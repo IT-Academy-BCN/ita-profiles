@@ -14,6 +14,7 @@ jobs:
           preset: per
           verboseMode: true
           testMode: true
+          configPath: ./vendor/bin/pint
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
