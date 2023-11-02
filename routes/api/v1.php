@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\api\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/students', [StudentController::class, 'store'])->name('student.create');
+Route::get('/students', [StudentController::class, 'index'])->name('students.list');
+
+//Route::get('/skins/available', [SkinController::class, 'index'])->name('skins.available');
