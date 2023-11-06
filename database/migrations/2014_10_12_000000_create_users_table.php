@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 75);
             $table->string('surname', 75);
-            $table->string('password', 45);
+            $table->string('password', 75);
             $table->string('dni', 9)->unique();
-            $table->string('dni/nie', 9)->unique();
             $table->string('email', 125)->unique();
             $table->boolean('active')->default(true);
             $table->timestamp('email_verified_at')->nullable();
