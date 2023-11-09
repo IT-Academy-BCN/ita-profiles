@@ -5,22 +5,21 @@ namespace Tests\Feature;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Spatie\Permission\Models\Role;
-
+use Tests\TestCase;
 
 class AdminControllerTest extends TestCase
 {
     use RefreshDatabase;
-    
-       public function verifyOrCreateRole(){
-        if (!Role::where('name', 'admin')->exists()) {
+
+    public function verifyOrCreateRole()
+    {
+        if (! Role::where('name', 'admin')->exists()) {
             Role::create(['name' => 'admin']);
         }
-       }
-     
-        public function test_create_admin_with_valid_data()
+    }
+
+    public function test_create_admin_with_valid_data()
     {
         $this->verifyOrCreateRole();
 
@@ -35,10 +34,8 @@ class AdminControllerTest extends TestCase
         $response = $this->post('/api/v1/admins', $userData);
         $response->assertHeader('Content-Type', 'application/json');
 
-
         $response->assertStatus(201);
 
-       
         $this->assertDatabaseHas('users', [
             'name' => $userData['name'],
             'surname' => $userData['surname'],
@@ -46,26 +43,22 @@ class AdminControllerTest extends TestCase
             'email' => $userData['email'],
         ]);
 
-     
         $this->assertDatabaseHas('admins', [
             'user_id' => User::where('email', $userData['email'])->first()->id,
         ]);
 
-        
         $user = User::where('email', $userData['email'])->first();
         $this->assertTrue($user->hasRole('admin'));
 
-      
         $response->assertJson([
-            'message' => __('Registre realitzat amb èxit.')
+            'message' => __('Registre realitzat amb èxit.'),
         ]);
         $response->assertHeader('Content-Type', 'application/json');
 
     }
-    
+
     public function test_create_admin_with_invalid_data()
     {
-        
 
         $response = $this->post('/api/v1/admins');
         $response->assertStatus(422);
@@ -73,9 +66,10 @@ class AdminControllerTest extends TestCase
         $response->assertHeader('Content-Type', 'application/json');
 
         $response->assertJsonValidationErrors([
-            'name', 'surname', 'dni', 'email', 'password'
+            'name', 'surname', 'dni', 'email', 'password',
         ]);
     }
+
     public function test_it_returns_a_list_of_admins()
     {
         $this->verifyOrCreateRole();
@@ -91,7 +85,6 @@ class AdminControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/json');
 
-
         $response->assertJsonCount(1, 'data');
         $response->assertJsonStructure([
             'data' => [
@@ -99,19 +92,20 @@ class AdminControllerTest extends TestCase
                     'id',
                     'name',
                     'surname',
-                    'email'
-                ]
-            ]
+                    'email',
+                ],
+            ],
         ]);
     }
 
-    public function test_can_return_empty_data(){
+    public function test_can_return_empty_data()
+    {
         $this->verifyOrCreateRole();
 
         $user = User::factory()->create();
 
         $user->assignRole('admin');
-        
+
         $this->actingAs($user, 'api');
         $response = $this->get('/api/v1/admins');
         $response->assertHeader('Content-Type', 'application/json');
@@ -119,11 +113,12 @@ class AdminControllerTest extends TestCase
         $response->assertStatus(404);
 
     }
+
     public function test_can_Show_specific_admin()
     {
-        
+
         $this->verifyOrCreateRole();
-      
+
         $user = User::factory()->create();
         $user->assignRole('admin');
 
@@ -138,15 +133,16 @@ class AdminControllerTest extends TestCase
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertJsonStructure([
             'data' => [
-                'id', 'name', 'surname','email',
-            ]
+                'id', 'name', 'surname', 'email',
+            ],
         ]);
     }
+
     public function test_can_show_specific_admin_invalid_data()
     {
-        
+
         $this->verifyOrCreateRole();
-      
+
         $user = User::factory()->create();
         $user->assignRole('admin');
 
@@ -159,10 +155,11 @@ class AdminControllerTest extends TestCase
         $response = $this->get("/api/v1/admins/{$admin2->id}");
 
         $response->assertStatus(401);
-        
+
         $response->assertHeader('Content-Type', 'application/json');
-        
+
     }
+
     public function test_update_specify_admin()
     {
         $this->verifyOrCreateRole();
@@ -172,7 +169,6 @@ class AdminControllerTest extends TestCase
         $user->assignRole('admin');
 
         $this->actingAs($user, 'api');
-        
 
         $admin = Admin::create(['user_id' => $user->id]);
 
@@ -184,13 +180,12 @@ class AdminControllerTest extends TestCase
 
         $response->assertHeader('Content-Type', 'application/json');
 
-
         $response->assertStatus(200);
 
-   
     }
 
-    public function test_can_update_ivalida_user(){
+    public function test_can_update_ivalida_user()
+    {
         $this->verifyOrCreateRole();
 
         $user = User::factory()->create();
@@ -200,7 +195,7 @@ class AdminControllerTest extends TestCase
         $this->actingAs($user, 'api');
 
         $admin = Admin::create(['user_id' => $user->id]);
-        
+
         $user2 = User::factory()->create();
         $admin2 = Admin::create(['user_id' => $user2->id]);
 
@@ -211,9 +206,9 @@ class AdminControllerTest extends TestCase
         ]);
         $response->assertHeader('Content-Type', 'application/json');
 
-
         $response->assertStatus(401);
     }
+
     public function test_can_destroy_destroy()
     {
         $this->verifyOrCreateRole();
@@ -238,14 +233,14 @@ class AdminControllerTest extends TestCase
         ]);
 
         $response->assertJson([
-            'message' => 'La seva compte ha estat eliminada amb èxit'
+            'message' => 'La seva compte ha estat eliminada amb èxit',
         ]);
     }
 
     public function test_can_destroy_dont_have_permissions()
     {
         $this->verifyOrCreateRole();
-     
+
         $user = User::factory()->create();
         $user->assignRole('admin');
 
@@ -260,8 +255,7 @@ class AdminControllerTest extends TestCase
         $response->assertHeader('Content-Type', 'application/json');
 
         $response->assertJson([
-            'message' => 'No tens permís per modificar aquest usuari'
+            'message' => 'No tens permís per modificar aquest usuari',
         ]);
     }
-    }  
-
+}

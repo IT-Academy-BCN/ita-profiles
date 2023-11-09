@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use App\Models\User;
-use App\Models\Admin;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use App\Http\Resources\AdminIndexResource;
 use App\Http\Resources\AdminShowResource;
+use App\Models\Admin;
+use App\Models\User;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * @OA\Info(
@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\Auth;
  *      title="IT Profiles"
  * )
  */
-
-
 class AdminController extends Controller
 {
     /**
@@ -72,64 +70,69 @@ class AdminController extends Controller
 
         return response()->json(['data' => AdminIndexResource::collection($admins)], 200);
     }
-/**
- * @OA\Post(
- *      path="/api/v1/admins",
- *      operationId="createAdmin",
- *      tags={"Admins"},
- *      summary="Create a new admin",
- *      description="Creates a new admin user with an invitation code.",
- *
- *      @OA\RequestBody(
- *          required=true,
- *
- *          @OA\JsonContent(
- *              @OA\Property(property="name", type="string", example="John"),
- *              @OA\Property(property="surname", type="string", example="Doe"),
- *              @OA\Property(property="email", type="string", format="email", example="john@example.com"), 
- *              @OA\Property(property="dni", type="string", example="12345678Y, X7959970T"), 
- *              @OA\Property(property="password", type="string", format="password", example="secretpassword"),
- *              @OA\Property(property="invitation_code", type="string", example="abcd1234")
- *          )
- *      ),
- *
- *      @OA\Response(
- *          response=201,
- *          description="Admin created successfully. No token is returned.",
- *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Admin created successfully.")
- *          )
- *      ),
- *
- *      @OA\Response(
- *          response=422,
- *          description="Validation error",
- *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="The given data was invalid."),
- *              @OA\Property(property="errors", type="object",
- *                  example={
- *                      "name": {"The name field is required."},
- *                      "surname": {"The surname field is required."},
- *                      "email": {"The email must be unique."},
- *                      "dni": {"The dni/nie must be unique."}
- *                  }
- *              )
- *          )
- *      ),
- *
- *      @OA\Parameter(
- *          name="invitation_code",
- *          in="query",
- *          required=true,
- *          description="Invitation code for creating a new admin.",
- *          @OA\Schema(type="string")
- *      ),
- *
- *   
- * )
- */
 
-
+    /**
+     * @OA\Post(
+     *      path="/api/v1/admins",
+     *      operationId="createAdmin",
+     *      tags={"Admins"},
+     *      summary="Create a new admin",
+     *      description="Creates a new admin user with an invitation code.",
+     *
+     *      @OA\RequestBody(
+     *          required=true,
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="name", type="string", example="John"),
+     *              @OA\Property(property="surname", type="string", example="Doe"),
+     *              @OA\Property(property="email", type="string", format="email", example="john@example.com"),
+     *              @OA\Property(property="dni", type="string", example="12345678Y, X7959970T"),
+     *              @OA\Property(property="password", type="string", format="password", example="secretpassword"),
+     *              @OA\Property(property="invitation_code", type="string", example="abcd1234")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=201,
+     *          description="Admin created successfully. No token is returned.",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Admin created successfully.")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=422,
+     *          description="Validation error",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *              @OA\Property(property="errors", type="object",
+     *                  example={
+     *                      "name": {"The name field is required."},
+     *                      "surname": {"The surname field is required."},
+     *                      "email": {"The email must be unique."},
+     *                      "dni": {"The dni/nie must be unique."}
+     *                  }
+     *              )
+     *          )
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="invitation_code",
+     *          in="query",
+     *          required=true,
+     *          description="Invitation code for creating a new admin.",
+     *
+     *          @OA\Schema(type="string")
+     *      ),
+     *
+     *
+     * )
+     */
     public function store(UserRequest $request)
     {
         $transaction = DB::transaction(function () use ($request) {
@@ -151,58 +154,60 @@ class AdminController extends Controller
 
         return response()->json(['message' => __('Registre realitzat amb èxit.')], 201);
     }
-   
-     /**
- * @OA\Get(
- *      path="api/v1/admins/{id}",
- *      operationId="getAdminDetails",
- *      tags={"Admins"},
- *      summary="Get details of an administrator",
- *      description="Get the details of a specific administrator. Requires admin role and valid token.",
- *      security={ {"bearerAuth": {} } },
- *
- *      @OA\Parameter(
- *          name="id",
- *          in="path",
- *          description="ID of the administrator",
- *          required=true,
- *          @OA\Schema(
- *              type="integer",
- *          ),
- *      ),
- *
- *      @OA\Parameter(
- *          name="token",
- *          in="query",
- *          required=true,
- *          description="Token for authentication.",
- *          @OA\Schema(type="string")
- *      ),
- *
- *      @OA\Response(
- *          response=200,
- *          description="Success. Returns administrator details.",
- *          @OA\JsonContent(
- *              type="object",
- *              @OA\Property(property="id", type="integer", example=1),
- *              @OA\Property(property="name", type="string", example="John"),
- *              @OA\Property(property="surname", type="string", example="Doe"),
- *              @OA\Property(property="email", type="string", format="email", example="john@example.com"),
- *          )
- *      ),
- *
- *      @OA\Response(
- *          response=403,
- *          description="Unauthorized. Missing authentication token or admin role."
- *      ),
- *
- *      @OA\Response(
- *          response=404,
- *          description="Not Found. Administrator with specified ID not found."
- *      ),
- * )
- */
 
+    /**
+     * @OA\Get(
+     *      path="api/v1/admins/{id}",
+     *      operationId="getAdminDetails",
+     *      tags={"Admins"},
+     *      summary="Get details of an administrator",
+     *      description="Get the details of a specific administrator. Requires admin role and valid token.",
+     *      security={ {"bearerAuth": {} } },
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID of the administrator",
+     *          required=true,
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="token",
+     *          in="query",
+     *          required=true,
+     *          description="Token for authentication.",
+     *
+     *          @OA\Schema(type="string")
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success. Returns administrator details.",
+     *
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(property="id", type="integer", example=1),
+     *              @OA\Property(property="name", type="string", example="John"),
+     *              @OA\Property(property="surname", type="string", example="Doe"),
+     *              @OA\Property(property="email", type="string", format="email", example="john@example.com"),
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=403,
+     *          description="Unauthorized. Missing authentication token or admin role."
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not Found. Administrator with specified ID not found."
+     *      ),
+     * )
+     */
     public function show($id)
     {
         $loggeuser = Auth::user();
@@ -224,7 +229,8 @@ class AdminController extends Controller
 
         return $admin;
     }
-  /**
+
+    /**
      * @OA\Put(
      *      path="api/v1/admins/{id}",
      *      operationId="updateAdmin",
@@ -307,47 +313,59 @@ class AdminController extends Controller
         return response()->json(['message' => 'Usuari actualitzat amb èxit', 'data' => new AdminshowResource($admin)], 200);
 
     }
-/**
- * @OA\Delete(
- *      path="/api/v1/admins/{id}",
- *      operationId="deleteAdmin",
- *      tags={"Admins"},
- *      summary="Delete an admin",
- *      description="Delete a specific admin by their ID",
- *      security={{"bearerAuth":{}}},
- *      @OA\Parameter(
- *          name="id",
- *          in="path",
- *          description="ID of the admin to be deleted",
- *          required=true,
- *          @OA\Schema(
- *              type="integer",
- *              format="int64"
- *          )
- *      ),
- *      @OA\Response(
- *          response=200,
- *          description="Admin deleted successfully",
- *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Admin deleted successfully")
- *          )
- *      ),
- *      @OA\Response(
- *          response=401,
- *          description="Unauthorized. Missing authentication token or admin role.",
- *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Unauthorized. Missing authentication token or admin role.")
- *          )
- *      ),
- *      @OA\Response(
- *          response=404,
- *          description="Admin not found",
- *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="No admins found in the database")
- *          )
- *      )
- * )
- */
+
+    /**
+     * @OA\Delete(
+     *      path="/api/v1/admins/{id}",
+     *      operationId="deleteAdmin",
+     *      tags={"Admins"},
+     *      summary="Delete an admin",
+     *      description="Delete a specific admin by their ID",
+     *      security={{"bearerAuth":{}}},
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID of the admin to be deleted",
+     *          required=true,
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Admin deleted successfully",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Admin deleted successfully")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized. Missing authentication token or admin role.",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="Unauthorized. Missing authentication token or admin role.")
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=404,
+     *          description="Admin not found",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="message", type="string", example="No admins found in the database")
+     *          )
+     *      )
+     * )
+     */
     public function destroy($id)
     {
 
@@ -362,5 +380,3 @@ class AdminController extends Controller
         return response()->json(['message' => __('La seva compte ha estat eliminada amb èxit')], 200);
     }
 }
-
-

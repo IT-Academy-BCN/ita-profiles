@@ -17,7 +17,7 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'
+            'user_id',
         ];
     }
 }
