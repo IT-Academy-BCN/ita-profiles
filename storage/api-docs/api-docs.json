@@ -1,9 +1,15 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "IT Profiles",
+        "title": "ITA Profiles page API documentation",
+        "description": "Documentation needed for the API Rest for the ITA Profiles page to IT Academy. Some useful links below:\r\n *   [ITA Profles Backend](https://github.com/IT-Academy-BCN/ita-profiles-backend)\r\n *   [ITA Profiles Frontend](https://github.com/IT-Academy-BCN/ita-profiles-frontend)",
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        }
+    ],
     "paths": {
         "api/v1/admins": {
             "get": {
@@ -400,155 +406,96 @@
                     }
                 ]
             }
-        },
-        "/api/v1/login": {
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Login",
-                "description": "Log in a user with their email and password.",
-                "operationId": "login",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "john@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "secretpassword"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AnnotationsAdmin": {
+                "title": "Admin",
+                "description": "Admin Model",
+                "properties": {
+                    "id": {
+                        "description": "Admin ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "description": "ID of the associated User",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "description": "Creation date of the Admin record",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Update date of the Admin record",
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
-                "responses": {
-                    "200": {
-                        "description": "Successful login",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Logged in"
-                                        },
-                                        "user": {
-                                            "type": "string",
-                                            "example": "John Doe"
-                                        },
-                                        "auth_token": {
-                                            "type": "string",
-                                            "example": "eyJ0e..."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Incorrect username or password"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "example": {
-                                                "email": [
-                                                    "The email field is required."
-                                                ],
-                                                "password": [
-                                                    "The password field is required."
-                                                ]
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
+                "type": "object",
+                "xml": {
+                    "name": "Admin"
                 }
-            }
-        },
-        "/api/v1/logout": {
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Logout",
-                "description": "Log out the authenticated user.",
-                "operationId": "logout",
-                "responses": {
-                    "200": {
-                        "description": "Successfully logged out",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Successfully logged out"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+            },
+            "AnnotationsUser": {
+                "title": "User",
+                "description": "User Model",
+                "properties": {
+                    "id": {
+                        "description": "User ID",
+                        "type": "integer",
+                        "format": "int64"
                     },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthenticated"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                    "name": {
+                        "description": "User's first name",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "surname": {
+                        "description": "User's last name",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "dni": {
+                        "description": "User's DNI",
+                        "type": "string",
+                        "example": "12345678B"
+                    },
+                    "email": {
+                        "description": "User's email address",
+                        "type": "string",
+                        "format": "email",
+                        "example": "johndoe@example.com"
+                    },
+                    "password": {
+                        "description": "User's password",
+                        "type": "string",
+                        "format": "password",
+                        "example": "********"
+                    },
+                    "created_at": {
+                        "description": "User's creation date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "User's update date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "email_verified_at": {
+                        "description": "User's email verification date",
+                        "type": "string",
+                        "format": "date-time"
                     }
                 },
-                "security": [
-                    {
-                        "passport": []
-                    }
-                ]
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
             }
         }
     }

@@ -26,8 +26,8 @@ class UserRequest extends FormRequest
     {
 
         return [
-            'name' => 'required|string',
-            'surname' => 'required|string',
+            'name' => 'required|string|regex:/^[a-zA-Z]+$/',
+            'surname' => 'required|string|regex:/^[a-zA-Z]+$/',
             'dni' => ['required', 'unique:users', new DniRule],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
