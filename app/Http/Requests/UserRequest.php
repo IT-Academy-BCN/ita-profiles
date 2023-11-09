@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\DniRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+
 
  class UserRequest extends FormRequest
 {
@@ -27,7 +29,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
         return [
             'name' => 'required|string',
             'surname' => 'required|string',
-            'dni' => 'required|string|unique:users',
+            'dni' => ['required','unique:users',new DniRule],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ];
