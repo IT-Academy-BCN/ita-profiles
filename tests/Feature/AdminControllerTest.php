@@ -57,6 +57,42 @@ class AdminControllerTest extends TestCase
 
     }
 
+    public function test_can_create_admin_with_bad_name()
+    {
+        $this->verifyOrCreateRole();
+
+        $userData = [
+            'name' => 'J@hn',
+            'surname' => 'Doe',
+            'dni' => '53671299V',
+            'email' => 'john@example.com',
+            'password' => 'password123',
+        ];
+
+        $response = $this->post('/api/v1/admins', $userData);
+        $response->assertHeader('Content-Type', 'application/json');
+        $response->assertStatus(422);
+
+    }
+
+    public function test_can_create_admin_with_bad_surname()
+    {
+        $this->verifyOrCreateRole();
+
+        $userData = [
+            'name' => 'John',
+            'surname' => 'Doe67',
+            'dni' => '53671299V',
+            'email' => 'john@example.com',
+            'password' => 'password123',
+        ];
+
+        $response = $this->post('/api/v1/admins', $userData);
+        $response->assertHeader('Content-Type', 'application/json');
+        $response->assertStatus(422);
+
+    }
+
     public function test_create_admin_with_invalid_data()
     {
 
