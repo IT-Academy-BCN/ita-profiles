@@ -72,7 +72,7 @@ class LoginController extends Controller
             /** @var \App\Models\User $user * */
             $token = $user->createToken('auth_token')->accessToken;
 
-            return response()->json(['message' => __('Logged in'), 'user' => $user->name, 'auth_token' => $token], 200);
+            return response()->json(['message' => __('Autenticació amb èxit'), 'user' => $user->name, 'auth_token' => $token], 200);
         }
 
         throw new HttpResponseException(response()->json(['message' => __('Usuari o contrasenya incorrectes')], 401));
@@ -116,6 +116,6 @@ class LoginController extends Controller
         $token = $user->token();
         $token->revoke();
 
-        return response()->json(['message' => 'Successfully logged out'], 200);
+        return response()->json(['message' => __('Desconnexió realitzada amb èxit')], 200);
     }
 }

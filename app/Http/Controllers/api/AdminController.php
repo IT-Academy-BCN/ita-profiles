@@ -217,7 +217,7 @@ class AdminController extends Controller
             throw new HttpResponseException(response()->json(['message' => __('No hi ha administradors a la base de dades')], 404));
         }
         if ($admin->id !== $loggeuser->admin->id) {
-            return response()->json(['message' => 'no tienes permisos para ver este usuario'], 401);
+            return response()->json(['message' => __('No tens permisos per veure aquest usuari.')], 401);
         }
 
         return response()->json(['data' => new AdminShowResource($admin)], 200);
