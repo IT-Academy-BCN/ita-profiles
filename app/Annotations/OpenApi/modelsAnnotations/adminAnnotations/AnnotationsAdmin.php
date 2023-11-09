@@ -48,6 +48,4 @@ namespace App\Annotations\OpenApi\modelsAnnotations\adminAnnotations;
  *
  * @var \Illuminate\Support\Carbon
  */
-class AnnotationsAdmin
-{
-}
+class AnnotationsAdmin {}
