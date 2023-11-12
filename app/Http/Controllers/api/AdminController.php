@@ -43,6 +43,9 @@ class AdminController extends Controller
 
             return $user;
         });
+        if (!$transaction) {
+            throw new HttpResponseException(response()->json(['message' => __('Registre no efectuat. Si-us-plau, torna-ho a provar.')], 404));
+        }
 
         return response()->json(['message' => __('Registre realitzat amb èxit.')], 201);
     }
