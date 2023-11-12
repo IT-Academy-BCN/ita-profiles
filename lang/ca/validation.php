@@ -38,7 +38,7 @@ return [
     'distinct' => 'El camp :attribute té un valor duplicat.',
     'doesnt_end_with' => 'El :attribute no pot acabar amb un dels següents: :values.',
     'doesnt_start_with' => 'El :attribute no pot començar amb un dels següents: :values.',
-    'dni' => 'No és un :Attribute vàlid',
+    'dni' => 'El camp :Attribute no és un vàlid',
     'email' => ':Attribute no és un e-mail vàlid',
     'ends_with' => 'La :attribute ha d\'acabar amb una de les següents: :values.',
     'enum' => 'El :attribute seleccionat no és vàlid.',
