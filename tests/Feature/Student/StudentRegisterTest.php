@@ -3,10 +3,8 @@
 namespace Tests\Feature\Student;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Student;
 use Spatie\Permission\Models\Role;
 
 class StudentRegisterTest extends TestCase
@@ -19,7 +17,7 @@ class StudentRegisterTest extends TestCase
             Role::create(['name' => 'student']);
         }
     }
-    
+
 
     /** @test */
     public function a_student_can_register_with_valid_data(): void
@@ -33,7 +31,7 @@ class StudentRegisterTest extends TestCase
             'email' => 'john@example.com',
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
-            'bootcamp'=> 'PHP Developer',
+            'bootcamp' => 'PHP Developer',
             //enddate
         ];
 
@@ -66,7 +64,7 @@ class StudentRegisterTest extends TestCase
     public function a_student_can_not_register_with_null_fields(): void
     {
         $this->verifyOrCreateRole();
-        
+
         $data = [
             'name' => null,
             'surname' => null,
@@ -74,10 +72,10 @@ class StudentRegisterTest extends TestCase
             'email' => null,
             'password' => null,
             'subtitle' => null,
-            'bootcamp'=> null,
+            'bootcamp' => null,
             //enddate
         ];
-       
+
         $response = $this -> post('/api/v1/students', $data);
 
         $response->assertHeader('Content-Type', 'application/json');
@@ -91,7 +89,7 @@ class StudentRegisterTest extends TestCase
     public function a_student_can_not_register_if_name_or_surname_contains_numbers(): void
     {
         $this->verifyOrCreateRole();
-         
+
         $data = [
             'name' => 'John23',
             'surname' => 'Doe23',
@@ -99,12 +97,12 @@ class StudentRegisterTest extends TestCase
             'email' => 'john@example.com',
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
-            'bootcamp'=> 'PHP Developer',
+            'bootcamp' => 'PHP Developer',
             //enddate
         ];
-        
+
         $response = $this -> post('/api/v1/students', $data);
- 
+
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertJsonValidationErrors([
             'name', 'surname'
@@ -116,7 +114,7 @@ class StudentRegisterTest extends TestCase
     public function a_student_can_not_register_if_name_or_surname_is_email(): void
     {
         $this->verifyOrCreateRole();
-          
+
         $data = [
             'name' => 'john@example.com',
             'surname' => 'john@example.com',
@@ -124,12 +122,12 @@ class StudentRegisterTest extends TestCase
             'email' => 'john@example.com',
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
-            'bootcamp'=> 'PHP Developer',
+            'bootcamp' => 'PHP Developer',
             //enddate
         ];
-         
+
         $response = $this -> post('/api/v1/students', $data);
-  
+
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertJsonValidationErrors([
             'name', 'surname'
@@ -149,10 +147,10 @@ class StudentRegisterTest extends TestCase
             'email' => 'johnmail.com',
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
-            'bootcamp'=> 'PHP Developer',
+            'bootcamp' => 'PHP Developer',
             //enddate
         ];
-       
+
         $response = $this -> post('/api/v1/students', $data);
 
         $response->assertHeader('Content-Type', 'application/json');
@@ -174,10 +172,10 @@ class StudentRegisterTest extends TestCase
             'email' => 'john@example.com',
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
-            'bootcamp'=> 'PHP',
+            'bootcamp' => 'PHP',
             //enddate
         ];
-       
+
         $response = $this -> post('/api/v1/students', $data);
 
         $response->assertHeader('Content-Type', 'application/json');
@@ -199,12 +197,12 @@ class StudentRegisterTest extends TestCase
              'email' => 'john@example.com',
              'password' => 'password123',
              'subtitle' => 'Enginyer Informàtic i Programador.',
-             'bootcamp'=> 'PHP Developer',
+             'bootcamp' => 'PHP Developer',
              //enddate
         ];
-        
+
         $response = $this -> post('/api/v1/students', $data);
- 
+
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertJsonValidationErrors([
             'dni'

@@ -23,10 +23,10 @@ class StudentResource extends JsonResource
             'about' => Str::ucfirst($this->about),
             'cv' =>  $this->cv,
             'bootcamp' => $this->bootcamp,
-            'endDate'=> $this->endDate,
+            'endDate' => $this->endDate,
             'linkedin' =>  $this->linkedin,
             'github' =>  $this->github,
-            
+
         ];
 
     }

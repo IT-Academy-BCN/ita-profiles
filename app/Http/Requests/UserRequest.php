@@ -7,7 +7,6 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-
 abstract class UserRequest extends FormRequest
 {
     /**
@@ -45,4 +44,4 @@ abstract class UserRequest extends FormRequest
 
         throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
     }
-} 
+}

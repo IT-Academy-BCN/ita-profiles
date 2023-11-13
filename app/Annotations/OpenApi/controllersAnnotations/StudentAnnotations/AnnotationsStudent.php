@@ -21,15 +21,15 @@ class AnnotationsStudent
      *                 property="data",
      *                 @OA\Items(
      *                     type="object",
-     *                     @OA\Property(property="name",type="string",example="John" ),            
-     *                     @OA\Property(property="surname", type="string",example="Doe"),     
+     *                     @OA\Property(property="name",type="string",example="John" ),
+     *                     @OA\Property(property="surname", type="string",example="Doe"),
      *                     @OA\Property(property="subtitle",type="string",example="Engineer and Developer" ),
      *                     @OA\Property( property="about", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit." ),
-     *                     @OA\Property(property="cv", type="string",example="My currículum."),      
-     *                     @OA\Property(property="bootcamp", type="string",example="PHP Developer" ),        
-     *                     @OA\Property(property="endDate",type="date",example="..." ),          
-     *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),   
-     *                     @OA\Property(property="github",type="string", example="http://www.github.com")                  
+     *                     @OA\Property(property="cv", type="string",example="My currículum."),
+     *                     @OA\Property(property="bootcamp", type="string",example="PHP Developer" ),
+     *                     @OA\Property(property="endDate",type="date",example="..." ),
+     *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
+     *                     @OA\Property(property="github",type="string", example="http://www.github.com")
      *                 )
      *             )
      *         )
@@ -37,7 +37,7 @@ class AnnotationsStudent
      * )
     */
     public function index() {}
-    
+
     /**
      * Crea un estudiant
      * @OA\Post (
@@ -46,7 +46,7 @@ class AnnotationsStudent
      *     tags={"Student"},
      *     summary="Create a new Student.",
      *     description="Creates a new user student. Authentication is not required.",
-     * 
+     *
      *     @OA\RequestBody(
      *          @OA\JsonContent(
      *              @OA\Property(property="name", type="string", example="John"),
@@ -59,15 +59,15 @@ class AnnotationsStudent
      *              @OA\Property(property="endDate", type="date", example="..."),
      *          )
      *      ),
-     * 
+     *
      *     @OA\Response(
      *         response=201,
      *         description="Student created successfully. No token is returned.",
      *         @OA\JsonContent(
      *              @OA\Property(property="message", type="string", example="Student created successfully.")
-     *          )    
+     *          )
      *     ),
-     * 
+     *
      *     @OA\Response(
      *          response=422,
      *          description="Validation error",
@@ -88,7 +88,7 @@ class AnnotationsStudent
      *              )
      *          )
      *      ),
-     * 
+     *
      *      @OA\Response(
      *            response=404,
      *            description="Register was not succesful.Please try it again later."
@@ -118,7 +118,7 @@ class AnnotationsStudent
      *              format="int64"
      *          ),
      *      ),
-     * 
+     *
      *      @OA\Response(
      *         response=200,
      *         description="Success. Returns student details.",
@@ -128,20 +128,20 @@ class AnnotationsStudent
      *                 property="data",
      *                 @OA\Items(
      *                     type="object",
-     *                     @OA\Property(property="name", type="string", example="John"),       
+     *                     @OA\Property(property="name", type="string", example="John"),
      *                     @OA\Property(property="surname",type="string", example="Doe"),
      *                     @OA\Property(property="subtitle", type="string", example="Engineer and Developer."),
      *                     @OA\Property(property="about", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
      *                     @OA\Property(property="cv", type="string", example="My currículum."),
      *                     @OA\Property(property="bootcamp", type="string", example="PHP Developer"),
-     *                     @OA\Property(property="endDate", type="date", example="..." ), 
+     *                     @OA\Property(property="endDate", type="date", example="..." ),
      *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
-     *                     @OA\Property(property="github", type="string", example="http://www.github.com")            
+     *                     @OA\Property(property="github", type="string", example="http://www.github.com")
      *                 )
      *             )
      *         )
      *     ),
-     * 
+     *
      *            @OA\Response(
      *            response=404,
      *            description="User not found."
@@ -149,7 +149,7 @@ class AnnotationsStudent
      * )
     */
     public function show() {}
-   
+
 
     /**
      * Actualitza les dades d'un estudiant
@@ -219,11 +219,11 @@ class AnnotationsStudent
      *              @OA\Property(property="message", type="string", example="Unauthorized.")
      *          )
      *      ),
-     * 
+     *
      *      @OA\Response(
      *          response=404,
      *          description="It was not possible to complete transaction.",
-     * 
+     *
      *          @OA\JsonContent(
      *              @OA\Property(property="message", type="string", example="Something went wrong. Try it again later.")
      *          )
@@ -275,7 +275,7 @@ class AnnotationsStudent
      *      @OA\Response(
      *          response=404,
      *          description="It was not possible to complete transaction.",
-     * 
+     *
      *          @OA\JsonContent(
      *              @OA\Property(property="message", type="string", example="Something went wrong. Try it again later-")
      *          )
@@ -283,4 +283,4 @@ class AnnotationsStudent
      * )
      */
     public function delete() {}
-} 
+}

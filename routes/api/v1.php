@@ -20,9 +20,9 @@ Route::get('/students', [StudentController::class, 'index'])->name('students.lis
 Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.show');
 
 
-Route::middleware(['auth:api'])->group(function() {
-     
+Route::middleware(['auth:api'])->group(function () {
+
     Route::put('/students/{id}', [StudentController::class, 'update']) -> middleware('can:update.student') -> name('student.update');
     Route::delete('/students/{id}', [StudentController::class, 'destroy']) -> middleware('can:delete.student') -> name('student.delete');
 
-}); 
+});

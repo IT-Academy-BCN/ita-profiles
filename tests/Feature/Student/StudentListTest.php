@@ -3,16 +3,14 @@
 namespace Tests\Feature\Student;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 
-
 class StudentListTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function verifyOrCreateRole()
     {
         if (!Role::where('name', 'student')->exists()) {
@@ -36,7 +34,7 @@ class StudentListTest extends TestCase
 
         $user -> student()->create([
             'subtitle' => 'Enginyer Informàtic i Programador.',
-            'bootcamp'=> 'PHP Developer',
+            'bootcamp' => 'PHP Developer',
         ]);
 
         $user -> assignRole('student');

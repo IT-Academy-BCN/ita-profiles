@@ -51,4 +51,4 @@ class DniRule implements ValidationRule
 
         return false;
     }
-} 
+}

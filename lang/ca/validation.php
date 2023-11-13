@@ -142,7 +142,7 @@ return [
     'url' => ':Attribute no és una adreça web vàlida.',
     'uuid' => 'El :attribute ha de ser un indentificador únic universal (UUID) vàlid.',
     'attributes' => [
-        'about'=> 'Sobre mí',
+        'about' => 'Sobre mí',
         'address' => 'adreça',
         'age' => 'edat',
         'amount' => 'quantitat',
@@ -204,7 +204,7 @@ return [
         'street' => 'carrer',
         'student' => 'estudiant',
         'subject' => 'assumpte',
-        'subtitle'=> 'subtítol',
+        'subtitle' => 'subtítol',
         'surname' => 'cognom',
         'teacher' => 'professor',
         'terms' => 'termes',

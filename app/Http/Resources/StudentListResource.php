@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
-
 class StudentListResource extends JsonResource
 {
     /**
@@ -28,5 +27,5 @@ class StudentListResource extends JsonResource
             'github ' => $this->github,
         ];
     }
-    
+
 }

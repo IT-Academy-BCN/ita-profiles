@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-
 class UpdateStudentRequest extends FormRequest
 {
     /**
@@ -33,7 +32,7 @@ class UpdateStudentRequest extends FormRequest
             'about' => 'string|nullable',
             'cv' => 'string|max:125|nullable',
             'linkedin' => 'string|url|max:60|nullable',
-            'github'=> 'string|url|max:60|nullable',
+            'github' => 'string|url|max:60|nullable',
         ];
 
     }
@@ -47,4 +46,4 @@ class UpdateStudentRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
     }
-} 
+}
