@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\DniRule;
+use App\Rules\NameSurnameRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -26,8 +27,8 @@ class UserRequest extends FormRequest
     {
 
         return [
-            'name' => 'required|string|regex:/^[a-zA-Z]+$/',
-            'surname' => 'required|string|regex:/^[a-zA-Z]+$/',
+            'name' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
+            'surname' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
             'dni' => ['required', 'unique:users', new DniRule()],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
