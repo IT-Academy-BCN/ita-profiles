@@ -191,15 +191,6 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "token",
-                        "in": "query",
-                        "description": "Token for authentication.",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
                     }
                 ],
                 "responses": {
@@ -233,7 +224,7 @@
                         }
                     },
                     "403": {
-                        "description": "Unauthorized. Missing authentication token or admin role."
+                        "description": "Forbidden. Missing authentication token or admin role."
                     },
                     "404": {
                         "description": "Not Found. Administrator with specified ID not found."
@@ -261,9 +252,41 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "New name of the administrator",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "NewJohn"
+                        }
+                    },
+                    {
+                        "name": "surname",
+                        "in": "query",
+                        "description": "New surname of the administrator",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "NewDoe"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "New email of the administrator",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "email",
+                            "example": "newjohn@example.com"
+                        }
                     }
                 ],
                 "requestBody": {
+                    "description": "Data to be updated",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -301,12 +324,16 @@
                                         },
                                         "name": {
                                             "type": "string",
-                                            "example": "John"
+                                            "example": "NewJohn"
+                                        },
+                                        "surname": {
+                                            "type": "string",
+                                            "example": "NewDoe"
                                         },
                                         "email": {
                                             "type": "string",
                                             "format": "email",
-                                            "example": "john@example.com"
+                                            "example": "newjohn@example.com"
                                         }
                                     },
                                     "type": "object"
@@ -326,9 +353,7 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "//admins/{id}": {
+            },
             "delete": {
                 "tags": [
                     "Admins"

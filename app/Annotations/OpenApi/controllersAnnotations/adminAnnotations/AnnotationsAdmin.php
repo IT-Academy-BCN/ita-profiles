@@ -42,7 +42,9 @@ class AnnotationsAdmin
      *      ),
      * )
      */
-    public function index() {}
+    public function index()
+    {
+    }
 
     /**
      * @OA\Post(
@@ -106,7 +108,9 @@ class AnnotationsAdmin
      *
      * )
      */
-    public function store() {}
+    public function store()
+    {
+    }
 
     /**
      * @OA\Get(
@@ -128,15 +132,6 @@ class AnnotationsAdmin
      *          ),
      *      ),
      *
-     *      @OA\Parameter(
-     *          name="token",
-     *          in="query",
-     *          required=true,
-     *          description="Token for authentication.",
-     *
-     *          @OA\Schema(type="string")
-     *      ),
-     *
      *      @OA\Response(
      *          response=200,
      *          description="Success. Returns administrator details.",
@@ -153,7 +148,7 @@ class AnnotationsAdmin
      *
      *      @OA\Response(
      *          response=403,
-     *          description="Unauthorized. Missing authentication token or admin role."
+     *          description="Forbidden. Missing authentication token or admin role."
      *      ),
      *      @OA\Response(
      *          response=404,
@@ -161,7 +156,9 @@ class AnnotationsAdmin
      *      ),
      * )
      */
-    public function show() {}
+    public function show()
+    {
+    }
 
     /**
      * @OA\Put(
@@ -170,7 +167,7 @@ class AnnotationsAdmin
      *      tags={"Admins"},
      *      summary="Update an administrator",
      *      description="Update the details of a specific administrator. Requires admin role and valid token.",
-     *      security={ {"bearerAuth": {} } },
+     *      security={{"bearerAuth": {}}},
      *
      *      @OA\Parameter(
      *          name="id",
@@ -178,13 +175,39 @@ class AnnotationsAdmin
      *          description="ID of the administrator",
      *          required=true,
      *
-     *          @OA\Schema(
-     *              type="integer",
-     *          )
+     *          @OA\Schema(type="integer"),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="name",
+     *          in="query",
+     *          description="New name of the administrator",
+     *          required=false,
+     *
+     *          @OA\Schema(type="string", example="NewJohn"),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="surname",
+     *          in="query",
+     *          description="New surname of the administrator",
+     *          required=false,
+     *
+     *          @OA\Schema(type="string", example="NewDoe"),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="email",
+     *          in="query",
+     *          description="New email of the administrator",
+     *          required=false,
+     *
+     *          @OA\Schema(type="string", format="email", example="newjohn@example.com"),
      *      ),
      *
      *      @OA\RequestBody(
      *          required=true,
+     *          description="Data to be updated",
      *
      *          @OA\JsonContent(
      *              type="object",
@@ -192,7 +215,6 @@ class AnnotationsAdmin
      *              @OA\Property(property="name", type="string", example="John"),
      *              @OA\Property(property="surname", type="string", example="Doe"),
      *              @OA\Property(property="email", type="string", format="email", example="john@example.com"),
-     *
      *          )
      *      ),
      *
@@ -204,9 +226,9 @@ class AnnotationsAdmin
      *              type="object",
      *
      *              @OA\Property(property="id", type="integer", example=1),
-     *              @OA\Property(property="name", type="string", example="John"),
-     *              @OA\Property(property="email", type="string", format="email", example="john@example.com"),
-     *
+     *              @OA\Property(property="name", type="string", example="NewJohn"),
+     *              @OA\Property(property="surname", type="string", example="NewDoe"),
+     *              @OA\Property(property="email", type="string", format="email", example="newjohn@example.com"),
      *          )
      *      ),
      *
@@ -220,11 +242,13 @@ class AnnotationsAdmin
      *      ),
      * )
      */
-    public function update() {}
+    public function update()
+    {
+    }
 
     /**
      * @OA\Delete(
-     *      path="//admins/{id}",
+     *      path="/admins/{id}",
      *      operationId="deleteAdmin",
      *      tags={"Admins"},
      *      summary="Delete an admin",
@@ -274,57 +298,7 @@ class AnnotationsAdmin
      *      )
      * )
      */
-    /**
-     * @OA\Delete(
-     *      path="//admins/{id}",
-     *      operationId="deleteAdmin",
-     *      tags={"Admins"},
-     *      summary="Delete an admin",
-     *      description="Delete a specific admin by their ID",
-     *      security={{"bearerAuth":{}}},
-     *
-     *      @OA\Parameter(
-     *          name="id",
-     *          in="path",
-     *          description="ID of the admin to be deleted",
-     *          required=true,
-     *
-     *          @OA\Schema(
-     *              type="integer",
-     *              format="int64"
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=200,
-     *          description="Admin deleted successfully",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Admin deleted successfully")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized. Missing authentication token or admin role.",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Unauthorized. Missing authentication token or admin role.")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=404,
-     *          description="Admin not found",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="No admins found in the database")
-     *          )
-     *      )
-     * )
-     */
-    public function delete() {}
+    public function delete()
+    {
+    }
 }

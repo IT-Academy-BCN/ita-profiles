@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Rules\DniRule;
-use App\Rules\NameSurnameRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;

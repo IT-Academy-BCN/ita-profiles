@@ -43,7 +43,7 @@ class AdminController extends Controller
 
             return $user;
         });
-        if (!$transaction) {
+        if (! $transaction) {
             throw new HttpResponseException(response()->json(['message' => __('Registre no efectuat. Si-us-plau, torna-ho a provar.')], 404));
         }
 
@@ -55,7 +55,7 @@ class AdminController extends Controller
         $loggeuser = Auth::user();
         $admin = $this->findAdmin($id);
 
-        if (!$admin) {
+        if (! $admin) {
             throw new HttpResponseException(response()->json(['message' => __('No hi ha administradors a la base de dades')], 404));
         }
         if ($admin->id !== $loggeuser->admin->id) {
@@ -80,7 +80,7 @@ class AdminController extends Controller
             throw new HttpResponseException(response()->json(['message' => __('No tens permís per modificar aquest usuari')], 401));
         }
 
-        if (!$admin) {
+        if (! $admin) {
             throw new HttpResponseException(response()->json(['message' => __('No hi ha administradors a la base de dades')], 404));
         }
 
