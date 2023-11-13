@@ -23,13 +23,13 @@ class LoginController extends Controller
             /** @var \App\Models\User $user * */
             $token = $user->createToken('auth_token')->accessToken;
 
-            return response()->json(['message' => 'Autenticació amb èxit. Benvingut ', 'name' => $user->name, 'token' => $token], 200);
+            return response()->json(['message' => __('Autenticació amb èxit. Benvingut'), 'name' => $user->name, 'token' => $token], 200);
         }
 
         throw new HttpResponseException(response()->json(['message' => __('Email o contrasenya incorrecte')], 401));
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         $user = Auth::user();
 
