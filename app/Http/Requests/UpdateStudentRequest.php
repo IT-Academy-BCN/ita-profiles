@@ -2,13 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\DniRule;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 
-abstract class UserRequest extends FormRequest
+class UpdateStudentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +24,18 @@ abstract class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
-            'name' => 'required|string|regex:/^[a-zA-Z]+$/',
-            'surname' => 'required|string|regex:/^[a-zA-Z]+$/',
-            'dni' => ['required', 'unique:users', new DniRule()],
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
+            'name' => 'required|string|regex:/^([^0-9]*)$/',
+            'surname' => 'required|string|regex:/^([^0-9]*)$/',
+            'email'  => 'required|string|email|max:255|unique:users',
+            'subtitle' => 'required|string',
+            'bootcamp' => 'required|in:Front end Developer,PHP Developer,Java Developer,Nodejs Developer',
+            'about' => 'string|nullable',
+            'cv' => 'string|max:125|nullable',
+            'linkedin' => 'string|url|max:60|nullable',
+            'github'=> 'string|url|max:60|nullable',
         ];
+
     }
 
     /**
@@ -42,7 +45,6 @@ abstract class UserRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-
         throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
     }
 } 

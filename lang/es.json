@@ -36,15 +36,19 @@
     "Verify Email Address": "Confirme su correo electrónico",
     "Whoops!": "¡Ups!",
     "You are receiving this email because we received a password reset request for your account.": "Ha recibido este mensaje porque se solicitó un restablecimiento de contraseña para su cuenta.",
+    "Alguna cosa ha anat malament. Intenta-ho de nou més tard.": "Algo ha ido mal. Intentálo de nuevo más tarde.",
     "Iniciar sessió": "Iniciar sesión",
     "Finalitzar sessió": "Finalizar sesión",
     "Prohibit": "Prohibido",
     "Pàgina expirada" : "Página expirada",
     "No autoritzat": "No autorizado",
+    "No hi ha estudiants a la base de dades": "No hay estudiantes en la base de datos",
     "No trobat": "No encontrado",
     "Registrar-se": "Registrarse",
     "Restablir contrassenya": "Restablecer contraseña",
     "resultats": "resultados",
     "Servei no disponible": "Servicio no disponible",
-    "Tots els drets reservats.": "Todos los derechos reservados."
+    "T'has donat de baixa com a estudiant d'It Profiles." : "Te has dado de baja como estudiante de It Profiles.",
+    "Tots els drets reservats.": "Todos los derechos reservados.",
+    "Usuari no trobat.": "Usuario no encontrado."
 }
