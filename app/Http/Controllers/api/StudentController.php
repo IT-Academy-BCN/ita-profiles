@@ -18,7 +18,7 @@ class StudentController extends Controller
 
         $studentsList = Student::all();
 
-        if (! $studentsList) {
+        if (!$studentsList) {
             throw new HttpResponseException(response()->json(['message' => 'Something went wrong. Please try again.'], 404));
         }
 
@@ -52,7 +52,7 @@ class StudentController extends Controller
 
         });
 
-        if (! $user) {
+        if (!$user) {
             throw new HttpResponseException(response()->json(['message' => __('Registre no efectuat. Si-us-plau, torna-ho a provar.')], 404));
         }
 
