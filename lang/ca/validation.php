@@ -203,6 +203,7 @@ return [
         'street' => 'carrer',
         'student' => 'estudiant',
         'subject' => 'assumpte',
+        'surname'=> 'cognom',
         'teacher' => 'professor',
         'terms' => 'termes',
         'test_description' => 'descripció de la prova',
