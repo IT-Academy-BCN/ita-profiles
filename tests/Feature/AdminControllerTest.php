@@ -14,7 +14,7 @@ class AdminControllerTest extends TestCase
 
     public function verifyOrCreateRole()
     {
-        if (!Role::where('name', 'admin')->exists()) {
+        if (! Role::where('name', 'admin')->exists()) {
             Role::create(['name' => 'admin']);
         }
     }
@@ -71,7 +71,18 @@ class AdminControllerTest extends TestCase
 
         $response = $this->post('/api/v1/admins', $userData);
         $response->assertHeader('Content-Type', 'application/json');
-        $response->assertStatus(422);
+        $response->assertStatus(422)->assertJsonStructure([
+            'errors' => [
+                'name',
+            ],
+        ])
+            ->assertJson([
+                'errors' => [
+                    'name' => [
+                        'El format de nom és invàlid.',
+                    ],
+                ],
+            ]);
 
     }
 
@@ -89,21 +100,106 @@ class AdminControllerTest extends TestCase
 
         $response = $this->post('/api/v1/admins', $userData);
         $response->assertHeader('Content-Type', 'application/json');
-        $response->assertStatus(422);
+        $response->assertStatus(422)->assertJsonStructure([
+            'errors' => [
+                'surname',
+            ],
+        ])
+            ->assertJson([
+                'errors' => [
+                    'surname' => [
+                        'El format de cognom és invàlid.',
+                    ],
+                ],
+            ]);
 
     }
 
-    public function test_create_admin_with_invalid_data()
+    public function test_can_create_admin_with_bad_dni()
     {
+        $this->verifyOrCreateRole();
 
-        $response = $this->post('/api/v1/admins');
-        $response->assertStatus(422);
+        $userData = [
+            'name' => 'John',
+            'surname' => 'Doe',
+            'dni' => '53671299x',
+            'email' => 'john@example.com',
+            'password' => 'password123',
+        ];
 
+        $response = $this->post('/api/v1/admins', $userData);
         $response->assertHeader('Content-Type', 'application/json');
+        $response->assertStatus(422)->assertJsonStructure([
+            'errors' => [
+                'dni',
+            ],
+        ])
+            ->assertJson([
+                'errors' => [
+                    'dni' => [
+                        'No és un Dni vàlid',
+                    ],
+                ],
+            ]);
 
-        $response->assertJsonValidationErrors([
-            'name', 'surname', 'dni', 'email', 'password',
-        ]);
+    }
+
+    public function test_can_create_admin_with_bad_email()
+    {
+        $this->verifyOrCreateRole();
+
+        $userData = [
+            'name' => 'John',
+            'surname' => 'Doe',
+            'dni' => '53671299V',
+            'email' => 'johnexample.com',
+            'password' => 'password123',
+        ];
+
+        $response = $this->post('/api/v1/admins', $userData);
+        $response->assertHeader('Content-Type', 'application/json');
+        $response->assertStatus(422)->assertJsonStructure([
+            'errors' => [
+                'email',
+            ],
+        ])
+            ->assertJson([
+                'errors' => [
+                    'email' => [
+                        'Adreça electrònica no és un e-mail vàlid',
+                    ],
+                ],
+            ]);
+
+    }
+
+    public function test_can_create_admin_with_bad_password()
+    {
+        $this->verifyOrCreateRole();
+
+        $userData = [
+            'name' => 'John',
+            'surname' => 'Doe',
+            'dni' => '53671299V',
+            'email' => 'john@example.com',
+            'password' => 'passwor',
+        ];
+
+        $response = $this->post('/api/v1/admins', $userData);
+        $response->assertHeader('Content-Type', 'application/json');
+        $response->assertStatus(422)->assertJsonStructure([
+            'errors' => [
+                'password',
+            ],
+        ])
+            ->assertJson([
+                'errors' => [
+                    'password' => [
+                        'Contrasenya ha de contenir almenys 8 caràcters.',
+                    ],
+                ],
+            ]);
+
     }
 
     public function test_it_returns_a_list_of_admins()
@@ -147,6 +243,11 @@ class AdminControllerTest extends TestCase
         $response->assertHeader('Content-Type', 'application/json');
 
         $response->assertStatus(404);
+        $response->assertJsonStructure(['message']);
+
+        $response->assertJson([
+            'message' => 'No hi ha administradors a la base de dades',
+        ]);
 
     }
 
@@ -191,6 +292,9 @@ class AdminControllerTest extends TestCase
         $response = $this->get("/api/v1/admins/{$admin2->id}");
 
         $response->assertStatus(401);
+        $response->assertJson([
+            'message' => 'No tens permisos per veure aquest usuari.',
+        ]);
 
         $response->assertHeader('Content-Type', 'application/json');
 
@@ -220,7 +324,7 @@ class AdminControllerTest extends TestCase
 
     }
 
-    public function test_can_update_ivalida_user()
+    public function test_can_update_invalid_user()
     {
         $this->verifyOrCreateRole();
 
@@ -241,6 +345,7 @@ class AdminControllerTest extends TestCase
             'email' => 'nuevo@example.com',
         ]);
         $response->assertHeader('Content-Type', 'application/json');
+        $response->assertJson(['message' => 'No tens permís per modificar aquest usuari']);
 
         $response->assertStatus(401);
     }
@@ -291,7 +396,7 @@ class AdminControllerTest extends TestCase
         $response->assertHeader('Content-Type', 'application/json');
 
         $response->assertJson([
-            'message' => 'No tens permís per modificar aquest usuari',
+            'message' => 'No tens permís per eliminar aquest usuari',
         ]);
     }
 }
