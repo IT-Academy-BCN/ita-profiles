@@ -42,9 +42,7 @@ class AnnotationsAdmin
      *      ),
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * @OA\Post(
@@ -108,9 +106,7 @@ class AnnotationsAdmin
      *
      * )
      */
-    public function store()
-    {
-    }
+    public function store() {}
 
     /**
      * @OA\Get(
@@ -156,9 +152,7 @@ class AnnotationsAdmin
      *      ),
      * )
      */
-    public function show()
-    {
-    }
+    public function show() {}
 
     /**
      * @OA\Put(
@@ -242,9 +236,7 @@ class AnnotationsAdmin
      *      ),
      * )
      */
-    public function update()
-    {
-    }
+    public function update() {}
 
     /**
      * @OA\Delete(
@@ -298,7 +290,5 @@ class AnnotationsAdmin
      *      )
      * )
      */
-    public function delete()
-    {
-    }
+    public function delete() {}
 }
