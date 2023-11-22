@@ -7,11 +7,11 @@
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000/api/v1"
+            "url": "http://127.0.0.1:8000"
         }
     ],
     "paths": {
-        "/admins": {
+        "/api/v1/admins": {
             "get": {
                 "tags": [
                     "Admins"
@@ -72,17 +72,6 @@
                 "summary": "Create a new admin",
                 "description": "Creates a new admin user with an invitation code.",
                 "operationId": "createAdmin",
-                "parameters": [
-                    {
-                        "name": "invitation_code",
-                        "in": "query",
-                        "description": "Invitation code for creating a new admin.",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -110,10 +99,6 @@
                                         "type": "string",
                                         "format": "password",
                                         "example": "secretpassword"
-                                    },
-                                    "invitation_code": {
-                                        "type": "string",
-                                        "example": "abcd1234"
                                     }
                                 },
                                 "type": "object"
@@ -174,7 +159,7 @@
                 }
             }
         },
-        "/admins/{id}": {
+        "/api/v1/admins/{id}": {
             "get": {
                 "tags": [
                     "Admins"

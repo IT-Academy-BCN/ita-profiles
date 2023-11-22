@@ -6,7 +6,7 @@ class AnnotationsAdmin
 {
     /**
      * @OA\Get(
-     *      path="/admins",
+     *      path="/api/v1/admins",
      *      operationId="getAllAdmins",
      *      tags={"Admins"},
      *      summary="Get all admins",
@@ -46,7 +46,7 @@ class AnnotationsAdmin
 
     /**
      * @OA\Post(
-     *      path="/admins",
+     *      path="/api/v1/admins",
      *      operationId="createAdmin",
      *      tags={"Admins"},
      *      summary="Create a new admin",
@@ -62,7 +62,6 @@ class AnnotationsAdmin
      *              @OA\Property(property="email", type="string", format="email", example="john@example.com"),
      *              @OA\Property(property="dni", type="string", example="12345678Y, X7959970T"),
      *              @OA\Property(property="password", type="string", format="password", example="secretpassword"),
-     *              @OA\Property(property="invitation_code", type="string", example="abcd1234")
      *          )
      *      ),
      *
@@ -94,14 +93,6 @@ class AnnotationsAdmin
      *          )
      *      ),
      *
-     *      @OA\Parameter(
-     *          name="invitation_code",
-     *          in="query",
-     *          required=true,
-     *          description="Invitation code for creating a new admin.",
-     *
-     *          @OA\Schema(type="string")
-     *      ),
      *
      *
      * )
@@ -110,7 +101,7 @@ class AnnotationsAdmin
 
     /**
      * @OA\Get(
-     *      path="/admins/{id}",
+     *      path="/api/v1/admins/{id}",
      *      operationId="getAdminDetails",
      *      tags={"Admins"},
      *      summary="Get details of an administrator",
@@ -156,7 +147,7 @@ class AnnotationsAdmin
 
     /**
      * @OA\Put(
-     *      path="/admins/{id}",
+     *      path="/api/v1/admins/{id}",
      *      operationId="updateAdmin",
      *      tags={"Admins"},
      *      summary="Update an administrator",
@@ -240,7 +231,7 @@ class AnnotationsAdmin
 
     /**
      * @OA\Delete(
-     *      path="/admins/{id}",
+     *      path="/api/v1/admins/{id}",
      *      operationId="deleteAdmin",
      *      tags={"Admins"},
      *      summary="Delete an admin",
