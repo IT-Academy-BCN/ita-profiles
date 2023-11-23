@@ -21,7 +21,7 @@ class RecruiterController extends Controller
 
         $recruitersList = Recruiter::all();
 
-        if (! $recruitersList) {
+        if (!$recruitersList) {
 
             throw new HttpResponseException(response()->json([
                 'message' => __(
@@ -65,7 +65,7 @@ class RecruiterController extends Controller
 
         });
 
-        if (! $recruiter) {
+        if (!$recruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Registre no efectuat. Si us plau, torna-ho a provar.'
@@ -83,7 +83,7 @@ class RecruiterController extends Controller
 
         $recruiter = Recruiter::where('id', $id)->first();
 
-        if (! $recruiter) {
+        if (!$recruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Usuari no trobat.'
@@ -107,7 +107,8 @@ class RecruiterController extends Controller
                 response()->json([
                     'message' => __(
                         'No autorizat'
-                    )], 401));
+                    )], 401)
+            );
         }
 
         $updatedRecruiter = DB::transaction(function () use ($request, $id) {
@@ -126,10 +127,11 @@ class RecruiterController extends Controller
             return $recruiter;
         });
 
-        if (! $updatedRecruiter) {
+        if (!$updatedRecruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
-                    'Alguna cosa ha anat malament.  Torna-ho a intentar més tard.')], 404));
+                    'Alguna cosa ha anat malament.  Torna-ho a intentar més tard.'
+                )], 404));
         }
 
         return response()->json([
@@ -146,7 +148,8 @@ class RecruiterController extends Controller
         if ($recruiterId != $id) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
-                    'No autoritzat')], 401));
+                    'No autoritzat'
+                )], 401));
         }
 
         $deletedRecruiter = DB::transaction(function () use ($id) {
@@ -158,14 +161,16 @@ class RecruiterController extends Controller
             return true;
         });
 
-        if (! $deletedRecruiter) {
+        if (!$deletedRecruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
-                    'Alguna cosa ha anat malament. Torna-ho a intenar més tard.')], 404));
+                    'Alguna cosa ha anat malament. Torna-ho a intenar més tard.'
+                )], 404));
         }
 
         return response()->json([
             'message' => __(
-                "T'has donat de baixa com a reclutador d'It Profiles.")], 200);
+                "T'has donat de baixa com a reclutador d'It Profiles."
+            )], 200);
     }
 }

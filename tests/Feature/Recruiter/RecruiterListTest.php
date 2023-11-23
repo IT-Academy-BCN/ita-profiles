@@ -9,5 +9,5 @@ class RecruiterListTest extends TestCase
 {
     use RefreshDatabase;
 
-    
+
 }

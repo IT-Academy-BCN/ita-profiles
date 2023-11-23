@@ -47,9 +47,7 @@ class AnnotationsRecruiter
      *     )
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * Crea un reclutador
@@ -93,9 +91,7 @@ class AnnotationsRecruiter
      *     )
      * )
      */
-    public function store()
-    {
-    }
+    public function store() {}
 
     /**
      * Detalls d'un reclutador
@@ -136,9 +132,7 @@ class AnnotationsRecruiter
      *     )
      * )
      */
-    public function show()
-    {
-    }
+    public function show() {}
 
     /**
      * Actualitza les dades d'un recruiter
@@ -198,9 +192,7 @@ class AnnotationsRecruiter
      *     )
      * )
      */
-    public function update()
-    {
-    }
+    public function update() {}
 
     /**
      * @OA\Delete(
@@ -241,8 +233,6 @@ class AnnotationsRecruiter
      *     )
      * )
      */
-    public function destroy()
-    {
-    }
+    public function destroy() {}
 
 }
