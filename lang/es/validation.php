@@ -38,6 +38,7 @@ return [
     'distinct' => 'El campo :attribute contiene un valor duplicado.',
     'doesnt_end_with' => 'El campo :attribute no debe finalizar con uno de los siguientes: :values.',
     'doesnt_start_with' => 'El campo :attribute no debe comenzar con uno de los siguientes: :values.',
+    'dni' => 'El campo :attribute no es valido',
     'email' => 'El campo :attribute no es un correo válido.',
     'ends_with' => 'El campo :attribute debe finalizar con uno de los siguientes valores: :values',
     'enum' => 'El :attribute seleccionado es inválido.',
