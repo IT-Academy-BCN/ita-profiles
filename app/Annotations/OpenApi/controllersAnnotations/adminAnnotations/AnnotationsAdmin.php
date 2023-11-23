@@ -46,7 +46,7 @@ class AnnotationsAdmin
 
     /**
      * @OA\Post(
-     *      path="/api/v1/admins",
+     *      path="/admins",
      *      operationId="createAdmin",
      *      tags={"Admins"},
      *      summary="Create a new admin",
@@ -101,7 +101,7 @@ class AnnotationsAdmin
 
     /**
      * @OA\Get(
-     *      path="/api/v1/admins/{id}",
+     *      path="/admins/{id}",
      *      operationId="getAdminDetails",
      *      tags={"Admins"},
      *      summary="Get details of an administrator",
@@ -147,7 +147,7 @@ class AnnotationsAdmin
 
     /**
      * @OA\Put(
-     *      path="/api/v1/admins/{id}",
+     *      path="/admins/{id}",
      *      operationId="updateAdmin",
      *      tags={"Admins"},
      *      summary="Update an administrator",
@@ -231,7 +231,7 @@ class AnnotationsAdmin
 
     /**
      * @OA\Delete(
-     *      path="/api/v1/admins/{id}",
+     *      path="/admins/{id}",
      *      operationId="deleteAdmin",
      *      tags={"Admins"},
      *      summary="Delete an admin",

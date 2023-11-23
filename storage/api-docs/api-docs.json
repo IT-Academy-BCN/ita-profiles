@@ -64,7 +64,9 @@
                         "bearerAuth": []
                     }
                 ]
-            },
+            }
+        },
+        "/admins": {
             "post": {
                 "tags": [
                     "Admins"
@@ -159,7 +161,7 @@
                 }
             }
         },
-        "/api/v1/admins/{id}": {
+        "/admins/{id}": {
             "get": {
                 "tags": [
                     "Admins"
