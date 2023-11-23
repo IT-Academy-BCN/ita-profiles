@@ -18,7 +18,7 @@ class RecruiterListResource extends JsonResource
             'name' => $this->user->name,
             'surname' => $this->user->surname,
             'company' => $this->company,
-            'sector' => $this->sector, 
+            'sector' => $this->sector,
         ];
     }
 }

@@ -2,34 +2,33 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\Recruiter; 
-use App\Http\Requests\StoreRecruiterRequest; 
+use App\Http\Requests\StoreRecruiterRequest;
 use App\Http\Requests\UpdateRecruiterRequest;
 use App\Http\Resources\RecruiterListResource;
 use App\Http\Resources\RecruiterResource;
+use App\Models\Recruiter;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-
 class RecruiterController extends Controller
 {
-    
-    public function index(){
+    public function index()
+    {
 
-        $recruitersList = Recruiter::all(); 
+        $recruitersList = Recruiter::all();
 
-        if(!$recruitersList) {
-        
+        if (! $recruitersList) {
+
             throw new HttpResponseException(response()->json([
-               'message' => __(
+                'message' => __(
                     'Alguna cosa ha anat malament. Torna-ho a intentar més tard.'
-            )], 404));
+                )], 404));
 
-        } elseif($recruitersList->isEmpty()){
+        } elseif ($recruitersList->isEmpty()) {
 
             throw new HttpResponseException(response()->json([
                 'message' => __(
@@ -38,12 +37,13 @@ class RecruiterController extends Controller
         }
 
         return response()->json([
-            'data'=> RecruiterListResource::collection($recruitersList)], 20);
+            'data' => RecruiterListResource::collection($recruitersList)], 20);
     }
 
-    public function store(StoreRecruiterRequest $request){
-    
-        $recruiter = DB::transaction(function() use($request){
+    public function store(StoreRecruiterRequest $request)
+    {
+
+        $recruiter = DB::transaction(function () use ($request) {
 
             $user = User::create([
                 'name' => Str::lower($request->name),
@@ -54,77 +54,79 @@ class RecruiterController extends Controller
                 'active' => true,
             ]);
 
-            $recruiter= $user->recruiter()->create([
+            $recruiter = $user->recruiter()->create([
                 'company' => $request->company,
                 'sector' => $request->sector,
             ]);
 
-            $user ->assignRole('recruiter'); 
+            $user->assignRole('recruiter');
 
-            return $recruiter; 
+            return $recruiter;
 
         });
 
-        if(!$recruiter){
+        if (! $recruiter) {
             throw new HttpResponseException(response()->json([
-                'message'=> __(
+                'message' => __(
                     'Registre no efectuat. Si us plau, torna-ho a provar.'
-                    )], 404));
+                )], 404));
         }
 
         return response()->json([
-            'message'=> __(
+            'message' => __(
                 'Registre realitzat amb èxit.'
-                )],201);
+            )], 201);
     }
 
-    public function show ($id){
-        
-        $recruiter= Recruiter::where('id',$id)-> first();
+    public function show($id)
+    {
 
-        if(!$recruiter){
+        $recruiter = Recruiter::where('id', $id)->first();
+
+        if (! $recruiter) {
             throw new HttpResponseException(response()->json([
-                'message'=> __(
+                'message' => __(
                     'Usuari no trobat.'
                 )], 404));
         }
 
         return response()->json([
-            'data'=> RecruiterResource::make($recruiter)], 200);
+            'data' => RecruiterResource::make($recruiter)], 200);
 
     }
 
-    public function update (UpdateRecruiterRequest $request, $id){
-         
-        $user = Auth::User(); 
+    public function update(UpdateRecruiterRequest $request, $id)
+    {
 
-        $recruiterId = $user-> recruiter -> id; 
+        $user = Auth::User();
 
-        if($recruiterId != $id){
+        $recruiterId = $user->recruiter->id;
+
+        if ($recruiterId != $id) {
             throw new HttpResponseException(
                 response()->json([
-                'message' => __(
-                    'No autorizat'
-                )], 401));
+                    'message' => __(
+                        'No autorizat'
+                    )], 401));
         }
 
-        $updatedRecruiter = DB::transaction(function() use ($request, $id){
+        $updatedRecruiter = DB::transaction(function () use ($request, $id) {
 
-            $recruiter = Recruiter::where('id',$id)->first();
+            $recruiter = Recruiter::where('id', $id)->first();
 
-            $recruiter -> user -> name = Str::lower($request->name);
-            $recruiter -> user -> surname = Str::lower($request->surname);
-            $recruiter -> user -> email = Str::lower($request->email);
-            $recruiter -> company = $request->company;
-            $recruiter -> sector = $request->sector;
+            $recruiter->user->name = Str::lower($request->name);
+            $recruiter->user->surname = Str::lower($request->surname);
+            $recruiter->user->email = Str::lower($request->email);
+            $recruiter->company = $request->company;
+            $recruiter->sector = $request->sector;
 
-            $recruiter -> user-> save();
-            $recruiter -> save();
+            $recruiter->user->save();
+            $recruiter->save();
 
             return $recruiter;
         });
 
-        if (!$updatedRecruiter){
+        if (! $updatedRecruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Alguna cosa ha anat malament.  Torna-ho a intentar més tard.')], 404));
@@ -134,27 +136,29 @@ class RecruiterController extends Controller
             'data' => RecruiterResource::make($updatedRecruiter)], 200);
     }
 
-    public function destroy($id){
-        
-         $user = Auth::User();
+    public function destroy($id)
+    {
 
-         $recruiterId = $user->recruiter -> id;
-         
-         if($recruiterId != $id){
+        $user = Auth::User();
+
+        $recruiterId = $user->recruiter->id;
+
+        if ($recruiterId != $id) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'No autoritzat')], 401));
         }
 
-        $deletedRecruiter= DB::transaction(function () use ($id) {
-            $recruiter = Recruiter::where('id',$id)->first();
-            $user = $recruiter-> user;
-            $recruiter -> delete();
-            $user -> delete();
+        $deletedRecruiter = DB::transaction(function () use ($id) {
+            $recruiter = Recruiter::where('id', $id)->first();
+            $user = $recruiter->user;
+            $recruiter->delete();
+            $user->delete();
+
             return true;
         });
 
-        if (!$deletedRecruiter){
+        if (! $deletedRecruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Alguna cosa ha anat malament. Torna-ho a intenar més tard.')], 404));
@@ -164,5 +168,4 @@ class RecruiterController extends Controller
             'message' => __(
                 "T'has donat de baixa com a reclutador d'It Profiles.")], 200);
     }
-
 }
