@@ -20,12 +20,12 @@ class LoginControllerTest extends TestCase
     public function test_Login_Success()
     {
         $user = User::factory()->create([
-            'email' => 'test@example.com',
+            'email' => 'pruebalogin@test.com',
             'password' => bcrypt('password123'),
         ]);
 
         $requestData = [
-            'email' => 'test@example.com',
+            'email' => 'pruebalogin@test.com',
             'password' => 'password123',
         ];
 
@@ -38,7 +38,7 @@ class LoginControllerTest extends TestCase
     public function test_a_user_can_login_with_short_password()
     {
         $user = User::factory()->create([
-            'email' => 'jose@gmail.com',
+            'email' => fake()->email(),
             'password' => '12345678',
         ]);
         $credentials = [

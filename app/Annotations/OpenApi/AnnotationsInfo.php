@@ -9,7 +9,7 @@ namespace App\Annotations\OpenApi;
  *   description="Documentation needed for the API Rest for the ITA Profiles page to IT Academy. Some useful links below:
  *   [ITA Profles Backend](https://github.com/IT-Academy-BCN/ita-profiles-backend)
  *   [ITA Profiles Frontend](https://github.com/IT-Academy-BCN/ita-profiles-frontend)
- *   To use the endpoints, prefix them with '**api/v1**'. For example: '**api/v1/endpoint**'."
+ *   To use the endpoints, prefix them with '**api/v1**'. For example: '**POST: https://itaperfils.eurecatacademy.org/api/v1/students'**'."
  * )
  *
  *   @OA\Server(
