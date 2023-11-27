@@ -4,14 +4,11 @@ namespace Tests\Feature;
 
 use App\Models\Admin;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class AdminControllerTest extends TestCase
 {
-    
-
     public function verifyOrCreateRole()
     {
         if (!Role::where('name', 'admin')->exists()) {
@@ -229,7 +226,7 @@ class AdminControllerTest extends TestCase
         ]);
     }
 
-  
+
 
     public function test_can_Show_specific_admin()
     {
