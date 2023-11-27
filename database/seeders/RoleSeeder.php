@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -13,13 +13,16 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-
+        //Admin Role
+        $admin = Role::create(['name' => 'admin']);
+        
+        //Student Role and Permission
         $student = Role::create(['name' => 'student']);
 
         $updateStudent = Permission::create(['name' => 'update.student']);
         $deleteStudent = Permission::create(['name' => 'delete.student']);
 
-        $student -> syncPermissions([$deleteStudent, $updateStudent]);
+        $student->syncPermissions([$deleteStudent, $updateStudent]);
         //$admin -> syncPermissions([$deleteStudent, $updateStudent]);
     }
 }

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Http\Resources\StudentResource;
 use App\Http\Resources\StudentListResource;
+use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -20,14 +20,14 @@ class StudentController extends Controller
     {
         $studentsList = Student::all();
 
-        if (!$studentsList) {
+        if (! $studentsList) {
 
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Alguna cosa ha anat malament.Intenta-ho de nou més tard.'
                 )], 404));
 
-        } elseif($studentsList->isEmpty()) {
+        } elseif ($studentsList->isEmpty()) {
 
             throw new HttpResponseException(response()->json([
                 'message' => __(
@@ -38,12 +38,11 @@ class StudentController extends Controller
 
         return response()->json(
             [
-            'data' => StudentListResource::collection($studentsList)],
+                'data' => StudentListResource::collection($studentsList)],
             200
         );
 
     }
-
 
     public function store(StoreStudentRequest $request)
     {
@@ -64,128 +63,125 @@ class StudentController extends Controller
                 'bootcamp' => $request->bootcamp,
             ]);
 
-            $user -> assignRole('student');
+            $user->assignRole('student');
 
             return $student;
 
         });
 
-        if (!$student) {
+        if (! $student) {
             throw new HttpResponseException(response()->json(
                 [
-                'message' => __('Registre no efectuat. Si-us-plau, torna-ho a provar.')],
+                    'message' => __('Registre no efectuat. Si-us-plau, torna-ho a provar.')],
                 404
             ));
         }
 
         return response()->json(
             [
-            'message' => __('Registre realitzat amb èxit.')],
+                'message' => __('Registre realitzat amb èxit.')],
             201
         );
 
     }
-
 
     public function show($id)
     {
 
         /**De moment no requereix autentificació */
 
-        $student = Student::where('id', $id) -> first();
+        $student = Student::where('id', $id)->first();
 
-        if(!$student) {
+        if (! $student) {
             throw new HttpResponseException(response()->json(['message' => __('Usuari no trobat.')], 404));
         }
 
         return response()->json(
             [
-            'data' => StudentResource::make($student)],
+                'data' => StudentResource::make($student)],
             200
         );
 
     }
 
-
     public function update(UpdateStudentRequest $request, $id)
     {
         $user = Auth::User();
 
-        $studentId = $user -> student -> id;
+        $studentId = $user->student->id;
 
-        if($studentId != $id) {
+        if ($studentId != $id) {
             throw new HttpResponseException(
                 response()->json([
-                'message' => __('No autoritzat')], 401)
+                    'message' => __('No autoritzat')], 401)
             );
         }
 
         $updatedStudent = DB::transaction(function () use ($request, $id) {
 
-            $student = Student::where('id', $id) -> first();
+            $student = Student::where('id', $id)->first();
 
-            $student -> user -> name = Str::lower($request->name);
-            $student -> user -> surname = Str::lower($request -> surname);
-            $student -> user -> email = Str::lower($request -> email);
-            $student -> subtitle = $request -> subtitle;
-            $student -> bootcamp = $request -> bootcamp;
-            $student -> about  = $request-> about;
-            $student -> cv = $request-> cv;
-            $student -> linkedin = Str::lower($request-> linkedin);
-            $student -> github = Str::lower($request-> github);
+            $student->user->name = Str::lower($request->name);
+            $student->user->surname = Str::lower($request->surname);
+            $student->user->email = Str::lower($request->email);
+            $student->subtitle = $request->subtitle;
+            $student->bootcamp = $request->bootcamp;
+            $student->about = $request->about;
+            $student->cv = $request->cv;
+            $student->linkedin = Str::lower($request->linkedin);
+            $student->github = Str::lower($request->github);
 
-            $student -> user -> save();
-            $student -> save();
+            $student->user->save();
+            $student->save();
 
             return $student;
         });
 
-        if (!$updatedStudent) {
+        if (! $updatedStudent) {
             throw new HttpResponseException(response()->json(['message' => __('Alguna cosa ha anat malament.
             Torna-ho a intentar més tard.')], 404));
         }
 
         return response()->json(
             [
-            'data' => StudentResource::make($updatedStudent)],
+                'data' => StudentResource::make($updatedStudent)],
             200
         );
     }
-
 
     public function destroy($id)
     {
 
         $user = Auth::User();
 
-        $studentId = $user -> student -> id;
+        $studentId = $user->student->id;
 
-        if($studentId != $id) {
+        if ($studentId != $id) {
             throw new HttpResponseException(
                 response()->json([
-                'message' => __('No autoritzat')], 401)
+                    'message' => __('No autoritzat')], 401)
             );
         }
 
         $deleteStudent = DB::transaction(function () use ($id) {
-            $student = Student::where('id', $id) -> first();
-            $user = $student -> user;
-            $student -> delete();
-            $user -> delete();
+            $student = Student::where('id', $id)->first();
+            $user = $student->user;
+            $student->delete();
+            $user->delete();
+
             return true;
         });
 
-        if(!$deleteStudent) {
+        if (! $deleteStudent) {
             throw new HttpResponseException(response()->json(['message' => __('Alguna cosa ha anat malament.
             Torna-ho a intentar més tard.')], 404));
         }
 
         return response()->json(
             [
-            'message' => __("T'has donat de baixa com a estudiant d'It Profiles.")],
+                'message' => __("T'has donat de baixa com a estudiant d'It Profiles.")],
             200
         );
 
     }
-
 }

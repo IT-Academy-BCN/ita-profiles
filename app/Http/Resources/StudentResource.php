@@ -21,11 +21,11 @@ class StudentResource extends JsonResource
             //'email'  => $this->user->email,
             'subtitle' => Str::ucfirst($this->subtitle),
             'about' => Str::ucfirst($this->about),
-            'cv' =>  $this->cv,
+            'cv' => $this->cv,
             'bootcamp' => $this->bootcamp,
             'endDate' => $this->endDate,
-            'linkedin' =>  $this->linkedin,
-            'github' =>  $this->github,
+            'linkedin' => $this->linkedin,
+            'github' => $this->github,
 
         ];
 

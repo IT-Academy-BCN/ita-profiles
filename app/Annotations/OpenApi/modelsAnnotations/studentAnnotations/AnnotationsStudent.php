@@ -21,7 +21,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  *
  * @var int
  *
- *
  * @OA\Property(
  *     property="user_id",
  *     description="ID of the associated User",
@@ -31,7 +30,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  *
  * @var int
  *
- *
  * @OA\Property(
  *     property="subtitle",
  *     description="Presentation subtitle of the Student",
@@ -39,8 +37,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  * )
  *
  * @var string
- *
- *
  *
  * @OA\Property(
  *     property="about",
@@ -50,7 +46,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  *
  * @var string
  *
- *
  * @OA\Property(
  *     property="cv",
  *     description="Curriculum of the Student-file?",
@@ -59,14 +54,11 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  *
  * @var string
  *
- *
  * @OA\Property(
  *     property="bootcamp",
  *     description="Name of the Bootcamp attended by the Student",
  *     type="enum"
  * )
- *
- *
  * @OA\Property(
  *     property="endDate",
  *     description="Student Bootcamp's ending date",
@@ -74,7 +66,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  * )
  *
  * @var date
- *
  *
  * @OA\Property(
  *     property="linkedin",
@@ -84,7 +75,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  *
  * @var string
  *
- *
  * @OA\Property(
  *     property="github",
  *     description="Url of student's github",
@@ -92,7 +82,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  * )
  *
  * @var string
- *
  *
  * @OA\Property(
  *     property="created_at",
@@ -112,4 +101,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  *
  * @var \Illuminate\Support\Carbon
  */
-class AnnotationsStudent {}
+class AnnotationsStudent
+{
+}

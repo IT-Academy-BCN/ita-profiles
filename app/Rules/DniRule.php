@@ -14,8 +14,8 @@ class DniRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!($this->isValidNif(strtoupper($value)) || $this->isValidNie(strtoupper($value)))) {
-            $fail('No és un :Attribute vàlid');
+        if (! ($this->isValidNif(strtoupper($value)) || $this->isValidNie(strtoupper($value)))) {
+            $fail(__('No és un :Attribute vàlid'));
         }
     }
 

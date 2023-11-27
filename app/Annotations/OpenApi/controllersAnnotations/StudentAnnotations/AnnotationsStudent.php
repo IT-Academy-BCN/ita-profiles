@@ -6,21 +6,27 @@ class AnnotationsStudent
 {
     /**
      * Llista de tots els estudiants
+     *
      * @OA\Get (
      *     path="/students",
      *     operationId="getAllStudents",
      *     tags={"Student"},
      *     summary="Get a list of all students.",
      *     description="Get a list of all registered students. Authentication is not required.",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation. Returns a list of registered students.",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(
      *                 type="array",
      *                 property="data",
+     *
      *                 @OA\Items(
      *                     type="object",
+     *
      *                     @OA\Property(property="name",type="string",example="John" ),
      *                     @OA\Property(property="surname", type="string",example="Doe"),
      *                     @OA\Property(property="subtitle",type="string",example="Engineer and Developer" ),
@@ -35,11 +41,14 @@ class AnnotationsStudent
      *         )
      *     )
      * )
-    */
-    public function index() {}
+     */
+    public function index()
+    {
+    }
 
     /**
      * Crea un estudiant
+     *
      * @OA\Post (
      *     path="/students",
      *     operationId="createStudent",
@@ -48,7 +57,9 @@ class AnnotationsStudent
      *     description="Creates a new user student. Authentication is not required.",
      *
      *     @OA\RequestBody(
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="name", type="string", example="John"),
      *              @OA\Property(property="surname", type="string", example="Doe"),
      *              @OA\Property(property="email", type="string", format="email", example="john@example.com"),
@@ -63,7 +74,9 @@ class AnnotationsStudent
      *     @OA\Response(
      *         response=201,
      *         description="Student created successfully. No token is returned.",
+     *
      *         @OA\JsonContent(
+     *
      *              @OA\Property(property="message", type="string", example="Student created successfully.")
      *          )
      *     ),
@@ -94,12 +107,14 @@ class AnnotationsStudent
      *            description="Register was not succesful.Please try it again later."
      *      ),
      * )
-    */
-    public function store() {}
-
+     */
+    public function store()
+    {
+    }
 
     /**
      * Detalls d'un estudiant
+     *
      * @OA\Get (
      *     path="/students/{id}",
      *     operationId="getStudentDetails",
@@ -122,12 +137,16 @@ class AnnotationsStudent
      *      @OA\Response(
      *         response=200,
      *         description="Success. Returns student details.",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(
      *                 type="array",
      *                 property="data",
+     *
      *                 @OA\Items(
      *                     type="object",
+     *
      *                     @OA\Property(property="name", type="string", example="John"),
      *                     @OA\Property(property="surname",type="string", example="Doe"),
      *                     @OA\Property(property="subtitle", type="string", example="Engineer and Developer."),
@@ -147,12 +166,14 @@ class AnnotationsStudent
      *            description="User not found."
      *     ),
      * )
-    */
-    public function show() {}
-
+     */
+    public function show()
+    {
+    }
 
     /**
      * Actualitza les dades d'un estudiant
+     *
      * @OA\Put(
      *      path="/students/{id}",
      *      operationId="updateStudent",
@@ -216,6 +237,7 @@ class AnnotationsStudent
      *          description="Unauthorized. Missing authentication token, admin role, student role, or not matching id.",
      *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="message", type="string", example="Unauthorized.")
      *          )
      *      ),
@@ -225,13 +247,15 @@ class AnnotationsStudent
      *          description="It was not possible to complete transaction.",
      *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="message", type="string", example="Something went wrong. Try it again later.")
      *          )
      *      )
      * )
      */
-    public function update() {}
-
+    public function update()
+    {
+    }
 
     /**
      * @OA\Delete(
@@ -259,6 +283,7 @@ class AnnotationsStudent
      *          description="Student deleted successfully",
      *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="message", type="string", example="Student deleted successfully")
      *          )
      *      ),
@@ -268,6 +293,7 @@ class AnnotationsStudent
      *          description="Unauthorized. Missing authentication token, admin role, student role, or not matching id.",
      *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="message", type="string", example="Unauthorized.")
      *          )
      *      ),
@@ -277,10 +303,13 @@ class AnnotationsStudent
      *          description="It was not possible to complete transaction.",
      *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="message", type="string", example="Something went wrong. Try it again later-")
      *          )
      *      )
      * )
      */
-    public function delete() {}
+    public function delete()
+    {
+    }
 }

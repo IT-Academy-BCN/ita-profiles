@@ -2,30 +2,33 @@
 
 namespace Tests\Feature\Student;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class StudentUpdateTest extends TestCase
 {
-    use RefreshDatabase;
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->artisan('passport:install');
+    }
+
 
     public function verifyOrCreateRolesAndPermissions()
     {
-        if (!Role::where('name', 'student')->exists()) {
+        if (! Role::where('name', 'student')->exists()) {
             $student = Role::create(['name' => 'student']);
         }
 
-        if (!Permission::where('name', 'update.student')->exists()) {
+        if (! Permission::where('name', 'update.student')->exists()) {
             $updateStudent = Permission::create(['name' => 'update.student']);
         }
 
-        $student -> syncPermissions($updateStudent);
-    }
-
+   }
 
     /** @test */
     public function student_data_can_be_updated_by_himself(): void
@@ -33,28 +36,28 @@ class StudentUpdateTest extends TestCase
         $this->verifyOrCreateRolesAndPermissions();
 
         $user = User::create([
-           'name' => 'John',
-           'surname' => 'Doe',
-           'dni' => '53671299V',
-           'email' => 'john@example.com',
-           'password' => bcrypt($password = 'password')
-       ]);
+            'name' => 'John',
+            'surname' => 'Doe',
+            'dni' => '52089182R',
+            'email' => fake()->email(),
+            'password' => bcrypt($password = 'password'),
+        ]);
 
-        $user -> student()->create([
-           'subtitle' => 'Enginyer Informàtic i Programador.',
-           'bootcamp' => 'PHP Developer',
-       ]);
+        $user->student()->create([
+            'subtitle' => 'Enginyer Informàtic i Programador.',
+            'bootcamp' => 'PHP Developer',
+        ]);
 
-        $user -> assignRole('student');
-
-        $response =  $this->post('api/v1/login', [
-         'email' => 'john@example.com',
-         'password' => $password
-       ]);
+        $user->assignRole('student');
+        $this->actingAs($user, 'api');
+        $response = $this->post('api/v1/login', [
+            'email' => fake()->email(),
+            'password' => $password,
+        ]);
 
         $this->assertAuthenticatedAs($user);
 
-        $this->actingAs($user, 'api');
+     
 
         $data = [
             'name' => 'Johnny',
@@ -68,19 +71,18 @@ class StudentUpdateTest extends TestCase
             'github' => 'http://www.github.com/johnnydoe',
         ];
 
-        $response = $this->withHeaders(['Accept' => 'application/json'])->put('api/v1/students/' . $user->student->id, $data);
+        $response = $this->withHeaders(['Accept' => 'application/json'])->put('api/v1/students/'.$user->student->id, $data);
 
-        $user = $user -> fresh();
-        $student = $user -> student -> fresh();
+        $user = $user->fresh();
+        $student = $user->student->fresh();
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/json');
 
-        $this -> assertEquals($user->name, Str::lower($data['name']));
-        $this -> assertEquals($user->email, Str::lower($data['email']));
-        $this -> assertEquals($student->cv, $data['cv']);
+        $this->assertEquals($user->name, Str::lower($data['name']));
+        $this->assertEquals($user->email, Str::lower($data['email']));
+        $this->assertEquals($student->cv, $data['cv']);
     }
-
 
     /** @test */
     public function student_data_cannot_be_updated_by_another_student(): void
@@ -88,33 +90,32 @@ class StudentUpdateTest extends TestCase
         $this->verifyOrCreateRolesAndPermissions();
 
         $user = User::create([
-           'name' => 'John',
-           'surname' => 'Doe',
-           'dni' => '53671299V',
-           'email' => 'john@example.com',
-           'password' => bcrypt($password = 'password')
-       ]);
+            'name' => 'John',
+            'surname' => 'Doe',
+            'dni' => '74542265R',
+            'email' => fake()->email(),
+            'password' => bcrypt($password = 'password'),
+        ]);
 
-        $user -> student()->create([
-           'subtitle' => 'Enginyer Informàtic i Programador.',
-           'bootcamp' => 'PHP Developer',
-       ]);
+        $user->student()->create([
+            'subtitle' => 'Enginyer Informàtic i Programador.',
+            'bootcamp' => 'PHP Developer',
+        ]);
 
-        $user -> assignRole('student');
+        $user->assignRole('student');
 
-        $response =  $this->post('api/v1/login', [
-         'email' => 'john@example.com',
-         'password' => $password
-       ]);
+        $response = $this->post('api/v1/login', [
+            'email' => fake()->email(),
+            'password' => $password,
+        ]);
 
-        $this->assertAuthenticatedAs($user);
 
         $this->actingAs($user, 'api');
 
         $data = [
             'name' => 'Johnny',
             'surname' => 'Doe',
-            'email' => 'johnny@example.com',
+            'email' => fake()->email(),
             'subtitle' => 'Enginyer Informàtic i Programador',
             'bootcamp' => 'PHP Developer',
             'about' => 'Lorem ipsum dolor sit amet.',
@@ -123,13 +124,12 @@ class StudentUpdateTest extends TestCase
             'github' => 'http://www.github.com/johnnydoe',
         ];
 
-        $response = $this->withHeaders(['Accept' => 'application/json'])->put('api/v1/students/2', $data);
+        $response = $this->withHeaders(['Accept' => 'application/json'])->put('api/v1/students/50', $data);
 
-        $user = $user -> fresh();
-        $student = $user -> student -> fresh();
+        $user = $user->fresh();
+        $student = $user->student->fresh();
 
         $response->assertStatus(401);
 
     }
-
 }

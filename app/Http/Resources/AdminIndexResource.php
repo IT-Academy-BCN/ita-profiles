@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
-class StudentListResource extends JsonResource
+class AdminIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,15 +16,12 @@ class StudentListResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
+            'userid' => $this->user->id,
             'name' => Str::ucfirst($this->user->name),
             'surname' => Str::ucfirst($this->user->surname),
-            'subtitle' => Str::ucfirst($this->subtitle),
-            'about ' => Str::ucfirst($this->about),
-            'cv' => $this->cv,
-            'bootcamp' => $this->bootcamp,
-            'endDate' => $this->endDate,
-            'linkedin' => $this->linkedin,
-            'github ' => $this->github,
+            'email' => Str::ucfirst($this->user->email),
+
         ];
     }
 }

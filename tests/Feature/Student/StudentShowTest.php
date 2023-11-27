@@ -2,18 +2,22 @@
 
 namespace Tests\Feature\Student;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use Spatie\Permission\Models\Role;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class StudentShowTest extends TestCase
 {
-    use RefreshDatabase;
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->artisan('passport:install');
+    }
 
     public function verifyOrCreateRole()
     {
-        if (!Role::where('name', 'student')->exists()) {
+        if (! Role::where('name', 'student')->exists()) {
             Role::create(['name' => 'student']);
         }
     }
@@ -26,19 +30,19 @@ class StudentShowTest extends TestCase
         $user = User::create([
             'name' => 'John',
             'surname' => 'Doe',
-            'dni' => '53671299V',
-            'email' => 'john@example.com',
+            'dni' => '71858753Z',
+            'email' => fake()->email(),
             'password' => 'password123',
         ]);
 
-        $user -> student()->create([
+        $user->student()->create([
             'subtitle' => 'Enginyer Informàtic i Programador.',
             'bootcamp' => 'PHP Developer',
         ]);
 
-        $user -> assignRole('student');
+        $user->assignRole('student');
 
-        $response = $this->get('api/v1/students/' . $user->student->id);
+        $response = $this->get('api/v1/students/'.$user->student->id);
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/json');
