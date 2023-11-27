@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {
-    use RefreshDatabase;
+  
 
     public function setUp(): void
     {

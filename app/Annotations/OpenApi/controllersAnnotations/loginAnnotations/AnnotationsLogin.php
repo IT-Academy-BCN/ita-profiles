@@ -6,7 +6,7 @@ class AnnotationsLogin
 {
     /**
      * @OA\Post(
-     *      path="api/v1/login",
+     *      path="/login",
      *      operationId="login",
      *      tags={"Authentication"},
      *      summary="Login",
