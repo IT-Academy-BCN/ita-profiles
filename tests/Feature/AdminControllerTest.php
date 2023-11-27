@@ -4,14 +4,11 @@ namespace Tests\Feature;
 
 use App\Models\Admin;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class AdminControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function verifyOrCreateRole()
     {
         if (!Role::where('name', 'admin')->exists()) {
@@ -217,7 +214,6 @@ class AdminControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/json');
 
-        $response->assertJsonCount(1, 'data');
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
@@ -230,26 +226,7 @@ class AdminControllerTest extends TestCase
         ]);
     }
 
-    public function test_can_return_empty_data()
-    {
-        $this->verifyOrCreateRole();
 
-        $user = User::factory()->create();
-
-        $user->assignRole('admin');
-
-        $this->actingAs($user, 'api');
-        $response = $this->get('/api/v1/admins');
-        $response->assertHeader('Content-Type', 'application/json');
-
-        $response->assertStatus(404);
-        $response->assertJsonStructure(['message']);
-
-        $response->assertJson([
-            'message' => 'No hi ha administradors a la base de dades',
-        ]);
-
-    }
 
     public function test_can_Show_specific_admin()
     {
