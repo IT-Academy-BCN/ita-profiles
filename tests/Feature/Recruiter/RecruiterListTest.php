@@ -8,6 +8,4 @@ use Tests\TestCase;
 class RecruiterListTest extends TestCase
 {
     use RefreshDatabase;
-
-
 }

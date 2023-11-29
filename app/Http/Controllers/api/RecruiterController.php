@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreRecruiterRequest;
 use App\Http\Requests\UpdateRecruiterRequest;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\RecruiterListResource;
 use App\Http\Resources\RecruiterResource;
 use App\Models\Recruiter;
@@ -21,7 +21,7 @@ class RecruiterController extends Controller
 
         $recruitersList = Recruiter::all();
 
-        if (!$recruitersList) {
+        if (! $recruitersList) {
 
             throw new HttpResponseException(response()->json([
                 'message' => __(
@@ -37,10 +37,10 @@ class RecruiterController extends Controller
         }
 
         return response()->json([
-            'data' => RecruiterListResource::collection($recruitersList)], 20);
+            'data' => RecruiterListResource::collection($recruitersList)], 200);
     }
 
-    public function store(StoreRecruiterRequest $request)
+    public function store(UserRequest $request)
     {
 
         $recruiter = DB::transaction(function () use ($request) {
@@ -65,7 +65,7 @@ class RecruiterController extends Controller
 
         });
 
-        if (!$recruiter) {
+        if (! $recruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Registre no efectuat. Si us plau, torna-ho a provar.'
@@ -83,7 +83,7 @@ class RecruiterController extends Controller
 
         $recruiter = Recruiter::where('id', $id)->first();
 
-        if (!$recruiter) {
+        if (! $recruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Usuari no trobat.'
@@ -99,10 +99,14 @@ class RecruiterController extends Controller
     {
 
         $user = Auth::User();
+        /*  $recruiter = User::find($user); */
 
-        $recruiterId = $user->recruiter->id;
+        $recruiter = Recruiter::find($id);
 
-        if ($recruiterId != $id) {
+        if ($recruiter) {
+            return response()->json(['hola' => $recruiter->id], 200);
+        }
+        if ($recruiter != $id) {
             throw new HttpResponseException(
                 response()->json([
                     'message' => __(
@@ -127,7 +131,7 @@ class RecruiterController extends Controller
             return $recruiter;
         });
 
-        if (!$updatedRecruiter) {
+        if (! $updatedRecruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Alguna cosa ha anat malament.  Torna-ho a intentar més tard.'
@@ -161,7 +165,7 @@ class RecruiterController extends Controller
             return true;
         });
 
-        if (!$deletedRecruiter) {
+        if (! $deletedRecruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Alguna cosa ha anat malament. Torna-ho a intenar més tard.'

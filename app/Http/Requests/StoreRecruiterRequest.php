@@ -21,11 +21,11 @@ class StoreRecruiterRequest extends FormRequest
      */
     public function rules(): array
     {
-        $array = [
-            'company' => 'required',
-            'sector' => 'required',
-        ];
+        return [
 
-        return array_merge(parent::rules(), $array);
+            'company' => 'required|string',
+            'sector' => 'required',
+
+        ];
     }
 }
