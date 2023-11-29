@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 class StudentListTest extends TestCase
 {
-
     public function setUp(): void
     {
         parent::setUp();
@@ -17,7 +16,7 @@ class StudentListTest extends TestCase
     }
     public function verifyOrCreateRole()
     {
-        if (! Role::where('name', 'student')->exists()) {
+        if (!Role::where('name', 'student')->exists()) {
             Role::create(['name' => 'student']);
         }
     }
@@ -49,5 +48,5 @@ class StudentListTest extends TestCase
 
     }
 
-    
+
 }

@@ -4,7 +4,6 @@ namespace Tests\Feature\Student;
 
 use App\Models\Student;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -20,11 +19,11 @@ class StudentDeleteTest extends TestCase
 
     public function verifyOrCreateRolesAndPermissions()
     {
-        if (! Role::where('name', 'student')->exists()) {
+        if (!Role::where('name', 'student')->exists()) {
             $student = Role::create(['name' => 'student']);
         }
 
-        if (! Permission::where('name', 'delete.student')->exists()) {
+        if (!Permission::where('name', 'delete.student')->exists()) {
             $deleteStudent = Permission::create(['name' => 'delete.student']);
         }
 
@@ -39,7 +38,7 @@ class StudentDeleteTest extends TestCase
             'name' => 'John',
             'surname' => 'Doe',
             'dni' => '64955736X',
-            'email' => $email =fake()->email(),
+            'email' => $email = fake()->email(),
             'password' => bcrypt($password = 'password'),
         ]);
 
@@ -59,12 +58,12 @@ class StudentDeleteTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $response = $this->withHeaders(['Accept' => 'application/json'])->delete('api/v1/students/'.$user->student->id);
+        $response = $this->withHeaders(['Accept' => 'application/json'])->delete('api/v1/students/' . $user->student->id);
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/json');
-/* 
-        $this->assertCount(0, User::all()); */
+        /*
+                $this->assertCount(0, User::all()); */
         $this->assertCount(0, Student::all());
 
     }
@@ -78,7 +77,7 @@ class StudentDeleteTest extends TestCase
             'name' => 'John',
             'surname' => 'Doe',
             'dni' => '43312254B',
-            'email' => $email =fake()->email(),
+            'email' => $email = fake()->email(),
             'password' => bcrypt($password = 'password'),
         ]);
 
@@ -102,7 +101,7 @@ class StudentDeleteTest extends TestCase
 
         $response->status(401);
 
-   
+
 
     }
 }
