@@ -12,13 +12,13 @@ return new class () extends Migration {
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('restrict')->onUpdate('cascade');
             $table->string('subtitle');
             $table->text('about')->nullable();
             $table->string('cv')->nullable();
-            $table->enum('bootcamp', ['Front end Developer', 'PHP Developer', 'Java Developer', 'Nodejs Developer',
-                'Data Scientists']);
-            $table->date('endDate')->nullable();
+            $table->enum('bootcamp', ['front end Developer', 'php developer', 'java developer', 'nodejs developer',
+                'data scientists']);
+            $table->date('end_date')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('github')->nullable();
             $table->timestamps();

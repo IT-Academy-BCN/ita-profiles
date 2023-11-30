@@ -11,7 +11,501 @@
         }
     ],
     "paths": {
-        "/api/v1/admins": {
+        "/students": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Get a list of all students.",
+                "description": "Get a list of all registered students. Authentication is not required.",
+                "operationId": "getAllStudents",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation. Returns a list of registered students.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "surname": {
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    },
+                                                    "subtitle": {
+                                                        "type": "string",
+                                                        "example": "Engineer and Developer"
+                                                    },
+                                                    "about": {
+                                                        "type": "string",
+                                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                                    },
+                                                    "cv": {
+                                                        "type": "string",
+                                                        "example": "My currículum."
+                                                    },
+                                                    "bootcamp": {
+                                                        "type": "string",
+                                                        "example": "PHP Developer"
+                                                    },
+                                                    "endDate": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "..."
+                                                    },
+                                                    "linkedin": {
+                                                        "type": "string",
+                                                        "example": "http://www.linkedin.com"
+                                                    },
+                                                    "github": {
+                                                        "type": "string",
+                                                        "example": "http://www.github.com"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Create a new Student.",
+                "description": "Creates a new user student. Authentication is not required.",
+                "operationId": "createStudent",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "dni": {
+                                        "type": "string",
+                                        "example": "13954476P"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secretpassword"
+                                    },
+                                    "subtitle": {
+                                        "type": "string",
+                                        "example": "Engineer and Developer."
+                                    },
+                                    "bootcamp": {
+                                        "type": "string",
+                                        "example": "PHP Developer"
+                                    },
+                                    "endDate": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "..."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Student created successfully. No token is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Student created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ],
+                                                "surname": [
+                                                    "The surname field is required."
+                                                ],
+                                                "email": [
+                                                    "The email must be unique."
+                                                ],
+                                                "dni": [
+                                                    "The dni/nie must be unique."
+                                                ],
+                                                "subtitle": [
+                                                    "The subtitle field is required."
+                                                ],
+                                                "bootcamp": [
+                                                    "The bootcamp field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Register was not succesful.Please try it again later."
+                    }
+                }
+            }
+        },
+        "/students/{id}": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Get details of a Student.",
+                "description": "Get the details of a specific student. Authentication is not required.",
+                "operationId": "getStudentDetails",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the student",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success. Returns student details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "surname": {
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    },
+                                                    "subtitle": {
+                                                        "type": "string",
+                                                        "example": "Engineer and Developer."
+                                                    },
+                                                    "about": {
+                                                        "type": "string",
+                                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                                    },
+                                                    "cv": {
+                                                        "type": "string",
+                                                        "example": "My currículum."
+                                                    },
+                                                    "bootcamp": {
+                                                        "type": "string",
+                                                        "example": "PHP Developer"
+                                                    },
+                                                    "endDate": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "..."
+                                                    },
+                                                    "linkedin": {
+                                                        "type": "string",
+                                                        "example": "http://www.linkedin.com"
+                                                    },
+                                                    "github": {
+                                                        "type": "string",
+                                                        "example": "http://www.github.com"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Update a Student.",
+                "description": "Update the details of a specific User. Requires student or admin role and valid token.",
+                "operationId": "updateStudent",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Student to be updated.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "subtitle": {
+                                        "type": "string",
+                                        "example": "Engineer and Full Stack Developer"
+                                    },
+                                    "bootcamp": {
+                                        "type": "enum",
+                                        "example": "PHP Developer"
+                                    },
+                                    "about": {
+                                        "type": "text",
+                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                    },
+                                    "cv": {
+                                        "type": "string",
+                                        "example": "Updated Curriculum."
+                                    },
+                                    "linkedin": {
+                                        "type": "string",
+                                        "example": "http://www.linkedin.com"
+                                    },
+                                    "github": {
+                                        "type": "string",
+                                        "example": "http://www.github.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. Returns Student details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "John"
+                                        },
+                                        "surname": {
+                                            "type": "string",
+                                            "example": "Doe"
+                                        },
+                                        "subtitle": {
+                                            "type": "string",
+                                            "example": "Engineer and Full Stack Developer"
+                                        },
+                                        "bootcamp": {
+                                            "type": "enum",
+                                            "example": "PHP Developer"
+                                        },
+                                        "endDate": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "..."
+                                        },
+                                        "about": {
+                                            "type": "text",
+                                            "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                        },
+                                        "cv": {
+                                            "type": "string",
+                                            "example": "Updated Curriculum."
+                                        },
+                                        "linkedin": {
+                                            "type": "string",
+                                            "example": "http://www.linkedin.com"
+                                        },
+                                        "github": {
+                                            "type": "string",
+                                            "example": "http://www.github.com"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Missing authentication token, admin role, student role, or not matching id.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "It was not possible to complete transaction.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Something went wrong. Try it again later."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Delete a Student.",
+                "description": "Delete a specific Student-User by his ID. Requires student or admin role and valid token.",
+                "operationId": "deleteStudent",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Student to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Student deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Student deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Missing authentication token, admin role, student role, or not matching id.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "It was not possible to complete transaction.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Something went wrong. Try it again later-"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admins": {
             "get": {
                 "tags": [
                     "Admins"
@@ -64,9 +558,7 @@
                         "bearerAuth": []
                     }
                 ]
-            }
-        },
-        "/admins": {
+            },
             "post": {
                 "tags": [
                     "Admins"
@@ -562,6 +1054,65 @@
                 "type": "object",
                 "xml": {
                     "name": "Admin"
+                }
+            },
+            "AnnotationsStudent": {
+                "title": "Student",
+                "description": "Student Model",
+                "properties": {
+                    "id": {
+                        "description": "Student ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "description": "ID of the associated User",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "subtitle": {
+                        "description": "Presentation subtitle of the Student",
+                        "type": "string"
+                    },
+                    "about": {
+                        "description": "Presentation text of the Student",
+                        "type": "string"
+                    },
+                    "cv": {
+                        "description": "Curriculum of the Student-file?",
+                        "type": "string"
+                    },
+                    "bootcamp": {
+                        "description": "Name of the Bootcamp attended by the Student",
+                        "type": "enum"
+                    },
+                    "endDate": {
+                        "description": "Student Bootcamp's ending date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "linkedin": {
+                        "description": "Url of student's linkedin",
+                        "type": "string"
+                    },
+                    "github": {
+                        "description": "Url of student's github",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Creation date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Update date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Student"
                 }
             },
             "AnnotationsUser": {

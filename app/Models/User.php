@@ -16,6 +16,11 @@ class User extends Authenticatable
     use HasRoles;
     use Notifiable;
 
+    protected function getDefaultGuardName(): string
+    {
+        return 'web';
+    }
+
     /**
      * The attributes that are mass assignable.
      *
