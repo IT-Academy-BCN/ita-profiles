@@ -6,7 +6,7 @@ class AnnotationsAdmin
 {
     /**
      * @OA\Get(
-     *      path="/api/v1/admins",
+     *      path="/admins",
      *      operationId="getAllAdmins",
      *      tags={"Admins"},
      *      summary="Get all admins",

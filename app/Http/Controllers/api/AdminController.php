@@ -75,6 +75,7 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         $loggeuser = Auth::user();
+
         $admin = $this->findAdmin($id);
         if ($admin->id !== $loggeuser->admin->id) {
             throw new HttpResponseException(response()->json(['message' => __('No tens permís per modificar aquest usuari')], 401));
