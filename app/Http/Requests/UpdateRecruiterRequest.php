@@ -24,6 +24,9 @@ class UpdateRecruiterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => 'required|string|regex:/^([^0-9]*)$/',
+            'surname' => 'required|string|regex:/^([^0-9]*)$/',
+            'email' => 'required|string|email|max:255|unique:users',
             'company' => 'required',
             'sector' => 'required',
         ];

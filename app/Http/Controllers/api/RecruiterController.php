@@ -99,19 +99,13 @@ class RecruiterController extends Controller
     {
 
         $user = Auth::User();
-        /*  $recruiter = User::find($user); */
 
-        $recruiter = Recruiter::find($id);
+        $recruiterID = $user->recruiter->id;
 
-        if ($recruiter) {
-            return response()->json(['hola' => $recruiter->id], 200);
-        }
-        if ($recruiter != $id) {
+        if ($recruiterID != $id) {
             throw new HttpResponseException(
                 response()->json([
-                    'message' => __(
-                        'No autorizat'
-                    )], 401)
+                    'message' => __('No autoritzat')], 401)
             );
         }
 
@@ -124,23 +118,24 @@ class RecruiterController extends Controller
             $recruiter->user->email = Str::lower($request->email);
             $recruiter->company = $request->company;
             $recruiter->sector = $request->sector;
-
             $recruiter->user->save();
             $recruiter->save();
 
             return $recruiter;
         });
 
-        if (! $updatedRecruiter) {
-            throw new HttpResponseException(response()->json([
-                'message' => __(
-                    'Alguna cosa ha anat malament.  Torna-ho a intentar més tard.'
-                )], 404));
+        if (!$updatedRecruiter) {
+            throw new HttpResponseException(response()->json(['message' => __('Alguna cosa ha anat malament.
+            Torna-ho a intentar més tard.')], 404));
         }
 
-        return response()->json([
-            'data' => RecruiterResource::make($updatedRecruiter)], 200);
+        return response()->json(
+            [
+                'data' => RecruiterResource::make($updatedRecruiter)],
+            200
+        );
     }
+    
 
     public function destroy($id)
     {
