@@ -57,6 +57,4 @@ namespace App\Annotations\OpenApi\modelsAnnotations\recruiterAnnotations;
  *
  * @var \Illuminate\Support\Carbon
  */
-class AnnotationsRecruiter
-{
-}
+class AnnotationsRecruiter {}

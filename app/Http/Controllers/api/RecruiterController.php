@@ -21,7 +21,7 @@ class RecruiterController extends Controller
 
         $recruitersList = Recruiter::all();
 
-        if (! $recruitersList) {
+        if (!$recruitersList) {
 
             throw new HttpResponseException(response()->json([
                 'message' => __(
@@ -65,7 +65,7 @@ class RecruiterController extends Controller
 
         });
 
-        if (! $recruiter) {
+        if (!$recruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Registre no efectuat. Si us plau, torna-ho a provar.'
@@ -83,7 +83,7 @@ class RecruiterController extends Controller
 
         $recruiter = Recruiter::where('id', $id)->first();
 
-        if (! $recruiter) {
+        if (!$recruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Usuari no trobat.'
@@ -159,7 +159,7 @@ class RecruiterController extends Controller
             return true;
         });
 
-        if (! $deletedRecruiter) {
+        if (!$deletedRecruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Alguna cosa ha anat malament. Torna-ho a intenar més tard.'

@@ -34,14 +34,17 @@ Route::middleware('auth:api')->group(function () {
     //Student
     Route::put('/students/{id}', [StudentController::class, 'update'])->middleware('can:update.student')->name('student.update');
     Route::delete('/students/{id}', [StudentController::class, 'destroy'])->middleware('can:delete.student')->name('student.delete');
+    //Recruiter
+    Route::put('/recruiters/{id}', [RecruiterController::class, 'update'])->name('recruiter.update');
+    Route::delete('/recruiters/{id}', [RecruiterController::class, 'destroy'])->name('recruiter.delete');
     //Admin
     Route::get('/admins/{id}', [AdminController::class, 'show'])->middleware('role:admin')->name('admin.show');
     Route::put('/admins/{id}', [AdminController::class, 'update'])->middleware('role:admin')->name('admin.update');
     Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->middleware('role:admin')->name('admin.destroy');
     Route::get('/admins', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
-    //Student
-    Route::put('/recruiters/{id}', [RecruiterController::class, 'update'])->name('recruiter.update');
-    Route::delete('/recruiters/{id}', [RecruiterController::class, 'destroy'])->name('recruiter.delete');
+
+    //Recruiter
+ 
     //logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
