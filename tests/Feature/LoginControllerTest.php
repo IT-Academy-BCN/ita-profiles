@@ -17,12 +17,12 @@ class LoginControllerTest extends TestCase
     public function test_Login_Success()
     {
         $user = User::factory()->create([
-            'email' => 'pruebalogin@test.com',
+            'dni' => '28386914S',
             'password' => bcrypt('password123'),
         ]);
 
         $requestData = [
-            'email' => 'pruebalogin@test.com',
+            'dni' => '28386914S',
             'password' => 'password123',
         ];
 
@@ -35,11 +35,11 @@ class LoginControllerTest extends TestCase
     public function test_a_user_can_login_with_short_password()
     {
         $user = User::factory()->create([
-            'email' => fake()->email(),
+            'dni' => 'Z0038540C',
             'password' => '12345678',
         ]);
         $credentials = [
-            'email' => 'jose@gmail.com',
+            'dni' => '28386914S',
             'password' => '123456',
         ];
 
@@ -49,20 +49,20 @@ class LoginControllerTest extends TestCase
 
     }
 
-    public function test_a_user_can_login_with_not_email()
+    public function test_a_user_can_login_with_not_dni()
     {
         $user = User::factory()->create();
         $credentials = [
-            'email',
+            'dni',
             'password' => '12345678',
         ];
 
         $response = $this->json('POST', '/api/v1/login');
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['email', 'password'])
+            ->assertJsonValidationErrors(['dni', 'password'])
             ->assertJson([
                 'errors' => [
-                    'email' => [__('El camp adreça electrònica és obligatori.')],
+                    'dni' => [__('El camp dni és obligatori.')],
                     'password' => [__('El camp contrasenya és obligatori.')],
                 ],
             ]);
@@ -72,13 +72,13 @@ class LoginControllerTest extends TestCase
     public function test_login_failure_bad_data()
     {
         $response = $this->post('/api/v1/login', [
-            'email' => 'invalid@example.com',
+            'dni' => 'Z0038540C',
             'password' => 'wrongpassword',
         ]);
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => __('Email o contrasenya incorrecte'),
+            'message' => __('Dni-Nie o contrasenya incorrecte'),
         ]);
 
     }

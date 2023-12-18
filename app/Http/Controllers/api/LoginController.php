@@ -13,7 +13,7 @@ class LoginController extends Controller
     {
 
         $data = [
-            'email' => $request->email,
+            'dni' => $request->dni,
             'password' => $request->password,
         ];
 
@@ -25,7 +25,7 @@ class LoginController extends Controller
             return response()->json(['message' => __('Autenticació amb èxit. Benvingut'), 'name' => $user->name, 'token' => $token], 200);
         }
 
-        throw new HttpResponseException(response()->json(['message' => __('Email o contrasenya incorrecte')], 401));
+        throw new HttpResponseException(response()->json(['message' => __('Dni-Nie o contrasenya incorrecte')], 401));
     }
 
     public function logout()
