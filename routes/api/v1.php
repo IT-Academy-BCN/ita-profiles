@@ -44,7 +44,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/admins', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
 
     //Recruiter
- 
+
     //logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

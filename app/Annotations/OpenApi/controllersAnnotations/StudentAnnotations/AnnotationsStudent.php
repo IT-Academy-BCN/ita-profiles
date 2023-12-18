@@ -42,9 +42,7 @@ class AnnotationsStudent
      *     )
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * Crea un estudiant
@@ -108,9 +106,7 @@ class AnnotationsStudent
      *      ),
      * )
      */
-    public function store()
-    {
-    }
+    public function store() {}
 
     /**
      * Detalls d'un estudiant
@@ -167,9 +163,7 @@ class AnnotationsStudent
      *     ),
      * )
      */
-    public function show()
-    {
-    }
+    public function show() {}
 
     /**
      * Actualitza les dades d'un estudiant
@@ -253,9 +247,7 @@ class AnnotationsStudent
      *      )
      * )
      */
-    public function update()
-    {
-    }
+    public function update() {}
 
     /**
      * @OA\Delete(
@@ -309,7 +301,5 @@ class AnnotationsStudent
      *      )
      * )
      */
-    public function delete()
-    {
-    }
+    public function delete() {}
 }

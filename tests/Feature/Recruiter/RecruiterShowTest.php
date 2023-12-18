@@ -10,7 +10,7 @@ class RecruiterShowTest extends TestCase
 {
     public function verifyOrCreate()
     {
-        if (! Role::where('name', 'recruiter')) {
+        if (!Role::where('name', 'recruiter')) {
             Role::create(['name' => 'recruiter']);
         }
     }

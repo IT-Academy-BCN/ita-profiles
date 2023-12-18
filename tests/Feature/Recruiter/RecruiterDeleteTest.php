@@ -10,7 +10,7 @@ class RecruiterDeleteTest extends TestCase
 {
     private function verifyOrCreateRole()
     {
-        if (! Role::where('name', 'recruiter')->exists()) {
+        if (!Role::where('name', 'recruiter')->exists()) {
             Role::create(['name' => 'recruiter']);
         }
     }

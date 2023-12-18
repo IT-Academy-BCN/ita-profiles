@@ -17,7 +17,7 @@ class RecruiterUpdateTest extends TestCase
 
     public function verifyOrCreateRole()
     {
-        if (! Role::where('name', 'recruiter')->exists()) {
+        if (!Role::where('name', 'recruiter')->exists()) {
             Role::create(['name' => 'recruiter']);
 
         }

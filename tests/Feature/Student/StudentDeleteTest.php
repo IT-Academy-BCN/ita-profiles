@@ -19,11 +19,11 @@ class StudentDeleteTest extends TestCase
 
     public function verifyOrCreateRolesAndPermissions()
     {
-        if (! Role::where('name', 'student')->exists()) {
+        if (!Role::where('name', 'student')->exists()) {
             $student = Role::create(['name' => 'student']);
         }
 
-        if (! Permission::where('name', 'delete.student')->exists()) {
+        if (!Permission::where('name', 'delete.student')->exists()) {
             $deleteStudent = Permission::create(['name' => 'delete.student']);
         }
 
@@ -58,7 +58,7 @@ class StudentDeleteTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $response = $this->withHeaders(['Accept' => 'application/json'])->delete('api/v1/students/'.$user->student->id);
+        $response = $this->withHeaders(['Accept' => 'application/json'])->delete('api/v1/students/' . $user->student->id);
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/json');
