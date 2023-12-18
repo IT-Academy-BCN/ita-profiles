@@ -15,10 +15,10 @@ class RecruiterResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->user->name,
-            'surname' => $this->user->surname,
-            'company' => $this->company,
-            'sector' => $this->sector,
+            'name' => ucwords($this->user->name),
+            'surname' => ucwords($this->user->surname),
+            'company' => ucwords($this->company),
+            'sector' => ucwords($this->sector),
         ];
     }
 }

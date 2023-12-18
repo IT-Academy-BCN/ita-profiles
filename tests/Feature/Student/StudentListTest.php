@@ -14,9 +14,10 @@ class StudentListTest extends TestCase
 
         $this->artisan('passport:install');
     }
+
     public function verifyOrCreateRole()
     {
-        if (!Role::where('name', 'student')->exists()) {
+        if (! Role::where('name', 'student')->exists()) {
             Role::create(['name' => 'student']);
         }
     }
@@ -47,6 +48,4 @@ class StudentListTest extends TestCase
         $response->assertHeader('Content-Type', 'application/json');
 
     }
-
-
 }

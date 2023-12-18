@@ -17,9 +17,9 @@ class RecruiterListResource extends JsonResource
         return [
             'user_id' => $this->user->id,
             'id' => $this->id,
-            'name' => $this->user->name,
-            'surname' => $this->user->surname,
-            'company' => $this->company,
+            'name' => ucwords($this->user->name),
+            'surname' => ucwords($this->user->surname),
+            'company' => ucwords($this->company),
             'sector' => $this->sector,
         ];
     }

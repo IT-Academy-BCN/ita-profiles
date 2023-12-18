@@ -124,7 +124,7 @@ class RecruiterController extends Controller
             return $recruiter;
         });
 
-        if (!$updatedRecruiter) {
+        if (! $updatedRecruiter) {
             throw new HttpResponseException(response()->json(['message' => __('Alguna cosa ha anat malament.
             Torna-ho a intentar més tard.')], 404));
         }
@@ -135,7 +135,6 @@ class RecruiterController extends Controller
             200
         );
     }
-    
 
     public function destroy($id)
     {

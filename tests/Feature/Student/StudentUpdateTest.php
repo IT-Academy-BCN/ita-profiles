@@ -17,14 +17,13 @@ class StudentUpdateTest extends TestCase
         $this->artisan('passport:install');
     }
 
-
     public function verifyOrCreateRolesAndPermissions()
     {
-        if (!Role::where('name', 'student')->exists()) {
+        if (! Role::where('name', 'student')->exists()) {
             $student = Role::create(['name' => 'student']);
         }
 
-        if (!Permission::where('name', 'update.student')->exists()) {
+        if (! Permission::where('name', 'update.student')->exists()) {
             $updateStudent = Permission::create(['name' => 'update.student']);
         }
 
@@ -57,8 +56,6 @@ class StudentUpdateTest extends TestCase
 
         $this->assertAuthenticatedAs($user);
 
-
-
         $data = [
             'name' => 'Johnny',
             'surname' => 'Doe',
@@ -71,7 +68,7 @@ class StudentUpdateTest extends TestCase
             'github' => 'http://www.github.com/johnnydoe',
         ];
 
-        $response = $this->withHeaders(['Accept' => 'application/json'])->put('api/v1/students/' . $user->student->id, $data);
+        $response = $this->withHeaders(['Accept' => 'application/json'])->put('api/v1/students/'.$user->student->id, $data);
 
         $user = $user->fresh();
         $student = $user->student->fresh();
@@ -108,7 +105,6 @@ class StudentUpdateTest extends TestCase
             'email' => fake()->email(),
             'password' => $password,
         ]);
-
 
         $this->actingAs($user, 'api');
 

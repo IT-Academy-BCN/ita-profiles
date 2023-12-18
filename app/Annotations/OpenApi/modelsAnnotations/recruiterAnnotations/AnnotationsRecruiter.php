@@ -18,7 +18,9 @@ namespace App\Annotations\OpenApi\modelsAnnotations\recruiterAnnotations;
  *     type="integer",
  *     format="int64"
  * )
+ *
  * @var int
+ *
  * @OA\Property(
  *     property="company",
  *     description="Recruiter Company",
