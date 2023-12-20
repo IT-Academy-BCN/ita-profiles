@@ -101,4 +101,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  *
  * @var \Illuminate\Support\Carbon
  */
-class AnnotationsStudent {}
+class AnnotationsStudent
+{
+}

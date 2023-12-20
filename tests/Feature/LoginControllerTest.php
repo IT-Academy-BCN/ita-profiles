@@ -2,10 +2,9 @@
 
 namespace Tests\Feature;
 
-
 use App\Models\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {
