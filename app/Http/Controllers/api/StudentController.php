@@ -20,7 +20,7 @@ class StudentController extends Controller
     {
         $studentsList = Student::all();
 
-        if (! $studentsList) {
+        if (!$studentsList) {
 
             throw new HttpResponseException(response()->json([
                 'message' => __(
@@ -69,7 +69,7 @@ class StudentController extends Controller
 
         });
 
-        if (! $student) {
+        if (!$student) {
             throw new HttpResponseException(response()->json(
                 [
                     'message' => __('Registre no efectuat. Si-us-plau, torna-ho a provar.')],
@@ -92,7 +92,7 @@ class StudentController extends Controller
 
         $student = Student::where('id', $id)->first();
 
-        if (! $student) {
+        if (!$student) {
             throw new HttpResponseException(response()->json(['message' => __('Usuari no trobat.')], 404));
         }
 
@@ -137,7 +137,7 @@ class StudentController extends Controller
             return $student;
         });
 
-        if (! $updatedStudent) {
+        if (!$updatedStudent) {
             throw new HttpResponseException(response()->json(['message' => __('Alguna cosa ha anat malament.
             Torna-ho a intentar més tard.')], 404));
         }
@@ -172,7 +172,7 @@ class StudentController extends Controller
             return true;
         });
 
-        if (! $deleteStudent) {
+        if (!$deleteStudent) {
             throw new HttpResponseException(response()->json(['message' => __('Alguna cosa ha anat malament.
             Torna-ho a intentar més tard.')], 404));
         }
