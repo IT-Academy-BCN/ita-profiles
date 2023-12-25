@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\DniRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use App\Rules\DniRule;
 
 class LoginRequest extends FormRequest
 {

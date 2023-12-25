@@ -3,10 +3,13 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -16,46 +19,40 @@ class LoginControllerTest extends TestCase
 
     public function test_Login_Success()
     {
-        $user = User::factory()->create([
+        User::factory()->create([
             'dni' => '28386914S',
             'password' => bcrypt('password123'),
         ]);
 
-        $requestData = [
+        $credentials = [
             'dni' => '28386914S',
             'password' => 'password123',
         ];
 
-        $response = $this->json('POST', '/api/v1/login', $requestData);
+        $response = $this->post(route('login'), $credentials);
 
         $response->assertStatus(200)->assertJsonStructure(['token']);
-
     }
 
-    public function test_a_user_can_login_with_short_password()
+    public function test_a_user_cannot_login_with_short_password()
     {
-        $user = User::factory()->create([
+        User::factory()->create([
             'dni' => 'Z0038540C',
             'password' => '12345678',
         ]);
         $credentials = [
-            'dni' => '28386914S',
+            'dni' => 'Z0038540C',
             'password' => '123456',
         ];
 
-        $response = $this->json('POST', '/api/v1/login', $credentials);
+        $response = $this->post(route('login'), $credentials);
 
         $response->assertStatus(422);
-
     }
 
-    public function test_a_user_can_login_with_not_dni()
+    public function test_a_user_cannot_login_without_dni_neither_passport()
     {
-        $user = User::factory()->create();
-        $credentials = [
-            'dni',
-            'password' => '12345678',
-        ];
+        User::factory()->create();
 
         $response = $this->json('POST', '/api/v1/login');
         $response->assertStatus(422)
@@ -66,12 +63,11 @@ class LoginControllerTest extends TestCase
                     'password' => [__('El camp contrasenya és obligatori.')],
                 ],
             ]);
-
     }
 
     public function test_login_failure_bad_data()
     {
-        $response = $this->post('/api/v1/login', [
+        $response = $this->post(route('login'), [
             'dni' => 'Z0038540C',
             'password' => 'wrongpassword',
         ]);
@@ -80,7 +76,6 @@ class LoginControllerTest extends TestCase
         $response->assertJson([
             'message' => __('Dni-Nie o contrasenya incorrecte'),
         ]);
-
     }
 
     public function test_can_logout()
@@ -100,7 +95,7 @@ class LoginControllerTest extends TestCase
     public function test_logout_no_auth()
     {
 
-        $user = User::factory()->create();
+        User::factory()->create();
 
         $response = $this->postJson('/api/v1/logout');
 
