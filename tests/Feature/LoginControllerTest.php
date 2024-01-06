@@ -29,7 +29,7 @@ class LoginControllerTest extends TestCase
             'password' => 'password123',
         ];
 
-        $response = $this->post(route('login'), $credentials);
+        $response = $this->postJson(route('login'), $credentials);
 
         $response->assertStatus(200)->assertJsonStructure(['token']);
     }
@@ -45,7 +45,7 @@ class LoginControllerTest extends TestCase
             'password' => '123456',
         ];
 
-        $response = $this->post(route('login'), $credentials);
+        $response = $this->postJson(route('login'), $credentials);
 
         $response->assertStatus(422);
     }
@@ -54,7 +54,7 @@ class LoginControllerTest extends TestCase
     {
         User::factory()->create();
 
-        $response = $this->json('POST', '/api/v1/login');
+        $response =$this->postJson(route('login'));
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['dni', 'password'])
             ->assertJson([
@@ -74,7 +74,7 @@ class LoginControllerTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson([
-            'message' => __('Dni-Nie o contrasenya incorrecte'),
+            'message' => __('Credencials invàlides, comprova-les i torneu a iniciar sessió'),
         ]);
     }
 
@@ -83,7 +83,7 @@ class LoginControllerTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user, 'api');
 
-        $response = $this->postJson('/api/v1/logout');
+        $response =$this->postJson(route('logout'));
 
         $response->assertStatus(200);
 
@@ -97,7 +97,7 @@ class LoginControllerTest extends TestCase
 
         User::factory()->create();
 
-        $response = $this->postJson('/api/v1/logout');
+        $response = $this->postJson(route('logout'));
 
         $response->assertStatus(401);
 

@@ -25,8 +25,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dni' => ['required', new DniRule()],
-            'password' => 'required|min:8',
+            'dni' => ['required','string', new DniRule()],
+            'password' => 'required|min:8|string',
         ];
     }
 

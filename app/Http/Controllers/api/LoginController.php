@@ -4,29 +4,42 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+
+
 
 class LoginController extends Controller
 {
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request) 
     {
+        try {
+            $credentials = $request->only('dni', 'password');
 
-        $data = [
-            'dni' => $request->dni,
-            'password' => $request->password,
-        ];
-
-        if (Auth::attempt($data)) {
-            $user = Auth::user();
-            /** @var \App\Models\User $user * */
+           $user= $this->verifyUser($credentials);
             $token = $user->createToken('auth_token')->accessToken;
 
-            return response()->json(['message' => __('Autenticació amb èxit. Benvingut'), 'name' => $user->name, 'token' => $token], 200);
-        }
+            return response()->json([
+                'message' => __('Autenticació amb èxit. Benvingut'),
+                'name' => ucwords($user->name),
+                'token' => $token
+            ], 200);
 
-        throw new HttpResponseException(response()->json(['message' => __('Dni-Nie o contrasenya incorrecte')], 401));
+        } catch (Exception $ex) {
+            return response()->json(['message' => __($ex->getMessage())], 401);
+        }
     }
+
+    private function verifyUser(array $credentials) {
+
+        if (!Auth::attempt($credentials)) {
+            throw new Exception(('Credencials invàlides, comprova-les i torneu a iniciar sessió'));
+           
+        } 
+        return Auth::user();
+    }
+
+   
 
     public function logout()
     {
