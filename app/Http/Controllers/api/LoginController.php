@@ -7,16 +7,14 @@ use App\Http\Requests\LoginRequest;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
-
-
 class LoginController extends Controller
 {
-    public function login(LoginRequest $request) 
+    public function login(LoginRequest $request)
     {
         try {
             $credentials = $request->only('dni', 'password');
 
-           $user= $this->verifyUser($credentials);
+            $user = $this->verifyUser($credentials);
             $token = $user->createToken('auth_token')->accessToken;
 
             return response()->json([
@@ -30,16 +28,17 @@ class LoginController extends Controller
         }
     }
 
-    private function verifyUser(array $credentials) {
+    private function verifyUser(array $credentials)
+    {
 
         if (!Auth::attempt($credentials)) {
             throw new Exception(('Credencials invàlides, comprova-les i torneu a iniciar sessió'));
-           
-        } 
+
+        }
         return Auth::user();
     }
 
-   
+
 
     public function logout()
     {

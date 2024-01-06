@@ -54,7 +54,7 @@ class LoginControllerTest extends TestCase
     {
         User::factory()->create();
 
-        $response =$this->postJson(route('login'));
+        $response = $this->postJson(route('login'));
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['dni', 'password'])
             ->assertJson([
@@ -83,7 +83,7 @@ class LoginControllerTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user, 'api');
 
-        $response =$this->postJson(route('logout'));
+        $response = $this->postJson(route('logout'));
 
         $response->assertStatus(200);
 
