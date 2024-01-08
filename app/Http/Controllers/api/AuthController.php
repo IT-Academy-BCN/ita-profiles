@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     public function login(LoginRequest $request) 
     {
@@ -33,7 +33,7 @@ class LoginController extends Controller
     private function verifyUser(array $credentials) {
 
         if (!Auth::attempt($credentials)) {
-            throw new Exception(('Credencials invàlides, comprova-les i torneu a iniciar sessió'));
+            throw new Exception(__('Credencials invàlides, comprova-les i torneu a iniciar sessió'));
            
         } 
         return Auth::user();

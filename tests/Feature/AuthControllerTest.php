@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class LoginControllerTest extends TestCase
+class AuthControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
