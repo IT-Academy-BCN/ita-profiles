@@ -25,8 +25,10 @@ class AuthController extends Controller
             ], 200);
 
         } catch (Exception $validationException) {
-            return response()->json(['message' => __($validationException->getMessage())], $validationException->getCode()
-        );
+            return response()->json(
+                ['message' => __($validationException->getMessage())],
+                $validationException->getCode()
+            );
         }
     }
 
