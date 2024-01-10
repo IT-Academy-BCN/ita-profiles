@@ -4,6 +4,7 @@ use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
+use App\Http\Controllers\api\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +43,9 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/admins/{id}', [AdminController::class, 'update'])->middleware('role:admin')->name('admin.update');
     Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->middleware('role:admin')->name('admin.destroy');
     Route::get('/admins', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
+
+    //Tags
+    Route::get('/tags', [TagController::class, 'index'])->middleware('role:admin')->name('tag.index');
 
     //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
