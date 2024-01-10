@@ -32,7 +32,7 @@ class RecruiterDeleteTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $response = $this->deleteJson("/api/v1/recruiters/{$recruiter->id}");
+        $response = $this->deleteJson(route('recruiter.delete', ['id' => $recruiter->id]));
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertStatus(200);
 
@@ -57,7 +57,7 @@ class RecruiterDeleteTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $response = $this->deleteJson("/api/v1/recruiters/{$fakeId}");
+        $response = $this->deleteJson(route('recruiter.delete', ['id' => $fakeId]));
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertStatus(401);
 

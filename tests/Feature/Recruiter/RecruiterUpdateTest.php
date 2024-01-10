@@ -42,16 +42,17 @@ class RecruiterUpdateTest extends TestCase
             'sector' => 'TOC', ];
         $this->actingAs($user, 'api');
         $idRecruiter = $user->recruiter->id;
-        $response = $this->put("/api/v1/recruiters/{$idRecruiter}", $data);
+   
+        $response = $this->put(route('recruiter.update',[$idRecruiter]), $data);
+
         $user = $user->fresh();
-        $recruiter = $user->recruiter->fresh();
+        $user->recruiter->fresh();
         $this->assertEquals(ucfirst($user->name), $data['name']);
         $this->assertEquals(ucfirst($user->surname), $data['surname']);
         $this->assertEquals(ucfirst($user->recruiter->company), ucfirst($data['company']));
         $this->assertEquals(ucfirst($user->recruiter->sector), $data['sector']);
 
         $response->assertHeader('Content-Type', 'application/json');
-
         $response->assertStatus(200);
 
     }
@@ -80,13 +81,14 @@ class RecruiterUpdateTest extends TestCase
             'company' => 'prueba update',
             'sector' => 'TOC', ];
         $this->actingAs($user, 'api');
-        $idRecruiter = $user->recruiter->id;
-        $response = $this->put("/api/v1/recruiters/{$fakeID}", $data);
+        $response = $this->put(route('recruiter.update',[$fakeID]), $data);
 
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertJson([
-            'message' => 'No autoritzat',
+            'message' => 'Usuari no autenticat',
         ]);
+
+        $response->assertUnauthorized();
 
         $response->assertStatus(401);
     }

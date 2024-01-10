@@ -44,10 +44,11 @@ class RecruiterRegisterTest extends TestCase
             'sector' => 'Telefonia',
         ];
 
-        $response = $this->post('/api/v1/recruiters', $userData);
+        $response = $this->postJson(route('recruiter.create'), $userData);
         $response->assertHeader('Content-Type', 'application/json');
 
         $response->assertStatus(201);
+        $response->assertCreated();
 
         $this->assertDatabaseHas('users', [
             'name' => $userData['name'],
@@ -83,7 +84,7 @@ class RecruiterRegisterTest extends TestCase
             'company' => 'Apple',
             'sector' => 'Telefonia',
         ];
-        $response = $this->post('/api/v1/recruiters', $userData);
+        $response = $this->postJson(route('recruiter.create'), $userData);
         $response->assertHeader('Content-Type', 'application/json')->assertStatus(422)->assertJson([
             'errors' => [
                 'email' => [
