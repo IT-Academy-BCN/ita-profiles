@@ -4,24 +4,23 @@ namespace Tests\Feature\Recruiter;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class RecruiterListTest extends TestCase
 {
-  use DatabaseTransactions;
+    use DatabaseTransactions;
 
-   
+
     public function test_it_returns_a_list_of_recruiters()
     {
-    
+
         $user = User::factory()->create();
         $user->recruiter()->create([
             'company' => fake()->name(),
             'sector' => 'TIC',
         ]);
         $user->assignRole('recruiter');
-       
+
         $response = $this->getJson(route('recruiter.list'));
 
         $response->assertStatus(200);

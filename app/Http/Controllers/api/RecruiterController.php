@@ -16,27 +16,26 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-
 class RecruiterController extends Controller
 {
     public function index()
     {
-        try{
+        try {
             $recruitersList = Recruiter::all();
 
             if ($recruitersList->isEmpty()) {
-    
-                throw new ModelNotFoundException( __(   'No hi ha reclutadors a la base de dades.'));
-    
+
+                throw new ModelNotFoundException(__('No hi ha reclutadors a la base de dades.'));
+
             }
-            
+
             return response()->json([
                 'data' => RecruiterListResource::collection($recruitersList)], 200);
 
-        }catch(ModelNotFoundException $modelNotFoundException){
-            return response()->json(['message' => $modelNotFoundException->getMessage()],404);
+        } catch(ModelNotFoundException $modelNotFoundException) {
+            return response()->json(['message' => $modelNotFoundException->getMessage()], 404);
         }
-        
+
     }
 
     public function store(UserRequest $request)
@@ -79,36 +78,36 @@ class RecruiterController extends Controller
 
     public function show($id)
     {
-            try{
-                $recruiter = Recruiter::where('id', $id)->first();
+        try {
+            $recruiter = Recruiter::where('id', $id)->first();
 
-        if (!$recruiter) {
-            throw new ModelNotFoundException(__('Usuari no trobat.'));
-        }
-
-        return response()->json([
-            'data' => RecruiterResource::make($recruiter)], 200);
-
-            }catch(ModelNotFoundException $recruiterNotFound){
-                return response()->json(['message' => $recruiterNotFound->getMessage()],404);
+            if (!$recruiter) {
+                throw new ModelNotFoundException(__('Usuari no trobat.'));
             }
+
+            return response()->json([
+                'data' => RecruiterResource::make($recruiter)], 200);
+
+        } catch(ModelNotFoundException $recruiterNotFound) {
+            return response()->json(['message' => $recruiterNotFound->getMessage()], 404);
+        }
     }
 
     public function update(UpdateRecruiterRequest $request, $id)
     {
-        try{
-          
+        try {
+
             $user = Auth::User();
-          
+
             $recruiterId = $user->recruiter->id;
-    
+
             if ($recruiterId != $id) {
-                throw new UserNotAuthenticatedException( __('Usuari no autenticat'));
-                
+                throw new UserNotAuthenticatedException(__('Usuari no autenticat'));
+
             }
-       
+
             $updatedRecruiter = DB::transaction(function () use ($request, $id) {
-    
+
                 $recruiter = Recruiter::where('id', $id)->first();
                 $recruiter->user->name = Str::lower($request->name);
                 $recruiter->user->surname = Str::lower($request->surname);
@@ -117,51 +116,51 @@ class RecruiterController extends Controller
                 $recruiter->sector = $request->sector;
                 $recruiter->user->save();
                 $recruiter->save();
-    
+
                 return $recruiter;
             });
-    
+
             if (!$updatedRecruiter) {
                 throw new HttpResponseException(response()->json(['message' => __('Alguna cosa ha anat malament.
                 Torna-ho a intentar més tard.')], 404));
             }
-    
+
             return response()->json(
                 [
                     'data' => RecruiterResource::make($updatedRecruiter)],
                 200
             );
-        }catch(UserNotAuthenticatedException $userNotAuth){
+        } catch(UserNotAuthenticatedException $userNotAuth) {
 
-            return response()->json(['message' => $userNotAuth->getMessage()], $userNotAuth->getHttpCode() );
+            return response()->json(['message' => $userNotAuth->getMessage()], $userNotAuth->getHttpCode());
 
         }
 
-       
+
     }
 
     public function destroy($id)
     {
-        try{
+        try {
 
             $user = Auth::User();
 
             $recruiterId = $user->recruiter->id;
-    
+
             if ($recruiterId != $id) {
-                throw new UserNotAuthenticatedException( __('Usuari no autenticat'));
-                
+                throw new UserNotAuthenticatedException(__('Usuari no autenticat'));
+
             }
-    
+
             $deletedRecruiter = DB::transaction(function () use ($id) {
                 $recruiter = Recruiter::where('id', $id)->first();
                 $user = $recruiter->user;
                 $recruiter->delete();
                 $user->delete();
-    
+
                 return true;
             });
-    
+
             if (!$deletedRecruiter) {
                 throw new HttpResponseException(response()->json([
                     'message' => __(
@@ -173,14 +172,14 @@ class RecruiterController extends Controller
                 'message' => __(
                     "T'has donat de baixa com a reclutador d'It Profiles."
                 )], 200);
-        }catch(UserNotAuthenticatedException $authException){
-            return response()->json(['message' => $authException->getMessage()], $authException->getHttpCode() );
+        } catch(UserNotAuthenticatedException $authException) {
+            return response()->json(['message' => $authException->getMessage()], $authException->getHttpCode());
 
         }
-       
 
-     
+
+
     }
-    
-    
+
+
 }

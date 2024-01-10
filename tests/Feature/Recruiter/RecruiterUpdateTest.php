@@ -42,8 +42,8 @@ class RecruiterUpdateTest extends TestCase
             'sector' => 'TOC', ];
         $this->actingAs($user, 'api');
         $idRecruiter = $user->recruiter->id;
-   
-        $response = $this->put(route('recruiter.update',[$idRecruiter]), $data);
+
+        $response = $this->put(route('recruiter.update', [$idRecruiter]), $data);
 
         $user = $user->fresh();
         $user->recruiter->fresh();
@@ -81,7 +81,7 @@ class RecruiterUpdateTest extends TestCase
             'company' => 'prueba update',
             'sector' => 'TOC', ];
         $this->actingAs($user, 'api');
-        $response = $this->put(route('recruiter.update',[$fakeID]), $data);
+        $response = $this->put(route('recruiter.update', [$fakeID]), $data);
 
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertJson([
