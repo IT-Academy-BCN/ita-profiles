@@ -48,6 +48,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/tags', [TagController::class, 'index'])->middleware('role:admin')->name('tag.index');
     Route::post('/tags', [TagController::class, 'store'])->middleware('role:admin')->name('tag.create');
     Route::get('/tags/{id}', [TagController::class, 'show'])->middleware('role:admin')->name('tag.show');
+    Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');
 
     //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

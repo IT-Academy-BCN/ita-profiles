@@ -45,4 +45,13 @@ class TagController extends Controller
 
         return response()->json(['data' => new TagResource($tag)], 200);
     }
+
+    public function update(TagRequest $request, $id)
+    {
+        $tag = $this->findTag($id);
+
+        $tag->update($request->validated());
+
+        return response()->json(['data' => new TagResource($tag), 'message' => __('Tag updated successfully')], 200);
+    }
 }
