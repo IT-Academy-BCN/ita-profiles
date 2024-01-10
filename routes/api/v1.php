@@ -49,9 +49,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/tags', [TagController::class, 'store'])->middleware('role:admin')->name('tag.create');
     Route::get('/tags/{id}', [TagController::class, 'show'])->middleware('role:admin')->name('tag.show');
     Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');
+    Route::delete('/tags/{id}', [TagController::class, 'destroy'])->middleware('role:admin')->name('tag.destroy');
 
     //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
 });

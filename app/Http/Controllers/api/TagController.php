@@ -54,4 +54,13 @@ class TagController extends Controller
 
         return response()->json(['data' => new TagResource($tag), 'message' => __('Tag updated successfully')], 200);
     }
+
+    public function destroy($id)
+{
+    $tag = $this->findTag($id);
+
+    $tag->delete();
+
+    return response()->json(['message' => __('Tag deleted successfully')], 200);
+}
 }
