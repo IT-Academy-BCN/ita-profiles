@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use App\Http\Resources\TagIndexResource;
 use Illuminate\Http\Request;
+use App\Http\Requests\TagRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,5 +23,16 @@ class TagController extends Controller
         }
 
         return response()->json(['data' => TagIndexResource::collection($tags)], 200);
+    }
+
+    public function store(TagRequest $request)
+    {
+        $tag = Tag::create($request->validated());
+
+        if ($tag) {
+            return response()->json(['message' => __('Registre realitzat amb èxit.'), 'tag' => $tag], 201);
+        } else {
+            return response()->json(['message' => __('Error en crear el tag. Si-us-plau, torna-ho a provar.')], 500);
+        }
     }
 }
