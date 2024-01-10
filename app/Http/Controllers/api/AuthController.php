@@ -15,6 +15,7 @@ class AuthController extends Controller
             $credentials = $request->only('dni', 'password');
 
             $user = $this->verifyUser($credentials);
+             /** @var \App\Models\User $user * */
             $token = $user->createToken('auth_token')->accessToken;
 
             return response()->json([
@@ -23,8 +24,8 @@ class AuthController extends Controller
                 'token' => $token
             ], 200);
 
-        } catch (Exception $ex) {
-            return response()->json(['message' => __($ex->getMessage())], 401);
+        } catch (Exception $validationException) {
+            return response()->json(['message' => __($validationException->getMessage())], $e);
         }
     }
 
@@ -32,7 +33,7 @@ class AuthController extends Controller
     {
 
         if (!Auth::attempt($credentials)) {
-            throw new Exception(__('Credencials invàlides, comprova-les i torneu a iniciar sessió'));
+            throw new Exception(__('Credencials invàlides, comprova-les i torneu a iniciar sessió'),401);
 
         }
         return Auth::user();
@@ -43,7 +44,7 @@ class AuthController extends Controller
     public function logout()
     {
         $user = Auth::user();
-
+         /** @var \App\Models\User $user * */
         $user->tokens()->delete();
 
         return response()->json(['message' => __('Desconnexió realitzada amb èxit')], 200);
