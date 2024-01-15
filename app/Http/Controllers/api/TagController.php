@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Tag;
-use App\Http\Resources\TagResource;
 use App\Http\Requests\TagRequest;
+use App\Http\Resources\TagResource;
+use App\Models\Tag;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class TagController extends Controller
@@ -56,11 +56,11 @@ class TagController extends Controller
     }
 
     public function destroy($id)
-{
-    $tag = $this->findTag($id);
+    {
+        $tag = $this->findTag($id);
 
-    $tag->delete();
+        $tag->delete();
 
-    return response()->json(['message' => __('Tag deleted successfully')], 200);
-}
+        return response()->json(['message' => __('Tag deleted successfully')], 200);
+    }
 }
