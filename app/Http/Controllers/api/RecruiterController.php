@@ -25,7 +25,7 @@ class RecruiterController extends Controller
 
             if ($recruitersList->isEmpty()) {
 
-                throw new ModelNotFoundException(__('No hi ha reclutadors a la base de dades.'));
+                throw new ModelNotFoundException(__('No hi ha reclutadors a la base de dades.'),404);
 
             }
 
@@ -33,7 +33,7 @@ class RecruiterController extends Controller
                 'data' => RecruiterListResource::collection($recruitersList)], 200);
 
         } catch(ModelNotFoundException $modelNotFoundException) {
-            return response()->json(['message' => $modelNotFoundException->getMessage()], 404);
+            return response()->json(['message' => $modelNotFoundException->getMessage()], $modelNotFoundException->getCode());
         }
 
     }
@@ -82,14 +82,14 @@ class RecruiterController extends Controller
             $recruiter = Recruiter::where('id', $id)->first();
 
             if (!$recruiter) {
-                throw new ModelNotFoundException(__('Usuari no trobat.'));
+                throw new ModelNotFoundException(__('Usuari no trobat.'),404);
             }
 
             return response()->json([
                 'data' => RecruiterResource::make($recruiter)], 200);
 
-        } catch(ModelNotFoundException $recruiterNotFound) {
-            return response()->json(['message' => $recruiterNotFound->getMessage()], 404);
+        } catch(ModelNotFoundException $recruiterNotFoundExep) {
+            return response()->json(['message' => $recruiterNotFoundExep->getMessage()], $recruiterNotFoundExep->getCode());
         }
     }
 

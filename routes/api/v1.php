@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AdminController;
-use App\Http\Controllers\api\LoginController;
+use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\Api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use Illuminate\Support\Facades\Route;
@@ -43,10 +43,8 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->middleware('role:admin')->name('admin.destroy');
     Route::get('/admins', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
 
-    //Recruiter
-
     //logout
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 });

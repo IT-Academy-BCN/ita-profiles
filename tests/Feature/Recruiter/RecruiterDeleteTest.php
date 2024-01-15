@@ -3,11 +3,13 @@
 namespace Tests\Feature\Recruiter;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class RecruiterDeleteTest extends TestCase
 {
+    use DatabaseTransactions;
     private function verifyOrCreateRole()
     {
         if (!Role::where('name', 'recruiter')->exists()) {
@@ -34,6 +36,7 @@ class RecruiterDeleteTest extends TestCase
 
         $response = $this->deleteJson(route('recruiter.delete', ['id' => $recruiter->id]));
         $response->assertHeader('Content-Type', 'application/json');
+        $response->assertJson(['message'=> "T'has donat de baixa com a reclutador d'It Profiles." ]);
         $response->assertStatus(200);
 
     }

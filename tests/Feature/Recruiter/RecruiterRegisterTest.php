@@ -3,15 +3,14 @@
 namespace Tests\Feature\Recruiter;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class RecruiterRegisterTest extends TestCase
 {
-    public function fakeEmail()
-    {
-        return fake()->email();
-    }
+    use DatabaseTransactions;
+
 
     public function setUp(): void
     {
@@ -38,7 +37,7 @@ class RecruiterRegisterTest extends TestCase
             'name' => 'John',
             'surname' => 'Doe',
             'dni' => '33461332N',
-            'email' => $this->fakeEmail(),
+            'email' => fake()->email(),
             'password' => 'password123',
             'company' => 'Apple',
             'sector' => 'Telefonia',
@@ -93,5 +92,17 @@ class RecruiterRegisterTest extends TestCase
             ],
         ]);
 
+    }
+
+    public static function generateNie(): string
+    {
+        $prefixes = ['X', 'Y', 'Z'];
+        $randomPrefix = $prefixes[array_rand($prefixes)];
+        $numbers = str_pad(mt_rand(1, 99999999), 7, '0', STR_PAD_LEFT);
+        $letters = 'TRWAGMYFPDXBNJZSQVHLCKE';
+
+        $checkDigit = $letters[($randomPrefix . $numbers) % 23];
+
+        return $randomPrefix . $numbers . $checkDigit;
     }
 }

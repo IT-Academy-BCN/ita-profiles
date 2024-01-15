@@ -3,11 +3,13 @@
 namespace Tests\Feature\Recruiter;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class RecruiterUpdateTest extends TestCase
 {
+    use DatabaseTransactions;
     public function setUp(): void
     {
         parent::setUp();
@@ -37,7 +39,7 @@ class RecruiterUpdateTest extends TestCase
         ]);
         $data = ['name' => 'Nuevo nombre',
             'surname' => 'Nuevo apellido',
-            'email' => 'nuevo@example.com',
+            'email' => fake()->email(),
             'company' => 'prueba update',
             'sector' => 'TOC', ];
         $this->actingAs($user, 'api');
@@ -51,6 +53,15 @@ class RecruiterUpdateTest extends TestCase
         $this->assertEquals(ucfirst($user->surname), $data['surname']);
         $this->assertEquals(ucfirst($user->recruiter->company), ucfirst($data['company']));
         $this->assertEquals(ucfirst($user->recruiter->sector), $data['sector']);
+      
+        $response->assertJson([
+         'data' =>[ 
+            'name' => ucwords($user->name),
+            'surname' => ucwords($user->surname),
+            'company' => ucwords($user->recruiter->company),
+            'sector' => ucwords($user->recruiter->sector)]
+        ]);
+
 
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertStatus(200);
@@ -61,11 +72,7 @@ class RecruiterUpdateTest extends TestCase
     {
         $this->verifyOrCreateRole();
         $user = User::factory()->create([
-            'name' => 'John',
-            'surname' => 'Doe',
-            'dni' => '87797617Q',
-            'email' => fake()->email(),
-            'password' => 'passwor',
+        
         ]);
         $user->assignRole('recruiter');
         $user->recruiter()->create([
