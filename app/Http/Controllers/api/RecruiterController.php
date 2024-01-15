@@ -25,7 +25,7 @@ class RecruiterController extends Controller
 
             if ($recruitersList->isEmpty()) {
 
-                throw new ModelNotFoundException(__('No hi ha reclutadors a la base de dades.'),404);
+                throw new ModelNotFoundException(__('No hi ha reclutadors a la base de dades.'), 404);
 
             }
 
@@ -82,7 +82,7 @@ class RecruiterController extends Controller
             $recruiter = Recruiter::where('id', $id)->first();
 
             if (!$recruiter) {
-                throw new ModelNotFoundException(__('Usuari no trobat.'),404);
+                throw new ModelNotFoundException(__('Usuari no trobat.'), 404);
             }
 
             return response()->json([
