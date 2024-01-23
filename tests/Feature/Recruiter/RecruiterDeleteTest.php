@@ -36,7 +36,7 @@ class RecruiterDeleteTest extends TestCase
 
         $response = $this->deleteJson(route('recruiter.delete', ['id' => $recruiter->id]));
         $response->assertHeader('Content-Type', 'application/json');
-        $response->assertJson(['message'=> "T'has donat de baixa com a reclutador d'It Profiles." ]);
+        $response->assertJson(['message' => "T'has donat de baixa com a reclutador d'It Profiles." ]);
         $response->assertStatus(200);
 
     }

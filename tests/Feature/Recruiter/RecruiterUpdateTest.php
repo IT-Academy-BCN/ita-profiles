@@ -53,9 +53,9 @@ class RecruiterUpdateTest extends TestCase
         $this->assertEquals(ucfirst($user->surname), $data['surname']);
         $this->assertEquals(ucfirst($user->recruiter->company), ucfirst($data['company']));
         $this->assertEquals(ucfirst($user->recruiter->sector), $data['sector']);
-      
+
         $response->assertJson([
-         'data' =>[ 
+         'data' => [
             'name' => ucwords($user->name),
             'surname' => ucwords($user->surname),
             'company' => ucwords($user->recruiter->company),
@@ -72,7 +72,7 @@ class RecruiterUpdateTest extends TestCase
     {
         $this->verifyOrCreateRole();
         $user = User::factory()->create([
-        
+
         ]);
         $user->assignRole('recruiter');
         $user->recruiter()->create([
