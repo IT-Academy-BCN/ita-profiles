@@ -50,7 +50,7 @@ class RecruiterDeleteTest extends TestCase
 
         ]);
         $user->assignRole('recruiter');
-        $recruiter = $user->recruiter()->create([
+        $user->recruiter()->create([
             'company' => 'Apple',
             'sector' => 'TIC',
 
@@ -62,6 +62,7 @@ class RecruiterDeleteTest extends TestCase
 
         $response = $this->deleteJson(route('recruiter.delete', ['id' => $fakeId]));
         $response->assertHeader('Content-Type', 'application/json');
+        $response->assertJson(['message'=> "Usuari no autenticat" ]);
         $response->assertStatus(401);
 
     }

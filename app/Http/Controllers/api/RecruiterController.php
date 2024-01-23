@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\api;
 
 use App\Exceptions\UserNotAuthenticatedException;
 use App\Http\Controllers\Controller;

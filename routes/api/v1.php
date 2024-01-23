@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\Api\RecruiterController;
+use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use Illuminate\Support\Facades\Route;
 
