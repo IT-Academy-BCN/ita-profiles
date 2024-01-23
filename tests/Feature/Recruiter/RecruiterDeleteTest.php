@@ -62,7 +62,7 @@ class RecruiterDeleteTest extends TestCase
 
         $response = $this->deleteJson(route('recruiter.delete', ['id' => $fakeId]));
         $response->assertHeader('Content-Type', 'application/json');
-        $response->assertJson(['message'=> "Usuari no autenticat" ]);
+        $response->assertJson(['message' => "Usuari no autenticat" ]);
         $response->assertStatus(401);
 
     }
