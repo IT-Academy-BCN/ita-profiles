@@ -33,7 +33,7 @@ class AnnotationsStudent
      *                     @OA\Property( property="about", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit." ),
      *                     @OA\Property(property="cv", type="string",example="My currículum."),
      *                     @OA\Property(property="bootcamp", type="string",example="PHP Developer" ),
-     *                     @OA\Property(property="endDate",type="date",example="..." ),
+     *                     @OA\Property(property="end_date",type="date",example="..." ),
      *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
      *                     @OA\Property(property="github",type="string", example="http://www.github.com")
      *                 )
@@ -65,7 +65,7 @@ class AnnotationsStudent
      *              @OA\Property(property="password", type="string", format="password", example="secretpassword"),
      *              @OA\Property(property="subtitle", type="string", example="Engineer and Developer."),
      *              @OA\Property(property="bootcamp", type="string", example="PHP Developer"),
-     *              @OA\Property(property="endDate", type="date", example="..."),
+     *              @OA\Property(property="end_date", type="date", example="..."),
      *          )
      *      ),
      *
@@ -149,7 +149,7 @@ class AnnotationsStudent
      *                     @OA\Property(property="about", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
      *                     @OA\Property(property="cv", type="string", example="My currículum."),
      *                     @OA\Property(property="bootcamp", type="string", example="PHP Developer"),
-     *                     @OA\Property(property="endDate", type="date", example="..." ),
+     *                     @OA\Property(property="end_date", type="date", example="..." ),
      *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
      *                     @OA\Property(property="github", type="string", example="http://www.github.com")
      *                 )
@@ -217,7 +217,7 @@ class AnnotationsStudent
      *              @OA\Property(property="surname", type="string", example="Doe"),
      *              @OA\Property(property="subtitle", type="string", example="Engineer and Full Stack Developer"),
      *              @OA\Property(property="bootcamp", type="enum", example="PHP Developer"),
-     *              @OA\Property(property="endDate",type="date",example="..." ),
+     *              @OA\Property(property="end_date",type="date",example="..." ),
      *              @OA\Property(property="about", type="text", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
      *              @OA\Property(property="cv", type="string", example="Updated Curriculum."),
      *              @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),

@@ -19,7 +19,7 @@ class Student extends Model
         'about',
         'cv',
         'bootcamp',
-        'endDate',
+        'end_date',
         'linkedin',
         'github',
     ];

@@ -60,7 +60,7 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  *     type="enum"
  * )
  * @OA\Property(
- *     property="endDate",
+ *     property="end_date",
  *     description="Student Bootcamp's ending date",
  *     type="date"
  * )

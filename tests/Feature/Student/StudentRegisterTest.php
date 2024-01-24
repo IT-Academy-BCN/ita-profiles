@@ -35,7 +35,7 @@ class StudentRegisterTest extends TestCase
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
             'bootcamp' => 'PHP Developer',
-            //enddate
+            //end_date
         ];
 
         $response = $this->post('/api/v1/students', $data);
@@ -75,7 +75,7 @@ class StudentRegisterTest extends TestCase
             'password' => null,
             'subtitle' => null,
             'bootcamp' => null,
-            //enddate
+            //end_date
         ];
 
         $response = $this->post('/api/v1/students', $data);
@@ -99,7 +99,7 @@ class StudentRegisterTest extends TestCase
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
             'bootcamp' => 'PHP Developer',
-            //enddate
+            //end_date
         ];
 
         $response = $this->post('/api/v1/students', $data);
@@ -123,7 +123,7 @@ class StudentRegisterTest extends TestCase
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
             'bootcamp' => 'PHP Developer',
-            //enddate
+            //end_date
         ];
 
         $response = $this->post('/api/v1/students', $data);
@@ -147,7 +147,7 @@ class StudentRegisterTest extends TestCase
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
             'bootcamp' => 'PHP Developer',
-            //enddate
+            //end_date
         ];
 
         $response = $this->post('/api/v1/students', $data);
@@ -171,7 +171,7 @@ class StudentRegisterTest extends TestCase
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
             'bootcamp' => 'PHP',
-            //enddate
+            //end_date
         ];
 
         $response = $this->post('/api/v1/students', $data);
@@ -195,7 +195,7 @@ class StudentRegisterTest extends TestCase
             'password' => 'password123',
             'subtitle' => 'Enginyer Informàtic i Programador.',
             'bootcamp' => 'PHP Developer',
-            //enddate
+            //end_date
         ];
 
         $response = $this->post('/api/v1/students', $data);

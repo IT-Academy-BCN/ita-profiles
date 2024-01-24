@@ -22,7 +22,7 @@ class StoreStudentRequest extends UserRequest
         $array = [
             'subtitle' => 'required|string',
             'bootcamp' => 'required|in:Front end Developer,PHP Developer,Java Developer,Nodejs Developer',
-            //endDate?
+            //end_date?
         ];
 
         return array_merge(parent::rules(), $array);
