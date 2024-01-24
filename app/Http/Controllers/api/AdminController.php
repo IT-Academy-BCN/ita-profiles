@@ -10,6 +10,7 @@ use App\Http\Resources\AdminShowResource;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
         try {
             return response()->json(
@@ -31,7 +32,7 @@ class AdminController extends Controller
         }
     }
 
-    public function store(UserRequest $request)
+    public function store(UserRequest $request): JsonResponse
     {
         $transaction = DB::transaction(function () use ($request) {
             $user = User::create([
