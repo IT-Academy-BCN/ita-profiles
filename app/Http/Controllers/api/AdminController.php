@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Exceptions\EmptyAdminListException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\AdminIndexResource;
@@ -18,19 +19,16 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admins = Admin::all();
-
-        if ($admins->isEmpty()) {
+        try {
+            return response()->json(
+                ['data' => AdminIndexResource::collection(Admin::findAll())]
+            );
+        } catch (EmptyAdminListException $exception) {
             throw new HttpResponseException(response()->json(
-                ['message' => __('No hi ha administradors a la base de dades')],
-                404
+                ['message' => $exception->getMessage()],
+                $exception->getCode()
             ));
         }
-
-        return response()->json(
-            ['data' => AdminIndexResource::collection($admins)],
-            200
-        );
     }
 
     public function store(UserRequest $request)
