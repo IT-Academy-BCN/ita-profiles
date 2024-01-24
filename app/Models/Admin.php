@@ -23,7 +23,7 @@ class Admin extends Model
     /**
      * @throws EmptyAdminListException
      */
-    public function findAll(): Collection
+    public static function findAll(): Collection
     {
         $admins = Admin::all();
 
