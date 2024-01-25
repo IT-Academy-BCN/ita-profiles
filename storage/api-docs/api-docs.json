@@ -1527,6 +1527,36 @@
                     "name": "Student"
                 }
             },
+            "AnnotationsTag": {
+                "title": "Tag",
+                "description": "Tag Model",
+                "properties": {
+                    "id": {
+                        "description": "Tag ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "tag_name": {
+                        "description": "Tag Name",
+                        "type": "string",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "description": "Tag creation date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Tag update date",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Tag"
+                }
+            },
             "AnnotationsUser": {
                 "title": "User",
                 "description": "User Model",
