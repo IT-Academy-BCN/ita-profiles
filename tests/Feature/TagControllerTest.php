@@ -14,13 +14,11 @@ class TagControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private User $user;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        $user = User::factory()->create();
         $adminRole = Role::where('name', 'admin')->first();
 
         if (!$adminRole) {
@@ -28,8 +26,8 @@ class TagControllerTest extends TestCase
             $adminRole = Role::create(['name' => 'admin']);
         }
 
-        $this->user->assignRole($adminRole);
-        $this->actingAs($this->user, 'api');
+        $user->assignRole($adminRole);
+        $this->actingAs($user, 'api');
     }
 
     public function testIndexReturnsTags()
