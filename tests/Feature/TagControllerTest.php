@@ -2,22 +2,25 @@
 
 namespace Tests\Feature\Api;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Database\Factories\TagFactory;
-use Tests\TestCase;
 use App\Models\Tag;
 use App\Models\User;
+use Database\Factories\TagFactory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 
 class TagControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    // Create admin user with role and authenticate
-    protected function createAndAuthenticateAdmin()
+    private User $user;
+
+    protected function setUp(): void
     {
-        $user = User::factory()->create();
+        parent::setUp();
+
+        $this->user = User::factory()->create();
         $adminRole = Role::where('name', 'admin')->first();
 
         if (!$adminRole) {
@@ -25,17 +28,12 @@ class TagControllerTest extends TestCase
             $adminRole = Role::create(['name' => 'admin']);
         }
 
-        $user->assignRole($adminRole);
-        $this->actingAs($user, 'api');
-
-        return $user;
+        $this->user->assignRole($adminRole);
+        $this->actingAs($this->user, 'api');
     }
 
     public function testIndexReturnsTags()
     {
-        // Create an admin user and authenticate
-        $this->createAndAuthenticateAdmin();
-
         // Create some tags
         TagFactory::new()->count(3)->create();
 
@@ -55,8 +53,6 @@ class TagControllerTest extends TestCase
 
     public function testIndexReturns404WhenNoTagsExist()
     {
-        $this->createAndAuthenticateAdmin();
-
         $response = $this->json('GET', '/api/v1/tags');
 
         $response->assertStatus(404);
@@ -66,8 +62,6 @@ class TagControllerTest extends TestCase
 
     public function testStoreTag()
     {
-        $this->createAndAuthenticateAdmin();
-
         $tagData = Tag::factory()->make()->toArray();
 
         $response = $this->json('POST', '/api/v1/tags', $tagData);
@@ -85,8 +79,6 @@ class TagControllerTest extends TestCase
 
     public function testStoreFailsWhenTagNameIsMissing()
     {
-        $this->createAndAuthenticateAdmin();
-
         $response = $this->json('POST', '/api/v1/tags', []);
 
         $response->assertStatus(422);
@@ -105,8 +97,6 @@ class TagControllerTest extends TestCase
 
     public function testShowReturnsTag()
     {
-        $this->createAndAuthenticateAdmin();
-
         $tag = Tag::factory()->create();
 
         $response = $this->json('GET', "/api/v1/tags/{$tag->id}");
@@ -131,8 +121,6 @@ class TagControllerTest extends TestCase
 
     public function testUpdateTagSuccessfully()
     {
-        $this->createAndAuthenticateAdmin();
-
         $tag = Tag::factory()->create();
 
         $updatedData = [
@@ -168,8 +156,6 @@ class TagControllerTest extends TestCase
 
     public function testDestroyTagSuccessfully()
     {
-        $this->createAndAuthenticateAdmin();
-
         $tag = Tag::factory()->create();
 
         $response = $this->json('DELETE', "/api/v1/tags/{$tag->id}");
