@@ -31,7 +31,16 @@ class AnnotationsTag
      *             )
      *         )
      *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
      *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="status", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Unauthorized")
+     *         )
+     *     )
      *     @OA\Response(
      *         response=404,
      *         description="No tags found.",
@@ -53,7 +62,7 @@ class AnnotationsTag
      *      summary="Create a new tag",
      *      description="Creates a new tag. Admin Authentication is required.",
      *
-     *      @OA\RequestBody(
+     *      security={{"bearer": {}}},
      *          required=true,
      *
      *          @OA\JsonContent(
@@ -94,7 +103,7 @@ class AnnotationsTag
      *      summary="Get details of a specific tag",
      *      description="Retrieve details of a specific tag based on the provided ID. Admin Authentication is required.",
      *
-     *      @OA\Parameter(
+     *      security={{"bearer": {}}},
      *          name="id",
      *          in="path",
      *          required=true,
@@ -111,7 +120,9 @@ class AnnotationsTag
      *
      *             @OA\Items(
      *                 type="object",
-     *
+     *           @OA\Property(
+     *           property="data",
+     *           type="object",
      *                 @OA\Property(property="id", type="integer", example=1),
      *                 @OA\Property(property="tag_name", type="string", example="Laravel"),
      *                 @OA\Property(property="created_at", type="string", format="date-time", example="2024-01-25T12:34:56Z"),
@@ -139,7 +150,7 @@ class AnnotationsTag
      *     summary="Update details of a specific tag.",
      *     description="Updates details of a specific tag based on the provided ID. Admin Authentication is required.",
      *
-     *     @OA\Parameter(
+     *     security={{"bearer": {}}},
      *         name="id",
      *         in="path",
      *         required=true,
@@ -193,7 +204,7 @@ class AnnotationsTag
      *     summary="Delete a specific tag.",
      *     description="Deletes a specific tag based on the provided ID. Admin Authentication is required.",
      *
-     *     @OA\Parameter(
+     *     security={{"bearer": {}}},
      *         name="id",
      *         in="path",
      *         required=true,

@@ -167,5 +167,6 @@ class TagControllerTest extends TestCase
 
         // Assert that the tag has been deleted
         $this->assertNull($retrievedTag);
+        $this->assertDatabaseMissing('tags', ['id' => $tag->id]);
     }
 }
