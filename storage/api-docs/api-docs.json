@@ -54,7 +54,7 @@
                                                         "type": "string",
                                                         "example": "PHP Developer"
                                                     },
-                                                    "endDate": {
+                                                    "end_date": {
                                                         "type": "string",
                                                         "format": "date",
                                                         "example": "..."
@@ -121,7 +121,7 @@
                                         "type": "string",
                                         "example": "PHP Developer"
                                     },
-                                    "endDate": {
+                                    "end_date": {
                                         "type": "string",
                                         "format": "date",
                                         "example": "..."
@@ -249,7 +249,7 @@
                                                         "type": "string",
                                                         "example": "PHP Developer"
                                                     },
-                                                    "endDate": {
+                                                    "end_date": {
                                                         "type": "string",
                                                         "format": "date",
                                                         "example": "..."
@@ -363,7 +363,7 @@
                                             "type": "enum",
                                             "example": "PHP Developer"
                                         },
-                                        "endDate": {
+                                        "end_date": {
                                             "type": "string",
                                             "format": "date",
                                             "example": "..."
@@ -1498,7 +1498,7 @@
                         "description": "Name of the Bootcamp attended by the Student",
                         "type": "enum"
                     },
-                    "endDate": {
+                    "end_date": {
                         "description": "Student Bootcamp's ending date",
                         "type": "string",
                         "format": "date"

@@ -22,7 +22,7 @@ class StudentListResource extends JsonResource
             'about ' => Str::ucfirst($this->about),
             'cv' => $this->cv,
             'bootcamp' => $this->bootcamp,
-            'endDate' => $this->endDate,
+            'end_date' => $this->end_date,
             'linkedin' => $this->linkedin,
             'github ' => $this->github,
         ];
