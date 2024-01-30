@@ -7,6 +7,7 @@ use App\Http\Requests\TagRequest;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TagController extends Controller
 {
@@ -15,7 +16,7 @@ class TagController extends Controller
         $tags = Tag::get();
 
         if ($tags->isEmpty()) {
-            throw new HttpResponseException(response()->json(['message' => __('No hi ha tags a la base de dades')], 404));
+            throw new HttpResponseException(response()->json(['message' => __('Not found')], 404));
         }
 
         return response()->json(['data' => TagResource::collection($tags)], 200);
@@ -23,44 +24,49 @@ class TagController extends Controller
 
     public function store(TagRequest $request)
     {
-        $tag = Tag::create($request->validated());
-
-        if ($tag) {
-            return response()->json(['data' => $tag, 'message' => __('Registre realitzat amb èxit.')], 201);
-        } else {
-            return response()->json(['message' => __('Error en crear el tag. Si-us-plau, torna-ho a provar.')], 500);
+        try {
+            $tag = Tag::create($request->validated());
+    
+            return response()->json(['data' => $tag, 'message' => __('Tag created successfully.')], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => __('Failed to create tag. Please try again.')], 500);
         }
     }
-
-    private function findTag($id)
-    {
-        $tag = Tag::findOrFail($id);
-
-        return $tag;
-    }
-
+    
     public function show($id)
     {
-        $tag = $this->findTag($id);
+        try {
+            $tag = Tag::findOrFail($id);
 
-        return response()->json(['data' => new TagResource($tag)], 200);
+            return response()->json(['data' => new TagResource($tag)], 200);
+        } catch (ModelNotFoundException) {
+            return response()->json(['error' => 'Tag not found'], 404);
+        }
     }
 
     public function update(TagRequest $request, $id)
     {
-        $tag = $this->findTag($id);
-
-        $tag->update($request->validated());
-
-        return response()->json(['data' => new TagResource($tag), 'message' => __('Tag updated successfully')], 200);
+        try {
+            $tag = Tag::findOrFail($id);
+    
+            $tag->update($request->validated());
+    
+            return response()->json(['data' => new TagResource($tag), 'message' => __('Tag updated successfully')], 200);
+        } catch (ModelNotFoundException) {
+            return response()->json(['error' => 'Tag not found'], 404);
+        }
     }
 
     public function destroy($id)
     {
-        $tag = $this->findTag($id);
-
-        $tag->delete();
-
-        return response()->json(['message' => __('Tag deleted successfully')], 200);
+        try {
+            $tag = Tag::findOrFail($id);
+    
+            $tag->delete();
+    
+            return response()->json(['message' => __('Tag deleted successfully')], 200);
+        } catch (ModelNotFoundException) {
+            return response()->json(['error' => 'Tag not found'], 404);
+        }
     }
 }

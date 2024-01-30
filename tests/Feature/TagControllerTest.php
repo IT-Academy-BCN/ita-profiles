@@ -35,7 +35,7 @@ class TagControllerTest extends TestCase
         // Create some tags
         TagFactory::new()->count(3)->create();
 
-        $response = $this->json('GET', '/api/v1/tags');
+        $response = $this->getJson(route('tag.index'));
 
         $response->assertStatus(200);
 
@@ -51,18 +51,18 @@ class TagControllerTest extends TestCase
 
     public function testIndexReturns404WhenNoTagsExist()
     {
-        $response = $this->json('GET', '/api/v1/tags');
+        $response = $this->getJson(route('tag.index'));  
 
         $response->assertStatus(404);
 
-        $response->assertJson(['message' => 'No hi ha tags a la base de dades']);
+        $response->assertJson(['message' => 'Not found']);
     }
 
     public function testStoreTag()
     {
         $tagData = Tag::factory()->make()->toArray();
 
-        $response = $this->json('POST', '/api/v1/tags', $tagData);
+        $response = $this->postjson(route('tag.create'), $tagData);
 
         $response->assertStatus(201);
 
@@ -77,7 +77,7 @@ class TagControllerTest extends TestCase
 
     public function testStoreFailsWhenTagNameIsMissing()
     {
-        $response = $this->json('POST', '/api/v1/tags', []);
+        $response = $this->postjson(route('tag.create'), []);
 
         $response->assertStatus(422);
 
@@ -97,7 +97,7 @@ class TagControllerTest extends TestCase
     {
         $tag = Tag::factory()->create();
 
-        $response = $this->json('GET', "/api/v1/tags/{$tag->id}");
+        $response = $this->getJson(route('tag.show', ['id' => $tag->id]));
 
         $response->assertStatus(200);
 
@@ -125,7 +125,7 @@ class TagControllerTest extends TestCase
             'tag_name' => 'Updated Tag Name',
         ];
 
-        $response = $this->json('PUT', "/api/v1/tags/{$tag->id}", $updatedData);
+        $response = $this->putJson(route('tag.update', ['id' => $tag->id]), $updatedData);
 
         $response->assertStatus(200);
 
@@ -156,7 +156,7 @@ class TagControllerTest extends TestCase
     {
         $tag = Tag::factory()->create();
 
-        $response = $this->json('DELETE', "/api/v1/tags/{$tag->id}");
+        $response = $this->deleteJson(route('tag.destroy', ['id' => $tag->id]));
 
         $response->assertStatus(200);
 
