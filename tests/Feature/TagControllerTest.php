@@ -9,7 +9,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-
 class TagControllerTest extends TestCase
 {
     use RefreshDatabase;
@@ -51,7 +50,7 @@ class TagControllerTest extends TestCase
 
     public function testIndexReturns404WhenNoTagsExist()
     {
-        $response = $this->getJson(route('tag.index'));  
+        $response = $this->getJson(route('tag.index'));
 
         $response->assertStatus(404);
 

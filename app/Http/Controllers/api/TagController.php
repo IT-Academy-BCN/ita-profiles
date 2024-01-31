@@ -26,13 +26,13 @@ class TagController extends Controller
     {
         try {
             $tag = Tag::create($request->validated());
-    
+
             return response()->json(['data' => $tag, 'message' => __('Tag created successfully.')], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => __('Failed to create tag. Please try again.')], 500);
         }
     }
-    
+
     public function show($id)
     {
         try {
@@ -48,9 +48,9 @@ class TagController extends Controller
     {
         try {
             $tag = Tag::findOrFail($id);
-    
+
             $tag->update($request->validated());
-    
+
             return response()->json(['data' => new TagResource($tag), 'message' => __('Tag updated successfully')], 200);
         } catch (ModelNotFoundException) {
             return response()->json(['error' => 'Tag not found'], 404);
@@ -61,9 +61,9 @@ class TagController extends Controller
     {
         try {
             $tag = Tag::findOrFail($id);
-    
+
             $tag->delete();
-    
+
             return response()->json(['message' => __('Tag deleted successfully')], 200);
         } catch (ModelNotFoundException) {
             return response()->json(['error' => 'Tag not found'], 404);

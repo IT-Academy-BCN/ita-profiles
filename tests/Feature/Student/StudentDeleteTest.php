@@ -58,7 +58,7 @@ class StudentDeleteTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $response = $this->withHeaders(['Accept' => 'application/json'])->delete('api/v1/students/'.$user->student->id);
+        $response = $this->withHeaders(['Accept' => 'application/json'])->delete('api/v1/students/' . $user->student->id);
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/json');
