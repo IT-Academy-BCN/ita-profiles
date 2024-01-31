@@ -2,12 +2,15 @@
     "openapi": "3.0.0",
     "info": {
         "title": "ITA Profiles page API documentation",
-        "description": "Documentation needed for the API Rest for the ITA Profiles page to IT Academy. Some useful links below:\n *   [ITA Profles Backend](https://github.com/IT-Academy-BCN/ita-profiles-backend)\n *   [ITA Profiles Frontend](https://github.com/IT-Academy-BCN/ita-profiles-frontend)\n *   To use the endpoints, prefix them with '**api/v1**'. For example: '**POST: https://itaperfils.eurecatacademy.org/api/v1/students'**'.",
+        "description": "Documentation needed for the API Rest for the ITA Profiles page to IT Academy. Some useful links below:\n *   [ITA Profles Backend](https://github.com/IT-Academy-BCN/ita-profiles-backend)\n *   [ITA Profiles Frontend](https://github.com/IT-Academy-BCN/ita-profiles-frontend)",
         "version": "1.0.0"
     },
     "servers": [
         {
             "url": "http://127.0.0.1:8000"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
         }
     ],
     "paths": {
@@ -1442,6 +1445,26 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "No tags found.",
                         "content": {
@@ -1530,7 +1553,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/tags/{id}": {
@@ -1559,30 +1587,32 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer",
-                                                "example": 1
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "tag_name": {
+                                                    "type": "string",
+                                                    "example": "Laravel"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-01-25T12:34:56Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-01-25T12:34:56Z"
+                                                }
                                             },
-                                            "tag_name": {
-                                                "type": "string",
-                                                "example": "Laravel"
-                                            },
-                                            "created_at": {
-                                                "type": "string",
-                                                "format": "date-time",
-                                                "example": "2024-01-25T12:34:56Z"
-                                            },
-                                            "updated_at": {
-                                                "type": "string",
-                                                "format": "date-time",
-                                                "example": "2024-01-25T12:34:56Z"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -1603,7 +1633,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -1694,7 +1729,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -1748,7 +1788,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         }
     },
