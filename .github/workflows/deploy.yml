@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Deploy to server
         run: |
-          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh {{ secrets.SSH_USERNAME }}@{{ secrets.SSH_HOST_URL }} "cd /var/www/html/ita-profiles-backend && git pull origin develop"
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no {{ secrets.SSH_USERNAME }}@{{ secrets.SSH_HOST_URL }} "cd /var/www/html/ita-profiles-backend && git pull origin develop"
 
         env:
           SSH_PASSWORD: ${{ secrets.SSH_KEY }}
