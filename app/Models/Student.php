@@ -29,12 +29,12 @@ class Student extends Model
         return $this->belongsTo(User::class);
     }
 
-    /*public function tags() {
-        $this->hasMany(Tag::class);
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'student_has_tags', 'student_id', 'tag_id');
     }
 
-
-    public function projects(){
+    /*public function projects(){
         $this->hasMany(Project::class);
     }*/
 
