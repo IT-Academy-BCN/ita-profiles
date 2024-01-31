@@ -40,7 +40,7 @@ class AnnotationsTag
      *             @OA\Property(property="status", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
-     *     )
+     *     ),
      *     @OA\Response(
      *         response=404,
      *         description="No tags found.",
@@ -61,19 +61,18 @@ class AnnotationsTag
      *      tags={"Tags"},
      *      summary="Create a new tag",
      *      description="Creates a new tag. Admin Authentication is required.",
-     *
      *      security={{"bearer": {}}},
-     *          required=true,
      *
-     *          @OA\JsonContent(
-     *
+     *      @OA\RequestBody(
+     *            required=true,
+     *            @OA\JsonContent(
+     *            type="object",
      *                 @OA\Property(property="id", type="integer", example=1),
      *                 @OA\Property(property="tag_name", type="string", example="Laravel"),
      *                 @OA\Property(property="created_at", type="string", format="date-time", example="2024-01-25T12:34:56Z"),
      *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2024-01-25T12:34:56Z"),
-     *          )
+     *           )
      *      ),
-     *
      *      @OA\Response(
      *          response=201,
      *          description="Tag created successfully.",
@@ -104,6 +103,7 @@ class AnnotationsTag
      *      description="Retrieve details of a specific tag based on the provided ID. Admin Authentication is required.",
      *
      *      security={{"bearer": {}}},
+     *      @OA\Parameter(
      *          name="id",
      *          in="path",
      *          required=true,
@@ -116,10 +116,9 @@ class AnnotationsTag
      *         description="Tag details retrieved successfully.",
      *
      *         @OA\JsonContent(
-     *             type="array",
      *
-     *             @OA\Items(
-     *                 type="object",
+     *             type="object",
+     *
      *           @OA\Property(
      *           property="data",
      *           type="object",
@@ -138,7 +137,7 @@ class AnnotationsTag
      *             @OA\Property(property="message", type="string", example="Tag not found."),
      *         ),
      *     ),
-     * )
+     *   )
      */
     public function show() {}
 
@@ -149,8 +148,9 @@ class AnnotationsTag
      *     tags={"Tags"},
      *     summary="Update details of a specific tag.",
      *     description="Updates details of a specific tag based on the provided ID. Admin Authentication is required.",
-     *
      *     security={{"bearer": {}}},
+     *     @OA\Parameter(
+
      *         name="id",
      *         in="path",
      *         required=true,
@@ -203,8 +203,8 @@ class AnnotationsTag
      *     tags={"Tags"},
      *     summary="Delete a specific tag.",
      *     description="Deletes a specific tag based on the provided ID. Admin Authentication is required.",
-     *
      *     security={{"bearer": {}}},
+     *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
