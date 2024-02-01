@@ -43,9 +43,7 @@ class AnnotationsRecruiter
      *     )
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * @OA\Post(
@@ -102,9 +100,7 @@ class AnnotationsRecruiter
      *
      * )
      */
-    public function store()
-    {
-    }
+    public function store() {}
 
     /**
      * @OA\Get(
@@ -147,9 +143,7 @@ class AnnotationsRecruiter
      *      ),
      * )
      */
-    public function show()
-    {
-    }
+    public function show() {}
 
     /**
      * @OA\Put(
@@ -205,9 +199,7 @@ class AnnotationsRecruiter
      *      ),
      * )
      */
-    public function update()
-    {
-    }
+    public function update() {}
 
     /**
      * @OA\Delete(
@@ -261,7 +253,5 @@ class AnnotationsRecruiter
      *      )
      * )
      */
-    public function delete()
-    {
-    }
+    public function delete() {}
 }

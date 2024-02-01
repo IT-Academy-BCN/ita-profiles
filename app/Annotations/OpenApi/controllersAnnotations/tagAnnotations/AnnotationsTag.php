@@ -54,9 +54,7 @@ class AnnotationsTag
      *     )
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * @OA\Post(
@@ -101,9 +99,7 @@ class AnnotationsTag
      *     ),
      * )
      */
-    public function store()
-    {
-    }
+    public function store() {}
 
     /**
      * @OA\Get(
@@ -154,9 +150,7 @@ class AnnotationsTag
      *     ),
      *   )
      */
-    public function show()
-    {
-    }
+    public function show() {}
 
     /**
      * @OA\Put(
@@ -217,9 +211,7 @@ class AnnotationsTag
      *     ),
      * )
      */
-    public function update()
-    {
-    }
+    public function update() {}
 
     /**
      * @OA\Delete(
@@ -260,7 +252,5 @@ class AnnotationsTag
      *     ),
      * )
      */
-    public function delete()
-    {
-    }
+    public function delete() {}
 }
