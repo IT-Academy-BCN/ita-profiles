@@ -11,7 +11,7 @@ class AdminControllerTest extends TestCase
 {
     public function verifyOrCreateRole()
     {
-        if (!Role::where('name', 'admin')->exists()) {
+        if (! Role::where('name', 'admin')->exists()) {
             Role::create(['name' => 'admin']);
         }
     }

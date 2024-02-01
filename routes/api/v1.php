@@ -4,6 +4,7 @@ use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
+use App\Http\Controllers\api\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,9 +50,13 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->middleware('role:admin')->name('admin.destroy');
     Route::get('/admins', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
 
+    //Tags
+    Route::get('/tags', [TagController::class, 'index'])->middleware('role:admin')->name('tag.index');
+    Route::post('/tags', [TagController::class, 'store'])->middleware('role:admin')->name('tag.create');
+    Route::get('/tags/{id}', [TagController::class, 'show'])->middleware('role:admin')->name('tag.show');
+    Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');
+    Route::delete('/tags/{id}', [TagController::class, 'destroy'])->middleware('role:admin')->name('tag.destroy');
+
     //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
-
 });

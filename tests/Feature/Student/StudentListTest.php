@@ -17,7 +17,7 @@ class StudentListTest extends TestCase
 
     public function verifyOrCreateRole()
     {
-        if (!Role::where('name', 'student')->exists()) {
+        if (! Role::where('name', 'student')->exists()) {
             Role::create(['name' => 'student']);
         }
     }

@@ -19,11 +19,11 @@ class StudentDeleteTest extends TestCase
 
     public function verifyOrCreateRolesAndPermissions()
     {
-        if (!Role::where('name', 'student')->exists()) {
+        if (! Role::where('name', 'student')->exists()) {
             $student = Role::create(['name' => 'student']);
         }
 
-        if (!Permission::where('name', 'delete.student')->exists()) {
+        if (! Permission::where('name', 'delete.student')->exists()) {
             $deleteStudent = Permission::create(['name' => 'delete.student']);
         }
 
