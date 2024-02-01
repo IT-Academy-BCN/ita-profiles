@@ -26,13 +26,12 @@ class RecruiterController extends Controller
             if ($recruitersList->isEmpty()) {
 
                 throw new ModelNotFoundException(__('No hi ha reclutadors a la base de dades.'), 404);
-
             }
 
             return response()->json([
                 'data' => RecruiterListResource::collection($recruitersList)], 200);
 
-        } catch(ModelNotFoundException $modelNotFoundException) {
+        } catch (ModelNotFoundException $modelNotFoundException) {
             return response()->json(['message' => $modelNotFoundException->getMessage()], $modelNotFoundException->getCode());
         }
 
@@ -63,7 +62,7 @@ class RecruiterController extends Controller
 
         });
 
-        if (!$recruiter) {
+        if (! $recruiter) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     'Registre no efectuat. Si us plau, torna-ho a provar.'
@@ -81,14 +80,14 @@ class RecruiterController extends Controller
         try {
             $recruiter = Recruiter::where('id', $id)->first();
 
-            if (!$recruiter) {
+            if (! $recruiter) {
                 throw new ModelNotFoundException(__('Usuari no trobat.'), 404);
             }
 
             return response()->json([
                 'data' => RecruiterResource::make($recruiter)], 200);
 
-        } catch(ModelNotFoundException $recruiterNotFoundExep) {
+        } catch (ModelNotFoundException $recruiterNotFoundExep) {
             return response()->json(['message' => $recruiterNotFoundExep->getMessage()], $recruiterNotFoundExep->getCode());
         }
     }
@@ -103,7 +102,6 @@ class RecruiterController extends Controller
 
             if ($recruiterId != $id) {
                 throw new UserNotAuthenticatedException(__('Usuari no autenticat'));
-
             }
 
             $updatedRecruiter = DB::transaction(function () use ($request, $id) {
@@ -120,7 +118,7 @@ class RecruiterController extends Controller
                 return $recruiter;
             });
 
-            if (!$updatedRecruiter) {
+            if (! $updatedRecruiter) {
                 throw new HttpResponseException(response()->json(['message' => __('Alguna cosa ha anat malament.
                 Torna-ho a intentar més tard.')], 404));
             }
@@ -130,12 +128,11 @@ class RecruiterController extends Controller
                     'data' => RecruiterResource::make($updatedRecruiter)],
                 200
             );
-        } catch(UserNotAuthenticatedException $userNotAuth) {
+        } catch (UserNotAuthenticatedException $userNotAuth) {
 
             return response()->json(['message' => $userNotAuth->getMessage()], $userNotAuth->getHttpCode());
 
         }
-
 
     }
 
@@ -149,7 +146,6 @@ class RecruiterController extends Controller
 
             if ($recruiterId != $id) {
                 throw new UserNotAuthenticatedException(__('Usuari no autenticat'));
-
             }
 
             $deletedRecruiter = DB::transaction(function () use ($id) {
@@ -161,7 +157,7 @@ class RecruiterController extends Controller
                 return true;
             });
 
-            if (!$deletedRecruiter) {
+            if (! $deletedRecruiter) {
                 throw new HttpResponseException(response()->json([
                     'message' => __(
                         'Alguna cosa ha anat malament. Torna-ho a intenar més tard.'
@@ -172,14 +168,10 @@ class RecruiterController extends Controller
                 'message' => __(
                     "T'has donat de baixa com a reclutador d'It Profiles."
                 )], 200);
-        } catch(UserNotAuthenticatedException $authException) {
+        } catch (UserNotAuthenticatedException $authException) {
             return response()->json(['message' => $authException->getMessage()], $authException->getHttpCode());
 
         }
 
-
-
     }
-
-
 }

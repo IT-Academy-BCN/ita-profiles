@@ -10,6 +10,7 @@ use Tests\TestCase;
 class RecruiterUpdateTest extends TestCase
 {
     use DatabaseTransactions;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -19,7 +20,7 @@ class RecruiterUpdateTest extends TestCase
 
     public function verifyOrCreateRole()
     {
-        if (!Role::where('name', 'recruiter')->exists()) {
+        if (! Role::where('name', 'recruiter')->exists()) {
             Role::create(['name' => 'recruiter']);
 
         }
@@ -55,13 +56,12 @@ class RecruiterUpdateTest extends TestCase
         $this->assertEquals(ucfirst($user->recruiter->sector), $data['sector']);
 
         $response->assertJson([
-         'data' => [
-            'name' => ucwords($user->name),
-            'surname' => ucwords($user->surname),
-            'company' => ucwords($user->recruiter->company),
-            'sector' => ucwords($user->recruiter->sector)]
+            'data' => [
+                'name' => ucwords($user->name),
+                'surname' => ucwords($user->surname),
+                'company' => ucwords($user->recruiter->company),
+                'sector' => ucwords($user->recruiter->sector)],
         ]);
-
 
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertStatus(200);

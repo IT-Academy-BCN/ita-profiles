@@ -10,7 +10,6 @@ class RecruiterListTest extends TestCase
 {
     use DatabaseTransactions;
 
-
     public function test_it_returns_a_list_of_recruiters()
     {
 

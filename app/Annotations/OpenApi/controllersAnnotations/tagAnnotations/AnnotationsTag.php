@@ -31,6 +31,7 @@ class AnnotationsTag
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
@@ -41,6 +42,7 @@ class AnnotationsTag
      *             @OA\Property(property="message", type="string", example="Unauthorized")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="No tags found.",
@@ -65,14 +67,17 @@ class AnnotationsTag
      *
      *      @OA\RequestBody(
      *            required=true,
+     *
      *            @OA\JsonContent(
      *            type="object",
+     *
      *                 @OA\Property(property="id", type="integer", example=1),
      *                 @OA\Property(property="tag_name", type="string", example="Laravel"),
      *                 @OA\Property(property="created_at", type="string", format="date-time", example="2024-01-25T12:34:56Z"),
      *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2024-01-25T12:34:56Z"),
      *           )
      *      ),
+     *
      *      @OA\Response(
      *          response=201,
      *          description="Tag created successfully.",
@@ -86,7 +91,9 @@ class AnnotationsTag
      *     @OA\Response(
      *         response=500,
      *         description="Error creating the tag.",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Error creating the tag. Please try again."),
      *         ),
      *     ),
@@ -103,11 +110,13 @@ class AnnotationsTag
      *      description="Retrieve details of a specific tag based on the provided ID. Admin Authentication is required.",
      *
      *      security={{"bearer": {}}},
+     *
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
      *          required=true,
      *          description="Tag ID",
+     *
      *          @OA\Schema(type="integer", format="int64"),
      *      ),
      *
@@ -133,7 +142,9 @@ class AnnotationsTag
      *     @OA\Response(
      *         response=404,
      *         description="Tag not found.",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Tag not found."),
      *         ),
      *     ),
@@ -149,19 +160,23 @@ class AnnotationsTag
      *     summary="Update details of a specific tag.",
      *     description="Updates details of a specific tag based on the provided ID. Admin Authentication is required.",
      *     security={{"bearer": {}}},
+     *
      *     @OA\Parameter(
 
      *         name="id",
      *         in="path",
      *         required=true,
      *         description="ID of the tag to be updated",
+     *
      *         @OA\Schema(type="integer", format="int64"),
      *     ),
      *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="tag_name", type="string", example="Updated Tag"),
      *         ),
      *     ),
@@ -188,7 +203,9 @@ class AnnotationsTag
      *     @OA\Response(
      *         response=404,
      *         description="Tag not found.",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Tag not found."),
      *         ),
      *     ),
@@ -204,18 +221,22 @@ class AnnotationsTag
      *     summary="Delete a specific tag.",
      *     description="Deletes a specific tag based on the provided ID. Admin Authentication is required.",
      *     security={{"bearer": {}}},
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
      *         description="ID of the tag to be deleted",
+     *
      *         @OA\Schema(type="integer", format="int64"),
      *     ),
      *
      *     @OA\Response(
      *         response=200,
      *         description="Tag deleted successfully.",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Tag deleted successfully."),
      *         ),
      *     ),
@@ -223,7 +244,9 @@ class AnnotationsTag
      *     @OA\Response(
      *         response=404,
      *         description="Tag not found.",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="message", type="string", example="Tag not found."),
      *         ),
      *     ),

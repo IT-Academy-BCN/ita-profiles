@@ -28,6 +28,13 @@ Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruit
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
+//! ENDPOINT FALSO
+Route::get('/fake-students', function () {
+    $data = file_get_contents(base_path('database/data/students.json'));
+
+    return response()->json(json_decode($data, true));
+});
+
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
 //Passport Auth with token
