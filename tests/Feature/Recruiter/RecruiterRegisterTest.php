@@ -11,7 +11,6 @@ class RecruiterRegisterTest extends TestCase
 {
     use DatabaseTransactions;
 
-
     public function setUp(): void
     {
         parent::setUp();
@@ -22,7 +21,7 @@ class RecruiterRegisterTest extends TestCase
     public function verifyOrCreateRole()
     {
 
-        if (!Role::where('name', 'recruiter')->exists()) {
+        if (! Role::where('name', 'recruiter')->exists()) {
             Role::create(['name' => 'recruier']);
 
         }
@@ -101,8 +100,8 @@ class RecruiterRegisterTest extends TestCase
         $numbers = str_pad(mt_rand(1, 99999999), 7, '0', STR_PAD_LEFT);
         $letters = 'TRWAGMYFPDXBNJZSQVHLCKE';
 
-        $checkDigit = $letters[($randomPrefix . $numbers) % 23];
+        $checkDigit = $letters[($randomPrefix.$numbers) % 23];
 
-        return $randomPrefix . $numbers . $checkDigit;
+        return $randomPrefix.$numbers.$checkDigit;
     }
 }

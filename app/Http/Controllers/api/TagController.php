@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TagRequest;
 use App\Http\Resources\TagResource;
 use App\Models\Tag;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class TagController extends Controller
 {

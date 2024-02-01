@@ -20,7 +20,7 @@ class TagControllerTest extends TestCase
         $user = User::factory()->create();
         $adminRole = Role::where('name', 'admin')->first();
 
-        if (!$adminRole) {
+        if (! $adminRole) {
             // If the "admin" role does not exist, create it
             $adminRole = Role::create(['name' => 'admin']);
         }
@@ -83,8 +83,8 @@ class TagControllerTest extends TestCase
         $response->assertJsonStructure([
             'message',
             'errors' => [
-                'tag_name'
-            ]
+                'tag_name',
+            ],
         ]);
 
         $response->assertJsonFragment([

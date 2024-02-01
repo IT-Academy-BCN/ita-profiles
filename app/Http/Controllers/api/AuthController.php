@@ -21,7 +21,7 @@ class AuthController extends Controller
             return response()->json([
                 'message' => __('Autenticació amb èxit. Benvingut'),
                 'name' => ucwords($user->name),
-                'token' => $token
+                'token' => $token,
             ], 200);
 
         } catch (Exception $validationException) {
@@ -35,14 +35,12 @@ class AuthController extends Controller
     private function verifyUser(array $credentials)
     {
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             throw new Exception(__('Credencials invàlides, comprova-les i torneu a iniciar sessió'), 401);
-
         }
+
         return Auth::user();
     }
-
-
 
     public function logout()
     {

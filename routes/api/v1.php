@@ -30,8 +30,9 @@ Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recr
 
 //! ENDPOINT FALSO
 Route::get('/fake-students', function () {
-   $data = file_get_contents(base_path('database/data/students.json'));
-   return response()->json(json_decode($data, true));
+    $data = file_get_contents(base_path('database/data/students.json'));
+
+    return response()->json(json_decode($data, true));
 });
 
 //Admins Route

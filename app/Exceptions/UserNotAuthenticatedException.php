@@ -2,20 +2,16 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Http\Response;
-
 use Exception;
+use Illuminate\Http\Response;
 
 class UserNotAuthenticatedException extends Exception
 {
     protected $message;
 
-
-
     public function __construct($message = null)
     {
         parent::__construct($message ?: 'No autoritzat.'); // Si no pasa mensaje en la exepcion, lanzara este por defecto
-
 
     }
 
@@ -23,5 +19,4 @@ class UserNotAuthenticatedException extends Exception
     {
         return Response::HTTP_UNAUTHORIZED; // Código HTTP 401
     }
-
 }

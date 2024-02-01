@@ -10,10 +10,8 @@ class RecruiterShowTest extends TestCase
 {
     use DatabaseTransactions;
 
-
     public function test_show_specific_recruiter()
     {
-
 
         $user = User::factory()->create();
         $recruiter = $user->recruiter()->create([
@@ -30,7 +28,6 @@ class RecruiterShowTest extends TestCase
             ],
         ]);
 
-
     }
 
     public function test_search_recruiter_not_found()
@@ -44,8 +41,4 @@ class RecruiterShowTest extends TestCase
 
         ]);
     }
-
-
-
-
 }

@@ -48,7 +48,9 @@ class AnnotationsAuth
      *      ),
      * )
      */
-    public function login() {}
+    public function login()
+    {
+    }
 
     /**
      * @OA\Post(
@@ -73,5 +75,7 @@ class AnnotationsAuth
      *      ),
      * )
      */
-    public function logout() {}
+    public function logout()
+    {
+    }
 }
