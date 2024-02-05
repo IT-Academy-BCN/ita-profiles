@@ -1403,6 +1403,45 @@
                 ]
             }
         },
+        "/get-roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Roles Index",
+                "operationId": "e7f76ffff43e72aa96bed3d9708106b6",
+                "responses": {
+                    "200": {
+                        "description": "Successful. Roles index retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "File not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/tags": {
             "get": {
                 "tags": [
