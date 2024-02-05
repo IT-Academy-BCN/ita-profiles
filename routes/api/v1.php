@@ -5,7 +5,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\TagController;
-use App\Http\Controllers\RoleListController;
+use App\Http\Controllers\api\RoleListController;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
 use Illuminate\Support\Facades\File;
+use App\Http\Controllers\Controller;
 
 class RoleListController extends Controller
 {
