@@ -37,7 +37,7 @@ Route::get('/fake-students', function () {
 });
 
 // Role List Endpoint
-Route::get('/get-roles', RoleListController::class)->name('roles.index');
+Route::get('/get-role-list', RoleListController::class)->name('roles.index');
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');

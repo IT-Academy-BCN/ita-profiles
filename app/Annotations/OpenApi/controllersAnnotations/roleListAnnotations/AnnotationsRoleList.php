@@ -8,7 +8,7 @@ class AnnotationsRoleList
 {
     /**
      * @OA\Get(
-     *     path="/api/v1/get-roles",
+     *     path="/api/v1/get-role-list",
      *     summary="Roles Index",
      *     tags={"Roles"},
      *     @OA\Response(
@@ -29,5 +29,5 @@ class AnnotationsRoleList
      *     )
      * )
      */
-    public function getRoleList() {}
+    public function __invoke() {}
 }

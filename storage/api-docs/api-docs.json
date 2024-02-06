@@ -1403,13 +1403,13 @@
                 ]
             }
         },
-        "/get-roles": {
+        "/api/v1/get-role-list": {
             "get": {
                 "tags": [
                     "Roles"
                 ],
                 "summary": "Roles Index",
-                "operationId": "e7f76ffff43e72aa96bed3d9708106b6",
+                "operationId": "b138f9027417a52ee136787d92b2f101",
                 "responses": {
                     "200": {
                         "description": "Successful. Roles index retrieved",
