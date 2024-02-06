@@ -21,7 +21,7 @@ class UserFactory extends Factory
 
         return [
             'name' => $faker->name(),
-            'surname' => $faker->name(),
+            'surname' => $faker->lastName(),
             'dni' => $faker->unique()->regexify('[A-Z0-9]{9}'),
             'email' => $faker->unique()->safeEmail(),
             'email_verified_at' => now(),
