@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Student;
 use App\Http\Resources\StudentListResource;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -22,7 +21,7 @@ class StudentListController extends Controller
                 'message' => __('No hi ha estudiants a la base de dades.')
             ], 404));
         }
-        
+
         $studentsList = $studentsList->map(function ($student) {
             return new StudentListResource($student);
         });
