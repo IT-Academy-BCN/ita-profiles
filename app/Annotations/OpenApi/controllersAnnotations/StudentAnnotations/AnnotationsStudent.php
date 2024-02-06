@@ -8,7 +8,7 @@ class AnnotationsStudent
      * Llista de tots els estudiants
      *
      * @OA\Get (
-     *     path="/students",
+     *     path="/",
      *     operationId="getAllStudents",
      *     tags={"Student"},
      *     summary="Get a list of all students.",
@@ -47,7 +47,7 @@ class AnnotationsStudent
      *     )
      * )
      */
-    public function index() {}
+    public function __invoke() {}
 
     /**
      * Crea un estudiant
