@@ -33,6 +33,10 @@
                                             "type": "array",
                                             "items": {
                                                 "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
                                                     "name": {
                                                         "type": "string",
                                                         "example": "John"
@@ -45,30 +49,21 @@
                                                         "type": "string",
                                                         "example": "Engineer and Developer"
                                                     },
-                                                    "about": {
-                                                        "type": "string",
-                                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                                    "tags": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        },
+                                                        "example": [
+                                                            "tag1",
+                                                            "tag2",
+                                                            "tag3"
+                                                        ]
                                                     },
-                                                    "cv": {
+                                                    "photo_url": {
                                                         "type": "string",
-                                                        "example": "My currículum."
-                                                    },
-                                                    "bootcamp": {
-                                                        "type": "string",
-                                                        "example": "PHP Developer"
-                                                    },
-                                                    "end_date": {
-                                                        "type": "string",
-                                                        "format": "date",
-                                                        "example": "..."
-                                                    },
-                                                    "linkedin": {
-                                                        "type": "string",
-                                                        "example": "http://www.linkedin.com"
-                                                    },
-                                                    "github": {
-                                                        "type": "string",
-                                                        "example": "http://www.github.com"
+                                                        "format": "url",
+                                                        "example": "http://example.com/img/stud_1.png"
                                                     }
                                                 },
                                                 "type": "object"
