@@ -5,6 +5,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\TagController;
+use App\Http\Controllers\StudentListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 //No Auth
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('/students', [StudentController::class, 'store'])->name('student.create');
-Route::get('/students', [StudentController::class, 'index'])->name('students.list');
+Route::get('/', [StudentListController::class,'__invoke']);
 Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.show');
 
 Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruiter.create');
