@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Http\Resources\StudentListResource;
+// use App\Http\Resources\StudentListResource;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use App\Models\User;
@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 
 class StudentController extends Controller
 {
-    public function index()
+    /* public function index()
     {
         $studentsList = Student::all();
 
@@ -35,7 +35,7 @@ class StudentController extends Controller
         });
 
         return response()->json(['data' => $studentsList], 200);
-    }
+    } */
 
     public function store(StoreStudentRequest $request)
     {
