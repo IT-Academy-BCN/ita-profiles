@@ -15,7 +15,7 @@ class StudentListResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        
+
         return [
             'id' => $this->id,
             'name' => Str::ucfirst($this->user->name),
@@ -24,6 +24,6 @@ class StudentListResource extends JsonResource
             'tags' => $this->tags->pluck('tag_name'),
             'photo_url' => url('img/stud_' . rand(1, 3) . '.png'),
         ];
-        
+
     }
 }
