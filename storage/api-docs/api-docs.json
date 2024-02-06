@@ -14,7 +14,7 @@
         }
     ],
     "paths": {
-        "/students": {
+        "/": {
             "get": {
                 "tags": [
                     "Student"
@@ -76,7 +76,9 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/students": {
             "post": {
                 "tags": [
                     "Student"
