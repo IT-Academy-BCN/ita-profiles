@@ -16,33 +16,7 @@ use Illuminate\Support\Str;
 
 class StudentController extends Controller
 {
-    public function indexOLD()
-    {
-        $studentsList = Student::all();
-
-        if (! $studentsList) {
-
-            throw new HttpResponseException(response()->json([
-                'message' => __(
-                    'Alguna cosa ha anat malament.Intenta-ho de nou més tard.'
-                )], 404));
-
-        } elseif ($studentsList->isEmpty()) {
-
-            throw new HttpResponseException(response()->json([
-                'message' => __(
-                    'No hi ha estudiants a la base de dades.'
-                )], 404));
-
-        }
-
-        return response()->json(
-            [
-                'data' => StudentListResource::collection($studentsList)],
-            200
-        );
-
-    }
+    
     
     public function index()
 {
