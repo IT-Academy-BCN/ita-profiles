@@ -34,13 +34,13 @@ class AnnotationsStudent
      *                      @OA\Property(property="tags",type="array",
  *         @OA\Items(type="string"),
  *         example={"tag1", "tag2", "tag3"}
- *     ), 
+ *     ),
  *                          @OA\Property(property="photo_url",
  *   type="string",
  *   format="url",
  *   example="http://example.com/img/stud_1.png"
- *     )                   
-     *                     
+ *     )
+     *
      *                 )
      *             )
      *         )
