@@ -8,7 +8,7 @@ class AnnotationsRoleList
 {
     /**
      * @OA\Get(
-     *     path="/get-roles",
+     *     path="/api/v1/get-roles",
      *     summary="Roles Index",
      *     tags={"Roles"},
      *     @OA\Response(
