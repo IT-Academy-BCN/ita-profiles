@@ -16,8 +16,6 @@ use Illuminate\Support\Str;
 
 class StudentController extends Controller
 {
-    
-
     public function store(StoreStudentRequest $request)
     {
 
