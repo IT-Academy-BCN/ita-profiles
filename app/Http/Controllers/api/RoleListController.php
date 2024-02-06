@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class RoleListController extends Controller
 {
-    public function getRoleList()
+    public function __invoke()
     {
         $filePath = base_path('database/data/role_list.json');
 
