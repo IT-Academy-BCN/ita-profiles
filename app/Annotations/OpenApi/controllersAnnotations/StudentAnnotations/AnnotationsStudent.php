@@ -27,15 +27,20 @@ class AnnotationsStudent
      *                 @OA\Items(
      *                     type="object",
      *
-     *                     @OA\Property(property="name",type="string",example="John" ),
+     *
+     * @OA\Property(property="id",type="int",example=1 ),                     @OA\Property(property="name",type="string",example="John" ),
      *                     @OA\Property(property="surname", type="string",example="Doe"),
      *                     @OA\Property(property="subtitle",type="string",example="Engineer and Developer" ),
-     *                     @OA\Property( property="about", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit." ),
-     *                     @OA\Property(property="cv", type="string",example="My currículum."),
-     *                     @OA\Property(property="bootcamp", type="string",example="PHP Developer" ),
-     *                     @OA\Property(property="end_date",type="date",example="..." ),
-     *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
-     *                     @OA\Property(property="github",type="string", example="http://www.github.com")
+     *                      @OA\Property(property="tags",type="array",
+ *         @OA\Items(type="string"),
+ *         example={"tag1", "tag2", "tag3"}
+ *     ), 
+ *                          @OA\Property(property="photo_url",
+ *   type="string",
+ *   format="url",
+ *   example="http://example.com/img/stud_1.png"
+ *     )                   
+     *                     
      *                 )
      *             )
      *         )
