@@ -14,7 +14,7 @@
         }
     ],
     "paths": {
-        "/": {
+        "/student/home": {
             "get": {
                 "tags": [
                     "Student"

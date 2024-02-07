@@ -6,7 +6,7 @@ class AnnotationsStudent
 {
     /**
  * @OA\Get(
- *     path="/",
+ *     path="/student/home",
  *     operationId="getAllStudentsForFigma",
  *     tags={"Student"},
  *     summary="Get all Students.",
