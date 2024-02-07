@@ -4,6 +4,7 @@ use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
+use App\Http\Controllers\api\StudentListController;
 use App\Http\Controllers\api\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,11 +30,7 @@ Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruite
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
 //! ENDPOINT FALSO
-Route::get('/fake-students', function () {
-    $data = file_get_contents(base_path('database/data/students.json'));
-
-    return response()->json(json_decode($data, true));
-});
+Route::get('/', [StudentListController::class,'__invoke']);
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
