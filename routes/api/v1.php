@@ -31,7 +31,7 @@ Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruite
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
 //! ENDPOINT FALSO
-Route::get('/', [StudentListController::class,'__invoke']);
+Route::get('/student/home', StudentListController::class)->name('student.home');
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
