@@ -14,6 +14,66 @@
         }
     ],
     "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Get all Students.",
+                "description": "Get a list of all registered students for Figma design. Authentication is not required",
+                "operationId": "getAllStudentsForFigma",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "fullname": {
+                                                        "type": "string",
+                                                        "example": "Juan Pérez"
+                                                    },
+                                                    "subtitle": {
+                                                        "type": "string",
+                                                        "example": "Desarrollador Frontend"
+                                                    },
+                                                    "photo": {
+                                                        "description": "Student Image Path",
+                                                        "type": "string",
+                                                        "example": "img/stud_1.png"
+                                                    },
+                                                    "tags": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        },
+                                                        "example": [
+                                                            "tag1",
+                                                            "tag2",
+                                                            "tag3"
+                                                        ]
+                                                    },
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/students": {
             "get": {
                 "tags": [
