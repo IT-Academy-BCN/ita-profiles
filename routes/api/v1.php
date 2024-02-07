@@ -6,6 +6,7 @@ use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
 use App\Http\Controllers\api\TagController;
+use App\Http\Controllers\api\SpecializationListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,9 @@ Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recr
 
 //! ENDPOINT FALSO
 Route::get('/', [StudentListController::class,'__invoke']);
+
+// Specialization List Endpoint
+Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');

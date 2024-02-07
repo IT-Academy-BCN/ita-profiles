@@ -1,0 +1,20 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to server
+        run: |
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && git pull origin develop"
+
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          SSH_HOST_URL: ${{ secrets.SSH_HOST }}
+          SSH_USERNAME: ${{ secrets.SSH_USER }}
