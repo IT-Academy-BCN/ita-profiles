@@ -5,6 +5,48 @@ namespace App\Annotations\OpenApi\controllersAnnotations\studentAnnotations;
 class AnnotationsStudent
 {
     /**
+ * @OA\Get(
+ *     path="/",
+ *     operationId="getAllStudents",
+ *     tags={"Student"},
+ *     summary="Get all Students.",
+ *     description="Get a list of all registered students for Figma design. Authentication is not required",
+ *
+ *     @OA\Response(
+ *         response=200,
+ *         description="",
+ *
+ *         @OA\JsonContent(
+ *             @OA\Property(
+ *                 type="array",
+ *                 property="data",
+ *                 @OA\Items(
+ *                     type="object",
+ *                     @OA\Property(property="fullname", type="string", example="Juan Pérez"),
+ *                     @OA\Property(property="subtitle", type="string", example="Desarrollador Frontend"),
+ *                     @OA\Property(
+ *     property="photo",
+ *     description="Student Image Path",
+ *     type="string",
+ *     example="img/stud_1.png"
+ * )
+ *                     @OA\Property(
+ *     property="tags",
+ *     type="array",
+ *     @OA\Items(
+ *         type="string"
+ *     ),
+ *     example={"tag1", "tag2", "tag3"}
+ * ),
+ *                     @OA\Property(property="id", type="integer", example=1),
+ *                 )
+ *             )
+ *         )
+ *     )
+ * )
+ */
+public function __invoke() {}
+    /**
      * Llista de tots els estudiants
      *
      * @OA\Get (
