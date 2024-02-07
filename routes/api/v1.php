@@ -5,7 +5,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\TagController;
-use App\Http\Controllers\api\RoleListController;
+use App\Http\Controllers\api\SpecializationListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,8 +36,8 @@ Route::get('/fake-students', function () {
     return response()->json(json_decode($data, true));
 });
 
-// Role List Endpoint
-Route::get('/get-role-list', RoleListController::class)->name('roles.index');
+// Specialization List Endpoint
+Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');

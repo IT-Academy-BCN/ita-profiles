@@ -1403,16 +1403,16 @@
                 ]
             }
         },
-        "/api/v1/get-role-list": {
+        "/api/v1/specialization/list": {
             "get": {
                 "tags": [
-                    "Roles"
+                    "Specialization"
                 ],
-                "summary": "Roles Index",
-                "operationId": "b138f9027417a52ee136787d92b2f101",
+                "summary": "Specialization list",
+                "operationId": "be655a322f23a316278b5324e0cfb31c",
                 "responses": {
                     "200": {
-                        "description": "Successful. Roles index retrieved",
+                        "description": "Successful. Specialization list retrieved",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1420,21 +1420,6 @@
                                     "items": {
                                         "type": "string"
                                     }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "File not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
                                 }
                             }
                         }
