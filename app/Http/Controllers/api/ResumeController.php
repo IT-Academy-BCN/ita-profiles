@@ -4,7 +4,6 @@ namespace App\Http\Controllers\api;
 
 use App\Exceptions\UserNotAuthenticatedException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ResumeStoreRequest;
 use App\Models\Resume;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -39,7 +38,7 @@ class ResumeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ResumeStoreRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         try {
             $data = $request->all();

@@ -96,4 +96,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\userAnnotations;
  *
  * @var \Illuminate\Support\Carbon|null
  */
-class AnnotationsUser {}
+class AnnotationsUser
+{
+}
