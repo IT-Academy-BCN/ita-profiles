@@ -39,7 +39,7 @@ class AnnotationsStudent
  *     )
  * )
  */
-public function __invoke() {}
+    public function __invoke() {}
     /**
      * Llista de tots els estudiants
      *
