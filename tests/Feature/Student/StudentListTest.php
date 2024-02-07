@@ -50,7 +50,7 @@ class StudentListTest extends TestCase
     }
     public function test_student_list_controller()
     {
-        $response = $this->get('api/v1/');
+        $response = $this->get('api/v1/student/home');
 
         $response->assertStatus(200);
 
