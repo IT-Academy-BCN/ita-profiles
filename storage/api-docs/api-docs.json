@@ -1403,6 +1403,30 @@
                 ]
             }
         },
+        "/api/v1/specialization/list": {
+            "get": {
+                "tags": [
+                    "Specialization"
+                ],
+                "summary": "Specialization list",
+                "operationId": "be655a322f23a316278b5324e0cfb31c",
+                "responses": {
+                    "200": {
+                        "description": "Successful. Specialization list retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/tags": {
             "get": {
                 "tags": [
