@@ -54,10 +54,10 @@ class ResumeController extends Controller
             $data = $request->all();
             $this->resumeUpdateService->execute(
                 $id,
-                $data['subtitle'],
-                $data['linkedin_url'],
-                $data['github_url'],
-                $data['specialization']
+                $data['subtitle'] ?? null,
+                $data['linkedin_url'] ?? null,
+                $data['github_url'] ?? null,
+                $data['specialization'] ?? null
             );
 
             return response('', 200);
