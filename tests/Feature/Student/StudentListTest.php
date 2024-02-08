@@ -49,23 +49,23 @@ class StudentListTest extends TestCase
 
     }
     public function test_student_list_controller()
-{
-    $response = $this->get('api/v1/student/list/for-home');
+    {
+        $response = $this->get('api/v1/student/list/for-home');
 
-    $response->assertStatus(200);
+        $response->assertStatus(200);
 
-    $response->assertJsonStructure([
-        '*' => [
-            'fullname',
-            'subtitle',
-            'photo',
-            'tags',
-            'id'
-        ]/* ,
+        $response->assertJsonStructure([
+            '*' => [
+                'fullname',
+                'subtitle',
+                'photo',
+                'tags',
+                'id'
+            ]/* ,
         '*.tags.*' => [
             'id',
             'name'
         ] */
-    ]);
-}
+        ]);
+    }
 }
