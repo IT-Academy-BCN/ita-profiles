@@ -28,7 +28,7 @@ class AnnotationsStudent
  *                              type="string",
  *                              example="img/stud_1.png"),
  *                     @OA\Property(property="tags",type="array",@OA\Items(ref="#/components/schemas/Tag"))
- * 
+ *
  *                  )
  *              )
  *          )
