@@ -14,13 +14,13 @@
         }
     ],
     "paths": {
-        "/student/home": {
+        "/student/list/for-home": {
             "get": {
                 "tags": [
                     "Student"
                 ],
                 "summary": "Get all Students.",
-                "description": "Get a list of all registered students for Figma design. Authentication is not required",
+                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design. No authentication required",
                 "operationId": "getAllStudentsForFigma",
                 "responses": {
                     "200": {
@@ -49,17 +49,8 @@
                                                     "tags": {
                                                         "type": "array",
                                                         "items": {
-                                                            "type": "string"
-                                                        },
-                                                        "example": [
-                                                            "tag1",
-                                                            "tag2",
-                                                            "tag3"
-                                                        ]
-                                                    },
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 1
+                                                            "$ref": "#/components/schemas/Tag"
+                                                        }
                                                     }
                                                 },
                                                 "type": "object"
@@ -1883,6 +1874,19 @@
     },
     "components": {
         "schemas": {
+            "Tag": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "JavaScript"
+                    }
+                },
+                "type": "object"
+            },
             "AnnotationsAdmin": {
                 "title": "Admin",
                 "description": "Admin Model",
