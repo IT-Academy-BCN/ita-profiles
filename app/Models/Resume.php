@@ -17,38 +17,6 @@ class Resume extends Model
 
     public function student()
     {
-        return $this->belongsTo(Student::class);
-    }
-
-    public static function updateResume($data, $id)
-    {
-        $instance = new self();
-        $resume = $instance->validateAndRetrieveResume($id);
-        $resume->update($data);
-
-        return $resume;
-
-    }
-
-    public static function deleteResume($id)
-    {
-        $instance = new self();
-        $resume = $instance->validateAndRetrieveResume($id);
-        $resume->delete();
-    }
-
-    private function validateAndRetrieveResume($id)
-    {
-        $resumeId = Auth::user()->student->resume->id;
-        $resume = Resume::find($id);
-        if (!$resume) {
-            throw new ModelNotFoundException(
-                __('Currículum no trobat'), 404);
-        }
-        if ($resumeId != $resume->id) {
-            throw new UserNotAuthenticatedException();
-        } 
-
-        return $resume;
+        return $this->belongsTo(Student::class, 'id', 'student_id');
     }
 }
