@@ -24,7 +24,5 @@ class AnnotationsSpecializationList
      *     )
      * )
      */
-    public function __invoke()
-    {
-    }
+    public function __invoke() {}
 }

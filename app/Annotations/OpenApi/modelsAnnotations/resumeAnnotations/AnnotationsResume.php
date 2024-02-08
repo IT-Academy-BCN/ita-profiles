@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Annotations\OpenApi\modelsAnnotations\resumeAnnotations;
 
 /**
@@ -24,7 +25,7 @@ namespace App\Annotations\OpenApi\modelsAnnotations\resumeAnnotations;
  *     property="student_id",
  *     description="ID of the associated students",
  *     type="string",
- *    
+ *
  * )
  *
  * @var string
@@ -58,9 +59,9 @@ namespace App\Annotations\OpenApi\modelsAnnotations\resumeAnnotations;
  *     description="Student Bootcamp's specialization",
  *     type="enum"
  * )
- * 
  *
- * 
+ *
+ *
  *
  * @OA\Property(
  *     property="tags_ids",
@@ -93,6 +94,4 @@ namespace App\Annotations\OpenApi\modelsAnnotations\resumeAnnotations;
 */
 
 
-class AnnotationsResume
-{
-}
+class AnnotationsResume {}

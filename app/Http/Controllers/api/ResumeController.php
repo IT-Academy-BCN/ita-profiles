@@ -4,15 +4,21 @@ namespace App\Http\Controllers\api;
 
 use App\Exceptions\UserNotAuthenticatedException;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ResumeShowResource;
 use App\Models\Resume;
+use App\Service\Resume\ResumeUpdateService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 
-
 class ResumeController extends Controller
 {
+    private ResumeUpdateService $resumeUpdateService;
+
+    public function __construct(ResumeUpdateService $resumeUpdateService)
+    {
+        $this->resumeUpdateService = $resumeUpdateService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -24,10 +30,7 @@ class ResumeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-       
-    }
+    public function store(Request $request) {}
 
     /**
      * Display the specified resource.
@@ -44,23 +47,29 @@ class ResumeController extends Controller
     {
         try {
             $data = $request->all();
-            $resume = Resume::updateResume($data, $id);
+            $this->resumeUpdateService->execute(
+                $id,
+                $data['subtitle'] ?? null,
+                $data['linkedin_url'] ?? null,
+                $data['github_url'] ?? null,
+                $data['specialization'] ?? null
+            );
 
-            return response()->json(['resume' =>new ResumeShowResource( $resume)], 200);
-
+            return response('', 200);
         } catch (ModelNotFoundException $resumeNotFoundExeption) {
 
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     $resumeNotFoundExeption->getMessage()
-                )], $resumeNotFoundExeption->getCode()));
+                )
+            ], $resumeNotFoundExeption->getCode()));
         } catch (UserNotAuthenticatedException $userNotAuthException) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     $userNotAuthException->getMessage()
-                )], $userNotAuthException->getHttpCode()));
+                )
+            ], $userNotAuthException->getHttpCode()));
         }
-
     }
 
     /**
@@ -77,13 +86,14 @@ class ResumeController extends Controller
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     $resumeNotFoundExeption->getMessage()
-                )], $resumeNotFoundExeption->getCode()));
+                )
+            ], $resumeNotFoundExeption->getCode()));
         } catch (UserNotAuthenticatedException $userNotAuthException) {
             throw new HttpResponseException(response()->json([
                 'message' => __(
                     $userNotAuthException->getMessage()
-                )], $userNotAuthException->getHttpCode()));
+                )
+            ], $userNotAuthException->getHttpCode()));
         }
-
     }
 }

@@ -42,7 +42,7 @@ class StudentShowTest extends TestCase
 
         $user->assignRole('student');
 
-        $response = $this->get('api/v1/students/'.$user->student->id);
+        $response = $this->get('api/v1/students/' . $user->student->id);
 
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/json');
