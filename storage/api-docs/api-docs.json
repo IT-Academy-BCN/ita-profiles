@@ -1403,6 +1403,159 @@
                 ]
             }
         },
+        "/resume/{id}": {
+            "put": {
+                "tags": [
+                    "Resumes"
+                ],
+                "summary": "Update a resume",
+                "description": "Update an existing resume. Authentication is required.",
+                "operationId": "updateResume",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the resume to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Data to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "subtitle": {
+                                        "type": "string",
+                                        "example": "New Subtitle"
+                                    },
+                                    "linkedin_url": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://www.linkedin.com"
+                                    },
+                                    "github_url": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://www.github.com"
+                                    },
+                                    "specialization": {
+                                        "type": "enum",
+                                        "enum": [
+                                            "Frontend",
+                                            "Backend",
+                                            "Fullstack",
+                                            "Data Science",
+                                            "Not Set"
+                                        ],
+                                        "example": "Backend"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. Returns updated resume details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "subtitle": {
+                                            "type": "string",
+                                            "example": "New Subtitle"
+                                        },
+                                        "linkedin_url": {
+                                            "type": "string",
+                                            "format": "url",
+                                            "example": "https://www.linkedin.com"
+                                        },
+                                        "github_url": {
+                                            "type": "string",
+                                            "format": "url",
+                                            "example": "https://www.github.com"
+                                        },
+                                        "specialization": {
+                                            "type": "enum",
+                                            "enum": [
+                                                "Frontend",
+                                                "Backend",
+                                                "Fullstack",
+                                                "Data Science",
+                                                "Not Set"
+                                            ],
+                                            "example": "Backend"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "You do not have permission to modify this resume"
+                    },
+                    "404": {
+                        "description": "Not Found. Resume with specified ID not found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Resumes"
+                ],
+                "summary": "Delete a resume",
+                "description": "Delete an existing resume. Authentication and authorized ID are required.",
+                "operationId": "deleteResume",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the resume to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success. Resume successfully deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized. Authentication failed or token is missing or invalid."
+                    },
+                    "404": {
+                        "description": "Not Found. Resume with specified ID not found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/specialization/list": {
             "get": {
                 "tags": [
@@ -1886,6 +2039,55 @@
                 "type": "object",
                 "xml": {
                     "name": "Recruiter"
+                }
+            },
+            "AnnotationsResume": {
+                "title": "Resume",
+                "description": "Resume Model",
+                "properties": {
+                    "id": {
+                        "description": "Resume UUID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "student_id": {
+                        "description": "ID of the associated students",
+                        "type": "string"
+                    },
+                    "subtitle": {
+                        "description": "Presentation subtitle of the Student",
+                        "type": "string"
+                    },
+                    "linkedin_url": {
+                        "description": "Url of student's linkedin",
+                        "type": "url"
+                    },
+                    "github_url": {
+                        "description": "Url of student's github",
+                        "type": "string"
+                    },
+                    "specialization": {
+                        "description": "Student Bootcamp's specialization",
+                        "type": "enum"
+                    },
+                    "tags_ids": {
+                        "description": "List of student's tags",
+                        "type": "json"
+                    },
+                    "created_at": {
+                        "description": "Creation date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Update date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Resume"
                 }
             },
             "AnnotationsStudent": {

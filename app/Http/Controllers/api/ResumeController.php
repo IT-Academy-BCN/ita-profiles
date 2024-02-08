@@ -4,10 +4,12 @@ namespace App\Http\Controllers\api;
 
 use App\Exceptions\UserNotAuthenticatedException;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ResumeShowResource;
 use App\Models\Resume;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+
 
 class ResumeController extends Controller
 {
@@ -24,7 +26,7 @@ class ResumeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
     }
 
     /**
@@ -44,7 +46,7 @@ class ResumeController extends Controller
             $data = $request->all();
             $resume = Resume::updateResume($data, $id);
 
-            return response()->json(['resume' => $resume], 200);
+            return response()->json(['resume' =>new ResumeShowResource( $resume)], 200);
 
         } catch (ModelNotFoundException $resumeNotFoundExeption) {
 
