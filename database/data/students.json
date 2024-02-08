@@ -1,73 +1,118 @@
 [
-    {
-        "fullname": "Juan Pérez",
-        "subtitle": "Desarrollador Frontend",
-        "photo": "img/stud_2.png",
-        "tags": ["JavaScript", "React", "HTML", "CSS"],
-        "id": 1
-    },
-    {
-        "fullname": "María García",
-        "subtitle": "Diseñadora UX/UI",
-        "photo": "img/stud_1.png",
-        "tags": ["CSS", "Sketch", "InVision"],
-        "id": 2
-      },
-      {
-        "fullname": "Carlos Rodríguez",
-        "subtitle": "Ingeniero de Software",
-        "photo": "img/stud_3.png",
-        "tags": ["Java", "PHP", "JavaScript", "React"],
-        "id": 3
-      },
-      {
-        "fullname": "Laura Martínez",
-        "subtitle": "Desarrolladora Full Stack",
-        "photo": "img/stud_1.png",
-        "tags": ["JavaScript", "Node.js", "Express", "SQL"],
-        "id": 4
-      },
-      {
-        "fullname": "Elena López",
-        "subtitle": "Frontend React",
-        "photo": "img/stud_2.png",
-        "tags": ["CSS", "React", "Figma"],
-        "id": 5
-      },
-      {
-        "fullname": "Alejandro Ruiz",
-        "subtitle": "Desarrollador Frontend",
-        "photo": "img/stud_3.png",
-        "tags": ["JavaScript", "Vue.js", "HTML", "CSS"],
-        "id": 6
-      },
-      {
-        "fullname": "Sofía Hernández",
-        "subtitle": "Diseñadora Gráfica",
-        "photo": "img/stud_1.png",
-        "tags": ["Illustrator", "Photoshop", "InDesign"],
-        "id": 7
-      },
-      {
-        "fullname": "Martín González",
-        "subtitle": "Ingeniero de Software",
-        "photo": "img/stud_2.png",
-        "tags": ["Java", "PHP", "JavaScript", "React"],
-        "id": 8
-      },
-      {
-        "fullname": "Ana Castro",
-        "subtitle": "Desarrolladora Full Stack",
-        "photo": "img/stud_3.png",
-        "tags": ["JavaScript", "Node.js", "Express", "SQL"],
-        "id": 9
-      },
-      {
-        "fullname": "Javier Díaz",
-        "subtitle": "Analista de Datos",
-        "photo": "img/stud_1.png",
-        "tags": ["Python", "Pandas", "SQL"],
-        "id": 10
-      }  
-
+  {
+      "fullname": "Juan Pérez",
+      "subtitle": "Desarrollador Frontend",
+      "photo": "img/stud_2.png",
+      "tags": [
+          {"id": 1, "name": "JavaScript"},
+          {"id": 2, "name": "React"},
+          {"id": 3, "name": "HTML"},
+          {"id": 4, "name": "CSS"}
+      ],
+      "id": 1
+  },
+  {
+      "fullname": "María García",
+      "subtitle": "Diseñadora UX/UI",
+      "photo": "img/stud_1.png",
+      "tags": [
+          {"id": 4, "name": "CSS"},
+          {"id": 6, "name": "Sketch"},
+          {"id": 7, "name": "InVision"}
+      ],
+      "id": 2
+  },
+  {
+      "fullname": "Carlos Rodríguez",
+      "subtitle": "Ingeniero de Software",
+      "photo": "img/stud_3.png",
+      "tags": [
+          {"id": 8, "name": "Java"},
+          {"id": 9, "name": "PHP"},
+          {"id": 1, "name": "JavaScript"},
+          {"id": 2, "name": "React"}
+      ],
+      "id": 3
+  },
+  {
+      "fullname": "Laura Martínez",
+      "subtitle": "Desarrolladora Full Stack",
+      "photo": "img/stud_1.png",
+      "tags": [
+          {"id": 1, "name": "JavaScript"},
+          {"id": 10, "name": "Node.js"},
+          {"id": 11, "name": "Express"},
+          {"id": 12, "name": "SQL"}
+      ],
+      "id": 4
+  },
+  {
+      "fullname": "Elena López",
+      "subtitle": "Frontend React",
+      "photo": "img/stud_2.png",
+      "tags": [
+          {"id": 4, "name": "CSS"},
+          {"id": 2, "name": "React"},
+          {"id": 13, "name": "Figma"}
+      ],
+      "id": 5
+  },
+  {
+      "fullname": "Alejandro Ruiz",
+      "subtitle": "Desarrollador Frontend",
+      "photo": "img/stud_3.png",
+      "tags": [
+          {"id": 1, "name": "JavaScript"},
+          {"id": 14, "name": "Vue.js"},
+          {"id": 3, "name": "HTML"},
+          {"id": 4, "name": "CSS"}
+      ],
+      "id": 6
+  },
+  {
+      "fullname": "Sofía Hernández",
+      "subtitle": "Diseñadora Gráfica",
+      "photo": "img/stud_1.png",
+      "tags": [
+          {"id": 15, "name": "Illustrator"},
+          {"id": 16, "name": "Photoshop"},
+          {"id": 17, "name": "InDesign"}
+      ],
+      "id": 7
+  },
+  {
+      "fullname": "Martín González",
+      "subtitle": "Ingeniero de Software",
+      "photo": "img/stud_2.png",
+      "tags": [
+          {"id": 8, "name": "Java"},
+          {"id": 9, "name": "PHP"},
+          {"id": 1, "name": "JavaScript"},
+          {"id": 2, "name": "React"}
+      ],
+      "id": 8
+  },
+  {
+      "fullname": "Ana Castro",
+      "subtitle": "Desarrolladora Full Stack",
+      "photo": "img/stud_3.png",
+      "tags": [
+          {"id": 1, "name": "JavaScript"},
+          {"id": 10, "name": "Node.js"},
+          {"id": 11, "name": "Express"},
+          {"id": 12, "name": "SQL"}
+      ],
+      "id": 9
+  },
+  {
+      "fullname": "Javier Díaz",
+      "subtitle": "Analista de Datos",
+      "photo": "img/stud_1.png",
+      "tags": [
+          {"id": 18, "name": "Python"},
+          {"id": 19, "name": "Pandas"},
+          {"id": 12, "name": "SQL"}
+      ],
+      "id": 10
+  }
 ]
