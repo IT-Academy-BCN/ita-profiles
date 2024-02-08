@@ -19,7 +19,7 @@ class ResumeShowResource extends JsonResource
             'subtitle' => $this->subtitle,
             'specialization' => $this->specialization,
             'tags_ids' => $this->tags_ids,
-        
+
         ];
     }
 }

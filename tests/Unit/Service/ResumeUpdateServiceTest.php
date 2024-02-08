@@ -13,10 +13,10 @@ use Tests\TestCase;
 
 class ResumeUpdateServiceTest extends TestCase
 {
-    const A_SUBTITLE = 'a subtitle';
-    const HTTPS_A_LINKEDIN_URL = 'https://a-linkedin.url';
-    const HTTPS_A_GITHUB_URL = 'https://a-github.url';
-    const A_SPECIALIZATION = 'Frontend';
+    public const A_SUBTITLE = 'a subtitle';
+    public const HTTPS_A_LINKEDIN_URL = 'https://a-linkedin.url';
+    public const HTTPS_A_GITHUB_URL = 'https://a-github.url';
+    public const A_SPECIALIZATION = 'Frontend';
 
     public function setUp(): void
     {

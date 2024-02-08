@@ -4,13 +4,11 @@ namespace App\Http\Controllers\api;
 
 use App\Exceptions\UserNotAuthenticatedException;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ResumeShowResource;
 use App\Models\Resume;
 use App\Service\Resume\ResumeUpdateService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
-
 
 class ResumeController extends Controller
 {
@@ -32,10 +30,7 @@ class ResumeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-
-    }
+    public function store(Request $request) {}
 
     /**
      * Display the specified resource.
