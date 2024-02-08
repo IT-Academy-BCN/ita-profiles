@@ -30,8 +30,8 @@ Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruit
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
-//! ENDPOINT FALSO
-Route::get('/student/home', StudentListController::class)->name('student.home');
+// Students
+Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
