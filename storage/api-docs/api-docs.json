@@ -1874,19 +1874,6 @@
     },
     "components": {
         "schemas": {
-            "Tag": {
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "name": {
-                        "type": "string",
-                        "example": "JavaScript"
-                    }
-                },
-                "type": "object"
-            },
             "AnnotationsAdmin": {
                 "title": "Admin",
                 "description": "Admin Model",
@@ -2011,7 +1998,7 @@
                     "name": "Student"
                 }
             },
-            "AnnotationsTag": {
+            "Tag": {
                 "title": "Tag",
                 "description": "Tag Model",
                 "properties": {
