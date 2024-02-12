@@ -4,7 +4,7 @@ namespace App\Annotations\OpenApi\controllersAnnotations\studentAnnotations;
 
 class AnnotationsStudent
 {
-    /**
+/**
  * @OA\Get(
  *     path="/student/list/for-home",
  *     operationId="getAllStudentsForFigma",
@@ -32,14 +32,17 @@ class AnnotationsStudent
  *                  )
  *              )
  *          )
+ *      ),
+ *       
+ * 
+ *      @OA\Schema(
+*           schema="Tag",
+*           type="object",
+*           @OA\Property(property="id", type="integer", example=1),
+*           @OA\Property(property="name", type="string", example="JavaScript"),
+*           example={"id": 1, "name": "JavaScript"}
  *      )
- *  )
- *          @OA\Schema(
- *              schema="Tag",
- *              type="object",
- *               @OA\Property(property="id", type="integer", example=1),
- *               @OA\Property(property="name", type="string", example="JavaScript")
- *           )
+ * )
  */
     public function __invoke() {}
     /**
