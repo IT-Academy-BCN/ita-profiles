@@ -64,6 +64,7 @@ Route::middleware('auth:api')->group(function () {
     //Resume
     Route::put('/resume/{id}', [ResumeController::class, 'update'])->middleware('role:student')->name('resume.update');
     Route::delete('/resume/{id}', [ResumeController::class, 'destroy'])->middleware('role:student')->name('resume.delete');
+    Route::post('/resume',[ResumeController::class,'store'])->middleware('role:student')->name('resume.store');
 
     //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

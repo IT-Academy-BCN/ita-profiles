@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Resume;
 use App\Models\Resume;
 
-class ResumeCreateServie{
+class ResumeCreateService{
 
     public function execute(
         string $resumeId,
@@ -25,7 +25,7 @@ class ResumeCreateServie{
         $resume->specialization = $specialization;
 
         $resume->save();
-        
+
         return $resume;
     }
 }

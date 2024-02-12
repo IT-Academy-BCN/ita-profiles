@@ -6,6 +6,7 @@ use App\Exceptions\UserNotAuthenticatedException;
 use App\Http\Controllers\Controller;
 use App\Models\Resume;
 use App\Service\Resume\ResumeUpdateService;
+use App\Service\Resume\ResumeCreateService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
@@ -13,10 +14,12 @@ use Illuminate\Http\Request;
 class ResumeController extends Controller
 {
     private ResumeUpdateService $resumeUpdateService;
+    private ResumeCreateService $resumeCreateService;
 
-    public function __construct(ResumeUpdateService $resumeUpdateService)
+    public function __construct(ResumeUpdateService $resumeUpdateService, ResumeCreateService $resumeCreateService)
     {
         $this->resumeUpdateService = $resumeUpdateService;
+        $this->resumeCreateService = $resumeCreateService;
     }
 
     /**
@@ -30,11 +33,29 @@ class ResumeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
+    public function store(Request $request) {
 
-    /**
-     * Display the specified resource.
-     */
+        try {
+            $data = $request->all();
+            $this->resumeCreateService->execute(
+                $data['id'],
+                $data['student_id'],
+                $data['subtitle'] ?? null,
+                $data['linkedin_url'] ?? null,
+                $data['github_url'] ?? null,
+                $data['tags_ids'] ?? [],
+                $data['specialization'] ?? 'Not Set'
+            );
+            return response()->json($data, 201);
+        } catch(UserNotAuthenticatedException $userNotAuthException) {
+            throw new HttpResponseException(response()->json([
+                'message' => __(
+                    $userNotAuthException->getMessage()
+                )
+            ], $userNotAuthException->getHttpCode()));
+            }
+    }
+   
     public function show(string $id)
     {
         //
