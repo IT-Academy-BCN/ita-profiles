@@ -41,6 +41,7 @@ class ResumeUpdateServiceTest extends TestCase
         $definition = $userFactory->definition();
         $user = new User($definition);
         $user->save();
+        $this->actingAs($user, 'api');
 
         $student = new Student();
         $student->setUniqueIds();

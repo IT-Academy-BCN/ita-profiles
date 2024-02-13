@@ -4,19 +4,28 @@ namespace App\Http\Controllers\api;
 
 use App\Exceptions\UserNotAuthenticatedException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ResumeRequest;
+use App\Http\Resources\ResumeShowResource;
 use App\Models\Resume;
+use App\Service\Resume\ResumeDeleteService;
 use App\Service\Resume\ResumeUpdateService;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use RuntimeException;
+use Symfony\Component\CssSelector\Exception\InternalruntimeException;
 
 class ResumeController extends Controller
 {
     private ResumeUpdateService $resumeUpdateService;
+    private ResumeDeleteService $resumeDeleteService;
 
-    public function __construct(ResumeUpdateService $resumeUpdateService)
+    public function __construct(ResumeUpdateService $resumeUpdateService, ResumeDeleteService $resumeDeleteService)
     {
         $this->resumeUpdateService = $resumeUpdateService;
+        $this->resumeDeleteService = $resumeDeleteService;
     }
 
     /**
@@ -30,7 +39,10 @@ class ResumeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
+    public function store(Request $request) {
+       
+    }
+    
 
     /**
      * Display the specified resource.
@@ -43,19 +55,18 @@ class ResumeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ResumeRequest $request, string $id)
     {
         try {
             $data = $request->all();
-            $this->resumeUpdateService->execute(
+          $this->resumeUpdateService->execute(
                 $id,
                 $data['subtitle'] ?? null,
                 $data['linkedin_url'] ?? null,
                 $data['github_url'] ?? null,
                 $data['specialization'] ?? null
             );
-
-            return response('', 200);
+            return response()->json(['message' => __('Currículum actualitzat.')], 200);
         } catch (ModelNotFoundException $resumeNotFoundExeption) {
 
             throw new HttpResponseException(response()->json([
@@ -69,18 +80,22 @@ class ResumeController extends Controller
                     $userNotAuthException->getMessage()
                 )
             ], $userNotAuthException->getHttpCode()));
+        }catch(Exception $exception){
+            throw new HttpResponseException(response()->json([
+                'message' => __(
+                    $exception->getMessage()
+                )
+            ], $exception->getCode()));
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
-            Resume::deleteResume($id);
+           $this->resumeDeleteService->execute($id);
+          
 
-            return response()->json(['message' => __('Resumen eliminat.')], 200);
+            return response()->json(['message' => __('Currículum eliminat.')], 200);
         } catch (ModelNotFoundException $resumeNotFoundExeption) {
 
             throw new HttpResponseException(response()->json([
@@ -88,12 +103,6 @@ class ResumeController extends Controller
                     $resumeNotFoundExeption->getMessage()
                 )
             ], $resumeNotFoundExeption->getCode()));
-        } catch (UserNotAuthenticatedException $userNotAuthException) {
-            throw new HttpResponseException(response()->json([
-                'message' => __(
-                    $userNotAuthException->getMessage()
-                )
-            ], $userNotAuthException->getHttpCode()));
         }
     }
 }
