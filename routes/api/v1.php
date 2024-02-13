@@ -62,8 +62,11 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');
     Route::delete('/tags/{id}', [TagController::class, 'destroy'])->middleware('role:admin')->name('tag.destroy');
     //Resume
+    Route::post('/resume',[ResumeController::class,'store'])->middleware('role:student')->name('resume.store');
+    Route::get('/resume/{id}',[ResumeController::class,'show'])->middleware('role:student')->name("resume.show");
     Route::put('/resume/{id}', [ResumeController::class, 'update'])->middleware('role:student')->name('resume.update');
     Route::delete('/resume/{id}', [ResumeController::class, 'destroy'])->middleware('role:student')->name('resume.delete');
+    
 
     //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
