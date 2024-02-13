@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Resume;
 use App\Service\Resume\ResumeUpdateService;
 use App\Service\Resume\ResumeCreateService;
+use App\Http\Resources\ResumeShowResource;
+use App\Http\Requests\ResumeRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+
 
 class ResumeController extends Controller
 {
@@ -27,16 +30,18 @@ class ResumeController extends Controller
      */
     public function index()
     {
-        //
+        return Resume::collection(
+            Resume::all()
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
+    public function store(ResumeRequest $request) {
 
         try {
-            $data = $request->all();
+            $data = $request->validated()->all();
             $this->resumeCreateService->execute(
                 $data['id'],
                 $data['student_id'],
@@ -54,11 +59,33 @@ class ResumeController extends Controller
                 )
             ], $userNotAuthException->getHttpCode()));
             }
+
     }
-   
+
     public function show(string $id)
     {
-        //
+
+        try {
+            $resume = Resume::where('id', $id)->first();
+            return response()->json(
+                [
+                    'data' => ResumeShowResource::make($resume)],
+                200
+            );
+        } catch (ModelNotFoundException $resumeNotFoundExeption) {
+
+            throw new HttpResponseException(response()->json([
+                'message' => __(
+                    $resumeNotFoundExeption->getMessage()
+                )
+            ], $resumeNotFoundExeption->getCode()));
+        } catch (UserNotAuthenticatedException $userNotAuthException) {
+            throw new HttpResponseException(response()->json([
+                'message' => __(
+                    $userNotAuthException->getMessage()
+                )
+            ], $userNotAuthException->getHttpCode()));
+        }
     }
 
     /**

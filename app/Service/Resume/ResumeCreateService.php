@@ -16,16 +16,15 @@ class ResumeCreateService{
         array $tagsIds = [],
         ?string $specialization = 'Not Set',
     ): Resume{
-        $resume = new Resume();
-        $resume->student_id = $studentId;
-        $resume->subtitle = $subtitle;
-        $resume->linkedin_url = $linkedinUrl;
-        $resume->github_url = $githubUrl;
-        $resume->tags_ids = $tagsIds;
-        $resume->specialization = $specialization;
-
-        $resume->save();
-
+        $resume = Resume::create([
+        'student_id' => $studentId,
+        'subtitle' => $subtitle,
+        'linkedin_url' => $linkedinUrl,
+        'github_url' => $githubUrl,
+        'tags_ids' => $tagsIds,
+        'specialization' => $specialization,
+        ]);
+        
         return $resume;
     }
 }
