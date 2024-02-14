@@ -46,7 +46,28 @@ class ResumeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {}
+    public function store(ResumeRequest $request) {
+
+        try {
+            $data = $request->all();
+            $this->resumeCreateService->execute(
+              //  $data['student_id'],
+                $data['subtitle'] ?? null,
+                $data['linkedin_url'] ?? null,
+                $data['github_url'] ?? null,
+              //  $data['tags_ids'] ?? [],
+                $data['specialization'] ?? 'Not Set'
+            );
+            return response()->json($data, 201);
+        } catch(UserNotAuthenticatedException $userNotAuthException) {
+            throw new HttpResponseException(response()->json([
+                'message' => __(
+                    $userNotAuthException->getMessage()
+                )
+            ], $userNotAuthException->getHttpCode()));
+            }
+
+    }
 
     /**
      * Display the specified resource.

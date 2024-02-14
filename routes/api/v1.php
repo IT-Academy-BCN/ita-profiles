@@ -4,6 +4,7 @@ use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\ResumeController;
+use App\Http\Controllers\api\ResumeTagController;
 use App\Http\Controllers\api\SpecializationListController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\TagController;
@@ -66,6 +67,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/resume/{id}',[ResumeController::class,'show'])->middleware('role:student')->name("resume.show");
     Route::put('/resume/{id}', [ResumeController::class, 'update'])->middleware('role:student')->name('resume.update');
     Route::delete('/resume/{id}', [ResumeController::class, 'destroy'])->middleware('role:student')->name('resume.delete');
+    //ResumeTags
+    Route::post('/resume/tags',[ResumeTagController::class,'store'])->middleware('role:student')->name('resume.tags.store');
     
 
     //logout
