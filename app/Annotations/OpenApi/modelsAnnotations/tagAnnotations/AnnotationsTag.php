@@ -4,6 +4,7 @@ namespace App\Annotations\OpenApi\modelsAnnotations\tagAnnotations;
 
 /**
  * @OA\Schema(
+ *     schema="Tag",
  *     title="Tag",
  *     description="Tag Model",
  *
