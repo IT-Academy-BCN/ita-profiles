@@ -2,40 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
     use HasFactory;
+    use HasUuids;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that aren't mass assignable.
      *
-     * @var array<int, string>
+     * @var array
      */
-    protected $fillable = [
-        'subtitle',
-        'about',
-        'cv',
-        'bootcamp',
-        'end_date',
-        'linkedin',
-        'github',
-    ];
+    protected $guarded = ['id'];
 
-    public function user()
+    public function resume()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(Resume::class);
     }
-
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class, 'student_has_tags', 'student_id', 'tag_id');
-    }
-
-    /*public function projects(){
-        $this->hasMany(Project::class);
-    }*/
-
 }
