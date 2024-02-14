@@ -18,6 +18,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Exceptions\DuplicateResumeException;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
 
@@ -26,6 +27,7 @@ class ResumeController extends Controller
     private ResumeUpdateService $resumeUpdateService;
     private ResumeCreateService $resumeCreateService;
     private ResumeDeleteService $resumeDeleteService;
+    private ResumeShowService $resumeShowService;
 
     public function __construct( ResumeCreateService $resumeCreateService,
                                  ResumeUpdateService $resumeUpdateService, 
@@ -44,9 +46,7 @@ class ResumeController extends Controller
      */
     public function index()
     {
-        return Resume::collection(
-            Resume::all()
-        );
+      
     }
 
     /**
@@ -57,11 +57,11 @@ class ResumeController extends Controller
         try {
             $user = Auth::guard('api')->user();
             $resume = $this->resumeCreateService->execute($request, $user);
-            return response()->json(['message' => 'Resume created successfully', 'resume' => $resume], 201);
+            return response()->json(['message' => 'Currículum creat correctament', 'resume' => $resume], 201);
         } catch (DuplicateResumeException $e) {
-            return response()->json(['message' => 'Duplicate resume', 'error' => $e->getMessage()], 409);
+            return response()->json(['message' => 'Currículum duplicat', 'error' => $e->getMessage()], 409);
         } catch (Exception $e) {
-            return response()->json(['message' => 'Failed to create resume', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'No ha pogut crear el currículum', 'error' => $e->getMessage()], 500);
         }
     }
 
@@ -70,23 +70,15 @@ class ResumeController extends Controller
      */
     public function show(string $id)
     {
-
-        try {
-         
-        } catch (ModelNotFoundException $resumeNotFoundExeption) {
-
-            throw new HttpResponseException(response()->json([
-                'message' => __(
-                    $resumeNotFoundExeption->getMessage()
-                )
-            ], $resumeNotFoundExeption->getCode()));
-        } catch (UserNotAuthenticatedException $userNotAuthException) {
-            throw new HttpResponseException(response()->json([
-                'message' => __(
-                    $userNotAuthException->getMessage()
-                )
-            ], $userNotAuthException->getHttpCode()));
+        try{
+            $resume = $this->resumeShowService->execute($id);
+            return response()->json(['resume' => $resume], 200);
+        } catch (UserNotAuthenticatedException $e) {
+            return response()->json(['message' => 'Usuari no autoritzat'], Response::HTTP_UNAUTHORIZED);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'currículum no trobat'], Response::HTTP_NOT_FOUND);
         }
+
     }
 
     /**
