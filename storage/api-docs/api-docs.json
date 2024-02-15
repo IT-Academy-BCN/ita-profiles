@@ -2236,6 +2236,150 @@
                     "name": "User"
                 }
             }
-        }
+        },
+        "/resume": {
+            "post": {
+              "tags": ["Resume"],
+              "summary": "Create a new resume.",
+              "description": "Creates a new resume for a student. Requires bearer authentication.",
+              "operationId": "createResume",
+              "security": [{ "BearerAuth": [] }],
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ResumeCreateRequest"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "201": {
+                  "description": "Resume created successfully.",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/Resume"
+                      }
+                    }
+                  }
+                },
+                "401": {
+                  "description": "Unauthorized: Missing or invalid bearer token."
+                },
+                "409": {
+                  "description": "Duplicate resume."
+                },
+                "500": {
+                  "description": "Internal Server Error."
+                }
+              }
+            }
+          },
+          "/resume/{id}": {
+            "get": {
+              "tags": ["Resume"],
+              "summary": "Retrieve a specific resume.",
+              "description": "Retrieve a specific resume by ID. Requires bearer authentication.",
+              "operationId": "getResume",
+              "security": [{ "BearerAuth": [] }],
+              "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "ID of the resume",
+                  "required": true,
+                  "schema": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "9b55d3f6-1184-4a70-8b3f-c14abf85e604"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Successful operation. Returns the specified resume.",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/Resume"
+                      }
+                    }
+                  }
+                },
+                "401": {
+                  "description": "Unauthorized: Missing or invalid bearer token."
+                },
+                "404": {
+                  "description": "Resume not found."
+                }
+              }
+            }
+          }
+        },
+        "components": {
+          "schemas": {
+            "Resume": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "example": "9b55d3f6-1184-4a70-8b3f-c14abf85e604"
+                },
+                "subtitle": {
+                  "type": "string",
+                  "example": "Engineer and Developer"
+                },
+                "specialization": {
+                  "type": "string",
+                  "example": "Specialization"
+                },
+                "tags_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": ["tag1", "tag2"]
+                }
+              }
+            },
+            "ResumeCreateRequest": {
+              "type": "object",
+              "properties": {
+                "subtitle": {
+                  "type": "string",
+                  "example": "Engineer and Developer."
+                },
+                "linkedin_url": {
+                  "type": "string",
+                  "format": "uri",
+                  "nullable": true,
+                  "example": "http://www.linkedin.com"
+                },
+                "github_url": {
+                  "type": "string",
+                  "format": "uri",
+                  "nullable": true,
+                  "example": "http://www.github.com"
+                },
+                "tags_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": ["tag1", "tag2"]
+                },
+                "specialization": {
+                  "type": "string",
+                  "enum": ["Frontend", "Backend", "Fullstack", "Data Science", "Not Set"],
+                  "example": "Specialization"
+                }
+              },
+              "required": ["subtitle", "specialization"]
+            }
+          }
+        
     }
 }
