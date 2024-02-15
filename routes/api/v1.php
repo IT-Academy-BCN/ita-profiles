@@ -7,6 +7,7 @@ use App\Http\Controllers\api\ResumeController;
 use App\Http\Controllers\api\ResumeTagController;
 use App\Http\Controllers\api\SpecializationListController;
 use App\Http\Controllers\api\StudentController;
+use App\Http\Controllers\api\StudentListController;
 use App\Http\Controllers\api\TagController;
 use Illuminate\Support\Facades\Route;
 
