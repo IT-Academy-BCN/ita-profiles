@@ -25,10 +25,9 @@ class ResumeRequest extends FormRequest
     {
         return [
             'subtitle'=>'required|string',
-            'linkedin_url'=>'required|url', 
-            'github_url'=>'url', 
-          //  'tags_ids'=>'required|string|max:75|unique:tags',
-            'specialization'=>'required|in:Frontend, Backend, Fullstack, Data Science, Not Set',
+            'linkedin_url'=>'url|nullable', 
+            'github_url'=>'url|nullable', 
+            'specialization'=>'required|in:Frontend,Backend,Fullstack,Data Science,Not Set',
         ];
     }
     protected function failedValidation(Validator $validator)

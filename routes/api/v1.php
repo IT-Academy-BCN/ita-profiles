@@ -31,6 +31,7 @@ Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruit
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
+
 //! ENDPOINT FALSO
 Route::get('/fake-students', function () {
     $data = file_get_contents(base_path('database/data/students.json'));
@@ -64,7 +65,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/tags/{id}', [TagController::class, 'destroy'])->middleware('role:admin')->name('tag.destroy');
     //Resume
     Route::post('/resume',[ResumeController::class,'store'])->middleware('role:student')->name('resume.store');
-    Route::get('/resume/{id}',[ResumeController::class,'show'])->middleware('role:student')->name("resume.show");
+    Route::get('/resume/{id}',[ResumeController::class,'show'])->middleware('role:student')->name('resume.show');
     Route::put('/resume/{id}', [ResumeController::class, 'update'])->middleware('role:student')->name('resume.update');
     Route::delete('/resume/{id}', [ResumeController::class, 'destroy'])->middleware('role:student')->name('resume.delete');
     //ResumeTags
