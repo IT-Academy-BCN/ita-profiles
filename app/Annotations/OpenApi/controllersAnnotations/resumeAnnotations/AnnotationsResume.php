@@ -8,7 +8,7 @@ class AnnotationsResume
     * @OA\Put(
     *      path="/resume/{id}",
     *      operationId="updateResume",
-    *      tags={"Resumes"},
+    *      tags={"Resume"},
     *      summary="Update a resume",
     *      description="Update an existing resume. Authentication is required.",
     *      security={{"bearerAuth": {}}},
@@ -62,7 +62,7 @@ class AnnotationsResume
  * @OA\Delete(
  *      path="/resume/{id}",
  *      operationId="deleteResume",
- *      tags={"Resumes"},
+ *      tags={"Resume"},
  *      summary="Delete a resume",
  *      description="Delete an existing resume. Authentication and authorized ID are required.",
  *      security={{"bearerAuth": {}}},

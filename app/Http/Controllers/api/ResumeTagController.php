@@ -14,22 +14,17 @@ use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 class ResumeTagController extends Controller
 {
     private ResumeTagAddService $resumeTagAddService;
+    private ResumeTagDeleteService $resumeTagDeleteService;
 
 
-    public function __construct(ResumeTagAddService $resumeTagAddService)
+    public function __construct(ResumeTagAddService $resumeTagAddService, ResumeTagDeleteService $resumeTagDeleteService)
     {
         $this->resumeTagAddService = $resumeTagAddService;
+        $this->resumeTagDeleteService = $resumeTagDeleteService;
       
 
     }
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try{
@@ -40,35 +35,22 @@ class ResumeTagController extends Controller
 
             return response()->json(['message' => __(' Etiquetas asignadas')], 201);
         }catch(BadRequestException $invalidArgumentException){
-            throw new HttpResponseException(response()->json(['error' => $invalidArgumentException->getMessage()], $invalidArgumentException->getCode())); // response()->json(['error' => $invalidArgumentException->getMessage()], $invalidArgumentException->getCode());
+            throw new HttpResponseException(response()->json(['error' => $invalidArgumentException->getMessage()], $invalidArgumentException->getCode())); 
         }
      
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+  
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-/**
- * Remove the specified resource from storage.
- */
-public function destroy(Request $request, string $id)
+public function destroy(Request $request)
 {
-    
+    try{
+        $this->resumeTagDeleteService->removespecifiedTags($request->input('tags_ids'));
+
+        return response()->json(['message' => __(' Etiquetas eliminadas')], 200);
+    }catch(BadRequestException $invalidArgumentException){
+        throw new HttpResponseException(response()->json(['error' => $invalidArgumentException->getMessage()], $invalidArgumentException->getCode()));
+    }
+   
 }
 }

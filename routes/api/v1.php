@@ -68,7 +68,9 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/resume/{id}', [ResumeController::class, 'update'])->middleware('role:student')->name('resume.update');
     Route::delete('/resume/{id}', [ResumeController::class, 'destroy'])->middleware('role:student')->name('resume.delete');
     //ResumeTags
-    Route::post('/resume/tags',[ResumeTagController::class,'store'])->middleware('role:student')->name('resume.tags.store');
+    Route::post('/resume/tags/assign',[ResumeTagController::class,'store'])->middleware('role:student')->name('resume.tags.store');
+    Route::delete('resume/tags/remove',[ResumeTagController::class,'destroy'])->middleware('role:student')->name('resume.tags.delete');
+
     
 
     //logout
