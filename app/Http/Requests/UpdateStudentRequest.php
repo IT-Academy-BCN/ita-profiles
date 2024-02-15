@@ -24,17 +24,11 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|regex:/^([^0-9]*)$/',
-            'surname' => 'required|string|regex:/^([^0-9]*)$/',
-            'email' => 'required|string|email|max:255|unique:users',
-            'subtitle' => 'required|string',
-            'bootcamp' => 'required|in:Front end Developer,PHP Developer,Java Developer,Nodejs Developer',
-            'about' => 'string|nullable',
-            'cv' => 'string|max:125|nullable',
-            'linkedin' => 'string|url|max:60|nullable',
-            'github' => 'string|url|max:60|nullable',
+                'name' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
+                'surname' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
+                'photo' => 'string',
+                'status' => 'required|in:Active, Inactive, In a Bootcamp, In a Job',
         ];
-
     }
 
     /**
@@ -44,6 +38,9 @@ class UpdateStudentRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
+        throw new HttpResponseException(response()->json(
+            ['errors' => $validator->errors()],
+            422
+        ));
     }
 }

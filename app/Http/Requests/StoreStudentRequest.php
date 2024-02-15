@@ -2,14 +2,18 @@
 
 namespace App\Http\Requests;
 
-class StoreStudentRequest extends UserRequest
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+class StoreStudentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return true; // TODO Check if here is the correct place to do this
     }
 
     /**
@@ -19,12 +23,23 @@ class StoreStudentRequest extends UserRequest
      */
     public function rules(): array
     {
-        $array = [
-            'subtitle' => 'required|string',
-            'bootcamp' => 'required|in:Front end Developer,PHP Developer,Java Developer,Nodejs Developer',
-            //end_date?
+        return [
+            'name' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
+            'surname' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
+            'photo' => 'string',
+            'status' => 'required|in:Active, Inactive, In a Bootcamp, In a Job',
         ];
-
-        return array_merge(parent::rules(), $array);
+    }
+    /**
+    * If validator fails returns the exception in json form
+    *
+    * @return array
+    */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json(
+            ['errors' => $validator->errors()],
+            422
+        ));
     }
 }

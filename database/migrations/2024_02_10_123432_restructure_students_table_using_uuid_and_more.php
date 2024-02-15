@@ -14,6 +14,7 @@ return new class () extends Migration {
             $table->dropConstrainedForeignId('student_id');
         });
         Schema::drop('students');
+
         Schema::create('students', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name', 255);
@@ -23,6 +24,7 @@ return new class () extends Migration {
                 'status',
                 ['Active', 'Inactive', 'In a Bootcamp', 'In a Job']
             )->default('Active');
+            $table->timestamps();
         });
     }
 
@@ -47,6 +49,7 @@ return new class () extends Migration {
             $table->date('end_date')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('github')->nullable();
+            $table->timestamps();
         });
         Schema::table('student_has_tags', function (Blueprint $table) {
             $table->foreignId('student_id')->constrained()->onDelete('restrict')->onUpdate('cascade');
