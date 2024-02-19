@@ -34,8 +34,8 @@ class ResumeUpdateService
         if ($resumeId != $resume->id) {
             throw new UserNotAuthenticatedException();
         }
-        if ($subtitle === null && $linkedinUrl === null && $githubUrl === null && $specialization === null) {
-            throw new \Exception('No s\'han proporcionat dades per actualitzar', 400);
+        if (empty($subtitle)  && empty($linkedinUrl)  && empty($githubUrl) && empty($specialization)) {
+            throw new \Exception(__('No s\'han proporcionat dades per actualitzar'), 400);
         }
         if ($subtitle !== null) {
             $resume->subtitle = $subtitle;
@@ -59,7 +59,7 @@ class ResumeUpdateService
     });
 
     if(!$transaction){
-        throw new \Exception('La transacció de base de dades ha fallat.',500);
+        throw new \Exception(__('La transacció de base de dades ha fallat.'),500);
     }
 
     }

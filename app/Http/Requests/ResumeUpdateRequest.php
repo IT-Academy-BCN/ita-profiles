@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ResumeUpdateRequest extends FormRequest
 {
@@ -22,10 +24,15 @@ class ResumeUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subtitle'=>'|string',
+            'subtitle'=>'string',
             'linkedin_url'=>'url', 
             'github_url'=>'url', 
             'specialization'=>'string|in:Frontend, Backend, Fullstack, Data Science, Not Set',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
     }
 }

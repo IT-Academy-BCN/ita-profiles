@@ -67,13 +67,6 @@ class AnnotationsResume
  *      description="Delete an existing resume. Authentication and authorized ID are required.",
  *      security={{"bearerAuth": {}}},
  *
- *      @OA\Parameter(
- *          name="Authorization",
- *          in="header",
- *          description="Bearer Token",
- *          required=true,
- *          @OA\Schema(type="string"),
- *      ),
  *
  *      @OA\Parameter(
  *          name="id",

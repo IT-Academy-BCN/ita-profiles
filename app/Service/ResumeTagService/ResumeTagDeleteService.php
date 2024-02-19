@@ -9,7 +9,7 @@ class ResumeTagDeleteService
     public function removespecifiedTags(?array $tagsIds = null): void
     {
         if($tagsIds === null || count($tagsIds) === 0) {
-            throw new BadRequestException('No s\'han proporcionat ids', 400);
+            throw new BadRequestException(__('No s\'han proporcionat ids'), 400);
         }
         $resume = Auth::user()->student->resume;
         $resume->tags_ids = array_filter(json_decode($resume->tags_ids, true), function ($tagId) use ($tagsIds) {
@@ -21,7 +21,7 @@ class ResumeTagDeleteService
 
     public function removeAllTags(): void{
         $resume = Auth::user()->student->resume;
-        $resume->tags_ids = [ ];
+        $resume->tags_ids = [];
         $resume->save();
     }
 }

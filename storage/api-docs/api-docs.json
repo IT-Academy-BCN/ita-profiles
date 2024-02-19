@@ -1571,15 +1571,6 @@
                 "operationId": "deleteResume",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "description": "Bearer Token",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
                         "name": "id",
                         "in": "path",
                         "description": "ID of the resume to be deleted",
@@ -1610,7 +1601,7 @@
         "/resume/tags/assign": {
             "post": {
                 "tags": [
-                    "Resume"
+                    "ResumeTag"
                 ],
                 "summary": "Assign tags to a resume",
                 "description": "Assigns tags to a specific resume by a student.",
@@ -1659,7 +1650,7 @@
         "/resume/tags/remove": {
             "delete": {
                 "tags": [
-                    "Resume"
+                    "ResumeTag"
                 ],
                 "summary": "Remove specified tags from the resume",
                 "description": "Remove specified tags from the resume of the authenticated student.",
@@ -2383,6 +2374,5 @@
                 }
             }
         }
-        
     }
 }

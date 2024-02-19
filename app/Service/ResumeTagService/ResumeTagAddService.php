@@ -19,7 +19,7 @@ class ResumeTagAddService
 
         $filteredTagIds = $this->filterExistingTags($this->filterExistingTagsinTagModel($tagIds));
         if(count($filteredTagIds) === 0) {
-            throw new BadRequestException('Totes les etiquetes proporcionades ja existeixen', 422);
+            throw new BadRequestException(__('Totes les etiquetes proporcionades ja existeixen'), 422);
         }
         $resume->tags_ids = json_encode(array_merge($existingTagIds, $filteredTagIds));
         $resume->save();

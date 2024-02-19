@@ -6,7 +6,7 @@ class AnnotationResumeTag
     /**
  * @OA\Post(
  *     path="/resume/tags/assign",
- *     tags={"Resume"},
+ *     tags={"ResumeTag"},
  *     summary="Assign tags to a resume",
  *     description="Assigns tags to a specific resume by a student.",
  *     security={{"bearerAuth":{}}},
@@ -46,7 +46,7 @@ class AnnotationResumeTag
  *
  * @OA\Delete(
  *     path="/resume/tags/remove",
- *     tags={"Resume"},
+ *     tags={"ResumeTag"},
  *     summary="Remove specified tags from the resume",
  *     description="Remove specified tags from the resume of the authenticated student.",
  *     security={{"bearerAuth":{}}},
