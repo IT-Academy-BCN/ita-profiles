@@ -6,8 +6,6 @@ use App\Models\Resume;
 use App\Models\Student;
 use App\Models\User;
 use Database\Factories\UserFactory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -19,13 +17,15 @@ class ResumeDeleteTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-    
+
     }
+
     public function tearDown(): void
     {
         $this->artisan('migrate:fresh');
         parent::tearDown();
     }
+
     public function verifyOrCreateRole()
     {
         if (! Role::where('name', 'student')->exists()) {
@@ -33,7 +33,8 @@ class ResumeDeleteTest extends TestCase
         }
     }
 
-    public function testDeletemethodInResumeController(){
+    public function testDeletemethodInResumeController()
+    {
 
         $this->verifyOrCreateRole();
         $userFactory = new UserFactory();
@@ -53,20 +54,19 @@ class ResumeDeleteTest extends TestCase
         $resume->save();
         $user->assignRole('student');
 
-
         $this->actingAs($user, 'api');
 
-        $response = $this->deleteJson(route('resume.delete',['id' =>$resume->id]) );
+        $response = $this->deleteJson(route('resume.delete', ['id' => $resume->id]));
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertStatus(200);
-        
 
         $response->assertJson([
             'message' => __('Currículum eliminat.'),
         ]);
     }
 
-    public function testDeleteResumeNotFound(){
+    public function testDeleteResumeNotFound()
+    {
 
         $this->verifyOrCreateRole();
         $userFactory = new UserFactory();
@@ -86,13 +86,11 @@ class ResumeDeleteTest extends TestCase
         $resume->save();
         $user->assignRole('student');
 
-
         $this->actingAs($user, 'api');
 
-        $response = $this->deleteJson(route('resume.delete',[ 900]), );
+        $response = $this->deleteJson(route('resume.delete', [900]));
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertStatus(404);
-        
 
         $response->assertJson([
             'message' => __('Currículum no trobat'),

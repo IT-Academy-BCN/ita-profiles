@@ -100,8 +100,8 @@ class RecruiterRegisterTest extends TestCase
         $numbers = str_pad(mt_rand(1, 99999999), 7, '0', STR_PAD_LEFT);
         $letters = 'TRWAGMYFPDXBNJZSQVHLCKE';
 
-        $checkDigit = $letters[($randomPrefix . $numbers) % 23];
+        $checkDigit = $letters[($randomPrefix.$numbers) % 23];
 
-        return $randomPrefix . $numbers . $checkDigit;
+        return $randomPrefix.$numbers.$checkDigit;
     }
 }

@@ -1,20 +1,21 @@
 <?php
 
-
 declare(strict_types=1);
+
 namespace App\Service\Resume;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+
+use App\Exceptions\DuplicateResumeException;
+use App\Http\Requests\ResumeRequest;
 use App\Models\Resume;
 use App\Models\Student;
-use App\Http\Requests\ResumeRequest;
-use App\Exceptions\DuplicateResumeException;
+use Illuminate\Support\Facades\DB;
 
-class ResumeCreateService{
+class ResumeCreateService
+{
     public function execute(ResumeRequest $request, $user): Resume
     {
         // Check if the user is authenticated
-        if (!$user) {
+        if (! $user) {
             throw new \Exception('Unauthorized', 401);
         }
         $student = Student::find($user->id);

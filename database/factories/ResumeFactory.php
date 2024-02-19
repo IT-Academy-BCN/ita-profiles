@@ -16,15 +16,15 @@ class ResumeFactory extends Factory
      */
     public function definition(): array
     {
-        
-            return [
-                'id' => $this->faker->uuid,
-                'subtitle' => $this->faker->sentence,
-                'specialization' => $this->faker->randomElement(['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set']),
-                'github_url' => $this->faker->url,
-                'linkedin_url' => $this->faker->url,
-                'tags_ids' => json_encode($this->faker->randomElements(range(1, 10), 3)),
-            ];
-    
+
+        return [
+            'id' => $this->faker->uuid,
+            'subtitle' => $this->faker->sentence,
+            'specialization' => $this->faker->randomElement(['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set']),
+            'github_url' => $this->faker->url,
+            'linkedin_url' => $this->faker->url,
+            'tags_ids' => json_encode($this->faker->randomElements(range(1, 10), 3)),
+        ];
+
     }
 }

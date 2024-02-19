@@ -1,19 +1,20 @@
 <?php
 
 declare(strict_types=1);
+
 namespace App\Service\Resume;
-use App\Models\Resume;
-use App\Http\Resources\ResumeShowResource;
-use Illuminate\Http\Exceptions\HttpResponseException;
+
 use App\Exceptions\UserNotAuthenticatedException;
+use App\Http\Resources\ResumeShowResource;
+use App\Models\Resume;
 use Illuminate\Support\Facades\Auth;
 
-class ResumeShowService{
-
+class ResumeShowService
+{
     public function execute(string $resumeId): ResumeShowResource
     {
         // Ensure user is authenticated
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             throw new UserNotAuthenticatedException();
         }
 
@@ -21,5 +22,4 @@ class ResumeShowService{
 
         return ResumeShowResource::make($resume);
     }
-
 }

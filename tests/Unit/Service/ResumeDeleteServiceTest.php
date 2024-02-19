@@ -38,7 +38,6 @@ class ResumeDeleteServiceTest extends TestCase
         $user->save();
         $this->actingAs($user, 'api');
 
-
         $student = new Student();
         $student->setUniqueIds();
         $student->user_id = $user->id;
@@ -49,10 +48,9 @@ class ResumeDeleteServiceTest extends TestCase
         $resume->student_id = $student->id;
         $resume->subtitle = '';
         $resume->save();
-    
+
         $this->resumeDeleteService->execute($resume->id);
 
-     
         $actualResume = Resume::find($resume->id);
         self::assertNull($actualResume);
     }

@@ -59,10 +59,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\resumeAnnotations;
  *     description="Student Bootcamp's specialization",
  *     type="enum"
  * )
- *
- *
- *
- *
  * @OA\Property(
  *     property="tags_ids",
  *     description="List of student's tags",
@@ -70,9 +66,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\resumeAnnotations;
  * )
  *
  * @var string
- *
- *
- *
  *
  * @OA\Property(
  *     property="created_at",
@@ -91,7 +84,7 @@ namespace App\Annotations\OpenApi\modelsAnnotations\resumeAnnotations;
  * )
  *
  * @var \Illuminate\Support\Carbon
-*/
-
-
-class AnnotationsResume {}
+ */
+class AnnotationsResume
+{
+}

@@ -1,5 +1,7 @@
-<?php 
+<?php
+
 declare(strict_types=1);
+
 namespace App\Service\Resume;
 
 use App\Exceptions\UserNotAuthenticatedException;
@@ -7,8 +9,8 @@ use App\Models\Resume;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 
-class ResumeDeleteService{
-
+class ResumeDeleteService
+{
     public function execute(string $resumeId)
     {
         $resume = Resume::find($resumeId);
@@ -22,8 +24,6 @@ class ResumeDeleteService{
         }
 
         $resume->delete();
-
-       
 
     }
 }

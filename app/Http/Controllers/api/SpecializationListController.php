@@ -10,7 +10,7 @@ class SpecializationListController extends Controller
     {
         $specialization_list = ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'None'];
 
-        $filtered_list = array_diff($specialization_list, ["None"]);
+        $filtered_list = array_diff($specialization_list, ['None']);
 
         return response()->json($filtered_list);
     }

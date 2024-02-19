@@ -10,7 +10,7 @@ class DuplicateResumeException extends Exception
 
     public function __construct($message = null)
     {
-        parent::__construct($message ?: 'Un estudiant només pot tenir un currículum.'); 
+        parent::__construct($message ?: 'Un estudiant només pot tenir un currículum.');
 
     }
 }

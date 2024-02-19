@@ -49,4 +49,6 @@ namespace App\Annotations\OpenApi\modelsAnnotations\tagAnnotations;
  *
  * @var \Illuminate\Support\Carbon
  */
-class AnnotationsTag {}
+class AnnotationsTag
+{
+}

@@ -7,7 +7,6 @@ use App\Http\Controllers\api\ResumeController;
 use App\Http\Controllers\api\ResumeTagController;
 use App\Http\Controllers\api\SpecializationListController;
 use App\Http\Controllers\api\StudentController;
-use App\Http\Controllers\api\StudentListController;
 use App\Http\Controllers\api\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +30,6 @@ Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.
 Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruiter.create');
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
-
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
@@ -58,15 +56,13 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');
     Route::delete('/tags/{id}', [TagController::class, 'destroy'])->middleware('role:admin')->name('tag.destroy');
     //Resume
-    Route::post('/resume',[ResumeController::class,'store'])->middleware('role:student')->name('resume.store');
-    Route::get('/resume/{id}',[ResumeController::class,'show'])->middleware('role:student')->name('resume.show');
+    Route::post('/resume', [ResumeController::class, 'store'])->middleware('role:student')->name('resume.store');
+    Route::get('/resume/{id}', [ResumeController::class, 'show'])->middleware('role:student')->name('resume.show');
     Route::put('/resume/{id}', [ResumeController::class, 'update'])->middleware('role:student')->name('resume.update');
     Route::delete('/resume/{id}', [ResumeController::class, 'destroy'])->middleware('role:student')->name('resume.delete');
     //ResumeTags
-    Route::post('/resume/tags/assign',[ResumeTagController::class,'store'])->middleware('role:student')->name('resume.tags.store');
-    Route::delete('resume/tags/remove',[ResumeTagController::class,'destroy'])->middleware('role:student')->name('resume.tags.delete');
-
-    
+    Route::post('/resume/tags/assign', [ResumeTagController::class, 'store'])->middleware('role:student')->name('resume.tags.store');
+    Route::delete('resume/tags/remove', [ResumeTagController::class, 'destroy'])->middleware('role:student')->name('resume.tags.delete');
 
     //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

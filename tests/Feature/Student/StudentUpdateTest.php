@@ -68,7 +68,7 @@ class StudentUpdateTest extends TestCase
             'github' => 'http://www.github.com/johnnydoe',
         ];
 
-        $response = $this->withHeaders(['Accept' => 'application/json'])->put('api/v1/students/' . $user->student->id, $data);
+        $response = $this->withHeaders(['Accept' => 'application/json'])->put('api/v1/students/'.$user->student->id, $data);
 
         $user = $user->fresh();
         $student = $user->student->fresh();

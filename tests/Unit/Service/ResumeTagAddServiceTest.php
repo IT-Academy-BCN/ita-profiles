@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
 namespace Service;
@@ -9,17 +10,16 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Service\ResumeTagService\ResumeTagAddService;
 use Database\Factories\UserFactory;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ResumeTagAddServiceTest extends TestCase
 {
-
     public function setUp(): void
     {
         parent::setUp();
         $this->resumeTagAddService = new ResumeTagAddService();
     }
+
     public function testCanInstantiate(): void
     {
         self::assertInstanceOf(ResumeTagAddService::class, $this->resumeTagAddService);
@@ -31,7 +31,6 @@ class ResumeTagAddServiceTest extends TestCase
         parent::tearDown();
     }
 
-
     public function testExecuteAddsTagsToResume()
     {
         $userFactory = new UserFactory();
@@ -39,8 +38,6 @@ class ResumeTagAddServiceTest extends TestCase
         $user = new User($definition);
         $user->save();
         $this->actingAs($user, 'api');
-        
-
 
         $student = new Student();
         $student->setUniqueIds();
@@ -53,22 +50,12 @@ class ResumeTagAddServiceTest extends TestCase
         $resume->subtitle = '';
         $resume->save();
 
-
-
- 
-        // Crear algunas etiquetas
         $tag1 = Tag::factory()->create();
         $tag2 = Tag::factory()->create();
 
-      
         $this->resumeTagAddService->execute([$tag1->id, $tag2->id]);
 
-        // Verificar que las etiquetas se hayan añadido correctamente al currículum
         $resume->refresh();
         $this->assertCount(2, json_decode($resume->tags_ids));
     }
-
-  
 }
-
-

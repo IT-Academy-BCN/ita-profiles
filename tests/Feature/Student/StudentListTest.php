@@ -48,6 +48,7 @@ class StudentListTest extends TestCase
         $response->assertHeader('Content-Type', 'application/json');
 
     }
+
     public function test_student_list_controller()
     {
         $response = $this->get('api/v1/student/list/for-home');
@@ -60,8 +61,8 @@ class StudentListTest extends TestCase
                 'subtitle',
                 'photo',
                 'tags',
-                'id'
-            ]/* ,
+                'id',
+            ], /* ,
         '*.tags.*' => [
             'id',
             'name'

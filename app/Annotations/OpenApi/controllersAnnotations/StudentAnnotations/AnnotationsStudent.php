@@ -17,11 +17,14 @@ class AnnotationsStudent
      *         description="",
      *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(
      *                 type="array",
      *                 property="data",
+     *
      *                 @OA\Items(
      *                     type="object",
+     *
      *                     @OA\Property(property="fullname", type="string", example="Juan Pérez"),
      *                     @OA\Property(property="subtitle", type="string", example="Desarrollador Frontend"),
      *                     @OA\Property(property="photo",description="Student Image Path",
@@ -34,17 +37,20 @@ class AnnotationsStudent
      *          )
      *      ),
      *
-     *
      *      @OA\Schema(
-    *           schema="Tag",
-    *           type="object",
-    *           @OA\Property(property="id", type="integer", example=1),
-    *           @OA\Property(property="name", type="string", example="JavaScript"),
-    *           example={"id": 1, "name": "JavaScript"}
+     *           schema="Tag",
+     *           type="object",
+     *
+     *           @OA\Property(property="id", type="integer", example=1),
+     *           @OA\Property(property="name", type="string", example="JavaScript"),
+     *           example={"id": 1, "name": "JavaScript"}
      *      )
      * )
      */
-    public function __invoke() {}
+    public function __invoke()
+    {
+    }
+
     /**
      * Llista de tots els estudiants
      *
@@ -83,7 +89,9 @@ class AnnotationsStudent
      *     )
      * )
      */
-    public function index() {}
+    public function index()
+    {
+    }
 
     /**
      * Crea un estudiant
@@ -147,7 +155,9 @@ class AnnotationsStudent
      *      ),
      * )
      */
-    public function store() {}
+    public function store()
+    {
+    }
 
     /**
      * Detalls d'un estudiant
@@ -204,7 +214,9 @@ class AnnotationsStudent
      *     ),
      * )
      */
-    public function show() {}
+    public function show()
+    {
+    }
 
     /**
      * Actualitza les dades d'un estudiant
@@ -288,7 +300,9 @@ class AnnotationsStudent
      *      )
      * )
      */
-    public function update() {}
+    public function update()
+    {
+    }
 
     /**
      * @OA\Delete(
@@ -342,5 +356,7 @@ class AnnotationsStudent
      *      )
      * )
      */
-    public function delete() {}
+    public function delete()
+    {
+    }
 }

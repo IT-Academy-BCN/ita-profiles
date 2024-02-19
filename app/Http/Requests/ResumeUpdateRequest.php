@@ -24,10 +24,10 @@ class ResumeUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subtitle'=>'string',
-            'linkedin_url'=>'url', 
-            'github_url'=>'url', 
-            'specialization'=>'string|in:Frontend, Backend, Fullstack, Data Science, Not Set',
+            'subtitle' => 'string',
+            'linkedin_url' => 'url',
+            'github_url' => 'url',
+            'specialization' => 'string|in:Frontend, Backend, Fullstack, Data Science, Not Set',
         ];
     }
 
