@@ -68,7 +68,7 @@ class AnnotationsResume
      * @OA\Get(
      *     path="/resume/{id}",
      *     tags={"Resume"},
-     *     summary="Retrieve a specific resume.",
+     *     summary="Retrieve a specific resume. Authentication is required.",
      *     description="Retrieve a specific resume by ID.",
      *     operationId="getResume",
      *     security={{"bearerAuth": {}}},
