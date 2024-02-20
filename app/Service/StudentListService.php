@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class StudentListService
 {
-    public function execute()
+    public function execute(): array
     {
 
         $resumes = Resume::all();
@@ -36,6 +36,6 @@ class StudentListService
 
             ];
         });
-        return $data;
+        return $data->toArray();
     }
 }

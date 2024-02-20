@@ -18,17 +18,11 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => function () {
-                return User::factory()->create()->id;
-            },
+            'user_id' => User::factory()->create()->id,
             'subtitle' => $this->faker->sentence,
-            'about' => $this->faker->paragraph,
-            'cv' => $this->faker->word . '.pdf',
+           
             'bootcamp' => $this->faker->randomElement(['front end Developer', 'php developer', 'java developer', 'nodejs developer', 'data scientists']),
-            'end_date' => $this->faker->dateTimeThisYear,
-            'linkedin' => $this->faker->url,
-            'github' => $this->faker->url,
-
+           
         ];
     }
 }
