@@ -16,14 +16,14 @@ class ResumeFactory extends Factory
      * @return array<string, mixed>
      */
 
-     const  SUBTITLES = [
-        "Ingeniero de Software",
-        "Full Stack developer en PHP",
-        "Frontend developer React",
-        "Backend developer Java",
-        "Analista de Datos"
+    public const  SUBTITLES = [
+       "Ingeniero de Software",
+       "Full Stack developer en PHP",
+       "Frontend developer React",
+       "Backend developer Java",
+       "Analista de Datos"
     ];
-    
+
     public function definition(): array
     {
         $tagsIds = json_encode($this->faker->randomElements((range(1, 26)), 4));

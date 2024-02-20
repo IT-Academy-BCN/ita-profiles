@@ -28,7 +28,7 @@ class StudentFactory extends Factory
             'end_date' => $this->faker->dateTimeThisYear,
             'linkedin' => $this->faker->url,
             'github' => $this->faker->url,
-        
+
         ];
     }
 }

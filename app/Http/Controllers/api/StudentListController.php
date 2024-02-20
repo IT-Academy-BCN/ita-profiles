@@ -9,7 +9,6 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StudentListController extends Controller
 {
-
     private StudentListService $studentListService;
 
     public function __construct(StudentListService $studentListService)
@@ -19,14 +18,14 @@ class StudentListController extends Controller
     }
     public function __invoke()
     {
-            try{
-                $data = $this->studentListService->execute();
+        try {
+            $data = $this->studentListService->execute();
 
-                return response()->json($data,200);
-            }catch(ModelNotFoundException $resumesNotFoundException){
-                throw new HttpResponseException(response()->json([
-                    'message' => $resumesNotFoundException->getMessage()], $resumesNotFoundException->getCode()));
-            }
-     
+            return response()->json($data, 200);
+        } catch(ModelNotFoundException $resumesNotFoundException) {
+            throw new HttpResponseException(response()->json([
+                'message' => $resumesNotFoundException->getMessage()], $resumesNotFoundException->getCode()));
+        }
+
     }
 }

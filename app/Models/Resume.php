@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Resume extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
+    use HasUuids;
 
     protected $fillable = [
         'student_id',
@@ -17,10 +18,11 @@ class Resume extends Model
         'github_url',
         'specialization',
         'tags_ids',
-        
+
     ];
 
-    public function student(){
+    public function student()
+    {
         return $this->belongsTo(Student::class);
     }
 }
