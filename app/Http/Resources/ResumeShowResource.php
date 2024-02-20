@@ -17,8 +17,10 @@ class ResumeShowResource extends JsonResource
         return [
             'id' => $this->id,
             'subtitle' => $this->subtitle,
-            'specialization' => $this->specialization,
+            'linkedin_url' => $this->linkedin_url,
+            'github_url' => $this->github_url,
             'tags_ids' => $this->tags_ids,
+            'specialization' => $this->specialization,
 
         ];
     }
