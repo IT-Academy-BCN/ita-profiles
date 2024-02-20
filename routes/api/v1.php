@@ -36,6 +36,9 @@ Route::get('/student/list/for-home', StudentListController::class)->name('profil
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
+// Student projects detail Endpoint
+Route::get('/students/{id}/projects', StudentProjectDetailController::class)->name('projects.list');
+
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
 //Passport Auth with token
