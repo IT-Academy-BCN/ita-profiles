@@ -1454,7 +1454,239 @@
                 ]
             }
         },
+        "/resume": {
+            "post": {
+                "tags": [
+                    "Resume"
+                ],
+                "summary": "Create a new resume.",
+                "description": "Creates a new resume for the authenticated student.",
+                "operationId": "createResume",
+                "requestBody": {
+                    "description": "Data for creating a resume",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "subtitle",
+                                    "tags_ids",
+                                    "specialization"
+                                ],
+                                "properties": {
+                                    "subtitle": {
+                                        "type": "string",
+                                        "example": "Fullstack PHP Developer"
+                                    },
+                                    "linkedin_url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "example": "http://www.linkedin.com",
+                                        "nullable": true
+                                    },
+                                    "github_url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "example": "http://www.github.com",
+                                        "nullable": true
+                                    },
+                                    "tags_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "tag1",
+                                            "tag2"
+                                        ]
+                                    },
+                                    "specialization": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Frontend",
+                                            "Backend",
+                                            "Fullstack",
+                                            "Data Science",
+                                            "Not Set"
+                                        ],
+                                        "example": "Fullstack"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Resume created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resume created successfully."
+                                        },
+                                        "resume": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "format": "uuid",
+                                                    "example": "9b55d3f6-1184-4a70-8b3f-c14abf85e604"
+                                                },
+                                                "subtitle": {
+                                                    "type": "string",
+                                                    "example": "Fullstack PHP Developer"
+                                                },
+                                                "linkedin_url": {
+                                                    "type": "string",
+                                                    "format": "uri",
+                                                    "example": "http://www.linkedin.com",
+                                                    "nullable": true
+                                                },
+                                                "github_url": {
+                                                    "type": "string",
+                                                    "format": "uri",
+                                                    "example": "http://www.github.com",
+                                                    "nullable": true
+                                                },
+                                                "tags_ids": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "example": [
+                                                        "tag1",
+                                                        "tag2"
+                                                    ]
+                                                },
+                                                "specialization": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "Frontend",
+                                                        "Backend",
+                                                        "Fullstack",
+                                                        "Data Science",
+                                                        "Not Set"
+                                                    ],
+                                                    "example": "Fullstack"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. User not authenticated."
+                    },
+                    "409": {
+                        "description": "Conflict. Duplicate resume found."
+                    },
+                    "500": {
+                        "description": "Internal Server Error. Failed to create resume."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/resume/{id}": {
+            "get": {
+                "tags": [
+                    "Resume"
+                ],
+                "summary": "Retrieve a specific resume.",
+                "description": "Retrieve a specific resume by ID.",
+                "operationId": "getResume",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the resume",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "9b55d3f6-1184-4a70-8b3f-c14abf85e604"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation. Returns the specified resume.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "9b55d3f6-1184-4a70-8b3f-c14abf85e604"
+                                        },
+                                        "subtitle": {
+                                            "type": "string",
+                                            "example": "Fullstack PHP Developer"
+                                        },
+                                        "linkedin_url": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "example": "http://www.linkedin.com",
+                                            "nullable": true
+                                        },
+                                        "github_url": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "example": "http://www.github.com",
+                                            "nullable": true
+                                        },
+                                        "tags_ids": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "tag1",
+                                                "tag2"
+                                            ]
+                                        },
+                                        "specialization": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Frontend",
+                                                "Backend",
+                                                "Fullstack",
+                                                "Data Science",
+                                                "Not Set"
+                                            ],
+                                            "example": "Fullstack"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. User not authenticated."
+                    },
+                    "404": {
+                        "description": "Resume not found."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "put": {
                 "tags": [
                     "Resume"
