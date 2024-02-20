@@ -20,9 +20,9 @@ class StudentFactory extends Factory
         return [
             'user_id' => User::factory()->create()->id,
             'subtitle' => $this->faker->sentence,
-           
+
             'bootcamp' => $this->faker->randomElement(['front end Developer', 'php developer', 'java developer', 'nodejs developer', 'data scientists']),
-           
+
         ];
     }
 }
