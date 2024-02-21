@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\ValueObjects;
 
-enum StudentStatus: string {
+enum StudentStatus: string
+{
     case ACTIVE = 'Active';
     case INACTIVE = 'Inactive';
     case IN_A_BOOTCAMP = 'In a Bootcamp';

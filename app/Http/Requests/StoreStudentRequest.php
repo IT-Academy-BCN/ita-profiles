@@ -13,7 +13,7 @@ class StoreStudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // TODO Check if here is the correct place to do this
+        return true;
     }
 
     /**

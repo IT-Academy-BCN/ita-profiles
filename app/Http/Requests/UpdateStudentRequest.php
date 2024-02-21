@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\ValueObjects\StudentStatus;
 
 class UpdateStudentRequest extends FormRequest
 {
@@ -23,11 +24,12 @@ class UpdateStudentRequest extends FormRequest
      */
     public function rules(): array
     {
+        $statusValues = collect(StudentStatus::cases())->map(fn($case) => $case->value)->join(',');
         return [
                 'name' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
                 'surname' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
                 'photo' => 'string',
-                'status' => 'required|in:Active, Inactive, In a Bootcamp, In a Job',
+                'status' => 'required|in:' . $statusValues,
         ];
     }
 
