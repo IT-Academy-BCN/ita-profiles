@@ -1478,6 +1478,67 @@
                 }
             }
         },
+        "/api/v1/students/{id}/projects": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get a detailed list of projects for a student",
+                "description": "Returns a list of projects for a specific student. (Note: This endpoint returns hardcoded project details)",
+                "operationId": "getStudentProjects",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "project_name": {
+                                                "description": "Name of the project",
+                                                "type": "string"
+                                            },
+                                            "project_site": {
+                                                "description": "Site where the project is happening",
+                                                "type": "string"
+                                            },
+                                            "project_skills": {
+                                                "description": "Skills required for the project",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "project_repository": {
+                                                "description": "URL of the project repository",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                }
+            }
+        },
         "/tags": {
             "get": {
                 "tags": [

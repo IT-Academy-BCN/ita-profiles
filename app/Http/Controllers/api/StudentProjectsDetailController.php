@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 
 class StudentProjectsDetailController extends Controller
 {
-    public function __invoke()
+    public function __invoke($id)
     {
+        Student::findOrFail($id);
+
         $projects_detail = [
+
             'projects' => [
                 [
                     'project_name' => 'ITA Project 1',
