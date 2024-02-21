@@ -5,6 +5,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
+use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
 use App\Http\Controllers\api\SpecializationListController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,7 @@ Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recr
 
 // Students
 Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
+Route::get('/student/detail/for-home', StudentDetailController::class)->name('student.detail');
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
