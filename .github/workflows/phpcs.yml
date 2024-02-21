@@ -1,0 +1,29 @@
+name: PHP CodeSniffer
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php --install-dir=bin --filename=composer
+          php -r "unlink('composer-setup.php');"
+        working-directory: ${{ github.workspace }}
+
+      - name: Install dependencies
+        run: composer install
+        working-directory: ${{ github.workspace }}
+
+      - name: Run PHPCS
+        run: vendor/bin/phpcs
+        working-directory: ${{ github.workspace }}
