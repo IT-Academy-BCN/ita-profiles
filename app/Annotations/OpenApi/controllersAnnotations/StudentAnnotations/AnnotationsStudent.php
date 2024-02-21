@@ -10,7 +10,9 @@ class AnnotationsStudent
      *     operationId="getAllStudentsForFigma",
      *     tags={"Student"},
      *     summary="Get all Students.",
-     *     description="Get a list of all students registered with the Profile-Home fields in Figma Design. No authentication required",
+     *     description="Get a list of all students registered with the Profile-Home fields in Figma Design.
+
+    No authentication required",
      *
      *     @OA\Response(
      *         response=200,
@@ -34,140 +36,196 @@ class AnnotationsStudent
      *          )
      *      ),
      *
-     *
      *      @OA\Schema(
-    *           schema="Tag",
-    *           type="object",
-    *           @OA\Property(property="id", type="integer", example=1),
-    *           @OA\Property(property="name", type="string", example="JavaScript"),
-    *           example={"id": 1, "name": "JavaScript"}
+     *           schema="Tag",
+     *           type="object",
+     *           @OA\Property(property="id", type="integer", example=1),
+     *           @OA\Property(property="name", type="string", example="JavaScript"),
+     *           example={"id": 1, "name": "JavaScript"}
      *      )
      * )
      */
     public function __invoke() {}
-    /**
-     * Llista de tots els estudiants
+
+    /** List all students (INDEX)
      *
      * @OA\Get (
      *     path="/students",
-     *     operationId="getAllStudents",
+     *     operationId="getStudents",
      *     tags={"Student"},
-     *     summary="Get a list of all students.",
-     *     description="Get a list of all registered students. Authentication is not required.",
-     *
+     *     summary="Get list of students.",
+     *     description="Retrieves a paginated list of students.
+
+    No authentication required",
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation. Returns a list of registered students.",
+     *         description="Successful operation. Returns a list of students.",
      *
      *         @OA\JsonContent(
-     *
+     *             type="object",
      *             @OA\Property(
      *                 type="array",
      *                 property="data",
-     *
-     *                 @OA\Items(
-     *                     type="object",
-     *
-     *                     @OA\Property(property="name",type="string",example="John" ),
-     *                     @OA\Property(property="surname", type="string",example="Doe"),
-     *                     @OA\Property(property="subtitle",type="string",example="Engineer and Developer" ),
-     *                     @OA\Property( property="about", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit." ),
-     *                     @OA\Property(property="cv", type="string",example="My currículum."),
-     *                     @OA\Property(property="bootcamp", type="string",example="PHP Developer" ),
-     *                     @OA\Property(property="end_date",type="date",example="..." ),
-     *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
-     *                     @OA\Property(property="github",type="string", example="http://www.github.com")
-     *                 )
+     *                 @OA\Items(ref="#/components/schemas/Student")
+     *             ),
+     *                 @OA\Property(
+     *                 property="links",
+     *                 type="object",
+     *                 @OA\Property(
+     *                   property="first",
+     *                   type="string",
+     *                   example="http://127.0.0.1:8000/api/v1/students?page=1"),
+     *                 @OA\Property(
+     *                   property="last",
+     *                   type="string",
+     *                   example="http://127.0.0.1:8000/api/v1/students?page=1"),
+     *                 @OA\Property(property="prev", type="string", example=null),
+     *                 @OA\Property(property="next", type="string", example=null)
+     *             ),
+     *             @OA\Property(
+     *                 property="meta",
+     *                 type="object",
+     *                 @OA\Property(property="current_page", type="integer", example=1),
+     *                 @OA\Property(property="from", type="integer", example=1),
+     *                 @OA\Property(property="last_page", type="integer", example=1),
+     *                 @OA\Property(
+     *                     property="links",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="url", type="string", example=null),
+     *                         @OA\Property(property="label", type="string", example="&laquo; Anterior"),
+     *                         @OA\Property(property="active", type="boolean", example=false)
+     *                     )
+     *                 ),
+     *                 @OA\Property(property="path", type="string", example="http://127.0.0.1:8000/api/v1/students"),
+     *                 @OA\Property(property="per_page", type="integer", example=10),
+     *                 @OA\Property(property="to", type="integer", example=2),
+     *                 @OA\Property(property="total", type="integer", example=2)
      *             )
      *         )
      *     )
      * )
+     *
+     * @OA\Schema(
+     *     schema="Student",
+     *     type="object",
+     *       @OA\Property(property="name", type="string", example="John"),
+     *       @OA\Property(property="surname", type="string", example="Doe"),
+     *       @OA\Property(property="photo", type="string", example="http://www.photo.com/johndoe"),
+     *       @OA\Property(property="status", type="enum", example="active"),
+     *       @OA\Property(
+     *           property="id",
+     *           type="uuid",
+     *           description="UUID of the student",
+     *           example="9b60ef21-ff25-44d5-ba26-217b9b816192"),
+     * )
      */
     public function index() {}
 
-    /**
-     * Crea un estudiant
+    /** Create a student (STORE)
      *
      * @OA\Post (
      *     path="/students",
      *     operationId="createStudent",
      *     tags={"Student"},
      *     summary="Create a new Student.",
-     *     description="Creates a new user student. Authentication is not required.",
+     *     description="Creates a new student with the provided data.
+          <ul><li>Name and Surname are <b>required</b>.</li>
+          <li><b>Status</b> can be <i>'Active'</i>, <i>'Inactive'</i>, <i>'In a Bootcamp'</i> or <i>'In a Job'.</i></li>
+          <li><b>Active</b> status is set by <b>default</b>.</li>
+          <li>Authentication is not required.</li></ul>",
      *
      *     @OA\RequestBody(
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="name", type="string", example="John"),
-     *              @OA\Property(property="surname", type="string", example="Doe"),
-     *              @OA\Property(property="email", type="string", format="email", example="john@example.com"),
-     *              @OA\Property(property="dni", type="string", example="13954476P"),
-     *              @OA\Property(property="password", type="string", format="password", example="secretpassword"),
-     *              @OA\Property(property="subtitle", type="string", example="Engineer and Developer."),
-     *              @OA\Property(property="bootcamp", type="string", example="PHP Developer"),
-     *              @OA\Property(property="end_date", type="date", example="..."),
-     *          )
-     *      ),
-     *
+     *         required=true,
+     *         description="Data for the new student",
+     *         @OA\JsonContent(
+     *           required={"name", "surname", "status"},
+     *           @OA\Property(
+     *             property="name",
+     *             type="string",
+     *             description="First name of the student",
+     *             example="Name"),
+     *           @OA\Property(
+     *             property="surname",
+     *             type="string",
+     *             description="Surname of the student",
+     *             example="Surname"),
+     *           @OA\Property(
+     *             property="photo",
+     *             type="string",
+     *             description="URL to the photo of the student",
+     *             example="http://www.photo.com"),
+     *           @OA\Property(
+     *             property="status",
+     *             type="string",
+     *             description="Status of the student",
+     *             example="Active"),
+     *             enum={"Active", "Inactive", "In a Bootcamp", "In a Job"},
+     *        )
+     *     ),
      *     @OA\Response(
      *         response=201,
      *         description="Student created successfully. No token is returned.",
      *
      *         @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Student created successfully.")
-     *          )
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  description="Success message",
+     *                  example="Registre realitzat amb èxit."),
+     *                  @OA\Property(
+     *                  property="data",
+     *                  type="object",
+     *                  ref="#/components/schemas/Student"
+     *             )
+     *         )
      *     ),
-     *
      *     @OA\Response(
-     *          response=422,
-     *          description="Validation error",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="The given data was invalid."),
-     *              @OA\Property(property="errors", type="object",
-     *                  example={
-     *                      "name": {"The name field is required."},
-     *                      "surname": {"The surname field is required."},
-     *                      "email": {"The email field is required."},
-     *                      "email": {"The email must be unique."},
-     *                      "dni": {"The dni/nie must be unique."},
-     *                      "subtitle": {"The subtitle field is required."},
-     *                      "bootcamp": {"The bootcamp field is required."},
-     *                  }
-     *              )
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *            response=404,
-     *            description="Register was not succesful.Please try it again later."
-     *      ),
+     *         response=400,
+     *         description="Bad request when data validation fails",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *               property="message",
+     *               type="string",
+     *               description="Error message",
+     *               example="Registre no efectuat. Si-us-plau, torna-ho a provar."),
+     *             @OA\Property(property="error", type="string", description="Error details")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object", description="Detail of validation errors")
+     *         )
+     *     )
      * )
      */
     public function store() {}
 
-    /**
-     * Detalls d'un estudiant
+    /** Show details from one student (SHOW)
      *
      * @OA\Get (
      *     path="/students/{id}",
      *     operationId="getStudentDetails",
      *     tags={"Student"},
      *     summary="Get details of a Student.",
-     *     description="Get the details of a specific student. Authentication is not required.",
+     *     description="Get the details of a specific student by UUID.
+
+    No authentication required",
      *
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
-     *          description="ID of the student",
+     *          description="UUID of the student",
      *          required=true,
      *
      *          @OA\Schema(
-     *              type="integer",
-     *              format="int64"
+     *              type="string",
+     *              format="uuid",
+     *              example="123e4567-e89b-12d3-a456-426614174000"
      *          ),
      *      ),
      *
@@ -177,170 +235,140 @@ class AnnotationsStudent
      *
      *         @OA\JsonContent(
      *
-     *             @OA\Property(
-     *                 type="array",
-     *                 property="data",
-     *
-     *                 @OA\Items(
-     *                     type="object",
-     *
-     *                     @OA\Property(property="name", type="string", example="John"),
-     *                     @OA\Property(property="surname",type="string", example="Doe"),
-     *                     @OA\Property(property="subtitle", type="string", example="Engineer and Developer."),
-     *                     @OA\Property(property="about", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
-     *                     @OA\Property(property="cv", type="string", example="My currículum."),
-     *                     @OA\Property(property="bootcamp", type="string", example="PHP Developer"),
-     *                     @OA\Property(property="end_date", type="date", example="..." ),
-     *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
-     *                     @OA\Property(property="github", type="string", example="http://www.github.com")
-     *                 )
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  description="Success message",
+     *                  example="Registre realitzat amb èxit."),
+     *                  @OA\Property(
+     *                  property="data",
+     *                  type="object",
+     *                  ref="#/components/schemas/Student"
      *             )
      *         )
      *     ),
      *
-     *            @OA\Response(
-     *            response=404,
-     *            description="User not found."
+     *     @OA\Response(
+     *         response=404,
+     *         description="Student not found."
      *     ),
      * )
      */
     public function show() {}
 
-    /**
-     * Actualitza les dades d'un estudiant
+    /** Update Student details (UPDATE)
      *
      * @OA\Put(
-     *      path="/students/{id}",
-     *      operationId="updateStudent",
-     *      tags={"Student"},
-     *      summary="Update a Student.",
-     *      description="Update the details of a specific User. Requires student or admin role and valid token.",
-     *      security={ {"bearerAuth": {} } },
+     *    path="/students/{id}",
+     *    operationId="updateStudent",
+     *    tags={"Student"},
+     *    summary="Update a Student.",
+     *    description="Update the details of a specific Student.
+          <ul><li>Name and Surname are <b>required</b>.</li>
+          <li><b>Status</b> can be <i>'Active'</i>, <i>'Inactive'</i>, <i>'In a Bootcamp'</i> or <i>'In a Job'.</i></li>
+          <li><b>Active</b> status is set by <b>default</b>.</li>
+          <li>Authentication is not required.</li></ul>",
      *
-     *      @OA\Parameter(
-     *          name="id",
-     *          in="path",
-     *          description="ID of the Student to be updated.",
-     *          required=true,
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        required=true,
+     *        description="UUID of the Student to be updated.",
      *
      *          @OA\Schema(
-     *              type="integer",
-     *              format="int64"
+     *              type="string",
+     *              format="uuid",
+     *              example="9b60ef21-ff25-44d5-ba26-217b9b816192"
      *          )
      *      ),
      *
-     *      @OA\RequestBody(
-     *          required=true,
-     *
-     *          @OA\JsonContent(
-     *              type="object",
-     *
-     *              @OA\Property(property="name", type="string", example="John"),
-     *              @OA\Property(property="surname", type="string", example="Doe"),
-     *              @OA\Property(property="subtitle", type="string", example="Engineer and Full Stack Developer"),
-     *              @OA\Property(property="bootcamp", type="enum", example="PHP Developer"),
-     *              @OA\Property(property="about", type="text", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
-     *              @OA\Property(property="cv", type="string", example="Updated Curriculum."),
-     *              @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
-     *              @OA\Property(property="github", type="string", example="http://www.github.com"),
-     *
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
+     *    @OA\RequestBody(
+     *        required=true,
+     *        description="New data to update the student with that UUID.",
+     *        @OA\JsonContent(
+     *            type="object",
+     *            required={"name", "surname", "status"},
+     *        @OA\Property(
+     *           property="name",
+     *           type="string",
+     *           description="First name of the student",
+     *           example="NewName"),
+     *        @OA\Property(
+     *           property="surname",
+     *           type="string",
+     *           description="Surname of the student",
+     *           example="NewSurname"),
+     *        @OA\Property(
+     *           property="photo",
+     *           type="string",
+     *           description="URL to the photo of the student",
+     *           example="http://www.photo.com/new"),
+     *        @OA\Property(
+     *           property="status",
+     *           type="string",
+     *           description="Status of the student",
+     *           example="Inactive",
+     *           enum={"Active", "Inactive", "In a Bootcamp", "In a Job"}),
+     *        ),
+     *    ),
+     *        @OA\Response(
      *          response=200,
      *          description="Success. Returns Student details.",
-     *
-     *          @OA\JsonContent(
-     *              type="object",
-     *
-     *              @OA\Property(property="name", type="string", example="John"),
-     *              @OA\Property(property="surname", type="string", example="Doe"),
-     *              @OA\Property(property="subtitle", type="string", example="Engineer and Full Stack Developer"),
-     *              @OA\Property(property="bootcamp", type="enum", example="PHP Developer"),
-     *              @OA\Property(property="end_date",type="date",example="..." ),
-     *              @OA\Property(property="about", type="text", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
-     *              @OA\Property(property="cv", type="string", example="Updated Curriculum."),
-     *              @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
-     *              @OA\Property(property="github", type="string", example="http://www.github.com"),
-     *
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized. Missing authentication token, admin role, student role, or not matching id.",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Unauthorized.")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=404,
-     *          description="It was not possible to complete transaction.",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Something went wrong. Try it again later.")
-     *          )
-     *      )
+     *          @OA\JsonContent(ref="#/components/schemas/Student")
+     *       ),
+     *         @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *       ),
+     *         @OA\Response(
+     *         response=404,
+     *         description="Student not found",
+     *            @OA\JsonContent(
+     *            @OA\Property(property="message", type="string", example="Something went wrong. Try it again later.")
+     *       ),
+     *    )
      * )
      */
     public function update() {}
 
-    /**
+    /** Delete a Student (DESTROY)
      * @OA\Delete(
      *      path="/students/{id}",
      *      operationId="deleteStudent",
      *      tags={"Student"},
      *      summary="Delete a Student.",
-     *      description="Delete a specific Student-User by his ID. Requires student or admin role and valid token.",
-     *      security={{"bearerAuth":{}}},
+     *      description="Delete a specific Student by his UUID.
+
+    No authentication required",
      *
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
-     *          description="ID of the Student to be deleted",
+     *          description="UUID of the Student to be deleted",
      *          required=true,
      *
-     *          @OA\Schema(
-     *              type="integer",
-     *              format="int64"
+     *           @OA\Schema(
+     *              type="string",
+     *              format="uuid",
+     *              example="9b60ef21-ff25-44d5-ba26-217b9b816192"
      *          )
      *      ),
      *
      *      @OA\Response(
-     *          response=200,
-     *          description="Student deleted successfully",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Student deleted successfully")
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthorized. Missing authentication token, admin role, student role, or not matching id.",
-     *
-     *          @OA\JsonContent(
-     *
-     *              @OA\Property(property="message", type="string", example="Unauthorized.")
-     *          )
+     *          response=204,
+     *          description="No Content. Student deleted successfully",
      *      ),
      *
      *      @OA\Response(
      *          response=404,
-     *          description="It was not possible to complete transaction.",
+     *          description="Student not found",
      *
      *          @OA\JsonContent(
      *
-     *              @OA\Property(property="message", type="string", example="Something went wrong. Try it again later-")
+     *              @OA\Property(property="message", type="string", example="Student not found")
      *          )
      *      )
      * )
      */
-    public function delete() {}
+    public function destroy() {}
 }
