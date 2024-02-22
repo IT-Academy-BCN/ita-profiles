@@ -2,17 +2,15 @@
     {
         "student_id": 1,
         "profile_detail": {
-            "title": "Detalle Perfil",
             "fullname": "Juan Pérez",
             "subtitle": "Desarrollador Frontend",
             "social_media": {
                 "linkedin": {
-                    "url": "https://es.linkedin.com/",
-                    "icon": "src/assets/svg/linkedin.svg"
+                    "url": "https://es.linkedin.com/"
                 },
                 "github": {
-                    "url": "https://github.com/",
-                    "icon": "src/assets/svg/github.svg"
+                    "url": "https://github.com/"
+                    
                 }
             },
             "about": {
