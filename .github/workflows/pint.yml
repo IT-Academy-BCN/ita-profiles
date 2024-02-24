@@ -1,6 +1,8 @@
 name: PHP Linting (Pint)
 on:
-  pull_request:
+  push:
+    branches:
+      - develop
 jobs:
   phplint:
     runs-on: ubuntu-latest
