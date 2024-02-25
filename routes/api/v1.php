@@ -27,13 +27,15 @@ Route::post('/students', [StudentController::class, 'store'])->name('student.cre
 Route::get('/students', [StudentController::class, 'index'])->name('students.list');
 Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.show');
 
+// Students Home
+Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
+Route::get('/student/detail/for-home', StudentDetailController::class)->name('student.detail');
+
 Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruiter.create');
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
-// Students
-Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
-Route::get('/student/detail/for-home', StudentDetailController::class)->name('student.detail');
+
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
