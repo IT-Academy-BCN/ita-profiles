@@ -1,0 +1,40 @@
+[
+    {
+        "student_id": 1,
+        "profile_detail": {
+            "fullname": "Juan Pérez",
+            "subtitle": "Desarrollador Frontend",
+            "social_media": {
+                "linkedin": {
+                    "url": "https://es.linkedin.com/"
+                },
+                "github": {
+                    "url": "https://github.com/"
+                    
+                }
+            },
+            "about": {
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a euismod elit. Nunc elit ante, vulputate sed maximus eu, posuere eu nibh. In eget lacus in mi pharetra volutpat a a justo. Fusce aliquet nibh nec accumsan facilisis. Suspendisse in tempor nibh, eu fermentum velit. Suspendisse cursus ultricies ipsum, eget tincidunt arcu pretium laoreet. Pellentesque eget egestas erat. Donec dapibus pharetra ultrices. Vivamus mollis sapien sed laoreet interdum."
+               
+            },
+            "tags": [
+                {
+                    "id": 1,
+                    "name": "JavaScript"
+                },
+                {
+                    "id": 2,
+                    "name": "React"
+                },
+                {
+                    "id": 3,
+                    "name": "HTML"
+                },
+                {
+                    "id": 4,
+                    "name": "CSS"
+                }
+            ]
+        }
+    }
+]
