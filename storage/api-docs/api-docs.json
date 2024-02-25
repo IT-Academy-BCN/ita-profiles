@@ -469,6 +469,98 @@
                             }
                         }
                     }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/student/detail/for-home": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Get Student Detail.",
+                "description": "Get student detail registered. No authentication required",
+                "operationId": "getStudentDetail",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "student_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "profile_detail": {
+                                                        "properties": {
+                                                            "fullname": {
+                                                                "type": "string",
+                                                                "example": "Juan Pérez"
+                                                            },
+                                                            "subtitle": {
+                                                                "type": "string",
+                                                                "example": "Desarrollador Frontend"
+                                                            },
+                                                            "social_media": {
+                                                                "properties": {
+                                                                    "linkedin": {
+                                                                        "properties": {
+                                                                            "url": {
+                                                                                "type": "string",
+                                                                                "example": "https://es.linkedin.com/"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    },
+                                                                    "github": {
+                                                                        "properties": {
+                                                                            "url": {
+                                                                                "type": "string",
+                                                                                "example": "https://github.com/"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "about": {
+                                                                "properties": {
+                                                                    "description": {
+                                                                        "type": "string",
+                                                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a euismod elit. Nunc elit ante, vulputate sed maximus eu, posuere eu nibh. In eget lacus in mi pharetra volutpat a a justo. Fusce aliquet nibh nec accumsan facilisis. Suspendisse in tempor nibh, eu fermentum velit. Suspendisse cursus ultricies ipsum, eget tincidunt arcu pretium laoreet. Pellentesque eget egestas erat. Donec dapibus pharetra ultrices. Vivamus mollis sapien sed laoreet interdum."
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "tags": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "$ref": "#/components/schemas/Tag"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1387,6 +1479,67 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/v1/students/{id}/projects": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get a detailed list of projects for a student",
+                "description": "Returns a list of projects for a specific student. (Note: This endpoint returns hardcoded project details)",
+                "operationId": "getStudentProjects",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "project_name": {
+                                                "description": "Name of the project",
+                                                "type": "string"
+                                            },
+                                            "project_site": {
+                                                "description": "Site where the project is happening",
+                                                "type": "string"
+                                            },
+                                            "project_skills": {
+                                                "description": "Skills required for the project",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "project_repository": {
+                                                "description": "URL of the project repository",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Student not found"
                     }
                 }
             }
