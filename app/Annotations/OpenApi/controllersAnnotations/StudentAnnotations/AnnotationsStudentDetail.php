@@ -50,7 +50,7 @@ class AnnotationsStudentDetail
      *                          ),
      *                             @OA\Property(property="tags",type="array",@OA\Items(ref="#/components/schemas/Tag"))
      *                         )
-     *                     
+     *
      *                  )
      *              )
      *          )
@@ -66,7 +66,5 @@ class AnnotationsStudentDetail
      *      )
      * )
      */
-    public function __invoke()
-    {
-    }
+    public function __invoke() {}
 }
