@@ -26,7 +26,6 @@ class AnnotationsStudentDetail
      *                     @OA\Property(
      *                         property="profile_detail",
      *                         type="object",
-     *                         @OA\Property(property="title", type="string", example="Detalle Perfil"),
      *                         @OA\Property(property="fullname", type="string", example="Juan Pérez"),
      *                         @OA\Property(property="subtitle", type="string", example="Desarrollador Frontend"),
      *                         @OA\Property(
@@ -36,23 +35,22 @@ class AnnotationsStudentDetail
      *                                 property="linkedin",
      *                                 type="object",
      *                                 @OA\Property(property="url", type="string", example="https://es.linkedin.com/"),
-     *                                 @OA\Property(property="icon", type="string", example="src/assets/svg/linkedin.svg")
      *                             ),
      *                             @OA\Property(
      *                                 property="github",
      *                                 type="object",
      *                                 @OA\Property(property="url", type="string", example="https://github.com/"),
-     *                                 @OA\Property(property="icon", type="string", example="src/assets/svg/github.svg")
      *                             )
      *                         ),
      *                         @OA\Property(
      *                             property="about",
      *                             type="object",
-     *                             @OA\Property(property="title", type="string", example="About"),
-     *                             @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a euismod elit. Nunc elit ante, vulputate sed maximus eu, posuere eu nibh. In eget lacus in mi pharetra volutpat a a justo. Fusce aliquet nibh nec accumsan facilisis. Suspendisse in tempor nibh, eu fermentum velit. Suspendisse cursus ultricies ipsum, eget tincidunt arcu pretium laoreet. Pellentesque eget egestas erat. Donec dapibus pharetra ultrices. Vivamus mollis sapien sed laoreet interdum."),
+     *                             @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a euismod elit. Nunc elit ante, vulputate sed maximus eu, posuere eu nibh. In eget lacus in mi pharetra volutpat a a justo. Fusce aliquet nibh nec accumsan facilisis. Suspendisse in tempor nibh, eu fermentum velit. Suspendisse cursus ultricies ipsum, eget tincidunt arcu pretium laoreet. Pellentesque eget egestas erat. Donec dapibus pharetra ultrices. Vivamus mollis sapien sed laoreet interdum."
+     *                              )
+     *                          ),
      *                             @OA\Property(property="tags",type="array",@OA\Items(ref="#/components/schemas/Tag"))
      *                         )
-     *                     )
+     *                     
      *                  )
      *              )
      *          )
@@ -68,5 +66,7 @@ class AnnotationsStudentDetail
      *      )
      * )
      */
-    public function __invoke() {}
+    public function __invoke()
+    {
+    }
 }
