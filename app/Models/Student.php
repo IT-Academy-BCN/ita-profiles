@@ -34,6 +34,10 @@ class Student extends Model
         return $this->belongsToMany(Tag::class, 'student_has_tags', 'student_id', 'tag_id');
     }
 
+    public function resume()
+    {
+        return $this->hasOne(Resume::class);
+    }
     /*public function projects(){
         $this->hasMany(Project::class);
     }*/
