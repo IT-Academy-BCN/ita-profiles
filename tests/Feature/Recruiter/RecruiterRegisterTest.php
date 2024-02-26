@@ -22,7 +22,7 @@ class RecruiterRegisterTest extends TestCase
     {
 
         if (! Role::where('name', 'recruiter')->exists()) {
-            Role::create(['name' => 'recruier']);
+            Role::create(['name' => 'recruiter']);
 
         }
 
