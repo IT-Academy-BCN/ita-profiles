@@ -28,7 +28,8 @@ class StudentShowTest extends TestCase
                 'name' => $student2->name,
                 'surname' => $student2->surname,
                 'photo' => $student2->photo,
-                'status' => $student2->status
+                'status' => $student2->status,
+                'id' => $student2->id
             ],
         ]);
     }

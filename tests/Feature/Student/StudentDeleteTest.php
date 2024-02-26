@@ -12,19 +12,20 @@ class StudentDeleteTest extends TestCase
     {
         parent::setUp();
 
-        $this->artisan('migrate:fresh');
+        $this->artisan('migrate:fresh --seed');
     }
 
     /** @test */
     public function a_student_can_be_deleted(): void
     {
+        $initialCount = Student::count();
         $student = Student::factory()->create();
 
         $this->withHeaders(['Accept' => 'application/json'])
         ->deleteJson(route('student.delete', $student))
         ->assertStatus(204);
-        $this->assertCount(0, Student::all());
-        $this->assertDatabaseCount('students', 0);
+        $this->assertCount($initialCount, Student::all());
+        $this->assertDatabaseCount('students', $initialCount);
         $this->assertDatabaseMissing('students', ['id' => $student->id]);
         $this->assertNull(Student::find($student->id));
     }

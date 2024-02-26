@@ -13,6 +13,10 @@ class StudentIndexTest extends TestCase
 
         $this->artisan('migrate:fresh');
     }
+    public function tearDown(): void
+    {
+        $this->artisan('migrate:fresh --seed');
+    }
     /** @test */
     public function a_list_of_students_can_be_getted(): void
     {
@@ -30,13 +34,15 @@ class StudentIndexTest extends TestCase
                 'name' => $student1->name,
                 'surname' => $student1->surname,
                 'photo' => $student1->photo,
-                'status' => $student1->status
+                'status' => $student1->status,
+                'id' => $student1->id
                 ],
                 [
                 'name' => $student2->name,
                 'surname' => $student2->surname,
                 'photo' => $student2->photo,
-                'status' => $student2->status
+                'status' => $student2->status,
+                'id' => $student2->id
                 ],
             ],
         ]);

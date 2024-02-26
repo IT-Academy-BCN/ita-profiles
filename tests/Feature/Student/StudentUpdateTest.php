@@ -44,6 +44,7 @@ class StudentUpdateTest extends TestCase
                 'surname' => 'Doe',
                 'photo' => 'http://www.photo.com/johnnydoe',
                 'status' => StudentStatus::INACTIVE,
+                'id' => $student->id
             ],
         ]);
     }

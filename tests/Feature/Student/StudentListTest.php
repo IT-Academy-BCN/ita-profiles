@@ -11,6 +11,7 @@ class StudentListTest extends TestCase
         parent::setUp();
 
         $this->artisan('passport:install');
+        $this->artisan('migrate:fresh --seed');
     }
 
     /** @test */
@@ -34,13 +35,13 @@ class StudentListTest extends TestCase
                 'fullname',
                 'subtitle',
                 'photo',
-                'tags',
-                'id'
-            ]/* ,
-        '*.tags.*' => [
-            'id',
-            'name'
-        ] */
+                'tags' => [
+                    '*' => [
+                        'id',
+                        'name'
+                    ],
+                ],
+            ],
         ]);
     }
 }
