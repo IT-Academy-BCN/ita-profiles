@@ -16,9 +16,9 @@ class StudentListSeeder extends Seeder
     public function run(): void
     {
         $resumes =  Resume::factory()->count(30)->create();
-        $resumes->map(function ($resume) {
-            $resume->student->user->assignRole('student');
-        });
+        // $resumes->map(function ($resume) {
+        //      $resume->student->user->assignRole('student');
+        // });
 
     }
 
