@@ -1478,7 +1478,7 @@
                 ]
             }
         },
-        "/student/detail/for-home": {
+        "api/v1/student/detail/for-home": {
             "get": {
                 "tags": [
                     "Student"
