@@ -6,6 +6,7 @@ use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
 use App\Http\Controllers\api\StudentProjectsDetailController;
+use App\Http\Controllers\api\StudentBootcampDetailController;
 use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
 use App\Http\Controllers\api\SpecializationListController;
@@ -37,7 +38,7 @@ Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruite
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
 // Student bootcamp detail Endpoint
-Route::get('/students/{id}/bootcamp', StudentProjectsDetailController::class)->name('bootcamp.list');
+Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
