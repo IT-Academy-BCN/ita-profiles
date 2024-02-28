@@ -29,7 +29,7 @@ class StudentListService
             });
 
             return [
-                'fullname' => $resume->student->user->name . " " . $resume->student->user->surname,
+                'fullname' => $resume->student->name . " " . $resume->student->surname,
                 'subtitle' => $resume->subtitle,
                 'photo' => asset('/img/stud_' . $randomNumber . '.png'),
                 'tags' => $mappedTags,
