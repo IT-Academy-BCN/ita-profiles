@@ -36,7 +36,8 @@ Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruit
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
-
+// Student bootcamp detail Endpoint
+Route::get('/students/{id}/bootcamp', StudentProjectsDetailController::class)->name('bootcamp.list');
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
