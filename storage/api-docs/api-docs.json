@@ -939,44 +939,39 @@
                     "Student"
                 ],
                 "summary": "Get all Students.",
-                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design. No authentication required",
+                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n     *     No authentication required",
                 "operationId": "getAllStudentsForFigma",
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "A list of students",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "fullname": {
-                                                        "type": "string",
-                                                        "example": "Juan Pérez"
-                                                    },
-                                                    "subtitle": {
-                                                        "type": "string",
-                                                        "example": "Desarrollador Frontend"
-                                                    },
-                                                    "photo": {
-                                                        "description": "Student Image Path",
-                                                        "type": "string",
-                                                        "example": "img/stud_1.png"
-                                                    },
-                                                    "tags": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "$ref": "#/components/schemas/Tag"
-                                                        }
-                                                    }
-                                                },
-                                                "type": "object"
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "fullname": {
+                                                "type": "string",
+                                                "example": "Juan Pérez"
+                                            },
+                                            "subtitle": {
+                                                "type": "string",
+                                                "example": "Desarrollador Frontend"
+                                            },
+                                            "photo": {
+                                                "description": "Student Image Path",
+                                                "type": "string",
+                                                "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
+                                            },
+                                            "tags": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/components/schemas/Tag"
+                                                }
                                             }
-                                        }
-                                    },
-                                    "type": "object"
+                                        },
+                                        "type": "object"
+                                    }
                                 }
                             }
                         }
