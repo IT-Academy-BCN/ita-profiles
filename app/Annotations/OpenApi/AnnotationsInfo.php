@@ -10,7 +10,10 @@ namespace App\Annotations\OpenApi;
  *   [ITA Profles Backend](https://github.com/IT-Academy-BCN/ita-profiles-backend)
  *   [ITA Profiles Frontend](https://github.com/IT-Academy-BCN/ita-profiles-frontend)"
  * )
- *
+ * 
+ *   @OA\Server(
+ *     url="http://127.0.0.1:8000"
+ *   )
  *   @OA\Server(
  *     url="https://itaperfils.eurecatacademy.org"
  *   )
