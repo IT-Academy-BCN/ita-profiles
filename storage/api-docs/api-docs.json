@@ -1669,7 +1669,7 @@
                 }
             }
         },
-        "/api/v1/students/{id}/projects": {
+        "/api/v1/students/{uuid}/projects": {
             "get": {
                 "tags": [
                     "Projects"
@@ -2340,4 +2340,3 @@
         }
     }
 }
-
