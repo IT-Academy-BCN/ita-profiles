@@ -9,19 +9,19 @@ class AnnotationsStudentBootcampDetail
 {
     /**
      * @OA\Get(
-     *      path="/api/v1/students/{id}/bootcamp",
+     *      path="/api/v1/students/{uuid}/bootcamp",
      *      operationId="getStudentBootcamp",
      *      tags={"Bootcamp"},
      *      summary="Get a detailed list of a student bootcamp",
      *      description="Returns detail for a specific student bootcamp. (Note: This endpoint returns hardcoded bootcamp details)",
      *      @OA\Parameter(
-     *          name="id",
-     *          description="Student ID",
+     *          name="uuid",
+     *          description="Student UUID",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
-     *              type="integer",
-     *              format="int64"
+     *              type="string",
+     *              format="uuid"
      *          )
      *      ),
      *      @OA\Response(

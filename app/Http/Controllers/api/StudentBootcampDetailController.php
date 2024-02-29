@@ -7,9 +7,9 @@ use App\Models\Student;
 
 class StudentBootcampDetailController extends Controller
 {
-    public function __invoke($id)
+    public function __invoke($uuid)
     {
-        Student::findOrFail($id);
+        Student::where('id', $uuid)->firstOrFail();
 
         $bootcamp_detail = [
 

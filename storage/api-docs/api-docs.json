@@ -1563,7 +1563,7 @@
                 }
             }
         },
-        "/api/v1/students/{id}/bootcamp": {
+        "/api/v1/students/{uuid}/bootcamp": {
             "get": {
                 "tags": [
                     "Bootcamp"
@@ -1573,13 +1573,13 @@
                 "operationId": "getStudentBootcamp",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
-                        "description": "Student ID",
+                        "description": "Student UUID",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
