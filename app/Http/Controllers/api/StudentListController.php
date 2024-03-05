@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Service\StudentListService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+
 
 class StudentListController extends Controller
 {
@@ -16,10 +18,11 @@ class StudentListController extends Controller
         $this->studentListService = $studentListService;
 
     }
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         try {
-            $data = $this->studentListService->execute();
+            $specialization = $request->get('specialization');
+            $data = $this->studentListService->execute($specialization);
 
             return response()->json($data, 200);
         } catch(ModelNotFoundException $resumesNotFoundException) {
