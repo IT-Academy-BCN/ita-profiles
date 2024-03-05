@@ -6,6 +6,7 @@ use App\Http\Controllers\api\DevelopmentListController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
+use App\Http\Controllers\api\StudentCollaborationController;
 use App\Http\Controllers\api\StudentProjectsDetailController;
 use App\Http\Controllers\api\StudentBootcampDetailController;
 use App\Http\Controllers\api\StudentDetailController;
@@ -50,6 +51,9 @@ Route::get('/specialization/list', SpecializationListController::class)->name('r
 
 // Student projects detail Endpoint
 Route::get('/students/{id}/projects', StudentProjectsDetailController::class)->name('projects.list');
+
+//Student Collaboration Endpoint
+Route::get('/studentCollaborations', StudentCollaborationController::class)->name('collaborations.list');
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
