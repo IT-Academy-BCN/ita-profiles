@@ -1604,26 +1604,14 @@
                 }
             }
         },
-        "/api/v1/students/{uuid}/bootcamp": {
+        "/api/v1/studentCollaborations": {
             "get": {
                 "tags": [
-                    "Bootcamp"
+                    "Collaborations"
                 ],
-                "summary": "Get a detailed list of a student bootcamp",
-                "description": "Returns detail for a specific student bootcamp. (Note: This endpoint returns hardcoded bootcamp details)",
-                "operationId": "getStudentBootcamp",
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "description": "Student UUID",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
+                "summary": "Get collaborations for a student",
+                "description": "Returns a list of collaborations for a specific student. (Note: This endpoint returns hardcoded student collaborations)",
+                "operationId": "getStudentCollaborations",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -1633,19 +1621,32 @@
                                     "type": "array",
                                     "items": {
                                         "properties": {
-                                            "bootcamp_id": {
-                                                "description": "Bootcamp ID",
-                                                "type": "string"
-                                            },
-                                            "bootcamp_name": {
-                                                "description": "Bootcamp Name",
-                                                "type": "string"
-                                            },
-                                            "bootcamp_end_date": {
-                                                "description": "Bootcamp end date",
+                                            "collaborations": {
                                                 "type": "array",
                                                 "items": {
-                                                    "type": "string"
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "Collaboration ID",
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "description": "Collaboration name",
+                                                            "type": "string",
+                                                            "example": "ita wiki"
+                                                        },
+                                                        "description": {
+                                                            "description": "Collaboration description",
+                                                            "type": "string",
+                                                            "example": "Recursos subidos"
+                                                        },
+                                                        "quantity": {
+                                                            "description": "Quantity",
+                                                            "type": "integer",
+                                                            "example": 9
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             }
                                         },
@@ -1661,7 +1662,7 @@
                 }
             }
         },
-        "/api/v1/students/{uuid}/projects": {
+        "/api/v1/students/{id}/projects": {
             "get": {
                 "tags": [
                     "Projects"
