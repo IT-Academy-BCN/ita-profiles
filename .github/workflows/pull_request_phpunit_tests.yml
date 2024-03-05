@@ -32,6 +32,9 @@ jobs:
       - name: Instalar dependencias
         run: composer install
 
+      - name: Copiar el archivo de entorno
+        run: cp .env.example .env
+
       - name: Configurar .env para pruebas
         run: |
           echo "APP_KEY=" >> .env
@@ -47,7 +50,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Ejecutar migraciones y seeds
-        run: php artisan migrate:fresh --seed
+        run: php artisan migrate --seed
 
       - name: Ejecutar pruebas unitarias
         run: php artisan test
