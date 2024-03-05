@@ -40,22 +40,13 @@ class AnnotationsStudentBootcampDetail
      *                      property="bootcamp_name",
      *                      type="string",
      *                      description="Bootcamp Name"
-     *                  ),
-     *                  @OA\Property(
-     *                      property="bootcamp_site",
-     *                      type="string",
-     *                      description="Bootcamp Site"
+
      *                  ),
      *                  @OA\Property(
      *                      property="bootcamp_end_date",
      *                      type="array",
      *                      @OA\Items(type="string"),
      *                      description="Bootcamp end date"
-     *                  ),
-     *                  @OA\Property(
-     *                      property="bootcamp_workload",
-     *                      type="string",
-     *                      description="Bootcamp Workload in hours"
      *                  )
      *              )
      *          )
