@@ -35,6 +35,7 @@ jobs:
       - name: Configurar .env para pruebas
         run: |
           touch .env
+          echo "APP_KEY=base64:gYuBF23TRA6rOCddx9KWbv7i0Um8GumR1/ZBelOJBqc=" >> .env
           echo "APP_ENV=testing" >> .env
           echo "DB_CONNECTION=mysql" >> .env
           echo "DB_HOST=mysql" >> .env
