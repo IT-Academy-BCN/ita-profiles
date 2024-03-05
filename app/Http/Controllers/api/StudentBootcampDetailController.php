@@ -17,9 +17,7 @@ class StudentBootcampDetailController extends Controller
                 [
                     'bootcamp_id' => '1',
                     'bootcamp_name' => 'php Fullstack Developer',
-                    'bootcamp_site' => 'IT Academy - Barcelona',
                     'bootcamp_end_date' => ['November 2023'],
-                    'bootcamp_workload' => '400 hrs'
                 ],
             ]
         ];
