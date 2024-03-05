@@ -16,9 +16,6 @@ class StudentCollaborationController extends Controller
         
         return response()->json($decodedData);
 
-       /*  $allCollaborations = array_merge(...array_column($decodedData, 'collaborations'));
-         
-        return response()->json(['collaborations' => $allCollaborations]); */
 
     }
 }
