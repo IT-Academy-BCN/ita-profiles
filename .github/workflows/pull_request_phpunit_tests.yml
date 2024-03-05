@@ -42,6 +42,7 @@ jobs:
           sed -i 's/DB_DATABASE=homestead/DB_DATABASE=laravel_test/g' .env
           sed -i 's/DB_USERNAME=homestead/DB_USERNAME=laravel_user/g' .env
           sed -i 's/DB_PASSWORD=secret/DB_PASSWORD=secret/g' .env
+          echo "APP_ENV=testing" >> .env
 
       - name: Generar clave de aplicación
         run: php artisan key:generate
