@@ -544,20 +544,32 @@
         "/modality": {
             "get": {
                 "tags": [
-                    "Modality"
+                    "Course Modality"
                 ],
-                "summary": "Retrieve the modality of a specific student",
+                "summary": "Retrieve the modality of a specific course",
                 "operationId": "30e586957e1736f63155fa2b43abc656",
                 "responses": {
                     "200": {
-                        "description": "Successful. Modality retrieved from enum",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
+                                    "properties": {
+                                        "modality": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Presencial"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
