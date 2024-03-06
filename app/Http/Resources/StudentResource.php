@@ -16,17 +16,11 @@ class StudentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => Str::ucfirst($this->user->name),
-            'surname' => Str::ucfirst($this->user->surname),
-            //'email'  => $this->user->email,
-            'subtitle' => Str::ucfirst($this->subtitle),
-            'about' => Str::ucfirst($this->about),
-            'cv' => $this->cv,
-            'bootcamp' => $this->bootcamp,
-            'end_date' => $this->end_date,
-            'linkedin' => $this->linkedin,
-            'github' => $this->github,
-
+            'name' => Str::ucfirst($this->name),
+            'surname' => Str::ucfirst($this->surname),
+            'photo' => $this->photo,
+            'status' => Str::ucfirst($this->status),
+            'id' => $this->id,
         ];
 
     }
