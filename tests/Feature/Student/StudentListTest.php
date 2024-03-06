@@ -16,10 +16,6 @@ class StudentListTest extends TestCase
         $this->artisan('migrate:fresh --seed');
     }
 
-    /**
-     * @test
-     * @group OpenEndpoints
-     */
     public function test_student_list_controller()
     {
         $response = $this->getJson(route('profiles.home'));
@@ -53,5 +49,6 @@ class StudentListTest extends TestCase
     $response->assertStatus(404);
     $response->assertJson(['message' => 'No hi ha resums']);
 }
+
 
 }
