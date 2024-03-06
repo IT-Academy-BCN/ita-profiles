@@ -7,6 +7,12 @@
     },
     "servers": [
         {
+            "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000"
+        },
+        {
             "url": "https://itaperfils.eurecatacademy.org"
         },
         {
@@ -530,6 +536,30 @@
                         "passport": []
                     }
                 ]
+            }
+        },
+        "/modality": {
+            "get": {
+                "tags": [
+                    "Modality"
+                ],
+                "summary": "Retrieve the modality of a specific student",
+                "operationId": "30e586957e1736f63155fa2b43abc656",
+                "responses": {
+                    "200": {
+                        "description": "Successful. Modality retrieved from enum",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/recruiters": {

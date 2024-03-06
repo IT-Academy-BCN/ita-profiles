@@ -12,7 +12,10 @@ namespace App\Annotations\OpenApi;
  * )
  *
  *   @OA\Server(
- *     url="http://127.0.0.1:8000"
+ *     url="http://127.0.0.1:8000/api/v1"
+ *   )
+ *   @OA\Server(
+ *     url= L5_SWAGGER_CONST_HOST
  *   )
  *   @OA\Server(
  *     url="https://itaperfils.eurecatacademy.org"
