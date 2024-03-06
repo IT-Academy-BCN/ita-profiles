@@ -32,9 +32,6 @@ jobs:
       - name: Instalar dependencias
         run: composer install
 
-      - name: Generar clave de aplicación
-        run: php artisan key:generate
-
       - name: Configurar .env para pruebas
         run: |
           echo "APP_ENV=testing" >> .env
@@ -44,6 +41,9 @@ jobs:
           echo "DB_DATABASE=laravel_test" >> .env
           echo "DB_USERNAME=laravel_user" >> .env
           echo "DB_PASSWORD=secret" >> .env
+
+      - name: Generar clave de aplicación
+        run: php artisan key:generate
 
       - name: Ejecutar migraciones y seeds
         run: php artisan migrate:fresh --seed
