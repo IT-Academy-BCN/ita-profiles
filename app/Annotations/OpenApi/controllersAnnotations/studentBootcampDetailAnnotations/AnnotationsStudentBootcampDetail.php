@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentProjectsDetailAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentBootcampDetailAnnotations;
+
 
 use OpenApi\Annotations as OA;
 
-class AnnotationsStudentProjectsDetail
+class AnnotationsStudentBootcampDetail
 {
     /**
      * @OA\Get(
-     *      path="/api/v1/students/{uuid}/projects",
-     *      operationId="getStudentProjects",
-     *      tags={"Projects"},
-     *      summary="Get a detailed list of projects for a student",
-     *      description="Returns a list of projects for a specific student. (Note: This endpoint returns hardcoded project details)",
+     *      path="/api/v1/students/{uuid}/bootcamp",
+     *      operationId="getStudentBootcamp",
+     *      tags={"Bootcamp"},
+     *      summary="Get a detailed list of a student bootcamp",
+     *      description="Returns detail for a specific student bootcamp. (Note: This endpoint returns hardcoded bootcamp details)",
      *      @OA\Parameter(
      *          name="uuid",
      *          description="Student UUID",
@@ -31,25 +32,21 @@ class AnnotationsStudentProjectsDetail
      *              @OA\Items(
      *                  type="object",
      *                  @OA\Property(
-     *                      property="project_name",
+     *                      property="bootcamp_id",
      *                      type="string",
-     *                      description="Name of the project"
+     *                      description="Bootcamp ID"
      *                  ),
      *                  @OA\Property(
-     *                      property="project_site",
+     *                      property="bootcamp_name",
      *                      type="string",
-     *                      description="Site where the project is happening"
+     *                      description="Bootcamp Name"
+
      *                  ),
      *                  @OA\Property(
-     *                      property="project_skills",
+     *                      property="bootcamp_end_date",
      *                      type="array",
      *                      @OA\Items(type="string"),
-     *                      description="Skills required for the project"
-     *                  ),
-     *                  @OA\Property(
-     *                      property="project_repository",
-     *                      type="string",
-     *                      description="URL of the project repository"
+     *                      description="Bootcamp end date"
      *                  )
      *              )
      *          )
