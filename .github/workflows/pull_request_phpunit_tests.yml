@@ -50,4 +50,4 @@ jobs:
         run: php artisan migrate:fresh --seed
 
       - name: Ejecutar pruebas unitarias
-        run: php artisan test --verbose
+        run: php artisan test
