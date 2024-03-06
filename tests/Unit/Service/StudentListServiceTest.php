@@ -10,6 +10,8 @@ use Tests\TestCase;
 
 class StudentListServiceTest extends TestCase
 {
+    private $resumeUpdateService;
+
     public function setUp(): void
     {
         parent::setUp();
