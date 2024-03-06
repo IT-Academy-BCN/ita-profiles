@@ -1,0 +1,52 @@
+name: Laravel CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: laravel_test
+          MYSQL_USER: laravel_user
+          MYSQL_PASSWORD: secret
+        ports:
+          - 3306:3306
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+
+      - name: Instalar dependencias
+        run: composer install
+
+      - name: Configurar .env para pruebas
+        run: |
+          echo "APP_ENV=testing" >> .env
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=laravel_test" >> .env
+          echo "DB_USERNAME=laravel_user" >> .env
+          echo "DB_PASSWORD=secret" >> .env
+
+      - name: Generar clave de aplicación
+        run: php artisan key:generate
+
+      - name: Ejecutar migraciones y seeds
+        run: php artisan migrate:fresh --seed
+
+      - name: Ejecutar pruebas unitarias
+        run: php artisan test
