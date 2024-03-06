@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\CourseModalityController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
@@ -36,7 +37,7 @@ Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruit
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
-
+Route::get('/modality', CourseModalityController::class)->name('modality.course');
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
