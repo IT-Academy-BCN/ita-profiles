@@ -7,6 +7,9 @@
     },
     "servers": [
         {
+            "url": "http://127.0.0.1:8000"
+        },
+        {
             "url": "https://itaperfils.eurecatacademy.org"
         },
         {
@@ -1560,7 +1563,7 @@
                 }
             }
         },
-        "/api/v1/students/{id}/projects": {
+        "/api/v1/students/{uuid}/projects": {
             "get": {
                 "tags": [
                     "Projects"
@@ -1570,13 +1573,13 @@
                 "operationId": "getStudentProjects",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
-                        "description": "Student ID",
+                        "description": "Student UUID",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
