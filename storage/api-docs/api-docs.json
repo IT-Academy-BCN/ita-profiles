@@ -1587,7 +1587,64 @@
                 }
             }
         },
-        "/api/v1/students/{id}/projects": {
+        "/api/v1/students/{uuid}/bootcamp": {
+            "get": {
+                "tags": [
+                    "Bootcamp"
+                ],
+                "summary": "Get a detailed list of a student bootcamp",
+                "description": "Returns detail for a specific student bootcamp. (Note: This endpoint returns hardcoded bootcamp details)",
+                "operationId": "getStudentBootcamp",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "Student UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "bootcamp_id": {
+                                                "description": "Bootcamp ID",
+                                                "type": "string"
+                                            },
+                                            "bootcamp_name": {
+                                                "description": "Bootcamp Name",
+                                                "type": "string"
+                                            },
+                                            "bootcamp_end_date": {
+                                                "description": "Bootcamp end date",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/students/{uuid}/projects": {
             "get": {
                 "tags": [
                     "Projects"
@@ -1597,13 +1654,13 @@
                 "operationId": "getStudentProjects",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
-                        "description": "Student ID",
+                        "description": "Student UUID",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
