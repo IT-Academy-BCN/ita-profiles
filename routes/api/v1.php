@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AdditionalTrainingListController;
 use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\RecruiterController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
 use App\Http\Controllers\api\SpecializationListController;
 use Illuminate\Support\Facades\Route;
+use LaravelLang\Publisher\Console\Add;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +39,7 @@ Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruite
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
 
-
+Route::get('/additional-training/list', AdditionalTrainingListController::class)->name('additional-training.list');
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
@@ -46,6 +48,8 @@ Route::get('/students/{id}/projects', StudentProjectsDetailController::class)->n
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
+Route::get('/tags', [TagController::class, 'index'])->name('tag.index');
+
 //Passport Auth with token
 Route::middleware('auth:api')->group(function () {
     //Student
@@ -61,7 +65,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/admins', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
 
     //Tags
-    Route::get('/tags', [TagController::class, 'index'])->middleware('role:admin')->name('tag.index');
     Route::post('/tags', [TagController::class, 'store'])->middleware('role:admin')->name('tag.create');
     Route::get('/tags/{id}', [TagController::class, 'show'])->middleware('role:admin')->name('tag.show');
     Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');

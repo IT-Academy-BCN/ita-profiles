@@ -16,8 +16,8 @@ class StudentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => Str::ucfirst($this->user->name),
-            'surname' => Str::ucfirst($this->user->surname),
+            'name' => Str::ucfirst($this->name),
+            'surname' => Str::ucfirst($this->surname),
             //'email'  => $this->user->email,
             'subtitle' => Str::ucfirst($this->subtitle),
             'about' => Str::ucfirst($this->about),
