@@ -1553,7 +1553,7 @@
                     "Student"
                 ],
                 "summary": "Get Students List.",
-                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design. If a 'specialization' parameter is provided, the list will be filtered by this specialization. If no parameter is provided, it returns a list of all students.\n\n     No authentication required",
+                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n- If a 'specialization' parameter is provided, the list will be filtered by student's specialization.\n\n- If not, it returns a list of all students.\n\n\n    No authentication required",
                 "operationId": "getAllStudentsForFigma",
                 "parameters": [
                     {
@@ -1591,7 +1591,21 @@
                                             "tags": {
                                                 "type": "array",
                                                 "items": {
-                                                    "$ref": "#/components/schemas/Tag"
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "C#"
+                                                        }
+                                                    },
+                                                    "type": "object",
+                                                    "example": {
+                                                        "id": 15,
+                                                        "name": "C#"
+                                                    }
                                                 }
                                             }
                                         },
@@ -2124,18 +2138,47 @@
                 "properties": {
                     "id": {
                         "description": "Student ID",
-                        "type": "string",
-                        "format": "uuid"
+                        "type": "integer",
+                        "format": "int64"
                     },
-                    "name": {
-                        "description": "User's first name",
-                        "type": "string",
-                        "example": "John"
+                    "user_id": {
+                        "description": "ID of the associated User",
+                        "type": "integer",
+                        "format": "int64"
                     },
-                    "surname": {
-                        "description": "User's last name",
+                    "subtitle": {
+                        "description": "Presentation subtitle of the Student",
+                        "type": "string"
+                    },
+                    "about": {
+                        "description": "Presentation text of the Student",
+                        "type": "string"
+                    },
+                    "cv": {
+                        "description": "Curriculum of the Student-file?",
+                        "type": "string"
+                    },
+                    "bootcamp": {
+                        "description": "Name of the Bootcamp attended by the Student",
+                        "type": "enum"
+                    },
+                    "end_date": {
+                        "description": "Student Bootcamp's ending date",
                         "type": "string",
-                        "example": "Doe"
+                        "format": "date"
+                    },
+                    "linkedin": {
+                        "description": "Url of student's linkedin",
+                        "type": "string"
+                    },
+                    "github": {
+                        "description": "Url of student's github",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Creation date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "updated_at": {
                         "description": "Update date of the Student record",
@@ -2213,57 +2256,6 @@
                     "name": "Recruiter"
                 }
             },
-            "AnnotationsResume": {
-                "title": "Resume",
-                "description": "Resume Model",
-                "properties": {
-                    "id": {
-                        "description": "Primary ID",
-                        "type": "string",
-                        "format": "uuid"
-                    },
-                    "Student ID": {
-                        "description": "Student ID",
-                        "type": "string",
-                        "example": "16763be4-6022-406e-a950-fcd5018633ca"
-                    },
-                    "subtitle": {
-                        "description": "Presentation subtitle of the Student",
-                        "type": "string"
-                    },
-                    "about": {
-                        "description": "Presentation text of the Student",
-                        "type": "string"
-                    },
-                    "cv": {
-                        "description": "Curriculum of the Student-file?",
-                        "type": "string"
-                    },
-                    "bootcamp": {
-                        "description": "Name of the Bootcamp attended by the Student",
-                        "type": "enum"
-                    },
-                    "end_date": {
-                        "description": "Student Bootcamp's ending date",
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "created_at": {
-                        "description": "Creation date of the Student record",
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updated_at": {
-                        "description": "Update date of the Student record",
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "Resume"
-                }
-            },
             "Tag": {
                 "title": "Tag",
                 "description": "Tag Model",
@@ -2302,6 +2294,16 @@
                         "description": "User ID",
                         "type": "integer",
                         "format": "int64"
+                    },
+                    "name": {
+                        "description": "User's first name",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "surname": {
+                        "description": "User's last name",
+                        "type": "string",
+                        "example": "Doe"
                     },
                     "dni": {
                         "description": "User's DNI",
