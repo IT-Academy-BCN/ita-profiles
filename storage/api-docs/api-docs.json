@@ -535,6 +535,30 @@
                 ]
             }
         },
+        "/api/v1/development/list": {
+            "get": {
+                "tags": [
+                    "Development"
+                ],
+                "summary": "Retrieve a development list ",
+                "operationId": "5d0020d91a4ae2f766a81b9777fbce9f",
+                "responses": {
+                    "200": {
+                        "description": "Successful. Development list retrieved from json file",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/recruiters": {
             "get": {
                 "tags": [
