@@ -9,7 +9,9 @@ class AnnotationsCourseModality
     /**
      * @OA\Get(
      *     path="/modality",
-     *     summary="Retrieve the modality of a specific course",
+     *     operationId="getCourse;odality",
+     *     summary="Get the modality of a specific course",
+     *     description="Retrieve the modality of a specific course",
      *     tags={"Course Modality"},
      *     @OA\Response(
      *         response=200,

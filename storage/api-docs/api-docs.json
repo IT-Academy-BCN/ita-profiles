@@ -543,8 +543,9 @@
                 "tags": [
                     "Course Modality"
                 ],
-                "summary": "Retrieve the modality of a specific course",
-                "operationId": "30e586957e1736f63155fa2b43abc656",
+                "summary": "Get the modality of a specific course",
+                "description": "Retrieve the modality of a specific course",
+                "operationId": "getCourse;odality",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
