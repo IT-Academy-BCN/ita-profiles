@@ -2,10 +2,16 @@
     "openapi": "3.0.0",
     "info": {
         "title": "ITA Profiles page API documentation",
-        "description": "Documentation needed for the API Rest for the ITA Profiles page to IT Academy. Some useful links below:\n *   [ITA Profles Backend](https://github.com/IT-Academy-BCN/ita-profiles-backend)\n *   [ITA Profiles Frontend](https://github.com/IT-Academy-BCN/ita-profiles-frontend)",
+        "description": "\n\n    API Rest documentation used on ITA Profiles WEB. Some useful links below:\n *   [ITA Profles Backend Repository](https://github.com/IT-Academy-BCN/ita-profiles-backend)\n *   [ITA Profiles Frontend Repository](https://github.com/IT-Academy-BCN/ita-profiles-frontend)\n *   [ITA Profiles WEB](https://ornate-dieffenbachia-e0ff84.netlify.app)",
         "version": "1.0.0"
     },
     "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        },
         {
             "url": "http://127.0.0.1:8000"
         },
@@ -936,52 +942,6 @@
                 }
             }
         },
-        "/student/list/for-home": {
-            "get": {
-                "tags": [
-                    "Student"
-                ],
-                "summary": "Get all Students.",
-                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n     *     No authentication required",
-                "operationId": "getAllStudentsForFigma",
-                "responses": {
-                    "200": {
-                        "description": "A list of students",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "fullname": {
-                                                "type": "string",
-                                                "example": "Juan Pérez"
-                                            },
-                                            "subtitle": {
-                                                "type": "string",
-                                                "example": "Desarrollador Frontend"
-                                            },
-                                            "photo": {
-                                                "description": "Student Image Path",
-                                                "type": "string",
-                                                "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
-                                            },
-                                            "tags": {
-                                                "type": "array",
-                                                "items": {
-                                                    "$ref": "#/components/schemas/Tag"
-                                                }
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/students": {
             "get": {
                 "tags": [
@@ -1563,6 +1523,63 @@
                 }
             }
         },
+        "/student/list/for-home": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Get Students List.",
+                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design. If a 'specialization' parameter is provided, the list will be filtered by this specialization. If no parameter is provided, it returns a list of all students.\n\n     No authentication required",
+                "operationId": "getAllStudentsForFigma",
+                "parameters": [
+                    {
+                        "name": "specialization",
+                        "in": "query",
+                        "description": "The specialization to filter students by",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of students",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "fullname": {
+                                                "type": "string",
+                                                "example": "Juan Pérez"
+                                            },
+                                            "subtitle": {
+                                                "type": "string",
+                                                "example": "Desarrollador Frontend"
+                                            },
+                                            "photo": {
+                                                "description": "Student Image Path",
+                                                "type": "string",
+                                                "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
+                                            },
+                                            "tags": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/components/schemas/Tag"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/students/{uuid}/bootcamp": {
             "get": {
                 "tags": [
@@ -2077,6 +2094,36 @@
     },
     "components": {
         "schemas": {
+            "AnnotationsStudent": {
+                "title": "Student",
+                "description": "Student Model",
+                "properties": {
+                    "id": {
+                        "description": "Student ID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "description": "User's first name",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "surname": {
+                        "description": "User's last name",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "updated_at": {
+                        "description": "Update date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Student"
+                }
+            },
             "AnnotationsAdmin": {
                 "title": "Admin",
                 "description": "Admin Model",
@@ -2142,19 +2189,19 @@
                     "name": "Recruiter"
                 }
             },
-            "AnnotationsStudent": {
-                "title": "Student",
-                "description": "Student Model",
+            "AnnotationsResume": {
+                "title": "Resume",
+                "description": "Resume Model",
                 "properties": {
                     "id": {
-                        "description": "Student ID",
-                        "type": "integer",
-                        "format": "int64"
+                        "description": "Primary ID",
+                        "type": "string",
+                        "format": "uuid"
                     },
-                    "user_id": {
-                        "description": "ID of the associated User",
-                        "type": "integer",
-                        "format": "int64"
+                    "Student ID": {
+                        "description": "Student ID",
+                        "type": "string",
+                        "example": "16763be4-6022-406e-a950-fcd5018633ca"
                     },
                     "subtitle": {
                         "description": "Presentation subtitle of the Student",
@@ -2177,14 +2224,6 @@
                         "type": "string",
                         "format": "date"
                     },
-                    "linkedin": {
-                        "description": "Url of student's linkedin",
-                        "type": "string"
-                    },
-                    "github": {
-                        "description": "Url of student's github",
-                        "type": "string"
-                    },
                     "created_at": {
                         "description": "Creation date of the Student record",
                         "type": "string",
@@ -2198,7 +2237,7 @@
                 },
                 "type": "object",
                 "xml": {
-                    "name": "Student"
+                    "name": "Resume"
                 }
             },
             "Tag": {
@@ -2239,16 +2278,6 @@
                         "description": "User ID",
                         "type": "integer",
                         "format": "int64"
-                    },
-                    "name": {
-                        "description": "User's first name",
-                        "type": "string",
-                        "example": "John"
-                    },
-                    "surname": {
-                        "description": "User's last name",
-                        "type": "string",
-                        "example": "Doe"
                     },
                     "dni": {
                         "description": "User's DNI",
