@@ -53,7 +53,9 @@ class AnnotationsStudent
      *     operationId="getAllStudents",
      *     tags={"Student"},
      *     summary="Get a list of all students.",
-     *     description="Get a list of all registered students. Authentication is not required.",
+     *     description="Get a list of all registered students.
+
+     No authentication required",
      *
      *     @OA\Response(
      *         response=200,
@@ -67,16 +69,13 @@ class AnnotationsStudent
      *
      *                 @OA\Items(
      *                     type="object",
-     *
      *                     @OA\Property(property="name",type="string",example="John" ),
      *                     @OA\Property(property="surname", type="string",example="Doe"),
-     *                     @OA\Property(property="subtitle",type="string",example="Engineer and Developer" ),
-     *                     @OA\Property( property="about", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit." ),
-     *                     @OA\Property(property="cv", type="string",example="My currículum."),
-     *                     @OA\Property(property="bootcamp", type="string",example="PHP Developer" ),
-     *                     @OA\Property(property="end_date",type="date",example="..." ),
-     *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
-     *                     @OA\Property(property="github",type="string", example="http://www.github.com")
+     *                     @OA\Property(property="photo",description="Student Image Path",
+     *                          type="string",
+     *                          example="https://itaperfils.eurecatacademy.org/img/stud_1.png"),
+     *                     @OA\Property(property="status", type="enum",example="Active"),
+     *                     @OA\Property(property="id", type="uuid",example="9b7dae57-447f-48dc-b175-d243f093bb37")
      *                 )
      *             )
      *         )

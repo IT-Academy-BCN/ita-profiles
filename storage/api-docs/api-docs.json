@@ -991,7 +991,7 @@
                     "Student"
                 ],
                 "summary": "Get a list of all students.",
-                "description": "Get a list of all registered students. Authentication is not required.",
+                "description": "Get a list of all registered students.\n\n     No authentication required",
                 "operationId": "getAllStudents",
                 "responses": {
                     "200": {
@@ -1012,34 +1012,18 @@
                                                         "type": "string",
                                                         "example": "Doe"
                                                     },
-                                                    "subtitle": {
+                                                    "photo": {
+                                                        "description": "Student Image Path",
                                                         "type": "string",
-                                                        "example": "Engineer and Developer"
+                                                        "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
                                                     },
-                                                    "about": {
-                                                        "type": "string",
-                                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                                    "status": {
+                                                        "type": "enum",
+                                                        "example": "Active"
                                                     },
-                                                    "cv": {
-                                                        "type": "string",
-                                                        "example": "My currículum."
-                                                    },
-                                                    "bootcamp": {
-                                                        "type": "string",
-                                                        "example": "PHP Developer"
-                                                    },
-                                                    "end_date": {
-                                                        "type": "string",
-                                                        "format": "date",
-                                                        "example": "..."
-                                                    },
-                                                    "linkedin": {
-                                                        "type": "string",
-                                                        "example": "http://www.linkedin.com"
-                                                    },
-                                                    "github": {
-                                                        "type": "string",
-                                                        "example": "http://www.github.com"
+                                                    "id": {
+                                                        "type": "uuid",
+                                                        "example": "9b7dae57-447f-48dc-b175-d243f093bb37"
                                                     }
                                                 },
                                                 "type": "object"
