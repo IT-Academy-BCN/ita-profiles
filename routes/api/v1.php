@@ -2,13 +2,16 @@
 
 use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\DevelopmentListController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
 use App\Http\Controllers\api\StudentProjectsDetailController;
+use App\Http\Controllers\api\StudentBootcampDetailController;
 use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
 use App\Http\Controllers\api\SpecializationListController;
+use App\Http\Controllers\api\TagListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,7 +39,11 @@ Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruit
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
 
+// Student bootcamp detail Endpoint
+Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
 
+//Fake endpoint development
+Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
