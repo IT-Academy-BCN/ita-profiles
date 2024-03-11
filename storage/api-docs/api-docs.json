@@ -1745,367 +1745,35 @@
                             "type": "string",
                             "format": "uuid"
                         }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "Successful operation",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "array",
-                                        "items": {
-                                            "properties": {
-                                                "project_name": {
-                                                    "description": "Name of the project",
-                                                    "type": "string"
-                                                },
-                                                "project_site": {
-                                                    "description": "Site where the project is happening",
-                                                    "type": "string"
-                                                },
-                                                "project_skills": {
-                                                    "description": "Skills required for the project",
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "project_repository": {
-                                                    "description": "URL of the project repository",
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "404": {
-                            "description": "Student not found"
-                        }
                     }
-                }
-            },
-            "/tags": {
-                "get": {
-                    "tags": [
-                        "Tags"
-                    ],
-                    "summary": "Tags Index.",
-                    "description": "Retrieve a list of registered tags. Admin Authentication is required.",
-                    "operationId": "getAllTags",
-                    "responses": {
-                        "200": {
-                            "description": "Successful. Tag Index retrieved.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "array",
-                                        "items": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "tag_name": {
-                                                    "type": "string",
-                                                    "example": "Laravel"
-                                                },
-                                                "created_at": {
-                                                    "type": "string",
-                                                    "format": "date-time",
-                                                    "example": "2024-01-25T12:34:56Z"
-                                                },
-                                                "updated_at": {
-                                                    "type": "string",
-                                                    "format": "date-time",
-                                                    "example": "2024-01-25T12:34:56Z"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "401": {
-                            "description": "Unauthorized",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "properties": {
-                                            "status": {
-                                                "type": "boolean",
-                                                "example": false
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Unauthorized"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        },
-                        "404": {
-                            "description": "No tags found.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "properties": {
-                                            "message": {
-                                                "type": "string",
-                                                "example": "No tags found in the database."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "post": {
-                    "tags": [
-                        "Tags"
-                    ],
-                    "summary": "Create a new tag",
-                    "description": "Creates a new tag. Admin Authentication is required.",
-                    "operationId": "createTag",
-                    "requestBody": {
-                        "required": true,
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "example": 1
-                                        },
-                                        "tag_name": {
-                                            "type": "string",
-                                            "example": "Laravel"
-                                        },
-                                        "created_at": {
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2024-01-25T12:34:56Z"
-                                        },
-                                        "updated_at": {
-                                            "type": "string",
-                                            "format": "date-time",
-                                            "example": "2024-01-25T12:34:56Z"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "responses": {
-                        "201": {
-                            "description": "Tag created successfully.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
+                                    "type": "array",
+                                    "items": {
                                         "properties": {
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Tag created successfully."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        },
-                        "500": {
-                            "description": "Error creating the tag.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "properties": {
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Error creating the tag. Please try again."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "security": [
-                        {
-                            "bearer": []
-                        }
-                    ]
-                }
-            },
-            "/tags/{id}": {
-                "get": {
-                    "tags": [
-                        "Tags"
-                    ],
-                    "summary": "Get details of a specific tag",
-                    "description": "Retrieve details of a specific tag based on the provided ID. Admin Authentication is required.",
-                    "operationId": "getTagById",
-                    "parameters": [
-                        {
-                            "name": "id",
-                            "in": "path",
-                            "description": "Tag ID",
-                            "required": true,
-                            "schema": {
-                                "type": "integer",
-                                "format": "int64"
-                            }
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "Tag details retrieved successfully.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "properties": {
-                                            "data": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "tag_name": {
-                                                        "type": "string",
-                                                        "example": "Laravel"
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2024-01-25T12:34:56Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2024-01-25T12:34:56Z"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        },
-                        "404": {
-                            "description": "Tag not found.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "properties": {
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Tag not found."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "security": [
-                        {
-                            "bearer": []
-                        }
-                    ]
-                },
-                "put": {
-                    "tags": [
-                        "Tags"
-                    ],
-                    "summary": "Update details of a specific tag.",
-                    "description": "Updates details of a specific tag based on the provided ID. Admin Authentication is required.",
-                    "operationId": "updateTag",
-                    "parameters": [
-                        {
-                            "name": "id",
-                            "in": "path",
-                            "description": "ID of the tag to be updated",
-                            "required": true,
-                            "schema": {
-                                "type": "integer",
-                                "format": "int64"
-                            }
-                        }
-                    ],
-                    "requestBody": {
-                        "required": true,
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "tag_name": {
-                                            "type": "string",
-                                            "example": "Updated Tag"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "responses": {
-                        "200": {
-                            "description": "Tag details retrieved successfully.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "array",
-                                        "items": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "tag_name": {
-                                                    "type": "string",
-                                                    "example": "Laravel"
-                                                },
-                                                "created_at": {
-                                                    "type": "string",
-                                                    "format": "date-time",
-                                                    "example": "2024-01-25T12:34:56Z"
-                                                },
-                                                "updated_at": {
-                                                    "type": "string",
-                                                    "format": "date-time",
-                                                    "example": "2024-01-25T12:34:56Z"
-                                                },
-                                                "message": {
-                                                    "type": "string",
-                                                    "example": "Tag updated successfully."
+                                            "project_name": {
+                                                "description": "Name of the project",
+                                                "type": "string"
+                                            },
+                                            "project_site": {
+                                                "description": "Site where the project is happening",
+                                                "type": "string"
+                                            },
+                                            "project_skills": {
+                                                "description": "Skills required for the project",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
                                                 }
                                             },
-                                            "type": "object"
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "404": {
-                            "description": "Tag not found.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "properties": {
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Tag not found."
+                                            "project_repository": {
+                                                "description": "URL of the project repository",
+                                                "type": "string"
                                             }
                                         },
                                         "type": "object"
@@ -2114,286 +1782,619 @@
                             }
                         }
                     },
-                    "security": [
-                        {
-                            "bearer": []
-                        }
-                    ]
-                },
-                "delete": {
-                    "tags": [
-                        "Tags"
-                    ],
-                    "summary": "Delete a specific tag.",
-                    "description": "Deletes a specific tag based on the provided ID. Admin Authentication is required.",
-                    "operationId": "deleteTag",
-                    "parameters": [
-                        {
-                            "name": "id",
-                            "in": "path",
-                            "description": "ID of the tag to be deleted",
-                            "required": true,
-                            "schema": {
-                                "type": "integer",
-                                "format": "int64"
-                            }
-                        }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "Tag deleted successfully.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "properties": {
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Tag deleted successfully."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        },
-                        "404": {
-                            "description": "Tag not found.",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "properties": {
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Tag not found."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "security": [
-                        {
-                            "bearer": []
-                        }
-                    ]
+                    "404": {
+                        "description": "Student not found"
+                    }
                 }
             }
         },
-        "components": {
-            "schemas": {
-                "AnnotationsAdmin": {
-                    "title": "Admin",
-                    "description": "Admin Model",
-                    "properties": {
-                        "id": {
-                            "description": "Admin ID",
-                            "type": "integer",
-                            "format": "int64"
-                        },
-                        "user_id": {
-                            "description": "ID of the associated User",
-                            "type": "integer",
-                            "format": "int64"
-                        },
-                        "created_at": {
-                            "description": "Creation date of the Admin record",
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "updated_at": {
-                            "description": "Update date of the Admin record",
-                            "type": "string",
-                            "format": "date-time"
+        "/tags": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Tags Index.",
+                "description": "Retrieve a list of registered tags. Admin Authentication is required.",
+                "operationId": "getAllTags",
+                "responses": {
+                    "200": {
+                        "description": "Successful. Tag Index retrieved.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "tag_name": {
+                                                "type": "string",
+                                                "example": "Laravel"
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2024-01-25T12:34:56Z"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2024-01-25T12:34:56Z"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
                         }
                     },
-                    "type": "object",
-                    "xml": {
-                        "name": "Admin"
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No tags found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No tags found in the database."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Create a new tag",
+                "description": "Creates a new tag. Admin Authentication is required.",
+                "operationId": "createTag",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "tag_name": {
+                                        "type": "string",
+                                        "example": "Laravel"
+                                    },
+                                    "created_at": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2024-01-25T12:34:56Z"
+                                    },
+                                    "updated_at": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2024-01-25T12:34:56Z"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
                 },
-                "AnnotationsRecruiter": {
-                    "title": "Recruiter",
-                    "description": "Recruiter Model",
-                    "properties": {
-                        "id": {
-                            "description": "Recruiter ID",
-                            "type": "integer",
-                            "format": "int64"
-                        },
-                        "company": {
-                            "description": "Recruiter Company",
-                            "type": "string",
-                            "format": "int64"
-                        },
-                        "user_id": {
-                            "description": "ID of the associated User",
-                            "type": "integer",
-                            "format": "int64"
-                        },
-                        "created_at": {
-                            "description": "Creation date of the Recruiter record",
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "updated_at": {
-                            "description": "Update date of the Recruiter record",
-                            "type": "string",
-                            "format": "date-time"
+                "responses": {
+                    "201": {
+                        "description": "Tag created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tag created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
                         }
                     },
-                    "type": "object",
-                    "xml": {
-                        "name": "Recruiter"
+                    "500": {
+                        "description": "Error creating the tag.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error creating the tag. Please try again."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
-                "AnnotationsStudent": {
-                    "title": "Student",
-                    "description": "Student Model",
-                    "properties": {
-                        "id": {
-                            "description": "Student ID",
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/tags/{id}": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Get details of a specific tag",
+                "description": "Retrieve details of a specific tag based on the provided ID. Admin Authentication is required.",
+                "operationId": "getTagById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tag ID",
+                        "required": true,
+                        "schema": {
                             "type": "integer",
                             "format": "int64"
-                        },
-                        "user_id": {
-                            "description": "ID of the associated User",
-                            "type": "integer",
-                            "format": "int64"
-                        },
-                        "subtitle": {
-                            "description": "Presentation subtitle of the Student",
-                            "type": "string"
-                        },
-                        "about": {
-                            "description": "Presentation text of the Student",
-                            "type": "string"
-                        },
-                        "cv": {
-                            "description": "Curriculum of the Student-file?",
-                            "type": "string"
-                        },
-                        "bootcamp": {
-                            "description": "Name of the Bootcamp attended by the Student",
-                            "type": "enum"
-                        },
-                        "end_date": {
-                            "description": "Student Bootcamp's ending date",
-                            "type": "string",
-                            "format": "date"
-                        },
-                        "linkedin": {
-                            "description": "Url of student's linkedin",
-                            "type": "string"
-                        },
-                        "github": {
-                            "description": "Url of student's github",
-                            "type": "string"
-                        },
-                        "created_at": {
-                            "description": "Creation date of the Student record",
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "updated_at": {
-                            "description": "Update date of the Student record",
-                            "type": "string",
-                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tag details retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "tag_name": {
+                                                    "type": "string",
+                                                    "example": "Laravel"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-01-25T12:34:56Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-01-25T12:34:56Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
                         }
                     },
-                    "type": "object",
-                    "xml": {
-                        "name": "Student"
+                    "404": {
+                        "description": "Tag not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tag not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
-                "Tag": {
-                    "title": "Tag",
-                    "description": "Tag Model",
-                    "properties": {
-                        "id": {
-                            "description": "Tag ID",
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Update details of a specific tag.",
+                "description": "Updates details of a specific tag based on the provided ID. Admin Authentication is required.",
+                "operationId": "updateTag",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the tag to be updated",
+                        "required": true,
+                        "schema": {
                             "type": "integer",
                             "format": "int64"
-                        },
-                        "tag_name": {
-                            "description": "Tag Name",
-                            "type": "string",
-                            "format": "int64"
-                        },
-                        "created_at": {
-                            "description": "Tag creation date",
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "updated_at": {
-                            "description": "Tag update date",
-                            "type": "string",
-                            "format": "date-time"
                         }
-                    },
-                    "type": "object",
-                    "xml": {
-                        "name": "Tag"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tag_name": {
+                                        "type": "string",
+                                        "example": "Updated Tag"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
                 },
-                "AnnotationsUser": {
-                    "title": "User",
-                    "description": "User Model",
-                    "properties": {
-                        "id": {
-                            "description": "User ID",
-                            "type": "integer",
-                            "format": "int64"
-                        },
-                        "name": {
-                            "description": "User's first name",
-                            "type": "string",
-                            "example": "John"
-                        },
-                        "surname": {
-                            "description": "User's last name",
-                            "type": "string",
-                            "example": "Doe"
-                        },
-                        "dni": {
-                            "description": "User's DNI",
-                            "type": "string",
-                            "example": "12345678B"
-                        },
-                        "email": {
-                            "description": "User's email address",
-                            "type": "string",
-                            "format": "email",
-                            "example": "johndoe@example.com"
-                        },
-                        "password": {
-                            "description": "User's password",
-                            "type": "string",
-                            "format": "password",
-                            "example": "********"
-                        },
-                        "created_at": {
-                            "description": "User's creation date",
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "updated_at": {
-                            "description": "User's update date",
-                            "type": "string",
-                            "format": "date-time"
-                        },
-                        "email_verified_at": {
-                            "description": "User's email verification date",
-                            "type": "string",
-                            "format": "date-time"
+                "responses": {
+                    "200": {
+                        "description": "Tag details retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "tag_name": {
+                                                "type": "string",
+                                                "example": "Laravel"
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2024-01-25T12:34:56Z"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2024-01-25T12:34:56Z"
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Tag updated successfully."
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
                         }
                     },
-                    "type": "object",
-                    "xml": {
-                        "name": "User"
+                    "404": {
+                        "description": "Tag not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tag not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Delete a specific tag.",
+                "description": "Deletes a specific tag based on the provided ID. Admin Authentication is required.",
+                "operationId": "deleteTag",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the tag to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tag deleted successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tag deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tag not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tag not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AnnotationsAdmin": {
+                "title": "Admin",
+                "description": "Admin Model",
+                "properties": {
+                    "id": {
+                        "description": "Admin ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "description": "ID of the associated User",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "description": "Creation date of the Admin record",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Update date of the Admin record",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Admin"
+                }
+            },
+            "AnnotationsRecruiter": {
+                "title": "Recruiter",
+                "description": "Recruiter Model",
+                "properties": {
+                    "id": {
+                        "description": "Recruiter ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "company": {
+                        "description": "Recruiter Company",
+                        "type": "string",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "description": "ID of the associated User",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "description": "Creation date of the Recruiter record",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Update date of the Recruiter record",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Recruiter"
+                }
+            },
+            "AnnotationsStudent": {
+                "title": "Student",
+                "description": "Student Model",
+                "properties": {
+                    "id": {
+                        "description": "Student ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "description": "ID of the associated User",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "subtitle": {
+                        "description": "Presentation subtitle of the Student",
+                        "type": "string"
+                    },
+                    "about": {
+                        "description": "Presentation text of the Student",
+                        "type": "string"
+                    },
+                    "cv": {
+                        "description": "Curriculum of the Student-file?",
+                        "type": "string"
+                    },
+                    "bootcamp": {
+                        "description": "Name of the Bootcamp attended by the Student",
+                        "type": "enum"
+                    },
+                    "end_date": {
+                        "description": "Student Bootcamp's ending date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "linkedin": {
+                        "description": "Url of student's linkedin",
+                        "type": "string"
+                    },
+                    "github": {
+                        "description": "Url of student's github",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Creation date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Update date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Student"
+                }
+            },
+            "Tag": {
+                "title": "Tag",
+                "description": "Tag Model",
+                "properties": {
+                    "id": {
+                        "description": "Tag ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "tag_name": {
+                        "description": "Tag Name",
+                        "type": "string",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "description": "Tag creation date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Tag update date",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Tag"
+                }
+            },
+            "AnnotationsUser": {
+                "title": "User",
+                "description": "User Model",
+                "properties": {
+                    "id": {
+                        "description": "User ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "description": "User's first name",
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "surname": {
+                        "description": "User's last name",
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "dni": {
+                        "description": "User's DNI",
+                        "type": "string",
+                        "example": "12345678B"
+                    },
+                    "email": {
+                        "description": "User's email address",
+                        "type": "string",
+                        "format": "email",
+                        "example": "johndoe@example.com"
+                    },
+                    "password": {
+                        "description": "User's password",
+                        "type": "string",
+                        "format": "password",
+                        "example": "********"
+                    },
+                    "created_at": {
+                        "description": "User's creation date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "User's update date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "email_verified_at": {
+                        "description": "User's email verification date",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
                 }
             }
         }
     }
+}
