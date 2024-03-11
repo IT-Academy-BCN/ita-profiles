@@ -1604,14 +1604,26 @@
                 }
             }
         },
-        "/api/v1/studentCollaborations": {
+        "/api/v1/students/{id}/bootcamp": {
             "get": {
                 "tags": [
-                    "Collaborations"
+                    "Bootcamp"
                 ],
-                "summary": "Get collaborations for a student",
-                "description": "Returns a list of collaborations for a specific student. (Note: This endpoint returns hardcoded student collaborations)",
-                "operationId": "getStudentCollaborations",
+                "summary": "Get a detailed list of a student bootcamp",
+                "description": "Returns detail for a specific student bootcamp. (Note: This endpoint returns hardcoded bootcamp details)",
+                "operationId": "getStudentBootcamp",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -1621,33 +1633,28 @@
                                     "type": "array",
                                     "items": {
                                         "properties": {
-                                            "collaborations": {
+                                            "bootcamp_id": {
+                                                "description": "Bootcamp ID",
+                                                "type": "string"
+                                            },
+                                            "bootcamp_name": {
+                                                "description": "Bootcamp Name",
+                                                "type": "string"
+                                            },
+                                            "bootcamp_site": {
+                                                "description": "Bootcamp Site",
+                                                "type": "string"
+                                            },
+                                            "bootcamp_end_date": {
+                                                "description": "Bootcamp end date",
                                                 "type": "array",
                                                 "items": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "description": "Collaboration ID",
-                                                            "type": "integer",
-                                                            "example": 1
-                                                        },
-                                                        "name": {
-                                                            "description": "Collaboration name",
-                                                            "type": "string",
-                                                            "example": "ita wiki"
-                                                        },
-                                                        "description": {
-                                                            "description": "Collaboration description",
-                                                            "type": "string",
-                                                            "example": "Recursos subidos"
-                                                        },
-                                                        "quantity": {
-                                                            "description": "Quantity",
-                                                            "type": "integer",
-                                                            "example": 9
-                                                        }
-                                                    },
-                                                    "type": "object"
+                                                    "type": "string"
                                                 }
+                                            },
+                                            "bootcamp_workload": {
+                                                "description": "Bootcamp Workload in hours",
+                                                "type": "string"
                                             }
                                         },
                                         "type": "object"
@@ -2333,3 +2340,4 @@
         }
     }
 }
+
