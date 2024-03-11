@@ -30,10 +30,12 @@ class AnnotationsStudentList
      *     @OA\Parameter(
      *       name="specialization",
      *       in="query",
-     *       description="The specialization to filter students by",
+     *       description="The specializations to filter students by",
      *       required=false,
+     *       style="form",
+     *       explode=true,
      *
-     *       @OA\Schema(type="string")
+     *       @OA\Schema(type="array", @OA\Items(type="string"))
      *     ),
      *
      *     @OA\Response(

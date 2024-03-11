@@ -1559,10 +1559,15 @@
                     {
                         "name": "specialization",
                         "in": "query",
-                        "description": "The specialization to filter students by",
+                        "description": "The specializations to filter students by",
                         "required": false,
+                        "style": "form",
+                        "explode": true,
                         "schema": {
-                            "type": "string"
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     }
                 ],
@@ -2132,65 +2137,6 @@
     },
     "components": {
         "schemas": {
-            "AnnotationsStudent": {
-                "title": "Student",
-                "description": "Student Model",
-                "properties": {
-                    "id": {
-                        "description": "Student ID",
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "user_id": {
-                        "description": "ID of the associated User",
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    "subtitle": {
-                        "description": "Presentation subtitle of the Student",
-                        "type": "string"
-                    },
-                    "about": {
-                        "description": "Presentation text of the Student",
-                        "type": "string"
-                    },
-                    "cv": {
-                        "description": "Curriculum of the Student-file?",
-                        "type": "string"
-                    },
-                    "bootcamp": {
-                        "description": "Name of the Bootcamp attended by the Student",
-                        "type": "enum"
-                    },
-                    "end_date": {
-                        "description": "Student Bootcamp's ending date",
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "linkedin": {
-                        "description": "Url of student's linkedin",
-                        "type": "string"
-                    },
-                    "github": {
-                        "description": "Url of student's github",
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "description": "Creation date of the Student record",
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updated_at": {
-                        "description": "Update date of the Student record",
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "Student"
-                }
-            },
             "AnnotationsAdmin": {
                 "title": "Admin",
                 "description": "Admin Model",
@@ -2254,6 +2200,65 @@
                 "type": "object",
                 "xml": {
                     "name": "Recruiter"
+                }
+            },
+            "AnnotationsStudent": {
+                "title": "Student",
+                "description": "Student Model",
+                "properties": {
+                    "id": {
+                        "description": "Student ID",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "user_id": {
+                        "description": "ID of the associated User",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "subtitle": {
+                        "description": "Presentation subtitle of the Student",
+                        "type": "string"
+                    },
+                    "about": {
+                        "description": "Presentation text of the Student",
+                        "type": "string"
+                    },
+                    "cv": {
+                        "description": "Curriculum of the Student-file?",
+                        "type": "string"
+                    },
+                    "bootcamp": {
+                        "description": "Name of the Bootcamp attended by the Student",
+                        "type": "enum"
+                    },
+                    "end_date": {
+                        "description": "Student Bootcamp's ending date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "linkedin": {
+                        "description": "Url of student's linkedin",
+                        "type": "string"
+                    },
+                    "github": {
+                        "description": "Url of student's github",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Creation date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Update date of the Student record",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Student"
                 }
             },
             "Tag": {
