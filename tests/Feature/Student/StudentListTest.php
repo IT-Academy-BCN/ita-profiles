@@ -20,8 +20,8 @@ class StudentListTest extends TestCase
 
     public function test_student_list_controller()
     {
-        $response = $this->getJson(route('profiles.home'));
-
+        $response = $this->getJson(route('profiles.home', ['specialization' => 'Data Science,Backend']));
+        
         $response->assertStatus(200);
 
         $response->assertJsonStructure([
@@ -59,7 +59,7 @@ class StudentListTest extends TestCase
             'student_id' => $student->id,
             'specialization' => $specialization,
         ]);
-        $response = $this->getJson(route('profiles.home', ['specialization' => $specialization]));
+        $response = $this->getJson(route('profiles.home', ['specialization' => 'Data Science,Backend']));
 
         $response->assertStatus(200);
 
