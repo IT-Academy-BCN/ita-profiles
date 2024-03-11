@@ -1553,7 +1553,7 @@
                     "Student"
                 ],
                 "summary": "Get Students List.",
-                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n- If a 'specialization' parameter is provided, the list will be filtered by student's specialization.\n\n- If not, it returns a list of all students.\n\n\n    No authentication required",
+                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n- If a 'specialization' parameter is provided, the list will be filtered by student's specialization.\n\n- If not, it returns a list of all students.\n\n- Multiple parameters can be added separated by commas.\n\n- For example, if the objetive is to filter Backend and Frontend students, the query would be:\n\n    ```/student/list/for-home?specialization=frontend,backend```\n\n---\n\n    No authentication required",
                 "operationId": "getAllStudentsForFigma",
                 "parameters": [
                     {

@@ -17,6 +17,13 @@ class AnnotationsStudentList
 
 - If not, it returns a list of all students.
 
+- Multiple parameters can be added separated by commas.
+
+- For example, if the objetive is to filter Backend and Frontend students, the query would be:
+
+    ```/student/list/for-home?specialization=frontend,backend```
+
+---
 
     No authentication required",
      *
