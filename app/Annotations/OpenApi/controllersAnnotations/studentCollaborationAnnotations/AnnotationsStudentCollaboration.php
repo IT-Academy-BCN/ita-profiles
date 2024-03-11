@@ -44,6 +44,8 @@ class AnnotationsStudentCollaboration
      *      )
      * )
      */
-    public function __invoke() {}
+    public function __invoke()
+    {
+    }
 }
 
