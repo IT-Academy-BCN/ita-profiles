@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000/api/v1"
+            "url": "http://my-default-host.com"
         },
         {
             "url": "http://127.0.0.1:8000/api/v1"
@@ -1614,13 +1614,13 @@
                 "operationId": "getStudentBootcamp",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uuid",
                         "in": "path",
-                        "description": "Student ID",
+                        "description": "Student UUID",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "string",
+                            "format": "uuid"
                         }
                     }
                 ],
@@ -1641,20 +1641,12 @@
                                                 "description": "Bootcamp Name",
                                                 "type": "string"
                                             },
-                                            "bootcamp_site": {
-                                                "description": "Bootcamp Site",
-                                                "type": "string"
-                                            },
                                             "bootcamp_end_date": {
                                                 "description": "Bootcamp end date",
                                                 "type": "array",
                                                 "items": {
                                                     "type": "string"
                                                 }
-                                            },
-                                            "bootcamp_workload": {
-                                                "description": "Bootcamp Workload in hours",
-                                                "type": "string"
                                             }
                                         },
                                         "type": "object"
@@ -2398,3 +2390,4 @@
         }
     }
 }
+
