@@ -10,9 +10,6 @@
             "url": "http://127.0.0.1:8000/api/v1"
         },
         {
-            "url": "http://127.0.0.1:8000"
-        },
-        {
             "url": "https://itaperfils.eurecatacademy.org"
         },
         {
@@ -20,6 +17,47 @@
         }
     ],
     "paths": {
+        "/additional-training/list": {
+            "get": {
+                "tags": [
+                    "Additional Training"
+                ],
+                "summary": "Retrieve a list of additional training",
+                "operationId": "ec1ec12caefc80b4f1bc588b1d4ab641",
+                "responses": {
+                    "200": {
+                        "description": "Successful. Additional training list retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "course": {
+                                                "type": "string"
+                                            },
+                                            "center": {
+                                                "type": "string"
+                                            },
+                                            "year": {
+                                                "type": "string"
+                                            },
+                                            "duration": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/admins": {
             "get": {
                 "tags": [

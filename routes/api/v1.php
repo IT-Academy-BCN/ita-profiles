@@ -47,6 +47,9 @@ Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->n
 //Fake endpoint development
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 
+//Fake endpoint
+Route::get('/additional-training/list', AdditionalTrainingListController::class)->name('additional-training.list');
+
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
