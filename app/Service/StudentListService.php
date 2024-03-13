@@ -21,7 +21,8 @@ class StudentListService
 
     private function getResumes(?array $specializations): Collection
     {
-        if ($specializations) {
+
+        if ($specializations[0] != null) {
             $resumes = Resume::whereIn('specialization', $specializations)->get();
         } else {
             $resumes = Resume::all();
