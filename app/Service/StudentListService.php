@@ -21,7 +21,8 @@ class StudentListService
 
     private function getResumes(?array $specializations): Collection
     {
-        if ($specializations) {
+
+        if ($specializations[0] != null) {
             $resumes = Resume::whereIn('specialization', $specializations)->get();
         } else {
             $resumes = Resume::all();
@@ -44,6 +45,7 @@ class StudentListService
     private function mapResumeToData($resume): array
     {
         return [
+            'specialization' => $resume->specialization,
             'fullname' => $resume->student->name . " " . $resume->student->surname,
             'subtitle' => $resume->subtitle,
             'photo' => asset('/img/stud_' . rand(1, 3) . '.png'),
