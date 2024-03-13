@@ -17,7 +17,7 @@ class AnnotationsStudentList
 
 - If not, it returns a list of all students.
 
-- Multiple parameters can be added separated by commas.
+- Multiple parameters can be added separated by commas without spaces.
 
 - For example, if the objetive is to filter Backend and Frontend students, the query would be:
 
@@ -35,7 +35,7 @@ class AnnotationsStudentList
      *       style="form",
      *       explode=true,
      *
-     *       @OA\Schema(type="array", @OA\Items(type="string"))
+     *       @OA\Schema(type="string")
      *     ),
      *
      *     @OA\Response(
