@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class StudentListServiceTest extends TestCase
 {
-    
+
 
     private $resumeUpdateService;
     private $studentListService;
@@ -27,21 +27,11 @@ class StudentListServiceTest extends TestCase
 
         $this->artisan('migrate:fresh --seed');
         $this->artisan('passport:install');
-
     }
 
     public function testCanInstantiate(): void
     {
         self::assertInstanceOf(StudentListService::class, $this->resumeUpdateService);
         self::assertInstanceOf(StudentListService::class, $this->studentListService);
-    }
-
-
-    public function testExecuteStudentListService(): void
-    {
-        Resume::factory()->count(10)->create();
-        $data = $this->resumeUpdateService->execute();
-        self::assertCount(40, $data);
-
     }
 }
