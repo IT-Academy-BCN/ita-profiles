@@ -5,47 +5,6 @@ namespace App\Annotations\OpenApi\controllersAnnotations\studentAnnotations;
 class AnnotationsStudent
 {
     /**
-     * @OA\Get(
-     *     path="/student/list/for-home",
-     *     operationId="getAllStudentsForFigma",
-     *     tags={"Student"},
-     *     summary="Get all Students.",
-     *     description="Get a list of all students registered with the Profile-Home fields in Figma Design.
-
-     *     No authentication required",
-     *
-     *     @OA\Response(
-     *         response=200,
-     *         description="A list of students",
-     *
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(
-     *                 type="object",
-     *                 @OA\Property(property="fullname", type="string", example="Juan Pérez"),
-     *                 @OA\Property(property="subtitle", type="string", example="Desarrollador Frontend"),
-     *                 @OA\Property(property="photo",description="Student Image Path",
-     *                     type="string",
-     *                     example="https://itaperfils.eurecatacademy.org/img/stud_1.png"),
-     *                 @OA\Property(
-     *                   property="tags",
-     *                   type="array",
-     *                   @OA\Items(ref="#/components/schemas/Tag"))
-     *             )
-     *          )
-     *      ),
-     *
-     *      @OA\Schema(
-     *           schema="Tag",
-     *           type="object",
-     *           @OA\Property(property="id", type="integer", example=1),
-     *           @OA\Property(property="name", type="string", example="JavaScript"),
-     *           example={"id": 1, "name": "JavaScript"}
-     *      )
-     * )
-     */
-    public function __invoke() {}
-    /**
      * Llista de tots els estudiants
      *
      * @OA\Get (

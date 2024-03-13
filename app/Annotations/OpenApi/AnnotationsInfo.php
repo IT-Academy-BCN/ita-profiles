@@ -6,11 +6,19 @@ namespace App\Annotations\OpenApi;
  * @OA\Info(
  *   version="1.0.0",
  *   title="ITA Profiles page API documentation",
- *   description="Documentation needed for the API Rest for the ITA Profiles page to IT Academy. Some useful links below:
- *   [ITA Profles Backend](https://github.com/IT-Academy-BCN/ita-profiles-backend)
- *   [ITA Profiles Frontend](https://github.com/IT-Academy-BCN/ita-profiles-frontend)"
+ *   description="
+
+    API Rest documentation used on ITA Profiles WEB. Some useful links below:
+ *   [ITA Profles Backend Repository](https://github.com/IT-Academy-BCN/ita-profiles-backend)
+ *   [ITA Profiles Frontend Repository](https://github.com/IT-Academy-BCN/ita-profiles-frontend)
+ *   [ITA Profiles WEB](https://ornate-dieffenbachia-e0ff84.netlify.app)"
  * )
- *
+ *   @OA\Server(
+ *     url= L5_SWAGGER_CONST_HOST
+ *   )
+ *   @OA\Server(
+ *     url="http://127.0.0.1:8000/api/v1"
+ *   )
  *   @OA\Server(
  *     url= L5_SWAGGER_CONST_HOST
  *   )

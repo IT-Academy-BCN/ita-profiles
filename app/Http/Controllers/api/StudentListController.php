@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Service\StudentListService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+
 
 class StudentListController extends Controller
 {
@@ -16,12 +18,19 @@ class StudentListController extends Controller
         $this->studentListService = $studentListService;
 
     }
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         try {
-            $data = $this->studentListService->execute();
+            $specializations = is_array($request->get('specialization')) ?
+                $request->get('specialization'): [$request->get('specialization')];
+
+                $specializationsString = $request->get('specialization');
+                $specializations = explode(',', $specializationsString);
+
+            $data = $this->studentListService->execute($specializations);
 
             return response()->json($data, 200);
+
         } catch(ModelNotFoundException $resumesNotFoundException) {
             throw new HttpResponseException(response()->json([
                 'message' => $resumesNotFoundException->getMessage()], $resumesNotFoundException->getCode()));
