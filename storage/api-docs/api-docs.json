@@ -1631,6 +1631,60 @@
                 }
             }
         },
+        "/students/{uuid}/languages": {
+            "get": {
+                "tags": [
+                    "Languages"
+                ],
+                "summary": "Get a detailed list of languages and level for a student",
+                "description": "Returns a list of Languages and level for a specific student. (Note: This endpoint returns hardcoded project details)",
+                "operationId": "getStudentLanguages",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "Student UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "language_id": {
+                                                "description": "id for languange",
+                                                "type": "integer"
+                                            },
+                                            "language_name": {
+                                                "description": "Language",
+                                                "type": "string"
+                                            },
+                                            "language_level": {
+                                                "description": "Language level",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                }
+            }
+        },
         "/api/v1/students/{uuid}/projects": {
             "get": {
                 "tags": [
