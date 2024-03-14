@@ -12,6 +12,7 @@ use App\Http\Controllers\api\StudentBootcampDetailController;
 use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
 use App\Http\Controllers\api\SpecializationListController;
+use App\Http\Controllers\api\StudentLanguagesDetailController;
 use App\Http\Controllers\api\TagListController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,9 @@ Route::get('/students/{id}/projects', StudentProjectsDetailController::class)->n
 
 //Student Collaboration fake Endpoint
 Route::get('/studentCollaborations', StudentCollaborationController::class)->name('collaborations.list');
+
+// Student languages details Endpoint
+Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
