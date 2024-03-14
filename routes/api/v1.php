@@ -11,6 +11,7 @@ use App\Http\Controllers\api\StudentBootcampDetailController;
 use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
 use App\Http\Controllers\api\SpecializationListController;
+use App\Http\Controllers\api\StudentLanguagesDetailController;
 use App\Http\Controllers\api\TagListController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +51,9 @@ Route::get('/specialization/list', SpecializationListController::class)->name('r
 
 // Student projects detail Endpoint
 Route::get('/students/{id}/projects', StudentProjectsDetailController::class)->name('projects.list');
+
+// Student languages details Endpoint
+Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
