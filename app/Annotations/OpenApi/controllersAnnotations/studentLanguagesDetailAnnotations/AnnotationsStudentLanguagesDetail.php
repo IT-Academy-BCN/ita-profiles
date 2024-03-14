@@ -8,7 +8,7 @@ class AnnotationsStudentLanguagesDetail
 {
     /**
      * @OA\Get(
-     *      path="/api/v1/students/{uuid}/languages",
+     *      path="/students/{uuid}/languages",
      *      operationId="getStudentLanguages",
      *      tags={"Languages"},
      *      summary="Get a detailed list of languages and level for a student",
