@@ -14,7 +14,7 @@ class CourseModalityController extends Controller
         $modality = $data['modalities'][array_rand( $data['modalities'])];
 
         return response()->json([
-            'modality' => $modality
+            'modality' => $modality['name']
         ], 200);    
 
     }

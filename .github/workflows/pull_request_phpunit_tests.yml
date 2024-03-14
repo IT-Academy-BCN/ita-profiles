@@ -34,6 +34,7 @@ jobs:
 
       - name: Configurar .env para pruebas
         run: |
+          echo "APP_KEY=" >> .env
           echo "APP_ENV=testing" >> .env
           echo "DB_CONNECTION=mysql" >> .env
           echo "DB_HOST=127.0.0.1" >> .env
@@ -46,7 +47,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Ejecutar migraciones y seeds
-        run: php artisan migrate:fresh --seed
+        run: php artisan migrate --seed
 
       - name: Ejecutar pruebas unitarias
         run: php artisan test

@@ -38,7 +38,7 @@ class StudentController extends Controller
 
         return response()->json(
             [
-                'data' => StudentListResource::collection($studentsList)],
+                'data' => StudentResource::collection($studentsList)],
             200
         );
 
