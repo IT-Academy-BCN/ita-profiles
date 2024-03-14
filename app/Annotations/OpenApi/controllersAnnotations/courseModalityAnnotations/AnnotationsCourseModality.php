@@ -17,11 +17,8 @@ class AnnotationsCourseModality
      *         response=200,
      *             description="Successful operation",
      *             @OA\JsonContent(
-     *                  type="object",
-     *                  @OA\Property(property="modality", type="object",
-     *                       @OA\Property(property="id", type="integer", example=1),
-     *                       @OA\Property(property="name", type="string", example="Presencial")
-     *                  )
+    *                   type="object",
+    *                   @OA\Property(property="modality", type="string", example="Presencial")
      *             )
      *     )
      * )
