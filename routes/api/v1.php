@@ -69,7 +69,7 @@ Route::middleware('auth:api')->group(function () {
     //Recruiter
     Route::put('/recruiters/{id}', [RecruiterController::class, 'update'])->name('recruiter.update');
     Route::delete('/recruiters/{id}', [RecruiterController::class, 'destroy'])->name('recruiter.delete');
-    //Admin
+    //Admin 
     Route::get('/admins/{id}', [AdminController::class, 'show'])->middleware('role:admin')->name('admin.show');
     Route::put('/admins/{id}', [AdminController::class, 'update'])->middleware('role:admin')->name('admin.update');
     Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->middleware('role:admin')->name('admin.destroy');
