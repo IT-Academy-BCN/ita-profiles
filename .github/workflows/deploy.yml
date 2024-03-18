@@ -28,7 +28,7 @@ jobs:
             sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && php artisan migrate:fresh"
             sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && php artisan db:seed"
 
-        env:
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-          SSH_HOST_URL: ${{ secrets.SSH_HOST }}
-          SSH_USERNAME: ${{ secrets.SSH_USER }}
+          env:
+            SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+            SSH_HOST_URL: ${{ secrets.SSH_HOST }}
+            SSH_USERNAME: ${{ secrets.SSH_USER }}
