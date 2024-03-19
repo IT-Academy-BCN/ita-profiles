@@ -1,0 +1,12 @@
+{
+    "modalities": [
+        {
+            "id": 1,
+            "name": "Presencial"
+        },
+        {
+            "id": 2,
+            "name": "Remoto"
+        }
+    ]
+}
