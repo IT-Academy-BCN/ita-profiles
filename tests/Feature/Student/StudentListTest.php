@@ -21,7 +21,7 @@ class StudentListTest extends TestCase
     public function test_student_list_controller()
     {
         $response = $this->getJson(route('profiles.home', ['specialization' => 'Data Science,Backend']));
-        
+
         $response->assertStatus(200);
 
         $response->assertJsonStructure([
@@ -82,5 +82,23 @@ class StudentListTest extends TestCase
         $fetchedResume = Resume::with('student')->find($resume->id);
         $this->assertNotNull($fetchedResume);
         $this->assertTrue($fetchedResume->student->is($student));
+    }
+    public function testGetResumesWithTags()
+    {
+        $specializations = null;
+        $tags = [1];
+        $resumeService = new StudentListService();
+
+        $resumes = $resumeService->getResumes($specializations, $tags);
+
+        $this->assertNotEmpty($resumes);
+
+        foreach ($resumes as $resume) {
+            $tags_ids_array = array_map('intval', array_map('trim', str_replace(['[', ']'], '', explode(',', $resume->tags_ids))));
+
+            foreach ($tags as $tag) {
+                $this->assertContains($tag, $tags_ids_array);
+            }
+        }
     }
 }
