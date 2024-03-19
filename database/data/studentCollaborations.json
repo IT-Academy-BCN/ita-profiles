@@ -1,0 +1,20 @@
+[
+    {
+        "collaborations":[
+            {
+                "id": 1,
+                "name":"ita wiki",
+                "description":"Recursos subidos",
+                "quantity": 9
+            },
+            {
+                "id": 2,
+                "name":"ita-challenges",
+                "description":"Retos completados",
+                "quantity": 12
+            }
+
+        ]
+
+    }
+]

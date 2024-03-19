@@ -18,15 +18,9 @@ class StudentResource extends JsonResource
         return [
             'name' => Str::ucfirst($this->name),
             'surname' => Str::ucfirst($this->surname),
-            //'email'  => $this->user->email,
-            'subtitle' => Str::ucfirst($this->subtitle),
-            'about' => Str::ucfirst($this->about),
-            'cv' => $this->cv,
-            'bootcamp' => $this->bootcamp,
-            'end_date' => $this->end_date,
-            'linkedin' => $this->linkedin,
-            'github' => $this->github,
-
+            'photo' => $this->photo,
+            'status' => Str::ucfirst($this->status),
+            'id' => $this->id,
         ];
 
     }

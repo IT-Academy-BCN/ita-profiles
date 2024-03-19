@@ -47,7 +47,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Ejecutar migraciones y seeds
-        run: php artisan migrate:fresh --seed
+        run: php artisan migrate --seed
 
       - name: Ejecutar pruebas unitarias
         run: php artisan test

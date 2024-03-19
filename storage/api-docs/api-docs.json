@@ -2,18 +2,12 @@
     "openapi": "3.0.0",
     "info": {
         "title": "ITA Profiles page API documentation",
-        "description": "Documentation needed for the API Rest for the ITA Profiles page to IT Academy. Some useful links below:\n *   [ITA Profles Backend](https://github.com/IT-Academy-BCN/ita-profiles-backend)\n *   [ITA Profiles Frontend](https://github.com/IT-Academy-BCN/ita-profiles-frontend)",
+        "description": "\n\n    API Rest documentation used on ITA Profiles WEB. Some useful links below:\n *   [ITA Profles Backend Repository](https://github.com/IT-Academy-BCN/ita-profiles-backend)\n *   [ITA Profiles Frontend Repository](https://github.com/IT-Academy-BCN/ita-profiles-frontend)\n *   [ITA Profiles WEB](https://ornate-dieffenbachia-e0ff84.netlify.app)",
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000/api/v1"
-        },
-        {
-            "url": "https://itaperfils.eurecatacademy.org"
-        },
-        {
-            "url": "https://itaperfils.eurecatacademy.org/api/v1"
+            "url": "http://localhost/api/v1"
         }
     ],
     "paths": {
@@ -34,7 +28,7 @@
                                     "items": {
                                         "properties": {
                                             "id": {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             "course": {
                                                 "type": "string"
@@ -46,7 +40,7 @@
                                                 "type": "string"
                                             },
                                             "duration": {
-                                                "type": "integer"
+                                                "type": "string"
                                             }
                                         },
                                         "type": "object"
@@ -1025,59 +1019,13 @@
                 }
             }
         },
-        "/student/list/for-home": {
-            "get": {
-                "tags": [
-                    "Student"
-                ],
-                "summary": "Get all Students.",
-                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n     *     No authentication required",
-                "operationId": "getAllStudentsForFigma",
-                "responses": {
-                    "200": {
-                        "description": "A list of students",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "fullname": {
-                                                "type": "string",
-                                                "example": "Juan Pérez"
-                                            },
-                                            "subtitle": {
-                                                "type": "string",
-                                                "example": "Desarrollador Frontend"
-                                            },
-                                            "photo": {
-                                                "description": "Student Image Path",
-                                                "type": "string",
-                                                "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
-                                            },
-                                            "tags": {
-                                                "type": "array",
-                                                "items": {
-                                                    "$ref": "#/components/schemas/Tag"
-                                                }
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/students": {
             "get": {
                 "tags": [
                     "Student"
                 ],
                 "summary": "Get a list of all students.",
-                "description": "Get a list of all registered students. Authentication is not required.",
+                "description": "Get a list of all registered students.\n\n     No authentication required",
                 "operationId": "getAllStudents",
                 "responses": {
                     "200": {
@@ -1098,34 +1046,18 @@
                                                         "type": "string",
                                                         "example": "Doe"
                                                     },
-                                                    "subtitle": {
+                                                    "photo": {
+                                                        "description": "Student Image Path",
                                                         "type": "string",
-                                                        "example": "Engineer and Developer"
+                                                        "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
                                                     },
-                                                    "about": {
-                                                        "type": "string",
-                                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                                    "status": {
+                                                        "type": "enum",
+                                                        "example": "Active"
                                                     },
-                                                    "cv": {
-                                                        "type": "string",
-                                                        "example": "My currículum."
-                                                    },
-                                                    "bootcamp": {
-                                                        "type": "string",
-                                                        "example": "PHP Developer"
-                                                    },
-                                                    "end_date": {
-                                                        "type": "string",
-                                                        "format": "date",
-                                                        "example": "..."
-                                                    },
-                                                    "linkedin": {
-                                                        "type": "string",
-                                                        "example": "http://www.linkedin.com"
-                                                    },
-                                                    "github": {
-                                                        "type": "string",
-                                                        "example": "http://www.github.com"
+                                                    "id": {
+                                                        "type": "uuid",
+                                                        "example": "9b7dae57-447f-48dc-b175-d243f093bb37"
                                                     }
                                                 },
                                                 "type": "object"
@@ -1652,7 +1584,80 @@
                 }
             }
         },
-        "/api/v1/students/{uuid}/bootcamp": {
+        "/student/list/for-home": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Get Students List.",
+                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n- If a 'specialization' parameter is provided, the list will be filtered by student's specialization.\n\n- If not, it returns a list of all students.\n\n- Multiple parameters can be added separated by commas without spaces.\n\n- For example, if the objetive is to filter Backend and Frontend students, the query would be:\n\n    ```/student/list/for-home?specialization=frontend,backend```\n\n---\n\n    No authentication required",
+                "operationId": "getAllStudentsForFigma",
+                "parameters": [
+                    {
+                        "name": "specialization",
+                        "in": "query",
+                        "description": "The specializations to filter students by",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of students",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "fullname": {
+                                                "type": "string",
+                                                "example": "Juan Pérez"
+                                            },
+                                            "subtitle": {
+                                                "type": "string",
+                                                "example": "Desarrollador Frontend"
+                                            },
+                                            "photo": {
+                                                "description": "Student Image Path",
+                                                "type": "string",
+                                                "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
+                                            },
+                                            "tags": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "C#"
+                                                        }
+                                                    },
+                                                    "type": "object",
+                                                    "example": {
+                                                        "id": 15,
+                                                        "name": "C#"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/students/{id}/bootcamp": {
             "get": {
                 "tags": [
                     "Bootcamp"
@@ -1694,6 +1699,64 @@
                                                 "type": "array",
                                                 "items": {
                                                     "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/studentCollaborations": {
+            "get": {
+                "tags": [
+                    "Collaborations"
+                ],
+                "summary": "Get collaborations for a student",
+                "description": "Returns a list of collaborations for a specific student. (Note: This endpoint returns hardcoded student collaborations)",
+                "operationId": "getStudentCollaborations",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "collaborations": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "Collaboration ID",
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "description": "Collaboration name",
+                                                            "type": "string",
+                                                            "example": "ita wiki"
+                                                        },
+                                                        "description": {
+                                                            "description": "Collaboration description",
+                                                            "type": "string",
+                                                            "example": "Recursos subidos"
+                                                        },
+                                                        "quantity": {
+                                                            "description": "Quantity",
+                                                            "type": "integer",
+                                                            "example": 9
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             }
                                         },
