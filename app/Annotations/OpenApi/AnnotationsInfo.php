@@ -15,24 +15,6 @@ namespace App\Annotations\OpenApi;
  * )
  *   @OA\Server(
  *     url= L5_SWAGGER_CONST_HOST
- *   )
- *   @OA\Server(
- *     url="http://127.0.0.1:8000/api/v1"
- *   )
- *   @OA\Server(
- *     url= L5_SWAGGER_CONST_HOST
- *   )
- *   @OA\Server(
- *     url="http://127.0.0.1:8000/api/v1"
- *   )
- *   @OA\Server(
- *     url="http://127.0.0.1:8000"
- *   )
- *   @OA\Server(
- *     url="https://itaperfils.eurecatacademy.org"
- *   )
- *   @OA\Server(
- *     url="https://itaperfils.eurecatacademy.org/api/v1"
- *   )
+ *       )
  */
 class AnnotationsInfo {}
