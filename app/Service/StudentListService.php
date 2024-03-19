@@ -19,7 +19,7 @@ class StudentListService
         return $this->mapResumesToData($resumes);
     }
 
-    private function getResumes(?array $specializations, ?array $tags = null): Collection
+    public function getResumes(?array $specializations, ?array $tags = null): Collection
     {
         $query = Resume::query();
 
