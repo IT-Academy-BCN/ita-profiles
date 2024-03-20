@@ -43,7 +43,7 @@ class AnnotationsStudentList
      *     ),
      *     @OA\Parameter(
      *       name="tags",
-     *       in="query",
+     *       string="query",
      *       description="The tags to filter students by",
      *       required=false,
      *       style="form",
