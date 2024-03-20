@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    app:
+        container_name: itaprofilesbackend-app
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/var/www/html
+        depends_on:
+            - db
+
+    db:
+        container_name: itaprofilesbackend-mysql
+        image: mysql:latest
+        environment:
+            MYSQL_DATABASE: laravel
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+            MYSQL_ROOT_PASSWORD: root_password
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./docker/mysql-data:/var/lib/mysql
