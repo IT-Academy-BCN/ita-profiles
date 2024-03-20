@@ -5,6 +5,7 @@ namespace Tests\Feature\Student;
 use Tests\TestCase;
 use App\Models\Resume;
 use App\Models\Student;
+use App\Models\Tag;
 use App\Service\StudentListService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -83,22 +84,36 @@ class StudentListTest extends TestCase
         $this->assertNotNull($fetchedResume);
         $this->assertTrue($fetchedResume->student->is($student));
     }
+
     public function testGetResumesWithTags()
     {
-        $specializations = null;
-        $tags = [1];
+        $tag1 = Tag::create(['tag_name' => 'tag1']);
+        $tag2 = Tag::create(['tag_name' => 'tag2']);
+        $student = Student::factory()->create([
+            'name' => 'Dokuta',
+            'surname' => 'Suranpu',
+            'photo' => 'Arale'
+        ]);
+        $resume1 = Resume::factory()->create([
+            'student_id' => $student->id,
+            'specialization' => 'Frontend',
+            'tags_ids' => json_encode([$tag1->id])
+        ]);
+        $resume2 = Resume::factory()->create([
+            'student_id' => $student->id,
+            'specialization' => 'Backend',
+            'tags_ids' => json_encode([$tag2->id])
+        ]);
+
         $resumeService = new StudentListService();
 
-        $resumes = $resumeService->getResumes($specializations, $tags);
+        $resumes = $resumeService->getResumes(null, ['tag1']);
+        $this->assertCount(1, $resumes);
+        $this->assertEquals($resume1->id, $resumes->first()->id);
 
-        $this->assertNotEmpty($resumes);
-
-        foreach ($resumes as $resume) {
-            $tags_ids_array = array_map('intval', array_map('trim', str_replace(['[', ']'], '', explode(',', $resume->tags_ids))));
-
-            foreach ($tags as $tag) {
-                $this->assertContains($tag, $tags_ids_array);
-            }
-        }
+        $resumes = $resumeService->getResumes(null, ['tag2']);
+        $this->assertCount(1, $resumes);
+        $this->assertEquals($resume2->id, $resumes->first()->id);
+        
     }
 }
