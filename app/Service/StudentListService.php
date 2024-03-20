@@ -26,15 +26,18 @@ class StudentListService
         if ($specializations !== null && $specializations[0] != null) {
             $query->whereIn('specialization', $specializations);
         }
-
         if ($tags != null) {
             $query->where(function ($query) use ($tags) {
                 foreach ($tags as $tag) {
-                    $query->orWhereJsonContains('tags_ids', (int)$tag);
+
+                    $tagId = Tag::where('tag_name', $tag)->value('id');
+                    if ($tagId) {
+
+                        $query->orWhereJsonContains('tags_ids', $tagId);
+                    }
                 }
             });
         }
-
         $resumes = $query->get();
 
         if ($resumes->isEmpty()) {
@@ -54,6 +57,7 @@ class StudentListService
     private function mapResumeToData($resume): array
     {
         return [
+            'specialization' => $resume->specialization,
             'fullname' => $resume->student->name . " " . $resume->student->surname,
             'subtitle' => $resume->subtitle,
             'photo' => asset('/img/stud_' . rand(1, 3) . '.png'),
