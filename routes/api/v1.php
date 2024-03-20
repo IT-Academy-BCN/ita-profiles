@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\DevelopmentListController;
+use App\Http\Controllers\api\CourseModalityController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
@@ -44,6 +45,7 @@ Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->n
 
 //Fake endpoint development
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
+Route::get('/modality', CourseModalityController::class)->name('modality.course');
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
