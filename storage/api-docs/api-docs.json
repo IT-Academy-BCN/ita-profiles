@@ -8,9 +8,6 @@
     "servers": [
         {
             "url": "http://localhost/api/v1"
-        },
-        {
-            "url": "http://127.0.0.1:8000/api/v1"
         }
     ],
     "paths": {
@@ -571,6 +568,34 @@
                         "passport": []
                     }
                 ]
+            }
+        },
+        "/modality": {
+            "get": {
+                "tags": [
+                    "Course Modality"
+                ],
+                "summary": "Get the modality of a specific course",
+                "description": "Retrieve the modality of a specific course",
+                "operationId": "getCourse;odality",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "modality": {
+                                            "type": "string",
+                                            "example": "Presencial"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/v1/development/list": {
