@@ -49,6 +49,10 @@ docker exec -it itaprofilesbackend-app ./vendor/bin/phpunit ./tests
 
 # To use php artisan:
 docker exec -it itaprofilesbackend-app php artisan ... <whatever...>
+
+# For example, when installing you'll find useful to do:
+docker exec -it itaprofilesbackend-app php artisan migrate:fresh
+docker exec -it itaprofilesbackend-app php artisan db:seed
 ```
 
 You'll have to run the previous composer install to get the project libraries and setup the project.
