@@ -14,11 +14,11 @@ class AnnotationsAdditionalTraining
  *         @OA\JsonContent(
  *             type="array",
  *             @OA\Items(
- *                 @OA\Property(property="id", type="integer"),
+ *                 @OA\Property(property="id", type="string"),
  *                 @OA\Property(property="course", type="string"),
  *                 @OA\Property(property="center", type="string"),
  *                 @OA\Property(property="year", type="string"),
- *                 @OA\Property(property="duration", type="integer"),
+ *                 @OA\Property(property="duration", type="string"),
  *             )
  *         )
  *     )
