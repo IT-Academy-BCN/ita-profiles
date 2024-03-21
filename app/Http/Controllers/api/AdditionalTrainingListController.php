@@ -20,7 +20,7 @@ class AdditionalTrainingListController extends Controller
             $randomProject = $additionalTraining[array_rand($additionalTraining)];
             if (!in_array($randomProject, $selectedProjects)) {
                 $selectedProjects[] = $randomProject;
-                break;
+            
             }
         
         }

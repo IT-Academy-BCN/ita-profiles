@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost/api/v1"
+            "url": "http://127.0.0.1:8000/api/v1"
         }
     ],
     "paths": {
@@ -24,27 +24,32 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "string"
-                                            },
-                                            "course": {
-                                                "type": "string"
-                                            },
-                                            "center": {
-                                                "type": "string"
-                                            },
-                                            "year": {
-                                                "type": "string"
-                                            },
-                                            "duration": {
-                                                "type": "string"
+                                    "properties": {
+                                        "additionalTraining": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "course": {
+                                                        "type": "string"
+                                                    },
+                                                    "center": {
+                                                        "type": "string"
+                                                    },
+                                                    "year": {
+                                                        "type": "string"
+                                                    },
+                                                    "duration": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
-                                        },
-                                        "type": "object"
-                                    }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }

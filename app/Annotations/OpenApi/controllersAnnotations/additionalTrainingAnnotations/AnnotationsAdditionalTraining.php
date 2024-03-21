@@ -12,18 +12,24 @@ class AnnotationsAdditionalTraining
  *         response=200,
  *         description="Successful. Additional training list retrieved",
  *         @OA\JsonContent(
- *             type="array",
- *             @OA\Items(
- *                 @OA\Property(property="id", type="string"),
- *                 @OA\Property(property="course", type="string"),
- *                 @OA\Property(property="center", type="string"),
- *                 @OA\Property(property="year", type="string"),
- *                 @OA\Property(property="duration", type="string"),
+ *             type="object",
+ *             @OA\Property(
+ *                 property="additionalTraining",
+ *                 type="array",
+ *                 @OA\Items(
+ *                     type="object",
+ *                     @OA\Property(property="id", type="string"),
+ *                     @OA\Property(property="course", type="string"),
+ *                     @OA\Property(property="center", type="string"),
+ *                     @OA\Property(property="year", type="string"),
+ *                     @OA\Property(property="duration", type="string"),
+ *                 )
  *             )
  *         )
  *     )
  * )
  */
+
 
     public function __invoke(){}
 }
