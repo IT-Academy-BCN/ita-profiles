@@ -43,4 +43,14 @@ class StudentProjectsDetailControllerTest extends TestCase
                 ]
             ]);
     }
+
+    public function test_controller_returns_empty_array_with_no_projects_listed()
+    {
+        $response = $this->get(route('projects.list', ['student' => $this->student->id]));
+
+        $response->assertStatus(200)
+        ->assertExactJson(['projects' => []]);
+    }
+
+    
 }
