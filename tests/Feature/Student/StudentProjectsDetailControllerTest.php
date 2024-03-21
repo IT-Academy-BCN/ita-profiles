@@ -15,10 +15,8 @@ class StudentProjectsDetailControllerTest extends TestCase
     {
         parent::setUp();
 
-        // Create a student
         $this->student = Student::factory()->create();
 
-        // Create projects associated with the student
         $this->projects = Project::factory()->count(3)->create();
         $this->student->resume()->create([
             'project_ids' => json_encode($this->projects->pluck('id')->toArray())
@@ -52,5 +50,13 @@ class StudentProjectsDetailControllerTest extends TestCase
         ->assertExactJson(['projects' => []]);
     }
 
-    
+    public function test_controller_returns_404_with_invalid_uuid()
+    {
+        $invalidUuid = 'invalid_uuid';
+
+        $response = $this->get(route('projects.list', ['student' => $invalidUuid]));
+
+        $response->assertStatus(404);
+    }
+
 }
