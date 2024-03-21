@@ -25,7 +25,7 @@ class AnnotationsStudentList
     - To filter by tags, the query would be:
     ```/student/list/for-home?tags=PHP,Laravel```
     - To filter by both specialization and tags:
-    ```/student/list/for-home?specialization=frontend&tags=1,2```
+    ```/student/list/for-home?specialization=frontend&tags=php,react```
 
 ---
 
