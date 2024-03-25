@@ -7,6 +7,8 @@ use App\Models\Resume;
 use App\Models\Student;
 use App\Models\Tag;
 use App\Service\StudentListService;
+use Tests\Fixtures\Students;
+use Tests\Fixtures\Resumes;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class StudentListTest extends TestCase
@@ -89,21 +91,11 @@ class StudentListTest extends TestCase
     {
         $tag1 = Tag::create(['tag_name' => 'tag1']);
         $tag2 = Tag::create(['tag_name' => 'tag2']);
-        $student = Student::factory()->create([
-            'name' => 'Dokuta',
-            'surname' => 'Suranpu',
-            'photo' => 'Arale'
-        ]);
-        $resume1 = Resume::factory()->create([
-            'student_id' => $student->id,
-            'specialization' => 'Frontend',
-            'tags_ids' => json_encode([$tag1->id])
-        ]);
-        $resume2 = Resume::factory()->create([
-            'student_id' => $student->id,
-            'specialization' => 'Backend',
-            'tags_ids' => json_encode([$tag2->id])
-        ]);
+
+        $student = Students::aStudent();
+        
+        $resume1 = Resumes::createResume($student->id, 'Frontend', [$tag1->id]);
+        $resume2 = Resumes::createResume($student->id, 'Backend', [$tag2->id]);
 
         $resumeService = new StudentListService();
 
