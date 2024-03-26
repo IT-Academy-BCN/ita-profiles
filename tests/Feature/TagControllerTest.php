@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Api;
+namespace Tests\Feature;
 
 use App\Models\Tag;
 use App\Models\User;
