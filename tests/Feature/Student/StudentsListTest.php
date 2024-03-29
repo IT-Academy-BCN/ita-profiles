@@ -2,21 +2,12 @@
 
 namespace Tests\Feature\Student;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class StudentsListTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->artisan('migrate:fresh --seed');
-    }
-
-    public function tearDown(): void
-    {
-        $this->artisan('migrate:fresh');
-        parent::tearDown();
-    }
+    use DatabaseTransactions;
 
     public function testGetStudentList()
     {
