@@ -6,7 +6,6 @@
 /storage/*.key
 /vendor
 /storage/api-docs/api-docs.json
-/docker/*
 .env
 .env.backup
 .env.production
