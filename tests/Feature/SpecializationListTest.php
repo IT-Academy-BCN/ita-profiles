@@ -20,6 +20,3 @@ class SpecializationListTest extends TestCase
 
 }
 
-
-
-?>
