@@ -15,14 +15,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Establecer el directorio de trabajo
 WORKDIR /var/www/html
 
-# Copiar los archivos de la aplicación Laravel
-COPY . .
-
-# Instalar dependencias de Composer
-RUN composer install
-
 # Exponer el puerto 8000
-EXPOSE 8000
+EXPOSE 80
 
 # Iniciar el servidor web de PHP
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=80"]
