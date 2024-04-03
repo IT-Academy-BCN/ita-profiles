@@ -7,7 +7,9 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    && docker-php-ext-install pdo_mysql zip bcmath
+    && pecl install xdebug \
+    && docker-php-ext-install pdo_mysql zip bcmath \
+    && docker-php-ext-enable xdebug
 
 # Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
