@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Service;
 
-use App\Models\Resume;
 use App\Service\StudentListService;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-
-
 
 class StudentListServiceTest extends TestCase
 {
-
 
     private $resumeUpdateService;
     private $studentListService;
@@ -24,9 +20,6 @@ class StudentListServiceTest extends TestCase
 
         $this->resumeUpdateService = new StudentListService();
         $this->studentListService = new StudentListService();
-
-        $this->artisan('migrate:fresh --seed');
-        $this->artisan('passport:install');
     }
 
     public function testCanInstantiate(): void

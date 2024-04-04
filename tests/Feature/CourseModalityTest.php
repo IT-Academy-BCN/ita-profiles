@@ -2,15 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class CourseModalityTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
+
+    use DatabaseTransactions;
+
     public function test_can_get_modality(): void
     {
         $response = $this->getJson(route('modality.course'));

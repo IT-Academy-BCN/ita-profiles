@@ -10,16 +10,11 @@ use App\Service\StudentListService;
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class StudentListTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->artisan('passport:install');
-        $this->artisan('migrate:fresh --seed');
-    }
+    use DatabaseTransactions;
 
     public function test_student_list_controller()
     {
