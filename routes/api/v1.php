@@ -14,6 +14,7 @@ use App\Http\Controllers\api\StudentBootcampDetailController;
 use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
 use App\Http\Controllers\api\SpecializationListController;
+use App\Http\Controllers\api\StudentLanguagesDetailController;
 use Illuminate\Support\Facades\Route;
 use LaravelLang\Publisher\Console\Add;
 
@@ -60,6 +61,9 @@ Route::get('/students/{student}/projects', StudentProjectsDetailController::clas
 
 //Student Collaboration fake Endpoint
 Route::get('/studentCollaborations', StudentCollaborationController::class)->name('collaborations.list');
+
+// Student languages details Endpoint
+Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
