@@ -1,23 +1,29 @@
 <?php
 
-namespace Tests\Feature\Api;
+namespace Tests\Feature;
 
 use App\Models\Tag;
 use App\Models\User;
 use Database\Factories\TagFactory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class TagControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $user = User::factory()->create();
+        $user = User::first();
+
+        if (!$user) {
+            // If there are no users, create one
+            $user = User::factory()->create();
+        }
+        
         $adminRole = Role::where('name', 'admin')->first();
 
         if (! $adminRole) {
@@ -31,8 +37,14 @@ class TagControllerTest extends TestCase
 
     public function testIndexReturnsTags()
     {
-        // Create some tags
-        TagFactory::new()->count(3)->create();
+       
+        // Retrieve three existing tags from the database
+        $tags = Tag::query()->limit(3)->get();
+
+        // If there are fewer than three tags in the database, create the necessary ones
+        if ($tags->count() < 3) {
+            $tags = TagFactory::new()->count(3 - $tags->count())->create();
+        }
 
         $response = $this->getJson(route('tag.index'));
 
@@ -50,6 +62,9 @@ class TagControllerTest extends TestCase
 
     public function testIndexReturns404WhenNoTagsExist()
     {
+        // Delete all existing tags from the database
+        Tag::query()->delete();
+
         $response = $this->getJson(route('tag.index'));
 
         $response->assertStatus(404);
@@ -59,6 +74,9 @@ class TagControllerTest extends TestCase
 
     public function testStoreTag()
     {
+        // Delete all existing tags from the database
+        Tag::query()->delete();
+
         $tagData = Tag::factory()->make()->toArray();
 
         $response = $this->postjson(route('tag.create'), $tagData);
@@ -94,7 +112,7 @@ class TagControllerTest extends TestCase
 
     public function testShowReturnsTag()
     {
-        $tag = Tag::factory()->create();
+        $tag = Tag::query()->first();
 
         $response = $this->getJson(route('tag.show', ['id' => $tag->id]));
 
@@ -118,7 +136,7 @@ class TagControllerTest extends TestCase
 
     public function testUpdateTagSuccessfully()
     {
-        $tag = Tag::factory()->create();
+        $tag = Tag::query()->first();
 
         $updatedData = [
             'tag_name' => 'Updated Tag Name',
@@ -153,7 +171,7 @@ class TagControllerTest extends TestCase
 
     public function testDestroyTagSuccessfully()
     {
-        $tag = Tag::factory()->create();
+        $tag = Tag::query()->first();
 
         $response = $this->deleteJson(route('tag.destroy', ['id' => $tag->id]));
 

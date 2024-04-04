@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Company extends Model
 {
     use HasFactory;
     use HasUuids;
@@ -17,15 +17,12 @@ class Student extends Model
      * @var array
      */
     protected $guarded = ['id'];
-    protected $fillable = [
-        'name',
-        'surname',
-        'photo',
-     
-    ];
 
-    public function resume()
+    /**
+     * Get the projects for the company.
+     */
+    public function projects()
     {
-        return $this->hasOne(Resume::class);
+        return $this->hasMany(Project::class);
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Project extends Model
 {
     use HasFactory;
     use HasUuids;
@@ -17,15 +17,9 @@ class Student extends Model
      * @var array
      */
     protected $guarded = ['id'];
-    protected $fillable = [
-        'name',
-        'surname',
-        'photo',
-     
-    ];
 
-    public function resume()
+    public function company()
     {
-        return $this->hasOne(Resume::class);
+        return $this->belongsTo(Company::class);
     }
 }

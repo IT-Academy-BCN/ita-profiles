@@ -5,23 +5,21 @@ namespace Tests\Feature\Student;
 use Tests\TestCase;
 use App\Models\Resume;
 use App\Models\Student;
+use App\Models\Tag;
 use App\Service\StudentListService;
+use Tests\Fixtures\Students;
+use Tests\Fixtures\Resumes;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class StudentListTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->artisan('passport:install');
-        $this->artisan('migrate:fresh --seed');
-    }
+    use DatabaseTransactions;
 
     public function test_student_list_controller()
     {
         $response = $this->getJson(route('profiles.home', ['specialization' => 'Data Science,Backend']));
-        
+
         $response->assertStatus(200);
 
         $response->assertJsonStructure([
@@ -82,5 +80,27 @@ class StudentListTest extends TestCase
         $fetchedResume = Resume::with('student')->find($resume->id);
         $this->assertNotNull($fetchedResume);
         $this->assertTrue($fetchedResume->student->is($student));
+    }
+
+    public function testGetResumesWithTags()
+    {
+        $tag1 = Tag::create(['tag_name' => 'tag1']);
+        $tag2 = Tag::create(['tag_name' => 'tag2']);
+
+        $student = Students::aStudent();
+        
+        $resume1 = Resumes::createResume($student->id, 'Frontend', [$tag1->id]);
+        $resume2 = Resumes::createResume($student->id, 'Backend', [$tag2->id]);
+
+        $resumeService = new StudentListService();
+
+        $resumes = $resumeService->getResumes(null, ['tag1']);
+        $this->assertCount(1, $resumes);
+        $this->assertEquals($resume1->id, $resumes->first()->id);
+
+        $resumes = $resumeService->getResumes(null, ['tag2']);
+        $this->assertCount(1, $resumes);
+        $this->assertEquals($resume2->id, $resumes->first()->id);
+        
     }
 }

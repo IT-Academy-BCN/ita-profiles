@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\api\AdditionalTrainingListController;
 use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\DevelopmentListController;
+use App\Http\Controllers\api\CourseModalityController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
@@ -13,8 +15,8 @@ use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
 use App\Http\Controllers\api\SpecializationListController;
 use App\Http\Controllers\api\StudentLanguagesDetailController;
-use App\Http\Controllers\api\TagListController;
 use Illuminate\Support\Facades\Route;
+use LaravelLang\Publisher\Console\Add;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,12 +48,16 @@ Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->n
 
 //Fake endpoint development
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
+Route::get('/modality', CourseModalityController::class)->name('modality.course');
+
+//Fake endpoint
+Route::get('/additional-training/list', AdditionalTrainingListController::class)->name('additional-training.list');
 
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
 // Student projects detail Endpoint
-Route::get('/students/{id}/projects', StudentProjectsDetailController::class)->name('projects.list');
+Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
 
 //Student Collaboration fake Endpoint
 Route::get('/studentCollaborations', StudentCollaborationController::class)->name('collaborations.list');
@@ -61,6 +67,8 @@ Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)-
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
+Route::get('/tags', [TagController::class, 'index'])->name('tag.index');
+
 //Passport Auth with token
 Route::middleware('auth:api')->group(function () {
     //Student
@@ -69,14 +77,13 @@ Route::middleware('auth:api')->group(function () {
     //Recruiter
     Route::put('/recruiters/{id}', [RecruiterController::class, 'update'])->name('recruiter.update');
     Route::delete('/recruiters/{id}', [RecruiterController::class, 'destroy'])->name('recruiter.delete');
-    //Admin 
+    //Admin
     Route::get('/admins/{id}', [AdminController::class, 'show'])->middleware('role:admin')->name('admin.show');
     Route::put('/admins/{id}', [AdminController::class, 'update'])->middleware('role:admin')->name('admin.update');
     Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->middleware('role:admin')->name('admin.destroy');
     Route::get('/admins', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
 
     //Tags
-    Route::get('/tags', [TagController::class, 'index'])->middleware('role:admin')->name('tag.index');
     Route::post('/tags', [TagController::class, 'store'])->middleware('role:admin')->name('tag.create');
     Route::get('/tags/{id}', [TagController::class, 'show'])->middleware('role:admin')->name('tag.show');
     Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');
