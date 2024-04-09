@@ -4,7 +4,7 @@ use App\Http\Controllers\api\AdditionalTrainingListController;
 use App\Http\Controllers\api\AdminController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\DevelopmentListController;
-use App\Http\Controllers\api\CourseModalityController;
+use App\Http\Controllers\api\ModalityController;
 use App\Http\Controllers\api\RecruiterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
@@ -48,7 +48,7 @@ Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->n
 
 //Fake endpoint development
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
-Route::get('/modality', CourseModalityController::class)->name('modality.course');
+Route::get('/modality/{studentId}', ModalityController::class)->name('modality');
 
 //Fake endpoint
 Route::get('/additional-training/list', AdditionalTrainingListController::class)->name('additional-training.list');

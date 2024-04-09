@@ -37,6 +37,7 @@ class ResumeFactory extends Factory
             'tags_ids' => $tagsIds ,
             'specialization' => $this->faker->randomElement(['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set']),
             'project_ids' => json_encode($projectIds),
+            'modality' => $this->faker->randomElements(['Presencial', 'Híbrido', 'Remoto'], rand(1, 3)),
         ];
     }
 
