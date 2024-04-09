@@ -11,16 +11,16 @@ class AnnotationsAdditionalTraining
  *     tags={"Additional Training"},
  * 
  * 
-*          @OA\Parameter(
-*          name="uuid",
-*          description="Student UUID",
-*          required=true,
-*          in="path",
-*          @OA\Schema(
-*              type="string",
-*              format="uuid"
-*          )
-*      ),
+ *          @OA\Parameter(
+ *          name="uuid",
+ *          description="Student UUID",
+ *          required=true,
+ *          in="path",
+ *          @OA\Schema(
+ *              type="string",
+ *              format="uuid"
+ *          )
+ *      ),
  * 
  *     @OA\Response(
  *         response=200,
