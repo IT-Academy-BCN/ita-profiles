@@ -16,4 +16,13 @@ class Resumes
             'tags_ids' => json_encode($tagIds),
         ]);
     }
+    public static function createResumeWithModality($studentId, $specialization, $tagIds, $modality): Resume
+    {
+        return Resume::factory()->create([
+            'student_id' => $studentId,
+            'specialization' => $specialization,
+            'tags_ids' => json_encode($tagIds),
+            'modality' => $modality,
+        ]);
+    }
 }
