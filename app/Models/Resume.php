@@ -18,7 +18,11 @@ class Resume extends Model
         'github_url',
         'specialization',
         'tags_ids',
+        'modality',
 
+    ];
+    protected $casts = [
+        'modality' => 'array',
     ];
 
     public function student()
