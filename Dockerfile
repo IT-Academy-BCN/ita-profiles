@@ -1,24 +1,33 @@
-# Utilizar la imagen oficial de PHP 8.1
-FROM php:8.1.27
-
-# Instalar dependencias
-RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    zip \
-    unzip \
-    git \
-    && pecl install xdebug \
-    && docker-php-ext-install pdo_mysql zip bcmath \
-    && docker-php-ext-enable xdebug
-
-# Instalar Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Establecer el directorio de trabajo
+FROM php:8.1.27-apache
 WORKDIR /var/www/html
 
-# Exponer el puerto 8000
-EXPOSE 80
+RUN a2enmod rewrite
 
-# Iniciar el servidor web de PHP
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=80"]
+RUN apt-get update && apt-get install -y \
+    libicu-dev \
+    libmariadb-dev \
+    unzip zip \
+    zlib1g-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    git \
+    libzip-dev \
+    && pecl install xdebug \
+    && docker-php-ext-install gettext intl pdo_mysql zip bcmath gd \
+    && docker-php-ext-enable xdebug
+
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+
+# Exponer el puerto 8000
+#EXPOSE 80
+#
+## Iniciar el servidor web de PHP
+#CMD ["php", "artisan", "cache:clear"]
+#CMD ["php", "artisan", "config:clear"]
