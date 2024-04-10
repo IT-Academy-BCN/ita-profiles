@@ -13,6 +13,6 @@ composer-install:
 composer-update:
 	docker exec -it itaprofilesbackend-php composer update
 ssh:
-	docker exec -it itaprofilesbackend-php bash
+	docker exec -it itaprofilesbackend-app bash
 swagger-generate:
 	docker exec -it itaprofilesbackend-php php artisan l5-swagger:generate

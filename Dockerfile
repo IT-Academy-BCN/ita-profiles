@@ -29,5 +29,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 #EXPOSE 80
 #
 ## Iniciar el servidor web de PHP
-#CMD ["php", "artisan", "cache:clear"]
-#CMD ["php", "artisan", "config:clear"]
+CMD ["php", "artisan", "cache:clear"]
+CMD ["php", "artisan", "config:clear"]
+CMD ["php", "artisan", "config:cache"]
