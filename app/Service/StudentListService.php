@@ -57,6 +57,7 @@ class StudentListService
     private function mapResumeToData($resume): array
     {
         return [
+            'id' => $resume->student->id,
             'fullname' => $resume->student->name . " " . $resume->student->surname,
             'subtitle' => $resume->subtitle,
             'photo' => asset('/img/stud_' . rand(1, 3) . '.png'),
