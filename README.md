@@ -56,3 +56,19 @@ docker exec -it itaprofilesbackend-app php artisan db:seed
 ```
 
 You'll have to run the previous composer install to get the project libraries and setup the project.
+
+### Addresses
+After being raised, our containers will provide your localhost with some interesting tools:
+
+- A local API REST from your laravel in [http://localhost](http://localhost)
+- A local Swagger documentation in [http://localhost:8000/api/documenation](http://localhost:8000/api/documenation)
+- A local PHPMyAdmin to work with MySQL in [http://localhost:9015](http://localhost:9015)
+
+#### PHPMyAdmin credentials
+To access PhpMyAdmin the basic credentials are:
+
+```
+host:     mysql
+user:     user
+password: password
+```
