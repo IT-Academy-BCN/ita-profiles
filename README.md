@@ -20,8 +20,14 @@ Once docker is installed in your machine, you'll have to build the containers. G
 type (remember the command as you'll have to type this every time you want to create the containers):
 
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
+
+At the end of this process, you'll have to run the following in order to make swagger styles and javascript to run properly:
+
+```shell
+docker compose exec -it laravel-docker php artisan config:cache
+``
 
 You'll see a lot of things building up, and then you'll return to the same folder. So, when the building is done, you'll
 be able to check that everything went well by typing the following:
