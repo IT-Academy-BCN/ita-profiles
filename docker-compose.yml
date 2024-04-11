@@ -1,7 +1,7 @@
 services:
-    app:
+    laravel-docker:
         depends_on:
-            - db
+            - mysql
         container_name: itaprofilesbackend-app
         build:
             context: .
@@ -15,7 +15,7 @@ services:
         networks:
             - itabackend
 
-    db:
+    mysql:
         container_name: itaprofilesbackend-mysql
         image: mysql:latest
         environment:
@@ -27,6 +27,15 @@ services:
             - "3306:3306"
         volumes:
             - ./docker/mysql-data:/var/lib/mysql
+        networks:
+            - itabackend
+
+    phpmyadmin:
+        image: phpmyadmin:latest
+        ports:
+            - 9015:80
+        environment:
+            - PMA_ARBITRARY=1
         networks:
             - itabackend
 

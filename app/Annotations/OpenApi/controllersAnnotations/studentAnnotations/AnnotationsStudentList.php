@@ -60,7 +60,10 @@ class AnnotationsStudentList
      *
      *             @OA\Items(
      *                 type="object",
-     *
+     *                 @OA\Property(
+     *                    property="id",
+     *                    type="string",
+     *                    example="9bc3c8fd-7754-43e0-95a1-68fc011d106c"),
      *                 @OA\Property(
      *                    property="fullname",
      *                    type="string",
