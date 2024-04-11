@@ -575,34 +575,6 @@
                 ]
             }
         },
-        "/modality": {
-            "get": {
-                "tags": [
-                    "Course Modality"
-                ],
-                "summary": "Get the modality of a specific course",
-                "description": "Retrieve the modality of a specific course",
-                "operationId": "getCourse;odality",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "modality": {
-                                            "type": "string",
-                                            "example": "Presencial"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/development/list": {
             "get": {
                 "tags": [
@@ -627,23 +599,70 @@
                 }
             }
         },
-        "/api/v1/modality": {
+        "/modality/{studentId}": {
             "get": {
                 "tags": [
                     "Modality"
                 ],
-                "summary": "Retrieve a specialization list from resume model enum",
-                "operationId": "4282f944c459f6be5621f0bd24a6a3b1",
+                "summary": "Get the modality of a specific resume",
+                "description": "Returns the modality of a specific student's resume  ",
+                "operationId": "invokeResume",
+                "parameters": [
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "UUID of the student to get the resume modality",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Successful. Specialization list retrieved from enum",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
+                                    "properties": {
+                                        "modality": {
+                                            "type": "string",
+                                            "example": "Presencial, Remoto"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "No se encontró el currículum del usuario"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Ha ocurrido un error"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -1658,6 +1677,10 @@
                                     "type": "array",
                                     "items": {
                                         "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "example": "9bc3c8fd-7754-43e0-95a1-68fc011d106c"
+                                            },
                                             "fullname": {
                                                 "type": "string",
                                                 "example": "Juan Pérez"
@@ -1816,13 +1839,67 @@
                 }
             }
         },
-        "/api/v1/students/{uuid}/projects": {
+        "/students/{uuid}/languages": {
+            "get": {
+                "tags": [
+                    "Languages"
+                ],
+                "summary": "Get a detailed list of languages and level for a student",
+                "description": "Returns a list of Languages and level for a specific student. (Note: This endpoint returns hardcoded project details)",
+                "operationId": "getStudentLanguages",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "Student UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "language_id": {
+                                                "description": "id for languange",
+                                                "type": "integer"
+                                            },
+                                            "language_name": {
+                                                "description": "Language",
+                                                "type": "string"
+                                            },
+                                            "language_level": {
+                                                "description": "Language level",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                }
+            }
+        },
+        "/students/{uuid}/projects": {
             "get": {
                 "tags": [
                     "Projects"
                 ],
                 "summary": "Get a detailed list of projects for a student",
-                "description": "Returns a list of projects for a specific student. (Note: This endpoint returns hardcoded project details)",
+                "description": "Returns a list of projects for a specific student.",
                 "operationId": "getStudentProjects",
                 "parameters": [
                     {
