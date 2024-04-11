@@ -10,16 +10,18 @@ class ModalityController extends Controller
 {
     public function __invoke($studentId)
     {
-        
-        $resume = Resume::where('student_id', $studentId)->first();
-        
-        if (!$resume) {
-            return response()->json(['error' => 'No se encontró el currículum del usuario'], 404);
+        try {
+            $resume = Resume::where('student_id', $studentId)->first();
+
+            if (!$resume) {
+                throw new \Exception('No se encontró el currículum del usuario', 404);
+            }
+
+            return response()->json([
+                'modality' => $resume->modality
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
         }
-
-        return response()->json([
-            'modality' => $resume->modality
-        ], 200);    
-
     }
 }
