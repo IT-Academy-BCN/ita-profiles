@@ -13,17 +13,17 @@ class ModalityTest extends TestCase
     use DatabaseTransactions;
 
     public function test_can_get_modality(): void
-{
-    
-    $student = Students::aStudent();
-    Resumes::createResumeWithModality($student->id, 'backend', ['some_tag'], ['Presencial', 'Remoto']);
+    {
 
-    $response = $this->getJson(route('modality', ['studentId' => $student->id]));
+        $student = Students::aStudent();
+        Resumes::createResumeWithModality($student->id, 'backend', ['some_tag'], ['Presencial', 'Remoto']);
 
-    $response->assertJsonStructure([
-        'modality' => []
-    ]);
+        $response = $this->getJson(route('modality', ['studentId' => $student->id]));
 
-    $response->assertStatus(200);
-}
+        $response->assertJsonStructure([
+            'modality' => []
+        ]);
+
+        $response->assertStatus(200);
+    }
 }
