@@ -1,27 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Resume;
+use App\Service\Student\ModalityService;
+use Illuminate\Http\JsonResponse;
+
 
 
 class ModalityController extends Controller
 {
-    public function __invoke($studentId)
+    private ModalityService $modalityService;
+
+    public function __construct(ModalityService $modalityService)
+    {
+        $this->modalityService = $modalityService;
+    }
+
+    public function __invoke($studentId): JsonResponse
     {
         try {
-            $resume = Resume::where('student_id', $studentId)->first();
-
-            if (!$resume) {
-                throw new \Exception('No se encontró el currículum del usuario', 404);
-            }
-
-            return response()->json([
-                'modality' => $resume->modality
-            ], 200);
+            $service = $this->modalityService->execute($studentId);
+            return response()->json(['modality'=>$service]);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], $e->getCode());
+            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
         }
     }
 }
