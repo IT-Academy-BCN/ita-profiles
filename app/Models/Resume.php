@@ -18,6 +18,7 @@ class Resume extends Model
         'github_url',
         'specialization',
         'tags_ids',
+        'about',
 
     ];
 
