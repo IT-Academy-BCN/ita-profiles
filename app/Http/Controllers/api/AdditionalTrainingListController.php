@@ -1,37 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\api;
-use App\Models\Student;
-use App\Models\AdditionalTraining;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+declare(strict_types=1);
 
+namespace App\Http\Controllers\api;
+use App\Http\Controllers\Controller;
+use App\Service\AdditionalTrainingService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 class AdditionalTrainingListController extends Controller
 {
-    public function __invoke($uuid){
+    protected $additionalTrainingService;
 
-        $student = Student::where('id', $uuid)->with('resume')->firstOrFail();
-
-        $resume = $student->resume;
-
-        $additionalTrainingIds = json_decode($resume->additional_trainings_ids);
-
-        $additionalTrainings = AdditionalTraining::findMany($additionalTrainingIds);
-
-        $additionalTrainingDetail = [
-            'additional_trainings' => $additionalTrainings->map(function ($additionalTraining) {
-                return [
-                    'uuid' => $additionalTraining->id,
-                    'course_name' => $additionalTraining->course_name,
-                    'study_center' => $additionalTraining->study_center,
-                    'course_beggining_year' => $additionalTraining->course_beggining_year,
-                    'course_ending_year' => $additionalTraining->course_ending_year,
-                    'duration_hrs' => $additionalTraining->duration_hrs,
-                ];
-            })
-        ];
-
-        return response()->json($additionalTrainingDetail);
+    public function __construct(AdditionalTrainingService $additionalTrainingService)
+    {
+        $this->additionalTrainingService = $additionalTrainingService;
     }
 
+    public function __invoke($uuid)
+    {
+        try {
+            $additionalTrainingDetail = [
+                'additional_trainings' => $this->additionalTrainingService->getAdditionalTrainingDetails($uuid),
+            ];
+            return response()->json($additionalTrainingDetail);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Student not found.'], 404);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Internal server error.'], 500);
+        }
+    }
 }
