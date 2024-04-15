@@ -30,7 +30,7 @@ class AdditionalTrainingFactory extends Factory
         return [
             'course_name' => $this->faker->sentence(3),
             'study_center' => $this->faker->company,
-            'course_beggining_year' => $beginningYear,
+            'course_beginning_year' => $beginningYear,
             'course_ending_year' => $endingYear,
             'duration_hrs' => $this->faker->numberBetween(60, 500),
         ];

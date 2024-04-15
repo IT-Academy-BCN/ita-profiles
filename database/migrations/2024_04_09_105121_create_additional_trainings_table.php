@@ -18,7 +18,7 @@ class CreateAdditionalTrainingsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('course_name');
             $table->string('study_center');
-            $table->integer('course_beggining_year');
+            $table->integer('course_beginning_year');
             $table->integer('course_ending_year');
             $table->integer('duration_hrs');
             $table->timestamps();
