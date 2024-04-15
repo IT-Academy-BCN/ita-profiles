@@ -7,21 +7,22 @@ use App\Models\Student;
 
 class StudentBootcampDetailController extends Controller
 {
-    public function __invoke($uuid)
+    private StudentBootcampDetailService $studentBootcampDetailService;
+
+    public function __construct(StudentBootcampDetailService $studentBootcampDetailService)
     {
-        Student::where('id', $uuid)->firstOrFail();
+        $this->studentBootcampDetailService = $studentBootcampDetailService;
+    }
 
-        $bootcamp_detail = [
+    public function __invoke(Student $student): JsonResponse
+    {
+        try {
+            $service = $this->studentBootcampDetailService->execute($student->id);
 
-            'bootcamp' => [
-                [
-                    'bootcamp_id' => '1',
-                    'bootcamp_name' => 'php Fullstack Developer',
-                    'bootcamp_end_date' => ['November 2023'],
-                ],
-            ]
-        ];
-        
-        return response()->json($bootcamp_detail);
+            return response()->json($service);
+        } catch (Exception $exception) {
+
+            return response($exception->getMessage(), $exception->getCode())->json();
+        }
     }
 }
