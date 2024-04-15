@@ -25,4 +25,8 @@ class Resume extends Model
     {
         return $this->belongsTo(Student::class);
     }
+    public function bootcamps()
+    {
+        return $this->belongsToMany(Bootcamp::class);
+    }
 }
