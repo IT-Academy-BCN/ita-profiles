@@ -36,35 +36,31 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "additionalTraining": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "uuid"
-                                                    },
-                                                    "course_name": {
-                                                        "type": "string"
-                                                    },
-                                                    "study_center": {
-                                                        "type": "string"
-                                                    },
-                                                    "course_beggining_year": {
-                                                        "type": "integer"
-                                                    },
-                                                    "course_ending_year": {
-                                                        "type": "integer"
-                                                    },
-                                                    "duration_hrs": {
-                                                        "type": "integer"
-                                                    }
-                                                },
-                                                "type": "object"
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "uuid": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "course_name": {
+                                                "type": "string"
+                                            },
+                                            "study_center": {
+                                                "type": "string"
+                                            },
+                                            "course_beginning_year": {
+                                                "type": "integer"
+                                            },
+                                            "course_ending_year": {
+                                                "type": "integer"
+                                            },
+                                            "duration_hrs": {
+                                                "type": "integer"
                                             }
-                                        }
-                                    },
-                                    "type": "object"
+                                        },
+                                        "type": "object"
+                                    }
                                 }
                             }
                         }
@@ -1673,6 +1669,10 @@
                                     "type": "array",
                                     "items": {
                                         "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "example": "9bc3c8fd-7754-43e0-95a1-68fc011d106c"
+                                            },
                                             "fullname": {
                                                 "type": "string",
                                                 "example": "Juan Pérez"
@@ -2347,6 +2347,54 @@
     },
     "components": {
         "schemas": {
+            "AdditionalTraining": {
+                "title": "Additional Training",
+                "description": "Additional Training Model",
+                "properties": {
+                    "id": {
+                        "description": "Additional Training ID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "course_name": {
+                        "description": "Course Name",
+                        "type": "string"
+                    },
+                    "study_center": {
+                        "description": "Study Center",
+                        "type": "string"
+                    },
+                    "course_beginning_year": {
+                        "description": "Course Beginning Year",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "course_ending_year": {
+                        "description": "Course Ending Year",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "duration_hrs": {
+                        "description": "Duration in Hours",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "created_at": {
+                        "description": "Training creation date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Training update date",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "AdditionalTraining"
+                }
+            },
             "AnnotationsAdmin": {
                 "title": "Admin",
                 "description": "Admin Model",
