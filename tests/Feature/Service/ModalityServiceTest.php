@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\Resume;
 use App\Service\Student\ModalityService;
 use Tests\Fixtures\Students;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
 
 class ModalityServiceTest extends TestCase
@@ -41,11 +42,10 @@ class ModalityServiceTest extends TestCase
         
         $modalityService = new ModalityService();
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage(__('No se encontró el currículum del usuario'));
-        $this->expectExceptionCode(404);
+        $this->expectException(ModelNotFoundException::class);
 
         $modalityService->execute($nonExistentStudentId);
+
     }
 
 }
