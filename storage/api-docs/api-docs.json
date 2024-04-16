@@ -626,8 +626,14 @@
                                 "schema": {
                                     "properties": {
                                         "modality": {
-                                            "type": "string",
-                                            "example": "Presencial, Remoto"
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "Presencial",
+                                                "Remoto"
+                                            ]
                                         }
                                     },
                                     "type": "object"
