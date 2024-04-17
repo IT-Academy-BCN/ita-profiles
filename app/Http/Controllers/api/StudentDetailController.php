@@ -10,7 +10,7 @@ use Symfony\Polyfill\Intl\Idn\Idn;
 
 class StudentDetailController extends Controller
 {
-    function getDetailsByStudentId(Request $request,$id){
+    function __invoke(Request $request,$id){
         if(!$id){
             return response()->json(['error' => 'ID de estudiante no válido'], 400);
         }
