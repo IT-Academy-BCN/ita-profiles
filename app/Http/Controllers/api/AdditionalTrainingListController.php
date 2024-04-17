@@ -1,32 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api;
-
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
+use App\Service\AdditionalTrainingService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 class AdditionalTrainingListController extends Controller
 {
-    public function __invoke(){
+    protected $additionalTrainingService;
 
-        $data = json_decode(file_get_contents(base_path('database/data/addtionalTraining.json')), true);
-        
-        $additionalTraining = $data['additionalTraining'];
+    public function __construct(AdditionalTrainingService $additionalTrainingService)
+    {
+        $this->additionalTrainingService = $additionalTrainingService;
+    }
 
-        $quantity = rand(2, min(7, count($additionalTraining))); 
-        $selectedProjects = [];
-    
-        while (count($selectedProjects) < $quantity) {
-            $randomProject = $additionalTraining[array_rand($additionalTraining)];
-            if (!in_array($randomProject, $selectedProjects)) {
-                $selectedProjects[] = $randomProject;
-            
-            }
-        
+    public function __invoke($uuid)
+    {
+        try {
+            $additionalTrainingDetail = [
+                'additional_trainings' => $this->additionalTrainingService->getAdditionalTrainingDetails($uuid),
+            ];
+            return response()->json($additionalTrainingDetail);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Student not found.'], 404);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Internal server error.'], 500);
         }
-    
-        return response()->json([
-            'additionalTraining' => $selectedProjects
-        ],200);
     }
 }
