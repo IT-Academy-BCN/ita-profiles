@@ -2,14 +2,22 @@
 
 namespace Tests\Feature\Student;
 
+use App\Models\Bootcamp;
+use App\Models\Resume;
 use App\Models\Student;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class StudentBootcampDetailControllerTest extends TestCase
 {
-    public function testStudentBootcampDetailControllerReturnsData(): void
+    use DatabaseTransactions;
+    public function testGetStudentBootcampDetails(): void
     {
-        $student = Student::whereHas('resume.bootcamps')->first();
+        $student = Student::factory()->create();
+        $resume = Resume::factory()->create(['student_id' => $student->id]);
+        $bootcamp = Bootcamp::factory()->create();
+        $resume->bootcamps()->attach($bootcamp->id, ['end_date' => now()->subYear()->addDays(rand(1, 365))]);
+
         $response = $this->getJson(route('bootcamp.list', ['id' => $student->id]));
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -23,19 +31,24 @@ class StudentBootcampDetailControllerTest extends TestCase
         ]);
     }
 
-    public function testStudentBootcampDetailControllerThrowsExceptionWithUnexistentStudent(): void
+    public function testControllerHandlesNonexistentStudent(): void
     {
-        $response = $this->getJson(route('bootcamp.list', ['id' => 'unexistent_uuid']));
+        $nonexistentUuid = Student::max('id') . 'A';
+        $response = $this->getJson(route('bootcamp.list', ['id' => $nonexistentUuid]));
         $response->assertStatus(404);
         $response->assertJson(['error' => 'Student not found']);
     }
 
-    public function testStudentBootcampDetailControllerReturnsEmptyObjectWithStudentWithoutBootcamp(): void
+    public function testControllerReturnsEmptyArrayForStudentWithoutBootcamp(): void
     {
-        $student = Student::whereDoesntHave('resume.bootcamps')->first();
+        $student = Student::factory()->create();
+        Resume::factory()->create(['student_id' => $student->id]);
+
         $response = $this->getJson(route('bootcamp.list', ['id' => $student->id]));
         $response->assertStatus(200);
         $response->assertJson(['bootcamps' => []]);
     }
 
 }
+
+
