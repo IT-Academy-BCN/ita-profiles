@@ -27,6 +27,6 @@ class Resume extends Model
     }
     public function bootcamps()
     {
-        return $this->belongsToMany(Bootcamp::class);
+        return $this->belongsToMany(Bootcamp::class)->withPivot('end_date');
     }
 }
