@@ -67,7 +67,7 @@ You'll have to run the previous composer install to get the project libraries an
 After being raised, our containers will provide your localhost with some interesting tools:
 
 - A local API REST from your laravel in [http://localhost](http://localhost)
-- A local Swagger documentation in [http://localhost:8000/api/documenation](http://localhost:8000/api/documenation)
+- A local Swagger documentation in [http://localhost:8000/api/documenation](http://localhost:8000/api/documentation)
 - A local PHPMyAdmin to work with MySQL in [http://localhost:9015](http://localhost:9015)
 
 #### PHPMyAdmin credentials
