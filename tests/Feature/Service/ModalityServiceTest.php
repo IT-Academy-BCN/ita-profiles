@@ -10,7 +10,7 @@ use App\Models\Student;
 use App\Models\Resume;
 use App\Service\Student\ModalityService;
 use Tests\Fixtures\Students;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Exceptions\ModalityNotFoundException;
 
 class ModalityServiceTest extends TestCase
 {
@@ -44,7 +44,7 @@ class ModalityServiceTest extends TestCase
     public function testExecuteWithInvalidStudentId()
     {
                 
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(ModalityNotFoundException::class);
 
         $this->modalityService->execute('nonExistentStudentId');
 
