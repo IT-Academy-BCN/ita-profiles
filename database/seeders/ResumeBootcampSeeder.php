@@ -13,15 +13,31 @@ class ResumeBootcampSeeder extends Seeder
      */
     public function run(): void
     {
-        $bootcamps = Bootcamp::all();
+        $bootcamps = Bootcamp::all()->pluck('id')->toArray();
+        $bootcamps[] = null;
+
         $resumes = Resume::all();
 
-        $resumes->each(function ($resume) use ($bootcamps) {
-            $randomBootcamp = $bootcamps->random();
-            $resume->bootcamps()->attach(
-                $randomBootcamp->id,
-                ['end_date' => now()->subYear()->addDays(rand(1, 365))->format('Y-m-d')],
-            );
-        });
+        foreach ($resumes as $resume) {
+            $selectedBootcamp = $bootcamps[array_rand($bootcamps)];
+
+            if ($selectedBootcamp !== null) {
+                $resume->bootcamps()->attach(
+                    $selectedBootcamp,
+                    ['end_date' => now()->subYear()->addDays(rand(1, 365))->format('Y-m-d')],
+                );
+            }
+            // Add ramdomly a second bootcamp with a 25% probability.
+            if (!rand(0, 3)) {
+                $eligibleBootcamps = array_diff($bootcamps, [$selectedBootcamp, null]);
+                if (!empty($eligibleBootcamps)) {
+                    $additionalBootcamp = $eligibleBootcamps[array_rand($eligibleBootcamps)];
+                    $resume->bootcamps()->attach(
+                        $additionalBootcamp,
+                        ['end_date' => now()->subYear()->addDays(rand(1, 365))->format('Y-m-d')],
+                    );
+                }
+            }
+        }
     }
 }
