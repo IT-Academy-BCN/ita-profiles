@@ -18,13 +18,13 @@ class StudentDetailController extends Controller
             return response()->json(['error' => 'No se encontró ningún estudiante con el ID especificado'], 404);
         }
         else{
-            
+            $studentDetails= Resume::where('student_id',$student_id)->get();
             return response()->json($studentDetails, 200);
 
-            
+            if ($studentDetails->isEmpty()) {
+                return response()->json(['error' => 'No se encontró ningún estudiante con el ID especificado'], 404);
+            }
 
         }
-
-    
     }     
 }
