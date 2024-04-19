@@ -46,6 +46,6 @@ class StudentBootcampDetailServiceTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $service = new StudentBootcampDetailService();
-        $service->execute(00000000 - 0000 - 0000 - 0000 - 000000000000);
+        $service->execute("00000000-0000-0000-0000-000000000000");
     }
 }
