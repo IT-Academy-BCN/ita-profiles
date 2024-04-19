@@ -59,8 +59,8 @@ Route::get('/specialization/list', SpecializationListController::class)->name('r
 // Student projects detail Endpoint
 Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
 
-//Student Collaboration fake Endpoint
-Route::get('/studentCollaborations', StudentCollaborationController::class)->name('collaborations.list');
+//Student Collaboration Endpoint
+Route::get('/students/{student}/collaborations', StudentCollaborationController::class)->name('collaborations.list');
 
 // Student languages details Endpoint
 Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
