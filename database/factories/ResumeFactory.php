@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Student;
@@ -12,18 +14,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ResumeFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-
     public const  SUBTITLES = [
         "Ingeniero de Software",
         "Full Stack developer en PHP",
         "Frontend developer React",
         "Backend developer Java",
-        "Analista de Datos"
+        "Analista de Datos",
     ];
 
     public function definition(): array
@@ -37,7 +33,9 @@ class ResumeFactory extends Factory
             'linkedin_url' => $this->faker->parse('https://linkedin.com/') . $this->faker->userName,
             'github_url' => $this->faker->parse('https://github.com/') . $this->faker->userName,
             'tags_ids' => $tagsIds ,
-            'specialization' => $this->faker->randomElement(['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set']),
+            'specialization' => $this->faker->randomElement(
+                ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
+            ),
             'project_ids' => json_encode($projectIds),
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
         ];

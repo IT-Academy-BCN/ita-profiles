@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Bootcamp;
@@ -8,9 +10,6 @@ use Illuminate\Database\Seeder;
 
 class ResumeBootcampSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $bootcamps = Bootcamp::all()->pluck('id')->toArray();
@@ -27,7 +26,6 @@ class ResumeBootcampSeeder extends Seeder
                     ['end_date' => now()->subYear()->addDays(rand(1, 365))->format('Y-m-d')],
                 );
             }
-            // Add ramdomly a second bootcamp with a 25% probability.
             if (!rand(0, 3)) {
                 $eligibleBootcamps = array_diff($bootcamps, [$selectedBootcamp, null]);
                 if (!empty($eligibleBootcamps)) {

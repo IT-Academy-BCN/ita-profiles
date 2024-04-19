@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Student;
 
 use App\Models\Bootcamp;
@@ -50,5 +52,3 @@ class StudentBootcampDetailControllerTest extends TestCase
     }
 
 }
-
-

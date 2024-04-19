@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Annotations\OpenApi\controllersAnnotations\studentBootcampDetailAnnotations;
 
 use OpenApi\Annotations as OA;
