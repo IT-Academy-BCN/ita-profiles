@@ -2418,6 +2418,44 @@
                     "name": "Admin"
                 }
             },
+            "Collaboration": {
+                "title": "Collaboration",
+                "description": "Collaboration Model",
+                "properties": {
+                    "id": {
+                        "description": "Collaboration ID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "collaboration_name": {
+                        "description": "Collaboration Name",
+                        "type": "string"
+                    },
+                    "collaboration_description": {
+                        "description": "Collaboration description",
+                        "type": "text"
+                    },
+                    "collaboration_quantity": {
+                        "description": "Collaboration quantity",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "created_at": {
+                        "description": "Training creation date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Training update date",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Collaboration"
+                }
+            },
             "AnnotationsRecruiter": {
                 "title": "Recruiter",
                 "description": "Recruiter Model",
