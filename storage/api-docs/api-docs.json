@@ -1773,50 +1773,46 @@
                 }
             }
         },
-        "/api/v1/studentCollaborations": {
+        "/students/{uuid}/collaborations": {
             "get": {
                 "tags": [
-                    "Collaborations"
+                    "Collaboration"
                 ],
-                "summary": "Get collaborations for a student",
-                "description": "Returns a list of collaborations for a specific student. (Note: This endpoint returns hardcoded student collaborations)",
+                "summary": "Retrieve a list of collaborations",
                 "operationId": "getStudentCollaborations",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "Student UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Successful. Collaboration list retrieved",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
                                         "properties": {
-                                            "collaborations": {
-                                                "type": "array",
-                                                "items": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "description": "Collaboration ID",
-                                                            "type": "integer",
-                                                            "example": 1
-                                                        },
-                                                        "name": {
-                                                            "description": "Collaboration name",
-                                                            "type": "string",
-                                                            "example": "ita wiki"
-                                                        },
-                                                        "description": {
-                                                            "description": "Collaboration description",
-                                                            "type": "string",
-                                                            "example": "Recursos subidos"
-                                                        },
-                                                        "quantity": {
-                                                            "description": "Quantity",
-                                                            "type": "integer",
-                                                            "example": 9
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                }
+                                            "uuid": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "collaboration_name": {
+                                                "type": "string"
+                                            },
+                                            "collaboration_description": {
+                                                "type": "text"
+                                            },
+                                            "collaboration_quantity": {
+                                                "type": "integer"
                                             }
                                         },
                                         "type": "object"
@@ -1824,9 +1820,6 @@
                                 }
                             }
                         }
-                    },
-                    "404": {
-                        "description": "Student not found"
                     }
                 }
             }
