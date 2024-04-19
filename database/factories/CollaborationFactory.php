@@ -24,7 +24,7 @@ class CollaborationFactory extends Factory
         return [
             'collaboration_name' => $this->faker->sentence($this->faker->numberBetween(1, 5)),
             'collaboration_description' => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
-            'collaboration_quantity' => $this->faker->numberBetween(1, 20),
+            'collaboration_quantity' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

@@ -17,7 +17,7 @@ class CreateCollaborationsTable extends Migration
         Schema::create('collaborations', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('collaboration_name');
-            $table->string('collaboration_description');
+            $table->text('collaboration_description');
             $table->integer('collaboration_quantity');
             $table->timestamps();
         });
