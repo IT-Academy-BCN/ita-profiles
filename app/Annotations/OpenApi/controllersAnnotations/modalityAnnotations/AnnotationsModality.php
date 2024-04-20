@@ -31,24 +31,25 @@ class AnnotationsModality
      *                  property="modality",
      *                   type="array",
      *                   @OA\Items(type="string"),
-     *                   example={"Presencial", "Remoto"}
-    *                   )
-*                  )
+     *                   example={"Presencial", "Remot"}
+     *                   )
+     *                )
      *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Resume not found",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="error", type="string", example="No se encontró el currículum del usuario")
-     *         )
+     * @OA\Response(
+     *     response=404,
+     *     description="Resume not found",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(property="message", type="string", example="L'estudiant amb ID: {studentId} no té informada la modalitat al seu currículum"),
+     *         @OA\Property(property="message2", type="string", example="No s'ha trobat cap estudiant amb aquest ID {studentId}")
+     *     )
      *     ),
      *     @OA\Response(
      *         response=500,
      *         description="Server error",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="error", type="string", example="Ha ocurrido un error")
+     *             @OA\Property(property="error", type="string", example="Hi ha hagut un error")
      *         )
      *     )
      * )

@@ -643,7 +643,7 @@
                                             },
                                             "example": [
                                                 "Presencial",
-                                                "Remoto"
+                                                "Remot"
                                             ]
                                         }
                                     },
@@ -658,9 +658,13 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "error": {
+                                        "message": {
                                             "type": "string",
-                                            "example": "No se encontró el currículum del usuario"
+                                            "example": "L'estudiant amb ID: {studentId} no té informada la modalitat al seu currículum"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
                                         }
                                     },
                                     "type": "object"
@@ -676,7 +680,7 @@
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "Ha ocurrido un error"
+                                            "example": "Hi ha hagut un error"
                                         }
                                     },
                                     "type": "object"

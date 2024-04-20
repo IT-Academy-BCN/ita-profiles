@@ -7,33 +7,27 @@ use Tests\TestCase;
 use App\Models\Resume;
 use App\Models\Student;
 use Tests\Fixtures\Students;
+use Tests\Fixtures\Resumes;
+use App\Service\Student\ModalityService;
 
 class ModalityTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function test_modality_controller_returns_200_status_if_a_student_has_resume()
-    {
-        $student = Student::first();
-
-        if (!$student) {
-            $student = Students::aStudent();
-        }
+    public function testExecuteWithValidStudentId()
+{
+    $student = Students::aStudent();
     
-        $studentId = $student->id;
+    $studentId = $student->id;
 
-        $resume = Resume::where('student_id', $studentId)->first();
+    $resume = Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
 
-        $this->assertNotNull($resume);
+    $modalityService = new ModalityService();
 
-        $response = $this->getJson(route('modality', ['studentId' => $studentId]));
+    $result = $modalityService->execute($student->id);
 
-        $response->assertStatus(200);
-
-        $response->assertJsonStructure([
-            'modality' => []
-        ]);
-    }
+    $this->assertEquals($resume->modality, $result);
+}
 
     public function test_modality_controller_returns_404_status_if_a_student_has_no_resume()
     {
@@ -52,4 +46,5 @@ class ModalityTest extends TestCase
         $response->assertStatus(404);
     }
 }
+
 

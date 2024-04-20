@@ -11,16 +11,7 @@ class Resume extends Model
     use HasFactory;
     use HasUuids;
 
-    protected $fillable = [
-        'student_id',
-        'subtitle',
-        'linkedin_url',
-        'github_url',
-        'specialization',
-        'tags_ids',
-        'modality',
-
-    ];
+    protected $guarded = ['id'];
     protected $casts = [
         'modality' => 'array',
     ];

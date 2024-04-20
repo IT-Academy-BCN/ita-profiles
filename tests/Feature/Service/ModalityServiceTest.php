@@ -10,7 +10,10 @@ use App\Models\Student;
 use App\Models\Resume;
 use App\Service\Student\ModalityService;
 use Tests\Fixtures\Students;
-use App\Exceptions\ModalityNotFoundException;
+use App\Exceptions\StudentNotFoundException;
+
+
+use Tests\Fixtures\Resumes;
 
 class ModalityServiceTest extends TestCase
 {
@@ -26,28 +29,24 @@ class ModalityServiceTest extends TestCase
 
     public function testExecuteWithValidStudentId()
     {
-        $student = Student::first();
+        $student = Students::aStudent();
 
-        if (!$student) {
-            $student = Students::aStudent();
-        }
-    
         $studentId = $student->id;
 
-        $resume = Resume::where('student_id', $studentId)->first();
+        $resume = Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
 
         $result = $this->modalityService->execute($student->id);
 
         $this->assertEquals($resume->modality, $result);
     }
 
+
+
     public function testExecuteWithInvalidStudentId()
     {
-                
-        $this->expectException(ModalityNotFoundException::class);
+
+        $this->expectException(StudentNotFoundException::class);
 
         $this->modalityService->execute('nonExistentStudentId');
-
     }
-
 }
