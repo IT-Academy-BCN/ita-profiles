@@ -15,8 +15,8 @@ class ModalityService
 {
     public function execute($studentId)
     {
-        $modality = $this->getModalityByStudentId($studentId);
-        return $modality;
+        return $this->getModalityByStudentId($studentId);
+        
     }
 
     public function getModalityByStudentId($studentId)
