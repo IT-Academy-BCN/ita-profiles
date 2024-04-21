@@ -37,7 +37,7 @@ class AnnotationsModality
      *     ),
      * @OA\Response(
      *     response=404,
-     *     description="Resume not found",
+     *     description="Modality not found or Student not found",
      *     @OA\JsonContent(
      *         type="object",
      *         @OA\Property(property="message", type="string", example="L'estudiant amb ID: {studentId} no té informada la modalitat al seu currículum"),

@@ -653,7 +653,7 @@
                         }
                     },
                     "404": {
-                        "description": "Resume not found",
+                        "description": "Modality not found or Student not found",
                         "content": {
                             "application/json": {
                                 "schema": {
