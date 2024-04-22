@@ -37,7 +37,7 @@ Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.
 
 // Students Home
 Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
-Route::get('/student/detail/for-home/{id}', StudentDetailController::class)->name('student.detail');
+Route::get('/student/{student}/detail/for-home', StudentDetailController::class)->name('student.detail');
 
 Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruiter.create');
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');

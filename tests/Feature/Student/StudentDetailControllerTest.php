@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -14,9 +14,9 @@ class StudentDetailControllerTest extends TestCase
     public function test_student_details_found()
     {
         $student = Resume::factory()->create();
-
-        $response = $this->get(route('student.detail', ['id' => $student->student_id]));
-
+    
+        $response = $this->get(route('student.detail', ['student' => $student->student_id]));
+    
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [ 
@@ -32,16 +32,15 @@ class StudentDetailControllerTest extends TestCase
                 'updated_at',
                 'about'
             ]    
-       
         ]);
     }
 
     public function test_student_details_not_found()
-    {
-        $response = $this->get(route('student.detail', ['id' => '12345']));
+{
+    $response = $this->get(route('student.detail', ['student' => '12345']));
 
-        $response->assertStatus(404);
-        $response->assertJson(['error' => 'No se encontró ningún estudiante con el ID especificado']);
-    }
+    $response->assertStatus(404);
+    $response->assertJson(['error' => 'No se encontró ningún estudiante con el ID especificado']);
+}
 
 }
