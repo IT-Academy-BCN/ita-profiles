@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Annotations\OpenApi\controllersAnnotations\modalityAnnotations;
 
 use OpenApi\Annotations as OA;
