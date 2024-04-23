@@ -1541,7 +1541,7 @@
                 ]
             }
         },
-        "/student/detail/for-home": {
+        "/student/{student}/detail/for-home": {
             "get": {
                 "tags": [
                     "Student"
