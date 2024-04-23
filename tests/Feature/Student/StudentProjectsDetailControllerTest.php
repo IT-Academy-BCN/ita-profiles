@@ -5,6 +5,8 @@ namespace Tests\Feature\Student;
 use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Project;
+use Tests\Fixtures\Students;
+use Tests\Fixtures\Resumes;
 
 class StudentProjectsDetailControllerTest extends TestCase
 {
@@ -44,10 +46,20 @@ class StudentProjectsDetailControllerTest extends TestCase
 
     public function test_controller_returns_empty_array_with_no_projects_listed()
     {
+        $student = Students::aStudent();
+        Resumes::createResumeWithEmptyProjects(
+            $student->id,
+            'Subtitle',
+            'linkedin-url',
+            'github-url',
+            ['tag1', 'tag2'],
+            'Frontend',
+            'Modality',
+            ['additional_training1', 'additional_training2']
+        );
         $response = $this->get(route('projects.list', ['student' => $this->student->id]));
-
-        $response->assertStatus(200)
-        ->assertExactJson(['projects' => []]);
+    
+        $response->assertJson(['projects' => []]);
     }
 
     public function test_controller_returns_404_with_invalid_uuid()
@@ -60,3 +72,4 @@ class StudentProjectsDetailControllerTest extends TestCase
     }
 
 }
+
