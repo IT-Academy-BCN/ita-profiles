@@ -6,7 +6,7 @@ class AnnotationsStudentDetail
 {
     /**
      * @OA\Get(
-     *     path="/student/detail/for-home",
+     *     path="/student/{student}/detail/for-home",
      *     operationId="getStudentDetail",
      *     tags={"Student"},
      *     summary="Get Student Detail.",
