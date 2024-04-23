@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Service\Student\ModalityService;
 use App\Exceptions\ModalityNotFoundException;
 use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
 use Illuminate\Http\JsonResponse;
 
 class ModalityController extends Controller
@@ -28,6 +29,8 @@ class ModalityController extends Controller
             return response()->json(['message' => $e->getMessage()], 404);
         } catch (ModalityNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], 404);
+        } catch (ResumeNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], 404);    
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
         }

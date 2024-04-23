@@ -7,6 +7,7 @@ namespace App\Service\Student;
 use App\Models\Student;
 use App\Exceptions\ModalityNotFoundException;
 use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
 
 class ModalityService
 {
@@ -26,7 +27,7 @@ class ModalityService
         $resume = $student->resume()->first();
 
         if (!$resume) {
-            throw new ModalityNotFoundException($studentId);
+            throw new ResumeNotFoundException($studentId);
         }
 
         $modality = $resume->modality;

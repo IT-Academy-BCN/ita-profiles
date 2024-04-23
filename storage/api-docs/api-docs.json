@@ -653,7 +653,7 @@
                         }
                     },
                     "404": {
-                        "description": "Modality not found or Student not found",
+                        "description": "Modality not found or Student not found or Resume not found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -665,6 +665,10 @@
                                         "message2": {
                                             "type": "string",
                                             "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message3": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
                                         }
                                     },
                                     "type": "object"
