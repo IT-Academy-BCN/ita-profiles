@@ -586,34 +586,6 @@
                 ]
             }
         },
-        "/modality": {
-            "get": {
-                "tags": [
-                    "Course Modality"
-                ],
-                "summary": "Get the modality of a specific course",
-                "description": "Retrieve the modality of a specific course",
-                "operationId": "getCourse;odality",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "modality": {
-                                            "type": "string",
-                                            "example": "Presencial"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/development/list": {
             "get": {
                 "tags": [
@@ -638,23 +610,84 @@
                 }
             }
         },
-        "/api/v1/modality": {
+        "/modality/{studentId}": {
             "get": {
                 "tags": [
                     "Modality"
                 ],
-                "summary": "Retrieve a specialization list from resume model enum",
-                "operationId": "4282f944c459f6be5621f0bd24a6a3b1",
+                "summary": "Get the modality of a specific resume",
+                "description": "Returns the modality of a specific student's resume  ",
+                "operationId": "invokeResume",
+                "parameters": [
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "UUID of the student to get the resume modality",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Successful. Specialization list retrieved from enum",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
+                                    "properties": {
+                                        "modality": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "Presencial",
+                                                "Remot"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Modality not found or Student not found or Resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té informada la modalitat al seu currículum"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message3": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Hi ha hagut un error"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
