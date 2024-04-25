@@ -1749,7 +1749,7 @@
                 }
             }
         },
-        "/api/v1/students/{id}/bootcamp": {
+        "/students/{id}/bootcamp": {
             "get": {
                 "tags": [
                     "Bootcamp"
