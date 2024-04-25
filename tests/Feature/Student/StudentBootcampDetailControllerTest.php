@@ -13,14 +13,25 @@ use Tests\TestCase;
 class StudentBootcampDetailControllerTest extends TestCase
 {
     use DatabaseTransactions;
-    public function testGetStudentBootcampDetails(): void
+
+    protected $studentWithoutBootcamps;
+    protected $studentWithBootcamps;
+
+    public function setUp(): void
     {
-        $student = Student::factory()->create();
-        $resume = Resume::factory()->create(['student_id' => $student->id]);
+        parent::setUp();
+
+        $this->studentWithoutBootcamps = Resume::factory()->create()->student;
+
+        $resume = Resume::factory()->create();
         $bootcamp = Bootcamp::factory()->create();
         $resume->bootcamps()->attach($bootcamp->id, ['end_date' => now()->subYear()->addDays(rand(1, 365))]);
 
-        $response = $this->getJson(route('bootcamp.list', ['id' => $student->id]));
+        $this->studentWithBootcamps = $resume->student;
+    }
+    public function testGetStudentBootcampDetails(): void
+    {
+        $response = $this->getJson(route('bootcamp.list', ['id' =>  $this->studentWithBootcamps->id]));
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'bootcamps' => [
@@ -43,10 +54,8 @@ class StudentBootcampDetailControllerTest extends TestCase
 
     public function testControllerReturnsEmptyArrayForStudentWithoutBootcamp(): void
     {
-        $student = Student::factory()->create();
-        Resume::factory()->create(['student_id' => $student->id]);
 
-        $response = $this->getJson(route('bootcamp.list', ['id' => $student->id]));
+        $response = $this->getJson(route('bootcamp.list', ['id' => $this->studentWithoutBootcamps->id]));
         $response->assertStatus(200);
         $response->assertJson(['bootcamps' => []]);
     }

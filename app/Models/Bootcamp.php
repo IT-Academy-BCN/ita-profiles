@@ -11,6 +11,8 @@ class Bootcamp extends Model
     use HasFactory;
     use HasUuids;
 
+    protected $guarded = ['id'];
+
     public function resumes()
     {
         return $this->belongsToMany(Resume::class);
