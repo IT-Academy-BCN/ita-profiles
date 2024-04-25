@@ -7,6 +7,9 @@ namespace App\Service\Student;
 use App\Models\Student;
 
 class StudentBootcampDetailService
+/**
+ * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the student is not found.
+ */
 {
     public function execute(string $uuid): array
     {

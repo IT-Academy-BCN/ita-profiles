@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Student;
 use App\Service\Student\StudentBootcampDetailService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,13 +16,6 @@ class StudentBootcampDetailController extends Controller
     {
         $this->studentBootcampDetailService = $studentBootcampDetailService;
     }
-    /**
-     * Handle the incoming request to get bootcamp details for a specific student.
-     *
-     * @param string $studentId The UUID of the student.
-     * @throws Exception If an error occurs while executing the function.
-     * @return JsonResponse The JSON response containing containing bootcamp details.
-     */
     public function __invoke($studentId): JsonResponse
     {
         try {
