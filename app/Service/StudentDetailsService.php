@@ -18,7 +18,7 @@ class StudentDetailsService
 
     public function getStudentDetailsById($student){
         $studentDetails = Resume::where('student_id', $student)->get();
-        if(!$studentDetails->isEmpty()){
+        if($studentDetails->isEmpty()){
             throw new StudentDetailsNotFoundException($student);
         }
         return $studentDetails;
