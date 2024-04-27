@@ -1869,8 +1869,8 @@
                 "tags": [
                     "Languages"
                 ],
-                "summary": "Get a detailed list of languages and level for a student",
-                "description": "Returns a list of Languages and level for a specific student. (Note: This endpoint returns hardcoded project details)",
+                "summary": "Get a detailed list of languages and their respective level from a specific student's resume",
+                "description": "Returns a detailed list of languages and their respective level from a specific student's resume",
                 "operationId": "getStudentLanguages",
                 "parameters": [
                     {
@@ -1890,30 +1890,75 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "language_id": {
-                                                "description": "id for languange",
-                                                "type": "integer"
-                                            },
-                                            "language_name": {
-                                                "description": "Language",
-                                                "type": "string"
-                                            },
-                                            "language_level": {
-                                                "description": "Language level",
-                                                "type": "string"
+                                    "properties": {
+                                        "languages": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "language_id": {
+                                                        "description": "Language UUID",
+                                                        "type": "string",
+                                                        "example": "e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e"
+                                                    },
+                                                    "language_name": {
+                                                        "description": "Language name",
+                                                        "type": "string",
+                                                        "example": "Anglès"
+                                                    },
+                                                    "language_level": {
+                                                        "description": "Language level",
+                                                        "type": "string",
+                                                        "example": "Bàsic"
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
-                                        },
-                                        "type": "object"
-                                    }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Student not found"
+                        "description": "Language not found or Student not found or Resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té informat cap idioma al seu currículum"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message3": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Hi ha hagut un error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
