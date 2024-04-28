@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use App\Models\Project;
+use App\Models\Tag;
 
 class StudentProjectsDetailController extends Controller
 {
@@ -19,17 +22,25 @@ class StudentProjectsDetailController extends Controller
 
         $projects_detail = [
             'projects' => $projects->map(function ($project) {
+                $tags = Tag::findMany(json_decode($project->tags));
                 return [
                     'uuid' => $project->id,
                     'project_name' => $project->name,
                     'company_name' => $project->company->name,
                     'project_url' => $project->project_url,
-                    'tags' => json_decode($project->tags),
+                    'tags' => $tags->map(function ($tag) {
+                        return [
+                            'id' => $tag->id,
+                            'name' => $tag->tag_name,
+                        ];
+                    }),
                     'github_url' => $project->github_url,
                 ];
             })
         ];
-
+        
         return response()->json($projects_detail);
+        
     }
+   
 }
