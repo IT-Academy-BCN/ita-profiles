@@ -13,7 +13,7 @@ class ProjectFactory extends Factory
     
     private function getTagObjects(): array
     {
-        $tagIds = Tag::inRandomOrder()->limit($this->faker->numberBetween(1, 10))->pluck('id')->toArray();
+        $tagIds = Tag::inRandomOrder()->limit($this->faker->numberBetween(2, 5))->pluck('id')->toArray();
         
         return $tagIds;
     }
