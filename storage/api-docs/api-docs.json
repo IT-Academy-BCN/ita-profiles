@@ -1918,7 +1918,7 @@
                 }
             }
         },
-        "/students/{uuid}/projects": {
+        "/students/{studentId}/projects": {
             "get": {
                 "tags": [
                     "Projects"
@@ -1928,9 +1928,9 @@
                 "operationId": "getStudentProjects",
                 "parameters": [
                     {
-                        "name": "uuid",
+                        "name": "studentId",
                         "in": "path",
-                        "description": "Student UUID",
+                        "description": "UUID of the student to get the projects",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -1944,37 +1944,86 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "project_name": {
-                                                "description": "Name of the project",
-                                                "type": "string"
-                                            },
-                                            "project_site": {
-                                                "description": "Site where the project is happening",
-                                                "type": "string"
-                                            },
-                                            "project_skills": {
-                                                "description": "Skills required for the project",
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "project_repository": {
-                                                "description": "URL of the project repository",
-                                                "type": "string"
+                                    "properties": {
+                                        "projects": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "uuid": {
+                                                        "description": "Unique identifier for the project",
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "9becbb14-0267-409b-9c77-9377ce67c9cf"
+                                                    },
+                                                    "project_name": {
+                                                        "description": "Name of the project",
+                                                        "type": "string",
+                                                        "example": "ITA Profiles"
+                                                    },
+                                                    "company_name": {
+                                                        "description": "Name of the company associated with the project",
+                                                        "type": "string",
+                                                        "example": "Barcelona Activa"
+                                                    },
+                                                    "project_url": {
+                                                        "description": "URL of the project",
+                                                        "type": "string",
+                                                        "example": "https://www.ita-profiles.com"
+                                                    },
+                                                    "tags": {
+                                                        "description": "List of tags associated with the project, each tag includes an id and a name",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 7
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "Bootstrap"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "project_repository": {
+                                                        "description": "URL of the project repository",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
-                                        },
-                                        "type": "object"
-                                    }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Student not found"
+                        "description": "Student,Projects or Resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té cap projecte informat al seu currículum"
+                                        },
+                                        "message3": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2637,6 +2686,24 @@
                 "type": "object",
                 "xml": {
                     "name": "User"
+                }
+            }
+        },
+        "responses": {
+            "500": {
+                "description": "Server error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Hi ha hagut un error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
                 }
             }
         }
