@@ -6,7 +6,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
-use App\Models\Project;
+use App\Models\Resume\Project;
 use App\Models\Tag;
 
 class StudentProjectsDetailController extends Controller
@@ -28,8 +28,12 @@ class StudentProjectsDetailController extends Controller
                     'project_name' => $project->name,
                     'company_name' => $project->company->name,
                     'project_url' => $project->project_url,
-                    'tags' => $tags->pluck('tag_name')->join(' + '),
-                    // 'tags_id' => $tags->pluck('id')->join(' + '), A la espera de si les hace falta a Front
+                    'tags' => $tags->map(function ($tag) {
+                        return [
+                            'id' => $tag->id,
+                            'name' => $tag->tag_name,
+                        ];
+                    })->toArray(),
                     'github_url' => $project->github_url,
                 ];
             })

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Models\Resume;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Company extends Model
 {
     use HasFactory;
     use HasUuids;
@@ -16,8 +16,11 @@ class Project extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
 
-    public function company()
+    /**
+     * Get the projects for the company.
+     */
+    public function projects()
     {
-        return $this->belongsTo(Company::class);
+        return $this->hasMany(Project::class);
     }
 }
