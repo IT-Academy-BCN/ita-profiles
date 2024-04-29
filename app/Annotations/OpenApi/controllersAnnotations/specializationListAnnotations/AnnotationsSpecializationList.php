@@ -8,7 +8,7 @@ class AnnotationsSpecializationList
 {
     /**
      * @OA\Get(
-     *     path="/api/v1/specialization/list",
+     *     path="/specialization/list",
      *     summary="Retrieve a specialization list from resume model enum",
      *     tags={"Specialization"},
      *     @OA\Response(
