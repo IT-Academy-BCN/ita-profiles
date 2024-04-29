@@ -76,7 +76,7 @@ class LanguageServiceTest extends TestCase
 
         $studentId = $student->id;
 
-        $resume = Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
+        Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
         
         $this->expectException(LanguageNotFoundException::class);
 
