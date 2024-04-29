@@ -36,14 +36,12 @@ class LanguageService
             throw new LanguageNotFoundException($studentId);
         }
 
-        $languageDetails = $languages->map(function ($language) {
-            return [
-                'language_id' => $language->id,
-                'language_name' => $language->language_name,
-                'language_level' => $language->language_level,
-            ];
-        })->toArray();
-
-        return $languageDetails;
+        return $languages->map(function ($language) {
+    return [
+        'language_id' => $language->id,
+        'language_name' => $language->language_name,
+        'language_level' => $language->language_level,
+    ];
+    })->toArray();
     }
 }
