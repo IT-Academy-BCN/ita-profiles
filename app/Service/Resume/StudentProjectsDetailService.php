@@ -13,28 +13,53 @@ use App\Exceptions\ProjectNotFoundException;
 
 class StudentProjectsDetailService
 {
+
     public function execute($uuid)
     {
+        $student = $this->getStudent($uuid);
+        $resume = $this->getResume($student);
+        $projects = $this->getProjects($resume);
+
+        return $this->formatProjectsDetail($projects);
+    }
+
+    private function getStudent($uuid)
+    {
         $student = Student::where('id', $uuid)->with('resume')->first();
+
         if (!$student) {
             throw new StudentNotFoundException($uuid);
         }
 
+        return $student;
+    }
+
+    private function getResume($student)
+    {
         $resume = $student->resume;
 
         if (!$resume) {
-            throw new ResumeNotFoundException($uuid);
+            throw new ResumeNotFoundException($student->id);
         }
 
-        $projectIds = json_decode($resume->project_ids);
+        return $resume;
+    }
 
+    private function getProjects($resume)
+    {
+        $projectIds = json_decode($resume->project_ids);
         $projects = Project::findMany($projectIds);
 
         if ($projects->isEmpty()) {
-            throw new ProjectNotFoundException($uuid);
+            throw new ProjectNotFoundException($resume->student_id);
         }
 
-        $projects_detail = [
+        return $projects;
+    }
+
+    private function formatProjectsDetail($projects)
+    {
+        return [
             'projects' => $projects->map(function ($project) {
                 $tags = Tag::findMany(json_decode($project->tags));
                 return [
@@ -52,7 +77,5 @@ class StudentProjectsDetailService
                 ];
             })
         ];
-
-        return $projects_detail;
     }
 }
