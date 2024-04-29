@@ -10,9 +10,7 @@ use App\Models\Resume;
 
 class ResumeLanguageSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run(): void
     {
         $languageIds = Language::pluck('id')->toArray();
