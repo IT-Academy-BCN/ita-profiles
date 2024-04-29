@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Resume;
 
 use App\Models\Student;
-use App\Models\Resume\Project;
+use App\Models\Project;
 use App\Models\Tag;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
@@ -30,7 +30,7 @@ class StudentProjectsDetailService
 
         $projects = Project::findMany($projectIds);
 
-        if (!$projects) {
+        if ($projects->isEmpty()) {
             throw new ProjectNotFoundException($uuid);
         }
 
