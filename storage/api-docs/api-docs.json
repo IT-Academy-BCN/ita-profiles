@@ -575,13 +575,13 @@
                 ]
             }
         },
-        "/api/v1/development/list": {
+        "/development/list": {
             "get": {
                 "tags": [
                     "Development"
                 ],
                 "summary": "Retrieve a development list ",
-                "operationId": "5d0020d91a4ae2f766a81b9777fbce9f",
+                "operationId": "e14a9caf5611cd7fee512d6251dbc24f",
                 "responses": {
                     "200": {
                         "description": "Successful. Development list retrieved from json file",
@@ -1061,13 +1061,13 @@
                 ]
             }
         },
-        "/api/v1/specialization/list": {
+        "/specialization/list": {
             "get": {
                 "tags": [
                     "Specialization"
                 ],
                 "summary": "Retrieve a specialization list from resume model enum",
-                "operationId": "be655a322f23a316278b5324e0cfb31c",
+                "operationId": "ed66866e7488b350aa0142e3b004ac52",
                 "responses": {
                     "200": {
                         "description": "Successful. Specialization list retrieved from enum",
