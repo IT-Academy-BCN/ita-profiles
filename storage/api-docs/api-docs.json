@@ -1869,8 +1869,8 @@
                 "tags": [
                     "Languages"
                 ],
-                "summary": "Get a detailed list of languages and their respective level from a specific student's resume",
-                "description": "Returns a detailed list of languages and their respective level from a specific student's resume",
+                "summary": "Gets the languages spoken by a student",
+                "description": "This endpoint receives the UUID of a student and returns a detailed list of the languages ​​spoken by said student.\n\nIt returns a list of languages along with any other relevant information, such as the proficiency level in each language.",
                 "operationId": "getStudentLanguages",
                 "parameters": [
                     {
@@ -1886,7 +1886,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Languages of the student found successfully.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1906,7 +1906,7 @@
                                                         "example": "Anglès"
                                                     },
                                                     "language_level": {
-                                                        "description": "Language level",
+                                                        "description": "The student's proficiency level in the language",
                                                         "type": "string",
                                                         "example": "Bàsic"
                                                     }

@@ -13,8 +13,11 @@ class AnnotationsStudentLanguagesDetail
      *      path="/students/{uuid}/languages",
      *      operationId="getStudentLanguages",
      *      tags={"Languages"},
-     *      summary="Get a detailed list of languages and their respective level from a specific student's resume",
-     *      description="Returns a detailed list of languages and their respective level from a specific student's resume",
+     *      summary="Gets the languages spoken by a student",
+     *      description="This endpoint receives the UUID of a student and returns a detailed list of the languages ​​spoken by said student.
+
+It returns a list of languages along with any other relevant information, such as the proficiency level in each language.",
+     *
      *      @OA\Parameter(
      *          name="uuid",
      *          description="Student UUID",
@@ -27,7 +30,7 @@ class AnnotationsStudentLanguagesDetail
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="Languages of the student found successfully.",
      *          @OA\JsonContent(
      *              type="object",
      *              @OA\Property(
@@ -50,7 +53,7 @@ class AnnotationsStudentLanguagesDetail
      *                      @OA\Property(
      *                          property="language_level",
      *                          type="string",
-     *                          description="Language level",
+     *                          description="The student's proficiency level in the language",
      *                          example="Bàsic"
      *                      ),
      *                  )
