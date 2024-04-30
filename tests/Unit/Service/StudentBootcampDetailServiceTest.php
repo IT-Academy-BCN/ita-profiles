@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Service;
 
+use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
 use App\Models\Student;
 use App\Models\Resume;
 use App\Models\Bootcamp;
 use App\Service\Student\StudentBootcampDetailService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -16,28 +17,38 @@ class StudentBootcampDetailServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
+    protected $studentWithoutBootcamps;
+    protected $studentWithBootcamps;
+    protected $studentWithoutResume;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->studentWithoutBootcamps = Resume::factory()->create()->student;
+
+        $resume = Resume::factory()->create();
+        $bootcamp = Bootcamp::factory()->create();
+        $resume->bootcamps()->attach($bootcamp->id, ['end_date' => now()->subYear()->addDays(rand(1, 365))]);
+
+        $this->studentWithBootcamps = $resume->student;
+
+        $this->studentWithoutResume = Student::factory()->create();
+    }
+
     public function testServiceReturnsBootcampDetailsForStudentWithBootcamps()
     {
-        $student = Student::factory()->create();
-        $resume = Resume::factory()->create(['student_id' => $student->id]);
-        $bootcamps = Bootcamp::factory()->count(2)->create();
-        foreach ($bootcamps as $bootcamp) {
-            $resume->bootcamps()->attach($bootcamp->id, ['end_date' => now()->subYear()->addDays(rand(1, 365))]);
-        }
         $service = new StudentBootcampDetailService();
-        $bootcampDetails = $service->execute($student->id);
+        $bootcampDetails = $service->execute($this->studentWithBootcamps->id);
 
         $this->assertIsArray($bootcampDetails);
-        $this->assertCount(2, $bootcampDetails['bootcamps']);
+        $this->assertCount(1, $bootcampDetails['bootcamps']);
     }
 
     public function testServiceHandlesStudentWithoutBootcamps()
     {
-        $student = Student::factory()->create();
-        Resume::factory()->create(['student_id' => $student->id]);
-
         $service = new StudentBootcampDetailService();
-        $bootcampDetails = $service->execute($student->id);
+        $bootcampDetails = $service->execute($this->studentWithoutBootcamps->id);
 
         $this->assertIsArray($bootcampDetails);
         $this->assertEmpty($bootcampDetails['bootcamps']);
@@ -45,9 +56,12 @@ class StudentBootcampDetailServiceTest extends TestCase
 
     public function testServiceHandlesNonexistentStudent()
     {
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(StudentNotFoundException::class);
 
         $service = new StudentBootcampDetailService();
-        $service->execute("00000000-0000-0000-0000-000000000000");
+
+        $nonexistentUuid = "00000000-0000-0000-0000-000000000000";
+        $service->execute($nonexistentUuid);
     }
+    // TODO Falta chequear el caso de que no tenga resume.
 }

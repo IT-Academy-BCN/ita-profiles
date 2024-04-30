@@ -6,7 +6,6 @@ namespace Tests\Feature\Student;
 
 use App\Models\Bootcamp;
 use App\Models\Resume;
-use App\Models\Student;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -46,10 +45,11 @@ class StudentBootcampDetailControllerTest extends TestCase
 
     public function testControllerHandlesNonexistentStudent(): void
     {
-        $nonexistentUuid = Student::max('id') . 'A';
+        $nonexistentUuid = "00000000-0000-0000-0000-000000000000";
+
         $response = $this->getJson(route('bootcamp.list', ['id' => $nonexistentUuid]));
         $response->assertStatus(404);
-        $response->assertJson(['error' => 'Student not found']);
+        $response->assertJson(['message' => "No s'ha trobat cap estudiant amb aquest ID: $nonexistentUuid"]);
     }
 
     public function testControllerReturnsEmptyArrayForStudentWithoutBootcamp(): void
