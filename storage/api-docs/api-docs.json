@@ -1574,17 +1574,28 @@
                 ]
             }
         },
-        "/student/{student}/detail/for-home": {
+        "/student/{id}/detail/for-home": {
             "get": {
                 "tags": [
                     "Student"
                 ],
-                "summary": "Get Student Detail.",
-                "description": "Get student detail registered. No authentication required",
-                "operationId": "getStudentDetail",
+                "summary": "Get details of a Student.",
+                "description": "Get the details of a specific student. Authentication is not required.",
+                "operationId": "getStudentDetailsabout",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the student",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "",
+                        "description": "Success. Returns student details with about.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1593,60 +1604,42 @@
                                             "type": "array",
                                             "items": {
                                                 "properties": {
-                                                    "student_id": {
-                                                        "type": "integer",
-                                                        "example": 1
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John"
                                                     },
-                                                    "profile_detail": {
-                                                        "properties": {
-                                                            "fullname": {
-                                                                "type": "string",
-                                                                "example": "Juan Pérez"
-                                                            },
-                                                            "subtitle": {
-                                                                "type": "string",
-                                                                "example": "Desarrollador Frontend"
-                                                            },
-                                                            "social_media": {
-                                                                "properties": {
-                                                                    "linkedin": {
-                                                                        "properties": {
-                                                                            "url": {
-                                                                                "type": "string",
-                                                                                "example": "https://es.linkedin.com/"
-                                                                            }
-                                                                        },
-                                                                        "type": "object"
-                                                                    },
-                                                                    "github": {
-                                                                        "properties": {
-                                                                            "url": {
-                                                                                "type": "string",
-                                                                                "example": "https://github.com/"
-                                                                            }
-                                                                        },
-                                                                        "type": "object"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "about": {
-                                                                "properties": {
-                                                                    "description": {
-                                                                        "type": "string",
-                                                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a euismod elit. Nunc elit ante, vulputate sed maximus eu, posuere eu nibh. In eget lacus in mi pharetra volutpat a a justo. Fusce aliquet nibh nec accumsan facilisis. Suspendisse in tempor nibh, eu fermentum velit. Suspendisse cursus ultricies ipsum, eget tincidunt arcu pretium laoreet. Pellentesque eget egestas erat. Donec dapibus pharetra ultrices. Vivamus mollis sapien sed laoreet interdum."
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "tags": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "$ref": "#/components/schemas/Tag"
-                                                                }
-                                                            }
-                                                        },
-                                                        "type": "object"
+                                                    "surname": {
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    },
+                                                    "subtitle": {
+                                                        "type": "string",
+                                                        "example": "Engineer and Developer."
+                                                    },
+                                                    "cv": {
+                                                        "type": "string",
+                                                        "example": "My currículum."
+                                                    },
+                                                    "bootcamp": {
+                                                        "type": "string",
+                                                        "example": "PHP Developer"
+                                                    },
+                                                    "end_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "..."
+                                                    },
+                                                    "linkedin": {
+                                                        "type": "string",
+                                                        "example": "http://www.linkedin.com"
+                                                    },
+                                                    "github": {
+                                                        "type": "string",
+                                                        "example": "http://www.github.com"
+                                                    },
+                                                    "about": {
+                                                        "type": "text",
+                                                        "example": "Tot sobre mi i alguna cosa més"
                                                     }
                                                 },
                                                 "type": "object"
@@ -1657,6 +1650,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "User not found."
                     }
                 }
             }
