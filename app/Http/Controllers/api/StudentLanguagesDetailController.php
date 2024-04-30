@@ -1,37 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Student;
+use App\Service\Student\LanguageService;
+use App\Exceptions\LanguageNotFoundException;
+use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
+use Illuminate\Http\JsonResponse;
 
 class StudentLanguagesDetailController extends Controller
 {
-    public function __invoke($uuid)
+    private LanguageService $languageService;
+
+    public function __construct(LanguageService $languageService)
     {
-        Student::where('id', $uuid)->firstOrFail();
+        $this->languageService = $languageService;
+    }
 
-        $languages_detail = [
-
-            'languages' => [
-                [
-                    'language_id' => '1',
-                    'language_name' => 'Español',
-                    'language_level' => 'Nativo',
-                ],
-                [
-                    'language_id' => '2',
-                    'language_name' => 'Català',
-                    'language_level' => 'Nativo',
-                ],
-                [
-                    'language_id' => '3',
-                    'language_name' => 'English',
-                    'language_level' => 'Intermedio',
-                ]
-            ]
-        ];
-
-        return response()->json($languages_detail);
+    public function __invoke($studentId): JsonResponse
+    {
+        try {
+            $service = $this->languageService->execute($studentId);
+            return response()->json(['languages' => $service]);
+        } catch (StudentNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        } catch (LanguageNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        } catch (ResumeNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
+        }
     }
 }

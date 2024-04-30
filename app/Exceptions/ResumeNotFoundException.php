@@ -11,9 +11,9 @@ class ResumeNotFoundException extends Exception
 {
     public const MESSAGE = 'No s\'ha trobat cap currículum per a l\'estudiant amb id: %s';
 
-    public function __construct(string $studentId, Throwable $previous = null)
+    public function __construct(string $studentId, $code = 404, Throwable $previous = null)
     {
         $message = sprintf(self::MESSAGE, $studentId);
-        parent::__construct($message, 404, $previous);
+        parent::__construct($message, $code, $previous);
     }
 }

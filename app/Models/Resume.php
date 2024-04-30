@@ -22,6 +22,11 @@ class Resume extends Model
     {
         return $this->belongsTo(Student::class);
     }
+
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class);
+    }
     public function bootcamps()
     {
         return $this->belongsToMany(Bootcamp::class)->withPivot('end_date');
