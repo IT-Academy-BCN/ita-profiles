@@ -63,5 +63,12 @@ class StudentBootcampDetailServiceTest extends TestCase
         $nonexistentUuid = "00000000-0000-0000-0000-000000000000";
         $service->execute($nonexistentUuid);
     }
-    // TODO Falta chequear el caso de que no tenga resume.
+    public function testServiceHandlesStudentWithoutResumeAssociated()
+    {
+        $this->expectException(ResumeNotFoundException::class);
+
+        $service = new StudentBootcampDetailService();
+
+        $service->execute($this->studentWithoutResume->id);
+    }
 }
