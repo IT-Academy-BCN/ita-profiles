@@ -21,7 +21,7 @@ class Student extends Model
         'name',
         'surname',
         'photo',
-     
+        'specialization',
     ];
 
     public function resume()
