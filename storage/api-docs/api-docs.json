@@ -2024,6 +2024,22 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Hi ha hagut un error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2686,24 +2702,6 @@
                 "type": "object",
                 "xml": {
                     "name": "User"
-                }
-            }
-        },
-        "responses": {
-            "500": {
-                "description": "Server error",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "properties": {
-                                "message": {
-                                    "type": "string",
-                                    "example": "Hi ha hagut un error"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
                 }
             }
         }
