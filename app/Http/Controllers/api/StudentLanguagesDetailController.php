@@ -26,11 +26,11 @@ class StudentLanguagesDetailController extends Controller
             $service = $this->languageService->execute($studentId);
             return response()->json(['languages' => $service]);
         } catch (StudentNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (LanguageNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (ResumeNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);    
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
         }
