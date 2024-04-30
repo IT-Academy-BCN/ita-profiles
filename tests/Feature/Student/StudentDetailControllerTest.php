@@ -21,7 +21,7 @@ class StudentDetailControllerTest extends TestCase
     
         $studentId = $student->id;
         
-        $studentDetails = Resume::factory()->create(['student_id' => $studentId]);
+        $studentDetails = Resume::factory()->create(['id' => $studentId]);
         $studentDetailsService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
@@ -29,7 +29,7 @@ class StudentDetailControllerTest extends TestCase
 
         $this->app->instance(StudentDetailsService::class, $studentDetailsService);
 
-        $response = $this->get(route('student.detail', ['student' => $studentId]));
+        $response = $this->get(route('student.detail', ['id' => $studentId]));
 
         $response->assertStatus(200);
 
@@ -64,7 +64,7 @@ class StudentDetailControllerTest extends TestCase
 
         $this->app->instance(StudentDetailsService::class, $studentDetailsService);
 
-        $response = $this->get(route('student.detail', ['student' => $studentId]));
+        $response = $this->get(route('student.detail', ['id' => $studentId]));
 
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No se encontró ningún estudiante con el ID especificado']);
