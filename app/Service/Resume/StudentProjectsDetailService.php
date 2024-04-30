@@ -59,8 +59,8 @@ class StudentProjectsDetailService
 
     private function formatProjectsDetail($projects)
     {
-        return [
-            'projects' => $projects->map(function ($project) {
+        return 
+            $projects->map(function ($project) {
                 $tags = Tag::findMany(json_decode($project->tags));
                 return [
                     'uuid' => $project->id,
@@ -75,7 +75,6 @@ class StudentProjectsDetailService
                     })->toArray(),
                     'github_url' => $project->github_url,
                 ];
-            })
-        ];
-    }
+            })->toArray();
+        }
 }
