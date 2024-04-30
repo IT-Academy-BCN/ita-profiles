@@ -7,9 +7,9 @@ namespace App\Exceptions;
 use Exception;
 use Throwable;
 
-class ResumeNotFoundException extends Exception
+class ResumeBootcampNotFoundException extends Exception
 {
-    public const MESSAGE = 'No s\'ha trobat cap currículum per a l\'estudiant amb id: %s';
+    public const MESSAGE = 'L\'estudiant amb ID: %s no té informat cap Bootcamp al seu currículum';
 
     public function __construct(string $studentId, Throwable $previous = null)
     {
