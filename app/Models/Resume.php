@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -19,5 +21,10 @@ class Resume extends Model
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+    
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class);
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanySeeder::class);
         $this->call(ProjectSeeder::class);
         $this->call(AdditionalTrainingSeeder::class);
+        $this->call(LanguageSeeder::class);
+        $this->call(ResumeLanguageSeeder::class);
     }
 }
