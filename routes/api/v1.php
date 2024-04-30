@@ -30,6 +30,7 @@ use LaravelLang\Publisher\Console\Add;
 */
 
 //No Auth
+Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('/students', [StudentController::class, 'store'])->name('student.create');
 Route::get('/students', [StudentController::class, 'index'])->name('students.list');
