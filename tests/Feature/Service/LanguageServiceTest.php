@@ -9,11 +9,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Service\Student\LanguageService;
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
+use Tests\Fixtures\LanguagesForResume;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\LanguageNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
-use Illuminate\Support\Str;
 
 class LanguageServiceTest extends TestCase
 {
@@ -34,21 +34,8 @@ class LanguageServiceTest extends TestCase
         $studentId = $student->id;
 
         $resume = Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
-        
-        $languages = [];
 
-        for ($i = 0; $i < 2; $i++) {
-            $language = $resume->languages()->create([
-                'language_id' => Str::uuid(),
-                'language_name' => 'Language ' . ($i + 1),
-                'language_level' => 'Bàsic',
-            ]);
-            $languages[] = [
-                'language_id' => $language->id,
-                'language_name' => $language->language_name,
-                'language_level' => $language->language_level,
-            ];
-        }
+        $languages = LanguagesForResume::createLanguagesForResume($resume,2);
 
         $response = $this->languageService->execute($student->id);
 
