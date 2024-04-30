@@ -23,9 +23,9 @@ class StudentDetailController extends Controller
             $service = $this->studentDetailsService->execute($student);
             return response()->json(['student'=> $service], 200);
         } catch (StudentDetailsNotFoundException $e) {
-            return response()->json(['message' => 'No se encontró ningún estudiante con el ID especificado'], 404);
+            return response()->json(['message' => 'No hem trobat cap estudiant amb aquest ID'], 404);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Se produjo un error inesperado'], 500);
+            return response()->json(['error' => 'Error inesperat'], 500);
         }
     }  
 }

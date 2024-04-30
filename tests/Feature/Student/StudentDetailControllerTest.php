@@ -67,6 +67,6 @@ class StudentDetailControllerTest extends TestCase
         $response = $this->get(route('student.detail', ['id' => $studentId]));
 
         $response->assertStatus(404);
-        $response->assertJson(['message' => 'No se encontró ningún estudiante con el ID especificado']);
+        $response->assertJson(['message' => 'No hem trobat cap estudiant amb aquest ID']);
     }
 }
