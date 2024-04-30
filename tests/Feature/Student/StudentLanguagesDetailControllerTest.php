@@ -6,9 +6,9 @@ namespace Tests\Feature\Student;
 
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
+use Tests\Fixtures\LanguagesForResume;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use Illuminate\Support\Str;
 
 class StudentLanguagesDetailControllerTest extends TestCase
 {
@@ -24,20 +24,7 @@ class StudentLanguagesDetailControllerTest extends TestCase
 
         $resume = Resumes::createResumeWithModality($this->student->id, 'frontend', ['tag1', 'tag2'], 'Presencial');
         
-        $languages = [];
-
-        for ($i = 0; $i < 2; $i++) {
-            $language = $resume->languages()->create([
-                'language_id' => Str::uuid(),
-                'language_name' => 'Language ' . ($i + 1),
-                'language_level' => 'Bàsic',
-            ]);
-            $languages[] = [
-                'language_id' => $language->id,
-                'language_name' => $language->language_name,
-                'language_level' => $language->language_level,
-            ];
-        }
+        LanguagesForResume::createLanguagesForResume($resume,2);
     }
 
     public function testLanguageControllerReturns_200StatusForValidStudentUuidWithLanguages(): void
