@@ -26,7 +26,7 @@ docker compose up -d
 At the end of this process, you'll have to run the following in order to make swagger styles and javascript to run properly:
 
 ```shell
-docker compose exec -it itaprofilesbackend-app php artisan config:cache
+docker compose exec -it laravel-docker php artisan config:cache
 ```
 
 You'll see a lot of things building up, and then you'll return to the same folder. So, when the building is done, you'll
@@ -36,7 +36,7 @@ be able to check that everything went well by typing the following:
 docker ps
 ```
 
-You'll see a table where you should see the container names: `itaprofilesbackend-app` and `itaprofilesbackend-mysql`.
+You'll see a table where you should see the container names: `laravel-docker` and `itaprofilesbackend-mysql`.
 
 Now you'll be able to run commands inside the container using linux shell commands, as follows:
 
@@ -45,20 +45,20 @@ docker exec -it <app-container-name> <the-command>
 
 # EXAMPLES:
 # To setup the libraries with composer:
-docker exec -it itaprofilesbackend-app composer install
+docker exec -it laravel-docker composer install
 
 # To update libraries with composer: 
-docker exec -it itaprofilesbackend-app composer update
+docker exec -it laravel-docker composer update
 
 # To run the tests with phpunit:
-docker exec -it itaprofilesbackend-app ./vendor/bin/phpunit ./tests
+docker exec -it laravel-docker ./vendor/bin/phpunit ./tests
 
 # To use php artisan:
-docker exec -it itaprofilesbackend-app php artisan ... <whatever...>
+docker exec -it laravel-docker php artisan ... <whatever...>
 
 # For example, when installing you'll find useful to do:
-docker exec -it itaprofilesbackend-app php artisan migrate:fresh
-docker exec -it itaprofilesbackend-app php artisan db:seed
+docker exec -it laravel-docker php artisan migrate:fresh
+docker exec -it laravel-docker php artisan db:seed
 ```
 
 You'll have to run the previous composer install to get the project libraries and setup the project.
