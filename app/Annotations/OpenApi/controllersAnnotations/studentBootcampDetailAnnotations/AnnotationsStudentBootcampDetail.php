@@ -9,7 +9,7 @@ class AnnotationsStudentBootcampDetail
 {
      /**
       * @OA\Get(
-      *      path="/api/v1/students/{id}/bootcamp",
+      *      path="/students/{id}/bootcamp",
       *      operationId="getStudentBootcamp",
       *      tags={"Bootcamp"},
       *      summary="Get a detailed list of a student bootcamp",

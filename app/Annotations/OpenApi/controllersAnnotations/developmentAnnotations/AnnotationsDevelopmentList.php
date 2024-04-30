@@ -5,7 +5,7 @@ class AnnotationsDevelopmentList
 {
     /**
      * @OA\Get(
-     *     path="/api/v1/development/list",
+     *     path="/development/list",
      *     summary="Retrieve a development list ",
      *     tags={"Development"},
      *     @OA\Response(
