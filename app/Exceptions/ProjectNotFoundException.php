@@ -7,7 +7,7 @@ use Throwable;
 
 class ProjectNotFoundException extends Exception
 {
-    public const MESSAGE = 'No s\'ha trobat cap Resume associat a aquest estudiant amb ID: %s';
+    public const MESSAGE = 'No s\'ha trobat cap projecte associat a aquest estudiant amb ID: %s';
 
     public function __construct($studentId, $code = 0, Throwable $previous = null)
     {
