@@ -41,11 +41,19 @@ class Resumes
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
         ]);
     }
-    public static function createResumeWithEmptyProjects($studentId, $subtitle, $linkedinUrl, $githubUrl, $tagsIds, $specialization, $modality, $additionalTrainingsIds): Resume
-    {
+    public static function createResumeWithEmptyProjects(
+        $studentId,
+        $subtitle = 'Subtitle',
+        $linkedinUrl = 'linkedin-url',
+        $githubUrl = 'github-url',
+        $tagsIds = ['tag1', 'tag2'],
+        $specialization = 'Frontend',
+        $modality = 'Modality',
+        $additionalTrainingsIds = ['additional_training1', 'additional_training2']
+    ): Resume {
         $specialization = substr($specialization, 0, 255);
 
-        return Resume::factory()->create([
+        $attributes = [
             'student_id' => $studentId,
             'subtitle' => $subtitle,
             'linkedin_url' => $linkedinUrl,
@@ -55,6 +63,8 @@ class Resumes
             'project_ids' => '[]',
             'modality' => $modality,
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
-        ]);
+        ];
+
+        return Resume::factory()->create($attributes);
     }
 }
