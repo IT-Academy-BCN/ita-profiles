@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Service\Student\StudentBootcampDetailService;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
-use App\Exceptions\ResumeBootcampNotFoundException;
 use Illuminate\Http\JsonResponse;
 
 class StudentBootcampDetailController extends Controller
@@ -25,7 +24,7 @@ class StudentBootcampDetailController extends Controller
         try {
             $service = $this->studentBootcampDetailService->execute($studentId);
             return response()->json($service);
-        } catch (StudentNotFoundException | ResumeNotFoundException | ResumeBootcampNotFoundException $e) {
+        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);

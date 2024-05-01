@@ -6,7 +6,6 @@ namespace App\Service\Student;
 
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
-use App\Exceptions\ResumeBootcampNotFoundException;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -24,9 +23,7 @@ class StudentBootcampDetailService
             throw new ResumeNotFoundException($studentId);
         }
         $bootcamps = $resume->bootcamps;
-        if (!$bootcamps) {
-            throw new ResumeBootcampNotFoundException($studentId);
-        }
+
         $bootcampDetails = $bootcamps->map(function ($bootcamp) {
             return [
                 'bootcamp_id' => $bootcamp->id,
