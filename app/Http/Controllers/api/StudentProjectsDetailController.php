@@ -26,12 +26,8 @@ class StudentProjectsDetailController extends Controller
         try {
             $service = $this->studentProjectsDetailService->execute($uuid);
             return response()->json(['projects' => $service]);
-        } catch (StudentNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        } catch (ProjectNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
-        } catch (ResumeNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+        } catch (StudentNotFoundException | ProjectNotFoundException | ResumeNotFoundException $e) {  
+            return response()->json(['message' => $e->getMessage()], $e->getCode());  
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
         }
