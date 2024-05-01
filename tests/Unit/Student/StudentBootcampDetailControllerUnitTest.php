@@ -6,7 +6,7 @@ namespace Tests\Unit\Student;
 
 use Tests\TestCase;
 use App\Http\Controllers\Api\StudentBootcampDetailController;
-use App\Service\Student\studentBootcampDetailService;
+use App\Service\Student\StudentBootcampDetailService;
 
 class StudentBootcampDetailControllerUnitTest extends TestCase
 {
@@ -16,7 +16,7 @@ class StudentBootcampDetailControllerUnitTest extends TestCase
     {
         parent::setUp();
 
-        $this->studentBootcampDetailService = new studentBootcampDetailService();
+        $this->studentBootcampDetailService = new StudentBootcampDetailService();
     }
 
     public function testStudentBootcampDetailControllerCanBeInstantiated()
