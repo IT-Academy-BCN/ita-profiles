@@ -11,45 +11,56 @@
         }
     ],
     "paths": {
-        "/additional-training/list": {
+        "/students/{uuid}/additionaltraining": {
             "get": {
                 "tags": [
                     "Additional Training"
                 ],
                 "summary": "Retrieve a list of additional training",
-                "operationId": "ec1ec12caefc80b4f1bc588b1d4ab641",
+                "operationId": "getStudentAdditionalTraining",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "Student UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful. Additional training list retrieved",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "additionalTraining": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "string"
-                                                    },
-                                                    "course": {
-                                                        "type": "string"
-                                                    },
-                                                    "center": {
-                                                        "type": "string"
-                                                    },
-                                                    "year": {
-                                                        "type": "string"
-                                                    },
-                                                    "duration": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "type": "object"
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "uuid": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "course_name": {
+                                                "type": "string"
+                                            },
+                                            "study_center": {
+                                                "type": "string"
+                                            },
+                                            "course_beginning_year": {
+                                                "type": "integer"
+                                            },
+                                            "course_ending_year": {
+                                                "type": "integer"
+                                            },
+                                            "duration_hrs": {
+                                                "type": "integer"
                                             }
-                                        }
-                                    },
-                                    "type": "object"
+                                        },
+                                        "type": "object"
+                                    }
                                 }
                             }
                         }
@@ -1656,13 +1667,24 @@
                     "Student"
                 ],
                 "summary": "Get Students List.",
-                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n- If a 'specialization' parameter is provided, the list will be filtered by student's specialization.\n\n- If not, it returns a list of all students.\n\n- Multiple parameters can be added separated by commas without spaces.\n\n- For example, if the objetive is to filter Backend and Frontend students, the query would be:\n\n    ```/student/list/for-home?specialization=frontend,backend```\n\n---\n\n    No authentication required",
+                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n- If a 'specialization' parameter is provided, the list will be filtered by student's specialization.\n\n- If not, it returns a list of all students.\n\n- Multiple parameters can be added separated by commas without spaces.\n\n- For example, if the objetive is to filter Backend and Frontend students, the query would be:\n\n    ```/student/list/for-home?specialization=frontend,backend```\n    - To filter by tags, the query would be:\n    ```/student/list/for-home?tags=PHP,Laravel```\n    - To filter by both specialization and tags:\n    ```/student/list/for-home?specialization=frontend&tags=php,react```\n\n---\n\n    No authentication required",
                 "operationId": "getAllStudentsForFigma",
                 "parameters": [
                     {
                         "name": "specialization",
                         "in": "query",
                         "description": "The specializations to filter students by",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "description": "The tags to filter students by",
                         "required": false,
                         "style": "form",
                         "explode": true,
@@ -1680,6 +1702,10 @@
                                     "type": "array",
                                     "items": {
                                         "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "example": "9bc3c8fd-7754-43e0-95a1-68fc011d106c"
+                                            },
                                             "fullname": {
                                                 "type": "string",
                                                 "example": "Juan Pérez"
@@ -1723,13 +1749,13 @@
                 }
             }
         },
-        "/students/{id}/bootcamp": {
+        "/students/{uuid}/bootcamp": {
             "get": {
                 "tags": [
                     "Bootcamp"
                 ],
-                "summary": "Get a detailed list of a student bootcamp",
-                "description": "Returns detail for a specific student bootcamp. (Note: This endpoint returns hardcoded bootcamp details)",
+                "summary": "Get a list of student´s bootcamp/s",
+                "description": "\n- Returns detailed list of a student's bootcamp/s and the date that was/were finished.\n- Returns an empty array if the student didn't finish any bootcamp yet.",
                 "operationId": "getStudentBootcamp",
                 "parameters": [
                     {
@@ -1749,33 +1775,55 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "bootcamp_id": {
-                                                "description": "Bootcamp ID",
-                                                "type": "string"
-                                            },
-                                            "bootcamp_name": {
-                                                "description": "Bootcamp Name",
-                                                "type": "string"
-                                            },
-                                            "bootcamp_end_date": {
-                                                "description": "Bootcamp end date",
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
+                                    "properties": {
+                                        "bootcamps": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "bootcamp_id": {
+                                                        "description": "Bootcamp ID",
+                                                        "type": "string",
+                                                        "example": "9bd21470-db24-4ce3-b838-c4d3847785d1"
+                                                    },
+                                                    "bootcamp_name": {
+                                                        "description": "Bootcamp Name",
+                                                        "type": "string",
+                                                        "example": "Fullstack PHP"
+                                                    },
+                                                    "bootcamp_end_date": {
+                                                        "description": "Bootcamp end date",
+                                                        "type": "string",
+                                                        "example": "2023-11-05"
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
-                                        },
-                                        "type": "object"
-                                    }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Student not found"
+                        "description": "Student or resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té cap projecte informat al seu currículum"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1943,7 +1991,7 @@
                     "Projects"
                 ],
                 "summary": "Get a detailed list of projects for a student",
-                "description": "Returns a list of projects for a specific student. (Note: This endpoint returns hardcoded project details)",
+                "description": "Returns a list of projects for a specific student.",
                 "operationId": "getStudentProjects",
                 "parameters": [
                     {
@@ -2464,6 +2512,54 @@
     },
     "components": {
         "schemas": {
+            "AdditionalTraining": {
+                "title": "Additional Training",
+                "description": "Additional Training Model",
+                "properties": {
+                    "id": {
+                        "description": "Additional Training ID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "course_name": {
+                        "description": "Course Name",
+                        "type": "string"
+                    },
+                    "study_center": {
+                        "description": "Study Center",
+                        "type": "string"
+                    },
+                    "course_beginning_year": {
+                        "description": "Course Beginning Year",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "course_ending_year": {
+                        "description": "Course Ending Year",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "duration_hrs": {
+                        "description": "Duration in Hours",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "created_at": {
+                        "description": "Training creation date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Training update date",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "AdditionalTraining"
+                }
+            },
             "AnnotationsAdmin": {
                 "title": "Admin",
                 "description": "Admin Model",
@@ -2673,6 +2769,24 @@
                 "type": "object",
                 "xml": {
                     "name": "User"
+                }
+            }
+        },
+        "responses": {
+            "500": {
+                "description": "Server error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Hi ha hagut un error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
                 }
             }
         }
