@@ -15,12 +15,12 @@ class StudentDetailsServiceTest extends TestCase
     {
         $service = new StudentDetailsService();
 
-        $student = Resume::factory()->create();
+        $resume = Resume::factory()->create();
 
-        $result = $service->getStudentDetailsById($student->student_id);
+        $result = $service->getStudentDetailsById($resume->student->id);
 
-        $this->assertEquals($student->student_id, $result->first()->student_id);
-        
+        $this->assertEquals($resume->about, $result["about"]);
+
     }
 
     public function test_student_details_not_found()
