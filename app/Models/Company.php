@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -11,12 +13,8 @@ class Company extends Model
     use HasFactory;
     use HasUuids;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
     protected $guarded = ['id'];
+    public $timestamps = false;
 
     /**
      * Get the projects for the company.
