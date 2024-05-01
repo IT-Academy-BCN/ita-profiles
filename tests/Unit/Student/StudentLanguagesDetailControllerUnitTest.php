@@ -21,7 +21,7 @@ class StudentLanguagesDetailControllerUnitTest extends TestCase
 
     public function testStudentLanguagesDetailControllerCanBeInstantiated()
     {
-                
+
         $controller = new StudentLanguagesDetailController($this->languageService);
 
         $this->assertInstanceOf(StudentLanguagesDetailController::class, $controller);

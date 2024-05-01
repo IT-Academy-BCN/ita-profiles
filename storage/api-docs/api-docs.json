@@ -1749,13 +1749,13 @@
                 }
             }
         },
-        "/students/{id}/bootcamp": {
+        "/students/{uuid}/bootcamp": {
             "get": {
                 "tags": [
                     "Bootcamp"
                 ],
-                "summary": "Get a detailed list of a student bootcamp",
-                "description": "Returns detail for a specific student bootcamp. (Note: This endpoint returns hardcoded bootcamp details)",
+                "summary": "Get a list of student´s bootcamp/s",
+                "description": "\n- Returns detailed list of a student's bootcamp/s and the date that was/were finished.\n- Returns an empty array if the student didn't finish any bootcamp yet.",
                 "operationId": "getStudentBootcamp",
                 "parameters": [
                     {
@@ -1775,33 +1775,55 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "bootcamp_id": {
-                                                "description": "Bootcamp ID",
-                                                "type": "string"
-                                            },
-                                            "bootcamp_name": {
-                                                "description": "Bootcamp Name",
-                                                "type": "string"
-                                            },
-                                            "bootcamp_end_date": {
-                                                "description": "Bootcamp end date",
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
+                                    "properties": {
+                                        "bootcamps": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "bootcamp_id": {
+                                                        "description": "Bootcamp ID",
+                                                        "type": "string",
+                                                        "example": "9bd21470-db24-4ce3-b838-c4d3847785d1"
+                                                    },
+                                                    "bootcamp_name": {
+                                                        "description": "Bootcamp Name",
+                                                        "type": "string",
+                                                        "example": "Fullstack PHP"
+                                                    },
+                                                    "bootcamp_end_date": {
+                                                        "description": "Bootcamp end date",
+                                                        "type": "string",
+                                                        "example": "2023-11-05"
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
-                                        },
-                                        "type": "object"
-                                    }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Student not found"
+                        "description": "Student or resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té cap projecte informat al seu currículum"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2747,6 +2769,24 @@
                 "type": "object",
                 "xml": {
                     "name": "User"
+                }
+            }
+        },
+        "responses": {
+            "500": {
+                "description": "Server error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Hi ha hagut un error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
                 }
             }
         }

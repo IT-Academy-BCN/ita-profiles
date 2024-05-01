@@ -14,7 +14,6 @@ use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\LanguageNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
-
 class LanguageServiceTest extends TestCase
 {
     use DatabaseTransactions;
@@ -35,7 +34,7 @@ class LanguageServiceTest extends TestCase
 
         $resume = Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
 
-        $languages = LanguagesForResume::createLanguagesForResume($resume,2);
+        $languages = LanguagesForResume::createLanguagesForResume($resume, 2);
 
         $response = $this->languageService->execute($student->id);
 
@@ -48,7 +47,7 @@ class LanguageServiceTest extends TestCase
         $this->assertArrayHasKey('language_id', $response[0]);
         $this->assertArrayHasKey('language_name', $response[0]);
         $this->assertArrayHasKey('language_level', $response[0]);
-        
+
     }
 
     public function testLanguageServiceThrowsStudentNotFountExceptionIfRecievesNonExistentStudendId()
@@ -64,7 +63,7 @@ class LanguageServiceTest extends TestCase
         $studentId = $student->id;
 
         Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
-        
+
         $this->expectException(LanguageNotFoundException::class);
 
         $this->languageService->execute($studentId);
@@ -76,7 +75,7 @@ class LanguageServiceTest extends TestCase
         $student = Students::aStudent();
 
         $studentId = $student->id;
-        
+
         $this->expectException(ResumeNotFoundException::class);
 
         $this->languageService->execute($studentId);
