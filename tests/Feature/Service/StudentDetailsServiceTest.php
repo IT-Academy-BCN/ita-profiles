@@ -7,7 +7,7 @@ namespace Tests\Feature\Service;
 use Tests\TestCase;
 use App\Models\Resume;
 use App\Service\StudentDetailsService;
-use App\Exceptions\StudentDetailsNotFoundException;
+use App\Exceptions\StudentNotFoundException;
 
 class StudentDetailsServiceTest extends TestCase
 {
@@ -20,6 +20,7 @@ class StudentDetailsServiceTest extends TestCase
         $result = $service->getStudentDetailsById($student->student_id);
 
         $this->assertEquals($student->student_id, $result->first()->student_id);
+        
     }
 
     public function test_student_details_not_found()
@@ -28,7 +29,7 @@ class StudentDetailsServiceTest extends TestCase
 
         $nonExistentStudentId = 'non-existent-student-id';
 
-        $this->expectException(StudentDetailsNotFoundException::class);
+        $this->expectException(StudentNotFoundException::class);
         $service->getStudentDetailsById($nonExistentStudentId);
     }
 }

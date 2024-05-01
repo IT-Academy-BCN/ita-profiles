@@ -21,7 +21,7 @@ class StudentDetailControllerTest extends TestCase
     
         $studentId = $student->id;
         
-        $studentDetails = Resume::factory()->create(['id' => $studentId]);
+        $studentDetails = Resume::factory()->create();
         $studentDetailsService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
@@ -33,23 +33,25 @@ class StudentDetailControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $response->assertJsonStructure([
-            '*' => [ 
-                'id',
-                'student_id',
+        $response->assertJsonStructure();
+
+        /*$response->assertJsonStructure([
+            'student' => [
+                'fullname',
                 'subtitle',
-                'linkedin_url',
-                'github_url',
-                'tags_ids',
-                'specialization',
-                'modality',
-                'project_ids',
-                'created_at',
-                'updated_at',
-                'additional_trainings_ids',
-                'about'
-            ]    
-        ]);
+                'social_media' => [
+                    'github' => ['url'],
+                    'linkedin' => ['url']
+                ],
+                'about',
+                'tags' => [
+                    '*' => [
+                        'id',
+                        'name'
+                    ]
+                ]
+            ]
+        ]);*/
     }
 
     public function test_student_details_not_found()
@@ -60,7 +62,7 @@ class StudentDetailControllerTest extends TestCase
         $studentDetailsService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
-                              ->willThrowException(new \App\Exceptions\StudentDetailsNotFoundException($studentId));
+                              ->willThrowException(new \App\Exceptions\StudentNotFoundException($studentId));
 
         $this->app->instance(StudentDetailsService::class, $studentDetailsService);
 

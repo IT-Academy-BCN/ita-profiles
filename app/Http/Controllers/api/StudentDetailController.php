@@ -7,7 +7,7 @@ use App\Models\Resume;
 use App\Service\StudentDetailsService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use App\Exceptions\StudentDetailsNotFoundException;
+use App\Exceptions\StudentNotFoundException;
 
 class StudentDetailController extends Controller
 {
@@ -22,7 +22,7 @@ class StudentDetailController extends Controller
         try {
             $service = $this->studentDetailsService->execute($student);
             return response()->json(['student'=> $service], 200);
-        } catch (StudentDetailsNotFoundException $e) {
+        } catch (StudentNotFoundException $e) {
             return response()->json(['message' => 'No hem trobat cap estudiant amb aquest ID'], 404);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error inesperat'], 500);
