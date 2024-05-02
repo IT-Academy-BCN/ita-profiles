@@ -5,60 +5,63 @@ namespace App\Annotations\OpenApi\controllersAnnotations\studentAnnotations;
 class AnnotationsStudentDetail
 {
     /**
-     *
-     *
      * @OA\Get (
      *     path="/student/{id}/detail/for-home",
      *     operationId="getStudentDetailsabout",
      *     tags={"Student"},
-     *     summary="Get details of a Student.",
-     *     description="Get the details of a specific student. Authentication is not required.",
-     *
-     *      @OA\Parameter(
-     *          name="id",
-     *          in="path",
-     *          description="ID of the student",
-     *          required=true,
-     *
-     *          @OA\Schema(
-     *              type="string"
-     *              
-     *          ),
-     *      ),
-     *
-     *      @OA\Response(
+     *     summary="Obtener detalles de un estudiante.",
+     *     description="Obtiene los detalles de un estudiante específico. No se requiere autenticación.",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del estudiante",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
      *         response=200,
-     *         description="Success. Returns student details with about.",
-     *
+     *         description="Éxito. Devuelve los detalles del estudiante.",
      *         @OA\JsonContent(
-     *
      *             @OA\Property(
-     *                 type="array",
      *                 property="data",
-     *
+     *                 type="array",
      *                 @OA\Items(
-     *                     type="object",
-     *
-     *                     @OA\Property(property="name", type="string", example="John"),
-     *                     @OA\Property(property="surname",type="string", example="Doe"),
-     *                     @OA\Property(property="subtitle", type="string", example="Engineer and Developer."),     *                     
-     *                     @OA\Property(property="cv", type="string", example="My currículum."),
-     *                     @OA\Property(property="bootcamp", type="string", example="PHP Developer"),
-     *                     @OA\Property(property="end_date", type="date", example="..." ),
-     *                     @OA\Property(property="linkedin", type="string", example="http://www.linkedin.com"),
-     *                     @OA\Property(property="github", type="string", example="http://www.github.com"),
-     *                     @OA\Property(property="about", type="text", example="Tot sobre mi i alguna cosa més"),
+     *                     @OA\Property(property="fullname", type="string", example="Katrine Wyman Jacobson"),
+     *                     @OA\Property(property="subtitle", type="string", example="Full Stack developer en PHP"),
+     *                     @OA\Property(
+     *                         property="social_media",
+     *                         type="object",
+     *                         @OA\Property(
+     *                             property="github",
+     *                             type="object",
+     *                             @OA\Property(property="url", type="string", example="https://github.com/bettie52")
+     *                         ),
+     *                         @OA\Property(
+     *                             property="linkedin",
+     *                             type="object",
+     *                             @OA\Property(property="url", type="string", example="https://linkedin.com/abernathy.dayne")
+     *                         )
+     *                     ),
+     *                     @OA\Property(property="about", type="string", example="Iusto aut debitis soluta facere tempore quisquam. Vel assumenda aliquid quod et eum quos ex. Ipsa ea tempora minima occaecati. Culpa occaecati quod laboriosam reiciendis quia consequuntur."),
+     *                     @OA\Property(
+     *                         property="tags",
+     *                         type="array",
+     *                         @OA\Items(
+     *                             @OA\Property(property="id", type="integer", example=4),
+     *                             @OA\Property(property="name", type="string", example="HTML&CSS")
+     *                         )
+     *                     )
      *                 )
      *             )
      *         )
      *     ),
-     *
-     *            @OA\Response(
-     *            response=404,
-     *            description="User not found."
-     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Usuario no encontrado."
+     *     )
      * )
      */
     public function show() {}
-     
 }

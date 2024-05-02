@@ -1579,14 +1579,14 @@
                 "tags": [
                     "Student"
                 ],
-                "summary": "Get details of a Student.",
-                "description": "Get the details of a specific student. Authentication is not required.",
+                "summary": "Obtener detalles de un estudiante.",
+                "description": "Obtiene los detalles de un estudiante específico. No se requiere autenticación.",
                 "operationId": "getStudentDetailsabout",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the student",
+                        "description": "ID del estudiante",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -1595,7 +1595,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success. Returns student details with about.",
+                        "description": "Éxito. Devuelve los detalles del estudiante.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1604,42 +1604,56 @@
                                             "type": "array",
                                             "items": {
                                                 "properties": {
-                                                    "name": {
+                                                    "fullname": {
                                                         "type": "string",
-                                                        "example": "John"
-                                                    },
-                                                    "surname": {
-                                                        "type": "string",
-                                                        "example": "Doe"
+                                                        "example": "Katrine Wyman Jacobson"
                                                     },
                                                     "subtitle": {
                                                         "type": "string",
-                                                        "example": "Engineer and Developer."
+                                                        "example": "Full Stack developer en PHP"
                                                     },
-                                                    "cv": {
-                                                        "type": "string",
-                                                        "example": "My currículum."
-                                                    },
-                                                    "bootcamp": {
-                                                        "type": "string",
-                                                        "example": "PHP Developer"
-                                                    },
-                                                    "end_date": {
-                                                        "type": "string",
-                                                        "format": "date",
-                                                        "example": "..."
-                                                    },
-                                                    "linkedin": {
-                                                        "type": "string",
-                                                        "example": "http://www.linkedin.com"
-                                                    },
-                                                    "github": {
-                                                        "type": "string",
-                                                        "example": "http://www.github.com"
+                                                    "social_media": {
+                                                        "properties": {
+                                                            "github": {
+                                                                "properties": {
+                                                                    "url": {
+                                                                        "type": "string",
+                                                                        "example": "https://github.com/bettie52"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "linkedin": {
+                                                                "properties": {
+                                                                    "url": {
+                                                                        "type": "string",
+                                                                        "example": "https://linkedin.com/abernathy.dayne"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
                                                     },
                                                     "about": {
-                                                        "type": "text",
-                                                        "example": "Tot sobre mi i alguna cosa més"
+                                                        "type": "string",
+                                                        "example": "Iusto aut debitis soluta facere tempore quisquam. Vel assumenda aliquid quod et eum quos ex. Ipsa ea tempora minima occaecati. Culpa occaecati quod laboriosam reiciendis quia consequuntur."
+                                                    },
+                                                    "tags": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 4
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "HTML&CSS"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
                                                     }
                                                 },
                                                 "type": "object"
@@ -1652,7 +1666,7 @@
                         }
                     },
                     "404": {
-                        "description": "User not found."
+                        "description": "Usuario no encontrado."
                     }
                 }
             }
