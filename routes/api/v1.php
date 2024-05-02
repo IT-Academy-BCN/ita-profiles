@@ -6,6 +6,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\DevelopmentListController;
 use App\Http\Controllers\api\ModalityController;
 use App\Http\Controllers\api\RecruiterController;
+use App\Http\Controllers\api\registerController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
 use App\Http\Controllers\api\StudentCollaborationController;
@@ -30,7 +31,7 @@ use LaravelLang\Publisher\Console\Add;
 */
 
 //No Auth
-Route::post('register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('/students', [StudentController::class, 'store'])->name('student.create');
 Route::get('/students', [StudentController::class, 'index'])->name('students.list');
