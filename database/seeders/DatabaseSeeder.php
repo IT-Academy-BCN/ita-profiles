@@ -1,15 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         $this->call(RoleSeeder::class);
@@ -18,5 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanySeeder::class);
         $this->call(ProjectSeeder::class);
         $this->call(AdditionalTrainingSeeder::class);
+        $this->call(LanguageSeeder::class);
+        $this->call(ResumeLanguageSeeder::class);
+        $this->call(BootcampSeeder::class);
+        $this->call(ResumeBootcampSeeder::class);
     }
 }

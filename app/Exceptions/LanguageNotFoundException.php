@@ -7,9 +7,9 @@ namespace App\Exceptions;
 use Exception;
 use Throwable;
 
-class ModalityNotFoundException extends Exception
+class LanguageNotFoundException extends Exception
 {
-    public const MESSAGE = 'L\'estudiant amb ID: %s no té informada la modalitat al seu currículum';
+    public const MESSAGE = 'L\'estudiant amb ID: %s no té informat cap idioma al seu currículum';
 
     public function __construct($studentId, $code = 404, Throwable $previous = null)
     {

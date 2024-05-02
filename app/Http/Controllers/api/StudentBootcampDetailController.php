@@ -1,50 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api;
 
+use Exception;
 use App\Http\Controllers\Controller;
-use App\Models\Student;
+use App\Service\Student\StudentBootcampDetailService;
+use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
+use Illuminate\Http\JsonResponse;
 
 class StudentBootcampDetailController extends Controller
 {
-    public function __invoke($uuid)
+    private StudentBootcampDetailService $studentBootcampDetailService;
+
+    public function __construct(StudentBootcampDetailService $studentBootcampDetailService)
     {
-        // Student::where('id', $uuid)->firstOrFail();
-
-        $bootcamp_detail = [
-
-            'bootcamp' => [
-                [
-                    'bootcamp_id' => '1',
-                    'bootcamp_name' => 'Full Stack PHP',
-                    'bootcamp_end_date' => ['November 2023'],
-                ],
-                [
-                    'bootcamp_id' => '2',
-                    'bootcamp_name' => 'Back End Nodejs',
-                    'bootcamp_end_date' => ['December 2023'],
-                ],
-                [
-                    'bootcamp_id' => '3',
-                    'bootcamp_name' => 'Data Analytics',
-                    'bootcamp_end_date' => ['January 2024'],
-                ],
-                [
-                    'bootcamp_id' => '4',
-                    'bootcamp_name' => 'Front End Angular',
-                    'bootcamp_end_date' => ['December 2022'],
-                ],
-                [
-                    'bootcamp_id' => '5',
-                    'bootcamp_name' => 'Front End React',
-                    'bootcamp_end_date' => ['October 2022'],
-                ],
-            ]
-        ];
-        
-        $random_bootcamp_index = array_rand($bootcamp_detail['bootcamp']);
-        $random_bootcamp = $bootcamp_detail['bootcamp'][$random_bootcamp_index];
-
-        return response()->json($random_bootcamp);
+        $this->studentBootcampDetailService = $studentBootcampDetailService;
     }
+    public function __invoke($studentId): JsonResponse
+    {
+        try {
+            $service = $this->studentBootcampDetailService->execute($studentId);
+            return response()->json($service);
+        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
+        }
+    }
+
 }
