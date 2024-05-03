@@ -1,27 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api;
 
+use Exception;
 use App\Http\Controllers\Controller;
-use App\Models\Student;
+use App\Service\Student\StudentBootcampDetailService;
+use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
+use Illuminate\Http\JsonResponse;
 
 class StudentBootcampDetailController extends Controller
 {
-    public function __invoke($uuid)
+    private StudentBootcampDetailService $studentBootcampDetailService;
+
+    public function __construct(StudentBootcampDetailService $studentBootcampDetailService)
     {
-        Student::where('id', $uuid)->firstOrFail();
-
-        $bootcamp_detail = [
-
-            'bootcamp' => [
-                [
-                    'bootcamp_id' => '1',
-                    'bootcamp_name' => 'php Fullstack Developer',
-                    'bootcamp_end_date' => ['November 2023'],
-                ],
-            ]
-        ];
-        
-        return response()->json($bootcamp_detail);
+        $this->studentBootcampDetailService = $studentBootcampDetailService;
     }
+    public function __invoke($studentId): JsonResponse
+    {
+        try {
+            $service = $this->studentBootcampDetailService->execute($studentId);
+            return response()->json($service);
+        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
+        }
+    }
+
 }

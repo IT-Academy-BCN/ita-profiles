@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Student;
 
 use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Project;
+use Tests\Fixtures\Students;
+use Tests\Fixtures\Resumes;
+use App\Models\Resume;
 
 class StudentProjectsDetailControllerTest extends TestCase
 {
@@ -42,21 +47,42 @@ class StudentProjectsDetailControllerTest extends TestCase
             ]);
     }
 
-    public function test_controller_returns_empty_array_with_no_projects_listed()
-    {
-        $response = $this->get(route('projects.list', ['student' => $this->student->id]));
-
-        $response->assertStatus(200)
-        ->assertExactJson(['projects' => []]);
-    }
-
     public function test_controller_returns_404_with_invalid_uuid()
     {
         $invalidUuid = 'invalid_uuid';
 
         $response = $this->get(route('projects.list', ['student' => $invalidUuid]));
 
+        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: ' . $invalidUuid]);
+
         $response->assertStatus(404);
     }
 
+    public function test_controller_returns_404_with_no_projects_listed()
+    {
+        $student = Students::aStudent();
+
+        Resumes::createResumeWithEmptyProjects($student->id);
+
+        Resume::where('student_id', $student->id)
+            ->update(['project_ids' => '[]']);
+
+        $response = $this->get(route('projects.list', ['student' => $student->id]));
+
+        $response->assertJson(['message' => 'No s\'ha trobat cap projecte associat a aquest estudiant amb ID: ' . $student->id]);
+
+        $response->assertStatus(404);
+    }
+
+    public function test_controller_returns_404_with_no_resume()
+    {
+        $student = Students::aStudent();
+
+        Resume::where('student_id', $student->id)->delete();
+
+        $response = $this->get(route('projects.list', ['student' => $student->id]));
+
+        $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $student->id]);
+        $response->assertStatus(404);
+    }
 }

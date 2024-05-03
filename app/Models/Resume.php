@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -11,18 +13,22 @@ class Resume extends Model
     use HasFactory;
     use HasUuids;
 
-    protected $fillable = [
-        'student_id',
-        'subtitle',
-        'linkedin_url',
-        'github_url',
-        'specialization',
-        'tags_ids',
-
+    protected $guarded = ['id'];
+    protected $casts = [
+        'modality' => 'array',
     ];
 
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class);
+    }
+    public function bootcamps()
+    {
+        return $this->belongsToMany(Bootcamp::class)->withPivot('end_date');
     }
 }

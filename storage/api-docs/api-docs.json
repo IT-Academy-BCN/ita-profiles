@@ -586,41 +586,13 @@
                 ]
             }
         },
-        "/modality": {
-            "get": {
-                "tags": [
-                    "Course Modality"
-                ],
-                "summary": "Get the modality of a specific course",
-                "description": "Retrieve the modality of a specific course",
-                "operationId": "getCourse;odality",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "modality": {
-                                            "type": "string",
-                                            "example": "Presencial"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/development/list": {
+        "/development/list": {
             "get": {
                 "tags": [
                     "Development"
                 ],
                 "summary": "Retrieve a development list ",
-                "operationId": "5d0020d91a4ae2f766a81b9777fbce9f",
+                "operationId": "e14a9caf5611cd7fee512d6251dbc24f",
                 "responses": {
                     "200": {
                         "description": "Successful. Development list retrieved from json file",
@@ -638,23 +610,84 @@
                 }
             }
         },
-        "/api/v1/modality": {
+        "/modality/{studentId}": {
             "get": {
                 "tags": [
                     "Modality"
                 ],
-                "summary": "Retrieve a specialization list from resume model enum",
-                "operationId": "4282f944c459f6be5621f0bd24a6a3b1",
+                "summary": "Get the modality of a specific resume",
+                "description": "Returns the modality of a specific student's resume  ",
+                "operationId": "invokeResume",
+                "parameters": [
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "UUID of the student to get the resume modality",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Successful. Specialization list retrieved from enum",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
+                                    "properties": {
+                                        "modality": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "Presencial",
+                                                "Remot"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Modality not found or Student not found or Resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té informada la modalitat al seu currículum"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message3": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Hi ha hagut un error"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -1039,13 +1072,13 @@
                 ]
             }
         },
-        "/api/v1/specialization/list": {
+        "/specialization/list": {
             "get": {
                 "tags": [
                     "Specialization"
                 ],
                 "summary": "Retrieve a specialization list from resume model enum",
-                "operationId": "be655a322f23a316278b5324e0cfb31c",
+                "operationId": "ed66866e7488b350aa0142e3b004ac52",
                 "responses": {
                     "200": {
                         "description": "Successful. Specialization list retrieved from enum",
@@ -1716,13 +1749,13 @@
                 }
             }
         },
-        "/api/v1/students/{id}/bootcamp": {
+        "/students/{uuid}/bootcamp": {
             "get": {
                 "tags": [
                     "Bootcamp"
                 ],
-                "summary": "Get a detailed list of a student bootcamp",
-                "description": "Returns detail for a specific student bootcamp. (Note: This endpoint returns hardcoded bootcamp details)",
+                "summary": "Get a list of student´s bootcamp/s",
+                "description": "\n- Returns detailed list of a student's bootcamp/s and the date that was/were finished.\n- Returns an empty array if the student didn't finish any bootcamp yet.",
                 "operationId": "getStudentBootcamp",
                 "parameters": [
                     {
@@ -1742,33 +1775,55 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "bootcamp_id": {
-                                                "description": "Bootcamp ID",
-                                                "type": "string"
-                                            },
-                                            "bootcamp_name": {
-                                                "description": "Bootcamp Name",
-                                                "type": "string"
-                                            },
-                                            "bootcamp_end_date": {
-                                                "description": "Bootcamp end date",
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
+                                    "properties": {
+                                        "bootcamps": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "bootcamp_id": {
+                                                        "description": "Bootcamp ID",
+                                                        "type": "string",
+                                                        "example": "9bd21470-db24-4ce3-b838-c4d3847785d1"
+                                                    },
+                                                    "bootcamp_name": {
+                                                        "description": "Bootcamp Name",
+                                                        "type": "string",
+                                                        "example": "Fullstack PHP"
+                                                    },
+                                                    "bootcamp_end_date": {
+                                                        "description": "Bootcamp end date",
+                                                        "type": "string",
+                                                        "example": "2023-11-05"
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
-                                        },
-                                        "type": "object"
-                                    }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Student not found"
+                        "description": "Student or resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té cap projecte informat al seu currículum"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1829,8 +1884,8 @@
                 "tags": [
                     "Languages"
                 ],
-                "summary": "Get a detailed list of languages and level for a student",
-                "description": "Returns a list of Languages and level for a specific student. (Note: This endpoint returns hardcoded project details)",
+                "summary": "Gets the languages spoken by a student",
+                "description": "This endpoint receives the UUID of a student and returns a detailed list of the languages ​​spoken by said student.\n\nIt returns a list of languages along with any other relevant information, such as the proficiency level in each language.",
                 "operationId": "getStudentLanguages",
                 "parameters": [
                     {
@@ -1846,39 +1901,84 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Languages of the student found successfully.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "language_id": {
-                                                "description": "id for languange",
-                                                "type": "integer"
-                                            },
-                                            "language_name": {
-                                                "description": "Language",
-                                                "type": "string"
-                                            },
-                                            "language_level": {
-                                                "description": "Language level",
-                                                "type": "string"
+                                    "properties": {
+                                        "languages": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "language_id": {
+                                                        "description": "Language UUID",
+                                                        "type": "string",
+                                                        "example": "e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e"
+                                                    },
+                                                    "language_name": {
+                                                        "description": "Language name",
+                                                        "type": "string",
+                                                        "example": "Anglès"
+                                                    },
+                                                    "language_level": {
+                                                        "description": "The student's proficiency level in the language",
+                                                        "type": "string",
+                                                        "example": "Bàsic"
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
-                                        },
-                                        "type": "object"
-                                    }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Student not found"
+                        "description": "Language not found or Student not found or Resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té informat cap idioma al seu currículum"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message3": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Hi ha hagut un error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
-        "/students/{uuid}/projects": {
+        "/students/{studentId}/projects": {
             "get": {
                 "tags": [
                     "Projects"
@@ -1888,9 +1988,9 @@
                 "operationId": "getStudentProjects",
                 "parameters": [
                     {
-                        "name": "uuid",
+                        "name": "studentId",
                         "in": "path",
-                        "description": "Student UUID",
+                        "description": "UUID of the student to get the projects",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -1904,37 +2004,102 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "project_name": {
-                                                "description": "Name of the project",
-                                                "type": "string"
-                                            },
-                                            "project_site": {
-                                                "description": "Site where the project is happening",
-                                                "type": "string"
-                                            },
-                                            "project_skills": {
-                                                "description": "Skills required for the project",
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "project_repository": {
-                                                "description": "URL of the project repository",
-                                                "type": "string"
+                                    "properties": {
+                                        "projects": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "uuid": {
+                                                        "description": "Unique identifier for the project",
+                                                        "type": "string",
+                                                        "format": "uuid",
+                                                        "example": "9becbb14-0267-409b-9c77-9377ce67c9cf"
+                                                    },
+                                                    "project_name": {
+                                                        "description": "Name of the project",
+                                                        "type": "string",
+                                                        "example": "ITA Profiles"
+                                                    },
+                                                    "company_name": {
+                                                        "description": "Name of the company associated with the project",
+                                                        "type": "string",
+                                                        "example": "Barcelona Activa"
+                                                    },
+                                                    "project_url": {
+                                                        "description": "URL of the project",
+                                                        "type": "string",
+                                                        "example": "https://www.ita-profiles.com"
+                                                    },
+                                                    "tags": {
+                                                        "description": "List of tags associated with the project, each tag includes an id and a name",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 7
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "Bootstrap"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "project_repository": {
+                                                        "description": "URL of the project repository",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
-                                        },
-                                        "type": "object"
-                                    }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Student not found"
+                        "description": "Student,Projects or Resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té cap projecte informat al seu currículum"
+                                        },
+                                        "message3": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Hi ha hagut un error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2635,6 +2800,24 @@
                 "type": "object",
                 "xml": {
                     "name": "User"
+                }
+            }
+        },
+        "responses": {
+            "500": {
+                "description": "Server error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Hi ha hagut un error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
                 }
             }
         }

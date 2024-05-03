@@ -36,12 +36,12 @@ be able to check that everything went well by typing the following:
 docker ps
 ```
 
-You'll see a table where you should see the container names: `itaprofilesbackend-app` and `itaprofilesbackend-mysql`.
+You'll see a table where you should see the container names: `laravel-docker` and `itaprofilesbackend-mysql`.
 
 Now you'll be able to run commands inside the container using linux shell commands, as follows:
 
 ```shell
-docker exec -it laravel-docker <the-command>
+docker exec -it <app-container-name> <the-command>
 
 # EXAMPLES:
 # To setup the libraries with composer:
@@ -67,7 +67,7 @@ You'll have to run the previous composer install to get the project libraries an
 After being raised, our containers will provide your localhost with some interesting tools:
 
 - A local API REST from your laravel in [http://localhost](http://localhost)
-- A local Swagger documentation in [http://localhost:8000/api/documenation](http://localhost:8000/api/documenation)
+- A local Swagger documentation in [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
 - A local PHPMyAdmin to work with MySQL in [http://localhost:9015](http://localhost:9015)
 
 #### PHPMyAdmin credentials

@@ -10,10 +10,11 @@ class Students
 {
     public static function aStudent(): Student
     {
-        return Student::factory()->create([
+        return $student=Student::factory()->create([
             'name' => 'Dokuta',
             'surname' => 'Suranpu',
             'photo' => 'Arale',
         ]);
+        return $student->refresh()->id;
     }
 }
