@@ -10,7 +10,6 @@ use App\Models\Resume;
 
 class ResumeLanguageSeeder extends Seeder
 {
-
     public function run(): void
     {
         $languageIds = Language::pluck('id')->toArray();
@@ -20,7 +19,7 @@ class ResumeLanguageSeeder extends Seeder
 
         foreach ($resumes as $resume) {
             $selectedLanguage = $languageIds[array_rand($languageIds)];
-    
+
             if ($selectedLanguage !== null) {
                 $this->attachLanguage($resume, $selectedLanguage);
                 $this->attachSecondLanguage($resume, $languageIds, $selectedLanguage);
@@ -42,7 +41,7 @@ class ResumeLanguageSeeder extends Seeder
                     $additionalLanguage = $eligibleLanguages[array_rand($eligibleLanguages)];
                     $selectedLanguageModel = Language::find($selectedLanguage);
                     $additionalLanguageModel = Language::find($additionalLanguage);
-                } while ($additionalLanguage === $selectedLanguage || 
+                } while ($additionalLanguage === $selectedLanguage ||
                         $additionalLanguageModel->language_name === $selectedLanguageModel->language_name);
                 $this->attachLanguage($resume, $additionalLanguage);
             }

@@ -1,35 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Student;
-use App\Models\Project;
+use App\Service\Resume\StudentProjectsDetailService;
+use Illuminate\Http\JsonResponse;
+use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
+use App\Exceptions\ProjectNotFoundException;
+
 
 class StudentProjectsDetailController extends Controller
 {
-    public function __invoke($uuid)
+    private $studentProjectsDetailService;
+
+    public function __construct(StudentProjectsDetailService $studentProjectsDetailService)
     {
-        $student = Student::where('id', $uuid)->with('resume')->firstOrFail();
-        $resume = $student->resume;
+        $this->studentProjectsDetailService = $studentProjectsDetailService;
+    }
 
-        $projectIds = json_decode($resume->project_ids);
-
-        $projects = Project::findMany($projectIds);
-
-        $projects_detail = [
-            'projects' => $projects->map(function ($project) {
-                return [
-                    'uuid' => $project->id,
-                    'project_name' => $project->name,
-                    'company_name' => $project->company->name,
-                    'project_url' => $project->project_url,
-                    'tags' => json_decode($project->tags),
-                    'github_url' => $project->github_url,
-                ];
-            })
-        ];
-
-        return response()->json($projects_detail);
+    public function __invoke($uuid): JsonResponse
+    {
+        try {
+            $service = $this->studentProjectsDetailService->execute($uuid);
+            return response()->json(['projects' => $service]);
+        } catch (StudentNotFoundException | ProjectNotFoundException | ResumeNotFoundException $e) {  
+            return response()->json(['message' => $e->getMessage()], $e->getCode());  
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
+        }
     }
 }

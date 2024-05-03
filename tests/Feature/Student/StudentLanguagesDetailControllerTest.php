@@ -23,8 +23,8 @@ class StudentLanguagesDetailControllerTest extends TestCase
         $this->student = Students::aStudent();
 
         $resume = Resumes::createResumeWithModality($this->student->id, 'frontend', ['tag1', 'tag2'], 'Presencial');
-        
-        LanguagesForResume::createLanguagesForResume($resume,2);
+
+        LanguagesForResume::createLanguagesForResume($resume, 2);
     }
 
     public function testLanguageControllerReturns_200StatusForValidStudentUuidWithLanguages(): void

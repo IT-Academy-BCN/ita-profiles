@@ -10,7 +10,6 @@ use Illuminate\Database\Seeder;
 
 class LanguageSeeder extends Seeder
 {
-
     public function run(): void
     {
         $languages = ['Castellà', 'Català', 'Anglès', 'Francès', 'Alemany', 'Italià', 'Portuguès', 'Rus'];
