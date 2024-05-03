@@ -21,7 +21,7 @@ class StudentDetailController extends Controller
     {
         try {
             $service = $this->studentDetailsService->execute($student);
-            return response()->json(['data'=> $service], 200);
+            return response()->json(['data'=> [$service]], 200);
         } catch (StudentNotFoundException $e) {
             return response()->json(['message' => 'No hem trobat cap estudiant amb aquest ID'], 404);
         } catch (\Exception $e) {
