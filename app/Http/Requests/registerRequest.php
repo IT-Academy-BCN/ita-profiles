@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class registerRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,44 @@ class registerRequest extends FormRequest
     {
 
         return [
+            'name' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
+            'surname' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;_="<>]+$/'],
+            'dni' => ['required', 'unique:users', 'string', 'max:9', 'regex:/^[XYZ]{1}\d{7}[TR]{1}$|^\d{8}[A-Z]{1}$/'],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|confirmed|string|min:8',
-            // 'password_confirmation' => 'required|same:password',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return[
+            // name
+            'name.required' => 'El nombre es requerido',
+            'name.string' => 'El nombre debe ser un texto',
+            'name.regex' => 'El nombre no debe contener caracteres especiales',
+
+            // surname
+            'surname.required' => 'El apellido es requerido',
+            'surname.string' => 'El apellido debe ser un texto',
+            'surname.regex' => 'El apellido no debe contener caracteres especiales',
+
+            // dni
+            'dni.required' => 'El dni es requerido',
+            'dni.unique' => 'El dni ya existe',
+            'dni.string' => 'El dni debe ser un texto',
+            'dni.max' => 'El dni no debe ser mayor a :max caracteres',
+            'dni.regex' => 'El dni no debe contener caracteres especiales',
+
+            // email
+            'email.required' => 'El email es requerido',
+            'email.string' => 'El email debe ser un texto',
+            'email.max' => 'El email no debe ser mayor a :max caracteres',
+            'email.unique' => 'El email ya existe',
+
+            // password
+            'password.required' => 'La contraseña es requerida',
+            'password.confirmed' => 'La contraseña no coincide',
+            'password.min' => 'La contraseña debe tener al menos :min caracteres',
         ];
     }
 

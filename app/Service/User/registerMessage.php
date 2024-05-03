@@ -1,9 +1,10 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
 namespace Service\User;
 
-Trait registerMessage
+trait registerMessage
 {
     public function sendResponse($result, $message)
     {

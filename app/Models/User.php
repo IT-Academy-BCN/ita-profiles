@@ -56,16 +56,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
+    // public static function boot()
+    // {
+    //     parent::boot();
 
-        static::saving(function ($user) {
-            if ($user->password !== $user->password_confirmation) {
-                throw new \Exception("Password and password confirmation do not match.");
-            }
-        });
-    }
+    //     static::saving(function ($user) {
+    //         if ($user->password !== $user->password_confirmation) {
+    //             throw new \Exception("Password and password confirmation do not match.");
+    //         }
+    //     });
+    // }
 
     public function student()
     {

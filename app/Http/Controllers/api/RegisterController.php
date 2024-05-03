@@ -2,60 +2,35 @@
 
 namespace App\Http\Controllers\api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\registerRequest;
-use Service\User\registerMessage;
-use Service\User\userService;
-
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
-use App\Models\User;
+use Service\User\registerMessage;
+use Service\User\UserService;
 
+/* TODO: En  el formulario de registro(imagen de la tarjeta #136) hay campos que no corresponden con la tabla users/students en la BBDD: 
+    -En el formulario faltaria: los campos surname(por cierto este campo esta repetido tanto en la tabla user como en la de students en la BBDD al igual que el name) y especializacion .
+     
+    PREGUNTA: porque existe el metodo boot() en la clase User, porque se esta validando alli el password? no deria validarse esto en controlador con un formrequest?
+*/
+
+/*
+🗒️NOTAS:
+    1: Es mejor instanciar el UserService dentro del metodo register() y no en el constructor, pues si se hace en el constructor se crea un registro en la BBDD antes de hacer la validacion en registerRequest y daria error de duplicated dni aunque sea un usuario nuevo.
+*/
 
 class RegisterController extends Controller
 {
+
     use registerMessage;
-    public function register(registerRequest $request)
+
+    public function register(registerRequest $request): JsonResponse
     {
-        // echo "estas en registerController";
-        // dd($request);
+        $userService = new UserService();/*nota 1*/
+        $response = $userService->register($request);
 
-        $register = new userService();
-        $register->register($request);
-
-        return response()->json([], 204);
-
-
+        return $this->sendResponse($response, 'User registered successfully.');
     }
 
-    // public function register(Request $request): JsonResponse
-    // {
-    //     // Validar los datos recibidos en la solicitud
-    //     $validator = Validator::make($request->all(), [
-    //         'email' => 'required|email|unique:users',
-    //         'password' => 'required|string|min:8',
-    //         'password_confirmation' => 'required|same:password',
-    //     ]);
-
-    //     // var_dump($validator);
-
-    //     // Si la validación falla, se retorna un error con los detalles
-    //     if ($validator->fails()) {
-    //         return $this->sendError('Validation Error.', $validator->errors());
-    //     }
-    //     // Obtener todos los datos de la solicitud
-    //     $input = $request->all();
-    //     // Encriptar la contraseña antes de almacenarla en la base de datos
-    //     $input['password'] = bcrypt($input['password']);
-    //     // Crear un nuevo usuario con los datos proporcionados
-    //     $user = User::create($input);
-    //     // Generar un token de acceso para el usuario recién registrado
-    //     $success['token'] = $user->createToken('MyApp')->accessToken;
-    //     $success['email'] = $user->email;
-        
-    //     // Retornar una respuesta exitosa con el token y el nombre del usuario
-    //     return $this->sendResponse($success, 'User registered successfully.');
-    // }
 
 }

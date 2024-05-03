@@ -1,21 +1,15 @@
-<?php 
-// declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Service\User;
 
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 
-class userService
+class UserService
 {
-    use registerMessage;
-
-    public function register($registerData):JsonResponse
+    public function register($registerData): array
     {
-        // dd($registerData);
-
-        // echo "estas en userService";
-
         $input = $registerData->all();
         $input['password'] = bcrypt($input['password']);
 
@@ -23,7 +17,7 @@ class userService
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['email'] = $user->email;
 
-        return $this->sendResponse($success, 'User registered successfully.');
+        return $success;
 
     }
 }

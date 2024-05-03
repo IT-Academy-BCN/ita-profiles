@@ -6,7 +6,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\DevelopmentListController;
 use App\Http\Controllers\api\ModalityController;
 use App\Http\Controllers\api\RecruiterController;
-use App\Http\Controllers\api\registerController;
+use App\Http\Controllers\api\RegisterController;
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\api\StudentListController;
 use App\Http\Controllers\api\StudentCollaborationController;
