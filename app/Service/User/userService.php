@@ -12,6 +12,7 @@ class UserService
     {
         $input = $registerData->all();
         $input['password'] = bcrypt($input['password']);
+        $input['password_confirmation'] = bcrypt($input['password']);
 
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
