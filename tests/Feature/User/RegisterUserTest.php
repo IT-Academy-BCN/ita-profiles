@@ -19,8 +19,8 @@ class RegisterUserTest extends TestCase
     private function createRandomUserData()
     {
         $userData =  User::factory()->make()->toArray();/*nota 1*/
-        $userData['password'] = 'password123';
-        $userData['password_confirmation'] = 'password123';
+        $userData['password'] = 'Password%123';
+        $userData['password_confirmation'] = 'Password%123';
 
         return $userData;
     }
@@ -41,17 +41,16 @@ class RegisterUserTest extends TestCase
     public function test_user_creation_with_invalid_data()
     {
         $response = $this->json('POST', 'api/v1/register', [
-            'name' => 'Invalid Name',
-            'surname' => 'Invalid Surname',
+            'name' => 'Invalid%Name',
+            'surname' => 'Invalid%Surname',
             'dni' => 'Invalid DNI',
             'email' => 'invalid_email',
-            'password' => 'password123',
-            'password_confirmation' => 'password123'
+            'password' => 'invalid_password',
+            'password_confirmation' => 'invalid_password_confirmation',
         ]);
     
         $response->assertStatus(422); // 422 Unprocessable Entity
-        $response->assertJsonValidationErrors(['dni', 'email']);
-        $response->assertJsonMissingValidationErrors(['name', 'surname']);
+        $response->assertJsonValidationErrors(['name', 'surname', 'dni', 'email', 'password']);
     }    
 
     public function test_required_fields_for_user_creation()

@@ -29,13 +29,13 @@ class RegisterRequest extends FormRequest
             'surname' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;="<>]+$/'],
             'dni' => ['required', 'unique:users', 'string', 'max:9', 'regex:/^[XYZ]{1}\d{7}[TR]{1}$|^\d{8}[A-Z]{1}$/'],
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|confirmed|string|min:8',
+            'password' => 'required|confirmed|string|regex:/^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$/',
         ];
     }
 
     public function messages(): array
     {
-        return[
+        return [
             // name
             'name.required' => 'El nombre es requerido',
             'name.string' => 'El nombre debe ser un texto',
@@ -60,9 +60,9 @@ class RegisterRequest extends FormRequest
             'email.unique' => 'El email ya existe',
 
             // password
-            'password.required' => 'La contraseña es requerida',
-            'password.confirmed' => 'La contraseña no coincide',
-            'password.min' => 'La contraseña debe tener al menos :min caracteres',
+            'password.required' => 'La contraseña es requerida',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide',
+            'password.regex' => 'La contraseña debe contener al menos una mayúscula y un carácter especial, y tener una longitud mínima de 8 caracteres',
         ];
     }
 
