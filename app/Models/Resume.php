@@ -32,3 +32,4 @@ class Resume extends Model
         return $this->belongsToMany(Bootcamp::class)->withPivot('end_date');
     }
 }
+
