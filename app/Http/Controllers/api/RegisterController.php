@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\registerRequest;
 use Illuminate\Http\JsonResponse;
+use PDOException;
 use Service\User\registerMessage;
 use Service\User\UserService;
 
@@ -24,12 +25,18 @@ class RegisterController extends Controller
 
     use registerMessage;
 
-    public function register(registerRequest $request): JsonResponse
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $userService = new UserService();/*nota 1*/
-        $response = $userService->register($request);
+        try {
+            $userService = new UserService();
+            $response = $userService->register($request);
 
-        return $this->sendResponse($response, 'User registered successfully.');
+            return $this->sendResponse($response, 'User registered successfully.');
+        } catch (PDOException $e) {
+            return $this->sendError('Error al registrar el usuario. Inténtalo de nuevo más tarde.', 500);
+        } catch (\Exception $e) {
+            return $this->sendError('Error inesperado. Inténtalo de nuevo más tarde.', $e->getMessage(), 500);
+        }
     }
 
 
