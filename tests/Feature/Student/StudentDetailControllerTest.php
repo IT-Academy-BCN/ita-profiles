@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Student;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -35,23 +35,6 @@ class StudentDetailControllerTest extends TestCase
 
         $response->assertJsonStructure();
 
-        /*$response->assertJsonStructure([
-            'student' => [
-                'fullname',
-                'subtitle',
-                'social_media' => [
-                    'github' => ['url'],
-                    'linkedin' => ['url']
-                ],
-                'about',
-                'tags' => [
-                    '*' => [
-                        'id',
-                        'name'
-                    ]
-                ]
-            ]
-        ]);*/
     }
 
     public function test_student_details_not_found()
@@ -69,6 +52,6 @@ class StudentDetailControllerTest extends TestCase
         $response = $this->get(route('student.detail', ['id' => $studentId]));
 
         $response->assertStatus(404);
-        $response->assertJson(['message' => 'No hem trobat cap estudiant amb aquest ID']);
+        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: 12345']);
     }
 }

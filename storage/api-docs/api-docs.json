@@ -1579,14 +1579,14 @@
                 "tags": [
                     "Student"
                 ],
-                "summary": "Obtener detalles de un estudiante.",
-                "description": "Obtiene los detalles de un estudiante específico. No se requiere autenticación.",
+                "summary": "Get Student Detail.",
+                "description": "Retrieve details of a specific student. No authentication required.",
                 "operationId": "getStudentDetailsabout",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID del estudiante",
+                        "description": "Student ID",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -1595,7 +1595,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Éxito. Devuelve los detalles del estudiante.",
+                        "description": "Success. Returns the student details.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1666,7 +1666,10 @@
                         }
                     },
                     "404": {
-                        "description": "Usuario no encontrado."
+                        "description": "No hem trobat cap estudiant amb aquest ID"
+                    },
+                    "500": {
+                        "description": "Error inesperat"
                     }
                 }
             }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
 use App\Models\Resume;
 use App\Models\Student;
 use App\Models\Tag;
@@ -17,23 +18,23 @@ class StudentDetailsService
     }
     
 
-    public function getStudentDetailsById($student){
+    public function getStudentDetailsById($studentId){
         
-        $studentDetails = Resume::where('student_id', $student)->first();
+        $resume = Resume::where('student_id', $studentId)->first();
 
-        if(!$studentDetails){
-            throw new StudentNotFoundException($student);
+        if(!$resume){
+            throw new ResumeNotFoundException($studentId);
         }
 
-        $studentName = Student::find($studentDetails->student_id); 
+        $student = Student::find($resume->student_id); 
 
-        if(!$studentName){
-            throw new StudentNotFoundException($student);
+        if(!$student){
+            throw new StudentNotFoundException($studentId);
         }
 
-        $fullName = $studentName->name . ' ' . $studentName->surname;
+        $fullName = $student->name . ' ' . $student->surname;
 
-        $tagsIds = json_decode($studentDetails->tags_ids, true);
+        $tagsIds = json_decode($resume->tags_ids, true);
         $tags = Tag::whereIn('id', $tagsIds)->get(['id', 'tag_name'])->toArray();
 
         $formattedTags = [];
@@ -46,17 +47,17 @@ class StudentDetailsService
 
         return [
             'fullname' => $fullName,
-            'subtitle' => $studentDetails->subtitle,
+            'subtitle' => $resume->subtitle,
                     'social_media' => [
                         'github' => [
-                            'url' => $studentDetails->github_url
+                            'url' => $resume->github_url
                         ],
                         'linkedin' => [
-                            'url' => $studentDetails->linkedin_url
+                            'url' => $resume->linkedin_url
                         ]
                         
                     ],
-            'about' => $studentDetails->about,
+            'about' => $resume->about,
             'tags' => $formattedTags,
         ];
         

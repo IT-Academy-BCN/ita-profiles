@@ -17,13 +17,13 @@ class StudentDetailController extends Controller
     {
         $this->studentDetailsService =$studentDetailsService;
     }
-    function __invoke(Request $request,$student):JsonResponse
+    function __invoke($studentId):JsonResponse
     {
         try {
-            $service = $this->studentDetailsService->execute($student);
+            $service = $this->studentDetailsService->execute($studentId);
             return response()->json(['data'=> [$service]], 200);
         } catch (StudentNotFoundException $e) {
-            return response()->json(['message' => 'No hem trobat cap estudiant amb aquest ID'], 404);
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error inesperat'], 500);
         }

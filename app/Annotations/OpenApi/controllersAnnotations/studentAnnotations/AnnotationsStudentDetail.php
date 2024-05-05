@@ -9,12 +9,12 @@ class AnnotationsStudentDetail
      *     path="/student/{id}/detail/for-home",
      *     operationId="getStudentDetailsabout",
      *     tags={"Student"},
-     *     summary="Obtener detalles de un estudiante.",
-     *     description="Obtiene los detalles de un estudiante específico. No se requiere autenticación.",
+     *     summary="Get Student Detail.",
+     *     description="Retrieve details of a specific student. No authentication required.",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="ID del estudiante",
+     *         description="Student ID",
      *         required=true,
      *         @OA\Schema(
      *             type="string"
@@ -22,7 +22,7 @@ class AnnotationsStudentDetail
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Éxito. Devuelve los detalles del estudiante.",
+     *         description="Success. Returns the student details.",
      *         @OA\JsonContent(
      *             @OA\Property(
      *                 property="data",
@@ -59,7 +59,11 @@ class AnnotationsStudentDetail
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Usuario no encontrado."
+     *         description="No hem trobat cap estudiant amb aquest ID"
+     *     ),
+     *     @OA\Response(
+     *         response=500,            
+     *         description="Error inesperat"
      *     )
      * )
      */
