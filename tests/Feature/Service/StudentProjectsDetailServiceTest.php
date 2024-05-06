@@ -55,7 +55,7 @@ class StudentProjectsDetailServiceTest extends TestCase
     }
     public function test_execute_throws_exception_for_student_without_resume()
 {
-    // Crear un estudiante sin currículum
+    
     $student = Students::aStudent();
 
     $this->expectException(ResumeNotFoundException::class);
@@ -63,10 +63,10 @@ class StudentProjectsDetailServiceTest extends TestCase
 }
 public function test_execute_throws_exception_for_student_with_empty_projects()
 {
-    // Crear un estudiante
+   
     $student = Students::aStudent();
 
-    // Crear un currículum sin proyectos para el estudiante
+    
     Resumes::createResumeWithEmptyProjects($student->id);
 
     $this->expectException(ProjectNotFoundException::class);
