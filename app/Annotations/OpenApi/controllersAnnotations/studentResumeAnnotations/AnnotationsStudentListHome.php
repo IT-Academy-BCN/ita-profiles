@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentAnnotations;
+declare(strict_types=1);
 
-class AnnotationsStudentList
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
+
+class AnnotationsStudentListHome
 {
     /**
      * @OA\Get(
-     *     path="/student/list/for-home",
+     *     path="/student/resume/list",
      *     operationId="getAllStudentsForFigma",
-     *     tags={"Student"},
+     *     tags={"Student -> Resume"},
      *     summary="Get Students List.",
      *
      *     description="Get a list of all students registered with the Profile-Home fields in Figma Design.

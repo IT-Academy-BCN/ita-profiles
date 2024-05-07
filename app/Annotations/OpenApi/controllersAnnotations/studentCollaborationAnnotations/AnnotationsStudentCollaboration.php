@@ -8,7 +8,7 @@ class AnnotationsStudentCollaboration
 {
     /**
      * @OA\Get(
-     *      path="/api/v1/studentCollaborations",
+     *      path="/student/Collaborations",
      *      operationId="getStudentCollaborations",
      *      tags={"Collaborations"},
      *      summary="Get collaborations for a student",
