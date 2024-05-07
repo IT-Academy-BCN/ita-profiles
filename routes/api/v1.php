@@ -24,6 +24,7 @@ use App\Http\Controllers\api\{
 
 // ! UPDATE DESDE AQUI
 //No Auth
+
 // Students Home
 Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
 Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
@@ -62,7 +63,6 @@ Route::prefix('student/resume')->group(function () {
 //!BLOQUE ACTUALIZADO
 
 //No Auth
-Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('/students', [StudentController::class, 'store'])->name('student.create');
 Route::get('/students', [StudentController::class, 'index'])->name('students.list');
