@@ -49,5 +49,8 @@ jobs:
       - name: Ejecutar migraciones y seeds
         run: php artisan migrate --seed
 
+      - name: Inicializar passport
+        run: php artisan passport:install
+
       - name: Ejecutar pruebas unitarias
         run: php artisan test
