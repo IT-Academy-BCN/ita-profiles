@@ -32,6 +32,7 @@ class User extends Authenticatable
         'dni',
         'email',
         'password',
+        'password_confirmation'
     ];
 
     /**
@@ -41,6 +42,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'password_confirmation',
         'remember_token',
     ];
 
@@ -53,6 +55,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // public static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::saving(function ($user) {
+    //         if ($user->password !== $user->password_confirmation) {
+    //             throw new \Exception("Password and password confirmation do not match.");
+    //         }
+    //     });
+    // }
 
     public function student()
     {
