@@ -24,7 +24,7 @@ use App\Http\Controllers\api\{
 
 // ! UPDATE DESDE AQUI
 //No Auth
-
+// Comentario para borrar
 // Students Home
 Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
 Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
