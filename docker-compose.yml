@@ -11,7 +11,7 @@ services:
         volumes:
             - .:/var/www/html
         command: >
-            bash -c "composer install && cp .env.docker .env && php artisan key:generate && php artisan migrate:fresh && php artisan db:seed && php artisan serve --host=0.0.0.0 --port=80 && php artisan config:cache"
+            bash -c "composer install && cp .env.docker .env && php artisan key:generate && php artisan migrate:fresh && php artisan db:seed && php artisan passport:install && php artisan serve --host=0.0.0.0 --port=80 && php artisan config:cache"
         networks:
             - itabackend
 
