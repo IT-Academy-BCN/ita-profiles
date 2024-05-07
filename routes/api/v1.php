@@ -8,6 +8,7 @@ use App\Http\Controllers\api\{
     AuthController,
     DevelopmentListController,
     ModalityController,
+    RegisterController,
     RecruiterController,
     StudentController,
     StudentListController,
@@ -61,6 +62,7 @@ Route::prefix('student/resume')->group(function () {
 //!BLOQUE ACTUALIZADO
 
 //No Auth
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('/students', [StudentController::class, 'store'])->name('student.create');
 Route::get('/students', [StudentController::class, 'index'])->name('students.list');
