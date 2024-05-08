@@ -1866,25 +1866,73 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "uuid": {
-                                                "type": "string",
-                                                "format": "uuid"
-                                            },
-                                            "collaboration_name": {
-                                                "type": "string"
-                                            },
-                                            "collaboration_description": {
-                                                "type": "text"
-                                            },
-                                            "collaboration_quantity": {
-                                                "type": "integer"
+                                    "properties": {
+                                        "collaborations": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "uuid": {
+                                                        "description": "Collaboration UUID",
+                                                        "type": "string",
+                                                        "example": "e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e"
+                                                    },
+                                                    "collaboration_name": {
+                                                        "description": "Name of the collaboration",
+                                                        "type": "string",
+                                                        "example": "Project X"
+                                                    },
+                                                    "collaboration_description": {
+                                                        "description": "Description of the collaboration",
+                                                        "type": "string",
+                                                        "example": "A collaborative project on topic Y"
+                                                    },
+                                                    "collaboration_quantity": {
+                                                        "description": "Quantity of the collaboration",
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Collaborations not found or Student not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Collaborations not found for the student with ID: {studentId}"
                                         },
-                                        "type": "object"
-                                    }
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "No student found with ID: {studentId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "There was a server error"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -2611,7 +2659,7 @@
                     },
                     "collaboration_description": {
                         "description": "Collaboration description",
-                        "type": "text"
+                        "type": "string"
                     },
                     "collaboration_quantity": {
                         "description": "Collaboration quantity",
