@@ -49,6 +49,12 @@ jobs:
       - name: Ejecutar migraciones y seeds
         run: php artisan migrate --seed
 
+      - name: Checkout del código y actualización de referencias de Git
+        run: |
+          git fetch --prune --unshallow
+          git checkout develop
+          git pull origin develop
+
       - name: Ejecutar pruebas unitarias y verificar cobertura
         run: |
           base_branch=develop
