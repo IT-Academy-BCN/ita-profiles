@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Exceptions\ResumeNotFoundException;
+use App\Exceptions\StudentNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Service\CollaborationService;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 //use Illuminate\Http\Request;
 
@@ -24,10 +25,12 @@ class StudentCollaborationController extends Controller
                 'collaborations' => $this->collaborationService->getCollaborationDetails($uuid),
             ];
             return response()->json($collaborationDetail);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Student not found.'], 404);
+        } catch (StudentNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        } catch (ResumeNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {
-            return response()->json(['error' => 'Internal server error.'], 500);
+            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
         }
     }
 }

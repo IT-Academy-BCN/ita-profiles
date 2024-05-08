@@ -4,16 +4,34 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Exceptions\ResumeNotFoundException;
+use App\Exceptions\StudentNotFoundException;
 use App\Models\Student;
 use App\Models\Collaboration;
 
 class CollaborationService
 {
-    public function getCollaborationDetails($uuid)
+    public function execute($studentId)
     {
-        $student = Student::where('id', $uuid)->with('resume')->firstOrFail();
-        $resume = $student->resume;
+        return $this->getCollaborationDetails($studentId);
+    }
+
+    public function getCollaborationDetails($studentId)
+    {
+        $student = Student::find($studentId);
+
+        if (!$student) {
+            throw new StudentNotFoundException($studentId);
+        }
+
+        $resume = $student->resume()->first();
+
+        if (!$resume) {
+            throw new ResumeNotFoundException($studentId);
+        }
+
         $collaborationIds = json_decode($resume->collaborations_ids);
+
         $collaborations = Collaboration::findMany($collaborationIds);
 
         return $collaborations->map(function ($collaboration) {

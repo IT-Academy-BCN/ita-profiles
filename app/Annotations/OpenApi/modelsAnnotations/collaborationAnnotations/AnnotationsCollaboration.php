@@ -40,7 +40,7 @@ class AnnotationsCollaboration {
      * @OA\Property(
      *     property="collaboration_description",
      *     description="Collaboration description",
-     *     type="text"
+     *     type="string"
      * )
      * @var string
      */

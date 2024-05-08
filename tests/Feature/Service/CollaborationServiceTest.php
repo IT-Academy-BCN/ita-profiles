@@ -2,19 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Student;
+namespace Tests\Feature\Service;
 
+use App\Exceptions\StudentNotFoundException;
 use Tests\TestCase;
 use App\Service\CollaborationService;
 use App\Models\Student;
-use App\Models\Resume;
 use App\Models\Collaboration;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use Exception;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CollaborationServiceTest extends TestCase
 {
+    use DatabaseTransactions;
     protected $collaborationService;
 
     protected function setUp(): void
@@ -27,7 +29,7 @@ class CollaborationServiceTest extends TestCase
     public function it_returns_collaboration_details_for_valid_uuid()
     {
         $student = Student::factory()->create();
-        $resume = Resume::factory()->create(['student_id' => $student->id]);
+        $resume = $student->resume()->create();
 
         $collaboration1 = Collaboration::factory()->create();
         $collaboration2 = Collaboration::factory()->create();
@@ -42,10 +44,10 @@ class CollaborationServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_model_not_found_exception_for_invalid_uuid()
+    public function it_throws_student_not_found_exception_for_invalid_uuid()
     {
 
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(StudentNotFoundException::class);
 
         $this->collaborationService->getCollaborationDetails('nonexistent_uuid');
     }

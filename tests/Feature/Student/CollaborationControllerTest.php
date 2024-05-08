@@ -2,24 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Api;
+namespace Tests\Feature\Student;
 
 use Tests\TestCase;
 use App\Models\Student;
-use App\Models\Resume;
 use App\Models\Collaboration;
 use App\Service\CollaborationService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CollaborationControllerTest extends TestCase
 {
+    use DatabaseTransactions;
     /** @test */
     public function it_returns_collaboration_details_for_valid_uuid()
     {
 
         $student = Student::factory()->create();
-        $resume = Resume::factory()->create(['student_id' => $student->id]);
+        $resume = $student->resume()->create();
         $collaboration1 = Collaboration::factory()->create();
         $collaboration2 = Collaboration::factory()->create();
         $resume->collaborations_ids = json_encode([$collaboration1->id, $collaboration2->id]);
@@ -55,7 +56,7 @@ class CollaborationControllerTest extends TestCase
         });
 
         $student = Student::factory()->create();
-        $resume = Resume::factory()->create(['student_id' => $student->id]);
+        $student->resume()->create();
 
         $response = $this->getJson(route('collaborations.list', ['student' => $student->id]));
 

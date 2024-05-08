@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('resumes', function (Blueprint $table) {
-            $table->json('collaborations_ids')->default(new Expression('(JSON_ARRAY())'));
+            $table->json('collaborations_ids')->default(new Expression('(JSON_ARRAY())'))->nullable();
         });
     }
 
