@@ -36,6 +36,7 @@ class ResumeFactory extends Factory
                 ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
             ),
             'project_ids' => json_encode($projectIds),
+            'about' => $this->faker->paragraph,
             'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
             'collaborations_ids' => json_encode($collaborationsIds),
