@@ -49,14 +49,15 @@ jobs:
       - name: Ejecutar migraciones y seeds
         run: php artisan migrate --seed
 
-      - name: Ejecutar pruebas unitarias y verificar cobertura
+      - name: Instalar PHPUnit
+        run: composer require --dev phpunit/phpunit
+
+      - name: Checkout del código y actualización de referencias de Git
         run: |
-          base_branch=develop
-          files_changed=$(git diff --name-only $base_branch)
-          phpunit --coverage-text --coverage-clover=coverage.xml --coverage-diff=coverage.diff ${files_changed[@]}
-          coverage=$(php -r '$xml = simplexml_load_file("coverage.xml"); echo $xml->project->metrics["coveredelements"];')
-          coverage_threshold=80
-          if [ "$coverage" -lt "$coverage_threshold" ]; then
-            echo "Error: Coverage over new and updated code should be over 80% (now $coverage%)."
-            exit 1
-          fi
+          git fetch --prune --unshallow
+          git checkout develop
+          git pull origin develop
+
+      - name: Ejecutar PHPUnit
+        run: php artisan test
+

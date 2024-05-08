@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Models\Student;
 use App\Models\AdditionalTraining;
+use App\Models\Collaboration;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,6 +25,7 @@ class ResumeFactory extends Factory
         $tagsIds = json_encode($this->faker->randomElements((range(1, 26)), 4));
         $projectIds = Project::factory()->count(2)->create()->pluck('id')->toArray();
         $additionalTrainingsIds = AdditionalTraining::factory()->count(2)->create()->pluck('id')->toArray();
+        $collaborationsIds = Collaboration::factory()->count(2)->create()->pluck('id')->toArray();
         return [
             'student_id' =>  Student::factory()->create()->id,
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
@@ -37,6 +39,7 @@ class ResumeFactory extends Factory
             'about' => $this->faker->paragraph,
             'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
+            'collaborations_ids' => json_encode($collaborationsIds),
         ];
     }
 
