@@ -30,5 +30,4 @@ class StudentBootcampDetailController extends Controller
             return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
         }
     }
-
 }
