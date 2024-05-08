@@ -58,14 +58,14 @@ jobs:
           git checkout develop
           git pull origin develop
 
-      - name: Ejecutar pruebas unitarias y verificar cobertura
+      - name: Ejecutar PHPUnit para pruebas y cobertura
         run: |
           base_branch=develop
           files_changed=$(git diff --name-only $base_branch)
-          phpunit --coverage-text --coverage-clover=coverage.xml --coverage-diff=coverage.diff ${files_changed[@]}
+          composer exec phpunit -- --coverage-text --coverage-clover=coverage.xml --coverage-diff=coverage.diff ${files_changed[@]}
           coverage=$(php -r '$xml = simplexml_load_file("coverage.xml"); echo $xml->project->metrics["coveredelements"];')
           coverage_threshold=80
           if [ "$coverage" -lt "$coverage_threshold" ]; then
-            echo "Error: Coverage over new and updated code should be over 80% (now $coverage%)."
+            echo "Error: Cobertura sobre el código nuevo y actualizado debe ser superior al 80% (ahora $coverage%)."
             exit 1
           fi
