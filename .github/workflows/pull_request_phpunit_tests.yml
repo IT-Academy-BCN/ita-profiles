@@ -49,15 +49,5 @@ jobs:
       - name: Ejecutar migraciones y seeds
         run: php artisan migrate --seed
 
-      - name: Instalar PHPUnit
-        run: composer require --dev phpunit/phpunit
-
-      - name: Checkout del código y actualización de referencias de Git
-        run: |
-          git fetch --prune --unshallow
-          git checkout develop
-          git pull origin develop
-
-      - name: Ejecutar PHPUnit
+      - name: Ejecutar pruebas unitarias
         run: php artisan test
-

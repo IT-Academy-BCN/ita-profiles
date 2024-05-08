@@ -1841,46 +1841,50 @@
                 }
             }
         },
-        "/students/{uuid}/collaborations": {
+        "/api/v1/studentCollaborations": {
             "get": {
                 "tags": [
-                    "Collaboration"
+                    "Collaborations"
                 ],
-                "summary": "Retrieve a list of collaborations",
+                "summary": "Get collaborations for a student",
+                "description": "Returns a list of collaborations for a specific student. (Note: This endpoint returns hardcoded student collaborations)",
                 "operationId": "getStudentCollaborations",
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "description": "Student UUID",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "Successful. Collaboration list retrieved",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
                                         "properties": {
-                                            "uuid": {
-                                                "type": "string",
-                                                "format": "uuid"
-                                            },
-                                            "collaboration_name": {
-                                                "type": "string"
-                                            },
-                                            "collaboration_description": {
-                                                "type": "text"
-                                            },
-                                            "collaboration_quantity": {
-                                                "type": "integer"
+                                            "collaborations": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "Collaboration ID",
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "description": "Collaboration name",
+                                                            "type": "string",
+                                                            "example": "ita wiki"
+                                                        },
+                                                        "description": {
+                                                            "description": "Collaboration description",
+                                                            "type": "string",
+                                                            "example": "Recursos subidos"
+                                                        },
+                                                        "quantity": {
+                                                            "description": "Quantity",
+                                                            "type": "integer",
+                                                            "example": 9
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
                                             }
                                         },
                                         "type": "object"
@@ -1888,6 +1892,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Student not found"
                     }
                 }
             }
@@ -2594,44 +2601,6 @@
                 "type": "object",
                 "xml": {
                     "name": "Admin"
-                }
-            },
-            "Collaboration": {
-                "title": "Collaboration",
-                "description": "Collaboration Model",
-                "properties": {
-                    "id": {
-                        "description": "Collaboration ID",
-                        "type": "string",
-                        "format": "uuid"
-                    },
-                    "collaboration_name": {
-                        "description": "Collaboration Name",
-                        "type": "string"
-                    },
-                    "collaboration_description": {
-                        "description": "Collaboration description",
-                        "type": "text"
-                    },
-                    "collaboration_quantity": {
-                        "description": "Collaboration quantity",
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "created_at": {
-                        "description": "Training creation date",
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updated_at": {
-                        "description": "Training update date",
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "Collaboration"
                 }
             },
             "AnnotationsRecruiter": {
