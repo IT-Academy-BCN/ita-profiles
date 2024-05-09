@@ -1674,94 +1674,6 @@
                 }
             }
         },
-        "/student/list/for-home": {
-            "get": {
-                "tags": [
-                    "Student"
-                ],
-                "summary": "Get Students List.",
-                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n- If a 'specialization' parameter is provided, the list will be filtered by student's specialization.\n\n- If not, it returns a list of all students.\n\n- Multiple parameters can be added separated by commas without spaces.\n\n- For example, if the objetive is to filter Backend and Frontend students, the query would be:\n\n    ```/student/list/for-home?specialization=frontend,backend```\n    - To filter by tags, the query would be:\n    ```/student/list/for-home?tags=PHP,Laravel```\n    - To filter by both specialization and tags:\n    ```/student/list/for-home?specialization=frontend&tags=php,react```\n\n---\n\n    No authentication required",
-                "operationId": "getAllStudentsForFigma",
-                "parameters": [
-                    {
-                        "name": "specialization",
-                        "in": "query",
-                        "description": "The specializations to filter students by",
-                        "required": false,
-                        "style": "form",
-                        "explode": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "tags",
-                        "in": "query",
-                        "description": "The tags to filter students by",
-                        "required": false,
-                        "style": "form",
-                        "explode": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "A list of students",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "string",
-                                                "example": "9bc3c8fd-7754-43e0-95a1-68fc011d106c"
-                                            },
-                                            "fullname": {
-                                                "type": "string",
-                                                "example": "Juan Pérez"
-                                            },
-                                            "subtitle": {
-                                                "type": "string",
-                                                "example": "Desarrollador Frontend"
-                                            },
-                                            "photo": {
-                                                "description": "Student Image Path",
-                                                "type": "string",
-                                                "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
-                                            },
-                                            "tags": {
-                                                "type": "array",
-                                                "items": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "integer",
-                                                            "example": 15
-                                                        },
-                                                        "name": {
-                                                            "type": "string",
-                                                            "example": "C#"
-                                                        }
-                                                    },
-                                                    "type": "object",
-                                                    "example": {
-                                                        "id": 15,
-                                                        "name": "C#"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/students/{uuid}/bootcamp": {
             "get": {
                 "tags": [
@@ -2158,6 +2070,94 @@
                                         }
                                     },
                                     "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/student/resume/list": {
+            "get": {
+                "tags": [
+                    "Student -> Resume"
+                ],
+                "summary": "Get Students List.",
+                "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n- If a 'specialization' parameter is provided, the list will be filtered by student's specialization.\n\n- If not, it returns a list of all students.\n\n- Multiple parameters can be added separated by commas without spaces.\n\n- For example, if the objetive is to filter Backend and Frontend students, the query would be:\n\n    ```/student/resume/list?specialization=frontend,backend```\n    - To filter by tags, the query would be:\n    ```/student/resume/list?tags=PHP,Laravel```\n    - To filter by both specialization and tags:\n    ```/student/resume/list?specialization=frontend&tags=php,react```\n\n---\n\n    No authentication required",
+                "operationId": "getListStudents",
+                "parameters": [
+                    {
+                        "name": "specialization",
+                        "in": "query",
+                        "description": "The specializations to filter students by",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "description": "The tags to filter students by",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of students",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "example": "9bc3c8fd-7754-43e0-95a1-68fc011d106c"
+                                            },
+                                            "fullname": {
+                                                "type": "string",
+                                                "example": "Juan Pérez"
+                                            },
+                                            "subtitle": {
+                                                "type": "string",
+                                                "example": "Desarrollador Frontend"
+                                            },
+                                            "photo": {
+                                                "description": "Student Image Path",
+                                                "type": "string",
+                                                "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
+                                            },
+                                            "tags": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 15
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "C#"
+                                                        }
+                                                    },
+                                                    "type": "object",
+                                                    "example": {
+                                                        "id": 15,
+                                                        "name": "C#"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
                                 }
                             }
                         }
