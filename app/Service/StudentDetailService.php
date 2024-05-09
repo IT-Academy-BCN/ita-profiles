@@ -18,9 +18,10 @@ class StudentDetailService
     }
     
 
-    public function getStudentDetailsById($studentId){
+    public function getStudentDetailsById($studentId): array
+    {
         
-        $resume = Resume::where('student_id', $studentId)->first();
+        Resume::where('student_id', $studentId)->first();
         $student = Student::find($studentId);
 
         if (!$student) {
