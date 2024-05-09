@@ -1,31 +1,30 @@
 <?php
 declare(strict_types=1); 
 namespace App\Http\Controllers\api;
-
+use Exception;
 use App\Http\Controllers\Controller;
-use App\Models\Resume;
-use App\Service\StudentDetailsService;
-use Illuminate\Http\Request;
+use App\Service\StudentDetailService;
 use Illuminate\Http\JsonResponse;
 use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
 
 class StudentDetailController extends Controller
 {
-    private StudentDetailsService $studentDetailsService;
+    private StudentDetailService $studentDetailsService;
 
-    public function __construct(StudentDetailsService $studentDetailsService)
+    public function __construct(StudentDetailService $studentDetailsService)
     {
         $this->studentDetailsService =$studentDetailsService;
     }
-    function __invoke($studentId):JsonResponse
+    public function __invoke($studentId):JsonResponse
     {
         try {
             $service = $this->studentDetailsService->execute($studentId);
-            return response()->json(['data'=> [$service]], 200);
-        } catch (StudentNotFoundException $e) {
+            return response()->json(['data'=> [$service]]);
+        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Error inesperat'], 500);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
         }
     }  
 }

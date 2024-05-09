@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Resume;
-use App\Service\StudentDetailsService;
+use App\Service\StudentDetailService;
 use App\Models\Student;
 
 class StudentDetailControllerTest extends TestCase
@@ -15,19 +15,19 @@ class StudentDetailControllerTest extends TestCase
 
     public function test_student_details_found()
     {
-        $studentDetailsService = $this->createMock(StudentDetailsService::class);
+        $studentDetailService = $this->createMock(StudentDetailService::class);
 
         $student = Student::factory()->create();
     
         $studentId = $student->id;
         
         $studentDetails = Resume::factory()->create();
-        $studentDetailsService->expects($this->once())
+        $studentDetailService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
                               ->willReturn($studentDetails);
 
-        $this->app->instance(StudentDetailsService::class, $studentDetailsService);
+        $this->app->instance(StudentDetailService::class, $studentDetailService);
 
         $response = $this->get(route('student.detail', ['id' => $studentId]));
 
@@ -39,15 +39,15 @@ class StudentDetailControllerTest extends TestCase
 
     public function test_student_details_not_found()
     {
-        $studentDetailsService = $this->createMock(StudentDetailsService::class);
+        $studentDetailService = $this->createMock(StudentDetailService::class);
 
         $studentId = 12345;
-        $studentDetailsService->expects($this->once())
+        $studentDetailService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
                               ->willThrowException(new \App\Exceptions\StudentNotFoundException($studentId));
 
-        $this->app->instance(StudentDetailsService::class, $studentDetailsService);
+        $this->app->instance(StudentDetailService::class, $studentDetailService);
 
         $response = $this->get(route('student.detail', ['id' => $studentId]));
 

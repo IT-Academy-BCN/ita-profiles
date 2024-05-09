@@ -6,16 +6,16 @@ namespace Tests\Feature\Service;
 
 use Tests\TestCase;
 use App\Models\Resume;
-use App\Service\StudentDetailsService;
-use App\Exceptions\ResumeNotFoundException;
+use App\Service\StudentDetailService;
+use App\Exceptions\StudentNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class StudentDetailsServiceTest extends TestCase
+class StudentDetailServiceTest extends TestCase
 {
     use DatabaseTransactions;
     public function test_get_student_details_by_id()
     {
-        $service = new StudentDetailsService();
+        $service = new StudentDetailService();
 
         $resume = Resume::factory()->create();
 
@@ -27,11 +27,11 @@ class StudentDetailsServiceTest extends TestCase
 
     public function test_student_details_not_found()
     {
-        $service = new StudentDetailsService();
+        $service = new StudentDetailService();
 
         $nonExistentStudentId = 'non-existent-student-id';
 
-        $this->expectException(ResumeNotFoundException::class);
+        $this->expectException(StudentNotFoundException::class);
         $service->getStudentDetailsById($nonExistentStudentId);
     }
 }

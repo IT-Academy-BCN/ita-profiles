@@ -10,7 +10,7 @@ use App\Models\Resume;
 use App\Models\Student;
 use App\Models\Tag;
 
-class StudentDetailsService
+class StudentDetailService
 {
     public function execute($student)
     {
@@ -21,15 +21,16 @@ class StudentDetailsService
     public function getStudentDetailsById($studentId){
         
         $resume = Resume::where('student_id', $studentId)->first();
+        $student = Student::find($studentId);
 
-        if(!$resume){
-            throw new ResumeNotFoundException($studentId);
+        if (!$student) {
+            throw new StudentNotFoundException($studentId);
         }
 
-        $student = Student::find($resume->student_id); 
+        $resume = $student->resume()->first();
 
-        if(!$student){
-            throw new StudentNotFoundException($studentId);
+        if (!$resume) {
+            throw new ResumeNotFoundException($studentId);
         }
 
         $fullName = $student->name . ' ' . $student->surname;
