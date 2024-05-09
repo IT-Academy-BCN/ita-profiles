@@ -20,8 +20,7 @@ class UserFactory extends Factory
         $faker = \Faker\Factory::create();
 
         return [
-            'name' => 'test_' . $faker->firstName(),
-            'surname' => 'test_' . $faker->lastName(),
+            'username' => 'test_' . $faker->userName(),
             'dni' => $faker->unique()->regexify('[1-9]{8}[A-Z]'),
             'email' => 'test_' . $faker->unique()->safeEmail(),
             'email_verified_at' => now(),
