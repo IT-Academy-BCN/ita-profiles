@@ -24,7 +24,7 @@ use App\Http\Controllers\api\{
 //No Auth
 
 // Students Home
-Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
+ /*Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
 Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
 // Student projects detail Endpoint
 Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
@@ -42,18 +42,18 @@ Route::get('/modality/{studentId}', ModalityController::class)->name('modality')
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
-
+ */
 
 //!BLOQUE ACTUALIZADO
 //No Auth
 Route::prefix('student/resume')->group(function () {
-    Route::get('/list', StudentListController::class)->name('students.list');
+    Route::get('/list', StudentListController::class)->name('students.all');
     Route::get('/{studentId}/detail', StudentDetailController::class)->name('student.detail');
     Route::get('/{studentId}/projects', StudentProjectsDetailController::class)->name('student.projects');
     Route::get('/{studentId}/collaborations', StudentCollaborationController::class)->name('student.collaborations');
     Route::get('/{studentId}/bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
     Route::get('/{studentId}/additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
-    Route::get('/{studentId}/languages', StudentLanguagesDetailController::class)->name('student.languages.');
+    Route::get('/{studentId}/languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::get('/{studentId}/modality', ModalityController::class)->name('student.modality');
     
 });
@@ -78,7 +78,7 @@ Route::get('/tags', [TagController::class, 'index'])->name('tag.index');
 //Passport Auth with token
 Route::middleware('auth:api')->group(function () {
     //Student
-    Route::put('/students/{id}', [StudentController::class, 'update'])->middleware('can:update.student')->name('student.update');
+    //? Route::put('/students/{id}', [StudentController::class, 'update'])->middleware('can:update.student')->name('student.update');
     Route::delete('/students/{id}', [StudentController::class, 'destroy'])->middleware('can:delete.student')->name('student.delete');
     //Recruiter
     Route::put('/recruiters/{id}', [RecruiterController::class, 'update'])->name('recruiter.update');

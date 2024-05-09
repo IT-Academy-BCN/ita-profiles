@@ -18,7 +18,7 @@ class StudentListTest extends TestCase
 
     public function test_student_list_controller()
     {
-        $response = $this->getJson(route('profiles.home', ['specialization' => 'Data Science,Backend']));
+        $response = $this->getJson(route('students.all', ['specialization' => 'Data Science,Backend']));
 
         $response->assertStatus(200);
 
@@ -44,7 +44,7 @@ class StudentListTest extends TestCase
                 ->andThrow(new ModelNotFoundException('No hi ha resums', 404));
         });
 
-        $response = $this->getJson(route('profiles.home'));
+        $response = $this->getJson(route('students.all'));
 
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No hi ha resums']);
@@ -57,7 +57,7 @@ class StudentListTest extends TestCase
             'student_id' => $student->id,
             'specialization' => $specialization,
         ]);
-        $response = $this->getJson(route('profiles.home', ['specialization' => 'Data Science,Backend']));
+        $response = $this->getJson(route('students.all', ['specialization' => 'Data Science,Backend']));
 
         $response->assertStatus(200);
 
