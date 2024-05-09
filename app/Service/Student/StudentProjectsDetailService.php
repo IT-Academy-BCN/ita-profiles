@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Resume;
+namespace App\Service\Student;
 
 use App\Models\Student;
 use App\Models\Project;

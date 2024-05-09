@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace tests\Unit\Service;
 
-use App\Service\Resume\StudentProjectsDetailService;
+use App\Service\Student\StudentProjectsDetailService;
 use Tests\TestCase;
 
-class StudentProjectsDetailServiceTest extends TestCase{
+class StudentProjectsDetailServiceUnitTest extends TestCase{
     private $StudentProjectsDetailService;
     
     public function setUp(): void

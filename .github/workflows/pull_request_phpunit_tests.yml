@@ -49,8 +49,22 @@ jobs:
       - name: Ejecutar migraciones y seeds
         run: php artisan migrate --seed
 
+<<<<<<< HEAD
       - name: Inicializar passport
         run: php artisan passport:install
 
       - name: Ejecutar pruebas unitarias
+=======
+      - name: Instalar PHPUnit
+        run: composer require --dev phpunit/phpunit
+
+      - name: Checkout del código y actualización de referencias de Git
+        run: |
+          git fetch --prune --unshallow
+          git checkout develop
+          git pull origin develop
+
+      - name: Ejecutar PHPUnit
+>>>>>>> a300cabbf6e8032c697d650637c14b4fea4669d7
         run: php artisan test
+
