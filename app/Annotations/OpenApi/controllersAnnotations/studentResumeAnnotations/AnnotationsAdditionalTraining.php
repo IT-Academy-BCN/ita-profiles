@@ -1,20 +1,20 @@
 <?php 
 
-namespace App\Annotations\OpenApi\controllersAnnotations\additionalTrainingAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 class AnnotationsAdditionalTraining
 {
 /**
  * @OA\Get(
- *     path="/students/{uuid}/additionaltraining",
+ *     path="/student/resume/{studentId}/additionaltraining",
  *     operationId="getStudentAdditionalTraining",
  *     summary="Retrieve a list of additional training",
- *     tags={"Additional Training"},
+ *     tags={"Student -> Resume"},
  * 
  * 
  *          @OA\Parameter(
- *          name="uuid",
- *          description="Student UUID",
+ *          name="studentId",
+ *          description="Student ID",
  *          required=true,
  *          in="path",
  *          @OA\Schema(

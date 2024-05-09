@@ -11,63 +11,6 @@
         }
     ],
     "paths": {
-        "/students/{uuid}/additionaltraining": {
-            "get": {
-                "tags": [
-                    "Additional Training"
-                ],
-                "summary": "Retrieve a list of additional training",
-                "operationId": "getStudentAdditionalTraining",
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "description": "Student UUID",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful. Additional training list retrieved",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "uuid": {
-                                                "type": "string",
-                                                "format": "uuid"
-                                            },
-                                            "course_name": {
-                                                "type": "string"
-                                            },
-                                            "study_center": {
-                                                "type": "string"
-                                            },
-                                            "course_beginning_year": {
-                                                "type": "integer"
-                                            },
-                                            "course_ending_year": {
-                                                "type": "integer"
-                                            },
-                                            "duration_hrs": {
-                                                "type": "integer"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/admins": {
             "get": {
                 "tags": [
@@ -1574,85 +1517,6 @@
                 ]
             }
         },
-        "/students/{uuid}/bootcamp": {
-            "get": {
-                "tags": [
-                    "Bootcamp"
-                ],
-                "summary": "Get a list of student´s bootcamp/s",
-                "description": "\n- Returns detailed list of a student's bootcamp/s and the date that was/were finished.\n- Returns an empty array if the student didn't finish any bootcamp yet.",
-                "operationId": "getStudentBootcamp",
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "description": "Student UUID",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "bootcamps": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "bootcamp_id": {
-                                                        "description": "Bootcamp ID",
-                                                        "type": "string",
-                                                        "example": "9bd21470-db24-4ce3-b838-c4d3847785d1"
-                                                    },
-                                                    "bootcamp_name": {
-                                                        "description": "Bootcamp Name",
-                                                        "type": "string",
-                                                        "example": "Fullstack PHP"
-                                                    },
-                                                    "bootcamp_end_date": {
-                                                        "description": "Bootcamp end date",
-                                                        "type": "string",
-                                                        "example": "2023-11-05"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Student or resume not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
-                                        },
-                                        "message2": {
-                                            "type": "string",
-                                            "example": "L'estudiant amb ID: {studentId} no té cap projecte informat al seu currículum"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/students/{uuid}/languages": {
             "get": {
                 "tags": [
@@ -1742,6 +1606,142 @@
                                         "error": {
                                             "type": "string",
                                             "example": "Hi ha hagut un error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/student/resume/{studentId}/additionaltraining": {
+            "get": {
+                "tags": [
+                    "Student -> Resume"
+                ],
+                "summary": "Retrieve a list of additional training",
+                "operationId": "getStudentAdditionalTraining",
+                "parameters": [
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful. Additional training list retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "uuid": {
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "course_name": {
+                                                "type": "string"
+                                            },
+                                            "study_center": {
+                                                "type": "string"
+                                            },
+                                            "course_beginning_year": {
+                                                "type": "integer"
+                                            },
+                                            "course_ending_year": {
+                                                "type": "integer"
+                                            },
+                                            "duration_hrs": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/student/resume/{studentId}/bootcamp": {
+            "get": {
+                "tags": [
+                    "Student -> Resume"
+                ],
+                "summary": "Get a list of student´s bootcamp/s",
+                "description": "\n- Returns detailed list of a student's bootcamp/s and the date that was/were finished.\n- Returns an empty array if the student didn't finish any bootcamp yet.",
+                "operationId": "getStudentBootcamp",
+                "parameters": [
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "bootcamps": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "bootcamp_id": {
+                                                        "description": "Bootcamp ID",
+                                                        "type": "string",
+                                                        "example": "9bd21470-db24-4ce3-b838-c4d3847785d1"
+                                                    },
+                                                    "bootcamp_name": {
+                                                        "description": "Bootcamp Name",
+                                                        "type": "string",
+                                                        "example": "Fullstack PHP"
+                                                    },
+                                                    "bootcamp_end_date": {
+                                                        "description": "Bootcamp end date",
+                                                        "type": "string",
+                                                        "example": "2023-11-05"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Student or resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té cap projecte informat al seu currículum"
                                         }
                                     },
                                     "type": "object"
