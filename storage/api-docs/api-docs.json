@@ -1987,7 +1987,7 @@
                 "operationId": "getStudentDetailsAbout",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "studentId",
                         "in": "path",
                         "description": "Student ID",
                         "required": true,
@@ -2723,8 +2723,7 @@
                 "properties": {
                     "id": {
                         "description": "Student ID",
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string"
                     },
                     "user_id": {
                         "description": "ID of the associated User",

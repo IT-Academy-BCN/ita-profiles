@@ -12,7 +12,7 @@ class AnnotationsStudentDetail
      *     summary="Get Student Detail.",
      *     description="Retrieve details of a specific student. No authentication required.",
      *     @OA\Parameter(
-     *         name="id",
+     *         name="studentId",
      *         in="path",
      *         description="Student ID",
      *         required=true,
