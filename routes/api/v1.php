@@ -19,31 +19,6 @@ use App\Http\Controllers\api\{
     StudentLanguagesDetailController
 };
 
-
-
-//No Auth
-
-// Students Home
- /*Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
-Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
-// Student projects detail Endpoint
-Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
-//Student Collaboration fake Endpoint
-Route::get('/studentCollaborations', StudentCollaborationController::class)->name('collaborations.list');
-// Student bootcamp detail Endpoint
-Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
-//Change the Fake endpoint to a real endpoint of Additional Training OTRA FORMACION
-Route::get('/students/{student}/additionaltraining', AdditionalTrainingListController::class)->name('additionaltraining.list');
-// Student languages details Endpoint
-Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
-// StudentModality Endpoint
-Route::get('/modality/{studentId}', ModalityController::class)->name('modality');
-// Fake endpoint development
-Route::get('/development/list', DevelopmentListController::class)->name('development.list');
-// Specialization List Endpoint
-Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
- */
-
 //!BLOQUE ACTUALIZADO
 //No Auth
 Route::prefix('student/resume')->group(function () {
