@@ -3,7 +3,6 @@
 namespace Tests\Feature\Student;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Resume;
 use App\Service\StudentDetailService;
@@ -13,7 +12,7 @@ class StudentDetailControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function test_student_details_found()
+    public function testStudentDetailsAreFound()
     {
         $studentDetailService = $this->createMock(StudentDetailService::class);
 
@@ -37,7 +36,7 @@ class StudentDetailControllerTest extends TestCase
 
     }
 
-    public function test_student_details_not_found()
+    public function testStudentDetailsIsNotFound()
     {
         $studentDetailService = $this->createMock(StudentDetailService::class);
 
