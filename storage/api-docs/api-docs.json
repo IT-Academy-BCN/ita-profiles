@@ -1574,106 +1574,6 @@
                 ]
             }
         },
-        "/student/{id}/detail/for-home": {
-            "get": {
-                "tags": [
-                    "Student"
-                ],
-                "summary": "Get Student Detail.",
-                "description": "Retrieve details of a specific student. No authentication required.",
-                "operationId": "getStudentDetailsabout",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Student ID",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success. Returns the student details.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "fullname": {
-                                                        "type": "string",
-                                                        "example": "Katrine Wyman Jacobson"
-                                                    },
-                                                    "subtitle": {
-                                                        "type": "string",
-                                                        "example": "Full Stack developer en PHP"
-                                                    },
-                                                    "social_media": {
-                                                        "properties": {
-                                                            "github": {
-                                                                "properties": {
-                                                                    "url": {
-                                                                        "type": "string",
-                                                                        "example": "https://github.com/bettie52"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "linkedin": {
-                                                                "properties": {
-                                                                    "url": {
-                                                                        "type": "string",
-                                                                        "example": "https://linkedin.com/abernathy.dayne"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    },
-                                                    "about": {
-                                                        "type": "string",
-                                                        "example": "Iusto aut debitis soluta facere tempore quisquam. Vel assumenda aliquid quod et eum quos ex. Ipsa ea tempora minima occaecati. Culpa occaecati quod laboriosam reiciendis quia consequuntur."
-                                                    },
-                                                    "tags": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "properties": {
-                                                                "id": {
-                                                                    "type": "integer",
-                                                                    "example": 4
-                                                                },
-                                                                "name": {
-                                                                    "type": "string",
-                                                                    "example": "HTML&CSS"
-                                                                }
-                                                            },
-                                                            "type": "object"
-                                                        }
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No hem trobat cap estudiant amb aquest ID"
-                    },
-                    "500": {
-                        "description": "Error inesperat"
-                    }
-                }
-            }
-        },
         "/students/{uuid}/bootcamp": {
             "get": {
                 "tags": [
@@ -2073,6 +1973,106 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/student/resume/{studentId}/detail": {
+            "get": {
+                "tags": [
+                    "Student -> Resume"
+                ],
+                "summary": "Get Student Detail.",
+                "description": "Retrieve details of a specific student. No authentication required.",
+                "operationId": "getStudentDetailsAbout",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success. Returns the student details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "fullname": {
+                                                        "type": "string",
+                                                        "example": "Katrine Wyman Jacobson"
+                                                    },
+                                                    "subtitle": {
+                                                        "type": "string",
+                                                        "example": "Full Stack developer en PHP"
+                                                    },
+                                                    "social_media": {
+                                                        "properties": {
+                                                            "github": {
+                                                                "properties": {
+                                                                    "url": {
+                                                                        "type": "string",
+                                                                        "example": "https://github.com/bettie52"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "linkedin": {
+                                                                "properties": {
+                                                                    "url": {
+                                                                        "type": "string",
+                                                                        "example": "https://linkedin.com/abernathy.dayne"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "about": {
+                                                        "type": "string",
+                                                        "example": "Iusto aut debitis soluta facere tempore quisquam. Vel assumenda aliquid quod et eum quos ex. Ipsa ea tempora minima occaecati. Culpa occaecati quod laboriosam reiciendis quia consequuntur."
+                                                    },
+                                                    "tags": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 4
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "HTML&CSS"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No hem trobat cap estudiant amb aquest ID"
+                    },
+                    "500": {
+                        "description": "Error inesperat"
                     }
                 }
             }

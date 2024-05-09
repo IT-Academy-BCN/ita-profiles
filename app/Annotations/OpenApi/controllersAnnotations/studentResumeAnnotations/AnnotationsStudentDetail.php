@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 class AnnotationsStudentDetail
 {
     /**
      * @OA\Get (
-     *     path="/student/{id}/detail/for-home",
-     *     operationId="getStudentDetailsabout",
-     *     tags={"Student"},
+     *     path="/student/resume/{studentId}/detail",
+     *     operationId="getStudentDetailsAbout",
+     *     tags={"Student -> Resume"},
      *     summary="Get Student Detail.",
      *     description="Retrieve details of a specific student. No authentication required.",
      *     @OA\Parameter(
