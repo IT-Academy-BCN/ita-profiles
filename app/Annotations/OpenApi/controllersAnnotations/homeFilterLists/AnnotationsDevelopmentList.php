@@ -1,5 +1,5 @@
 <?php 
-namespace App\Annotations\OpenApi\controllersAnnotations\developmentAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\homeFilterLists;
 
 class AnnotationsDevelopmentList
 {
@@ -7,7 +7,7 @@ class AnnotationsDevelopmentList
      * @OA\Get(
      *     path="/development/list",
      *     summary="Retrieve a development list ",
-     *     tags={"Development"},
+     *     tags={"Home Filter Lists"},
      *     @OA\Response(
      *         response=200,
      *         description="Successful. Development list retrieved from json file",

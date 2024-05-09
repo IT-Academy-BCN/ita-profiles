@@ -17,7 +17,8 @@ class AnnotationsStudentDetail
      *         description="Student ID",
      *         required=true,
      *         @OA\Schema(
-     *             type="string"
+     *             type="string",
+     *             format="uuid"
      *         )
      *     ),
      *     @OA\Response(

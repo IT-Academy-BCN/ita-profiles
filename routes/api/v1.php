@@ -55,9 +55,10 @@ Route::prefix('student/resume')->group(function () {
     Route::get('/{studentId}/additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('/{studentId}/languages', StudentLanguagesDetailController::class)->name('student.languages.');
     Route::get('/{studentId}/modality', ModalityController::class)->name('student.modality');
+    
+});
     Route::get('/development/list', DevelopmentListController::class)->name('development.list');
     Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
-});
 //!BLOQUE ACTUALIZADO
 
 //No Auth
