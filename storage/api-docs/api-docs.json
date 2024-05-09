@@ -553,91 +553,6 @@
                 }
             }
         },
-        "/modality/{studentId}": {
-            "get": {
-                "tags": [
-                    "Modality"
-                ],
-                "summary": "Get the modality of a specific resume",
-                "description": "Returns the modality of a specific student's resume  ",
-                "operationId": "invokeResume",
-                "parameters": [
-                    {
-                        "name": "studentId",
-                        "in": "path",
-                        "description": "UUID of the student to get the resume modality",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "modality": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "string"
-                                            },
-                                            "example": [
-                                                "Presencial",
-                                                "Remot"
-                                            ]
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Modality not found or Student not found or Resume not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "L'estudiant amb ID: {studentId} no té informada la modalitat al seu currículum"
-                                        },
-                                        "message2": {
-                                            "type": "string",
-                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
-                                        },
-                                        "message3": {
-                                            "type": "string",
-                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Hi ha hagut un error"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/recruiters": {
             "get": {
                 "tags": [
@@ -1517,105 +1432,6 @@
                 ]
             }
         },
-        "/students/{uuid}/languages": {
-            "get": {
-                "tags": [
-                    "Languages"
-                ],
-                "summary": "Gets the languages spoken by a student",
-                "description": "This endpoint receives the UUID of a student and returns a detailed list of the languages ​​spoken by said student.\n\nIt returns a list of languages along with any other relevant information, such as the proficiency level in each language.",
-                "operationId": "getStudentLanguages",
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "in": "path",
-                        "description": "Student UUID",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Languages of the student found successfully.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "languages": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "language_id": {
-                                                        "description": "Language UUID",
-                                                        "type": "string",
-                                                        "example": "e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e"
-                                                    },
-                                                    "language_name": {
-                                                        "description": "Language name",
-                                                        "type": "string",
-                                                        "example": "Anglès"
-                                                    },
-                                                    "language_level": {
-                                                        "description": "The student's proficiency level in the language",
-                                                        "type": "string",
-                                                        "example": "Bàsic"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Language not found or Student not found or Resume not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "L'estudiant amb ID: {studentId} no té informat cap idioma al seu currículum"
-                                        },
-                                        "message2": {
-                                            "type": "string",
-                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
-                                        },
-                                        "message3": {
-                                            "type": "string",
-                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Hi ha hagut un error"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/student/resume/{studentId}/additionaltraining": {
             "get": {
                 "tags": [
@@ -1666,6 +1482,92 @@
                                         },
                                         "type": "object"
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/student/resume/{studentId}/modality/": {
+            "get": {
+                "tags": [
+                    "Student -> Resume"
+                ],
+                "summary": "Get the modality of a specific resume",
+                "description": "Returns the modality of a specific student's resume  ",
+                "operationId": "invokeResume",
+                "parameters": [
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "modality": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "Presencial",
+                                                "Remot"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Modality not found or Student not found or Resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té informada la modalitat al seu currículum"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message3": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Hi ha hagut un error"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -1948,6 +1850,105 @@
                     },
                     "500": {
                         "description": "Error inesperat"
+                    }
+                }
+            }
+        },
+        "/student/resume/{studentId}/languages": {
+            "get": {
+                "tags": [
+                    "Student -> Resume"
+                ],
+                "summary": "Gets the languages spoken by a student",
+                "description": "This endpoint receives the UUID of a student and returns a detailed list of the languages ​​spoken by said student.\n\nIt returns a list of languages along with any other relevant information, such as the proficiency level in each language.",
+                "operationId": "getStudentLanguages",
+                "parameters": [
+                    {
+                        "name": "studentId",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Languages of the student found successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "languages": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "language_id": {
+                                                        "description": "Language UUID",
+                                                        "type": "string",
+                                                        "example": "e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e"
+                                                    },
+                                                    "language_name": {
+                                                        "description": "Language name",
+                                                        "type": "string",
+                                                        "example": "Anglès"
+                                                    },
+                                                    "language_level": {
+                                                        "description": "The student's proficiency level in the language",
+                                                        "type": "string",
+                                                        "example": "Bàsic"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Language not found or Student not found or Resume not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "L'estudiant amb ID: {studentId} no té informat cap idioma al seu currículum"
+                                        },
+                                        "message2": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap estudiant amb aquest ID {studentId}"
+                                        },
+                                        "message3": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Hi ha hagut un error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
