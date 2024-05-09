@@ -1,33 +1,64 @@
 <?php
 
-use App\Http\Controllers\api\AdditionalTrainingListController;
-use App\Http\Controllers\api\AdminController;
-use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\DevelopmentListController;
-use App\Http\Controllers\api\ModalityController;
-use App\Http\Controllers\api\RecruiterController;
-use App\Http\Controllers\api\StudentController;
-use App\Http\Controllers\api\StudentListController;
-use App\Http\Controllers\api\StudentCollaborationController;
-use App\Http\Controllers\api\StudentProjectsDetailController;
-use App\Http\Controllers\api\StudentBootcampDetailController;
-use App\Http\Controllers\api\StudentDetailController;
-use App\Http\Controllers\api\TagController;
-use App\Http\Controllers\api\SpecializationListController;
-use App\Http\Controllers\api\StudentLanguagesDetailController;
 use Illuminate\Support\Facades\Route;
-use LaravelLang\Publisher\Console\Add;
+use App\Http\Controllers\api\{
+    AdditionalTrainingListController,
+    AdminController,
+    AuthController,
+    DevelopmentListController,
+    ModalityController,
+    RecruiterController,
+    StudentController,
+    StudentListController,
+    StudentCollaborationController,
+    StudentProjectsDetailController,
+    StudentBootcampDetailController,
+    StudentDetailController,
+    TagController,
+    SpecializationListController,
+    StudentLanguagesDetailController
+};
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+
+
+//No Auth
+
+// Students Home
+Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
+Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
+// Student projects detail Endpoint
+Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
+//Student Collaboration fake Endpoint
+Route::get('/studentCollaborations', StudentCollaborationController::class)->name('collaborations.list');
+// Student bootcamp detail Endpoint
+Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
+//Change the Fake endpoint to a real endpoint of Additional Training OTRA FORMACION
+Route::get('/students/{student}/additionaltraining', AdditionalTrainingListController::class)->name('additionaltraining.list');
+// Student languages details Endpoint
+Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
+// StudentModality Endpoint
+Route::get('/modality/{studentId}', ModalityController::class)->name('modality');
+// Fake endpoint development
+Route::get('/development/list', DevelopmentListController::class)->name('development.list');
+// Specialization List Endpoint
+Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
+
+
+//!BLOQUE ACTUALIZADO
+//No Auth
+Route::prefix('student/resume')->group(function () {
+    Route::get('/list', StudentListController::class)->name('students.list');
+    Route::get('/{studentId}/detail', StudentDetailController::class)->name('student.detail');
+    Route::get('/{studentId}/projects', StudentProjectsDetailController::class)->name('student.projects');
+    Route::get('/{studentId}/collaborations', StudentCollaborationController::class)->name('student.collaborations');
+    Route::get('/{studentId}/bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
+    Route::get('/{studentId}/additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
+    Route::get('/{studentId}/languages', StudentLanguagesDetailController::class)->name('student.languages.');
+    Route::get('/{studentId}/modality', ModalityController::class)->name('student.modality');
+    Route::get('/development/list', DevelopmentListController::class)->name('development.list');
+    Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
+});
+//!BLOQUE ACTUALIZADO
 
 //No Auth
 Route::post('login', [AuthController::class, 'login'])->name('login');
@@ -35,35 +66,9 @@ Route::post('/students', [StudentController::class, 'store'])->name('student.cre
 Route::get('/students', [StudentController::class, 'index'])->name('students.list');
 Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.show');
 
-// Students Home
-Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
-Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
-
 Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruiter.create');
 Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
 Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
-
-// Student bootcamp detail Endpoint
-Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
-
-//Fake endpoint development
-Route::get('/development/list', DevelopmentListController::class)->name('development.list');
-Route::get('/modality/{studentId}', ModalityController::class)->name('modality');
-
-//Change the Fake endpoint to a real endpoint of Additional Training
-Route::get('/students/{student}/additionaltraining', AdditionalTrainingListController::class)->name('additionaltraining.list');
-
-// Specialization List Endpoint
-Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
-
-// Student projects detail Endpoint
-Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
-
-//Student Collaboration Endpoint
-Route::get('/students/{student}/collaborations', StudentCollaborationController::class)->name('collaborations.list');
-
-// Student languages details Endpoint
-Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
 
 //Admins Route
 Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
