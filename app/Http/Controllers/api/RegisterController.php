@@ -4,40 +4,38 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\registerRequest;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use PDOException;
 use Service\User\registerMessage;
 use Service\User\UserService;
 
-/* TODO: En  el formulario de registro(imagen de la tarjeta #136) hay campos que no corresponden con la tabla users/students en la BBDD: 
-    -En el formulario faltaria: los campos surname(por cierto este campo esta repetido tanto en la tabla user como en la de students en la BBDD al igual que el name) y especializacion .
-     
-    PREGUNTA: porque existe el metodo boot() en la clase User, porque se esta validando alli el password? no deria validarse esto en controlador con un formrequest?
+/* TODO:    
+    1: porque existe el metodo boot() en la clase User, porque se esta validando alli el password? no deria validarse esto en controlador con un formrequest?
+    2: Como hacemos un confirmacion de password_confirmation si al final quitamos este campo?: ' Column not found: 1054 Unknown column &#039;password_confirmation&#039; '
 */
 
-/*
-🗒️NOTAS:
-    1: Es mejor instanciar el UserService dentro del metodo register() y no en el constructor, pues si se hace en el constructor se crea un registro en la BBDD antes de hacer la validacion en registerRequest y daria error de duplicated dni aunque sea un usuario nuevo.
-*/
 
 class RegisterController extends Controller
 {
 
     use registerMessage;
 
+    private UserService $userService;
+
+    public function __construct()
+    {
+        $this->userService = new UserService();
+    }
     public function register(RegisterRequest $request): JsonResponse
     {
         try {
-            $userService = new UserService();
-            $response = $userService->register($request);
+            $result = $this->userService->createUser($request);
 
-            return $this->sendResponse($response, 'User registered successfully.');
-        } catch (PDOException $e) {
-            return $this->sendError('Error al registrar el usuario. Inténtalo de nuevo más tarde.', 500);
-        } catch (\Exception $e) {
-            return $this->sendError('Error inesperado. Inténtalo de nuevo más tarde.', $e->getMessage(), 500);
+            return $this->sendResponse($result, 'User registered successfully.');
+        } catch (Exception $e) {
+            throw new Exception("Error creating user: " . $e->getMessage()); 
         }
+        
     }
-
-
 }

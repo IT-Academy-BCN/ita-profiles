@@ -25,8 +25,7 @@ class RegisterRequest extends FormRequest
     {
 
         return [
-            'name' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;="<>]+$/'],
-            'surname' => ['required', 'string', 'regex:/^[^0-9\/?|\\)(*&%$#@!{}\[\]:;="<>]+$/'],
+            'username' => ['required', 'string', 'min:3'],
             'dni' => ['required', 'unique:users', 'string', 'max:9', 'regex:/^[XYZ]{1}\d{7}[TR]{1}$|^\d{8}[A-Z]{1}$/'],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|confirmed|string|regex:/^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$/',
@@ -36,15 +35,10 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            // name
-            'name.required' => 'El nombre es requerido',
-            'name.string' => 'El nombre debe ser un texto',
-            'name.regex' => 'El nombre no debe contener caracteres especiales',
-
-            // surname
-            'surname.required' => 'El apellido es requerido',
-            'surname.string' => 'El apellido debe ser un texto',
-            'surname.regex' => 'El apellido no debe contener caracteres especiales',
+            // username
+            'username.required' => 'El username es requerido',
+            'username.string' => 'El username debe ser un texto',
+            'username.min' => 'El username debe tener al menos 3 caracteres',
 
             // dni
             'dni.required' => 'El dni es requerido',
@@ -61,8 +55,8 @@ class RegisterRequest extends FormRequest
 
             // password
             'password.required' => 'La contraseña es requerida',
-            'password.confirmed' => 'La confirmación de la contraseña no coincide',
-            'password.regex' => 'La contraseña debe contener al menos una mayúscula y un carácter especial, y tener una longitud mínima de 8 caracteres',
+            'password.confirmed' => 'La confirmacion de la contraseña no coincide',
+            'password.regex' => 'La contraseña debe contener al menos una mayúscula y un carácter especial, y tener una longitud minima de 8 caracteres',
         ];
     }
 

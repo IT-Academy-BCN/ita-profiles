@@ -4,18 +4,30 @@ declare(strict_types=1);
 
 namespace Service\User;
 
+use Illuminate\Http\JsonResponse;
+
 trait registerMessage
 {
-    public function sendResponse($result, $message)
+    public function sendResponse($result, $message): JsonResponse
     {
-        // Crea un arreglo con los datos de la respuesta exitosa
         $response = [
-            'success' => true, // Indica que la respuesta fue exitosa
-            'data' => $result, // Incluye los datos de la respuesta
-            'message' => $message, // Incluye un mensaje descriptivo
+            'success' => true,
+            'data' => $result,
+            'message' => $message,
         ];
-        // Retorna una respuesta en formato JSON con código de estado 200 (éxito)
         return response()->json($response, 200);
     }
 
+    public function sendError($error, $errorMessages = [])
+    {
+        $response = [
+            'success' => false, 
+            'message' => $error, 
+        ];
+        // Verifica si hay mensajes de error adicionales y los incluye en la respuesta
+        if (!empty($errorMessages)) {
+            $response['data'] = $errorMessages;
+        }
+        return response()->json($response, 401);
+    }
 }
