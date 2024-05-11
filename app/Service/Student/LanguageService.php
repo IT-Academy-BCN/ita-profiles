@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace App\Service\Student;
 
 use App\Models\Student;
-use App\Exceptions\LanguageNotFoundException;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
 class LanguageService
 {
-    public function execute($studentId)
+    public function execute(string $studentId): array
     {
         return $this->getLanguageByStudentId($studentId);
     }
 
-    public function getLanguageByStudentId($studentId)
+    public function getLanguageByStudentId(string $studentId): array
     {
         $student = Student::find($studentId);
 
@@ -30,12 +29,15 @@ class LanguageService
             throw new ResumeNotFoundException($studentId);
         }
 
-        $languages = $resume->languages;
+        $languages = $this->mapLanguageDetails($resume->languages);
 
-        if (count($languages) < 1) {
-            throw new LanguageNotFoundException($studentId);
-        }
+        return [
+            'languages' => $languages,
+        ];
+    }
 
+    private function mapLanguageDetails(object $languages): array
+    {
         return $languages->map(function ($language) {
             return [
                 'language_id' => $language->id,
