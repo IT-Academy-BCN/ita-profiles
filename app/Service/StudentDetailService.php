@@ -12,9 +12,9 @@ use App\Models\Tag;
 
 class StudentDetailService
 {
-    public function execute($student)
+    public function execute(string $studentId)
     {
-        return $this->getStudentDetailsById($student);
+        return $this->getStudentDetailsById($studentId);
     }
     
 

@@ -20,11 +20,11 @@ class StudentDetailControllerTest extends TestCase
     
         $studentId = $student->id;
         
-        $studentDetails = Resume::factory()->create();
+        $studentDetail = Resume::factory()->create();
         $studentDetailService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
-                              ->willReturn($studentDetails);
+                              ->willReturn($studentDetail);
 
         $this->app->instance(StudentDetailService::class, $studentDetailService);
 
