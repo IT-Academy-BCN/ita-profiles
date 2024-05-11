@@ -4,65 +4,89 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Service;
 
-use App\Exceptions\StudentNotFoundException;
 use Tests\TestCase;
 use App\Service\CollaborationService;
 use App\Models\Student;
 use App\Models\Collaboration;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
+use Tests\Fixtures\Students;
 
-use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CollaborationServiceTest extends TestCase
 {
     use DatabaseTransactions;
+
     protected $collaborationService;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->collaborationService = new collaborationService();
+
+        $this->collaborationService = new CollaborationService();
     }
 
-    /** @test */
-    public function it_returns_collaboration_details_for_valid_uuid()
+    public function testCollaborationServiceReturnsValidCollaborationDetailsForStudentWithCollaborations(): void
     {
         $student = Student::factory()->create();
+
         $resume = $student->resume()->create();
 
         $collaboration1 = Collaboration::factory()->create();
+
         $collaboration2 = Collaboration::factory()->create();
 
         $resume->collaborations_ids = json_encode([$collaboration1->id, $collaboration2->id]);
+
         $resume->save();
 
-        $result = $this->collaborationService->getCollaborationDetails($student->id);
+        $response = $this->collaborationService->getCollaborationDetails($student->id);
 
-        $this->assertCount(2, $result);
+        $this->assertIsArray($response);
 
+        $this->assertArrayHasKey('collaborations', $response);
+
+        $this->assertIsArray($response['collaborations']);
+
+        $this->assertCount(2, $response['collaborations']);
+        
+        foreach ($response['collaborations'] as $collaboration) {
+            $this->assertIsArray($collaboration);
+        }
     }
 
-    /** @test */
-    public function it_throws_student_not_found_exception_for_invalid_uuid()
+    public function testCollaborationServiceReturnsAnEmptyArrayInCaseOfStudentWithoutCollaborations(): void
     {
-
-        $this->expectException(StudentNotFoundException::class);
-
-        $this->collaborationService->getCollaborationDetails('nonexistent_uuid');
-    }
-
-    /** @test */
-    public function testGetCollaborationDetailsNoRecords()
-    {
-
         $student = Student::factory()->create();
 
         $student->resume()->create();
 
         $service = new CollaborationService();
 
-        $result = $service->getCollaborationDetails($student->id);
-        $this->assertEmpty($result);
+        $response = $service->getCollaborationDetails($student->id);
+
+        $this->assertIsArray($response);
+        
+        $this->assertCount(0, $response['collaborations']);
     }
+
+    public function testCollaborationServiceThrowsStudentNotFoundExceptionIfRecievesNonExistentStudendId(): void
+    {
+        $this->expectException(StudentNotFoundException::class);
+
+        $this->collaborationService->getCollaborationDetails('nonexistent_uuid');
+    }
+
+    public function testCollaborationServiceThrowsResumeNotFoundExceptionForstudentWithoutResume(): void
+    {
+        $student = Students::aStudent();
+
+        $studentId = $student->id;
+
+        $this->expectException(ResumeNotFoundException::class);
+
+        $this->collaborationService->execute($studentId);
+    }
+
 }

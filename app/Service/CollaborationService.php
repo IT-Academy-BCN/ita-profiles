@@ -11,12 +11,12 @@ use App\Models\Collaboration;
 
 class CollaborationService
 {
-    public function execute($studentId)
+    public function execute(string $studentId): array
     {
         return $this->getCollaborationDetails($studentId);
     }
 
-    public function getCollaborationDetails($studentId)
+    public function getCollaborationDetails(string $studentId): array
     {
         $student = Student::find($studentId);
 
@@ -33,7 +33,16 @@ class CollaborationService
         $collaborationIds = json_decode($resume->collaborations_ids);
 
         $collaborations = Collaboration::findMany($collaborationIds);
+        
+        $collaborationDetails = $this->mapCollaborationsDetails($collaborations);
+        
+        return [
+            'collaborations' => $collaborationDetails,
+        ];
+    }
 
+    private function mapCollaborationsDetails(object $collaborations): array
+    {
         return $collaborations->map(function ($collaboration) {
             return [
                 'uuid' => $collaboration->id,
@@ -41,6 +50,6 @@ class CollaborationService
                 'collaboration_description' => $collaboration->collaboration_description,
                 'collaboration_quantity' => $collaboration->collaboration_quantity,
             ];
-        });
+        })->toArray();
     }
 }

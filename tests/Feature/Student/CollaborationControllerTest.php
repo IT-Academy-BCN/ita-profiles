@@ -7,60 +7,60 @@ namespace Tests\Feature\Student;
 use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Collaboration;
-use App\Service\CollaborationService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Exception;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CollaborationControllerTest extends TestCase
 {
     use DatabaseTransactions;
-    /** @test */
-    public function it_returns_collaboration_details_for_valid_uuid()
+
+    protected $student;
+    protected $resume;
+
+    public function setUp(): void
     {
+        parent::setUp();
 
-        $student = Student::factory()->create();
-        $resume = $student->resume()->create();
-        $collaboration1 = Collaboration::factory()->create();
-        $collaboration2 = Collaboration::factory()->create();
-        $resume->collaborations_ids = json_encode([$collaboration1->id, $collaboration2->id]);
-        $resume->save();
+        $this->student = Student::factory()->create();
 
-        $this->app->instance(CollaborationService::class, new CollaborationService());
-
-        $response = $this->getJson(route('collaborations.list', ['student' => $student->id]));
-
-        $response->assertStatus(200)
-                 ->assertJsonStructure(['collaborations']);
+        $this->resume = $this->student->resume()->create();
     }
 
-    /** @test */
-    public function it_returns_404_for_invalid_uuid()
+    public function testCollaborationControllerReturns_200StatusForValidStudentUuidWithCollaborations(): void
     {
-        $this->app->instance(CollaborationService::class, new CollaborationService());
 
-        $response = $this->getJson(route('collaborations.list', ['student' => 'nonexistent_uuid']));
+        $collaboration1 = Collaboration::factory()->create();
+
+        $collaboration2 = Collaboration::factory()->create();
+
+        $this->resume->collaborations_ids = json_encode([$collaboration1->id, $collaboration2->id]);
+
+        $this->resume->save();
+
+        $response = $this->getJson(route('collaborations.list', ['student' => $this->student->id]));
+
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure(['collaborations']);
+    }
+
+    public function testCollaborationControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
+    {
+        $response = $this->getJson(route('languages.list', ['id' =>  'nonExistentStudentId']));
 
         $response->assertStatus(404);
+
+        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
     }
 
-    /** @test */
-    public function it_returns_500_for_internal_server_error()
+    public function testCollaborationControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume(): void
     {
+        $this->student->resume->delete();
 
-        $this->app->instance(CollaborationService::class, new class {
-            public function getCollaborationDetails($uuid)
-            {
-                throw new Exception();
-            }
-        });
+        $response = $this->getJson(route('languages.list', ['id' =>  $this->student->id]));
 
-        $student = Student::factory()->create();
-        $student->resume()->create();
-
-        $response = $this->getJson(route('collaborations.list', ['student' => $student->id]));
-
-        $response->assertStatus(500);
+        $response->assertStatus(404);
+        
+        $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
     }
 
 }
