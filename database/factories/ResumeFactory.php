@@ -43,4 +43,13 @@ class ResumeFactory extends Factory
         ];
     }
 
+    public function specificSpecialization(string $specialization): Factory
+    {
+        return $this->state(function (array $attributes) use ($specialization) {
+            return [
+                'specialization' => $specialization,
+            ];
+        });
+    }
+
 }
