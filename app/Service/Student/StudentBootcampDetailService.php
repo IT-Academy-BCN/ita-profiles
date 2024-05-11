@@ -12,6 +12,10 @@ class StudentBootcampDetailService
 {
     public function execute(string $studentId): array
     {
+        return $this->getStudentBootcampsById($studentId);
+    }
+    public function getStudentBootcampsById(string $studentId): array
+    {
         $student = Student::find($studentId);
         if (!$student) {
             throw new StudentNotFoundException($studentId);
