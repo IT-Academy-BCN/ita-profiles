@@ -33,7 +33,8 @@ class ModalityService
         $modality = $resume->modality;
 
         if (!$modality) {
-            throw new ModalityNotFoundException($studentId);
+            return [];
+            //throw new ModalityNotFoundException($studentId);
         }
 
         return $modality;

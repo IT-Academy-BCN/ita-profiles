@@ -25,6 +25,15 @@ class Resumes
             'modality' => $modality,
         ]);
     }
+    public static function createResumeWithoutModality($studentId, $specialization, $tagIds, $modality): Resume
+    {
+        return Resume::factory()->create([
+            'student_id' => $studentId,
+            'specialization' => $specialization,
+            'tags_ids' => json_encode($tagIds),
+            'modality' => null,
+        ]);
+    }
     public static function createResumeWithAllFields($studentId, $subtitle, $linkedinUrl, $githubUrl, $tagsIds, $specialization, $projectIds, $modality, $additionalTrainingsIds): Resume
     {
         $specialization = substr($specialization, 0, 255);
