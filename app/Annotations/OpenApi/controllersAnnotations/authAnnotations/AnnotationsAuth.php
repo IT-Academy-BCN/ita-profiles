@@ -83,13 +83,34 @@ class AnnotationsAuth
      *      tags={"Authentication"},
      *      summary="Signin",
      *      description="Sign in a user with their email and password.",
+     *		
      *
+     * 		@OA\Parameter(
+     * 			name="dni",
+     *         in="path",
+     *         description="UUID of the student to get the resume modality",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         ),
+     *  	),
+     * 		@OA\Parameter(
+     *         
+     * 
+     * 			name="password",
+     *         in="path",
+     *         description="Password of related with the user",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         ),
+     *     ),
      *      @OA\RequestBody(
      *          required=true,
      *
      *          @OA\JsonContent(
      *
-     *              @OA\Property(property="DNI/NIE", type="string", format="text", example="48332312C/Y4527507V"),
+     *              @OA\Property(property="dni", type="string", format="text", example="48332312C/Y4527507V"),
      *              @OA\Property(property="password", type="string", format="password", example="passOnePass")
      *          )
      *      ),

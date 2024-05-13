@@ -9,14 +9,13 @@ class UserService
 {
 
 	private string $key_hash_mac = "";
-	//private string $key_hash_mac = "passwordOne";
 	private int $expirationTime_s = 60*30; //30 minutes expiration time
 	
 	private $redis;
 	
 	public function __construct()
 	{
-		$this->key_hash_mac = env('KEY_HASH_MAC', "passwordOne");
+		$this->key_hash_mac = env('KEY_HASH_MAC', "CHANGE_MY_IN_ENV_Password");
 		
 		//$this->redis = new Redis();
 		
@@ -91,7 +90,7 @@ class UserService
 	{
 		try{
 			//$this->redis->set('user:JWToken_'.$userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
-			Redis::set('user:JWToken_'.$userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
+			Redis::set('user:0:JWToken_'.$userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
 			return True;
 		}catch (Exception $e){
 			return False;
@@ -101,7 +100,7 @@ class UserService
 	public function getJWTokenByUserID(string $userID): string | bool
 	{
 		try{
-			$jwt = $this->redis->get('user:JWToken_'.$userID); //35 seconds 30*60=1800
+			$jwt = $this->redis->get('user:0:JWToken_'.$userID); //35 seconds 30*60=1800
 			return $jwt;
 		}catch (Exception $e){
 			return False;

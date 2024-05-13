@@ -594,13 +594,33 @@
                 "summary": "Signin",
                 "description": "Sign in a user with their email and password.",
                 "operationId": "signin",
+                "parameters": [
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "Password of related with the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "UUID of the student to get the resume modality",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "DNI/NIE": {
+                                    "dni": {
                                         "type": "string",
                                         "format": "text",
                                         "example": "48332312C/Y4527507V"
