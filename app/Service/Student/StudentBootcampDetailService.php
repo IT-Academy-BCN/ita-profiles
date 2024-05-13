@@ -24,10 +24,7 @@ class StudentBootcampDetailService
         if (!$resume) {
             throw new ResumeNotFoundException($studentId);
         }
-        $bootcampDetails = $this->mapBootcampDetails($resume->bootcamps);
-        return [
-            'bootcamps' => $bootcampDetails,
-        ];
+        return $this->mapBootcampDetails($resume->bootcamps);
     }
     private function mapBootcampDetails(object $bootcamps): array
     {

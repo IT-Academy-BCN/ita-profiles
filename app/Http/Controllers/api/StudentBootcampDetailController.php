@@ -22,8 +22,8 @@ class StudentBootcampDetailController extends Controller
     public function __invoke($studentId): JsonResponse
     {
         try {
-            $service = $this->studentBootcampDetailService->execute($studentId);
-            return response()->json($service);
+            $bootcampDetails = $this->studentBootcampDetailService->execute($studentId);
+            return response()->json(['bootcamps' => $bootcampDetails]);
         } catch (StudentNotFoundException | ResumeNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {
