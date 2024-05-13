@@ -12,7 +12,7 @@ use App\Models\Tag;
 
 class StudentDetailService
 {
-    public function execute(string $studentId)
+    public function execute(string $studentId): array
     {
         return $this->getStudentDetailsById($studentId);
     }

@@ -14,7 +14,7 @@ class StudentDetailController extends Controller
 
     public function __construct(StudentDetailService $studentDetailsService)
     {
-        $this->studentDetailsService =$studentDetailsService;
+        $this->studentDetailsService = $studentDetailsService;
     }
     public function __invoke($studentId):JsonResponse
     {
