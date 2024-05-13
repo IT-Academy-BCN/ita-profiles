@@ -22,7 +22,7 @@ use App\Http\Controllers\api\{
 //!BLOQUE ACTUALIZADO
 //No Auth
 Route::prefix('student/resume')->group(function () {
-    Route::get('/list', StudentListController::class)->name('students.all');
+    Route::get('/list', StudentListController::class)->name('students.list');
     Route::get('/{studentId}/detail', StudentDetailController::class)->name('student.detail');
     Route::get('/{studentId}/projects', StudentProjectsDetailController::class)->name('student.projects');
     Route::get('/{studentId}/collaborations', StudentCollaborationController::class)->name('student.collaborations');
@@ -30,24 +30,13 @@ Route::prefix('student/resume')->group(function () {
     Route::get('/{studentId}/additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('/{studentId}/languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::get('/{studentId}/modality', ModalityController::class)->name('student.modality');
-    
+
 });
     Route::get('/development/list', DevelopmentListController::class)->name('development.list');
     Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 //!BLOQUE ACTUALIZADO
 
 //No Auth
-Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::post('/students', [StudentController::class, 'store'])->name('student.create');
-Route::get('/students', [StudentController::class, 'index'])->name('students.list');
-Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.show');
-
-Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruiter.create');
-Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
-Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
-
-//Admins Route
-Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
 Route::get('/tags', [TagController::class, 'index'])->name('tag.index');
 
 //Passport Auth with token

@@ -18,7 +18,7 @@ class StudentListTest extends TestCase
 
     public function test_student_list_controller()
     {
-        $response = $this->getJson(route('students.all', ['specialization' => 'Data Science,Backend']));
+        $response = $this->getJson(route('students.list', ['specialization' => 'Data Science,Backend']));
 
         $response->assertStatus(200);
 
@@ -44,7 +44,7 @@ class StudentListTest extends TestCase
                 ->andThrow(new ModelNotFoundException('No hi ha resums', 404));
         });
 
-        $response = $this->getJson(route('students.all'));
+        $response = $this->getJson(route('students.list'));
 
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No hi ha resums']);
@@ -57,7 +57,7 @@ class StudentListTest extends TestCase
             'student_id' => $student->id,
             'specialization' => $specialization,
         ]);
-        $response = $this->getJson(route('students.all', ['specialization' => 'Data Science,Backend']));
+        $response = $this->getJson(route('students.list', ['specialization' => 'Data Science,Backend']));
 
         $response->assertStatus(200);
 
@@ -88,7 +88,7 @@ class StudentListTest extends TestCase
         $tag2 = Tag::create(['tag_name' => 'tag2']);
 
         $student = Students::aStudent();
-        
+
         $resume1 = Resumes::createResume($student->id, 'Frontend', [$tag1->id]);
         $resume2 = Resumes::createResume($student->id, 'Backend', [$tag2->id]);
 
@@ -101,6 +101,6 @@ class StudentListTest extends TestCase
         $resumes = $resumeService->getResumes(null, ['tag2']);
         $this->assertCount(1, $resumes);
         $this->assertEquals($resume2->id, $resumes->first()->id);
-        
+
     }
 }
