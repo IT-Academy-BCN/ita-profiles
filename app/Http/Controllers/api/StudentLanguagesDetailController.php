@@ -24,7 +24,7 @@ class StudentLanguagesDetailController extends Controller
     {
         try {
             $service = $this->languageService->execute($studentId);
-            return response()->json($service);
+            return response()->json(['languages' => $service]);
         } catch (StudentNotFoundException | ResumeNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {

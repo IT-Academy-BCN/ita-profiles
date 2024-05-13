@@ -46,18 +46,15 @@ class LanguageServiceTest extends TestCase
         $response = $this->languageService->execute($this->studentWithLanguages->id);
 
         $this->assertIsArray($response);
-        $this->assertArrayHasKey('languages', $response);
-        $this->assertIsArray($response['languages']);
-        $this->assertCount(2, $response['languages']);
-        foreach ($response['languages'] as $language) {
-            $this->assertIsArray($language);
+
+        $this->assertCount(2, $response);
+
+        $expectedKeys = ['language_id', 'language_name', 'language_level'];
+        foreach ($response as $languageDetails) {
+            foreach ($expectedKeys as $key) {
+                $this->assertArrayHasKey($key, $languageDetails);
+            }
         }
-        $this->assertArrayHasKey('language_id', $response['languages'][0]);
-        $this->assertArrayHasKey('language_name', $response['languages'][0]);
-        $this->assertArrayHasKey('language_level', $response['languages'][0]);
-        $this->assertArrayHasKey('language_id', $response['languages'][1]);
-        $this->assertArrayHasKey('language_name', $response['languages'][1]);
-        $this->assertArrayHasKey('language_level', $response['languages'][1]);
     }
 
     public function testLanguageServiceReturnsAnEmptyArrayInCaseOfStudentWithoutLanguages(): void
@@ -66,7 +63,7 @@ class LanguageServiceTest extends TestCase
 
         $this->assertIsArray($response);
         
-        $this->assertCount(0, $response['languages']);
+        $this->assertEmpty($response);
     }
 
     public function testLanguageServiceThrowsStudentNotFountExceptionIfRecievesNonExistentStudendId(): void

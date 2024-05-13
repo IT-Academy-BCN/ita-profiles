@@ -29,11 +29,7 @@ class LanguageService
             throw new ResumeNotFoundException($studentId);
         }
 
-        $languages = $this->mapLanguageDetails($resume->languages);
-
-        return [
-            'languages' => $languages,
-        ];
+        return $this->mapLanguageDetails($resume->languages);
     }
 
     private function mapLanguageDetails(object $languages): array
