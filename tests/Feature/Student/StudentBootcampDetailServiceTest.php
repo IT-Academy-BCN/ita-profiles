@@ -6,43 +6,70 @@ namespace Tests\Feature\Student;
 
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
-use App\Models\Student;
-use App\Models\Resume;
-use App\Models\Bootcamp;
 use App\Service\Student\StudentBootcampDetailService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use Tests\Fixtures\Students;
 
 class StudentBootcampDetailServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
     protected $studentWithoutBootcamps;
-    protected $studentWithBootcamps;
+    protected $studentWithOneBootcamp;
+    protected $studentWithTwoBootcamps;
     protected $studentWithoutResume;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->studentWithoutBootcamps = Resume::factory()->create()->student;
-
-        $resume = Resume::factory()->create();
-        $bootcamp = Bootcamp::factory()->create();
-        $resume->bootcamps()->attach($bootcamp->id, ['end_date' => now()->subYear()->addDays(rand(1, 365))]);
-
-        $this->studentWithBootcamps = $resume->student;
-
-        $this->studentWithoutResume = Student::factory()->create();
+        $this->studentWithoutBootcamps = Students::aStudentWithResume();
+        $this->studentWithOneBootcamp = Students::aStudentWithOneBootcamp();
+        $this->studentWithTwoBootcamps = Students::aStudentWithTwoBootcamps();
+        $this->studentWithoutResume = Students::aStudentWithoutResume();
     }
 
-    public function testServiceReturnsBootcampDetailsForStudentWithBootcamps()
+    public function testServiceReturnsBootcampDetailsForStudentWithOneBootcamp()
     {
         $service = new StudentBootcampDetailService();
-        $bootcampDetails = $service->execute($this->studentWithBootcamps->id);
+        $bootcampDetails = $service->execute($this->studentWithOneBootcamp->id);
 
         $this->assertIsArray($bootcampDetails);
-        $this->assertCount(1, $bootcampDetails['bootcamps']);
+        $this->assertCount(1, $bootcampDetails);
+
+        $bootcamp = $this->studentWithOneBootcamp->resume->bootcamps->first();
+        foreach ($bootcampDetails as $detail) {
+            $this->assertArrayHasKey('bootcamp_id', $detail);
+            $this->assertArrayHasKey('bootcamp_name', $detail);
+            $this->assertArrayHasKey('bootcamp_end_date', $detail);
+
+            $this->assertEquals($bootcamp->id, $detail['bootcamp_id']);
+            $this->assertEquals($bootcamp->name, $detail['bootcamp_name']);
+            $this->assertEquals($bootcamp->pivot->end_date, $detail['bootcamp_end_date']);
+        }
+    }
+    public function testServiceReturnsBootcampDetailsForStudentWithTwoBootcamps()
+    {
+        $student = Students::aStudentWithTwoBootcamps();
+        $service = new StudentBootcampDetailService();
+        $bootcampDetails = $service->execute($student->id);
+
+        $this->assertIsArray($bootcampDetails);
+        $this->assertCount(2, $bootcampDetails);
+
+        $bootcamps = $student->resume->bootcamps->all();
+        foreach ($bootcampDetails as $index => $detail) {
+            $this->assertArrayHasKey('bootcamp_id', $detail);
+            $this->assertArrayHasKey('bootcamp_name', $detail);
+            $this->assertArrayHasKey('bootcamp_end_date', $detail);
+
+            $bootcamp = $bootcamps[$index];
+
+            $this->assertEquals($bootcamp->id, $detail['bootcamp_id']);
+            $this->assertEquals($bootcamp->name, $detail['bootcamp_name']);
+            $this->assertEquals($bootcamp->pivot->end_date, $detail['bootcamp_end_date']);
+        }
     }
 
     public function testServiceHandlesStudentWithoutBootcamps()
@@ -51,7 +78,7 @@ class StudentBootcampDetailServiceTest extends TestCase
         $bootcampDetails = $service->execute($this->studentWithoutBootcamps->id);
 
         $this->assertIsArray($bootcampDetails);
-        $this->assertEmpty($bootcampDetails['bootcamps']);
+        $this->assertEmpty($bootcampDetails, "The bootcamp details array should be empty for a student without bootcamps.");
     }
 
     public function testServiceHandlesNonexistentStudent()
