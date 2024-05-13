@@ -16,23 +16,6 @@ class TagControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $user = User::first();
-
-        if (!$user) {
-            // If there are no users, create one
-            $user = User::factory()->create();
-        }
-        
-        $adminRole = Role::where('name', 'admin')->first();
-
-        if (! $adminRole) {
-            // If the "admin" role does not exist, create it
-            $adminRole = Role::create(['name' => 'admin']);
-        }
-
-        $user->assignRole($adminRole);
-        $this->actingAs($user, 'api');
     }
 
     public function testIndexReturnsTags()
