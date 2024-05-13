@@ -10,7 +10,7 @@ class AnnotationsModality
 {
     /**
      * @OA\Get(
-     *     path="/student/resume/{studentId}/modality/",
+     *     path="/student/{studentId}/resume/modality/",
      *     operationId="invokeResume",
      *     summary="Get the modality of a specific resume",
      *     description="Returns the modality of a specific student's resume  ",

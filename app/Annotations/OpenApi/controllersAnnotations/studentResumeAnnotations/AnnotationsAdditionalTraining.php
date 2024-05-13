@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
@@ -6,12 +6,12 @@ class AnnotationsAdditionalTraining
 {
 /**
  * @OA\Get(
- *     path="/student/resume/{studentId}/additionaltraining",
- *     operationId="getStudentAdditionalTraining",
+ *     path="/student/{studentId}/resume/additionaltraining",
+ *     operationId="getStudentResumeAdditionalTraining",
  *     summary="Retrieve a list of additional training",
  *     tags={"Student -> Resume"},
- * 
- * 
+ *
+ *
  *          @OA\Parameter(
  *          name="studentId",
  *          description="Student ID",
@@ -22,7 +22,7 @@ class AnnotationsAdditionalTraining
  *              format="uuid"
  *          )
  *      ),
- * 
+ *
  *     @OA\Response(
  *         response=200,
  *         description="Successful. Additional training list retrieved",

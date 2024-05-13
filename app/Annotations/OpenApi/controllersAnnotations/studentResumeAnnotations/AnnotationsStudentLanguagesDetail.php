@@ -10,8 +10,8 @@ class AnnotationsStudentLanguagesDetail
 {
     /**
      * @OA\Get(
-     *      path="/student/resume/{studentId}/languages",
-     *      operationId="getStudentLanguages",
+     *      path="/student/{studentId}/resume/languages",
+     *      operationId="getStudentResumeLanguages",
      *      tags={"Student -> Resume"},
      *      summary="Gets the languages spoken by a student",
      *      description="This endpoint receives the UUID of a student and returns a detailed list of the languages ​​spoken by said student.

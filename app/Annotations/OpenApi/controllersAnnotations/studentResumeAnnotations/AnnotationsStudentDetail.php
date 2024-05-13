@@ -6,8 +6,8 @@ class AnnotationsStudentDetail
 {
     /**
      * @OA\Get (
-     *     path="/student/resume/{studentId}/detail",
-     *     operationId="getStudentDetailsAbout",
+     *     path="/student/{studentId}/resume/detail",
+     *     operationId="getStudentDetailsResumeAbout",
      *     tags={"Student -> Resume"},
      *     summary="Get Student Detail.",
      *     description="Retrieve details of a specific student. No authentication required.",
@@ -63,7 +63,7 @@ class AnnotationsStudentDetail
      *         description="No hem trobat cap estudiant amb aquest ID"
      *     ),
      *     @OA\Response(
-     *         response=500,            
+     *         response=500,
      *         description="Error inesperat"
      *     )
      * )

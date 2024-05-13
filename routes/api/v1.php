@@ -21,15 +21,15 @@ use App\Http\Controllers\api\{
 
 //!BLOQUE ACTUALIZADO
 //No Auth
-Route::prefix('student/resume')->group(function () {
-    Route::get('/list', StudentListController::class)->name('students.list');
-    Route::get('/{studentId}/detail', StudentDetailController::class)->name('student.detail');
-    Route::get('/{studentId}/projects', StudentProjectsDetailController::class)->name('student.projects');
-    Route::get('/{studentId}/collaborations', StudentCollaborationController::class)->name('student.collaborations');
-    Route::get('/{studentId}/bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
-    Route::get('/{studentId}/additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
-    Route::get('/{studentId}/languages', StudentLanguagesDetailController::class)->name('student.languages');
-    Route::get('/{studentId}/modality', ModalityController::class)->name('student.modality');
+Route::prefix('student')->group(function () {
+    Route::get('resume/list', StudentListController::class)->name('students.list');
+    Route::get('{studentId}/resume/detail', StudentDetailController::class)->name('student.detail');
+    Route::get('{studentId}/resume/projects', StudentProjectsDetailController::class)->name('student.projects');
+    Route::get('{studentId}/resume/collaborations', StudentCollaborationController::class)->name('student.collaborations');
+    Route::get('{studentId}/resume/bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
+    Route::get('{studentId}/resume/additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
+    Route::get('{studentId}/resume/languages', StudentLanguagesDetailController::class)->name('student.languages');
+    Route::get('{studentId}/resume/modality', ModalityController::class)->name('student.modality');
 
 });
     Route::get('/development/list', DevelopmentListController::class)->name('development.list');

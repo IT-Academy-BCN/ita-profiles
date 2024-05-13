@@ -954,13 +954,13 @@
                 ]
             }
         },
-        "/student/resume/{studentId}/additionaltraining": {
+        "/student/{studentId}/resume/additionaltraining": {
             "get": {
                 "tags": [
                     "Student -> Resume"
                 ],
                 "summary": "Retrieve a list of additional training",
-                "operationId": "getStudentAdditionalTraining",
+                "operationId": "getStudentResumeAdditionalTraining",
                 "parameters": [
                     {
                         "name": "studentId",
@@ -1011,7 +1011,7 @@
                 }
             }
         },
-        "/student/resume/{studentId}/modality/": {
+        "/student/{studentId}/resume/modality/": {
             "get": {
                 "tags": [
                     "Student -> Resume"
@@ -1097,14 +1097,14 @@
                 }
             }
         },
-        "/student/resume/{studentId}/bootcamp": {
+        "/student/{studentId}/resume/bootcamp": {
             "get": {
                 "tags": [
                     "Student -> Resume"
                 ],
                 "summary": "Get a list of student´s bootcamp/s",
                 "description": "\n- Returns detailed list of a student's bootcamp/s and the date that was/were finished.\n- Returns an empty array if the student didn't finish any bootcamp yet.",
-                "operationId": "getStudentBootcamp",
+                "operationId": "getStudentResumeBootcamp",
                 "parameters": [
                     {
                         "name": "studentId",
@@ -1176,14 +1176,14 @@
                 }
             }
         },
-        "/student/resume/{studentId}/collaborations": {
+        "/student/{studentId}/resume/collaborations": {
             "get": {
                 "tags": [
                     "Student -> Resume"
                 ],
                 "summary": "Retrieve a list of collaborations",
                 "description": "Retrieve collaborations details of a specific student. No authentication required.",
-                "operationId": "getStudentCollaborations",
+                "operationId": "getStudentResumeCollaborations",
                 "parameters": [
                     {
                         "name": "studentId",
@@ -1276,14 +1276,14 @@
                 }
             }
         },
-        "/student/resume/{studentId}/detail": {
+        "/student/{studentId}/resume/detail": {
             "get": {
                 "tags": [
                     "Student -> Resume"
                 ],
                 "summary": "Get Student Detail.",
                 "description": "Retrieve details of a specific student. No authentication required.",
-                "operationId": "getStudentDetailsAbout",
+                "operationId": "getStudentDetailsResumeAbout",
                 "parameters": [
                     {
                         "name": "studentId",
@@ -1377,14 +1377,14 @@
                 }
             }
         },
-        "/student/resume/{studentId}/languages": {
+        "/student/{studentId}/resume/languages": {
             "get": {
                 "tags": [
                     "Student -> Resume"
                 ],
                 "summary": "Gets the languages spoken by a student",
                 "description": "This endpoint receives the UUID of a student and returns a detailed list of the languages ​​spoken by said student.\n\nIt returns a list of languages along with any other relevant information, such as the proficiency level in each language.",
-                "operationId": "getStudentLanguages",
+                "operationId": "getStudentResumeLanguages",
                 "parameters": [
                     {
                         "name": "studentId",
@@ -1483,7 +1483,7 @@
                 ],
                 "summary": "Get Students List.",
                 "description": "Get a list of all students registered with the Profile-Home fields in Figma Design.\n\n- If a 'specialization' parameter is provided, the list will be filtered by student's specialization.\n\n- If not, it returns a list of all students.\n\n- Multiple parameters can be added separated by commas without spaces.\n\n- For example, if the objetive is to filter Backend and Frontend students, the query would be:\n\n    ```/student/resume/list?specialization=frontend,backend```\n    - To filter by tags, the query would be:\n    ```/student/resume/list?tags=PHP,Laravel```\n    - To filter by both specialization and tags:\n    ```/student/resume/list?specialization=frontend&tags=php,react```\n\n---\n\n    No authentication required",
-                "operationId": "getListStudents",
+                "operationId": "getListResumeStudents",
                 "parameters": [
                     {
                         "name": "specialization",
@@ -1564,14 +1564,14 @@
                 }
             }
         },
-        "/student/resume/{studentId}/projects": {
+        "/student/{studentId}/resume/projects": {
             "get": {
                 "tags": [
                     "Student -> Resume"
                 ],
                 "summary": "Get a detailed list of projects for a student",
                 "description": "Returns a list of projects for a specific student.",
-                "operationId": "getStudentProjects",
+                "operationId": "getStudentResumeProjects",
                 "parameters": [
                     {
                         "name": "studentId",

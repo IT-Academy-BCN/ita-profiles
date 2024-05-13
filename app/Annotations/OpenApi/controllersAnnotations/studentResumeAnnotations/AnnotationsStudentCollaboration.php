@@ -6,8 +6,8 @@ class AnnotationsStudentCollaboration
 {
     /**
      * @OA\Get(
-     *     path="/student/resume/{studentId}/collaborations",
-     *     operationId="getStudentCollaborations",
+     *     path="/student/{studentId}/resume/collaborations",
+     *     operationId="getStudentResumeCollaborations",
      *     summary="Retrieve a list of collaborations",
      *     tags={"Student -> Resume"},
      *     description="Retrieve collaborations details of a specific student. No authentication required.",

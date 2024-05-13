@@ -8,8 +8,8 @@ class AnnotationsStudentProjectsDetail
 {
   /**
    * @OA\Get(
-   *      path="/student/resume/{studentId}/projects",
-   *      operationId="getStudentProjects",
+   *      path="/student/{studentId}/resume/projects",
+   *      operationId="getStudentResumeProjects",
    *      tags={"Student -> Resume"},
    *      summary="Get a detailed list of projects for a student",
    *      description="Returns a list of projects for a specific student.",
@@ -108,7 +108,7 @@ class AnnotationsStudentProjectsDetail
    *             example="Hi ha hagut un error"
    *             )
    *         )
-   *     ) 
+   *     )
    * )
    */
 

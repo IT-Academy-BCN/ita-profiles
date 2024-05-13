@@ -10,8 +10,8 @@ class AnnotationsStudentBootcampDetail
 {
     /**
      * @OA\Get(
-     *      path="/student/resume/{studentId}/bootcamp",
-     *      operationId="getStudentBootcamp",
+     *      path="/student/{studentId}/resume/bootcamp",
+     *      operationId="getStudentResumeBootcamp",
      *      tags={"Student -> Resume"},
      *      summary="Get a list of student´s bootcamp/s",
      *      description="
@@ -86,7 +86,7 @@ class AnnotationsStudentBootcampDetail
     *             example="Hi ha hagut un error"
     *             )
     *         )
-    *     ) 
+    *     )
     * )
      */
     public function __invoke()
