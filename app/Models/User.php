@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -15,6 +16,8 @@ class User extends Authenticatable
     use HasFactory;
     use HasRoles;
     use Notifiable;
+
+    public $timestamps = false;
 
     protected function getDefaultGuardName(): string
     {
@@ -51,22 +54,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // public static function boot()
-    // {
-    //     parent::boot();
-
-    //     static::saving(function ($user) {
-    //         if ($user->password !== $user->password_confirmation) {
-    //             throw new \Exception("Password and password confirmation do not match.");
-    //         }
-    //     });
-    // }
-
-    public function student()
-    {
-        return $this->hasOne(Student::class);
-    }
-
     public function admin()
     {
         return $this->hasOne(Admin::class);
@@ -75,5 +62,14 @@ class User extends Authenticatable
     public function recruiter()
     {
         return $this->hasOne(Recruiter::class);
+    }
+
+    public function student():HasOne
+    {
+        return $this->hasOne(Student::class);
+    }
+    public function resume():HasOne
+    {
+        return $this->hasOne(Resume::class);
     }
 }

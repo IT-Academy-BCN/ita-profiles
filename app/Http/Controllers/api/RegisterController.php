@@ -12,9 +12,7 @@ use Service\User\UserService;
 
 /* TODO:    
     1: porque existe el metodo boot() en la clase User, porque se esta validando alli el password? no deria validarse esto en controlador con un formrequest?
-    2: Como hacemos un confirmacion de password_confirmation si al final quitamos este campo?: ' Column not found: 1054 Unknown column &#039;password_confirmation&#039; '
 */
-
 
 class RegisterController extends Controller
 {
@@ -29,13 +27,8 @@ class RegisterController extends Controller
     }
     public function register(RegisterRequest $request): JsonResponse
     {
-        try {
             $result = $this->userService->createUser($request);
 
             return $this->sendResponse($result, 'User registered successfully.');
-        } catch (Exception $e) {
-            throw new Exception("Error creating user: " . $e->getMessage()); 
-        }
-        
     }
 }

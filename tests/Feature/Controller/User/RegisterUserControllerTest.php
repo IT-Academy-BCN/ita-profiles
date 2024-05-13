@@ -18,9 +18,10 @@ class RegisterUserControllerTest extends TestCase
     private function createUserData()
     {
         $userData['username'] = 'test_username';
-        $userData['dni'] = '39665471Q';
+        $userData['dni'] = '27827083G';
         $userData['email'] = 'test_email@test.com';
         $userData['password'] = 'Password%123';
+        $userData['specialization'] = 'Backend';
         $userData['password_confirmation'] = 'Password%123';
 
         return $userData;

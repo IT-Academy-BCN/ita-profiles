@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\DniNieRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -26,8 +27,9 @@ class RegisterRequest extends FormRequest
 
         return [
             'username' => ['required', 'string', 'min:3'],
-            'dni' => ['required', 'unique:users', 'string', 'max:9', 'regex:/^[XYZ]{1}\d{7}[TR]{1}$|^\d{8}[A-Z]{1}$/'],
+            'dni' => ['required', 'unique:users', 'string', 'max:9', new DniNieRule()],
             'email' => 'required|string|email|max:255|unique:users',
+            'specialization' => 'required|in:Frontend,Backend,Fullstack,Data Science,Not Set',
             'password' => 'required|confirmed|string|regex:/^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$/',
         ];
     }
@@ -57,6 +59,10 @@ class RegisterRequest extends FormRequest
             'password.required' => 'La contraseña es requerida',
             'password.confirmed' => 'La confirmacion de la contraseña no coincide',
             'password.regex' => 'La contraseña debe contener al menos una mayúscula y un carácter especial, y tener una longitud minima de 8 caracteres',
+
+            // specialization
+            'specialization.required' => 'La especialidad es requerida',
+            'specialization.in' => 'La especialidad no es valida',
         ];
     }
 

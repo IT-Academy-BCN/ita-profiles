@@ -24,9 +24,10 @@ class RegisterUserServiceTest extends TestCase
     private function createUserData()
     {
         $userData['username'] = 'test_username';
-        $userData['dni'] = '39665471Q';
+        $userData['dni'] = '27827083G';
         $userData['email'] = 'test_email@test.com';
         $userData['password'] = 'Password%123';
+        $userData['specialization'] = 'Backend';
         $userData['password_confirmation'] = 'Password%123';
 
         return $userData;
@@ -49,6 +50,8 @@ class RegisterUserServiceTest extends TestCase
     {
         $registerData = new RegisterRequest([ // Invalid formats
             'username' => '',
+            'dni' => 'invalidDNI',
+            'specialization' => 'invalidSpecialization',            
             'email' => 'invalidemail',
             'password' => '123456'
         ]);
@@ -60,10 +63,11 @@ class RegisterUserServiceTest extends TestCase
     public function test_user_creation_with_empty_data()
     {
         $registerData = new RegisterRequest([
-            'name' => '',
+            'username' => '',
+            'dni' => '',
+            'specialization' => '',            
             'email' => '',
-            'password' => '',
-            'dni' => ''
+            'password' => ''
         ]);
 
         $this->expectException(Exception::class);
@@ -72,11 +76,13 @@ class RegisterUserServiceTest extends TestCase
 
     public function test_required_fields_for_user_creation()
     {
-        // Missing 'name' field
+        // Missing 'username' field
         $registerData1 = new RegisterRequest([
+            'username' => 'test_username',
+            'specialization' => 'Backend',
             'email' => 'test@example.com',
             'password' => 'password123',
-            'dni' => '12345678A'
+            'dni' => '27827083G'
         ]);
 
         $this->expectException(Exception::class);
@@ -84,9 +90,10 @@ class RegisterUserServiceTest extends TestCase
 
         // Missing 'email' field
         $registerData2 = new RegisterRequest([
-            'name' => 'John Doe',
+            'username' => 'test_username',
+            'specialization' => 'Backend',
             'password' => 'password123',
-            'dni' => '12345678A'
+            'dni' => '27827083G'
         ]);
 
         $this->expectException(Exception::class);
@@ -94,9 +101,10 @@ class RegisterUserServiceTest extends TestCase
 
         // Missing 'password' field
         $registerData3 = new RegisterRequest([
-            'name' => 'Jane Smith',
+            'username' => 'test_username',
+            'specialization' => 'Backend',
             'email' => 'janesmith@example.com',
-            'dni' => '12345678A'
+            'dni' => '27827083G'
         ]);
 
         $this->expectException(Exception::class);
@@ -104,7 +112,16 @@ class RegisterUserServiceTest extends TestCase
 
         // Missing 'dni' field
         $registerData4 = new RegisterRequest([
-            'name' => 'Alice Brown',
+            'username' => 'test_username',
+            'specialization' => 'Backend',
+            'email' => 'alicebrown@example.com',
+            'password' => 'password123'
+        ]);
+
+        // Missing 'specialization' field
+        $registerData4 = new RegisterRequest([
+            'username' => 'Alice Brown',
+            'dni' => '27827083G',
             'email' => 'alicebrown@example.com',
             'password' => 'password123'
         ]);

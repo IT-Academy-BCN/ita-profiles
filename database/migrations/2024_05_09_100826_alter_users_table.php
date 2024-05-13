@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['name', 'surname', 'password_confirmation']);
+            $table->dropColumn(['name', 'surname','active','remember_token','created_at','updated_at']);
             $table->string('username', 100)->unique()->after('id');
         });
     }
@@ -26,8 +26,13 @@ return new class extends Migration
             $table->string('name', 75);
             $table->string('surname', 75);
             $table->string('password_confirmation');
+            $table->boolean('active')->default(true);
+            $table->string('remember_token');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->dropColumn('username');
+            
         });
     }
 };
