@@ -22,7 +22,7 @@ class StudentCollaborationController extends Controller
     {
         try {
             $service = $this->collaborationService->execute($studentId);
-            return response()->json($service);
+            return response()->json(['collaborations' => $service]);
         } catch (StudentNotFoundException | ResumeNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {

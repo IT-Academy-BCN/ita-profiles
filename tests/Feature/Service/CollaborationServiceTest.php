@@ -45,14 +45,13 @@ class CollaborationServiceTest extends TestCase
 
         $this->assertIsArray($response);
 
-        $this->assertArrayHasKey('collaborations', $response);
+        $this->assertCount(2, $response);
 
-        $this->assertIsArray($response['collaborations']);
-
-        $this->assertCount(2, $response['collaborations']);
-        
-        foreach ($response['collaborations'] as $collaboration) {
-            $this->assertIsArray($collaboration);
+        $expectedKeys = ['uuid', 'collaboration_name', 'collaboration_description', 'collaboration_quantity'];
+        foreach ($response as $collaborationDetails) {
+            foreach ($expectedKeys as $key) {
+                $this->assertArrayHasKey($key, $collaborationDetails);
+            }
         }
     }
 
@@ -68,7 +67,7 @@ class CollaborationServiceTest extends TestCase
 
         $this->assertIsArray($response);
         
-        $this->assertCount(0, $response['collaborations']);
+        $this->assertEmpty($response);
     }
 
     public function testCollaborationServiceThrowsStudentNotFoundExceptionIfRecievesNonExistentStudendId(): void

@@ -33,12 +33,8 @@ class CollaborationService
         $collaborationIds = json_decode($resume->collaborations_ids);
 
         $collaborations = Collaboration::findMany($collaborationIds);
-        
-        $collaborationDetails = $this->mapCollaborationsDetails($collaborations);
-        
-        return [
-            'collaborations' => $collaborationDetails,
-        ];
+
+        return $this->mapCollaborationsDetails($collaborations);
     }
 
     private function mapCollaborationsDetails(object $collaborations): array
