@@ -29,6 +29,8 @@ use LaravelLang\Publisher\Console\Add;
 |
 */
 
+Route::post('signin', [AuthController::class, 'signin'])->name('signin');
+
 //No Auth
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('/students', [StudentController::class, 'store'])->name('student.create');

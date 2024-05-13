@@ -586,6 +586,108 @@
                 ]
             }
         },
+        "/signin": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Signin",
+                "description": "Sign in a user with their email and password.",
+                "operationId": "signin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "DNI/NIE": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "48332312C/Y4527507V"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "passOnePass"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logged in"
+                                        },
+                                        "userID": {
+                                            "type": "string",
+                                            "example": "7"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJ0e..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "object",
+                                            "example": [
+                                                {
+                                                    "errors": {
+                                                        "password": [
+                                                            "El camp contrasenya \\u00e9s obligatori."
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Incorrect Password Or User",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "object",
+                                            "example": [
+                                                {
+                                                    "message": "Wrong User Identication or Password"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/development/list": {
             "get": {
                 "tags": [
