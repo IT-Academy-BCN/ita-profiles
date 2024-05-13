@@ -10,7 +10,7 @@ use App\Service\Student\ModalityService;
 
 class ModalityControllerUnitTest extends TestCase
 {
-    public function testModalityControllerCanBeInstantiated()
+    public function testModalityControllerCanBeInstantiated():void
     {
         $modalityService = $this->createMock(ModalityService::class);
         

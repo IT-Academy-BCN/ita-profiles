@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace App\Service\Student;
 
 use App\Models\Student;
-use App\Exceptions\ModalityNotFoundException;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
 class ModalityService
 {
-    public function execute($studentId)
+    public function execute(string $studentId):array
     {
         return $this->getModalityByStudentId($studentId);
     }
 
-    public function getModalityByStudentId($studentId)
+    public function getModalityByStudentId(string $studentId):array
     {
         $student = Student::find($studentId);
 
@@ -34,7 +33,6 @@ class ModalityService
 
         if (!$modality) {
             return [];
-            //throw new ModalityNotFoundException($studentId);
         }
 
         return $modality;

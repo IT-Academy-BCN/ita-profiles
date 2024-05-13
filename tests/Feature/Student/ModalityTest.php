@@ -14,7 +14,7 @@ class ModalityTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function testExecuteWithValidStudentId()
+    public function testExecuteWithValidStudentId():void
 {
     $student = Students::aStudent();
     
@@ -29,7 +29,7 @@ class ModalityTest extends TestCase
     $this->assertEquals($resume->modality, $result);
 }
 
-    public function test_modality_controller_returns_404_status_if_a_student_has_no_resume()
+    public function test_modality_controller_returns_404_status_if_a_student_has_no_resume():void
     {
         $student = Student::first();
 

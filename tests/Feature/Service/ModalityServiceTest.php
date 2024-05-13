@@ -6,8 +6,6 @@ namespace Tests\Feature\Service;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Models\Student;
-use App\Models\Resume;
 use App\Service\Student\ModalityService;
 use Tests\Fixtures\Students;
 use App\Exceptions\StudentNotFoundException;
@@ -29,7 +27,7 @@ class ModalityServiceTest extends TestCase
         $this->modalityService = new modalityService();
     }
 
-    public function testExecuteWithValidStudentId()
+    public function testExecuteWithValidStudentId():void
     {
         $student = Students::aStudent();
 
@@ -42,13 +40,13 @@ class ModalityServiceTest extends TestCase
         $this->assertEquals($resume->modality, $result);
     }
 
-    public function testServiceHandlesStudentWithoutModality()
+    public function testServiceHandlesStudentWithoutModality():void
     {
         $student = Students::aStudent();
 
         $studentId = $student->id;
 
-        $resume = Resumes::createResumeWithoutModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
+        Resumes::createResumeWithoutModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
 
         $result = $this->modalityService->execute($student->id);
 
@@ -57,7 +55,7 @@ class ModalityServiceTest extends TestCase
     }
 
 
-    public function testExecuteWithInvalidStudentId()
+    public function testExecuteWithInvalidStudentId():void
     {
 
         $this->expectException(StudentNotFoundException::class);
@@ -65,7 +63,7 @@ class ModalityServiceTest extends TestCase
         $this->modalityService->execute('nonExistentStudentId');
     }
 
-    public function testExecuteThrowsExceptionForStudentWithoutResume()
+    public function testExecuteThrowsExceptionForStudentWithoutResume():void
 {
     
     $student = Students::aStudent();
