@@ -14,5 +14,7 @@ composer-update:
 	docker exec -it itaprofilesbackend-php composer update
 ssh:
 	docker exec -it itaprofilesbackend-app bash
+run-tests:
+	docker exec -it itaprofilesbackend-app ./vendor/bin/phpunit -c phpunit.xml ./tests/ --testdox
 swagger-generate:
 	docker exec -it itaprofilesbackend-php php artisan l5-swagger:generate
