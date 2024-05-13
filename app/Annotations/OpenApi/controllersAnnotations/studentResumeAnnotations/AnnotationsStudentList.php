@@ -7,7 +7,7 @@ class AnnotationsStudentList
     /**
      * @OA\Get(
      *     path="/student/resume/list",
-     *     operationId="getListResumeStudents",
+     *     operationId="getStudentResumeListHome",
      *     tags={"Student -> Resume"},
      *     summary="Get Students List.",
      *

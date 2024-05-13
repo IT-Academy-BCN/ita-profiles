@@ -11,7 +11,7 @@ class AnnotationsModality
     /**
      * @OA\Get(
      *     path="/student/{studentId}/resume/modality/",
-     *     operationId="invokeResume",
+     *     operationId="getStudentResumeModality",
      *     summary="Get the modality of a specific resume",
      *     description="Returns the modality of a specific student's resume  ",
      *     tags={"Student -> Resume"},

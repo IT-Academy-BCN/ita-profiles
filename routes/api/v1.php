@@ -3,12 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\{
     AdditionalTrainingListController,
-    AdminController,
-    AuthController,
     DevelopmentListController,
     ModalityController,
-    RecruiterController,
-    StudentController,
     StudentListController,
     StudentCollaborationController,
     StudentProjectsDetailController,
@@ -19,46 +15,23 @@ use App\Http\Controllers\api\{
     StudentLanguagesDetailController
 };
 
-//!BLOQUE ACTUALIZADO
-//No Auth
-Route::prefix('student')->group(function () {
-    Route::get('resume/list', StudentListController::class)->name('students.list');
-    Route::get('{studentId}/resume/detail', StudentDetailController::class)->name('student.detail');
-    Route::get('{studentId}/resume/projects', StudentProjectsDetailController::class)->name('student.projects');
-    Route::get('{studentId}/resume/collaborations', StudentCollaborationController::class)->name('student.collaborations');
-    Route::get('{studentId}/resume/bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
-    Route::get('{studentId}/resume/additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
-    Route::get('{studentId}/resume/languages', StudentLanguagesDetailController::class)->name('student.languages');
-    Route::get('{studentId}/resume/modality', ModalityController::class)->name('student.modality');
+Route::get('/development/list', DevelopmentListController::class)->name('development.list');
+Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
+Route::get('student/resume/list', StudentListController::class)->name('students.list');
+Route::prefix('student/{studentId}/resume')->group(function () {
+    Route::get('detail', StudentDetailController::class)->name('student.detail');
+    Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
+    Route::get('collaborations', StudentCollaborationController::class)->name('student.collaborations');
+    Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
+    Route::get('additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
+    Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
+    Route::get('modality', ModalityController::class)->name('student.modality');
 });
-    Route::get('/development/list', DevelopmentListController::class)->name('development.list');
-    Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
-//!BLOQUE ACTUALIZADO
 
-//No Auth
-Route::get('/tags', [TagController::class, 'index'])->name('tag.index');
-
-//Passport Auth with token
-Route::middleware('auth:api')->group(function () {
-    //Student
-    //? Route::put('/students/{id}', [StudentController::class, 'update'])->middleware('can:update.student')->name('student.update');
-    Route::delete('/students/{id}', [StudentController::class, 'destroy'])->middleware('can:delete.student')->name('student.delete');
-    //Recruiter
-    Route::put('/recruiters/{id}', [RecruiterController::class, 'update'])->name('recruiter.update');
-    Route::delete('/recruiters/{id}', [RecruiterController::class, 'destroy'])->name('recruiter.delete');
-    //Admin
-    Route::get('/admins/{id}', [AdminController::class, 'show'])->middleware('role:admin')->name('admin.show');
-    Route::put('/admins/{id}', [AdminController::class, 'update'])->middleware('role:admin')->name('admin.update');
-    Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->middleware('role:admin')->name('admin.destroy');
-    Route::get('/admins', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
-
-    //Tags
-    Route::post('/tags', [TagController::class, 'store'])->middleware('role:admin')->name('tag.create');
-    Route::get('/tags/{id}', [TagController::class, 'show'])->middleware('role:admin')->name('tag.show');
-    Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');
-    Route::delete('/tags/{id}', [TagController::class, 'destroy'])->middleware('role:admin')->name('tag.destroy');
-
-    //logout
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::prefix('tags')->group(function () {
+    Route::get('/', [TagController::class, 'index'])->name('tag.index');
+    Route::post('/', [TagController::class, 'store'])->name('tag.create');
+    Route::get('/{id}', [TagController::class, 'show'])->name('tag.show');
+    Route::put('/{id}', [TagController::class, 'update'])->name('tag.update');
 });
