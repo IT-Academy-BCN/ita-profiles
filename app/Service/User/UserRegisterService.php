@@ -8,12 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\Resume;
 use App\Models\Student;
 use App\Models\User;
-/*
-TODO: 
-    - Añadir try catch en UserService.
-    - Mirar cambiar respuesta Json en RegisterController
-*/
-class UserService
+class UserRegisterService
 {
 
     public function createUser(RegisterRequest $registerData): array

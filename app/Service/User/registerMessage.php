@@ -18,13 +18,13 @@ trait registerMessage
         return response()->json($response, 200);
     }
 
-    public function sendError($error, $errorMessages = [])
+    public function sendError($error, $errorMessages = []):JsonResponse
     {
         $response = [
             'success' => false, 
             'message' => $error, 
         ];
-        // Verifica si hay mensajes de error adicionales y los incluye en la respuesta
+        // Checks for additional error messages and includes them in the response
         if (!empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }

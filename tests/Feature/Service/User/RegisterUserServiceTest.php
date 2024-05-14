@@ -7,7 +7,7 @@ use Tests\TestCase;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Exception;
-use Service\User\UserService;
+use Service\User\UserRegisterService;
 
 class RegisterUserServiceTest extends TestCase
 {
@@ -18,7 +18,7 @@ class RegisterUserServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->userService = new UserService();
+        $this->userService = new UserRegisterService();
     }
 
     private function createUserData()
@@ -26,6 +26,7 @@ class RegisterUserServiceTest extends TestCase
         $userData['username'] = 'test_username';
         $userData['dni'] = '27827083G';
         $userData['email'] = 'test_email@test.com';
+        $userData['terms'] = 'true';
         $userData['password'] = 'Password%123';
         $userData['specialization'] = 'Backend';
         $userData['password_confirmation'] = 'Password%123';
@@ -48,10 +49,11 @@ class RegisterUserServiceTest extends TestCase
 
     public function test_user_creation_with_invalid_data()
     {
-        $registerData = new RegisterRequest([ // Invalid formats
+        $registerData = new RegisterRequest([ 
             'username' => '',
             'dni' => 'invalidDNI',
-            'specialization' => 'invalidSpecialization',            
+            'specialization' => 'invalidSpecialization',  
+            'terms' => 'false',          
             'email' => 'invalidemail',
             'password' => '123456'
         ]);
@@ -65,6 +67,7 @@ class RegisterUserServiceTest extends TestCase
         $registerData = new RegisterRequest([
             'username' => '',
             'dni' => '',
+            'terms' => '',
             'specialization' => '',            
             'email' => '',
             'password' => ''
@@ -80,6 +83,7 @@ class RegisterUserServiceTest extends TestCase
         $registerData1 = new RegisterRequest([
             'username' => 'test_username',
             'specialization' => 'Backend',
+            'terms' => 'true',
             'email' => 'test@example.com',
             'password' => 'password123',
             'dni' => '27827083G'
@@ -92,6 +96,7 @@ class RegisterUserServiceTest extends TestCase
         $registerData2 = new RegisterRequest([
             'username' => 'test_username',
             'specialization' => 'Backend',
+            'terms' => 'true',
             'password' => 'password123',
             'dni' => '27827083G'
         ]);
@@ -103,6 +108,7 @@ class RegisterUserServiceTest extends TestCase
         $registerData3 = new RegisterRequest([
             'username' => 'test_username',
             'specialization' => 'Backend',
+            'terms' => 'true',
             'email' => 'janesmith@example.com',
             'dni' => '27827083G'
         ]);
@@ -115,6 +121,7 @@ class RegisterUserServiceTest extends TestCase
             'username' => 'test_username',
             'specialization' => 'Backend',
             'email' => 'alicebrown@example.com',
+            'terms' => 'true',
             'password' => 'password123'
         ]);
 
@@ -123,6 +130,16 @@ class RegisterUserServiceTest extends TestCase
             'username' => 'Alice Brown',
             'dni' => '27827083G',
             'email' => 'alicebrown@example.com',
+            'terms' => 'true',
+            'password' => 'password123'
+        ]);
+
+        // Missing 'terms' field
+        $registerData4 = new RegisterRequest([
+            'username' => 'Alice Brown',
+            'dni' => '27827083G',
+            'email' => 'alicebrown@example.com',
+            'specialization' => 'Backend',
             'password' => 'password123'
         ]);
 

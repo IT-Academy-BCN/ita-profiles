@@ -31,6 +31,7 @@ class RegisterRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users',
             'specialization' => 'required|in:Frontend,Backend,Fullstack,Data Science,Not Set',
             'password' => 'required|confirmed|string|regex:/^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$/',
+            'terms' =>  'required|in:true' 
         ];
     }
 
@@ -63,6 +64,10 @@ class RegisterRequest extends FormRequest
             // specialization
             'specialization.required' => 'La especialidad es requerida',
             'specialization.in' => 'La especialidad no es valida',
+
+            // terms
+            'terms.required' => 'Debes aceptar los terminos y condiciones',
+            'terms.in' => 'Debes aceptar los terminos y condiciones',
         ];
     }
 
