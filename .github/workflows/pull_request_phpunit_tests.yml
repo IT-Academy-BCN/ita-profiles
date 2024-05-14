@@ -52,12 +52,6 @@ jobs:
       - name: Instalar PHPUnit
         run: composer require --dev phpunit/phpunit
 
-      - name: Checkout del código y actualización de referencias de Git
-        run: |
-          git fetch --prune --unshallow
-          git checkout develop
-          git pull origin develop
-
       - name: Ejecutar PHPUnit
         run: php artisan test
 
