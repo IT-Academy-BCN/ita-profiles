@@ -1136,6 +1136,16 @@
                             "type": "string",
                             "format": "password"
                         }
+                    },
+                    {
+                        "name": "terms",
+                        "in": "path",
+                        "description": "Acceptance of terms and conditions",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "boolean"
+                        }
                     }
                 ],
                 "requestBody": {
@@ -1149,7 +1159,7 @@
                                     },
                                     "dni": {
                                         "type": "string",
-                                        "example": "12345678A"
+                                        "example": "12345678Z"
                                     },
                                     "email": {
                                         "type": "string",
@@ -1158,15 +1168,19 @@
                                     },
                                     "specialization": {
                                         "type": "string",
-                                        "example": "FrontEnd"
+                                        "example": "Frontend"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "123456789"
+                                        "example": "Password%123"
                                     },
                                     "password_confirmation": {
                                         "type": "string",
-                                        "example": "123456789"
+                                        "example": "Password%123"
+                                    },
+                                    "terms": {
+                                        "type": "boolean",
+                                        "example": "true"
                                     }
                                 },
                                 "type": "object"

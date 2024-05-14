@@ -74,31 +74,40 @@ class AnnotationsRegisterUser
      *             format="password"
      *         ),
      *     ),
+     *
+     *      @OA\Parameter(
+     *          name="terms",
+     *          in="path",
+     *          description="Acceptance of terms and conditions",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *              format="boolean"
+     *          ),
+     *      ),
 
      *      @OA\RequestBody(
      *           @OA\JsonContent(
      *              type="object",
      *              @OA\Property(property="username", type="string", example="user1"),
-     *              @OA\Property(property="dni", type="string", example="12345678A"),
+     *              @OA\Property(property="dni", type="string", example="12345678Z"),
      *              @OA\Property(property="email", type="string", format="email", example="user1@user.com"),
-     *              @OA\Property(property="specialization", type="string", example="FrontEnd"),
-     *              @OA\Property(property="password", type="string", example="123456789"),
-     *              @OA\Property(property="password_confirmation", type="string", example="123456789"),
+     *              @OA\Property(property="specialization", type="string", example="Frontend"),
+     *              @OA\Property(property="password", type="string", example="Password%123"),
+     *              @OA\Property(property="password_confirmation", type="string", example="Password%123"),
+     *              @OA\Property(property="terms", type="boolean", example="true"),
      *          )
      *      ),
      *
      *       @OA\Response(
      *          response=201,
      *          description="User registered successfully",
-     *
      *          @OA\JsonContent(
      *              type="object",
      *              @OA\Property(property="token", type="string", example="enGJ56Bvbhb56fCVJftbGciOiJSUzI1NiJ9"),
      *              @OA\Property(property="email", type="string", example="user1@user.com"),
      *          )
      *      ),
-     *
-     *
      *      @OA\Response(
      *          response=422,
      *          description="Validation error",
