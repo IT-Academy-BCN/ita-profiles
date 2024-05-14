@@ -78,7 +78,7 @@ class SigninTest extends TestCase
 		$this->app->instance('App\Models\User', $mockUser);
 		
 		foreach($this->usersRegistered as $newUser){
-			
+
 			$userData = [ 
 				'name' => "",
 				'surname' => "",
@@ -94,6 +94,12 @@ class SigninTest extends TestCase
 			});
 			// Call the method that would use the User model to insert a new user
 			$newUser = $mockUser->create($userData);
+			
+			
+			
+			
+			
+			
 		}
 
 		// Tell your mocked instance what methods it should receive.
@@ -106,7 +112,6 @@ class SigninTest extends TestCase
 		$response->assertStatus($expectedStatusCode);
         
     }
-    
     
 	/**
      * @dataProvider signinProvider

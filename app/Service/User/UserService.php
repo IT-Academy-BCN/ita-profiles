@@ -10,6 +10,7 @@ class UserService
 
 	private string $key_hash_mac = "";
 	private int $expirationTime_s = 60*30; //30 minutes expiration time
+	private string $JWTokenRedisPre = 'user:0:JWToken_';
 	
 	private $redis;
 	
@@ -17,7 +18,7 @@ class UserService
 	{
 		$this->key_hash_mac = env('KEY_HASH_MAC', "CHANGE_MY_IN_ENV_Password");
 		
-		//$this->redis = new Redis();
+		$this->redis = new Redis();
 		
 	}
 
@@ -88,8 +89,13 @@ class UserService
 	{
 		try{
 			//$this->redis->set('user:JWToken_'.$userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
-			Redis::set('user:0:JWToken_'.$userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
-			return True;
+			$result = Redis::set($this->JWTokenRedisPre . $userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
+			//$result = $this->redis->set($this->JWTokenRedisPre . $userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800 
+			if($result == True){
+				return True;
+			}else{	
+				return False;
+			}
 		}catch (Exception $e){
 			return False;
 		}
@@ -98,8 +104,15 @@ class UserService
 	public function getJWTokenByUserID(string $userID): string | bool
 	{
 		try{
-			$jwt = $this->redis->get('user:0:JWToken_'.$userID); //35 seconds 30*60=1800
-			return $jwt;
+			//$jwt = $this->redis->get('laravel_database_user:0:JWToken_'.$userID); //35 seconds 30*60=1800
+			$jwt = $result = Redis::get('user:0:JWToken_'.$userID); //35 seconds 30*60=1800
+			//$jwt = $this->redis->get('user:0:JWToken_'.$userID); //35 seconds 30*60=1800
+			
+			if(is_string($jwt)){
+				return $jwt;
+			}else{
+				return False;
+			}
 		}catch (Exception $e){
 			return False;
 		}

@@ -279,12 +279,100 @@ class UserServiceTest extends TestCase
 	}
     
 
+    /**
+     * @dataProvider getUserIDByDNIProvider
+     */ 
+    public function testGenerateJWToken(string $userID ,bool $expectedOutput)
+    {
+		$jwt = $this->service->generateJWToken($userID);
+		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt);//(^[\w-]*\.[\w-]*\.[\w-]*$)
+		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)',$jwt);
+		
+		if($resultOne == True && $resultTwo == True){
+				$this->assertEquals(True , True);
+		}else{
+			$this->assertEquals(True , False);
+		}
+		
+	}
+    
+    static function generateJWTokenProvider()
+    {
+		$array = array(
+			array(
+				'123', //userID
+				True // Expected Output
+				),
+			array(
+				'abc', //userID
+				False // Expected Output
+				),
+			);
+		
+		return $array;
+	}
     
     
+    /**
+     * @dataProvider storeUserIDAndTokenRedisProvider
+     */ 
+    public function testStoreUserIDAndTokenRedis(string $userID, string $jwt ,bool $expectedOutput)
+    {
+		//ToDo - Important - Hide Connection And Check Redis Network Communication
+		//ToDo - Or just use a testing database
+		$result = $this->service->storeUserIDAndTokenRedis($userID, $jwt);
+		$this->assertEquals($result, $expectedOutput);
+	}
+    static function storeUserIDAndTokenRedisProvider()
+    {
+		$array = array(
+			array(
+				'Z123', //userID
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+				True // Expected Output
+				),
+			array(
+				'abc', //userID
+				'abc',
+				True // Expected Output
+				),
+			);
+		
+		return $array;
+	}
+	
+	 /**
+     * @dataProvider getJWTokenByUserIDProvider
+     */ 
+    public function testGetJWTokenByUserID(string $userID ,bool $expectedOutput)
+    {
+		//ToDo - Important - Hide Connection And Check Redis Network Communication
+		//ToDo - Or just use a testing database
+		$result = $this->service->getJWTokenByUserID($userID);
+		$this->assertEquals($result, $expectedOutput);
+	}
+    static function getJWTokenByUserIDProvider()
+    {
+		$array = array(
+			array(
+				'Z123', //userID
+				True // Expected Output
+				),
+			array(
+				'abc', //userID
+				True // Expected Output
+				),
+				
+			array(
+				'ZZZZZZZZZ981273', //userID
+				False // Expected Output
+				),
+			);
+		
+		return $array;
+	}
     
-    
-    
-    
+	
     
     protected function tearDown(): void
     {
