@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+//declare(strict_types=1);
 
 use App\Service;
 use Tests\TestCase;
@@ -14,7 +14,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Service\User\UserService;
 
 use Illuminate\Database\Eloquent\Collection;
-use Mockery\MockInterface;
+//use Eloquent\Support\Collection;
+//use Mockery;
+//use Mockery\MockInterface;
 
 /**
  * @runTestsInSeparateProcesses
@@ -31,7 +33,7 @@ class UserServiceTest extends TestCase
 		$this->service = new UserService();
 		//$this->mockery =  Mockery::mock('alias:\App\Models\User');
 		//$this->app->instance(User::class, $this->mockery);
-		$this->mockery = \Mockery::mock('overload:App\Models\User');
+		$this->mockery = Mockery::mock('overload:App\Models\User');
 	}
 	
 	/**
@@ -41,93 +43,36 @@ class UserServiceTest extends TestCase
     public function testCheckUserCredentials(string $userDNI, string $password, bool $corerctPasswordBool, bool $addDBBool,bool $expectedOutput)
     {
 		
-		// Create a mock of the User model
-        //$userMock = Mockery::mock(User::class);
-        //$userMock =  Mockery::mock('alias:\App\Models\User');
-        //$userMock = Mockery::mock('Eloquent', 'alias:\App\Models\User');
+		$randID = rand(1,100);
         
         if($addDBBool == True)
-        {
+        {	
+			/*
 			$returnUser = new App\Models\User([
-					'id' => rand(1,100),
-					'name' => "",
-					'surname' => "",
+					'id' => intval(rand(1,100)),
+					'name' => "Name",
+					'surname' => "Surname",
 					'email' => $userDNI."@mail.com",
 					'dni' => $userDNI,
-					'password' => "password",//($corerctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword') ),
+					'password' => ($corerctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword') ),
 				]);
+			*/	
+			$returnUser = new App\Models\User;
 			
-			// Define expectations on the mock
-			//$userMock->shouldReceive('where')->once()->with('dni', $userDNI)->andReturn(new Collection([$returnUser]));
-			
-			/*
-			// Define the expected behavior for the first() method
-			$userMock->shouldReceive('first')
-				->once() // Expect the first method to be called once
-				->andReturn($returnUser); // Return a specific Product instance
-			*/
+			$returnUser->id = intval($randID);
+			$returnUser->name = "Name";
+			$returnUser->surname = "Surname";
+			$returnUser->email = $userDNI."@mail.com";
+			$returnUser->dni = $userDNI;
+			$returnUser->password = ($corerctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword') );
 			
 		}else{
-			
-			$returnUser = Null;
-			
-			// Define expectations on the mock
-			//$userMock->shouldReceive('where')->once()->with('dni', $userDNI)->andReturn(new Collection([$returnUser]));	
-			
-			/*
-			// Define the expected behavior for the first() method
-			$userMock->shouldReceive('first')
-				->once() // Expect the first method to be called once
-				->andReturn($returnUser); // Return a specific Product instance
-			*/
+			$returnUser = Null;	
 		}
-		//$this->app->instance(User::class, $this->mockery);
-		///app()->instance(User::class, $userMock);
-		//$this->app->instance('alias:\App\Models\User', $userMock);
 		
-		// Define expectations on the mock
-		//$userMock->shouldReceive('where')->once()->with('dni', $userDNI)->andReturn(new Collection([$returnUser]));
-		//$userMock->shouldReceive('where')->once()->withAnyArgs()->andReturn(new Collection([$returnUser]));
-		//$userMock->shouldReceive('where')->with('dni', $userDNI)->andReturn(new Collection([$returnUser]));
-		
-		//Eloquent->shouldReceive('where')->once()->withAnyArgs()->andReturn(new Collection([$returnUser]));
-		/*
-		$user = $this
-			->getMockBuilder(User::class)
-			->disableOriginalConstructor()
-			->setMethods(['__get'])
-			->getMock()
-		;*/
-		/*
-		$userMock = $this
-			->getMockBuilder(User::class)
-			->disableOriginalConstructor()
-			->setMethods(['where'])
-			->getMock();
-		$userMock->expects($this->any())->with('dni', $userDNI)->willReturn(new Collection([$returnUser]));
-        */
-        // Replace the actual User model with the mock
-        //$this->app->instance('App\Models\User', $userMock);
-        
-        //dd(get_class($userMock));
-        
-        //$mockFXRate = \Mockery::mock(User::class);
-		//$mockFXRate = \Mockery::mock('overload:App\Models\User');
-		/*
-		$mockFXRate->shouldReceive('where')
-			->once()
-			->andReturn(new Collection([$returnUser]));
-		*/
-		/*$mockFXRate->shouldReceive('where')
-			->once()
-			->andReturn(new Collection([$returnUser]));*/
-		/*User::shouldReceive('where')
-			->andReturn(new Collection([$returnUser]));
-		*/
-        // Replace the real User instance with the mocked one
-        //$returnCollection = new Collection([$returnUser]);
         $returnCollection = collect([$returnUser]);
         $returnCollection->push($returnUser);
+        $returnCollection->add($returnUser);
         
         $this->mockery->shouldReceive('where')
 			->once()
@@ -172,15 +117,42 @@ class UserServiceTest extends TestCase
 		
         //$result = True;
         
+        
+        /*
         $this->mockery->shouldReceive('where')
 			->once()
 			//->andReturn(True);
 			->andReturn($returnCollection);
-        
-        
-        
+        */
+       
+        $this->mockery->shouldReceive('first')
+			->once()
+			//->andReturn(True);
+			->andReturn($returnUser);
+        if(empty(User::where('dni', $userDNI)->first()->dni)){
+			//Assert Result
+			$this->assertEquals(True, True);
+		}
+		
+		$this->mockery->shouldReceive('first')
+			->once()
+			//->andReturn(True);
+			->andReturn($returnUser);
+		/*
+		$this->mockery->shouldReceive('password')
+			->once()
+			//->andReturn(True);
+			->andReturn($returnUser->password);
+		*/
+		
+		//$this->app->instance(User::class, $this->mockery);
+		
+		$this->app->instance('overload:App\Models\User', $this->mockery);
+		
+		
 		//Perform the call to the function to be tested:
 		$result = $this->service->checkUserCredentials($userDNI, $password);
+		
 		
 		//Assert Result
 		$this->assertEquals($expectedOutput, $result);
@@ -236,10 +208,83 @@ class UserServiceTest extends TestCase
 				True,  //Add In "DB" (True = Yes , False = No)
 				False // Expected Output
 				),
-	
+			array(
+				'48332312C',
+				'passOnePass',
+				True, //Add In "DB" With True/False Password
+				True,  //Add In "DB" (True = Yes , False = No)
+				True // Expected Output
+				),
 			);
 		return $array;
     }
+    
+    /**
+     * @dataProvider getUserIDByDNIProvider
+     */ 
+    public function testGetUserIDByDNI(string $userDNI, bool $addDBBool,bool $expectedOutput)
+    {
+		
+		$randID = rand(1,100);
+		if($addDBBool == True)
+        {
+			$returnUser = new App\Models\User;
+			
+			$returnUser->id = intval($randID);
+			$returnUser->name = "";
+			$returnUser->surname = "";
+			$returnUser->email = $userDNI."@mail.com";
+			$returnUser->dni = $userDNI;
+			$returnUser->password = bcrypt("password") ;
+			
+		}else{
+			$returnUser = False;
+		}
+		
+		$returnCollection = collect([$returnUser]);
+        //$returnCollection->push($returnUser);
+       
+        
+		$this->mockery->shouldReceive('where')
+			->with('dni', $userDNI)
+			->andReturn($returnCollection);
+			
+		$id = $this->service->getUserIDByDNI($userDNI);
+		//Assert Result
+		if($expectedOutput == False){
+			$this->assertEquals(False, $id);
+		}else{
+			$this->assertEquals($randID, $id);
+		}
+			
+	}
+   
+     
+    static function getUserIDByDNIProvider()
+    {
+		$array = array(
+			array(
+				'69818630Z', //NIF/NIE
+				True, //Add In "DB" (True = Yes , False = No)
+				True // Expected Output
+				),
+			array(
+				'69818630Z', //NIF/NIE
+				False, //Add In "DB" (True = Yes , False = No)
+				False // Expected Output
+				),
+			);
+		
+		return $array;
+	}
+    
+
+    
+    
+    
+    
+    
+    
     
     protected function tearDown(): void
     {

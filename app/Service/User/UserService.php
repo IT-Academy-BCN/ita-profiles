@@ -27,8 +27,6 @@ class UserService
 		
 		if(empty($user) == False && empty($user->password) == False){
 			try{
-
-				//if($user->password == bcrypt($password)){
 				if(password_verify($password, $user->password)){
 					return True;
 				}else{
@@ -47,7 +45,7 @@ class UserService
 	{
 		$user = User::where('dni', $userDNI)->first();
 		
-		if(empty($user) == False){
+		if(empty($user) == False && empty($user->id) == False){
 			return $user->id;
 		}else{
 			return False;
