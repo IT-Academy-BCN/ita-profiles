@@ -10,7 +10,7 @@ use PDOException;
 use Service\User\registerMessage;
 use Service\User\UserService;
 
-/* TODO:    
+/* TODO:
     1: porque existe el metodo boot() en la clase User, porque se esta validando alli el password? no deria validarse esto en controlador con un formrequest?
 */
 
@@ -21,7 +21,7 @@ class RegisterController extends Controller
 
     private UserService $userService;
 
-    public function __construct()
+    public function __construct(UserService $userService)
     {
         $this->userService = new UserService();
     }
