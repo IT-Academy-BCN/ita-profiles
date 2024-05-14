@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Api;
+//namespace Tests\Feature\Api;
+namespace Tests\Feature\Student;
 
 use Tests\TestCase;
 use App\Models\Student;
@@ -11,6 +12,7 @@ use App\Models\AdditionalTraining;
 use App\Service\AdditionalTrainingService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Tests\Fixtures\Students;
 
 class AdditionalTrainingListControllerTest extends TestCase
 {
@@ -41,7 +43,25 @@ class AdditionalTrainingListControllerTest extends TestCase
         $response = $this->getJson(route('additionaltraining.list', ['student' => 'nonexistent_uuid']));
 
         $response->assertStatus(404);
+
+        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonexistent_uuid']);
     }
+
+     /** @test */
+     public function it_returns_404_for_valid_uuid_without_resume()
+     {
+        $student = Students::aStudent();
+
+        $studentId = $student->id;
+        
+        $this->app->instance(AdditionalTrainingService::class, new AdditionalTrainingService());
+ 
+         $response = $this->getJson(route('additionaltraining.list', ['student' => $studentId]));
+ 
+         $response->assertStatus(404);
+
+         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $studentId]);
+     }
 
     /** @test */
     public function it_returns_500_for_internal_server_error()

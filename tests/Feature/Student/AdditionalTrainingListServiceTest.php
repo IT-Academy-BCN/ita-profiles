@@ -9,7 +9,9 @@ use App\Service\AdditionalTrainingService;
 use App\Models\Student;
 use App\Models\Resume;
 use App\Models\AdditionalTraining;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
+use Tests\Fixtures\Students;
 
 use Exception;
 
@@ -24,7 +26,7 @@ class AdditionalTrainingListServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_additional_training_details_for_valid_uuid()
+    public function it_returns_additional_training_details_for_valid_uuid(): void
     {
         $student = Student::factory()->create();
         $resume = Resume::factory()->create(['student_id' => $student->id]);
@@ -35,23 +37,36 @@ class AdditionalTrainingListServiceTest extends TestCase
         $resume->additional_trainings_ids = json_encode([$additionalTraining1->id, $additionalTraining2->id]);
         $resume->save();
 
-        $result = $this->additionalTrainingService->getAdditionalTrainingDetails($student->id);
+        $result = $this->additionalTrainingService->execute($student->id);
 
         $this->assertCount(2, $result);
         
     }
 
     /** @test */
-    public function it_throws_model_not_found_exception_for_invalid_uuid()
+    public function it_throws_student_not_found_exception_for_invalid_uuid(): void
     {
         
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(StudentNotFoundException::class);
 
-        $this->additionalTrainingService->getAdditionalTrainingDetails('nonexistent_uuid');
+        $this->additionalTrainingService->execute('nonexistent_uuid');
     }
 
     /** @test */
-    public function testGetAdditionalTrainingDetailsNoRecords()
+    public function it_throws_resume_not_found_exception_for_valid_uuid(): void
+    {
+
+        $student = Students::aStudent();
+
+        $studentId = $student->id;
+
+        $this->expectException(ResumeNotFoundException::class);
+
+        $this->additionalTrainingService->execute($studentId);
+    }
+
+    /** @test */
+    public function testGetAdditionalTrainingDetailsNoRecords(): void
     {
         
         $student = Student::factory()->create();
@@ -60,7 +75,8 @@ class AdditionalTrainingListServiceTest extends TestCase
         
         $service = new AdditionalTrainingService();
 
-        $result = $service->getAdditionalTrainingDetails($student->id);
+        $result = $service->execute($student->id);
         $this->assertEmpty($result);
     }
+    
 }
