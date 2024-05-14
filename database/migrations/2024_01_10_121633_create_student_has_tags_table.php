@@ -27,3 +27,6 @@ return new class () extends Migration {
         Schema::dropIfExists('student_has_tags');
     }
 };
+
+
+//esta tabla no deberia estar vinculada con foreign key a Student? ahora mismo no me aparece vinculada en phpmyadmin. Puede que al no haber definido en down la foreign key y haber hecho algun roll back, no se haya vuelto a crear al volver a hacer las migraciones?
