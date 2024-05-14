@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use App\Models\User;
 
 class RegisterUserControllerTest extends TestCase
 {
@@ -20,6 +19,7 @@ class RegisterUserControllerTest extends TestCase
         $userData['username'] = 'test_username';
         $userData['dni'] = '27827083G';
         $userData['email'] = 'test_email@test.com';
+        $userData['terms'] = 'true';
         $userData['password'] = 'Password%123';
         $userData['specialization'] = 'Backend';
         $userData['password_confirmation'] = 'Password%123';
@@ -46,6 +46,7 @@ class RegisterUserControllerTest extends TestCase
             'username' => 667677,
             'dni' => 'Invalid DNI',
             'email' => 'invalid_email',
+            'terms' => 'false',
             'password' => 'invalid_password',
             'password_confirmation' => 'invalid_password_confirmation',
         ]);
