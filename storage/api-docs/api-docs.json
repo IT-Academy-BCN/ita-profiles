@@ -1179,7 +1179,7 @@
                                         "example": "Password%123"
                                     },
                                     "terms": {
-                                        "type": "boolean",
+                                        "type": "string",
                                         "example": "true"
                                     }
                                 },

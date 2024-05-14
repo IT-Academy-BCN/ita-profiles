@@ -95,7 +95,7 @@ class AnnotationsRegisterUser
      *              @OA\Property(property="specialization", type="string", example="Frontend"),
      *              @OA\Property(property="password", type="string", example="Password%123"),
      *              @OA\Property(property="password_confirmation", type="string", example="Password%123"),
-     *              @OA\Property(property="terms", type="boolean", example="true"),
+     *              @OA\Property(property="terms", type="string", example="true"),
      *          )
      *      ),
      *
