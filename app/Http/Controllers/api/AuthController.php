@@ -73,6 +73,9 @@ class AuthController extends Controller
 		
 		if($this->userService->checkUserCredentials($request->dni, $request->password) == True)
 		{
+			//Improve:
+			
+			
 			
 			$userID = $this->userService->getUserIDByDNI($request->dni);
 			
