@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use PDOException;
 use Service\User\registerMessage;
-use Service\User\UserService;
+use Service\User\UserRegisterService;
 
 /* TODO:
     1: porque existe el metodo boot() en la clase User, porque se esta validando alli el password? no deria validarse esto en controlador con un formrequest?
