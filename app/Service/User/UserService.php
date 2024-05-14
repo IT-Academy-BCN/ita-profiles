@@ -39,11 +39,11 @@ class UserService
 				return False;
 			}
 		}else{
-			return True;
+			return False;
 		}
 	}
 	
-	public function getUserIDByDNI(string $userDNI): string
+	public function getUserIDByDNI(string $userDNI): string | bool
 	{
 		$user = User::where('dni', $userDNI)->first();
 		
@@ -56,7 +56,7 @@ class UserService
 	
 	
 	//public function generateJWToken(string $userID, string $issuerID)
-	public function generateJWToken(string $userID)
+	public function generateJWToken(string $userID): string
 	{
 		// Create token header as a JSON string
 		$header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
