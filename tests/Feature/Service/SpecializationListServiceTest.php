@@ -33,17 +33,13 @@ class SpecializationListServiceTest extends TestCase
             ResumeFactory::new()->specificSpecialization($specialization)->create();
         }
 
-        $response = $this->getJson(route('roles.list'));
+        $response = $this->specializationListService->execute(); // DEBERÍA SER LA LLAMADA AL SERVICE
 
-        $response->assertStatus(200);
-
-        $specialization_list= $response->json();
-        
-        $this->assertCount(4, $specialization_list);
-        $this->assertContains('Frontend', $specialization_list);
-        $this->assertContains('Backend', $specialization_list);
-        $this->assertContains('Fullstack', $specialization_list);
-        $this->assertContains('Data Science', $specialization_list);
+        $this->assertCount(4, $response);
+        $this->assertContains('Frontend', $response);
+        $this->assertContains('Backend', $response);
+        $this->assertContains('Fullstack', $response);
+        $this->assertContains('Data Science', $response);
     }
 
     public function testSpecializationListServiceReturnsAVoidArrayForExistingResumesWithSpecializationFieldWithNotSetValue(): void
@@ -55,28 +51,20 @@ class SpecializationListServiceTest extends TestCase
         for ($i = 0; $i < 3; $i++) {
             ResumeFactory::new()->specificSpecialization($specialization)->create();
         }
-
-        $response = $this->getJson(route('roles.list'));
-
-        $response->assertStatus(200);
-
-        $specialization_list= $response->json();
-
-        $this->assertIsArray($specialization_list);
         
-        $this->assertEquals([], $specialization_list);
+        $response = $this->specializationListService->execute();
+
+        $this->assertIsArray($response);
+        
+        $this->assertEquals([], $response);
     }
 
     public function testSpecializationListServiceReturnsAnEmptyArrayWhenNoResumes(): void
     {
         Resume::query()->delete();
 
-        $response = $this->getJson(route('roles.list'));
+        $response = $this->specializationListService->execute();
 
-        $response->assertStatus(200);
-
-        $specialization_list = $response->json();
-
-        $this->assertEquals([], $specialization_list);
+        $this->assertEquals([], $response);
     }
 }
