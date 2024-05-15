@@ -10,7 +10,7 @@ class AnnotationsSpecializationList
      * @OA\Get(
      *     path="/specialization/list",
      *     summary="Retrieve a specialization list from resume model enum",
-     *     tags={"Home Filter Lists"},
+     *     tags={"Filter List"},
      *     @OA\Response(
      *         response=200,
      *         description="Successful. Specialization list retrieved from enum",
