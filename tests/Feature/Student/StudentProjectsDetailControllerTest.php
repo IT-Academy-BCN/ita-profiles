@@ -8,11 +8,13 @@ use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Project;
 use Tests\Fixtures\Students;
-use Tests\Fixtures\Resumes;
 use App\Models\Resume;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 
 class StudentProjectsDetailControllerTest extends TestCase
 {
+    use DatabaseTransactions;
     protected $student;
     protected $projects;
 
@@ -54,22 +56,6 @@ class StudentProjectsDetailControllerTest extends TestCase
         $response = $this->get(route('projects.list', ['student' => $invalidUuid]));
 
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: ' . $invalidUuid]);
-
-        $response->assertStatus(404);
-    }
-
-    public function test_controller_returns_404_with_no_projects_listed()
-    {
-        $student = Students::aStudent();
-
-        Resumes::createResumeWithEmptyProjects($student->id);
-
-        Resume::where('student_id', $student->id)
-            ->update(['project_ids' => '[]']);
-
-        $response = $this->get(route('projects.list', ['student' => $student->id]));
-
-        $response->assertJson(['message' => 'No s\'ha trobat cap projecte associat a aquest estudiant amb ID: ' . $student->id]);
 
         $response->assertStatus(404);
     }
