@@ -41,7 +41,7 @@ class CollaborationServiceTest extends TestCase
 
         $resume->save();
 
-        $response = $this->collaborationService->getCollaborationDetails($student->id);
+        $response = $this->collaborationService->execute($student->id);
 
         $this->assertIsArray($response);
 
@@ -63,7 +63,7 @@ class CollaborationServiceTest extends TestCase
 
         $service = new CollaborationService();
 
-        $response = $service->getCollaborationDetails($student->id);
+        $response = $service->execute($student->id);
 
         $this->assertIsArray($response);
         
@@ -74,7 +74,7 @@ class CollaborationServiceTest extends TestCase
     {
         $this->expectException(StudentNotFoundException::class);
 
-        $this->collaborationService->getCollaborationDetails('nonexistent_uuid');
+        $this->collaborationService->execute('nonexistent_uuid');
     }
 
     public function testCollaborationServiceThrowsResumeNotFoundExceptionForstudentWithoutResume(): void
