@@ -12,7 +12,7 @@ use Tests\Fixtures\Resumes;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class StudentListTest extends TestCase
+class StudentListControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
