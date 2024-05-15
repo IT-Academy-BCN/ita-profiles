@@ -24,6 +24,7 @@ class UserFactory extends Factory
             'dni' => $faker->unique()->regexify('[1-9]{8}[A-Z]'),
             'email' => $faker->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'password' => bcrypt('password123'), // O puedes usar Faker para generar contraseñas aleatorias
         ];
     }
 
