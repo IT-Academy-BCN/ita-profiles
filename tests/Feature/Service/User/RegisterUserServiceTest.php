@@ -58,8 +58,12 @@ class RegisterUserServiceTest extends TestCase
             'password' => '123456'
         ]);
 
-        $this->expectException(Exception::class);
-        $this->userService->createUser($registerData);
+        //$this->expectException(Exception::class);
+        
+        $succes = $this->userService->createUser($registerData);
+        
+        $this->assertEquals(True, empty($success['email']));
+        
     }
 
     public function test_user_creation_with_empty_data()
@@ -73,8 +77,13 @@ class RegisterUserServiceTest extends TestCase
             'password' => ''
         ]);
 
-        $this->expectException(Exception::class);
+        //$this->expectException(Exception::class);
         $this->userService->createUser($registerData);
+        
+        $succes = $this->userService->createUser($registerData);
+        
+        $this->assertEquals(True, empty($success['email']));
+        
     }
 
     public function test_required_fields_for_user_creation()

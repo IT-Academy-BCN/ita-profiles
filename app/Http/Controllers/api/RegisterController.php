@@ -31,7 +31,13 @@ class RegisterController extends Controller
     {
         try {
             $result = $this->userService->createUser($request);
-            return $this->sendResponse($result, 'User registered successfully.');
+            
+            if(empty($result['token']) == False && empty($result['token']) == False){
+				return $this->sendResponse($result, 'User registered successfully.');
+			}else{
+				return $this->sendError(['message'=>'ProcessFailed'], 'User register failed.', 401);
+			}
+            
         } catch (Exception $exception) {
             // Log the exception for debugging and potential alerting
             Log::error('Error during user registration:', [
