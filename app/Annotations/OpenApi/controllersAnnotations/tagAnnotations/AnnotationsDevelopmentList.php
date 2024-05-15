@@ -7,7 +7,7 @@ class AnnotationsDevelopmentList
      * @OA\Get(
      *     path="/development/list",
      *     summary="Retrieve a development list ",
-     *     tags={"Filter List"},
+     *     tags={"Tags"},
      *     @OA\Response(
      *         response=200,
      *         description="Successful. Development list retrieved from json file",
