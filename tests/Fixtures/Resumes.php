@@ -25,7 +25,7 @@ class Resumes
             'modality' => $modality,
         ]);
     }
-    public static function createResumeWithoutModality($studentId, $specialization, $tagIds, $modality): Resume
+    public static function createResumeWithoutModality($studentId, $specialization, $tagIds): Resume
     {
         return Resume::factory()->create([
             'student_id' => $studentId,

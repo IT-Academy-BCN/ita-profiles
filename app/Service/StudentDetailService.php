@@ -20,22 +20,56 @@ class StudentDetailService
 
     public function getStudentDetailsById($studentId): array
     {
-        
-        Resume::where('student_id', $studentId)->first();
+        $student = $this->getStudent($studentId);
+        $resume = $this->getResume($student);
+        $fullName = $this->getFullName($student);
+        $formattedTags = $this->getFormattedTags($resume);
+
+        return [
+            'fullname' => $fullName,
+            'subtitle' => $resume->subtitle,
+            'social_media' => [
+                'github' => [
+                    'url' => $resume->github_url
+                ],
+                'linkedin' => [
+                    'url' => $resume->linkedin_url
+                ]
+            ],
+            'about' => $resume->about,
+            'tags' => $formattedTags,
+        ];
+    }
+
+    private function getStudent($studentId): Student
+    {
         $student = Student::find($studentId);
 
         if (!$student) {
             throw new StudentNotFoundException($studentId);
         }
 
+        return $student;
+    }
+
+    private function getResume(Student $student): Resume
+    {
         $resume = $student->resume()->first();
 
         if (!$resume) {
-            throw new ResumeNotFoundException($studentId);
+            throw new ResumeNotFoundException($student->id);
         }
 
-        $fullName = $student->name . ' ' . $student->surname;
+        return $resume;
+    }
 
+    private function getFullName(Student $student): string
+    {
+        return $student->name . ' ' . $student->surname;
+    }
+
+    private function getFormattedTags(Resume $resume): array
+    {
         $tagsIds = json_decode($resume->tags_ids, true);
         $tags = Tag::whereIn('id', $tagsIds)->get(['id', 'tag_name'])->toArray();
 
@@ -47,22 +81,6 @@ class StudentDetailService
             ];
         }
 
-        return [
-            'fullname' => $fullName,
-            'subtitle' => $resume->subtitle,
-                    'social_media' => [
-                        'github' => [
-                            'url' => $resume->github_url
-                        ],
-                        'linkedin' => [
-                            'url' => $resume->linkedin_url
-                        ]
-                        
-                    ],
-            'about' => $resume->about,
-            'tags' => $formattedTags,
-        ];
-        
+        return $formattedTags;
     }
-
 }

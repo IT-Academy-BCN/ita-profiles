@@ -8,14 +8,26 @@ use Tests\TestCase;
 use App\Models\Resume;
 use App\Service\StudentDetailService;
 use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\Student;
+use Tests\Fixtures\Students;
 
 class StudentDetailServiceTest extends TestCase
 {
     use DatabaseTransactions;
-    public function test_get_student_details_by_id()
+
+    protected $studentDetailService;
+
+    protected function setUp(): void
     {
-        $service = new StudentDetailService();
+        parent::setUp();
+
+        $this->studentDetailService = new StudentDetailService();
+    }
+    public function testGetStudentDetailsById() : void
+    {
+        $service = $this->studentDetailService;
 
         $resume = Resume::factory()->create();
 
@@ -25,7 +37,7 @@ class StudentDetailServiceTest extends TestCase
 
     }
 
-    public function test_student_details_not_found()
+    public function testStudentDetailsNotFound() : void
     {
         $service = new StudentDetailService();
 
@@ -34,4 +46,16 @@ class StudentDetailServiceTest extends TestCase
         $this->expectException(StudentNotFoundException::class);
         $service->getStudentDetailsById($nonExistentStudentId);
     }
+
+    public function testCollaborationServiceThrowsResumeNotFoundExceptionForstudentWithoutResume(): void
+    {
+        $student = Students::aStudent();
+
+        $studentId = $student->id;
+
+        $this->expectException(ResumeNotFoundException::class);
+
+        $this->studentDetailService->execute($studentId);
+    }
+
 }

@@ -67,5 +67,5 @@ class AnnotationsStudentDetail
      *     )
      * )
      */
-    public function show() {}
+    public function __invoke() {}
 }

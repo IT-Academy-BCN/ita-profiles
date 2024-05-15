@@ -10,12 +10,12 @@ use App\Exceptions\ResumeNotFoundException;
 
 class ModalityService
 {
-    public function execute(string $studentId):array
+    public function execute(string $studentId): array
     {
         return $this->getModalityByStudentId($studentId);
     }
 
-    public function getModalityByStudentId(string $studentId):array
+    public function getModalityByStudentId(string $studentId): array
     {
         $student = Student::find($studentId);
 
@@ -31,10 +31,6 @@ class ModalityService
 
         $modality = $resume->modality;
 
-        if (!$modality) {
-            return [];
-        }
-
-        return $modality;
+        return (array) $modality;
     }
 }

@@ -12,15 +12,27 @@ class StudentDetailControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
+    protected $student;
+    protected $resume;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->student = Student::factory()->create();
+
+        $this->resume = $this->student->resume()->create();
+    }
+    
     public function testStudentDetailsAreFound()
     {
         $studentDetailService = $this->createMock(StudentDetailService::class);
 
-        $student = Student::factory()->create();
+        $student = $this->student;
     
         $studentId = $student->id;
         
-        $studentDetail = Resume::factory()->create(['student_id' => $studentId]);
+        $studentDetail = $this->resume;
         $studentDetailService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
@@ -52,5 +64,16 @@ class StudentDetailControllerTest extends TestCase
 
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: 12345']);
+    }
+
+    public function testStudentDetailControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume(): void
+    {
+        $this->student->resume->delete();
+
+        $response = $this->get(route('student.detail', ['id' => $this->student]));
+
+        $response->assertStatus(404);
+        
+        $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
     }
 }

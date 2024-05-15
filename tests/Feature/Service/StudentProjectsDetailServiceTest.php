@@ -11,8 +11,9 @@ use Tests\Fixtures\Resumes;
 use Tests\Fixtures\ProjectsForResume;
 use App\Service\Student\StudentProjectsDetailService;
 use App\Exceptions\StudentNotFoundException;
-use App\Exceptions\ProjectNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
+use App\Models\Student;
+
 
 
 class StudentProjectsDetailServiceTest extends TestCase
@@ -61,16 +62,16 @@ class StudentProjectsDetailServiceTest extends TestCase
     $this->expectException(ResumeNotFoundException::class);
     $this->projectsService->execute($student->id);
 }
-public function test_execute_throws_exception_for_student_with_empty_projects()
+
+public function testProjectsServiceReturnsEmptyArrayWhenNoProjectsFound(): void
 {
-   
-    $student = Students::aStudent();
 
-    
+    $student = Student::factory()->create();
     Resumes::createResumeWithEmptyProjects($student->id);
-
-    $this->expectException(ProjectNotFoundException::class);
-    $this->projectsService->execute($student->id);
+    $service = new StudentProjectsDetailService();
+    $projects = $service->execute($student->id);
+    $this->assertIsArray($projects);
+    $this->assertEmpty($projects);
 }
 
 
