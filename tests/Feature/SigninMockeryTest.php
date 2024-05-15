@@ -89,7 +89,6 @@ class SigninMockeryTest extends TestCase
 		}
 		$returnCollection = null;
 		$returnCollection = collect([$returnUser]);
-        //$returnCollection->push($returnUser);
        
         if($expectedStatusCode = 200){
 			$this->mockery->shouldReceive('where')
@@ -127,8 +126,6 @@ class SigninMockeryTest extends TestCase
 		}
 		
 		$returnCollection = collect([$returnUser]);
-        //$returnCollection->push($returnUser);
-       
         
 		$this->mockery->shouldReceive('where')
 			->once()
@@ -139,6 +136,7 @@ class SigninMockeryTest extends TestCase
 		
 		return $randID;
 	}
+	
 	private function mockCheckUserCredentials(string $userDNI, string $password, bool $addDBBool = True)
 	{
 		$randID = rand(1,100);
