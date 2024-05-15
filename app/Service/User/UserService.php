@@ -88,14 +88,14 @@ class UserService
 	public function storeUserIDAndTokenRedis(string $userID,string $token): bool
 	{
 		try{
-			//$this->redis->set('user:JWToken_'.$userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
+			
 			$result = Redis::set($this->JWTokenRedisPre . $userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
-			//$result = $this->redis->set($this->JWTokenRedisPre . $userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800 
 			if($result == True){
 				return True;
 			}else{	
 				return False;
 			}
+			
 		}catch (Exception $e){
 			return False;
 		}
@@ -104,9 +104,8 @@ class UserService
 	public function getJWTokenByUserID(string $userID): string | bool
 	{
 		try{
-			//$jwt = $this->redis->get('laravel_database_user:0:JWToken_'.$userID); //35 seconds 30*60=1800
+			
 			$jwt = $result = Redis::get('user:0:JWToken_'.$userID); //35 seconds 30*60=1800
-			//$jwt = $this->redis->get('user:0:JWToken_'.$userID); //35 seconds 30*60=1800
 			
 			if(is_string($jwt)){
 				return $jwt;

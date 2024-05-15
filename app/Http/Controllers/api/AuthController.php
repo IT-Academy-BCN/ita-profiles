@@ -70,13 +70,9 @@ class AuthController extends Controller
     public function signin(SigninRequest $request)
 	{
 		
-		
 		if($this->userService->checkUserCredentials($request->dni, $request->password) == True)
 		{
-			//Improve:
-			
-			
-			
+
 			$userID = $this->userService->getUserIDByDNI($request->dni);
 			
 			if(empty($userID) == False){

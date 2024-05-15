@@ -14,9 +14,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Service\User\UserService;
 
 use Illuminate\Database\Eloquent\Collection;
-//use Eloquent\Support\Collection;
-//use Mockery;
-//use Mockery\MockInterface;
+
 
 /**
  * @runTestsInSeparateProcesses
@@ -31,8 +29,6 @@ class UserServiceTest extends TestCase
 	{
 		parent::setUp();
 		$this->service = new UserService();
-		//$this->mockery =  Mockery::mock('alias:\App\Models\User');
-		//$this->app->instance(User::class, $this->mockery);
 		$this->mockery = Mockery::mock('overload:App\Models\User');
 	}
 	
@@ -47,16 +43,6 @@ class UserServiceTest extends TestCase
         
         if($addDBBool == True)
         {	
-			/*
-			$returnUser = new App\Models\User([
-					'id' => intval(rand(1,100)),
-					'name' => "Name",
-					'surname' => "Surname",
-					'email' => $userDNI."@mail.com",
-					'dni' => $userDNI,
-					'password' => ($corerctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword') ),
-				]);
-			*/	
 			$returnUser = new App\Models\User;
 			
 			$returnUser->id = intval($randID);
@@ -71,97 +57,21 @@ class UserServiceTest extends TestCase
 		}
 		
         $returnCollection = collect([$returnUser]);
-        $returnCollection->push($returnUser);
-        $returnCollection->add($returnUser);
         
         $this->mockery->shouldReceive('where')
-			->once()
-			//->andReturn(True);
+			->with('dni', $userDNI)
 			->andReturn($returnCollection);
-		/*
-        $this->mockery->shouldReceive('first')
-			->once()
-			//->andReturn(True);
-			->andReturn($returnUser);
-			
-        $this->app->instance(User::class, $this->mockery);
-        */
-        //dd(app());
-        
-        if(empty($returnUser->password)){
-			//Assert Result
-			$this->assertEquals(True, True);
-		}
-        if(empty(User::where('dni', $userDNI)->first())){
-			//Assert Result
-			$this->assertEquals(True, True);
-		}
-        
-        $this->mockery->shouldReceive('where')
-			->once()
-			//->andReturn(True);
-			->andReturn($returnCollection);
-        if(empty(User::where('dni', $userDNI)->first()->password)){
-			//Assert Result
-			$this->assertEquals(True, True);
-		}
-		
-		$this->mockery->shouldReceive('where')
-			->once()
-			//->andReturn(True);
-			->andReturn($returnCollection);
-        if(empty(User::where('dni', $userDNI)->first()->dni)){
-			//Assert Result
-			$this->assertEquals(True, True);
-		}
-		
-        //$result = True;
-        
-        
-        /*
-        $this->mockery->shouldReceive('where')
-			->once()
-			//->andReturn(True);
-			->andReturn($returnCollection);
-        */
-       
-        $this->mockery->shouldReceive('first')
-			->once()
-			//->andReturn(True);
-			->andReturn($returnUser);
-        if(empty(User::where('dni', $userDNI)->first()->dni)){
-			//Assert Result
-			$this->assertEquals(True, True);
-		}
-		
-		$this->mockery->shouldReceive('first')
-			->once()
-			//->andReturn(True);
-			->andReturn($returnUser);
-		/*
-		$this->mockery->shouldReceive('password')
-			->once()
-			//->andReturn(True);
-			->andReturn($returnUser->password);
-		*/
-		
-		//$this->app->instance(User::class, $this->mockery);
 		
 		$this->app->instance('overload:App\Models\User', $this->mockery);
 		
-		
 		//Perform the call to the function to be tested:
 		$result = $this->service->checkUserCredentials($userDNI, $password);
-		
-		
+
 		//Assert Result
 		$this->assertEquals($expectedOutput, $result);
         
     }
-    
-    
-    
-	
+
     static function checkUserCredentialsProvider()
     {
         $array = array(
@@ -172,7 +82,6 @@ class UserServiceTest extends TestCase
 				False, //Add In "DB" (True = Yes , False = No)
 				False // Expected Output
 				),
-			
 			array(
 				'X6849947H',
 				'password',
@@ -242,14 +151,13 @@ class UserServiceTest extends TestCase
 		}
 		
 		$returnCollection = collect([$returnUser]);
-        //$returnCollection->push($returnUser);
-       
         
 		$this->mockery->shouldReceive('where')
 			->with('dni', $userDNI)
 			->andReturn($returnCollection);
 			
 		$id = $this->service->getUserIDByDNI($userDNI);
+		
 		//Assert Result
 		if($expectedOutput == False){
 			$this->assertEquals(False, $id);
@@ -289,7 +197,7 @@ class UserServiceTest extends TestCase
 		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)',$jwt);
 		
 		if($resultOne == True && $resultTwo == True){
-				$this->assertEquals(True , True);
+			$this->assertEquals(True , True);
 		}else{
 			$this->assertEquals(True , False);
 		}
@@ -362,7 +270,6 @@ class UserServiceTest extends TestCase
 				'abc', //userID
 				True // Expected Output
 				),
-				
 			array(
 				'ZZZZZZZZZ981273', //userID
 				False // Expected Output
@@ -371,8 +278,7 @@ class UserServiceTest extends TestCase
 		
 		return $array;
 	}
-    
-	
+
     
     protected function tearDown(): void
     {
