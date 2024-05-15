@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\homeFilterLists;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 use OpenApi\Annotations as OA;
 

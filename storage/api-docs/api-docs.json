@@ -11,54 +11,6 @@
         }
     ],
     "paths": {
-        "/development/list": {
-            "get": {
-                "tags": [
-                    "Home Filter Lists"
-                ],
-                "summary": "Retrieve a development list ",
-                "operationId": "316ec2428e9951c98d27a1cde1db075c",
-                "responses": {
-                    "200": {
-                        "description": "Successful. Development list retrieved from json file",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/specialization/list": {
-            "get": {
-                "tags": [
-                    "Home Filter Lists"
-                ],
-                "summary": "Retrieve a specialization list from resume model enum",
-                "operationId": "2fef70eb5bb38db63cd2428637e229cf",
-                "responses": {
-                    "200": {
-                        "description": "Successful. Specialization list retrieved from enum",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/student/{studentId}/resume/additionaltraining": {
             "get": {
                 "tags": [
@@ -195,6 +147,30 @@
                                         }
                                     },
                                     "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/specialization/list": {
+            "get": {
+                "tags": [
+                    "Filter List"
+                ],
+                "summary": "Retrieve a specialization list from resume model enum",
+                "operationId": "48a099805fc747c3b2f8cd5f55038a47",
+                "responses": {
+                    "200": {
+                        "description": "Successful. Specialization list retrieved from enum",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
                                 }
                             }
                         }
@@ -787,6 +763,30 @@
                                         }
                                     },
                                     "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/development/list": {
+            "get": {
+                "tags": [
+                    "Filter List"
+                ],
+                "summary": "Retrieve a development list ",
+                "operationId": "c2b401adb6631f377c6e1cfbe4495159",
+                "responses": {
+                    "200": {
+                        "description": "Successful. Development list retrieved from json file",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
                                 }
                             }
                         }
