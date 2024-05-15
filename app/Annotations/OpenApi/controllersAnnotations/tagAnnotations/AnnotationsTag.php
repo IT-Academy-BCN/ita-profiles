@@ -12,8 +12,7 @@ class AnnotationsTag
  *     operationId="getAllTags",
  *     tags={"Tags"},
  *     summary="Tags Index.",
- *     description="Retrieve a list of registered tags. Admin Authentication is required.",
- *     security={{"bearerAuth": {}}},
+ *     description="Retrieve a list of registered tags.",
  *
  *     @OA\Response(
  *         response=200,

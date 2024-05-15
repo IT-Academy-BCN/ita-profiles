@@ -157,7 +157,7 @@
         "/specialization/list": {
             "get": {
                 "tags": [
-                    "Filter List"
+                    "Student -> Resume"
                 ],
                 "summary": "Retrieve a specialization list from resume model enum",
                 "operationId": "48a099805fc747c3b2f8cd5f55038a47",
@@ -773,7 +773,7 @@
         "/development/list": {
             "get": {
                 "tags": [
-                    "Filter List"
+                    "Tags"
                 ],
                 "summary": "Retrieve a development list ",
                 "operationId": "c2b401adb6631f377c6e1cfbe4495159",
@@ -800,7 +800,7 @@
                     "Tags"
                 ],
                 "summary": "Tags Index.",
-                "description": "Retrieve a list of registered tags. Admin Authentication is required.",
+                "description": "Retrieve a list of registered tags.",
                 "operationId": "getAllTags",
                 "responses": {
                     "200": {
@@ -872,12 +872,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
+                }
             },
             "post": {
                 "tags": [
