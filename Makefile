@@ -6,6 +6,8 @@ down:
 	docker compose down
 full-restart:
 	docker compose down && docker system prune --all -f && docker compose up --build -d
+full-restart-linux:
+	docker-compose down && docker system prune --all -f && docker-compose up --build -d
 start:
 	docker exec -it itaprofilesbackend-php php artisan serve --host=0.0.0.0 --port=8000
 composer-install:
