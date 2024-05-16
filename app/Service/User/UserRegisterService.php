@@ -13,29 +13,9 @@ use Illuminate\Support\Facades\DB;
 class UserRegisterService
 {
 
-    public function createUser(RegisterRequest $registerData): array
+    public function createUser(RegisterRequest $registerData): array | bool
     {
-		/*
-		$input = $registerData->all();
-        $input['password'] = bcrypt($input['password']);
-		
-		DB::transaction(function() {
-			$user = User::create($input);
-			$student = new Student();
-			$student->user_id = $user->id; 
-			$student->save();
-			$resume = new Resume();
-			$resume->student_id = $student->id; 
-			$resume->specialization = $input['specialization']; 
-			$resume->save();
-		});
-
-        $success['token'] = $user->createToken('ITAcademy')->accessToken;
-        $success['email'] = $user->email ?? Null;
-
-        return $success;
-        */
-        
+	
         $input = $registerData->all();
         $input['password'] = bcrypt($input['password']);
 		$user = new User;
@@ -46,6 +26,8 @@ class UserRegisterService
 			DB::beginTransaction();
 			
 			$user = User::create($input);
+			
+			$user = $user->fresh();
 			
 			$student->user_id = $user->id; 
 			$student->save();
@@ -61,12 +43,18 @@ class UserRegisterService
 		} catch (\PDOException $e) {
 			// Woopsy
 			DB::rollBack();
+			return False;
 		}
 		
+		/*
+		if(empty($user->email)){
+			return False;
+		}*/
 		
         $success['email'] = $user->email;
 		
 		return $success;
+		//return False;
         /*
         
         $input = $registerData->all();

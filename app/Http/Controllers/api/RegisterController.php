@@ -32,7 +32,8 @@ class RegisterController extends Controller
         try {
             $result = $this->userService->createUser($request);
             
-            if(empty($result['token']) == False && empty($result['token']) == False){
+            //if(empty($result['token']) == False && empty($result['token']) == False){
+             if($result != False){
 				return $this->sendResponse($result, 'User registered successfully.');
 			}else{
 				return $this->sendError(['message'=>'ProcessFailed'], 'User register failed.', 401);

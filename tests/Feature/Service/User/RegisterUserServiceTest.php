@@ -14,13 +14,50 @@ class RegisterUserServiceTest extends TestCase
     use DatabaseTransactions; //ensures that any database modifications made during testing are reverted once the test is complete
 
     protected $userService;
+    
+    protected $validationMessage = array ( 
+		// username
+		'username.required' => 'El username es requerido',
+		'username.string' => 'El username debe ser un texto',
+		'username.min' => 'El username debe tener al menos 3 caracteres',
+
+		// dni
+		'dni.required' => 'El dni es requerido',
+		'dni.unique' => 'El dni ya existe',
+		'dni.string' => 'El dni debe ser un texto',
+		'dni.max' => 'El dni no debe ser mayor a :max caracteres',
+		'dni.regex' => 'El dni no debe contener caracteres especiales',
+
+		// email
+		'email.required' => 'El email es requerido',
+		'email.string' => 'El email debe ser un texto',
+		'email.max' => 'El email no debe ser mayor a :max caracteres',
+		'email.unique' => 'El email ya existe',
+
+		// password
+		'password.required' => 'La contraseña es requerida',
+		'password.confirmed' => 'La confirmacion de la contraseña no coincide',
+		'password.regex' => 'La contraseña debe contener al menos una mayúscula y un carácter especial, y tener una longitud minima de 8 caracteres',
+
+		// specialization
+		'specialization.required' => 'La especialidad es requerida',
+		'specialization.in' => 'La especialidad no es valida',
+
+		// terms
+		'terms.required' => 'Debes aceptar los terminos y condiciones',
+		'terms.in' => 'Debes aceptar los terminos y condiciones',
+
+    );
+    
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->userService = new UserRegisterService();
     }
-
+		
+		
+		
     private function createUserData()
     {
         $userData['username'] = 'test_username';
@@ -62,7 +99,8 @@ class RegisterUserServiceTest extends TestCase
         
         $succes = $this->userService->createUser($registerData);
         
-        $this->assertEquals(True, empty($success['email']));
+        //$this->assertEquals(True, empty($success['email']));
+        $this->assertEquals(False, $succes);
         
     }
 
@@ -82,7 +120,8 @@ class RegisterUserServiceTest extends TestCase
         
         $succes = $this->userService->createUser($registerData);
         
-        $this->assertEquals(True, empty($success['email']));
+        //$this->assertEquals(True, empty($success['email']));
+        $this->assertEquals(False, $succes);
         
     }
 
@@ -90,7 +129,8 @@ class RegisterUserServiceTest extends TestCase
     {
         // Missing 'username' field
         $registerData1 = new RegisterRequest([
-            'username' => 'test_username',
+            //'username' => 'test_username',
+            'username' => '',
             'specialization' => 'Backend',
             'terms' => 'true',
             'email' => 'test@example.com',
@@ -100,6 +140,7 @@ class RegisterUserServiceTest extends TestCase
 
         $this->expectException(Exception::class);
         $this->userService->createUser($registerData1);
+
 
         // Missing 'email' field
         $registerData2 = new RegisterRequest([
@@ -111,8 +152,8 @@ class RegisterUserServiceTest extends TestCase
         ]);
 
         $this->expectException(Exception::class);
-        $this->userService->createUser($registerData2);
-
+        $succes  = $this->userService->createUser($registerData1);
+        
         // Missing 'password' field
         $registerData3 = new RegisterRequest([
             'username' => 'test_username',
@@ -123,8 +164,8 @@ class RegisterUserServiceTest extends TestCase
         ]);
 
         $this->expectException(Exception::class);
-        $this->userService->createUser($registerData3);
-
+        $succes  = $this->userService->createUser($registerData1);
+        
         // Missing 'dni' field
         $registerData4 = new RegisterRequest([
             'username' => 'test_username',
@@ -153,6 +194,106 @@ class RegisterUserServiceTest extends TestCase
         ]);
 
         $this->expectException(Exception::class);
-        $this->userService->createUser($registerData4);
+        $succes  = $this->userService->createUser($registerData1);
     }
+    
+    /**
+     * @dataProvider required_fields_for_user_creation_provider 
+     */
+    public function test_required_fields_for_user_creation_my(array $array)
+    {
+        // Missing 'username' field
+        $registerData1 = new RegisterRequest([
+            //'username' => 'test_username',
+            'username' => $array['username'] ?? "",
+            'specialization' => $array['specialization'] ?? "",
+            'terms' => $array['terms'] ?? "",
+            'email' => $array['email'] ?? "",
+            'password' => $array['password'] ?? "",
+            'dni' => $array['dni'] ?? "",
+        ]);
+
+        //$this->expectException(Exception::class);
+        $this->userService->createUser($registerData1);
+        $succes  = $this->userService->createUser($registerData1);
+        $this->assertEquals(False, $succes);
+	}
+    
+    static function required_fields_for_user_creation_provider()
+    {
+		$array = array(
+			// Missing 'username' field
+			array(
+				array(
+					//'username' => 'hoho',
+					'specialization' => 'Backend',
+					'terms' => 'true',
+					'email' => 'test@example.com',
+					'password' => 'password123',
+					'dni' => '27827083G'
+				),
+			),
+			// Missing 'email' field
+			array(
+				array(		
+					'username' => 'test_username',
+					'specialization' => 'Backend',
+					'terms' => 'true',
+					'password' => 'password123',
+					'dni' => '27827083G'
+				),
+			),
+			// Missing 'dni' field
+			array(
+				array(		
+					'username' => 'test_username',
+					'specialization' => 'Backend',
+					'terms' => 'true',
+					'email' => 'janesmith@example.com',
+					'dni' => '27827083G'
+				),
+			),
+			// Missing 'specialization' field
+			array(
+				array(		
+					'username' => 'test_username',
+					'specialization' => 'Backend',
+					'email' => 'alicebrown@example.com',
+					'terms' => 'true',
+					'password' => 'password123'
+				),
+			),
+			// Missing 'terms' field
+			array(
+				array(		
+					'username' => 'Alice Brown',
+					'dni' => '27827083G',
+					'email' => 'alicebrown@example.com',
+					'terms' => 'true',
+					'password' => 'password123'
+				),
+			),
+			
+			// Missing 'terms' field
+			array(
+				array(		
+					'username' => 'Alice Brown',
+					'dni' => '27827083G',
+					'email' => 'alicebrown@example.com',
+					'specialization' => 'Backend',
+					'password' => 'password123'
+				),
+			),
+			
+			
+		);
+		
+		return $array;
+	}
+    
+    
+    
 }
+
+
+
