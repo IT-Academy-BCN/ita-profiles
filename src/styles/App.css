@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #282828;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  overflow-y: auto;
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  overflow-y: auto;
+  background: #ededed;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  overflow-y: auto;
+  background: #b0b0b0;
+  border-radius: 16px;
+  cursor: pointer;
+}

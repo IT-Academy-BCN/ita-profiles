@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "email": "email@gmail.com",
+      "password": "$2a$10$nEmy3UtEDDmeRUYAqHVCc.4OTs5LUzYtQt3DimdQfB5/Iw92z2NzG",
+      "username": "luiggi",
+      "dni": "95230031A",
+      "specialization": "react",
+      "confirmPassword": "password",
+      "id": 1
+    }
+  ]
+}
