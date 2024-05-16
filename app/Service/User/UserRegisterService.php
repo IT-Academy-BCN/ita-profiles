@@ -38,7 +38,6 @@ class UserRegisterService
 			
 			$success['token'] = $user->createToken('ITAcademy')->accessToken;
 			
-			
 			DB::commit();
 		} catch (\PDOException $e) {
 			// Woopsy
@@ -50,7 +49,7 @@ class UserRegisterService
 		if(empty($user->email)){
 			return False;
 		}*/
-		
+		//$success['token'] = $user->createToken('ITAcademy')->accessToken;
         $success['email'] = $user->email;
 		
 		return $success;

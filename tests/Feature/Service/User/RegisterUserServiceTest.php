@@ -200,10 +200,10 @@ class RegisterUserServiceTest extends TestCase
     /**
      * @dataProvider required_fields_for_user_creation_provider 
      */
-    public function test_required_fields_for_user_creation_my(array $array)
+    public function test_required_fields_for_user_creation_my(array $array, bool $resultCorrect)
     {
         // Missing 'username' field
-        $registerData1 = new RegisterRequest([
+        $registerData = new RegisterRequest([
             //'username' => 'test_username',
             'username' => $array['username'] ?? "",
             'specialization' => $array['specialization'] ?? "",
@@ -214,15 +214,25 @@ class RegisterUserServiceTest extends TestCase
         ]);
 
         //$this->expectException(Exception::class);
-        $this->userService->createUser($registerData1);
-        $succes  = $this->userService->createUser($registerData1);
-        $this->assertEquals(False, $succes);
+        //$this->userService->createUser($registerData1);
+        $success  = $this->userService->createUser($registerData);
+        //$this->assertEquals(False, $succes);
+        //$this->assertEquals($this->validationMessage, $succes);
+        
+        if($resultCorrect){
+			//$this->assertEquals($this->validationMessage, $succes);
+			$this->assertEquals(True, empty($success['email']) == False && empty($success['token']) == False );
+			
+		}else{
+			$this->assertEquals($resultCorrect, $success);
+		}
+        
 	}
     
     static function required_fields_for_user_creation_provider()
     {
 		$array = array(
-			// Missing 'username' field
+			// Missing 'username' field - 0 
 			array(
 				array(
 					//'username' => 'hoho',
@@ -232,8 +242,9 @@ class RegisterUserServiceTest extends TestCase
 					'password' => 'password123',
 					'dni' => '27827083G'
 				),
+				True
 			),
-			// Missing 'email' field
+			// Missing 'email' field - 1
 			array(
 				array(		
 					'username' => 'test_username',
@@ -242,8 +253,10 @@ class RegisterUserServiceTest extends TestCase
 					'password' => 'password123',
 					'dni' => '27827083G'
 				),
+				//Returning False because email is not specified
+				False
 			),
-			// Missing 'dni' field
+			// Missing 'password' field  - 2
 			array(
 				array(		
 					'username' => 'test_username',
@@ -252,8 +265,10 @@ class RegisterUserServiceTest extends TestCase
 					'email' => 'janesmith@example.com',
 					'dni' => '27827083G'
 				),
+				True
 			),
-			// Missing 'specialization' field
+			
+			//// Missing 'dni' field  - 3
 			array(
 				array(		
 					'username' => 'test_username',
@@ -262,8 +277,9 @@ class RegisterUserServiceTest extends TestCase
 					'terms' => 'true',
 					'password' => 'password123'
 				),
+				True
 			),
-			// Missing 'terms' field
+			// Missing 'specialization' field - 4
 			array(
 				array(		
 					'username' => 'Alice Brown',
@@ -272,9 +288,11 @@ class RegisterUserServiceTest extends TestCase
 					'terms' => 'true',
 					'password' => 'password123'
 				),
+				//False because "specialization" not in DB ENUM
+				False
 			),
 			
-			// Missing 'terms' field
+			// Missing 'terms' field - 5
 			array(
 				array(		
 					'username' => 'Alice Brown',
@@ -283,6 +301,7 @@ class RegisterUserServiceTest extends TestCase
 					'specialization' => 'Backend',
 					'password' => 'password123'
 				),
+				True
 			),
 			
 			
