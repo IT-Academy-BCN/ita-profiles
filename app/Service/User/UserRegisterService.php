@@ -15,8 +15,14 @@ class UserRegisterService
 
     public function createUser(RegisterRequest $registerData): array | bool
     {
-	
+		
         $input = $registerData->all();
+        
+        //Workaround...createToken needs email?
+        if(empty($input['email'])){
+			return False;
+		}
+        
         $input['password'] = bcrypt($input['password']);
 		$user = new User;
 		$student = new Student;
@@ -27,25 +33,18 @@ class UserRegisterService
 			
 			$user = User::create($input);
 			
-			//$user = $user->fresh();
-			
+			$user = $user->fresh();
+
 			$student->user_id = $user->id; 
 			$student->save();
-			
+
 			$resume->student_id = $student->id; 
 			$resume->specialization = $input['specialization']; 
 			$resume->save();
-			
+
 			$resume = $resume->fresh();
 			
 			$success['token'] = $user->createToken('ITAcademy')->accessToken;
-			
-			/*
-			if(empty($success['token']) == False){
-				DB::rollBack();
-				return False;
-			}*/
-			
 			
 			DB::commit();
 		} catch (\PDOException $e) {
@@ -58,12 +57,7 @@ class UserRegisterService
 			DB::rollBack();
 			return False;
 		}
-		
-		/*
-		if(empty($user->email) || empty($success['token'])){
-			return False;
-		}*/
-		//$success['token'] = $user->createToken('ITAcademy')->accessToken;
+
         $success['email'] = $user->email;
 		
 		return $success;
