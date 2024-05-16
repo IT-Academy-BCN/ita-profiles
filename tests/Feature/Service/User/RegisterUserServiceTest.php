@@ -82,6 +82,10 @@ class RegisterUserServiceTest extends TestCase
         $this->assertEquals($userData['email'], $response['email']);
         $this->assertArrayHasKey('token', $response);
         $this->assertIsString($response['token']);
+        $this->assertEquals(False, empty($response['token']));
+        //$this->assertEquals(True,False);        
+        
+        
     }
 
     public function test_user_creation_with_invalid_data()

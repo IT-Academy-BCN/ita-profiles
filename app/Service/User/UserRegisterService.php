@@ -40,10 +40,11 @@ class UserRegisterService
 			
 			$success['token'] = $user->createToken('ITAcademy')->accessToken;
 			
+			/*
 			if(empty($success['token']) == False){
 				DB::rollBack();
 				return False;
-			}
+			}*/
 			
 			
 			DB::commit();
