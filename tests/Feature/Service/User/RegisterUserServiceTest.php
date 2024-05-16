@@ -251,7 +251,8 @@ class RegisterUserServiceTest extends TestCase
 					'specialization' => 'Backend',
 					'terms' => 'true',
 					'password' => 'password123',
-					'dni' => '27827083G'
+					'dni' => '27827083G',
+					//'email' => 'test@example.com',
 				),
 				//Returning False because email is not specified
 				False

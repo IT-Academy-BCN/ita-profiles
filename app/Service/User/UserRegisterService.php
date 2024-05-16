@@ -27,7 +27,7 @@ class UserRegisterService
 			
 			$user = User::create($input);
 			
-			$user = $user->fresh();
+			//$user = $user->fresh();
 			
 			$student->user_id = $user->id; 
 			$student->save();
@@ -36,17 +36,30 @@ class UserRegisterService
 			$resume->specialization = $input['specialization']; 
 			$resume->save();
 			
+			$resume = $resume->fresh();
+			
 			$success['token'] = $user->createToken('ITAcademy')->accessToken;
+			
+			if(empty($success['token']) == False){
+				DB::rollBack();
+				return False;
+			}
+			
 			
 			DB::commit();
 		} catch (\PDOException $e) {
 			// Woopsy
 			DB::rollBack();
 			return False;
+			
+		} catch (Exception $e){
+			// Woopsy
+			DB::rollBack();
+			return False;
 		}
 		
 		/*
-		if(empty($user->email)){
+		if(empty($user->email) || empty($success['token'])){
 			return False;
 		}*/
 		//$success['token'] = $user->createToken('ITAcademy')->accessToken;
