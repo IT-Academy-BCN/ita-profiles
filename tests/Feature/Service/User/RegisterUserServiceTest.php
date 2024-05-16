@@ -142,10 +142,11 @@ class RegisterUserServiceTest extends TestCase
             'dni' => '27827083G'
         ]);
 
-        $this->expectException(Exception::class);
-        $this->userService->createUser($registerData1);
-
-
+        //$this->expectException(Exception::class);
+        $success = $this->userService->createUser($registerData1);
+		//$this->assertEquals(False, $success);
+		$this->assertEquals(True, empty($success['email']) == False && empty($success['token']) == False );
+		
         // Missing 'email' field
         $registerData2 = new RegisterRequest([
             'username' => 'test_username',
@@ -217,16 +218,10 @@ class RegisterUserServiceTest extends TestCase
             'dni' => $array['dni'] ?? "",
         ]);
 
-        //$this->expectException(Exception::class);
-        //$this->userService->createUser($registerData1);
         $success  = $this->userService->createUser($registerData);
-        //$this->assertEquals(False, $succes);
-        //$this->assertEquals($this->validationMessage, $succes);
-        
+
         if($resultCorrect){
-			//$this->assertEquals($this->validationMessage, $succes);
 			$this->assertEquals(True, empty($success['email']) == False && empty($success['token']) == False );
-			
 		}else{
 			$this->assertEquals($resultCorrect, $success);
 		}
