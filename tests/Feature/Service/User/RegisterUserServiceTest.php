@@ -14,49 +14,13 @@ class RegisterUserServiceTest extends TestCase
     use DatabaseTransactions; //ensures that any database modifications made during testing are reverted once the test is complete
 
     protected $userService;
-    
-    protected $validationMessage = array ( 
-		// username
-		'username.required' => 'El username es requerido',
-		'username.string' => 'El username debe ser un texto',
-		'username.min' => 'El username debe tener al menos 3 caracteres',
-
-		// dni
-		'dni.required' => 'El dni es requerido',
-		'dni.unique' => 'El dni ya existe',
-		'dni.string' => 'El dni debe ser un texto',
-		'dni.max' => 'El dni no debe ser mayor a :max caracteres',
-		'dni.regex' => 'El dni no debe contener caracteres especiales',
-
-		// email
-		'email.required' => 'El email es requerido',
-		'email.string' => 'El email debe ser un texto',
-		'email.max' => 'El email no debe ser mayor a :max caracteres',
-		'email.unique' => 'El email ya existe',
-
-		// password
-		'password.required' => 'La contraseña es requerida',
-		'password.confirmed' => 'La confirmacion de la contraseña no coincide',
-		'password.regex' => 'La contraseña debe contener al menos una mayúscula y un carácter especial, y tener una longitud minima de 8 caracteres',
-
-		// specialization
-		'specialization.required' => 'La especialidad es requerida',
-		'specialization.in' => 'La especialidad no es valida',
-
-		// terms
-		'terms.required' => 'Debes aceptar los terminos y condiciones',
-		'terms.in' => 'Debes aceptar los terminos y condiciones',
-
-    );
-    
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->userService = new UserRegisterService();
     }
-		
-		
+	
 		
     private function createUserData()
     {
@@ -75,16 +39,12 @@ class RegisterUserServiceTest extends TestCase
     {
         $userData = $this->createUserData();
 
-        //$request = new RegisterRequest($userData);
-
         $response = $this->userService->createUser($userData);
 
         $this->assertEquals($userData['email'], $response['email']);
         $this->assertArrayHasKey('token', $response);
         $this->assertIsString($response['token']);
-        $this->assertEquals(False, empty($response['token']));
-        //$this->assertEquals(True,False);        
-        
+        $this->assertEquals(False, empty($response['token']) || empty($response['email']));
         
     }
 
@@ -113,7 +73,6 @@ class RegisterUserServiceTest extends TestCase
         
         $succes = $this->userService->createUser($registerData);
         
-        //$this->assertEquals(True, empty($success['email']));
         $this->assertEquals(False, $succes);
         
     }
@@ -143,7 +102,6 @@ class RegisterUserServiceTest extends TestCase
         
         $succes = $this->userService->createUser($registerData);
         
-        //$this->assertEquals(True, empty($success['email']));
         $this->assertEquals(False, $succes);
         
     }

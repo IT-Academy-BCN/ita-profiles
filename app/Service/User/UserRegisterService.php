@@ -13,12 +13,9 @@ use Illuminate\Support\Facades\DB;
 class UserRegisterService
 {
 
-    public function createUser(array $registerData): array | bool
+    public function createUser(array $input): array | bool
     {
-		
-        //$input = $registerData->all();
-		$input = $registerData;
-        
+	
         
         //Workaround...createToken needs email?
         if(empty($input['email']) || empty($input['password']) ){
