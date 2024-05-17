@@ -2,6 +2,7 @@ services:
     laravel-docker:
         depends_on:
             - mysql
+            - redis
         container_name: itaprofilesbackend-app
         build:
             context: .
