@@ -13,13 +13,15 @@ use Illuminate\Support\Facades\DB;
 class UserRegisterService
 {
 
-    public function createUser(RegisterRequest $registerData): array | bool
+    public function createUser(array $registerData): array | bool
     {
 		
-        $input = $registerData->all();
+        //$input = $registerData->all();
+		$input = $registerData;
+        
         
         //Workaround...createToken needs email?
-        if(empty($input['email'])){
+        if(empty($input['email']) || empty($input['password']) ){
 			return False;
 		}
         
@@ -39,7 +41,7 @@ class UserRegisterService
 			$student->save();
 
 			$resume->student_id = $student->id; 
-			$resume->specialization = $input['specialization']; 
+			$resume->specialization = $input['specialization'] ?? null; 
 			$resume->save();
 
 			$resume = $resume->fresh();

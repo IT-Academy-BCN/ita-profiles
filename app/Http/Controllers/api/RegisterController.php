@@ -30,7 +30,8 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         try {
-            $result = $this->userService->createUser($request);
+			$dataRegistser = $request->only(['email', 'username', 'password']);
+            $result = $this->userService->createUser($dataRegistser);
             
             //if(empty($result['token']) == False && empty($result['token']) == False){
              if($result != False){

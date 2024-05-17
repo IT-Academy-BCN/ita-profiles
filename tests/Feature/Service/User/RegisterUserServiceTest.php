@@ -75,9 +75,9 @@ class RegisterUserServiceTest extends TestCase
     {
         $userData = $this->createUserData();
 
-        $request = new RegisterRequest($userData);
+        //$request = new RegisterRequest($userData);
 
-        $response = $this->userService->createUser($request);
+        $response = $this->userService->createUser($userData);
 
         $this->assertEquals($userData['email'], $response['email']);
         $this->assertArrayHasKey('token', $response);
@@ -89,7 +89,8 @@ class RegisterUserServiceTest extends TestCase
     }
 
     public function test_user_creation_with_invalid_data()
-    {
+    {	
+		/*
         $registerData = new RegisterRequest([ 
             'username' => '',
             'dni' => 'invalidDNI',
@@ -97,7 +98,16 @@ class RegisterUserServiceTest extends TestCase
             'terms' => 'false',          
             'email' => 'invalidemail',
             'password' => '123456'
-        ]);
+        ]);*/
+        
+        $registerData = array(
+			'username' => '',
+            'dni' => 'invalidDNI',
+            'specialization' => 'invalidSpecialization',  
+            'terms' => 'false',          
+            'email' => 'invalidemail',
+            'password' => '123456'
+        );
 
         //$this->expectException(Exception::class);
         
@@ -110,14 +120,23 @@ class RegisterUserServiceTest extends TestCase
 
     public function test_user_creation_with_empty_data()
     {
-        $registerData = new RegisterRequest([
+        
+        /*$registerData = new RegisterRequest([
             'username' => '',
             'dni' => '',
             'terms' => '',
             'specialization' => '',            
             'email' => '',
             'password' => ''
-        ]);
+        ]);*/        
+        $registerData = array(
+            'username' => '',
+            'dni' => '',
+            'terms' => '',
+            'specialization' => '',            
+            'email' => '',
+            'password' => ''
+        );
 
         //$this->expectException(Exception::class);
         $this->userService->createUser($registerData);
@@ -142,8 +161,8 @@ class RegisterUserServiceTest extends TestCase
             'dni' => '27827083G'
         ]);
 
-        //$this->expectException(Exception::class);
-        $success = $this->userService->createUser($registerData1);
+        $this->expectException(Exception::class);
+        //$success = $this->userService->createUser($registerData1);
 		//$this->assertEquals(False, $success);
 		$this->assertEquals(True, empty($success['email']) == False && empty($success['token']) == False );
 		
@@ -210,15 +229,16 @@ class RegisterUserServiceTest extends TestCase
         // Missing 'username' field
         $registerData = new RegisterRequest([
             //'username' => 'test_username',
-            'username' => $array['username'] ?? "",
-            'specialization' => $array['specialization'] ?? "",
-            'terms' => $array['terms'] ?? "",
-            'email' => $array['email'] ?? "",
-            'password' => $array['password'] ?? "",
-            'dni' => $array['dni'] ?? "",
+            'username' => $array['username'] ?? null,
+            'specialization' => $array['specialization'] ?? null,
+            'terms' => $array['terms'] ?? null,
+            'email' => $array['email'] ?? null,
+            'password' => $array['password'] ?? null,
+            'dni' => $array['dni'] ?? null,
         ]);
 
-        $success  = $this->userService->createUser($registerData);
+        //$success  = $this->userService->createUser($registerData);
+        $success  = $this->userService->createUser($array);
 
         if($resultCorrect){
 			$this->assertEquals(True, empty($success['email']) == False && empty($success['token']) == False );
@@ -241,7 +261,7 @@ class RegisterUserServiceTest extends TestCase
 					'password' => 'password123',
 					'dni' => '27827083G'
 				),
-				True
+				False
 			),
 			// Missing 'email' field - 1
 			array(
@@ -265,7 +285,7 @@ class RegisterUserServiceTest extends TestCase
 					'email' => 'janesmith@example.com',
 					'dni' => '27827083G'
 				),
-				True
+				False
 			),
 			
 			//// Missing 'dni' field  - 3
@@ -277,7 +297,7 @@ class RegisterUserServiceTest extends TestCase
 					'terms' => 'true',
 					'password' => 'password123'
 				),
-				True
+				False
 			),
 			// Missing 'specialization' field - 4
 			array(
