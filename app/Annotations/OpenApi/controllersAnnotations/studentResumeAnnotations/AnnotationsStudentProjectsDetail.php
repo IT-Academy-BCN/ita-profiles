@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentProjectsDetailAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 use OpenApi\Annotations as OA;
 
@@ -8,19 +8,19 @@ class AnnotationsStudentProjectsDetail
 {
   /**
    * @OA\Get(
-   *      path="/students/{studentId}/projects",
-   *      operationId="getStudentProjects",
-   *      tags={"Projects"},
+   *      path="/student/{studentId}/resume/projects",
+   *      operationId="getStudentResumeProjects",
+   *      tags={"Student -> Resume"},
    *      summary="Get a detailed list of projects for a student",
    *      description="Returns a list of projects for a specific student.",
    *      @OA\Parameter(
    *          name="studentId",
-   *          description="UUID of the student to get the projects",
+   *          in="path",
+   *          description="Student ID",
    *          required=true,
    *          in="path",
    *          @OA\Schema(
-   *              type="string",
-   *              format="uuid"
+   *              type="string"
    *          )
    *      ),
    *      @OA\Response(
@@ -108,7 +108,7 @@ class AnnotationsStudentProjectsDetail
    *             example="Hi ha hagut un error"
    *             )
    *         )
-   *     ) 
+   *     )
    * )
    */
 

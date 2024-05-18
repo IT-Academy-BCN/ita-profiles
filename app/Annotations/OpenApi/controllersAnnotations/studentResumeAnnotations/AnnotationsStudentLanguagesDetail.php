@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentLanguagesDetailAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 use OpenApi\Annotations as OA;
 
@@ -10,17 +10,17 @@ class AnnotationsStudentLanguagesDetail
 {
     /**
      * @OA\Get(
-     *      path="/students/{uuid}/languages",
-     *      operationId="getStudentLanguages",
-     *      tags={"Languages"},
+     *      path="/student/{studentId}/resume/languages",
+     *      operationId="getStudentResumeLanguages",
+     *      tags={"Student -> Resume"},
      *      summary="Gets the languages spoken by a student",
      *      description="This endpoint receives the UUID of a student and returns a detailed list of the languages ​​spoken by said student.
 
 It returns a list of languages along with any other relevant information, such as the proficiency level in each language.",
      *
      *      @OA\Parameter(
-     *          name="uuid",
-     *          description="Student UUID",
+     *          name="studentId",
+     *          description="Student ID",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
