@@ -4,21 +4,16 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
-use PDOException;
-use Service\User\registerMessage;
+use Service\User\RegisterMessage;
 use Service\User\UserRegisterService;
-
-/* TODO:
-    1: porque existe el metodo boot() en la clase User, porque se esta validando alli el password? no deria validarse esto en controlador con un formrequest?
-*/
+use Exception;
+use PDOException;
 
 class RegisterController extends Controller
 {
-
-    use registerMessage;
+    use RegisterMessage;
 
     private UserRegisterService $userService;
 
@@ -29,29 +24,29 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request): JsonResponse
     {
+        $dataRegister = $request->only(['username', 'dni', 'email', 'specialization', 'password']);
+
         try {
-			$dataRegistser = $request->only(['username', 'dni', 'email', 'specialization', 'password']);
-            $result = $this->userService->createUser($dataRegistser);
+            $result = $this->userService->createUser($dataRegister);
 
-            if($result != False){
-				return $this->sendResponse($result, 'User registered successfully.');
-			}else{
-				return $this->sendError(['message'=>'ProcessFailed'], 'User register failed.', 401);
-			}
-            
-        } catch (Exception $exception) {
-            // Log the exception for debugging and potential alerting
-            Log::error('Error during user registration:', [
-                'exception' => $exception->getMessage(),
-                'trace' => $exception->getTraceAsString(),
-            ]);
-
-            // Handle specific exceptions if necessary (e.g., PDOException for database errors)
-            if ($exception instanceof PDOException) {
-                return $this->sendError('Database error occurred during registration.', 500);
+            if ($result !== false) {
+                return $this->sendResponse($result, 'User registered successfully.');
+            } else {
+                return $this->sendError(['message' => 'ProcessFailed'], 'User register failed.');
             }
 
-            // Handle generic exception
+        } catch (PDOException $e) {
+            Log::error('Database error during user registration:', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return $this->sendError('Database error occurred during registration.', 500);
+
+        } catch (Exception $e) {
+            Log::error('Error during user registration:', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return $this->sendError('An error occurred during registration. Please try again later.');
         }
     }

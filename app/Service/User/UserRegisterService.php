@@ -4,83 +4,53 @@ declare(strict_types=1);
 
 namespace Service\User;
 
-use App\Http\Requests\RegisterRequest;
 use App\Models\Resume;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Exception;
+use PDOException;
 
 class UserRegisterService
 {
-
     public function createUser(array $input): array | bool
     {
-	
-        
-        //Workaround...createToken needs email?
-        if(empty($input['email']) || empty($input['password']) ){
-			return False;
-		}
-        
+        // Verifica que los campos de email y password no estén vacíos
+        if (empty($input['email']) || empty($input['password'])) {
+            return false;
+        }
+
+        // Hashea la contraseña
         $input['password'] = bcrypt($input['password']);
-		$user = new User;
-		$student = new Student;
-		$resume = new Resume;
+
+        DB::beginTransaction();
+
         try {
-			
-			DB::beginTransaction();
-			
-			$user = User::create($input);
-			
-			$user = $user->fresh();
+            // Crea el usuario
+            $user = User::create($input);
 
-			$student->user_id = $user->id; 
-			$student->save();
+            // Crea el estudiante asociado al usuario
+            $student = new Student;
+            $student->user_id = $user->id;
+            $student->save();
 
-			$resume->student_id = $student->id; 
-			$resume->specialization = $input['specialization'] ?? null; 
-			$resume->save();
+            // Crea el currículum asociado al estudiante
+            $resume = new Resume;
+            $resume->student_id = $student->id;
+            $resume->specialization = $input['specialization'] ?? null;
+            $resume->save();
 
-			$resume = $resume->fresh();
-			
-			$success['token'] = $user->createToken('ITAcademy')->accessToken;
-			
-			DB::commit();
-		} catch (\PDOException $e) {
-			// Woopsy
-			DB::rollBack();
-			return False;
-			
-		} catch (Exception $e){
-			// Woopsy
-			DB::rollBack();
-			return False;
-		}
+            // Genera el token de acceso
+            $success['token'] = $user->createToken('ITAcademy')->accessToken;
 
-        $success['email'] = $user->email;
-		
-		return $success;
-		//return False;
-        /*
-        
-        $input = $registerData->all();
-        $input['password'] = bcrypt($input['password']);
+            DB::commit();
 
-        $user = User::create($input);
-        $student = new Student();
-        $student->user_id = $user->id; 
-        $student->save();
-        $resume = new Resume();
-        $resume->student_id = $student->id; 
-        $resume->specialization = $input['specialization']; 
-        $resume->save();
-
-        $success['token'] = $user->createToken('ITAcademy')->accessToken;
-        $success['email'] = $user->email;
-
-        return $success;
-
-		*/
+            $success['email'] = $user->email;
+            // Devuelve el email del usuario y el token
+            return $success;
+        } catch (PDOException | Exception $e) {
+            DB::rollBack();
+            return false;
+        }
     }
-    
 }
