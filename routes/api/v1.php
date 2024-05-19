@@ -13,6 +13,7 @@ use App\Http\Controllers\api\StudentProjectsDetailController;
 use App\Http\Controllers\api\StudentBootcampDetailController;
 use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
+use App\Http\Controllers\api\TagDetailController;
 use App\Http\Controllers\api\SpecializationListController;
 use App\Http\Controllers\api\StudentLanguagesDetailController;
 use Illuminate\Support\Facades\Route;
@@ -88,7 +89,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/tags/{id}', [TagController::class, 'show'])->middleware('role:admin')->name('tag.show');
     Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');
     Route::delete('/tags/{id}', [TagController::class, 'destroy'])->middleware('role:admin')->name('tag.destroy');
-
+    
     //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+//Tag Detail without middleware
+Route::get('/tag/detail/{id}', TagDetailController::class)->name('tag.detail');
