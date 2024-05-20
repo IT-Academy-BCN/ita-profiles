@@ -7,7 +7,7 @@ use Tests\TestCase;
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
 
-class ModalityControllerTest extends TestCase
+class ModalityTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -41,7 +41,7 @@ class ModalityControllerTest extends TestCase
 
     public function testModalityControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
     {
-        $response = $this->getJson(route('languages.list', ['id' =>  'nonExistentStudentId']));
+        $response = $this->getJson(route('modality', ['studentId' =>  'nonExistentStudentId']));
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
     }
