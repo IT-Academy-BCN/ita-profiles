@@ -45,7 +45,7 @@ class CollaborationControllerTest extends TestCase
 
     public function testCollaborationControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
     {
-        $response = $this->getJson(route('languages.list', ['id' =>  'nonExistentStudentId']));
+        $response = $this->getJson(route('collaborations.list', ['student' =>  'nonExistentStudentId']));
 
         $response->assertStatus(404);
 
@@ -56,7 +56,7 @@ class CollaborationControllerTest extends TestCase
     {
         $this->student->resume->delete();
 
-        $response = $this->getJson(route('languages.list', ['id' =>  $this->student->id]));
+        $response = $this->getJson(route('collaborations.list', ['student' =>  $this->student->id]));
 
         $response->assertStatus(404);
         
