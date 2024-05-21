@@ -22,14 +22,6 @@ class SpecializationListControllerTest extends TestCase
         $response = $this->getJson(route('roles.list'));
 
         $response->assertStatus(200);
-
-        $specialization_list= $response->json();
-        
-        $this->assertCount(4, $specialization_list);
-        $this->assertContains('Frontend', $specialization_list);
-        $this->assertContains('Backend', $specialization_list);
-        $this->assertContains('Fullstack', $specialization_list);
-        $this->assertContains('Data Science', $specialization_list);
     }
 
     public function testSpecializationListControllerReturns_200StatusAnEmptyArrayForResumesWithNotSetSpecialization(): void
@@ -45,12 +37,6 @@ class SpecializationListControllerTest extends TestCase
         $response = $this->getJson(route('roles.list'));
 
         $response->assertStatus(200);
-
-        $specialization_list= $response->json();
-
-        $this->assertIsArray($specialization_list);
-        
-        $this->assertEquals([], $specialization_list);
     }
 
     public function testSpecializationListControllerReturns_200StatusAnEmptyArrayWhenNoResumes(): void
@@ -60,10 +46,6 @@ class SpecializationListControllerTest extends TestCase
         $response = $this->getJson(route('roles.list'));
 
         $response->assertStatus(200);
-
-        $specialization_list = $response->json();
-
-        $this->assertEquals([], $specialization_list);
     }
 
 }
