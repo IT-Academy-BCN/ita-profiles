@@ -29,7 +29,7 @@ class AdditionalTrainingListControllerTest extends TestCase
 
         $this->app->instance(AdditionalTrainingService::class, new AdditionalTrainingService());
 
-        $response = $this->getJson(route('additionaltraining.list', ['student' => $student->id]));
+        $response = $this->getJson(route('student.additionaltraining', ['studentId' => $student->id]));
 
         $response->assertStatus(200)
                  ->assertJsonStructure(['additional_trainings']);
@@ -40,7 +40,7 @@ class AdditionalTrainingListControllerTest extends TestCase
     {
         $this->app->instance(AdditionalTrainingService::class, new AdditionalTrainingService());
 
-        $response = $this->getJson(route('additionaltraining.list', ['student' => 'nonexistent_uuid']));
+        $response = $this->getJson(route('student.additionaltraining', ['studentId' => 'nonexistent_uuid']));
 
         $response->assertStatus(404);
 
@@ -77,7 +77,7 @@ class AdditionalTrainingListControllerTest extends TestCase
         $student = Student::factory()->create();
         $resume = Resume::factory()->create(['student_id' => $student->id]);        
 
-        $response = $this->getJson(route('additionaltraining.list', ['student' => $student->id]));
+        $response = $this->getJson(route('student.additionaltraining', ['studentId' => $student->id]));
 
         $response->assertStatus(500);
     }

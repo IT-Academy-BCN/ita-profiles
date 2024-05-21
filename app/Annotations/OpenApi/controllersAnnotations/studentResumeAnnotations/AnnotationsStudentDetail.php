@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 class AnnotationsStudentDetail
 {
     /**
      * @OA\Get (
-     *     path="/student/{id}/detail/for-home",
-     *     operationId="getStudentDetailsabout",
-     *     tags={"Student"},
+     *     path="/student/{studentId}/resume/detail",
+     *     operationId="getStudentDetailsResumeAbout",
+     *     tags={"Student -> Resume"},
      *     summary="Get Student Detail.",
      *     description="Retrieve details of a specific student. No authentication required.",
      *     @OA\Parameter(
-     *         name="id",
+     *         name="studentId",
      *         in="path",
      *         description="Student ID",
      *         required=true,
      *         @OA\Schema(
-     *             type="string"
+     *             type="string",
+     *             format="uuid"
      *         )
      *     ),
      *     @OA\Response(
@@ -62,7 +63,7 @@ class AnnotationsStudentDetail
      *         description="No hem trobat cap estudiant amb aquest ID"
      *     ),
      *     @OA\Response(
-     *         response=500,            
+     *         response=500,
      *         description="Error inesperat"
      *     )
      * )

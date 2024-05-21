@@ -32,7 +32,7 @@ class StudentProjectsDetailControllerTest extends TestCase
 
     public function test_controller_returns_correct_response_with_valid_uuid()
     {
-        $response = $this->get(route('projects.list', ['student' => $this->student->id]));
+        $response = $this->get(route('student.projects', ['studentId' => $this->student->id]));
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -53,7 +53,7 @@ class StudentProjectsDetailControllerTest extends TestCase
     {
         $invalidUuid = 'invalid_uuid';
 
-        $response = $this->get(route('projects.list', ['student' => $invalidUuid]));
+        $response = $this->get(route('student.projects', ['studentId' => $invalidUuid]));
 
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: ' . $invalidUuid]);
 
@@ -66,7 +66,7 @@ class StudentProjectsDetailControllerTest extends TestCase
 
         Resume::where('student_id', $student->id)->delete();
 
-        $response = $this->get(route('projects.list', ['student' => $student->id]));
+        $response = $this->get(route('student.projects', ['studentId' => $student->id]));
 
         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $student->id]);
         $response->assertStatus(404);

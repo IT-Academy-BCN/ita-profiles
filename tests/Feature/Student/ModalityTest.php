@@ -32,7 +32,7 @@ class ModalityTest extends TestCase
         
         $studentId = $student->id;
 
-        $response = $this->getJson(route('modality', ['studentId' => $studentId]));
+        $response = $this->getJson(route('student.modality', ['studentId' => $studentId]));
 
         $response->assertStatus(404);
 
