@@ -1,80 +1,137 @@
-# ita-profiles-backend
+
+# ITA Profiles
 
 ## Introduction
 
-ITA Profiles Backend is a project from IT Academy post-specialization course that allows students from our academy to
-gain experience in a team that is using SCRUM methodology, and several tecnologies often used by most tech companies.
-So, the main focus of Project is to help grow our students so they can learn to work in a team, question, think
-solutions and face the usual
+ITA Profiles is a project from IT Academy post-specialization course that allows students from our academy to gain experience in a team that is using SCRUM methodology, and several technologies often used by most tech companies. So, the main focus of the project is to help grow our students so they can learn to work in a team, question, think solutions and face the usual challenges.
 
-The backend of Profiles project gives solution to a frontend by providing an API Rest well documented with Swagger.
+The project now integrates both frontend and backend functionalities to provide a seamless experience for users.
 
 ## How to install the project
 
-We do use docker containers to share the same versions of PHP and MySQL around all the backend team. So, in first term
-and after have cloned the project in your local, you'll need to install docker.
+We use docker containers to share the same versions of PHP and MySQL around all the team members. After cloning the project in your local environment, follow these steps:
 
-To install docker, [click here and follow the instructions](https://docs.docker.com/engine/install/).
+1. Install Docker by following the instructions [here](https://docs.docker.com/engine/install/).
 
-Once docker is installed in your machine, you'll have to build the containers. Go to your project's root folder, and
-type (remember the command as you'll have to type this every time you want to create the containers):
+2. Once Docker is installed, go to the project's root folder and build the containers by running:
 
 ```shell
 docker compose up -d
 ```
 
-At the end of this process, you'll have to run the following in order to make swagger styles and javascript to run properly:
+3. After the containers are built, run the following command to ensure Swagger styles and JavaScript run properly:
 
 ```shell
 docker compose exec -it laravel-docker php artisan config:cache
 ```
 
-You'll see a lot of things building up, and then you'll return to the same folder. So, when the building is done, you'll
-be able to check that everything went well by typing the following:
+4. Verify that the containers are running by executing:
 
 ```shell
 docker ps
 ```
 
-You'll see a table where you should see the container names: `laravel-docker` and `itaprofilesbackend-mysql`.
-
-Now you'll be able to run commands inside the container using linux shell commands, as follows:
+5. You can now run commands inside the container using the following format:
 
 ```shell
 docker exec -it <app-container-name> <the-command>
+```
 
-# EXAMPLES:
-# To setup the libraries with composer:
+For example:
+
+```shell
 docker exec -it laravel-docker composer install
-
-# To update libraries with composer: 
-docker exec -it laravel-docker composer update
-
-# To run the tests with phpunit:
-docker exec -it laravel-docker ./vendor/bin/phpunit ./tests
-
-# To use php artisan:
-docker exec -it laravel-docker php artisan ... <whatever...>
-
-# For example, when installing you'll find useful to do:
 docker exec -it laravel-docker php artisan migrate:fresh
 docker exec -it laravel-docker php artisan db:seed
 ```
 
-You'll have to run the previous composer install to get the project libraries and setup the project.
+### Local Addresses
 
-### Addresses
-After being raised, our containers will provide your localhost with some interesting tools:
+After the containers are up, you can access various tools locally:
 
-- A local API REST from your laravel in [http://localhost](http://localhost)
-- A local Swagger documentation in [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
-- A local PHPMyAdmin to work with MySQL in [http://localhost:9015](http://localhost:9015)
+- Local Laravel API: [http://localhost](http://localhost)
+- Local Swagger documentation: [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
+- Local PHPMyAdmin (MySQL): [http://localhost:9015](http://localhost:9015)
 
-#### PHPMyAdmin credentials
-To access PhpMyAdmin the basic credentials are:
+#### PHPMyAdmin Credentials
+
+Use the following credentials to access PHPMyAdmin:
 
 ```
-host:     mysql
-user:     user
-password: password
+Host: mysql
+User: user
+Password: password
 ```
+
+## Demo
+
+--
+
+## Screenshots
+
+--
+
+## Installation
+
+To install the frontend, follow these steps:
+
+```console
+git clone --
+npm i
+npm run dev
+```
+
+If a backend API is not available, you can use json-server. Start a local server to keep track of the `db.json` file:
+
+```console
+npx json-server --watch db.json -m ./node_modules/json-server-auth
+```
+
+Change the port of the server if needed:
+
+```console
+npx json-server --watch -p 3001 db.json -m ./node_modules/json-server-auth
+```
+
+## Contribution Guidelines
+
+Contributions are always welcome! Please follow these guidelines:
+
+### Folder Structure
+
+- Components: All React components should be created within the /components folder. These components should focus solely on rendering and presenting data. They should not contain any logic or API calls.
+- Pages: Create new pages within the /pages folder. Pages should serve as the top-level components that define the structure of a route and may contain a composition of components. Keep pages clean and avoid adding complex logic directly to them.
+
+### Separation of Concerns
+
+- Logic and API Calls: Components should not contain logic or make API calls directly. Utilize either the React Context API or Redux state management for handling application logic and data fetching. Create separate files for actions, reducers, and selectors as needed within the Redux structure.
+- Redux: Follow the Redux pattern for actions and reducers. Ensure that reducers are pure functions and keep state updates predictable.
+
+### Git Workflow
+
+1. Branches: Create a new branch from the dev branch with a descriptive name for new features or bug fixes.
+2. Commits: Make frequent, well-documented commits with clear and concise messages.
+3. Pull Requests: Submit a pull request when your feature or bug fix is ready for review. Include a description of your changes and reference any related issues.
+
+### Code Quality
+
+1. Code Style: Maintain a consistent code style throughout the project. Use appropriate naming conventions, indentation, and follow any established coding standards.
+2. Code Reviews: Be open to feedback during code reviews to ensure code quality and maintainability.
+
+## Used By
+
+This project is being used by IT Academy at Barcelona Activa.
+
+## Acknowledgements
+
+Thanks to all the students whose hard work makes these projects possible and move forward.
+
+## FAQ
+
+#### What are the requirements to participate in projects?
+
+Complete the React specialization at IT Academy.
+
+#### Why should I collaborate on this project?
+
+This project provides a real-world environment to apply all the concepts learned in the bootcamp. It also allows for learning more advanced concepts and facing real-life situations that may occur in a company.
