@@ -6,7 +6,7 @@ namespace Service\User;
 
 use Illuminate\Http\JsonResponse;
 
-trait registerMessage
+trait RegisterMessage
 {
     public function sendResponse($result, $message): JsonResponse
     {

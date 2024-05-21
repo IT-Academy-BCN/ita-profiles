@@ -82,7 +82,8 @@ class RegisterUserServiceTest extends TestCase
      *
      * @param array $array Data array with user information to test.
      * @param bool $resultCorrect Expected result of the test (true if user creation should succeed, false otherwise).
-     */    public function test_required_fields_for_user_creation(array $array, bool $resultCorrect): void
+     */    
+    public function test_required_fields_for_user_creation(array $array, bool $resultCorrect): void
     {
         $success = $this->userService->createUser($array);
 
