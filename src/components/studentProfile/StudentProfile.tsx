@@ -7,7 +7,7 @@ import CompletedSteps from './CompletedSteps';
 const StudentProfile: React.FC = () => (
   <>
     <StudentProfileDetail />
-    <CompletionPercentage />
+    <CompletionPercentage completion={0} />
     <CompletedSteps />
     <button type="button" className="border-2">
       Volver
