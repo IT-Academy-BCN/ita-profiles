@@ -4,7 +4,6 @@ namespace Tests\Feature\Student;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use App\Models\Resume;
 use App\Service\StudentDetailService;
 use App\Models\Student;
 
@@ -70,7 +69,7 @@ class StudentDetailControllerTest extends TestCase
     {
         $this->student->resume->delete();
 
-        $response = $this->get(route('student.detail', ['id' => $this->student]));
+        $response = $this->get(route('student.details', ['studentId' => $this->student]));
 
         $response->assertStatus(404);
         
