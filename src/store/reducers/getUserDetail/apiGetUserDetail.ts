@@ -9,16 +9,21 @@ const showUserInfo = createSlice({
     name: "showUserReducer",
     initialState,
     reducers: {
-        toggleUserPanel: (state) => {
+        openUserPanel: (state) => {
             // eslint-disable-next-line no-param-reassign
-            state.isUserPanelOpen = !state.isUserPanelOpen;
+            state.isUserPanelOpen = true;
+        },
+        closeUserPanel: (state) => {
+            // eslint-disable-next-line no-param-reassign
+            state.isUserPanelOpen = false;
         },
         setFilteredStudents: (state, action: PayloadAction<string>) => {
             // eslint-disable-next-line no-param-reassign
             state.filteredStudents = action.payload;
-        }  
-    }
-})
+        },
+    },
+});
 
-export const { toggleUserPanel, setFilteredStudents  } = showUserInfo.actions;
+export const { openUserPanel, closeUserPanel, setFilteredStudents } = showUserInfo.actions;
+
 export default showUserInfo.reducer;

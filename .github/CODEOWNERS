@@ -1,3 +1,1 @@
-./src @IT-Academy-BCN/fe-react
-./app @IT-Academy-BCN/be-php
-./tests @IT-Academy-BCN/be-php
+. @IT-Academy-BCN/fe-react

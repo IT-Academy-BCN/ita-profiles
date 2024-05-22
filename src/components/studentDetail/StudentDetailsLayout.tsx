@@ -1,44 +1,44 @@
-import { useContext, useEffect } from 'react';
-import { SmallScreenContext } from '../../context/SmallScreenContext';
-import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import type { TSmallScreenContext } from '../../interfaces/interfaces';
-import { toggleUserPanel } from '../../store/reducers/getUserDetail/apiGetUserDetail';
-import StudentDetailsContent from './StudentDetailsContent';
+import { useContext, useEffect } from 'react'
+import { SmallScreenContext } from '../../context/SmallScreenContext'
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks'
+import type { TSmallScreenContext } from '../../interfaces/interfaces'
+import { closeUserPanel } from '../../store/reducers/getUserDetail/apiGetUserDetail'
+import StudentDetailsContent from './StudentDetailsContent'
 
 const StudentDetailsLayout: React.FC = () => {
   // aqui cogemos el estado que viene por default "false".
   const isPanelOpen = useAppSelector(
     (state) => state.ShowUserReducer.isUserPanelOpen,
-  );
-  const dispatch = useAppDispatch();
+  )
+  const dispatch = useAppDispatch()
 
   // aquí transformamos el estado a true o false con la action.
   const handleIsPanelOpen = () => {
-    dispatch(toggleUserPanel());
-  };
+    dispatch(closeUserPanel())
+  }
 
   const { isMobile, setIsMobile }: TSmallScreenContext =
-    useContext(SmallScreenContext);
+    useContext(SmallScreenContext)
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+      setIsMobile(window.innerWidth < 768)
+    }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [setIsMobile]);
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [setIsMobile])
 
-  const mobileScreen = isMobile ? 'modal modal-open md:hidden' : 'w-1/3';
+  const mobileScreen = isMobile ? 'modal modal-open md:hidden' : 'w-1/3'
 
   return (
-    <div className= {`${isPanelOpen ? mobileScreen : 'hidden'}`}>
+    <div className={`${isPanelOpen ? mobileScreen : 'hidden'}`}>
       <StudentDetailsContent handleIsPanelOpen={handleIsPanelOpen} />
     </div>
-  );
-};
+  )
+}
 
-export default StudentDetailsLayout;
+export default StudentDetailsLayout

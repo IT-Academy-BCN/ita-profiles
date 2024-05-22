@@ -1,36 +1,69 @@
 import axios from 'axios';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import MockAdapter from 'axios-mock-adapter';
-import { FetchStudentsListHome } from '../../../api/FetchStudentsList';
+import { render, RenderResult, waitFor } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
+import StudentFiltersProvider from '../../../components/studentFilters/StudentFiltersContent';
+import { StudentFiltersContext } from '../../../context/StudentFiltersContext';
 
-const mockAxios = new MockAdapter(axios);
+describe('StudentFiltersProvider', () => {
+  let mock: MockAdapter;
 
-describe('FetchStudentsListHome function', () => {
+  beforeAll(() => {
+    mock = new MockAdapter(axios);
+  });
+
   afterEach(() => {
-    mockAxios.reset();
+    mock.reset();
   });
 
-  it('should fetch student list for home', async () => {
-    const selectedRoles = ['role1', 'role2'];
-
-    const expectedUrl = 'https://itaperfils.eurecatacademy.org/api/v1/student/list/for-home?specialization=role1,role2';
-
-    const mockData = [{ id: 1, name: 'Student 1' }, { id: 2, name: 'Student 2' }];
-
-    mockAxios.onGet(expectedUrl).reply(200, mockData);
-
-    const result = await FetchStudentsListHome(selectedRoles);
-
-    expect(result).toEqual(mockData);
+  afterAll(() => {
+    mock.restore();
   });
 
-  it('should handle errors', async () => {
-    const selectedRoles: string[] = [];
+  const selectedRoles: string[] = [];
+  const addRole = () => { };
+  const removeRole = () => { };
 
-    const expectedUrl = 'https://itaperfils.eurecatacademy.org/api/v1/student/list/for-home';
+  const value = {
+    selectedRoles,
+    addRole,
+    removeRole,
+  };
 
-    mockAxios.onGet(expectedUrl).reply(500);
+  const rolesData: string[] | undefined = [];
+  const developmentData: string[] | undefined = [];
 
-    await expect(FetchStudentsListHome(selectedRoles)).rejects.toThrow();
+  test('renders student filters correctly', async () => {
+    // Mock API responses
+    mock
+      .onGet('https://itaperfils.eurecatacademy.org/api/v1/specialization/list')
+      .reply(200, rolesData);
+  
+    mock
+      .onGet('https://itaperfils.eurecatacademy.org/api/v1/development/list')
+      .reply(200, developmentData);
+  
+    let getByText: RenderResult['getByText'];
+  
+    // Render the component
+    await act(async () => {
+        const renderResult = render(
+          <StudentFiltersContext.Provider value={value}>
+            <StudentFiltersProvider />
+          </StudentFiltersContext.Provider>
+        );
+        getByText = renderResult.getByText;      
+      
+        // Wait for data to be fetched and rendered
+        await waitFor(() => {
+          rolesData.forEach((role) => {
+            expect(getByText(role)).toBeInTheDocument();
+          });
+      
+          developmentData.forEach((development) => {
+            expect(getByText(development)).toBeInTheDocument();
+          });
+        });
+      });
   });
 });

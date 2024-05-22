@@ -1,52 +1,41 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Github, Linkedin } from '../../../assets/svg'
 import { Stud1 as ProfilePicture } from '../../../assets/img'
+import { TAbout, ITag } from '../../../interfaces/interfaces'
+import { useStudentIdContext } from '../../../context/StudentIdContext'
+import { fetchAboutData } from '../../../api/FetchStudentsAbout'
 
 const StudentDataCard: React.FC = () => {
+  const [aboutData, setAboutData] = useState<TAbout[]>([])
+  const { studentUUID } = useStudentIdContext()
   const [showFullDescription, setShowFullDescription] = useState(false)
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription)
   }
 
-  const studentData = [
-    {
-      id: 1,
-      profileDetail: {
-        fullname: 'Marta Oliveras',
-        subtitle: 'Full-stack developer PHP',
-        socialMedia: {
-          linkedin: {
-            url: 'LinkedIn',
-          },
-          github: {
-            url: 'Github',
-          },
-        },
-        about: {
-          description:
-            'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit, voluptatum iste. Commodi, libero adipisci. Dignissimos consequuntur ab excepturi incidunt ducimus!',
-        },
-        tags: [
-          'PHP',
-          'Laravel',
-          'SQL',
-          'MongoDB',
-          'Javascript',
-          'React',
-          'Redux',
-          'Github',
-          'CI/CD',
-          'TDD',
-        ],
-      },
-    },
-  ]
+  useEffect(() => {
+    const getStudentData = async () => {
+      try {
+        if (studentUUID) {
+          const studentAbout = await fetchAboutData(studentUUID)
+          setAboutData(studentAbout)
+        }
+      } catch (error) {
+        throw new Error('Failed to obtain student data')
+      }
+    }
+
+    if (studentUUID) {
+      getStudentData()
+    }
+  }, [studentUUID])
+
 
   return (
     <div data-testid="StudentDataCard">
-      {studentData.map((student) => (
-        <div key={student.id} className="flex flex-col gap-4">
+      {aboutData.map((studentData) => (
+        <div key={studentData.id} className="flex flex-col gap-4">
           <div className="flex gap-3">
             <img
               src={ProfilePicture}
@@ -57,21 +46,21 @@ const StudentDataCard: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex flex-col">
                   <h2 className="text-xl font-bold">
-                    {student.profileDetail.fullname}
+                    {studentData.fullname}
                   </h2>
                   <p className="text-gray-2">
-                    {student.profileDetail.subtitle}
+                    {studentData.subtitle}
                   </p>
                 </div>
                 <div className="flex gap-4">
-                  <div className="flex gap-1">
+                  <a href={studentData.social_media.github.url} className="flex gap-1">
                     <img src={Github} alt="github icon" />
-                    {student.profileDetail.socialMedia.github.url}
-                  </div>
-                  <div className="flex gap-1">
+                    Github
+                  </a>
+                  <a href={studentData.social_media.linkedin.url} className="flex gap-1">
                     <img src={Linkedin} alt="linkedin icon" />
-                    {student.profileDetail.socialMedia.linkedin.url}
-                  </div>
+                    LinkedIn
+                  </a>
                 </div>
               </div>
             </div>
@@ -82,11 +71,11 @@ const StudentDataCard: React.FC = () => {
               <div>
                 <p className="text-sm">
                   {showFullDescription
-                    ? student.profileDetail.about.description
-                    : `${student.profileDetail.about.description
-                        .split(' ')
-                        .slice(0, 15)
-                        .join(' ')}...`}
+                    ? studentData.about
+                    : `${studentData.about
+                      .split(' ')
+                      .slice(0, 15)
+                      .join(' ')}...`}
                   {!showFullDescription && (
                     <button
                       type="button"
@@ -111,12 +100,12 @@ const StudentDataCard: React.FC = () => {
               </div>
             </div>
             <ul className="flex flex-wrap gap-2">
-              {student.profileDetail.tags.map((tag) => (
+              {studentData.tags.map((tag: ITag) => (
                 <li
-                  key={tag}
+                  key={tag.id}
                   className="rounded-md bg-gray-5-background px-2 py-1 text-sm"
                 >
-                  {tag}
+                  {tag.name}
                 </li>
               ))}
             </ul>
