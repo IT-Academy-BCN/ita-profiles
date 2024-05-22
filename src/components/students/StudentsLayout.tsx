@@ -2,11 +2,23 @@ import { useState } from 'react';
 import StudentsList from './StudentsList';
 import StudentsFiltersModal from '../studentFilters/StudentFiltersModal';
 
+declare global {
+  interface Window {
+    handleNavigation: (path: string) => void;
+  }
+}
+
 const StudentsLayout: React.FC = () => {
+
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => {
     setOpenModal(!openModal);
   };
+
+  const handleNavigation = (path: string) => {
+    window.handleNavigation(path);
+  };
+
   return (
     <div className="flex flex-col w-full gap-20">
       <div className="flex justify-between">
@@ -22,6 +34,7 @@ const StudentsLayout: React.FC = () => {
       </div>
       <StudentsList />
       {openModal && <StudentsFiltersModal handleOpenModal={handleOpenModal} />}
+      <button onClick={() => handleNavigation('/profile')}>Go to Profile</button>
     </div>
   );
 };
