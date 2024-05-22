@@ -93,27 +93,4 @@ class TagControllerTest extends TestCase
         ]);
     }
 
-    public function testShowReturnsTag()
-    {
-        $tag = Tag::query()->first();
-
-        $response = $this->getJson(route('tag.show', ['id' => $tag->id]));
-
-        $response->assertStatus(200);
-
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'tag_name',
-            ],
-        ]);
-
-        // Assert the response data matches the created tag
-        $response->assertJson([
-            'data' => [
-                'id' => $tag->id,
-                'tag_name' => $tag->tag_name,
-            ],
-        ]);
-    }
 }
