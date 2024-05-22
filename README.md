@@ -1,12 +1,67 @@
-# ITA Profiles FRONTEND
 
-Welcome to the ITA FRONTEND GitHub repository!
+# ITA Profiles
 
-This repository houses the source code for the IT Academy's profiles. Thi platform enables event recruiters collaborating with the IT academy to have quick access to all candidates, allowing them to filter and communicate with them effortlessly. For students, the aim is to enhance the visibility of their profiles and thereby improve their employability.
+## Introduction
 
-IT Academy is a leading educational institution of Barcelona dedicated to providing tech education.
+ITA Profiles is a project from IT Academy post-specialization course that allows students from our academy to gain experience in a team that is using SCRUM methodology, and several technologies often used by most tech companies. So, the main focus of the project is to help grow our students so they can learn to work in a team, question, think solutions and face the usual challenges.
 
-**The code is developed by students who have completed the IT Academy Bootcamp** and are currently in the project phase. In these projects, there is a Product Owner and a Scrum Master to enable students to apply their knowledge in a real-world environment.
+The project now integrates both frontend and backend functionalities to provide a seamless experience for users.
+
+## How to install the project
+
+We use docker containers to share the same versions of PHP and MySQL around all the team members. After cloning the project in your local environment, follow these steps:
+
+1. Install Docker by following the instructions [here](https://docs.docker.com/engine/install/).
+
+2. Once Docker is installed, go to the project's root folder and build the containers by running:
+
+```shell
+docker compose up -d
+```
+
+3. After the containers are built, run the following command to ensure Swagger styles and JavaScript run properly:
+
+```shell
+docker compose exec -it laravel-docker php artisan config:cache
+```
+
+4. Verify that the containers are running by executing:
+
+```shell
+docker ps
+```
+
+5. You can now run commands inside the container using the following format:
+
+```shell
+docker exec -it <app-container-name> <the-command>
+```
+
+For example:
+
+```shell
+docker exec -it laravel-docker composer install
+docker exec -it laravel-docker php artisan migrate:fresh
+docker exec -it laravel-docker php artisan db:seed
+```
+
+### Local Addresses
+
+After the containers are up, you can access various tools locally:
+
+- Local Laravel API: [http://localhost](http://localhost)
+- Local Swagger documentation: [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
+- Local PHPMyAdmin (MySQL): [http://localhost:9015](http://localhost:9015)
+
+#### PHPMyAdmin Credentials
+
+Use the following credentials to access PHPMyAdmin:
+
+```
+Host: mysql
+User: user
+Password: password
+```
 
 ## Demo
 
@@ -18,63 +73,58 @@ IT Academy is a leading educational institution of Barcelona dedicated to provid
 
 ## Installation
 
+To install the frontend, follow these steps:
+
 ```console
 git clone --
 npm i
 npm run dev
 ```
 
-_Note: The next steps are only needed while there isn't a backend API_
+If a backend API is not available, you can use json-server. Start a local server to keep track of the `db.json` file:
 
-If we need to run json-server we must start a local server to keep track of the `db.json` file. For that we need to execute this command on our IDE terminal. This will run the server in `localhost:3000`.
+```console
+npx json-server --watch db.json -m ./node_modules/json-server-auth
+```
 
-`npx json-server --watch db.json -m ./node_modules/json-server-auth`
+Change the port of the server if needed:
 
-If we need to change the port of the server we add `-p xxxx`. The next example will run the server on `localhost:3001`.
-
-`npx json-server --watch -p 3001 db.json -m ./node_modules/json-server-auth`
+```console
+npx json-server --watch -p 3001 db.json -m ./node_modules/json-server-auth
+```
 
 ## Contribution Guidelines
 
-Contributions are always welcome!
-
-To ensure a smooth and organized development process, please follow these guidelines when contributing:
+Contributions are always welcome! Please follow these guidelines:
 
 ### Folder Structure
 
 - Components: All React components should be created within the /components folder. These components should focus solely on rendering and presenting data. They should not contain any logic or API calls.
-- Pages: If it is necessary to create a new page, please do so within the /pages folder. Pages should serve as the top-level components that define the structure of a route and may contain a composition of components. Keep pages clean and avoid adding complex logic directly to them.
-
---
+- Pages: Create new pages within the /pages folder. Pages should serve as the top-level components that define the structure of a route and may contain a composition of components. Keep pages clean and avoid adding complex logic directly to them.
 
 ### Separation of Concerns
 
-Logic and API Calls: Components should not contain logic or make API calls directly. For handling application logic and data fetching, utilize either the React Context API or Redux state management. Create separate files for actions, reducers, and selectors as needed within the Redux structure.
-Redux: If you're working on state management, follow the Redux pattern for actions and reducers. Ensure that reducers are pure functions and keep state updates predictable.
+- Logic and API Calls: Components should not contain logic or make API calls directly. Utilize either the React Context API or Redux state management for handling application logic and data fetching. Create separate files for actions, reducers, and selectors as needed within the Redux structure.
+- Redux: Follow the Redux pattern for actions and reducers. Ensure that reducers are pure functions and keep state updates predictable.
 
 ### Git Workflow
 
-1. Branches: When working on a new feature or bug fix, create a new branch from the dev branch with a descriptive name, such as feature/add-user-profile. Make your changes within this branch.
-
-2. Commits: Make frequent, well-documented commits. Use clear and concise commit messages that describe the purpose of each commit.
-
-3. Pull Requests: Submit a pull request when your feature or bug fix is ready for review. Include a description of your changes in the pull request, and reference any related issues, if applicable.
+1. Branches: Create a new branch from the dev branch with a descriptive name for new features or bug fixes.
+2. Commits: Make frequent, well-documented commits with clear and concise messages.
+3. Pull Requests: Submit a pull request when your feature or bug fix is ready for review. Include a description of your changes and reference any related issues.
 
 ### Code Quality
 
 1. Code Style: Maintain a consistent code style throughout the project. Use appropriate naming conventions, indentation, and follow any established coding standards.
-
-2. Code Reviews: Be open to feedback during code reviews. Reviewers may suggest improvements or changes to ensure code quality and maintainability.
-
-By following these contribution guidelines, you'll help maintain a clean and organized codebase,
+2. Code Reviews: Be open to feedback during code reviews to ensure code quality and maintainability.
 
 ## Used By
 
-This project is being used by IT Academy at Barcelona Activa
+This project is being used by IT Academy at Barcelona Activa.
 
 ## Acknowledgements
 
-To all the students whose hard work makes these projects possible and move forward.
+Thanks to all the students whose hard work makes these projects possible and move forward.
 
 ## FAQ
 
@@ -84,4 +134,4 @@ Complete the React specialization at IT Academy.
 
 #### Why should I collaborate on this project?
 
-Because it provides a real-world environment to apply all the concepts learned in the bootcamp. It also allows for learning more advanced concepts and facing real-life situations that may occur in a company.
+This project provides a real-world environment to apply all the concepts learned in the bootcamp. It also allows for learning more advanced concepts and facing real-life situations that may occur in a company.
