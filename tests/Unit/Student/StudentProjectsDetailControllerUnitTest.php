@@ -18,7 +18,8 @@ class StudentProjectsDetailControllerUnitTest extends TestCase
 
         $this->projectsService = new StudentProjectsDetailService();
     }
-    public function testStudentProjectsDetailControllerCanBeInstantiated()
+
+    public function testStudentProjectsDetailControllerCanBeInstantiated():void
     {
 
         $controller = new StudentProjectsDetailController($this->projectsService);

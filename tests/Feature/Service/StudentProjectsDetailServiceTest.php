@@ -14,8 +14,6 @@ use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 use App\Models\Student;
 
-
-
 class StudentProjectsDetailServiceTest extends TestCase
 {
     use DatabaseTransactions;
@@ -26,11 +24,11 @@ class StudentProjectsDetailServiceTest extends TestCase
         parent::setUp();
         $this->projectsService = new StudentProjectsDetailService();
     }
-    public function test_execute_returns_projects_for_valid_student()
+
+    public function test_execute_returns_projects_for_valid_student():void
     {
         $student = Students::aStudent();
         $resume = Resumes::createResumeWithModality($student->id, 'frontend', ['tag1', 'tag2'], 'Presencial');
-
 
         $projectNames = ['Project 1', 'Project 2', 'Project 3'];
         ProjectsForResume::createProjectsForResume($resume->id, $projectNames);
@@ -49,30 +47,28 @@ class StudentProjectsDetailServiceTest extends TestCase
             $this->assertArrayHasKey('github_url', $projectDetail);
         }
     }
-    public function test_execute_throws_exception_for_nonexistent_student_UUID()
+
+    public function test_execute_throws_exception_for_nonexistent_student_UUID():void
     {
         $this->expectException(StudentNotFoundException::class);
         $this->projectsService->execute('nonExistentStudentId');
     }
-    public function test_execute_throws_exception_for_student_without_resume()
-{
-    
-    $student = Students::aStudent();
 
-    $this->expectException(ResumeNotFoundException::class);
-    $this->projectsService->execute($student->id);
-}
+    public function test_execute_throws_exception_for_student_without_resume():void
+    {
+        $student = Students::aStudent();
 
-public function testProjectsServiceReturnsEmptyArrayWhenNoProjectsFound(): void
-{
+        $this->expectException(ResumeNotFoundException::class);
+        $this->projectsService->execute($student->id);
+    }
 
-    $student = Student::factory()->create();
-    Resumes::createResumeWithEmptyProjects($student->id);
-    $service = new StudentProjectsDetailService();
-    $projects = $service->execute($student->id);
-    $this->assertIsArray($projects);
-    $this->assertEmpty($projects);
-}
-
-
+    public function testProjectsServiceReturnsEmptyArrayWhenNoProjectsFound(): void
+    {
+        $student = Student::factory()->create();
+        Resumes::createResumeWithEmptyProjects($student->id);
+        $service = new StudentProjectsDetailService();
+        $projects = $service->execute($student->id);
+        $this->assertIsArray($projects);
+        $this->assertEmpty($projects);
+    }
 }

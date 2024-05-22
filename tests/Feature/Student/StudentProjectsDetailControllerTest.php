@@ -30,7 +30,7 @@ class StudentProjectsDetailControllerTest extends TestCase
         ]);
     }
 
-    public function test_controller_returns_correct_response_with_valid_uuid()
+    public function test_controller_returns_correct_response_with_valid_uuid():void
     {
         $response = $this->get(route('student.projects', ['studentId' => $this->student->id]));
 
@@ -49,7 +49,7 @@ class StudentProjectsDetailControllerTest extends TestCase
             ]);
     }
 
-    public function test_controller_returns_404_with_invalid_uuid()
+    public function test_controller_returns_404_with_invalid_uuid():void
     {
         $invalidUuid = 'invalid_uuid';
 
@@ -60,7 +60,7 @@ class StudentProjectsDetailControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_controller_returns_404_with_no_resume()
+    public function test_controller_returns_404_with_no_resume():void
     {
         $student = Students::aStudent();
 
