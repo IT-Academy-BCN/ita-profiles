@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentCollaborationAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 class AnnotationsStudentCollaboration
 {
     /**
      * @OA\Get(
-     *     path="/students/{uuid}/collaborations",
-     *     operationId="getStudentCollaborations",
+     *     path="/student/{studentId}/resume/collaborations",
+     *     operationId="getStudentResumeCollaborations",
      *     summary="Retrieve a list of collaborations",
-     *     tags={"Collaboration"},
+     *     tags={"Student -> Resume"},
+     *     description="Retrieve collaborations details of a specific student. No authentication required.",
      *
      *
      *     @OA\Parameter(
-     *         name="uuid",
-     *         description="Student UUID",
+     *         name="studentId",
+     *         description="Student ID",
      *         required=true,
      *         in="path",
      *         @OA\Schema(

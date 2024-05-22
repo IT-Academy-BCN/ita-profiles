@@ -29,14 +29,14 @@ class StudentLanguagesDetailControllerTest extends TestCase
 
     public function testLanguageControllerReturns_200StatusForValidStudentUuidWithLanguages(): void
     {
-        $response = $this->getJson(route('languages.list', ['id' =>  $this->student->id]));
+        $response = $this->getJson(route('student.languages', ['studentId' =>  $this->student->id]));
         $response->assertStatus(200);
         $response->assertJson([]);
     }
 
     public function testLanguageControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
     {
-        $response = $this->getJson(route('languages.list', ['id' =>  'nonExistentStudentId']));
+        $response = $this->getJson(route('student.languages', ['studentId' =>  'nonExistentStudentId']));
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
     }
@@ -44,7 +44,7 @@ class StudentLanguagesDetailControllerTest extends TestCase
     public function testLanguageControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume(): void
     {
         $this->student->resume->delete();
-        $response = $this->getJson(route('languages.list', ['id' =>  $this->student->id]));
+        $response = $this->getJson(route('student.languages', ['studentId' =>  $this->student->id]));
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
     }

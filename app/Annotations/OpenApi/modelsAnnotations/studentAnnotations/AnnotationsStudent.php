@@ -15,8 +15,7 @@ namespace App\Annotations\OpenApi\modelsAnnotations\studentAnnotations;
  * @OA\Property(
  *     property="id",
  *     description="Student ID",
- *     type="integer",
- *     format="int64"
+ *     type="string"
  * )
  *
  * @var int

@@ -40,7 +40,7 @@ class StudentDetailControllerTest extends TestCase
 
         $this->app->instance(StudentDetailService::class, $studentDetailService);
 
-        $response = $this->get(route('student.detail', ['id' => $studentId]));
+        $response = $this->get(route('student.details', ['studentId' => $studentId]));
 
         $response->assertStatus(200);
 
@@ -60,7 +60,7 @@ class StudentDetailControllerTest extends TestCase
 
         $this->app->instance(StudentDetailService::class, $studentDetailService);
 
-        $response = $this->get(route('student.detail', ['id' => $studentId]));
+        $response = $this->get(route('student.details', ['studentId' => $studentId]));
 
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: 12345']);

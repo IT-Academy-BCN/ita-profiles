@@ -1,97 +1,55 @@
 <?php
 
-use App\Http\Controllers\api\AdditionalTrainingListController;
-use App\Http\Controllers\api\AdminController;
-use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\DevelopmentListController;
-use App\Http\Controllers\api\ModalityController;
-use App\Http\Controllers\api\RecruiterController;
-use App\Http\Controllers\api\StudentController;
-use App\Http\Controllers\api\StudentListController;
-use App\Http\Controllers\api\StudentCollaborationController;
-use App\Http\Controllers\api\StudentProjectsDetailController;
-use App\Http\Controllers\api\StudentBootcampDetailController;
-use App\Http\Controllers\api\StudentDetailController;
-use App\Http\Controllers\api\TagController;
-use App\Http\Controllers\api\TagDetailController;
-use App\Http\Controllers\api\SpecializationListController;
-use App\Http\Controllers\api\StudentLanguagesDetailController;
 use Illuminate\Support\Facades\Route;
-use LaravelLang\Publisher\Console\Add;
+use App\Http\Controllers\api\{
+    AdditionalTrainingListController,
+    DevelopmentListController,
+    ModalityController,
+    StudentListController,
+    StudentCollaborationController,
+    StudentProjectsDetailController,
+    StudentBootcampDetailController,
+    StudentDetailController,
+    TagController,
+    SpecializationListController,
+    StudentLanguagesDetailController,
+    TagDetailController
+};
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-//No Auth
-Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::post('/students', [StudentController::class, 'store'])->name('student.create');
-Route::get('/students', [StudentController::class, 'index'])->name('students.list');
-Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.show');
-
-// Students Home
-Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
-Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
-
-Route::post('/recruiters', [RecruiterController::class, 'store'])->name('recruiter.create');
-Route::get('/recruiters', [RecruiterController::class, 'index'])->name('recruiter.list');
-Route::get('/recruiters/{id}', [RecruiterController::class, 'show'])->name('recruiter.show');
-
-// Student bootcamp detail Endpoint
-Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
-
-//Fake endpoint development
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
-Route::get('/modality/{studentId}', ModalityController::class)->name('modality');
-
-//Change the Fake endpoint to a real endpoint of Additional Training
-Route::get('/students/{student}/additionaltraining', AdditionalTrainingListController::class)->name('additionaltraining.list');
-
-// Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
-// Student projects detail Endpoint
-Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
-
-//Student Collaboration Endpoint
-Route::get('/students/{student}/collaborations', StudentCollaborationController::class)->name('collaborations.list');
-
-// Student languages details Endpoint
-Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
-
-//Admins Route
-Route::post('/admins', [AdminController::class, 'store'])->name('admins.create');
-Route::get('/tags', [TagController::class, 'index'])->name('tag.index');
-
-//Passport Auth with token
-Route::middleware('auth:api')->group(function () {
-    //Student
-    Route::put('/students/{id}', [StudentController::class, 'update'])->middleware('can:update.student')->name('student.update');
-    Route::delete('/students/{id}', [StudentController::class, 'destroy'])->middleware('can:delete.student')->name('student.delete');
-    //Recruiter
-    Route::put('/recruiters/{id}', [RecruiterController::class, 'update'])->name('recruiter.update');
-    Route::delete('/recruiters/{id}', [RecruiterController::class, 'destroy'])->name('recruiter.delete');
-    //Admin
-    Route::get('/admins/{id}', [AdminController::class, 'show'])->middleware('role:admin')->name('admin.show');
-    Route::put('/admins/{id}', [AdminController::class, 'update'])->middleware('role:admin')->name('admin.update');
-    Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->middleware('role:admin')->name('admin.destroy');
-    Route::get('/admins', [AdminController::class, 'index'])->middleware('role:admin')->name('admin.index');
-
-    //Tags
-    Route::post('/tags', [TagController::class, 'store'])->middleware('role:admin')->name('tag.create');
-    Route::get('/tags/{id}', [TagController::class, 'show'])->middleware('role:admin')->name('tag.show');
-    Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin')->name('tag.update');
-    Route::delete('/tags/{id}', [TagController::class, 'destroy'])->middleware('role:admin')->name('tag.destroy');
-    
-    //logout
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('student/resume/list', StudentListController::class)->name('students.list');
+Route::prefix('student/{studentId}/resume')->group(function () {
+    Route::get('detail', StudentDetailController::class)->name('student.details');
+    Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
+    Route::get('collaborations', StudentCollaborationController::class)->name('student.collaborations');
+    Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
+    Route::get('additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
+    Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
+    Route::get('modality', ModalityController::class)->name('student.modality');
 });
+
+Route::prefix('tags')->group(function () {
+    Route::get('/', [TagController::class, 'index'])->name('tag.index');
+    Route::post('/', [TagController::class, 'store'])->name('tag.create');
+    //Route::get('/{id}', [TagController::class, 'show'])->name('tag.show');
+    Route::get('/{id}', TagDetailController::class)->name('tag.detail');
+    Route::put('/{id}', [TagController::class, 'update'])->name('tag.update');
+});
+// ! OLD ROUTES BLOCK
+Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
+Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
+Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
+Route::get('/students/{student}/collaborations', StudentCollaborationController::class)->name('collaborations.list');
+Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
+Route::get('/students/{student}/additionaltraining', AdditionalTrainingListController::class)->name('additionaltraining.list');
+Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
+Route::get('/modality/{studentId}', ModalityController::class)->name('modality');
+// Fake endpoint development
+Route::get('/development/list', DevelopmentListController::class)->name('development.list');
+// Specialization List Endpoint
+Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
+// ! OLD ROUTES BLOCK
 //Tag Detail without middleware
 Route::get('/tag/detail/{id}', TagDetailController::class)->name('tag.detail');

@@ -19,21 +19,21 @@ class SpecializationListServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Resume::query()->delete();
         
         $this->specializationListService = new SpecializationListService();
     }
 
     public function testSpecializationListServiceReturnsAValidSpecializationArrayForExistingResumesWithSpecializationFieldWithValidData(): void
     {
-        Resume::query()->delete();
-
         $specializations = ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'];
         
         foreach ($specializations as $specialization) {
             ResumeFactory::new()->specificSpecialization($specialization)->create();
         }
 
-        $response = $this->specializationListService->execute(); // DEBERÍA SER LA LLAMADA AL SERVICE
+        $response = $this->specializationListService->execute();
 
         $this->assertCount(4, $response);
         $this->assertContains('Frontend', $response);
@@ -44,8 +44,6 @@ class SpecializationListServiceTest extends TestCase
 
     public function testSpecializationListServiceReturnsAVoidArrayForExistingResumesWithSpecializationFieldWithNotSetValue(): void
     {
-        Resume::query()->delete();
-
         $specialization = 'Not Set';
     
         for ($i = 0; $i < 3; $i++) {
@@ -61,8 +59,6 @@ class SpecializationListServiceTest extends TestCase
 
     public function testSpecializationListServiceReturnsAnEmptyArrayWhenNoResumes(): void
     {
-        Resume::query()->delete();
-
         $response = $this->specializationListService->execute();
 
         $this->assertEquals([], $response);
