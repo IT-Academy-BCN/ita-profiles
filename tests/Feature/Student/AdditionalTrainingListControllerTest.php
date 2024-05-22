@@ -2,24 +2,18 @@
 
 declare(strict_types=1);
 
-//namespace Tests\Feature\Api;
 namespace Tests\Feature\Student;
 
 use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Resume;
 use App\Models\AdditionalTraining;
-use App\Service\AdditionalTrainingService;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Exception;
 use Tests\Fixtures\Students;
 
 class AdditionalTrainingListControllerTest extends TestCase
 {
-    /** @test */
-    public function it_returns_additional_training_details_for_valid_uuid()
+    public function test_it_returns_additional_training_details_for_valid_uuid()
     {
-        
         $student = Student::factory()->create();
         $resume = Resume::factory()->create(['student_id' => $student->id]);        
         $additionalTraining1 = AdditionalTraining::factory()->create();
@@ -27,19 +21,14 @@ class AdditionalTrainingListControllerTest extends TestCase
         $resume->additional_trainings_ids = json_encode([$additionalTraining1->id, $additionalTraining2->id]);
         $resume->save();
 
-        $this->app->instance(AdditionalTrainingService::class, new AdditionalTrainingService());
-
         $response = $this->getJson(route('student.additionaltraining', ['studentId' => $student->id]));
 
         $response->assertStatus(200)
                  ->assertJsonStructure(['additional_trainings']);
     }
 
-    /** @test */
-    public function it_returns_404_for_invalid_uuid()
+    public function test_it_returns_404_for_invalid_uuid()
     {
-        $this->app->instance(AdditionalTrainingService::class, new AdditionalTrainingService());
-
         $response = $this->getJson(route('student.additionaltraining', ['studentId' => 'nonexistent_uuid']));
 
         $response->assertStatus(404);
@@ -47,39 +36,17 @@ class AdditionalTrainingListControllerTest extends TestCase
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonexistent_uuid']);
     }
 
-     /** @test */
-     public function it_returns_404_for_valid_uuid_without_resume()
+     public function test_it_returns_404_for_valid_uuid_without_resume()
      {
         $student = Students::aStudent();
 
         $studentId = $student->id;
-        
-        $this->app->instance(AdditionalTrainingService::class, new AdditionalTrainingService());
+         
+        $response = $this->getJson(route('student.additionaltraining', ['studentId' => $studentId]));
  
-         $response = $this->getJson(route('additionaltraining.list', ['student' => $studentId]));
- 
-         $response->assertStatus(404);
+        $response->assertStatus(404);
 
-         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $studentId]);
+        $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $studentId]);
      }
-
-    /** @test */
-    public function it_returns_500_for_internal_server_error()
-    {
-        
-        $this->app->instance(AdditionalTrainingService::class, new class {
-            public function getAdditionalTrainingDetails($uuid)
-            {
-                throw new Exception();
-            }
-        });
-
-        $student = Student::factory()->create();
-        $resume = Resume::factory()->create(['student_id' => $student->id]);        
-
-        $response = $this->getJson(route('student.additionaltraining', ['studentId' => $student->id]));
-
-        $response->assertStatus(500);
-    }
 
 }

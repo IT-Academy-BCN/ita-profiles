@@ -11,6 +11,7 @@ use App\Http\Controllers\api\{
     StudentBootcampDetailController,
     StudentDetailController,
     TagController,
+    TagListController,
     SpecializationListController,
     StudentLanguagesDetailController
 };
@@ -30,7 +31,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
 });
 
 Route::prefix('tags')->group(function () {
-    Route::get('/', [TagController::class, 'index'])->name('tag.index');
+    Route::get('/', TagListController::class)->name('tag.list');
     Route::post('/', [TagController::class, 'store'])->name('tag.create');
     Route::get('/{id}', [TagController::class, 'show'])->name('tag.show');
     Route::put('/{id}', [TagController::class, 'update'])->name('tag.update');

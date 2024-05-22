@@ -19,7 +19,7 @@ class ModalityTest extends TestCase
 
         Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
 
-        $response = $this->getJson(route('modality', ['studentId' => $studentId]));
+        $response = $this->getJson(route('student.modality', ['studentId' => $studentId]));
 
         $response->assertStatus(200);
 
@@ -41,7 +41,7 @@ class ModalityTest extends TestCase
 
     public function testModalityControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
     {
-        $response = $this->getJson(route('modality', ['studentId' =>  'nonExistentStudentId']));
+        $response = $this->getJson(route('student.modality', ['studentId' =>  'nonExistentStudentId']));
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
     }
