@@ -24,11 +24,7 @@ RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-
-# Exponer el puerto 8000
-#EXPOSE 80
-#
-## Iniciar el servidor web de PHP
+## Vaciar cache
 CMD ["php", "artisan", "cache:clear"]
 CMD ["php", "artisan", "config:clear"]
 CMD ["php", "artisan", "config:cache"]
