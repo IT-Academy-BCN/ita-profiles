@@ -20,7 +20,7 @@ class TagDetailControllerTest extends TestCase
             'tag_name' => 'Test Tag',
         ]);
 
-        $response = $this->getJson(route('tag.detail', ['id' => $tag->id]));
+        $response = $this->getJson(route('tag.detail', ['tagId' => $tag->id]));
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -37,7 +37,7 @@ class TagDetailControllerTest extends TestCase
     {
         $nonExistentTagId = 9999;
 
-        $response = $this->getJson(route('tag.detail', ['id' => $nonExistentTagId]));
+        $response = $this->getJson(route('tag.detail', ['tagId' => $nonExistentTagId]));
 
         $response->assertStatus(404);
         $response->assertJson([

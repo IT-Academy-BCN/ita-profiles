@@ -33,8 +33,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
 Route::prefix('tags')->group(function () {
     Route::get('/', [TagController::class, 'index'])->name('tag.index');
     Route::post('/', [TagController::class, 'store'])->name('tag.create');
-    //Route::get('/{id}', [TagController::class, 'show'])->name('tag.show');
-    Route::get('/{id}', TagDetailController::class)->name('tag.detail');
+    Route::get('/{tagId}', TagDetailController::class)->name('tag.detail');
     Route::put('/{id}', [TagController::class, 'update'])->name('tag.update');
 });
 // ! OLD ROUTES BLOCK
