@@ -18,13 +18,12 @@ class TagControllerTest extends TestCase
         parent::setUp();
     }
 
-    public function testIndexReturnsTags()
+    // ESTE MÉTODO DEBERÍA ELIMINARSE. YA EXISTE EL TAGLISTCONTROLLER
+    /* public function testIndexReturnsTags()
     {
        
-        // Retrieve three existing tags from the database
         $tags = Tag::query()->limit(3)->get();
 
-        // If there are fewer than three tags in the database, create the necessary ones
         if ($tags->count() < 3) {
             $tags = TagFactory::new()->count(3 - $tags->count())->create();
         }
@@ -41,9 +40,10 @@ class TagControllerTest extends TestCase
                 ],
             ],
         ]);
-    }
+    } */
 
-    public function testIndexReturns404WhenNoTagsExist()
+    // ESTE MÉTODO DEBERÍA ELIMINARSE. NO DEBE DEVOLVER UN ERROR, SINO UN ARRAY VACÍO
+    /* public function testIndexReturns404WhenNoTagsExist()
     {
         // Delete all existing tags from the database
         Tag::query()->delete();
@@ -53,7 +53,7 @@ class TagControllerTest extends TestCase
         $response->assertStatus(404);
 
         $response->assertJson(['message' => 'Not found']);
-    }
+    } */
 
     public function testStoreTag()
     {

@@ -4,58 +4,6 @@ namespace App\Annotations\OpenApi\controllersAnnotations\tagAnnotations;
 
 class AnnotationsTag
 {
-   /**
- * Tag List
- *
- * @OA\Get(
- *     path="/tags",
- *     operationId="getAllTags",
- *     tags={"Tags"},
- *     summary="Tags Index.",
- *     description="Retrieve a list of registered tags.",
- *
- *     @OA\Response(
- *         response=200,
- *         description="Successful. Tag Index retrieved.",
- *
- *         @OA\JsonContent(
- *             type="array",
- *
- *             @OA\Items(
- *                 type="object",
- *
- *                 @OA\Property(property="id", type="integer", example=1),
- *                 @OA\Property(property="tag_name", type="string", example="Laravel"),
- *                 @OA\Property(property="created_at", type="string", format="date-time", example="2024-01-25T12:34:56Z"),
- *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2024-01-25T12:34:56Z"),
- *             )
- *         )
- *     ),
- *
- *     @OA\Response(
- *         response=401,
- *         description="Unauthorized",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="status", type="boolean", example=false),
- *             @OA\Property(property="message", type="string", example="Unauthorized")
- *         )
- *     ),
- *
- *     @OA\Response(
- *         response=404,
- *         description="No tags found.",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="message", type="string", example="No tags found in the database.")
- *         )
- *     )
- * )
- */
-    public function index() {}
-
     /**
      * @OA\Post(
      *      path="/tags",
