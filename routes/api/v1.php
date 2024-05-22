@@ -51,5 +51,3 @@ Route::get('/development/list', DevelopmentListController::class)->name('develop
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 // ! OLD ROUTES BLOCK
-//Tag Detail without middleware
-Route::get('/tag/detail/{id}', TagDetailController::class)->name('tag.detail');
