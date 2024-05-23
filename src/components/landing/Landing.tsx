@@ -1,11 +1,32 @@
+import { useState } from 'react'
 import MenuNavbar from '../menuNavbar/MenuNavbar'
 import UserNavbar from '../userNavBar/UserNavbar'
 import StudentDetailsLayout from '../studentDetail/StudentDetailsLayout'
 import StudentsLayout from '../students/StudentsLayout'
 import StudentFiltersLayout from '../studentFilters/StudentFiltersLayout'
 import { StudentFiltersProvider } from '../../context/StudentFiltersContext'
+import StudentProfile from '../studentProfile/StudentProfile';
 
-const Landing = () => (
+
+const Landing: React.FC = () => {
+  
+
+  const [viewProfile, setViewProfile] = useState(false); // Quitar
+
+  // Quitar de fila 15 a 26(botón auxiliar para ver perfil)
+  const handleViewProfile = () => {
+    setViewProfile(true);
+  };
+
+  const handleBackToList = () => {
+    setViewProfile(false);
+  };
+
+  if (viewProfile) {
+    return <StudentProfile onBack={handleBackToList} />;
+  }
+
+return (
   <div className="flex h-screen">
     <MenuNavbar data-testid="MenuNavbar" /> {/* Added data-testid */}
     <div className="flex w-full md:w-[calc(100%-176px)] flex-col gap-3 p-2.5 md:p-2 md:pb-8 md:pr-14">
@@ -23,7 +44,12 @@ const Landing = () => (
         </div>
       </StudentFiltersProvider>
     </div>
+    {/* Quitar de fila 43 a 45(botón auxiliar para ver perfil) */}
+    <button type='button' onClick={handleViewProfile}>
+        View Profile
+      </button>
   </div>
 )
+}
 
 export default Landing
