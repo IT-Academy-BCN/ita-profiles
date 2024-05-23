@@ -15,6 +15,7 @@ use App\Http\Controllers\api\StudentDetailController;
 use App\Http\Controllers\api\TagController;
 use App\Http\Controllers\api\SpecializationListController;
 use App\Http\Controllers\api\StudentLanguagesDetailController;
+use App\Http\Controllers\api\StudentUpdateController;
 use Illuminate\Support\Facades\Route;
 use LaravelLang\Publisher\Console\Add;
 
@@ -34,6 +35,7 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('/students', [StudentController::class, 'store'])->name('student.create');
 Route::get('/students', [StudentController::class, 'index'])->name('students.list');
 Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.show');
+Route::put('/students/{studentId}', StudentUpdateController::class)->name('student.update');
 
 // Students Home
 Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
