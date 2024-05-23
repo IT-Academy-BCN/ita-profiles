@@ -1,23 +1,28 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import StudentsList from './StudentsList';
 import StudentsFiltersModal from '../studentFilters/StudentFiltersModal';
-
-declare global {
-  interface Window {
-    handleNavigation: (path: string) => void;
-  }
-}
+import StudentProfile from '../studentProfile/StudentProfile';
 
 const StudentsLayout: React.FC = () => {
-
   const [openModal, setOpenModal] = useState(false);
+  const [viewProfile, setViewProfile] = useState(false); // Quitar
+
   const handleOpenModal = () => {
     setOpenModal(!openModal);
   };
 
-  const handleNavigation = (path: string) => {
-    window.handleNavigation(path);
+  // Quitar de fila 15 a 26(botón auxiliar para ver perfil)
+  const handleViewProfile = () => {
+    setViewProfile(true);
   };
+
+  const handleBackToList = () => {
+    setViewProfile(false);
+  };
+
+  if (viewProfile) {
+    return <StudentProfile onBack={handleBackToList} />;
+  }
 
   return (
     <div className="flex flex-col w-full gap-20">
@@ -34,8 +39,12 @@ const StudentsLayout: React.FC = () => {
       </div>
       <StudentsList />
       {openModal && <StudentsFiltersModal handleOpenModal={handleOpenModal} />}
-      <button onClick={() => handleNavigation('/profile')}>Go to Profile</button>
+      {/* Quitar de fila 43 a 45(botón auxiliar para ver perfil) */}
+      <button type='button' onClick={handleViewProfile}>
+        View Profile
+      </button>
     </div>
   );
 };
+
 export default StudentsLayout;

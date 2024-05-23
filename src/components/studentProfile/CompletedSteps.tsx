@@ -1,24 +1,38 @@
-import React from 'react';
+import ProfileProgress from './ProfileProgress';
+import LikeIcon from '../../assets/svg/like.svg';
 
 const items = [
   { text: 'Nombre, título, gitHub y Linkedin', checked: true },
   { text: 'Presentación', checked: true },
   { text: 'Skills', checked: true },
   { text: 'Proyectos', checked: true },
-  { text: 'Colaboración', checked: true },
-  { text: 'Formación', checked: true },
+  { text: 'Colaboración', checked: false },
+  { text: 'Formación', checked: false },
   { text: 'Idiomas', checked: false },
   { text: 'Modalidad de empleo', checked: false },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-shadow
+const calculateCompletionPercentage = (items: { text: string; checked: boolean }[]) => {
+  const totalItems = items.length;
+  const completedItems = items.filter(item => item.checked).length;
+  return (completedItems / totalItems) * 100;
+};
+
+const completionPercentage = calculateCompletionPercentage(items);
+
 const CompletedSteps = () => (
-    <ul>
+  <>
+    <ProfileProgress completion={completionPercentage} />
+    <ul className="list-none p-0">
       {items.map((item) => (
-        <li  style={{ color: item.checked ? 'magenta' : 'gray' }}>
+        <li className={`my-2 font-semibold flex ${item.checked ? 'text-primary' : 'text-gray-3'}`}>
+          <img src={LikeIcon} alt="like" className={`mr-2 ${item.checked ? 'text-primary' : 'text-gray-3'}`} />
           {item.text}
         </li>
       ))}
     </ul>
-  );
+  </>
+);
 
 export default CompletedSteps;

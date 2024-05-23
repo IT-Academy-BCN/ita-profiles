@@ -1,18 +1,30 @@
 import React from 'react';
 import StudentProfileDetail from './StudentProfileDetail';
-import CompletionPercentage from './CompletionPercentage';
 import CompletedSteps from './CompletedSteps';
 
 
-const StudentProfile: React.FC = () => (
+interface StudentProfileProps {
+  onBack: () => void;
+}
+
+const StudentProfile: React.FC<StudentProfileProps> = ({ onBack }) => (
   <>
-    <StudentProfileDetail />
-    <CompletionPercentage completion={0} />
-    <CompletedSteps />
-    <button type="button" className="border-2">
-      Volver
+    <div className='flex'>
+      <div className="flex flex-col gap-6">
+        <CompletedSteps />
+      </div>
+      <div className="justify-end">
+        <StudentProfileDetail />
+      </div>
+    </div>
+    <button type="button" onClick={onBack} className='absolute right-20 top-20'>
+      Back to List
     </button>
   </>
+
+
+
+
 );
 
 export default StudentProfile;
