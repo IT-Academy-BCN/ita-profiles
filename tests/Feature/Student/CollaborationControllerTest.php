@@ -8,6 +8,8 @@ use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Collaboration;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\api\StudentCollaborationController;
+use App\Service\CollaborationService;
 
 class CollaborationControllerTest extends TestCase
 {
@@ -16,7 +18,7 @@ class CollaborationControllerTest extends TestCase
     protected $student;
     protected $resume;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -27,7 +29,6 @@ class CollaborationControllerTest extends TestCase
 
     public function testCollaborationControllerReturns_200StatusForValidStudentUuidWithCollaborations(): void
     {
-
         $collaboration1 = Collaboration::factory()->create();
 
         $collaboration2 = Collaboration::factory()->create();
@@ -61,6 +62,15 @@ class CollaborationControllerTest extends TestCase
         $response->assertStatus(404);
 
         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
+    }
+
+    public function testStudentCollaborationControllerCanBeInstantiated(): void
+    {
+        $collaborationService = $this->createMock(CollaborationService::class);
+    
+        $controller = new StudentCollaborationController($collaborationService);
+
+        $this->assertInstanceOf(StudentCollaborationController::class, $controller);
     }
 
 }
