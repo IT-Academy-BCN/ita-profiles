@@ -9,7 +9,7 @@ use App\Exceptions\StudentNotFoundException;
 use App\Models\Student;
 use App\Models\Collaboration;
 
-class CollaborationService
+class StudentCollaborationService
 {
     public function execute(string $studentId): array
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Service;
 
 use Tests\TestCase;
-use App\Service\CollaborationService;
+use App\Service\StudentCollaborationService;
 use App\Models\Student;
 use App\Models\Collaboration;
 use App\Exceptions\StudentNotFoundException;
@@ -14,17 +14,17 @@ use Tests\Fixtures\Students;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CollaborationServiceTest extends TestCase
+class StudentCollaborationServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $collaborationService;
+    protected $studentCollaborationService;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->collaborationService = new CollaborationService();
+        $this->studentCollaborationService = new StudentCollaborationService();
     }
 
     public function testCollaborationServiceReturnsValidCollaborationDetailsForStudentWithCollaborations(): void
@@ -41,7 +41,7 @@ class CollaborationServiceTest extends TestCase
 
         $resume->save();
 
-        $response = $this->collaborationService->execute($student->id);
+        $response = $this->studentCollaborationService->execute($student->id);
 
         $this->assertIsArray($response);
 
@@ -62,7 +62,7 @@ class CollaborationServiceTest extends TestCase
 
         $student->resume()->create();
 
-        $service = new CollaborationService();
+        $service = new StudentCollaborationService();
 
         $response = $service->execute($student->id);
 
@@ -75,7 +75,7 @@ class CollaborationServiceTest extends TestCase
     {
         $this->expectException(StudentNotFoundException::class);
 
-        $this->collaborationService->execute('nonexistent_uuid');
+        $this->studentCollaborationService->execute('nonexistent_uuid');
     }
 
     public function testCollaborationServiceThrowsResumeNotFoundExceptionForstudentWithoutResume(): void
@@ -86,12 +86,12 @@ class CollaborationServiceTest extends TestCase
 
         $this->expectException(ResumeNotFoundException::class);
 
-        $this->collaborationService->execute($studentId);
+        $this->studentCollaborationService->execute($studentId);
     }
 
     public function testCollaborationServiceCanBeInstantiated(): void
     {
-        self::assertInstanceOf(CollaborationService::class, $this->collaborationService);
+        self::assertInstanceOf(StudentCollaborationService::class, $this->studentCollaborationService);
     }
 
 }

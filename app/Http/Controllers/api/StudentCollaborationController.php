@@ -7,23 +7,23 @@ namespace App\Http\Controllers\api;
 use App\Exceptions\ResumeNotFoundException;
 use App\Exceptions\StudentNotFoundException;
 use App\Http\Controllers\Controller;
-use App\Service\CollaborationService;
+use App\Service\StudentCollaborationService;
 use Illuminate\Http\JsonResponse;
 use Exception;
 
 class StudentCollaborationController extends Controller
 {
-    private CollaborationService $collaborationService;
+    private StudentCollaborationService $studentCollaborationService;
 
-    public function __construct(CollaborationService $collaborationService)
+    public function __construct(StudentCollaborationService $studentCollaborationService)
     {
-        $this->collaborationService = $collaborationService;
+        $this->studentCollaborationService = $studentCollaborationService;
     }
     
     public function __invoke(string $studentId): JsonResponse
     {
         try {
-            $service = $this->collaborationService->execute($studentId);
+            $service = $this->studentCollaborationService->execute($studentId);
             return response()->json(['collaborations' => $service]);
         } catch (StudentNotFoundException | ResumeNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());

@@ -9,9 +9,9 @@ use App\Models\Student;
 use App\Models\Collaboration;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\api\StudentCollaborationController;
-use App\Service\CollaborationService;
+use App\Service\StudentCollaborationService;
 
-class CollaborationControllerTest extends TestCase
+class StudentCollaborationControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -66,9 +66,9 @@ class CollaborationControllerTest extends TestCase
 
     public function testStudentCollaborationControllerCanBeInstantiated(): void
     {
-        $collaborationService = $this->createMock(CollaborationService::class);
+        $studentCollaborationService = $this->createMock(StudentCollaborationService::class);
     
-        $controller = new StudentCollaborationController($collaborationService);
+        $controller = new StudentCollaborationController($studentCollaborationService);
 
         $this->assertInstanceOf(StudentCollaborationController::class, $controller);
     }
