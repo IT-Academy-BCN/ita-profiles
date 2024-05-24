@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Resume;
 use App\Models\Student;
 use App\Models\Tag;
+use App\Http\Controllers\api\StudentListController;
 use App\Service\StudentListService;
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
@@ -47,16 +48,21 @@ class StudentListControllerTest extends TestCase
         $response = $this->getJson(route('students.list'));
 
         $response->assertStatus(404);
+
         $response->assertJson(['message' => 'No hi ha resums']);
     }
+
     public function test_specialization_filter_returns_correct_students()
     {
         $specialization = 'Backend';
+
         $student = Student::factory()->create();
+
         $resume = Resume::factory()->create([
             'student_id' => $student->id,
             'specialization' => $specialization,
         ]);
+
         $response = $this->getJson(route('students.list', ['specialization' => 'Data Science,Backend']));
 
         $response->assertStatus(200);
@@ -65,7 +71,7 @@ class StudentListControllerTest extends TestCase
             'fullname' => $student->name . " " . $student->surname,
             'subtitle' => $resume->subtitle,
         ]);
-        // Comprobar directamente en la base de datos
+
         $this->assertDatabaseHas('students', [
             'id' => $student->id,
             'name' => $student->name,
@@ -77,30 +83,47 @@ class StudentListControllerTest extends TestCase
             'student_id' => $student->id,
             'specialization' => $specialization,
         ]);
+
         $fetchedResume = Resume::with('student')->find($resume->id);
+
         $this->assertNotNull($fetchedResume);
+
         $this->assertTrue($fetchedResume->student->is($student));
     }
 
     public function testGetResumesWithTags()
     {
         $tag1 = Tag::create(['tag_name' => 'tag1']);
+
         $tag2 = Tag::create(['tag_name' => 'tag2']);
 
         $student = Students::aStudent();
 
         $resume1 = Resumes::createResume($student->id, 'Frontend', [$tag1->id]);
+
         $resume2 = Resumes::createResume($student->id, 'Backend', [$tag2->id]);
 
         $resumeService = new StudentListService();
 
         $resumes = $resumeService->getResumes(null, ['tag1']);
+
         $this->assertCount(1, $resumes);
+
         $this->assertEquals($resume1->id, $resumes->first()->id);
 
         $resumes = $resumeService->getResumes(null, ['tag2']);
-        $this->assertCount(1, $resumes);
-        $this->assertEquals($resume2->id, $resumes->first()->id);
 
+        $this->assertCount(1, $resumes);
+
+        $this->assertEquals($resume2->id, $resumes->first()->id);
+    }
+
+    public function testStudentListControllerCanBeInstantiated()
+    {
+        $studentListService = $this->createMock(StudentListService::class);
+        
+        $controller = new StudentListController($studentListService);
+
+        $this->assertInstanceOf(StudentListController::class, $controller);
     }
 }
