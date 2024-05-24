@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Database\Factories\ResumeFactory;
 use App\Models\Resume;
+use App\Http\Controllers\api\SpecializationListController;
+use App\Service\SpecializationListService;
 
 class SpecializationListControllerTest extends TestCase
 {
@@ -46,6 +50,15 @@ class SpecializationListControllerTest extends TestCase
         $response = $this->getJson(route('roles.list'));
 
         $response->assertStatus(200);
+    }
+
+    public function testSpecializationListControllerCanBeInstantiated(): void
+    {
+        $specializationListService = $this->createMock(SpecializationListService::class);
+        
+        $controller = new SpecializationListController($specializationListService);
+
+        $this->assertInstanceOf(SpecializationListController::class, $controller);
     }
 
 }
