@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Student;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -23,7 +25,7 @@ class StudentDetailControllerTest extends TestCase
         $this->resume = $this->student->resume()->create();
     }
     
-    public function testStudentDetailsAreFound()
+    public function testStudentDetailsAreFound(): void
     {
         $studentDetailService = $this->createMock(StudentDetailService::class);
 
@@ -47,7 +49,7 @@ class StudentDetailControllerTest extends TestCase
 
     }
 
-    public function testStudentDetailsIsNotFound()
+    public function testStudentDetailsIsNotFound(): void
     {
         $studentDetailService = $this->createMock(StudentDetailService::class);
 
@@ -55,7 +57,7 @@ class StudentDetailControllerTest extends TestCase
         $studentDetailService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
-                              ->willThrowException(new \App\Exceptions\StudentNotFoundException($studentId));
+                              ->willThrowException(new \App\Exceptions\StudentNotFoundException((string)$studentId));
 
         $this->app->instance(StudentDetailService::class, $studentDetailService);
 
