@@ -9,6 +9,8 @@ use Tests\Fixtures\Resumes;
 use Tests\Fixtures\LanguagesForResume;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use App\Http\Controllers\api\StudentLanguagesDetailController;
+use App\Service\Student\LanguageService;
 
 class StudentLanguagesDetailControllerTest extends TestCase
 {
@@ -16,7 +18,7 @@ class StudentLanguagesDetailControllerTest extends TestCase
 
     protected $student;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -30,23 +32,39 @@ class StudentLanguagesDetailControllerTest extends TestCase
     public function testLanguageControllerReturns_200StatusForValidStudentUuidWithLanguages(): void
     {
         $response = $this->getJson(route('student.languages', ['studentId' =>  $this->student->id]));
+
         $response->assertStatus(200);
+
         $response->assertJson([]);
     }
 
     public function testLanguageControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
     {
         $response = $this->getJson(route('student.languages', ['studentId' =>  'nonExistentStudentId']));
+
         $response->assertStatus(404);
+
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
     }
 
     public function testLanguageControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume(): void
     {
         $this->student->resume->delete();
+
         $response = $this->getJson(route('student.languages', ['studentId' =>  $this->student->id]));
+
         $response->assertStatus(404);
+
         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
+    }
+
+    public function testStudentLanguagesDetailControllerCanBeInstantiated(): void
+    {
+        $languageService = $this->createMock(LanguageService::class);
+        
+        $controller = new StudentLanguagesDetailController($languageService);
+
+        $this->assertInstanceOf(StudentLanguagesDetailController::class, $controller);
     }
 
 }

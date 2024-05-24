@@ -23,7 +23,7 @@ class LanguageServiceTest extends TestCase
     protected $studentWithoutResume;
     protected $languages;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,6 +50,7 @@ class LanguageServiceTest extends TestCase
         $this->assertCount(2, $response);
 
         $expectedKeys = ['language_id', 'language_name', 'language_level'];
+        
         foreach ($response as $languageDetails) {
             foreach ($expectedKeys as $key) {
                 $this->assertArrayHasKey($key, $languageDetails);
@@ -78,5 +79,10 @@ class LanguageServiceTest extends TestCase
         $this->expectException(ResumeNotFoundException::class);
 
         $this->languageService->execute($this->studentWithoutResume->id);
+    }
+
+    public function testLanguageServiceCanBeInstantiated(): void
+    {
+        self::assertInstanceOf(LanguageService::class, $this->languageService);
     }
 }
