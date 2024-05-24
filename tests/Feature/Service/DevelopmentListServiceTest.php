@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Service;
 
 use Tests\TestCase;
@@ -17,63 +19,53 @@ class DevelopmentListServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        Resume::query()->delete();
         
         $this->developmentListService = new DevelopmentListService();
     }
 
     public function testDevelopmentListServiceReturnsAValidDevelopmentArrayForExistingResumesWithDevelopmentFieldWithValidData(): void
     {
-        Resume::query()->delete();
-
         $developmentOptions = ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'];
         
         foreach ($developmentOptions as $development) {
             ResumeFactory::new()->specificDevelopment($development)->create();
         }
 
-        $response = $this->getJson(route('development.list'));
+        $response = $this->developmentListService->execute();
 
-        $response->assertStatus(200);
-
-        $developmentList = $response->json();
-        
-        $this->assertCount(4, $developmentList);
-        $this->assertContains('Spring', $developmentList);
-        $this->assertContains('Laravel', $developmentList);
-        $this->assertContains('Angular', $developmentList);
-        $this->assertContains('React', $developmentList);
+        $this->assertCount(4, $response);
+        $this->assertContains('Spring', $response);
+        $this->assertContains('Laravel', $response);
+        $this->assertContains('Angular', $response);
+        $this->assertContains('React', $response);
     }
 
     public function testDevelopmentListServiceReturnsAnEmptyArrayForExistingResumesWithDevelopmentFieldWithNotSetValue(): void
     {
-        Resume::query()->delete();
-
         $development = 'Not Set';
     
         for ($i = 0; $i < 3; $i++) {
             ResumeFactory::new()->specificDevelopment($development)->create();
         }
 
-        $response = $this->getJson(route('development.list'));
+        $response = $this->developmentListService->execute();
 
-        $response->assertStatus(200);
+        $this->assertIsArray($response);
 
-        $developmentList = $response->json();
-
-        $this->assertIsArray($developmentList);
-        $this->assertEquals([], $developmentList);
+        $this->assertEquals([], $response);
     }
 
     public function testDevelopmentListServiceReturnsAnEmptyArrayWhenNoResumes(): void
     {
-        Resume::query()->delete();
+        $response = $this->developmentListService->execute();
 
-        $response = $this->getJson(route('development.list'));
+        $this->assertEquals([], $response);
+    }
 
-        $response->assertStatus(200);
-
-        $developmentList = $response->json();
-
-        $this->assertEquals([], $developmentList);
+    public function testDevelopmentListServiceCanBeInstantiated(): void
+    {
+        self::assertInstanceOf(DevelopmentListService::class, $this->developmentListService);
     }
 }
