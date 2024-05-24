@@ -13,7 +13,7 @@ use Exception;
 
 class StudentCollaborationController extends Controller
 {
-    protected $collaborationService;
+    private CollaborationService $collaborationService;
 
     public function __construct(CollaborationService $collaborationService)
     {
