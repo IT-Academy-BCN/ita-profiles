@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Student;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
+use App\Service\Student\ModalityService;
+use App\Http\Controllers\api\ModalityController;
 
 class ModalityTest extends TestCase
 {
@@ -44,6 +48,15 @@ class ModalityTest extends TestCase
         $response = $this->getJson(route('student.modality', ['studentId' =>  'nonExistentStudentId']));
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
+    }
+
+    public function testModalityControllerCanBeInstantiated():void
+    {
+        $modalityService = $this->createMock(ModalityService::class);
+        
+        $controller = new ModalityController($modalityService);
+
+        $this->assertInstanceOf(ModalityController::class, $controller);
     }
 }
 

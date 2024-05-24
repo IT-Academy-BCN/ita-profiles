@@ -6,6 +6,7 @@ namespace Tests\Feature\Student;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use App\Http\Controllers\api\StudentDetailController;
 use App\Service\StudentDetailService;
 use App\Models\Student;
 
@@ -16,7 +17,7 @@ class StudentDetailControllerTest extends TestCase
     protected $student;
     protected $resume;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -34,6 +35,7 @@ class StudentDetailControllerTest extends TestCase
         $studentId = $student->id;
         
         $studentDetail = $this->resume;
+
         $studentDetailService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
@@ -46,7 +48,6 @@ class StudentDetailControllerTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJsonStructure();
-
     }
 
     public function testStudentDetailsIsNotFound(): void
@@ -54,6 +55,7 @@ class StudentDetailControllerTest extends TestCase
         $studentDetailService = $this->createMock(StudentDetailService::class);
 
         $studentId = 12345;
+
         $studentDetailService->expects($this->once())
                               ->method('execute')
                               ->with($studentId)
@@ -64,6 +66,7 @@ class StudentDetailControllerTest extends TestCase
         $response = $this->get(route('student.details', ['studentId' => $studentId]));
 
         $response->assertStatus(404);
+        
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: 12345']);
     }
 
@@ -76,5 +79,14 @@ class StudentDetailControllerTest extends TestCase
         $response->assertStatus(404);
         
         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
+    }
+
+    public function testStudentDetailControllerCanBeInstantiated():void
+    {
+        $studentDetailService = $this->createMock(StudentDetailService::class);
+        
+        $controller = new StudentDetailController($studentDetailService);
+
+        $this->assertInstanceOf(StudentDetailController::class, $controller);
     }
 }

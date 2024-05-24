@@ -10,7 +10,6 @@ use App\Service\StudentDetailService;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Models\Student;
 use Tests\Fixtures\Students;
 
 class StudentDetailServiceTest extends TestCase
@@ -25,6 +24,7 @@ class StudentDetailServiceTest extends TestCase
 
         $this->studentDetailService = new StudentDetailService();
     }
+
     public function testGetStudentDetailsById() : void
     {
         $service = $this->studentDetailService;
@@ -34,7 +34,6 @@ class StudentDetailServiceTest extends TestCase
         $result = $service->getStudentDetailsById($resume->student->id);
 
         $this->assertEquals($resume->about, $result["about"]);
-
     }
 
     public function testStudentDetailsNotFound() : void
@@ -44,6 +43,7 @@ class StudentDetailServiceTest extends TestCase
         $nonExistentStudentId = 'non-existent-student-id';
 
         $this->expectException(StudentNotFoundException::class);
+        
         $service->getStudentDetailsById($nonExistentStudentId);
     }
 
@@ -56,6 +56,11 @@ class StudentDetailServiceTest extends TestCase
         $this->expectException(ResumeNotFoundException::class);
 
         $this->studentDetailService->execute($studentId);
+    }
+
+    public function testStudentDetailServiceCanBeInstantiated(): void
+    {
+        self::assertInstanceOf(StudentDetailService::class, $this->studentDetailService);
     }
 
 }

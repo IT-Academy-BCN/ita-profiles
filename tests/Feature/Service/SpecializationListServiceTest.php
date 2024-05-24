@@ -63,4 +63,9 @@ class SpecializationListServiceTest extends TestCase
 
         $this->assertEquals([], $response);
     }
+
+    public function testSpecializationListServiceCanBeInstantiated(): void
+    {
+        self::assertInstanceOf(SpecializationListService::class, $this->specializationListService);
+    }
 }

@@ -23,6 +23,7 @@ class TagDetailServiceTest extends TestCase
 
         $this->tagDetailService = new TagDetailService();
     }
+
     public function testExecuteReturnsExpectedData(): void
     {
         $tag = Tag::factory()->create([
@@ -41,11 +42,16 @@ class TagDetailServiceTest extends TestCase
 
     public function testTagDetailsNotFound() : void
     {
-
         $nonExistentTagId = 'non-existent-tag-id';
 
         $this->expectException(ModelNotFoundException::class);
+        
         $this->tagDetailService->execute($nonExistentTagId);
+    }
+
+    public function testTagDetailServiceCanBeInstantiated(): void
+    {
+        self::assertInstanceOf(TagDetailService::class, $this->tagDetailService);
     }
 
 }

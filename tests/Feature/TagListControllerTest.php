@@ -41,9 +41,9 @@ class TagListControllerTest extends TestCase
 
     public function testTagListControllerCanBeInstantiated(): void
     {
-        $this->tagListService = new TagListService();
-
-        $controller = new TagListController($this->tagListService);
+        $tagListService = $this->createMock(TagListService::class);
+        
+        $controller = new TagListController($tagListService);
 
         $this->assertInstanceOf(TagListController::class, $controller);
     }

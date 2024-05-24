@@ -1,17 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Database\Factories\ResumeFactory;
 use App\Models\Resume;
+use App\Http\Controllers\api\DevelopmentListController;
+use App\Service\DevelopmentListService;
 
 class DevelopmentListControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function testDevelopmentListControllerReturns200StatusAndValidDevelopmentListForResumesWithValidDevelopmentOptions(): void
+    public function testDevelopmentListControllerReturns_200StatusAndValidDevelopmentListForResumesWithValidDevelopmentOptions(): void
     {
         $developmentOptions = ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'];
         
@@ -32,7 +36,7 @@ class DevelopmentListControllerTest extends TestCase
         $this->assertContains('React', $developmentList);
     }
 
-    public function testDevelopmentListControllerReturns200StatusAndEmptyArrayForResumesWithNotSetDevelopmentOption(): void
+    public function testDevelopmentListControllerReturns_200StatusAndEmptyArrayForResumesWithNotSetDevelopmentOption(): void
     {
         Resume::query()->delete();
 
@@ -52,7 +56,7 @@ class DevelopmentListControllerTest extends TestCase
         $this->assertEquals([], $developmentList);
     }
 
-    public function testDevelopmentListControllerReturns200StatusAndEmptyArrayWhenNoResumes(): void
+    public function testDevelopmentListControllerReturns_200StatusAndEmptyArrayWhenNoResumes(): void
     {
         Resume::query()->delete();
 
@@ -63,6 +67,15 @@ class DevelopmentListControllerTest extends TestCase
         $developmentList = $response->json();
 
         $this->assertEquals([], $developmentList);
+    }
+
+    public function testDevelopmentListControllerCanBeInstantiated(): void
+    {
+        $developmentListService = $this->createMock(DevelopmentListService::class);
+        
+        $controller = new DevelopmentListController($developmentListService);
+
+        $this->assertInstanceOf(DevelopmentListController::class, $controller);
     }
 
 }

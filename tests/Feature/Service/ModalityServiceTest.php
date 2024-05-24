@@ -53,7 +53,6 @@ class ModalityServiceTest extends TestCase
         $this->assertEmpty($result);
     }
 
-
     public function testExecuteWithInvalidStudentId():void
     {
         $this->expectException(StudentNotFoundException::class);
@@ -71,4 +70,10 @@ class ModalityServiceTest extends TestCase
 
         $this->modalityService->execute($studentId);
     }
+
+    public function testModalityServiceCanBeInstantiated(): void
+    {
+        self::assertInstanceOf(ModalityService::class, $this->modalityService);
+    }
+
 }

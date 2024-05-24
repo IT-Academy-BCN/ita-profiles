@@ -7,8 +7,8 @@ namespace Tests\Feature\Controller;
 use Tests\TestCase;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use App\Http\Controllers\api\TagDetailController;
+use App\Service\TagDetailService;
 
 class TagDetailControllerTest extends TestCase
 {
@@ -43,5 +43,14 @@ class TagDetailControllerTest extends TestCase
         $response->assertJson([
             'message' => 'Tag not found with id '.$nonExistentTagId,
         ]);
+    }
+
+    public function testTagDetailControllerCanBeInstantiated()
+    {
+        $studentDetailService = $this->createMock(TagDetailService::class);
+        
+        $controller = new TagDetailController($studentDetailService);
+
+        $this->assertInstanceOf(TagDetailController::class, $controller);
     }
 }
