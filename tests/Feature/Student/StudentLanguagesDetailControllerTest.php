@@ -10,7 +10,7 @@ use Tests\Fixtures\LanguagesForResume;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Http\Controllers\api\StudentLanguagesDetailController;
-use App\Service\Student\LanguageService;
+use App\Service\Student\StudentLanguageDetailService;
 
 class StudentLanguagesDetailControllerTest extends TestCase
 {
@@ -60,7 +60,7 @@ class StudentLanguagesDetailControllerTest extends TestCase
 
     public function testStudentLanguagesDetailControllerCanBeInstantiated(): void
     {
-        $languageService = $this->createMock(LanguageService::class);
+        $languageService = $this->createMock(StudentLanguageDetailService::class);
         
         $controller = new StudentLanguagesDetailController($languageService);
 

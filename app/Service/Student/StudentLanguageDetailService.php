@@ -8,7 +8,7 @@ use App\Models\Student;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
-class LanguageService
+class StudentLanguageDetailService
 {
     public function execute(string $studentId): array
     {

@@ -6,18 +6,18 @@ namespace Tests\Feature\Service;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Service\Student\LanguageService;
+use App\Service\Student\StudentLanguageDetailService;
 use App\Models\Resume;
 use App\Models\Student;
 use Tests\Fixtures\LanguagesForResume;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
-class LanguageServiceTest extends TestCase
+class StudentLanguageDetailServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $languageService;
+    protected $studentLanguageDetailService;
     protected $studentWithoutLanguages;
     protected $studentWithLanguages;
     protected $studentWithoutResume;
@@ -27,7 +27,7 @@ class LanguageServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->languageService = new LanguageService();
+        $this->studentLanguageDetailService = new StudentLanguageDetailService();
 
         $this->studentWithoutLanguages = Resume::factory()->create()->student;
 
@@ -43,7 +43,7 @@ class LanguageServiceTest extends TestCase
     public function testLanguageServiceReturnsValidLanguageDetailsForStudentWithLanguages(): void
     {
 
-        $response = $this->languageService->execute($this->studentWithLanguages->id);
+        $response = $this->studentLanguageDetailService->execute($this->studentWithLanguages->id);
 
         $this->assertIsArray($response);
 
@@ -60,7 +60,7 @@ class LanguageServiceTest extends TestCase
 
     public function testLanguageServiceReturnsAnEmptyArrayInCaseOfStudentWithoutLanguages(): void
     {
-        $response = $this->languageService->execute($this->studentWithoutLanguages->id);
+        $response = $this->studentLanguageDetailService->execute($this->studentWithoutLanguages->id);
 
         $this->assertIsArray($response);
         
@@ -71,18 +71,18 @@ class LanguageServiceTest extends TestCase
     {
         $this->expectException(StudentNotFoundException::class);
 
-        $this->languageService->execute('nonExistentStudentId');
+        $this->studentLanguageDetailService->execute('nonExistentStudentId');
     }
 
     public function testLanguageServiceThrowsResumeNotFoundExceptionForStudentWithoutResume(): void
     {
         $this->expectException(ResumeNotFoundException::class);
 
-        $this->languageService->execute($this->studentWithoutResume->id);
+        $this->studentLanguageDetailService->execute($this->studentWithoutResume->id);
     }
 
     public function testLanguageServiceCanBeInstantiated(): void
     {
-        self::assertInstanceOf(LanguageService::class, $this->languageService);
+        self::assertInstanceOf(StudentLanguageDetailService::class, $this->studentLanguageDetailService);
     }
 }
