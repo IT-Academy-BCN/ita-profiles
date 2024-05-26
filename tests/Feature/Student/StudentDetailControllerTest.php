@@ -7,7 +7,7 @@ namespace Tests\Feature\Student;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Http\Controllers\api\Student\StudentDetailController;
-use App\Service\StudentDetailService;
+use App\Service\Student\StudentDetailService;
 use App\Models\Student;
 
 class StudentDetailControllerTest extends TestCase

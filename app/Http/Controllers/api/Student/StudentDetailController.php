@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api\Student;
 
 use Exception;
 use App\Http\Controllers\Controller;
-use App\Service\StudentDetailService;
+use App\Service\Student\StudentDetailService;
 use Illuminate\Http\JsonResponse;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;

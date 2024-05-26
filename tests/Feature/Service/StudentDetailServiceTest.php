@@ -6,7 +6,7 @@ namespace Tests\Feature\Service;
 
 use Tests\TestCase;
 use App\Models\Resume;
-use App\Service\StudentDetailService;
+use App\Service\Student\StudentDetailService;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
