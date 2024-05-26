@@ -9,7 +9,7 @@ use Tests\TestCase;
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
 use App\Service\Student\StudentModalityService;
-use App\Http\Controllers\api\StudentModalityController;
+use App\Http\Controllers\api\Student\StudentModalityController;
 
 class StudentModalityControllerTest extends TestCase
 {

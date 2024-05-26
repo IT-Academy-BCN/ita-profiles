@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\Student\{
     StudentAdditionalTrainingListController,
+    StudentModalityController,
 };
 use App\Http\Controllers\api\{
     
     DevelopmentListController,
-    StudentModalityController,
     StudentListController,
     StudentCollaborationDetailController,
     StudentProjectsDetailController,
