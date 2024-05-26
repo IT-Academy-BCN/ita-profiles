@@ -14,13 +14,13 @@ use App\Http\Controllers\api\Student\{
 use App\Http\Controllers\api\Tag\{
     TagDetailController,
     TagListController,
+    TagController,
 
 };
 
 use App\Http\Controllers\api\{
     
     DevelopmentListController,
-    TagController,
     SpecializationListController,
 };
 
