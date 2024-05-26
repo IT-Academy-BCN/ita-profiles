@@ -12,7 +12,7 @@ use Exception;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
-class AdditionalTrainingListController extends Controller
+class StudentAdditionalTrainingListController extends Controller
 {
     protected AdditionalTrainingService $additionalTrainingService;
 

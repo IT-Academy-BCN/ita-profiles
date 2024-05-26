@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\{
-    AdditionalTrainingListController,
+    StudentAdditionalTrainingListController,
     DevelopmentListController,
     StudentModalityController,
     StudentListController,
@@ -26,7 +26,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
     Route::get('collaborations', StudentCollaborationController::class)->name('student.collaborations');
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
-    Route::get('additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
+    Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
 });
@@ -43,7 +43,7 @@ Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->nam
 Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
 Route::get('/students/{student}/collaborations', StudentCollaborationController::class)->name('collaborations.list');
 Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
-Route::get('/students/{student}/additionaltraining', AdditionalTrainingListController::class)->name('additionaltraining.list');
+Route::get('/students/{student}/additionaltraining', StudentAdditionalTrainingListController::class)->name('additionaltraining.list');
 Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
 Route::get('/modality/{studentId}', StudentModalityController::class)->name('modality');
 // Fake endpoint development
