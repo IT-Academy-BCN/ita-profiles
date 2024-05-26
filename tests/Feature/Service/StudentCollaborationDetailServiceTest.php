@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Service;
 
 use Tests\TestCase;
-use App\Service\StudentCollaborationService;
+use App\Service\StudentCollaborationDetailService;
 use App\Models\Student;
 use App\Models\Collaboration;
 use App\Exceptions\StudentNotFoundException;
@@ -14,17 +14,17 @@ use Tests\Fixtures\Students;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class StudentCollaborationServiceTest extends TestCase
+class StudentCollaborationDetailServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $studentCollaborationService;
+    protected $studentCollaborationDetailService;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->studentCollaborationService = new StudentCollaborationService();
+        $this->studentCollaborationDetailService = new StudentCollaborationDetailService();
     }
 
     public function testCollaborationServiceReturnsValidCollaborationDetailsForStudentWithCollaborations(): void
@@ -41,7 +41,7 @@ class StudentCollaborationServiceTest extends TestCase
 
         $resume->save();
 
-        $response = $this->studentCollaborationService->execute($student->id);
+        $response = $this->studentCollaborationDetailService->execute($student->id);
 
         $this->assertIsArray($response);
 
@@ -62,7 +62,7 @@ class StudentCollaborationServiceTest extends TestCase
 
         $student->resume()->create();
 
-        $service = new StudentCollaborationService();
+        $service = new StudentCollaborationDetailService();
 
         $response = $service->execute($student->id);
 
@@ -75,7 +75,7 @@ class StudentCollaborationServiceTest extends TestCase
     {
         $this->expectException(StudentNotFoundException::class);
 
-        $this->studentCollaborationService->execute('nonexistent_uuid');
+        $this->studentCollaborationDetailService->execute('nonexistent_uuid');
     }
 
     public function testCollaborationServiceThrowsResumeNotFoundExceptionForstudentWithoutResume(): void
@@ -86,12 +86,12 @@ class StudentCollaborationServiceTest extends TestCase
 
         $this->expectException(ResumeNotFoundException::class);
 
-        $this->studentCollaborationService->execute($studentId);
+        $this->studentCollaborationDetailService->execute($studentId);
     }
 
     public function testCollaborationServiceCanBeInstantiated(): void
     {
-        self::assertInstanceOf(StudentCollaborationService::class, $this->studentCollaborationService);
+        self::assertInstanceOf(StudentCollaborationDetailService::class, $this->studentCollaborationDetailService);
     }
 
 }
