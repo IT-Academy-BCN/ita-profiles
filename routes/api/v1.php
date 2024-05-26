@@ -11,13 +11,17 @@ use App\Http\Controllers\api\Student\{
     StudentListController,
     StudentProjectsDetailController,
 };
+use App\Http\Controllers\api\Tag\{
+    TagDetailController
+
+};
+
 use App\Http\Controllers\api\{
     
     DevelopmentListController,
     TagController,
     TagListController,
     SpecializationListController,
-    TagDetailController
 };
 
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');

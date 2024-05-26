@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\api\Tag;
 
 use App\Http\Controllers\Controller;
 use App\Service\TagDetailService;

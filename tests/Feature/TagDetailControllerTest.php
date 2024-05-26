@@ -7,7 +7,7 @@ namespace Tests\Feature\Controller;
 use Tests\TestCase;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\api\TagDetailController;
+use App\Http\Controllers\api\Tag\TagDetailController;
 use App\Service\TagDetailService;
 
 class TagDetailControllerTest extends TestCase
