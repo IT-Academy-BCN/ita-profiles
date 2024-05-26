@@ -9,7 +9,7 @@ use App\Models\Student;
 use App\Models\Collaboration;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\api\Student\StudentCollaborationDetailController;
-use App\Service\StudentCollaborationDetailService;
+use App\Service\Student\StudentCollaborationDetailService;
 
 class StudentCollaborationDetailControllerTest extends TestCase
 {

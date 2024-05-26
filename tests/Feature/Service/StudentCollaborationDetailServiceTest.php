@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Service;
 
 use Tests\TestCase;
-use App\Service\StudentCollaborationDetailService;
+use App\Service\Student\StudentCollaborationDetailService;
 use App\Models\Student;
 use App\Models\Collaboration;
 use App\Exceptions\StudentNotFoundException;
