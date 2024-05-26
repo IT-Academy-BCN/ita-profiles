@@ -10,7 +10,7 @@ use App\Models\Project;
 use Tests\Fixtures\Students;
 use App\Models\Resume;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\api\StudentProjectsDetailController;
+use App\Http\Controllers\api\Student\StudentProjectsDetailController;
 use App\Service\Student\StudentProjectsDetailService;
 
 class StudentProjectsDetailControllerTest extends TestCase

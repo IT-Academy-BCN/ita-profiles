@@ -9,11 +9,11 @@ use App\Http\Controllers\api\Student\{
     StudentDetailController,
     StudentLanguagesDetailController,
     StudentListController,
+    StudentProjectsDetailController,
 };
 use App\Http\Controllers\api\{
     
     DevelopmentListController,
-    StudentProjectsDetailController,
     TagController,
     TagListController,
     SpecializationListController,
