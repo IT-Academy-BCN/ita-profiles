@@ -6,23 +6,23 @@ namespace Tests\Feature\Service;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Service\Student\ModalityService;
+use App\Service\Student\StudentModalityService;
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
-class ModalityServiceTest extends TestCase
+class StudentModalityServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $modalityService;
+    protected $studentModalityService;
 
     protected function setUp(): void
     {
         parent::setUp();
         
-        $this->modalityService = new modalityService();
+        $this->studentModalityService = new StudentModalityService();
     }
 
     public function testExecuteWithValidStudentId(): void
@@ -33,7 +33,7 @@ class ModalityServiceTest extends TestCase
 
         Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
 
-        $result = $this->modalityService->execute($studentId);
+        $result = $this->studentModalityService->execute($studentId);
 
         $this->assertIsArray($result);
     }
@@ -46,7 +46,7 @@ class ModalityServiceTest extends TestCase
 
         Resumes::createResumeWithoutModality($studentId, 'frontend', ['tag1', 'tag2']);
 
-        $result = $this->modalityService->execute($studentId);
+        $result = $this->studentModalityService->execute($studentId);
 
         $this->assertIsArray($result);
 
@@ -57,7 +57,7 @@ class ModalityServiceTest extends TestCase
     {
         $this->expectException(StudentNotFoundException::class);
 
-        $this->modalityService->execute('nonExistentStudentId');
+        $this->studentModalityService->execute('nonExistentStudentId');
     }
 
     public function testExecuteThrowsExceptionForStudentWithoutResume():void
@@ -68,12 +68,12 @@ class ModalityServiceTest extends TestCase
 
         $this->expectException(ResumeNotFoundException::class);
 
-        $this->modalityService->execute($studentId);
+        $this->studentModalityService->execute($studentId);
     }
 
     public function testModalityServiceCanBeInstantiated(): void
     {
-        self::assertInstanceOf(ModalityService::class, $this->modalityService);
+        self::assertInstanceOf(StudentModalityService::class, $this->studentModalityService);
     }
 
 }

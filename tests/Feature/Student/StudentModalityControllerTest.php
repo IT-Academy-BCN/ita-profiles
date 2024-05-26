@@ -8,8 +8,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
-use App\Service\Student\ModalityService;
-use App\Http\Controllers\api\ModalityController;
+use App\Service\Student\StudentModalityService;
+use App\Http\Controllers\api\StudentModalityController;
 
 class StudentModalityControllerTest extends TestCase
 {
@@ -52,11 +52,11 @@ class StudentModalityControllerTest extends TestCase
 
     public function testStudentModalityControllerCanBeInstantiated():void
     {
-        $modalityService = $this->createMock(ModalityService::class);
+        $studentModalityService = $this->createMock(StudentModalityService::class);
         
-        $controller = new ModalityController($modalityService);
+        $controller = new StudentModalityController($studentModalityService);
 
-        $this->assertInstanceOf(ModalityController::class, $controller);
+        $this->assertInstanceOf(StudentModalityController::class, $controller);
     }
 }
 

@@ -8,7 +8,7 @@ use App\Models\Student;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
-class ModalityService
+class StudentModalityService
 {
     public function execute(string $studentId): array
     {
