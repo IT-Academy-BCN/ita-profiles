@@ -12,7 +12,7 @@ use Tests\Fixtures\Students;
 use App\Http\Controllers\api\AdditionalTrainingListController;
 use App\Service\AdditionalTrainingService;
 
-class AdditionalTrainingListControllerTest extends TestCase
+class StudentAdditionalTrainingListControllerTest extends TestCase
 {
     public function test_it_returns_additional_training_details_for_valid_uuid()
     {
