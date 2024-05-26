@@ -11,7 +11,7 @@ use Tests\Fixtures\Resumes;
 use App\Service\Student\ModalityService;
 use App\Http\Controllers\api\ModalityController;
 
-class ModalityTest extends TestCase
+class StudentModalityControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
