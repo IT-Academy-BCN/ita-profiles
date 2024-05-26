@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Student;
+namespace Tests\Feature\Service;
 
 use Tests\TestCase;
-use App\Service\AdditionalTrainingService;
+use App\Service\StudentAdditionalTrainingService;
 use App\Models\Student;
 use App\Models\Resume;
 use App\Models\AdditionalTraining;
@@ -13,15 +13,15 @@ use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 use Tests\Fixtures\Students;
 
-class AdditionalTrainingListServiceTest extends TestCase
+class StudentAdditionalTrainingListServiceTest extends TestCase
 {
-    protected $additionalTrainingService;
+    protected $studentAdditionalTrainingService;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->additionalTrainingService = new AdditionalTrainingService();
+        $this->studentAdditionalTrainingService = new StudentAdditionalTrainingService();
     }
 
     public function test_it_returns_additional_training_details_for_valid_uuid(): void
@@ -38,7 +38,7 @@ class AdditionalTrainingListServiceTest extends TestCase
 
         $resume->save();
 
-        $result = $this->additionalTrainingService->execute($student->id);
+        $result = $this->studentAdditionalTrainingService->execute($student->id);
 
         $this->assertCount(2, $result);
     }
@@ -47,7 +47,7 @@ class AdditionalTrainingListServiceTest extends TestCase
     {
         $this->expectException(StudentNotFoundException::class);
 
-        $this->additionalTrainingService->execute('nonexistent_uuid');
+        $this->studentAdditionalTrainingService->execute('nonexistent_uuid');
     }
 
     public function test_it_throws_resume_not_found_exception_for_valid_uuid(): void
@@ -58,7 +58,7 @@ class AdditionalTrainingListServiceTest extends TestCase
 
         $this->expectException(ResumeNotFoundException::class);
 
-        $this->additionalTrainingService->execute($studentId);
+        $this->studentAdditionalTrainingService->execute($studentId);
     }
 
     public function test_get_additional_training_details_no_records(): void
@@ -67,7 +67,7 @@ class AdditionalTrainingListServiceTest extends TestCase
 
         $student->resume()->create();
         
-        $service = new AdditionalTrainingService();
+        $service = new StudentAdditionalTrainingService();
 
         $result = $service->execute($student->id);
         
@@ -76,7 +76,7 @@ class AdditionalTrainingListServiceTest extends TestCase
 
     public function testAdditionalTrainingListServiceCanBeInstantiated(): void
     {
-        self::assertInstanceOf(AdditionalTrainingService::class, $this->additionalTrainingService);
+        self::assertInstanceOf(StudentAdditionalTrainingService::class, $this->studentAdditionalTrainingService);
     }
     
 }
