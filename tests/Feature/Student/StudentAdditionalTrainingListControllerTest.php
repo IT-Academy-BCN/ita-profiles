@@ -14,7 +14,7 @@ use App\Service\AdditionalTrainingService;
 
 class StudentAdditionalTrainingListControllerTest extends TestCase
 {
-    public function test_it_returns_additional_training_details_for_valid_uuid()
+    public function testStudentAdditionalTrainingListControllerReturnsAdditionalTrainingDetailsForValidStudentUuid()
     {
         $student = Student::factory()->create();
 
@@ -35,7 +35,7 @@ class StudentAdditionalTrainingListControllerTest extends TestCase
         $response->assertJsonStructure(['additional_trainings']);
     }
 
-    public function test_it_returns_404_for_invalid_uuid()
+    public function testStudentAdditionalTrainingListControllerReturns_404ForInvalidStudentUuid()
     {
         $response = $this->getJson(route('student.additionaltraining', ['studentId' => 'nonexistent_uuid']));
 
@@ -44,7 +44,7 @@ class StudentAdditionalTrainingListControllerTest extends TestCase
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonexistent_uuid']);
     }
 
-    public function test_it_returns_404_for_valid_uuid_without_resume()
+    public function testStudentAdditionalTrainingListControllerReturns_404ForValidStudentUuidWithoutResume()
     {
         $student = Students::aStudent();
 
@@ -57,7 +57,7 @@ class StudentAdditionalTrainingListControllerTest extends TestCase
         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $studentId]);
     }
 
-    public function testAdditionalTrainingListControllerCanBeInstantiated(): void
+    public function testStudentAdditionalTrainingListControllerCanBeInstantiated(): void
     {
         $additionalTrainingService = $this->createMock(AdditionalTrainingService::class);
         
