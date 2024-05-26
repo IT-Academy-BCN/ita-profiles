@@ -8,8 +8,8 @@ use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Collaboration;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\api\StudentCollaborationController;
-use App\Service\StudentCollaborationService;
+use App\Http\Controllers\api\StudentCollaborationDetailController;
+use App\Service\StudentCollaborationDetailService;
 
 class StudentCollaborationDetailControllerTest extends TestCase
 {
@@ -66,11 +66,11 @@ class StudentCollaborationDetailControllerTest extends TestCase
 
     public function testStudentCollaborationDetailControllerCanBeInstantiated(): void
     {
-        $studentCollaborationService = $this->createMock(StudentCollaborationService::class);
+        $studentCollaborationService = $this->createMock(StudentCollaborationDetailService::class);
     
-        $controller = new StudentCollaborationController($studentCollaborationService);
+        $controller = new StudentCollaborationDetailController($studentCollaborationService);
 
-        $this->assertInstanceOf(StudentCollaborationController::class, $controller);
+        $this->assertInstanceOf(StudentCollaborationDetailController::class, $controller);
     }
 
 }
