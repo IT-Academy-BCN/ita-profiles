@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\api\StudentCollaborationController;
 use App\Service\StudentCollaborationService;
 
-class StudentCollaborationControllerTest extends TestCase
+class StudentCollaborationDetailControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -27,7 +27,7 @@ class StudentCollaborationControllerTest extends TestCase
         $this->resume = $this->student->resume()->create();
     }
 
-    public function testCollaborationControllerReturns_200StatusForValidStudentUuidWithCollaborations(): void
+    public function testStudentCollaborationDetailControllerReturns_200StatusForValidStudentUuidWithCollaborations(): void
     {
         $collaboration1 = Collaboration::factory()->create();
 
@@ -44,7 +44,7 @@ class StudentCollaborationControllerTest extends TestCase
         $response->assertJsonStructure(['collaborations']);
     }
 
-    public function testCollaborationControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
+    public function testStudentCollaborationDetailControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
     {
         $response = $this->getJson(route('student.collaborations', ['studentId' =>  'nonExistentStudentId']));
 
@@ -53,7 +53,7 @@ class StudentCollaborationControllerTest extends TestCase
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
     }
 
-    public function testCollaborationControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume(): void
+    public function testStudentCollaborationDetailControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume(): void
     {
         $this->student->resume->delete();
 
@@ -64,7 +64,7 @@ class StudentCollaborationControllerTest extends TestCase
         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
     }
 
-    public function testStudentCollaborationControllerCanBeInstantiated(): void
+    public function testStudentCollaborationDetailControllerCanBeInstantiated(): void
     {
         $studentCollaborationService = $this->createMock(StudentCollaborationService::class);
     
