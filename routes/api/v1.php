@@ -12,7 +12,8 @@ use App\Http\Controllers\api\Student\{
     StudentProjectsDetailController,
 };
 use App\Http\Controllers\api\Tag\{
-    TagDetailController
+    TagDetailController,
+    TagListController,
 
 };
 
@@ -20,7 +21,6 @@ use App\Http\Controllers\api\{
     
     DevelopmentListController,
     TagController,
-    TagListController,
     SpecializationListController,
 };
 
