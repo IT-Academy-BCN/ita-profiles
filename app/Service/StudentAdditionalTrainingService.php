@@ -6,12 +6,11 @@ namespace App\Service;
 
 use App\Models\Student;
 use App\Models\AdditionalTraining;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
 
-class AdditionalTrainingService
+class StudentAdditionalTrainingService
 {
 
     public function execute(string $studentId)
