@@ -7,6 +7,7 @@ use App\Http\Controllers\api\Student\{
     StudentBootcampDetailController,
     StudentCollaborationDetailController,
     StudentDetailController,
+    StudentLanguagesDetailController,
 };
 use App\Http\Controllers\api\{
     
@@ -16,7 +17,6 @@ use App\Http\Controllers\api\{
     TagController,
     TagListController,
     SpecializationListController,
-    StudentLanguagesDetailController,
     TagDetailController
 };
 

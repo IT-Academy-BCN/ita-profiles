@@ -9,7 +9,7 @@ use Tests\Fixtures\Resumes;
 use Tests\Fixtures\LanguagesForResume;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use App\Http\Controllers\api\StudentLanguagesDetailController;
+use App\Http\Controllers\api\Student\StudentLanguagesDetailController;
 use App\Service\Student\StudentLanguageDetailService;
 
 class StudentLanguagesDetailControllerTest extends TestCase
