@@ -34,7 +34,7 @@ class StudentBootcampDetailControllerTest extends TestCase
         $this->studentWithBootcamps = $resume->student;
     }
 
-    public function testGetStudentBootcampDetails(): void
+    public function testStudentBootcampDetailControllerGetStudentBootcampDetails(): void
     {
         $response = $this->getJson(route('student.bootcamp', ['studentId' =>  $this->studentWithBootcamps->id]));
 
@@ -51,7 +51,7 @@ class StudentBootcampDetailControllerTest extends TestCase
         ]);
     }
 
-    public function testControllerHandlesNonexistentStudent(): void
+    public function testStudentBootcampDetailControllerHandlesNonexistentStudent(): void
     {
         $nonexistentUuid = "00000000-0000-0000-0000-000000000000";
 
@@ -62,7 +62,7 @@ class StudentBootcampDetailControllerTest extends TestCase
         $response->assertJson(['message' => "No s'ha trobat cap estudiant amb aquest ID: $nonexistentUuid"]);
     }
 
-    public function testControllerReturnsEmptyArrayForStudentWithoutBootcamp(): void
+    public function testStudentBootcampDetailControllerReturnsEmptyArrayForStudentWithoutBootcamp(): void
     {
         $response = $this->getJson(route('student.bootcamp', ['studentId' => $this->studentWithoutBootcamps->id]));
 
