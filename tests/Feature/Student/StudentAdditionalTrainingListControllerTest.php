@@ -10,7 +10,7 @@ use App\Models\Resume;
 use App\Models\AdditionalTraining;
 use Tests\Fixtures\Students;
 use App\Http\Controllers\api\Student\StudentAdditionalTrainingListController;
-use App\Service\StudentAdditionalTrainingListService;
+use App\Service\Student\StudentAdditionalTrainingListService;
 
 class StudentAdditionalTrainingListControllerTest extends TestCase
 {

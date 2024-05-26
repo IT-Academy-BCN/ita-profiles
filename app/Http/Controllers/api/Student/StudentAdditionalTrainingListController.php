@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
-use App\Service\StudentAdditionalTrainingListService;
+use App\Service\Student\StudentAdditionalTrainingListService;
 use Illuminate\Http\JsonResponse;
 use Exception;
 use App\Exceptions\StudentNotFoundException;

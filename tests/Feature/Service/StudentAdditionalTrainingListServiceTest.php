@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Service;
 
 use Tests\TestCase;
-use App\Service\StudentAdditionalTrainingListService;
+use App\Service\Student\StudentAdditionalTrainingListService;
 use App\Models\Student;
 use App\Models\Resume;
 use App\Models\AdditionalTraining;
