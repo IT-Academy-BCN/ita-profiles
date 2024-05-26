@@ -9,8 +9,8 @@ use App\Models\Student;
 use App\Models\Resume;
 use App\Models\AdditionalTraining;
 use Tests\Fixtures\Students;
-use App\Http\Controllers\api\StudentAdditionalTrainingListController;
-use App\Service\StudentAdditionalTrainingService;
+use App\Http\Controllers\api\Student\StudentAdditionalTrainingListController;
+use App\Service\StudentAdditionalTrainingListService;
 
 class StudentAdditionalTrainingListControllerTest extends TestCase
 {
@@ -59,9 +59,9 @@ class StudentAdditionalTrainingListControllerTest extends TestCase
 
     public function testStudentAdditionalTrainingListControllerCanBeInstantiated(): void
     {
-        $additionalTrainingService = $this->createMock(StudentAdditionalTrainingService::class);
+        $additionalTrainingListService = $this->createMock(StudentAdditionalTrainingListService::class);
         
-        $controller = new StudentAdditionalTrainingListController($additionalTrainingService);
+        $controller = new StudentAdditionalTrainingListController($additionalTrainingListService);
 
         $this->assertInstanceOf(StudentAdditionalTrainingListController::class, $controller);
     }

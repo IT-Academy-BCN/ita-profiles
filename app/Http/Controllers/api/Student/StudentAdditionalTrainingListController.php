@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
-use App\Service\StudentAdditionalTrainingService;
+use App\Service\StudentAdditionalTrainingListService;
 use Illuminate\Http\JsonResponse;
 use Exception;
 use App\Exceptions\StudentNotFoundException;
@@ -13,17 +13,17 @@ use App\Exceptions\ResumeNotFoundException;
 
 class StudentAdditionalTrainingListController extends Controller
 {
-    protected StudentAdditionalTrainingService $studentAdditionalTrainingService;
+    protected StudentAdditionalTrainingListService $studentAdditionalTrainingListService;
 
-    public function __construct(StudentAdditionalTrainingService $studentAdditionalTrainingService)
+    public function __construct(StudentAdditionalTrainingListService $studentAdditionalTrainingListService)
     {
-        $this->studentAdditionalTrainingService = $studentAdditionalTrainingService;
+        $this->studentAdditionalTrainingListService = $studentAdditionalTrainingListService;
     }
 
     public function __invoke(string $studentId): JsonResponse
     {
         try {
-            $additionalTrainings = $this->studentAdditionalTrainingService->execute($studentId);
+            $additionalTrainings = $this->studentAdditionalTrainingListService->execute($studentId);
             return response()->json(['additional_trainings' => $additionalTrainings]);
         } catch (StudentNotFoundException | ResumeNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());

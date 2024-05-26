@@ -10,7 +10,7 @@ use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 
 
-class StudentAdditionalTrainingService
+class StudentAdditionalTrainingListService
 {
 
     public function execute(string $studentId)

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Service;
 
 use Tests\TestCase;
-use App\Service\StudentAdditionalTrainingService;
+use App\Service\StudentAdditionalTrainingListService;
 use App\Models\Student;
 use App\Models\Resume;
 use App\Models\AdditionalTraining;
@@ -21,7 +21,7 @@ class StudentAdditionalTrainingListServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->studentAdditionalTrainingService = new StudentAdditionalTrainingService();
+        $this->studentAdditionalTrainingService = new StudentAdditionalTrainingListService();
     }
 
     public function test_it_returns_additional_training_details_for_valid_uuid(): void
@@ -67,7 +67,7 @@ class StudentAdditionalTrainingListServiceTest extends TestCase
 
         $student->resume()->create();
         
-        $service = new StudentAdditionalTrainingService();
+        $service = new StudentAdditionalTrainingListService();
 
         $result = $service->execute($student->id);
         
@@ -76,7 +76,7 @@ class StudentAdditionalTrainingListServiceTest extends TestCase
 
     public function testAdditionalTrainingListServiceCanBeInstantiated(): void
     {
-        self::assertInstanceOf(StudentAdditionalTrainingService::class, $this->studentAdditionalTrainingService);
+        self::assertInstanceOf(StudentAdditionalTrainingListService::class, $this->studentAdditionalTrainingService);
     }
     
 }

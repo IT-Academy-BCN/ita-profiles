@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\{
+use App\Http\Controllers\api\Student\{
     StudentAdditionalTrainingListController,
+};
+use App\Http\Controllers\api\{
+    
     DevelopmentListController,
     StudentModalityController,
     StudentListController,
