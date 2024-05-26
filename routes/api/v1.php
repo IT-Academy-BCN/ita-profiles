@@ -6,7 +6,7 @@ use App\Http\Controllers\api\{
     DevelopmentListController,
     StudentModalityController,
     StudentListController,
-    StudentCollaborationController,
+    StudentCollaborationDetailController,
     StudentProjectsDetailController,
     StudentBootcampDetailController,
     StudentDetailController,
@@ -24,7 +24,7 @@ Route::get('student/resume/list', StudentListController::class)->name('students.
 Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('detail', StudentDetailController::class)->name('student.details');
     Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
-    Route::get('collaborations', StudentCollaborationController::class)->name('student.collaborations');
+    Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
@@ -41,7 +41,7 @@ Route::prefix('tags')->group(function () {
 Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
 Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
 Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
-Route::get('/students/{student}/collaborations', StudentCollaborationController::class)->name('collaborations.list');
+Route::get('/students/{student}/collaborations', StudentCollaborationDetailController::class)->name('collaborations.list');
 Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
 Route::get('/students/{student}/additionaltraining', StudentAdditionalTrainingListController::class)->name('additionaltraining.list');
 Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
