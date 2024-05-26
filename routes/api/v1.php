@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\Student\{
     StudentAdditionalTrainingListController,
     StudentModalityController,
+    StudentBootcampDetailController,
 };
 use App\Http\Controllers\api\{
     
@@ -11,7 +12,6 @@ use App\Http\Controllers\api\{
     StudentListController,
     StudentCollaborationDetailController,
     StudentProjectsDetailController,
-    StudentBootcampDetailController,
     StudentDetailController,
     TagController,
     TagListController,

@@ -7,7 +7,7 @@ namespace Tests\Feature\Student;
 use App\Models\Bootcamp;
 use App\Models\Resume;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\api\StudentBootcampDetailController;
+use App\Http\Controllers\api\Student\StudentBootcampDetailController;
 use App\Service\Student\StudentBootcampDetailService;
 use Tests\TestCase;
 
