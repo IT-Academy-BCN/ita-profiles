@@ -8,7 +8,7 @@ use Tests\TestCase;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\api\Tag\TagDetailController;
-use App\Service\TagDetailService;
+use App\Service\Tag\TagDetailService;
 
 class TagDetailControllerTest extends TestCase
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\api\Tag;
 
 use App\Http\Controllers\Controller;
-use App\Service\TagDetailService;
+use App\Service\Tag\TagDetailService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;

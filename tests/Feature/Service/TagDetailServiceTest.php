@@ -7,7 +7,7 @@ namespace Tests\Feature\Service;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Tag;
-use App\Service\TagDetailService;
+use App\Service\Tag\TagDetailService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 

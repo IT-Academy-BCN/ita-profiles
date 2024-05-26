@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Tag;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Tag;
