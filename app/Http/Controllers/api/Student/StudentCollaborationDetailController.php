@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\api\Student;
 
 use App\Exceptions\ResumeNotFoundException;
 use App\Exceptions\StudentNotFoundException;

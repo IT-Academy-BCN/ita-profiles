@@ -5,12 +5,12 @@ use App\Http\Controllers\api\Student\{
     StudentAdditionalTrainingListController,
     StudentModalityController,
     StudentBootcampDetailController,
+    StudentCollaborationDetailController,
 };
 use App\Http\Controllers\api\{
     
     DevelopmentListController,
     StudentListController,
-    StudentCollaborationDetailController,
     StudentProjectsDetailController,
     StudentDetailController,
     TagController,
