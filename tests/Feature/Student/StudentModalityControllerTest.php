@@ -15,7 +15,7 @@ class StudentModalityControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function testModalityControllerReturns_200StatusForValidStudentUuidWithModality():void
+    public function testStudentModalityControllerReturns_200StatusForValidStudentUuidWithModality():void
     {
         $student = Students::aStudent();
         
@@ -30,7 +30,7 @@ class StudentModalityControllerTest extends TestCase
         $response->assertJsonStructure(['modality']);
     }
 
-    public function testModalityControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume():void
+    public function testStudentModalityControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume():void
     {
         $student = Students::aStudent();
         
@@ -43,14 +43,14 @@ class StudentModalityControllerTest extends TestCase
         $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $studentId]);
     }
 
-    public function testModalityControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
+    public function testStudentModalityControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
     {
         $response = $this->getJson(route('student.modality', ['studentId' =>  'nonExistentStudentId']));
         $response->assertStatus(404);
         $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
     }
 
-    public function testModalityControllerCanBeInstantiated():void
+    public function testStudentModalityControllerCanBeInstantiated():void
     {
         $modalityService = $this->createMock(ModalityService::class);
         
