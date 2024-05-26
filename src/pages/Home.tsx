@@ -1,5 +1,20 @@
-import Landing from '../components/landing/Landing'
+import React from 'react';
+import { useNavigate} from 'react-router-dom';
+import Landing from '../components/landing/Landing';
 
-const Home = () => <Landing />
+const Home: React.FC = () => {
+  const navigate = useNavigate();
 
-export default Home
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
+
+  return (
+    <div className="home-page">
+      <Landing />
+      <button onClick={() => handleNavigation('/profile')}>Go to Profile</button>
+    </div>
+  );
+};
+
+export default Home;
