@@ -7,7 +7,7 @@ namespace Tests\Feature\Service;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Tag;
-use App\Service\TagListService;
+use App\Service\Tag\TagListService;
 
 
 class TagListServiceTest extends TestCase

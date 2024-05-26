@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\api\Tag;
 
 use App\Http\Controllers\Controller;
-use App\Service\TagListService;
+use App\Service\Tag\TagListService;
 use Illuminate\Http\JsonResponse;
 use Exception;
 

@@ -8,7 +8,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Tag;
 use App\Http\Controllers\api\Tag\TagListController;
-use App\Service\TagListService;
+use App\Service\Tag\TagListService;
 
 class TagListControllerTest extends TestCase
 {
