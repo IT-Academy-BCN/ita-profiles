@@ -6,13 +6,13 @@ use App\Http\Controllers\api\Student\{
     StudentModalityController,
     StudentBootcampDetailController,
     StudentCollaborationDetailController,
+    StudentDetailController,
 };
 use App\Http\Controllers\api\{
     
     DevelopmentListController,
     StudentListController,
     StudentProjectsDetailController,
-    StudentDetailController,
     TagController,
     TagListController,
     SpecializationListController,

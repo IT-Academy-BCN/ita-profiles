@@ -1,6 +1,8 @@
 <?php
-declare(strict_types=1); 
-namespace App\Http\Controllers\api;
+declare(strict_types=1);
+
+namespace App\Http\Controllers\api\Student;
+
 use Exception;
 use App\Http\Controllers\Controller;
 use App\Service\StudentDetailService;
