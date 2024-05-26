@@ -6,7 +6,7 @@ namespace Tests\Feature\Service;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Service\StudentListService;
+use App\Service\Student\StudentListService;
 use App\Models\Resume;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

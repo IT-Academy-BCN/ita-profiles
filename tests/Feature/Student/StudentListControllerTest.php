@@ -7,7 +7,7 @@ use App\Models\Resume;
 use App\Models\Student;
 use App\Models\Tag;
 use App\Http\Controllers\api\Student\StudentListController;
-use App\Service\StudentListService;
+use App\Service\Student\StudentListService;
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

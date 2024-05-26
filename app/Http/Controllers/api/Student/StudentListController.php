@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
-use App\Service\StudentListService;
+use App\Service\Student\StudentListService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
