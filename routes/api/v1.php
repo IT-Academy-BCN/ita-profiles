@@ -8,11 +8,11 @@ use App\Http\Controllers\api\Student\{
     StudentCollaborationDetailController,
     StudentDetailController,
     StudentLanguagesDetailController,
+    StudentListController,
 };
 use App\Http\Controllers\api\{
     
     DevelopmentListController,
-    StudentListController,
     StudentProjectsDetailController,
     TagController,
     TagListController,
