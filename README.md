@@ -10,6 +10,7 @@ The project now integrates both frontend and backend functionalities to provide 
 We have a "production" url for this project placed here:
 
 Backend: https://ita-profiles.onrender.com/api/documentation
+
 Frontend: https://ita-profiles.netlify.app/
 
 ## How to install the project
