@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Student;
+namespace Tests\Feature\Controller;
 
 use Tests\Fixtures\Students;
 use Tests\Fixtures\Resumes;

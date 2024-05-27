@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Student;
+namespace Tests\Feature\Controller;
 
 use Tests\TestCase;
 use App\Models\Resume;
