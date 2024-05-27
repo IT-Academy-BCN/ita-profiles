@@ -1,20 +1,12 @@
 import React from 'react';
-import { useNavigate} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import Landing from '../components/landing/Landing';
 
-const Home: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleNavigation = (path: string) => {
-    navigate(path);
-  };
-
-  return (
+const Home: React.FC = () => (
     <div className="home-page">
       <Landing />
-      <button type='button' onClick={() => handleNavigation('/profile')}>Go to Profile</button>
+      <Link to="/profile"><p className='absolute bottom-10 left-10'>Go to profile</p></Link>
     </div>
   );
-};
 
 export default Home;

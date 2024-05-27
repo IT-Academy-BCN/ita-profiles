@@ -1,15 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import StudentProfileDetail from './StudentProfileDetail';
 import CompletedSteps from './CompletedSteps';
 import MenuNavbar from '../menuNavbar/MenuNavbar';
 import UserNavbar from '../userNavBar/UserNavbar';
 
 
-interface StudentProfileProps {
-  onBack: () => void;
-}
 
-const StudentProfile: React.FC<StudentProfileProps> = ({ onBack }) => (
+const StudentProfile: React.FC = () => (
+  
+
   <div className="flex">
     <MenuNavbar />
     <div className="flex w-full md:w-[calc(100%-176px)] flex-col gap-3 p-2.5 md:p-2 md:pb-8 md:pr-14">
@@ -18,9 +18,11 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ onBack }) => (
         <CompletedSteps />
         <StudentProfileDetail />
       </div>
-      <button type="button" onClick={onBack} className='absolute left-20 top-20'>
-        Back to List
-      </button>
+      <Link to="/">
+        <p className='absolute bottom-10 left-10'>Back to Home</p>
+      </Link>
+
+      
     </div>
   </div>
 );
