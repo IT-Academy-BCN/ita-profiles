@@ -24,7 +24,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ onClose }) => {
   }
 
   return (
-    <div className="relative flex w-72 flex-col items-center rounded-lg bg-white p-4 md:p-8">
+    <div className="w-1/3 relative flex flex-col items-center rounded-lg bg-white p-5 md:p-20">
       <h2 className="text-lg font-bold text-black-3">Login</h2>
       <form className="flex flex-col space-y-4">
         <button
@@ -37,14 +37,14 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ onClose }) => {
         <input
           type="text"
           id="dni"
-          className="border-gray-300 w-full rounded-lg border p-2 focus:border-blue-300 focus:outline-none focus:ring"
+          className="border-gray-300 w-full rounded-lg border p-4 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring"
           placeholder="email por ahora."
           {...register('email')}
         />
         <input
           type="password"
           id="password"
-          className="border-gray-300 w-full rounded-lg border p-2 focus:border-blue-300 focus:outline-none focus:ring"
+          className="border-gray-300 w-full rounded-lg border p-4 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring"
           placeholder="Contraseña"
           {...register('password')}
         />

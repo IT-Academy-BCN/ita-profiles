@@ -89,3 +89,8 @@ export type TCollaboration = {
   collaboration_description: string
   collaboration_quantity: number
 }
+
+// === LoginResponse ===
+export type LoginResponse = {
+  token: string;
+}
