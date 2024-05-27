@@ -40,7 +40,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ onClose }) => {
           type="text"
           id="dni"
           className="border-gray-300 w-full rounded-lg border p-4 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring"
-          placeholder="email por ahora."
+          placeholder="DNI O NIE"
           {...register('dni')}
         />
         <input

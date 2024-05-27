@@ -1,4 +1,3 @@
-// LoginProvider.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface LoginContextProps {
@@ -28,7 +27,7 @@ const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    setIsLoggedIn(Boolean(storedToken)); // Actualizar isLoggedIn cuando cambie el token almacenado
+    setIsLoggedIn(Boolean(storedToken)); 
   }, []);
   
 

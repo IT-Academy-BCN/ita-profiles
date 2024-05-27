@@ -1,4 +1,3 @@
-// api.ts
 import axios from 'axios';
 import { LoginResponse } from '../interfaces/interfaces';
 
