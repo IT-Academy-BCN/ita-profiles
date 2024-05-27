@@ -17,7 +17,7 @@ class StudentListControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function test_student_list_controller()
+    public function test_student_list_controller_returns_valid_student_data()
     {
         $response = $this->getJson(route('students.list', ['specialization' => 'Data Science,Backend']));
 
