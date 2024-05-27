@@ -1,5 +1,3 @@
-import axios from 'axios'
-import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ILoginForm } from '../../interfaces/interfaces'
 import { useLogin } from '../../context/LoginContext';
