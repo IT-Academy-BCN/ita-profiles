@@ -5,6 +5,7 @@ import { ILoginForm } from '../../interfaces/interfaces'
 import { useLogin } from '../../context/LoginContext';
 import { fetchLogin } from '../../api/FetchLogin';
 
+
 type LoginPopupProps = {
   onClose: () => void
 }
@@ -18,6 +19,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ onClose }) => {
       const { token } = response;
       login(token);
       onClose();
+      console.log('Login successful');
     } catch (e) {
       console.error('Error logging in:', e);
     }
