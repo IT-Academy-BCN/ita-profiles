@@ -25,9 +25,6 @@ RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-EXPOSE 80
-EXPOSE 8000
-
 COPY . /var/www/html/
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --working-dir=/var/www/html
 RUN cp .env.docker .env
@@ -39,4 +36,6 @@ RUN chmod +x /usr/local/bin/wait-for-it.sh
 COPY init.sh /usr/local/bin/init.sh
 RUN chmod +x /usr/local/bin/init.sh
 
-CMD ["/usr/local/bin/init.sh"]
+EXPOSE 8000
+
+ENTRYPOINT ["/usr/local/bin/init.sh"]

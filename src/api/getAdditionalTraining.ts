@@ -4,7 +4,7 @@ const baseApi = ''
 export const getAdditionalTraining = async (studentUUID: string | null) => {
   try {
     const response = await axios.get(
-      `${baseApi}/api/v1/students/${studentUUID}/additionaltraining`,
+      `${baseApi}//localhost:8000/api/v1/students/${studentUUID}/additionaltraining`,
     )
     return response.data.additional_trainings
   } catch (err) {

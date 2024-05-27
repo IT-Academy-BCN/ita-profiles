@@ -54,7 +54,7 @@ describe('BootcampCard component', () => {
   test('renders bootcamp data correctly', async () => {
     mock
       .onGet(
-        `/api/v1/students/${studentUUID}/bootcamp`,
+        `//localhost:8000/api/v1/students/${studentUUID}/bootcamp`,
       )
       .reply(200, { bootcamps: bootcampData })
 

@@ -1,18 +1,32 @@
 services:
-    laravel-docker:
+    frontend:
         depends_on:
             - mysql
-        container_name: itaprofilesbackend-app
+        container_name: itaprofiles-frontend
+        command: ["npm", "run", "start"]
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: FrontendDockerFile
         ports:
             - "80:80"
+        volumes:
+            - .:/var/www/html
+        networks:
+            - itaprofiles
+
+    backend:
+        depends_on:
+            - mysql
+        container_name: itaprofiles-backend
+        build:
+            context: .
+            dockerfile: BackendDockerFile
+        ports:
             - "8000:8000"
         volumes:
             - .:/var/www/html
         networks:
-            - itabackend
+            - itaprofiles
 
     mysql:
         container_name: itaprofilesbackend-mysql
@@ -27,7 +41,7 @@ services:
         volumes:
             - ./docker/mysql-data:/var/lib/mysql
         networks:
-            - itabackend
+            - itaprofiles
 
     phpmyadmin:
         image: phpmyadmin:latest
@@ -38,7 +52,7 @@ services:
         environment:
             - PMA_ARBITRARY=1
         networks:
-            - itabackend
+            - itaprofiles
 
 networks:
-    itabackend:
+    itaprofiles:

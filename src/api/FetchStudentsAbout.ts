@@ -5,7 +5,7 @@ export const fetchAboutData = async (studentUUID: string | null) => {
 
         try {
           const response = await axios.get(
-            `/api/v1/student/${studentUUID}/detail/for-home`,
+            `//localhost:8000/api/v1/student/${studentUUID}/detail/for-home`,
 
           )
           return response.data.data;

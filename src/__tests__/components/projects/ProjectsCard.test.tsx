@@ -44,7 +44,7 @@ describe('ProjectsCard component', () => {
   test('renders projects correctly', async () => {
     mock
       .onGet(
-        `/api/v1/students/${studentUUID}/projects`,
+        `//localhost:8000/api/v1/students/${studentUUID}/projects`,
       )
       .reply(200, projectsData)
 

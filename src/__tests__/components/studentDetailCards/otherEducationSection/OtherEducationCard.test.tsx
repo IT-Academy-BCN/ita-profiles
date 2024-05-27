@@ -27,7 +27,7 @@ describe('OtherEducationCard', () => {
       },
     ]
     mock
-      .onGet(`${baseApi}/api/v1/students/${studentUUID}/additionaltraining`)
+      .onGet(`${baseApi}//localhost:8000/api/v1/students/${studentUUID}/additionaltraining`)
       .reply(200, additionalTraining)
 
     render(
