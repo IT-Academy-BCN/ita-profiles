@@ -5,11 +5,11 @@ const nie = /^[XYZ]\d{7,8}[A-Z]$/;
 const regexDNI = z
   .string()
   .regex(dni)
-  .max(9, { message: 'El documento deber contener 9 carácteres' });
+  .max(9, { message: 'El documento deber contener 9 caracteres' });
 const regexNIE = z
   .string()
   .regex(nie)
-  .max(9, { message: 'El documento deber contener 9 carácteres' });
+  .max(9, { message: 'El documento deber contener 9 caracteres' });
 
 export const UserSchema = z
   .object({
@@ -17,7 +17,7 @@ export const UserSchema = z
       message: 'El nombre de usuario es requerido',
     }),
     dni: z.union([regexDNI, regexNIE]),
-    email: z.string().email({ message: 'Este email no es válido.' }),
+    email: z.string().email({ message: 'Este email no es válido' }),
     specialization: z
       .string()
       .min(1, { message: 'La especialización es requerida' }),
@@ -26,7 +26,7 @@ export const UserSchema = z
     }),
     confirmPassword: z
       .string()
-      .min(1, { message: 'Confirmar password es requerido' }),
+      .min(1, { message: 'Confirmar contraseña es requerido' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'La contraseña no coincide',
