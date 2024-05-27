@@ -10,8 +10,6 @@ services:
             - "8000:80"
         volumes:
             - .:/var/www/html
-        command: >
-            bash -c "composer install && cp .env.docker .env && php artisan key:generate && php artisan migrate:fresh && php artisan db:seed && php artisan serve --host=0.0.0.0 --port=80 && php artisan config:cache"
         networks:
             - itabackend
 
@@ -32,6 +30,8 @@ services:
 
     phpmyadmin:
         image: phpmyadmin:latest
+        depends_on:
+            - mysql
         ports:
             - 9015:80
         environment:
