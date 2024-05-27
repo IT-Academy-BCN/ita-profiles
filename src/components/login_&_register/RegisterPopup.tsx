@@ -50,14 +50,16 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
   return (
     <div className="w-120 relative flex flex-col items-center rounded-lg bg-white p-5 md:p-20">
       <h2 className="text-lg font-bold md:text-2xl">Registro</h2>
+
       <form className="flex flex-col space-y-4">
+
         <button
           type="button"
           className="absolute right-2 top-2 h-8 w-8 cursor-pointer rounded-full border-none bg-transparent"
-          onClick={onClose}
-        >
+          onClick={onClose}>
           ✕
         </button>
+
         <div className="grid grid-cols-2 gap-4">
           <div>
             <input
@@ -71,32 +73,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               <p className="text-error">{`${errors.dni?.message}`}</p>
             )}
           </div>
-          <div>
-            <input
-              {...register('username')}
-              type="text"
-              id="username"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-              placeholder="Username"
-            />
-            {errors.username && (
-              <p className="text-error">{`${errors.username?.message}`}</p>
-            )}
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <input
-              {...register('password')}
-              type="password"
-              id="password"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-              placeholder="Password"
-            />
-            {errors.password && (
-              <p className="text-error">{`${errors.password?.message}`}</p>
-            )}
-          </div>
+
           <div>
             <input
               {...register('email')}
@@ -109,18 +86,17 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               <p className="text-error">{`${errors.email?.message}`}</p>
             )}
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
+
           <div>
             <input
-              type="password"
-              {...register('confirmPassword')}
-              id="confirmPassword"
+              {...register('username')}
+              type="text"
+              id="username"
               className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-              placeholder="Confirm Password"
+              placeholder="Username"
             />
-            {errors.confirmPassword && (
-              <p className="text-error">{`${errors.confirmPassword?.message}`}</p>
+            {errors.username && (
+              <p className="text-error">{`${errors.username?.message}`}</p>
             )}
           </div>
 
@@ -130,13 +106,40 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               {...register('specialization')}
               id="specialization"
               className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-              placeholder="Specialization"
+              placeholder="Especialización"
             />
             {errors.specialization && (
               <p className="text-error">{`${errors.specialization.message}`}</p>
             )}
           </div>
+
+          <div>
+            <input
+              {...register('password')}
+              type="password"
+              id="password"
+              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+              placeholder="Contraseña"
+            />
+            {errors.password && (
+              <p className="text-error">{`${errors.password?.message}`}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              type="password"
+              {...register('confirmPassword')}
+              id="confirmPassword"
+              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+              placeholder="Repetir contraseña"
+            />
+            {errors.confirmPassword && (
+              <p className="text-error">{`${errors.confirmPassword?.message}`}</p>
+            )}
+          </div>
         </div>
+
         <div className="flex items-center justify-center space-x-8 p-4 md:p-5 ">
           <div className="flex flex-col">
             <div className="flex items-center gap-1">
