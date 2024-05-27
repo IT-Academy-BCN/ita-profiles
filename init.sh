@@ -1,4 +1,7 @@
 #!/bin/sh
+npm install
+npm run dev
+
 /usr/local/bin/wait-for-it.sh mysql:3306 --timeout=120 --strict -- php artisan migrate:fresh
 /usr/local/bin/wait-for-it.sh mysql:3306 --timeout=120 --strict -- php artisan db:seed
 php artisan cache:clear

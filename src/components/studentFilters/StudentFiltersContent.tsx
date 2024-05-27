@@ -24,9 +24,9 @@ const StudentFiltersProvider: React.FC = () => {
   )
 
   const urlRoles =
-    'https://itaperfils.eurecatacademy.org/api/v1/specialization/list'
+    '/api/v1/specialization/list'
   const urlDevelopment =
-    'https://itaperfils.eurecatacademy.org/api/v1/development/list'
+    '/api/v1/development/list'
 
   const fetchData = async (
     url: string,

@@ -36,15 +36,15 @@ describe('StudentFiltersProvider', () => {
   test('renders student filters correctly', async () => {
     // Mock API responses
     mock
-      .onGet('https://itaperfils.eurecatacademy.org/api/v1/specialization/list')
+      .onGet('/api/v1/specialization/list')
       .reply(200, rolesData);
-  
+
     mock
-      .onGet('https://itaperfils.eurecatacademy.org/api/v1/development/list')
+      .onGet('/api/v1/development/list')
       .reply(200, developmentData);
-  
+
     let getByText: RenderResult['getByText'];
-  
+
     // Render the component
     await act(async () => {
         const renderResult = render(
@@ -52,14 +52,14 @@ describe('StudentFiltersProvider', () => {
             <StudentFiltersProvider />
           </StudentFiltersContext.Provider>
         );
-        getByText = renderResult.getByText;      
-      
+        getByText = renderResult.getByText;
+
         // Wait for data to be fetched and rendered
         await waitFor(() => {
           rolesData.forEach((role) => {
             expect(getByText(role)).toBeInTheDocument();
           });
-      
+
           developmentData.forEach((development) => {
             expect(getByText(development)).toBeInTheDocument();
           });

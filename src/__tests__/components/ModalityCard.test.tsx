@@ -45,7 +45,7 @@ describe('ModalityCard component', () => {
   test('renders modalities correctly', async () => {
     mock
       .onGet(
-        `https://itaperfils.eurecatacademy.org/api/v1/modality/${studentUUID}`,
+        `/api/v1/modality/${studentUUID}`,
       )
       .reply(200, modalityData)
 

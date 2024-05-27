@@ -21,7 +21,7 @@ describe('FetchStudentsListHome function', () => {
     const selectedRoles = ['role1', 'role2']
 
     const expectedUrl =
-      'https://itaperfils.eurecatacademy.org/api/v1/student/list/for-home?specialization=role1,role2'
+      '/api/v1/student/list/for-home?specialization=role1,role2'
 
     const mockData = [
       { id: 1, name: 'Student 1' },
@@ -39,7 +39,7 @@ describe('FetchStudentsListHome function', () => {
     const selectedRoles: string[] = []
 
     const expectedUrl =
-      'https://itaperfils.eurecatacademy.org/api/v1/student/list/for-home'
+      '/api/v1/student/list/for-home'
 
     mockAxios.onGet(expectedUrl).reply(500)
 
