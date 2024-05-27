@@ -2,6 +2,8 @@ import axios from 'axios'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ILoginForm } from '../../interfaces/interfaces'
+import { useLogin } from '../../context/LoginContext';
+import { fetchLogin } from '../../api/FetchLogin';
 
 type LoginPopupProps = {
   onClose: () => void
@@ -9,17 +11,15 @@ type LoginPopupProps = {
 
 const LoginPopup: React.FC<LoginPopupProps> = ({ onClose }) => {
   const { handleSubmit, register } = useForm<ILoginForm>()
+  const { login } = useLogin()
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
-      const response = await axios.post('http://localhost:3000/login', data)
-      // eslint-disable-next-line no-console
-      console.log('El data de login =>', response.data)
-      // token se devuelve solo cuando utilizamos email y password.
-      // Imposible modificar los campos a dni y password.
-      onClose()
+      const response = await fetchLogin(data);
+      const { token } = response;
+      login(token);
+      onClose();
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log('el error =>', e)
+      console.error('Error logging in:', e);
     }
   }
 
@@ -39,7 +39,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ onClose }) => {
           id="dni"
           className="border-gray-300 w-full rounded-lg border p-4 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring"
           placeholder="email por ahora."
-          {...register('email')}
+          {...register('dni')}
         />
         <input
           type="password"
