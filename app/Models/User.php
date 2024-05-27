@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -15,6 +18,9 @@ class User extends Authenticatable
     use HasFactory;
     use HasRoles;
     use Notifiable;
+    use HasUuids;
+
+    public $timestamps = false;
 
     protected function getDefaultGuardName(): string
     {
@@ -26,12 +32,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $guarded = ['id'];
     protected $fillable = [
-        'name',
-        'surname',
-        'dni',
-        'email',
-        'password',
+        'username', 'dni', 'email', 'password',
     ];
 
     /**
@@ -41,6 +44,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'password_confirmation',
         'remember_token',
     ];
 
@@ -54,11 +58,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function student()
-    {
-        return $this->hasOne(Student::class);
-    }
-
     public function admin()
     {
         return $this->hasOne(Admin::class);
@@ -67,5 +66,14 @@ class User extends Authenticatable
     public function recruiter()
     {
         return $this->hasOne(Recruiter::class);
+    }
+
+    public function student():HasOne
+    {
+        return $this->hasOne(Student::class);
+    }
+    public function resume():HasOne
+    {
+        return $this->hasOne(Resume::class);
     }
 }

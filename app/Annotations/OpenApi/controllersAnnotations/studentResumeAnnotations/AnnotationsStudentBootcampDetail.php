@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentBootcampDetailAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 use OpenApi\Annotations as OA;
 
@@ -10,16 +10,16 @@ class AnnotationsStudentBootcampDetail
 {
     /**
      * @OA\Get(
-     *      path="/students/{uuid}/bootcamp",
-     *      operationId="getStudentBootcamp",
-     *      tags={"Bootcamp"},
+     *      path="/student/{studentId}/resume/bootcamp",
+     *      operationId="getStudentResumeBootcamp",
+     *      tags={"Student -> Resume"},
      *      summary="Get a list of student´s bootcamp/s",
      *      description="
 - Returns detailed list of a student's bootcamp/s and the date that was/were finished.
 - Returns an empty array if the student didn't finish any bootcamp yet.",
      *      @OA\Parameter(
-     *          name="uuid",
-     *          description="Student UUID",
+     *          name="studentId",
+     *          description="Student ID",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -86,7 +86,7 @@ class AnnotationsStudentBootcampDetail
     *             example="Hi ha hagut un error"
     *             )
     *         )
-    *     ) 
+    *     )
     * )
      */
     public function __invoke()

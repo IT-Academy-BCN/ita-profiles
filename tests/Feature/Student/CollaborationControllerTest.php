@@ -28,7 +28,7 @@ class CollaborationControllerTest extends TestCase
 
         $this->app->instance(CollaborationService::class, new CollaborationService());
 
-        $response = $this->getJson(route('collaborations.list', ['student' => $student->id]));
+        $response = $this->getJson(route('student.collaborations', ['studentId' => $student->id]));
 
         $response->assertStatus(200)
                  ->assertJsonStructure(['collaborations']);
@@ -39,7 +39,7 @@ class CollaborationControllerTest extends TestCase
     {
         $this->app->instance(CollaborationService::class, new CollaborationService());
 
-        $response = $this->getJson(route('collaborations.list', ['student' => 'nonexistent_uuid']));
+        $response = $this->getJson(route('student.collaborations', ['studentId' => 'nonexistent_uuid']));
 
         $response->assertStatus(404);
     }
@@ -58,7 +58,7 @@ class CollaborationControllerTest extends TestCase
         $student = Student::factory()->create();
         $student->resume()->create();
 
-        $response = $this->getJson(route('collaborations.list', ['student' => $student->id]));
+        $response = $this->getJson(route('student.collaborations', ['studentId' => $student->id]));
 
         $response->assertStatus(500);
     }
