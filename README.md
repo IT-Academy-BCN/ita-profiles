@@ -7,6 +7,11 @@ ITA Profiles is a project from IT Academy post-specialization course that allows
 
 The project now integrates both frontend and backend functionalities to provide a seamless experience for users.
 
+We have a "production" url for this project placed here:
+
+Backend: https://ita-profiles.onrender.com/api/documentation
+Frontend: https://ita-profiles.netlify.app/
+
 ## How to install the project
 
 We use docker containers to share the same versions of PHP and MySQL around all the team members. After cloning the project in your local environment, follow these steps:
