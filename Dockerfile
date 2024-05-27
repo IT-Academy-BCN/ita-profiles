@@ -25,7 +25,7 @@ RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-EXPOSE 80
+EXPOSE 8000
 
 COPY . /var/www/html/
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --working-dir=/var/www/html
