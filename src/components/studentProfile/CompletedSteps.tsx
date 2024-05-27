@@ -1,5 +1,5 @@
 import ProfileProgress from './ProfileProgress';
-import LikeIcon from '../../assets/svg/like.svg';
+import LikeIcon from '../../assets/img/like.png';
 import CheckedIcon from '../../assets/img/likeChecked.png'
 
 const items = [
@@ -31,7 +31,7 @@ const CompletedSteps = () => (
                     {item.checked ? (
             <img src={CheckedIcon} alt="like" className="mr-2 w-8 h-8" />
           ) : (
-            <img src={LikeIcon} alt="dislike" className="mr-2" />
+            <img src={LikeIcon} alt="dislike" className="mr-2 w-8 h-8" />
           )}
 
           {item.text}

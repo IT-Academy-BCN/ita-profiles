@@ -12,9 +12,9 @@ const StudentProfile: React.FC = () => (
 
   <div className="flex">
     <MenuNavbar />
-    <div className="flex w-full md:w-[calc(100%-176px)] flex-col gap-3 p-2.5 md:p-2 md:pb-8 md:pr-14">
+    <div className="flex w-full md:w-[calc(100%-176px)] flex-col p-2.5 md:p-2 md:pb-8 md:pr-14">
       <UserNavbar />
-      <div className="flex h-[90vh] w-full justify-between items-center rounded-xl bg-white px-20 pt-20">
+      <div className="flex h-[90vh] w-full justify-between items-center rounded-xl bg-white px-28 pt-20 mt-3">
         <CompletedSteps />
         <StudentProfileDetail />
       </div>
