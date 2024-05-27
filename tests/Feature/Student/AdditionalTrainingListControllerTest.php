@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Api;
+namespace Tests\Feature\Student;
 
 use Tests\TestCase;
 use App\Models\Student;
@@ -17,9 +17,9 @@ class AdditionalTrainingListControllerTest extends TestCase
     /** @test */
     public function it_returns_additional_training_details_for_valid_uuid()
     {
-        
+
         $student = Student::factory()->create();
-        $resume = Resume::factory()->create(['student_id' => $student->id]);        
+        $resume = Resume::factory()->create(['student_id' => $student->id]);
         $additionalTraining1 = AdditionalTraining::factory()->create();
         $additionalTraining2 = AdditionalTraining::factory()->create();
         $resume->additional_trainings_ids = json_encode([$additionalTraining1->id, $additionalTraining2->id]);
@@ -46,7 +46,7 @@ class AdditionalTrainingListControllerTest extends TestCase
     /** @test */
     public function it_returns_500_for_internal_server_error()
     {
-        
+
         $this->app->instance(AdditionalTrainingService::class, new class {
             public function getAdditionalTrainingDetails($uuid)
             {
@@ -55,7 +55,7 @@ class AdditionalTrainingListControllerTest extends TestCase
         });
 
         $student = Student::factory()->create();
-        $resume = Resume::factory()->create(['student_id' => $student->id]);        
+        $resume = Resume::factory()->create(['student_id' => $student->id]);
 
         $response = $this->getJson(route('additionaltraining.list', ['student' => $student->id]));
 
