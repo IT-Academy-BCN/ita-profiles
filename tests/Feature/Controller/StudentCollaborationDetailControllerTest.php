@@ -72,5 +72,4 @@ class StudentCollaborationDetailControllerTest extends TestCase
 
         $this->assertInstanceOf(StudentCollaborationDetailController::class, $controller);
     }
-
 }
