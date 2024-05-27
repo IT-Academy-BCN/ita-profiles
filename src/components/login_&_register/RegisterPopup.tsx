@@ -61,59 +61,65 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
         </button>
 
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <input
-              {...register('dni')}
-              type="text"
-              id="dni"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-              placeholder="DNI o NIE"
-            />
-            {errors.dni && (
-              <p className="text-error">{`${errors.dni?.message}`}</p>
-            )}
-          </div>
 
-          <div>
-            <input
-              {...register('email')}
-              type="email"
-              id="email"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-              placeholder="Email"
-            />
-            {errors.email && (
-              <p className="text-error">{`${errors.email?.message}`}</p>
-            )}
-          </div>
+          <input
+            {...register('dni')}
+            type="text"
+            id="dni"
+            className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+            placeholder="DNI o NIE"
+          />
+          {errors.dni && (
+            <p className="text-error">{`${errors.dni?.message}`}</p>
+          )}
 
-          <div>
-            <input
-              {...register('username')}
-              type="text"
-              id="username"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-              placeholder="Username"
-            />
-            {errors.username && (
-              <p className="text-error">{`${errors.username?.message}`}</p>
-            )}
-          </div>
+          <input
+            {...register('email')}
+            type="email"
+            id="email"
+            className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+            placeholder="Email"
+          />
+          {errors.email && (
+            <p className="text-error">{`${errors.email?.message}`}</p>
+          )}
+        
+          <input
+            {...register('username')}
+            type="text"
+            id="username"
+            className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+            placeholder="Username"
+          />
+          {errors.username && (
+            <p className="text-error">{`${errors.username?.message}`}</p>
+          )}
 
-          <div>
-            <input
-              type="text"
-              {...register('specialization')}
-              id="specialization"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-              placeholder="Especialización"
-            />
-            {errors.specialization && (
-              <p className="text-error">{`${errors.specialization.message}`}</p>
-            )}
-          </div>
+          {/* <input
+            type="text"
+            {...register('specialization')}
+            id="specialization"
+            className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+            placeholder="Especialización"
+          /> */}
+          <select
+            {...register('specialization')}
+            id="specialization"
+            className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2">
 
-          <div>
+            <option value="placeholder" style={{color: "#9da3ae"}} selected>Especialización</option>
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+            <option value="fullstack">Fullstack</option>
+            <option value="dataScience">Data Science</option>
+              
+          </select>
+
+          {errors.specialization && (
+            <p className="text-error">{`${errors.specialization.message}`}</p>
+          )}
+
+        <div>
             <input
               {...register('password')}
               type="password"
