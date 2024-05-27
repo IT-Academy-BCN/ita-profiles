@@ -26,7 +26,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 
 # Exponer el puerto 8000
-#EXPOSE 80
+EXPOSE 80
 #
 ## Iniciar el servidor web de PHP
 CMD ["php", "artisan", "cache:clear"]
