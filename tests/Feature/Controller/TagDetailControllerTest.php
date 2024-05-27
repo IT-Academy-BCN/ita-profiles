@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Controller;
 
 use Tests\TestCase;
 use App\Models\Tag;
