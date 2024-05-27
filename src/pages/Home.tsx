@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   return (
     <div className="home-page">
       <Landing />
-      <button onClick={() => handleNavigation('/profile')}>Go to Profile</button>
+      <button type='button' onClick={() => handleNavigation('/profile')}>Go to Profile</button>
     </div>
   );
 };

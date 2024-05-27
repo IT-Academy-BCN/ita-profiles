@@ -10,25 +10,19 @@ interface StudentProfileProps {
 }
 
 const StudentProfile: React.FC<StudentProfileProps> = ({ onBack }) => (
-  <>
+  <div className="flex">
     <MenuNavbar />
-    <UserNavbar />
-    <div className='flex'>
-      <div className="flex flex-col gap-6">
+    <div className="flex w-full md:w-[calc(100%-176px)] flex-col gap-3 p-2.5 md:p-2 md:pb-8 md:pr-14">
+      <UserNavbar />
+      <div className="flex h-[90vh] w-full justify-between items-center rounded-xl bg-white px-20 pt-20">
         <CompletedSteps />
-      </div>
-      <div className="justify-end">
         <StudentProfileDetail />
       </div>
+      <button type="button" onClick={onBack} className='absolute left-20 top-20'>
+        Back to List
+      </button>
     </div>
-    <button type="button" onClick={onBack} className='absolute right-20 top-20'>
-      Back to List
-    </button>
-  </>
-
-
-
-
+  </div>
 );
 
 export default StudentProfile;

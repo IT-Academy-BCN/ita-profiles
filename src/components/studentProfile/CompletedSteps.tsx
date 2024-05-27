@@ -23,13 +23,13 @@ const calculateCompletionPercentage = (items: { text: string; checked: boolean }
 const completionPercentage = calculateCompletionPercentage(items);
 
 const CompletedSteps = () => (
-  <>
-    <ProfileProgress completion={completionPercentage} />
+  <div className="flex flex-col gap-4 w-1/3">
+<ProfileProgress completion={completionPercentage} />
     <ul className="list-none p-0">
       {items.map((item) => (
-        <li className={`my-2 font-semibold flex ${item.checked ? 'text-primary' : 'text-gray-3'}`}>
+        <li className={`my-4 font-semibold flex text-xl ${item.checked ? 'text-primary' : 'text-gray-3'}`}>
                     {item.checked ? (
-            <img src={CheckedIcon} alt="like" className="mr-2 w-6 h-6" />
+            <img src={CheckedIcon} alt="like" className="mr-2 w-8 h-8" />
           ) : (
             <img src={LikeIcon} alt="dislike" className="mr-2" />
           )}
@@ -38,7 +38,9 @@ const CompletedSteps = () => (
         </li>
       ))}
     </ul>
-  </>
+
+  </div>
+  
 );
 
 export default CompletedSteps;
