@@ -159,19 +159,20 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
             </div>
             {checkError && (
               <p className={`${isChecked ? 'hidden' : 'text-error'}`}>
-                Debes aceptar los términos
+                Debes aceptar los términos legales para completar el registro.
               </p>
             )}
           </div>
+
           <button
             type="button"
             className="w-102 mr-6 h-12 cursor-pointer rounded-lg border-none bg-primary text-white md:h-12 md:w-60 md:text-lg"
-            onClick={handleSubmit(sendRegister)}
-          >
-            Register
+            onClick={handleSubmit(sendRegister)}>
+            Registro
           </button>
         </div>
       </form>
+
       <div className="mt-4 text-center">
         <button
           type="button"
