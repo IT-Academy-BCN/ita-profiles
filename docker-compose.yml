@@ -7,7 +7,7 @@ services:
             context: .
             dockerfile: Dockerfile
         ports:
-            - "8000:80"
+            - "8000:8000"
         volumes:
             - .:/var/www/html
         command: >
@@ -32,8 +32,10 @@ services:
 
     phpmyadmin:
         image: phpmyadmin:latest
+        depends_on:
+            - mysql
         ports:
-            - 9015:80
+            - "9015:80"
         environment:
             - PMA_ARBITRARY=1
         networks:

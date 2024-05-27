@@ -4,6 +4,7 @@ WORKDIR /var/www/html
 RUN a2enmod rewrite
 
 RUN apt-get update && apt-get install -y \
+    wait-for-it \
     libicu-dev \
     libmariadb-dev \
     unzip zip \
@@ -24,11 +25,17 @@ RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+EXPOSE 8000
 
-# Exponer el puerto 8000
-#EXPOSE 80
-#
-## Iniciar el servidor web de PHP
-CMD ["php", "artisan", "cache:clear"]
-CMD ["php", "artisan", "config:clear"]
-CMD ["php", "artisan", "config:cache"]
+COPY . /var/www/html/
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --working-dir=/var/www/html
+RUN cp .env.docker .env
+RUN php artisan key:generate
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
+# Copiar el script de inicialización
+COPY init.sh /usr/local/bin/init.sh
+RUN chmod +x /usr/local/bin/init.sh
+
+CMD ["/usr/local/bin/init.sh"]
