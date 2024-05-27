@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 class AnnotationsStudentList
 {
     /**
      * @OA\Get(
-     *     path="/student/list/for-home",
-     *     operationId="getAllStudentsForFigma",
-     *     tags={"Student"},
+     *     path="/student/resume/list",
+     *     operationId="getStudentResumeListHome",
+     *     tags={"Student -> Resume"},
      *     summary="Get Students List.",
      *
      *     description="Get a list of all students registered with the Profile-Home fields in Figma Design.
@@ -21,11 +21,11 @@ class AnnotationsStudentList
 
 - For example, if the objetive is to filter Backend and Frontend students, the query would be:
 
-    ```/student/list/for-home?specialization=frontend,backend```
+    ```/student/resume/list?specialization=frontend,backend```
     - To filter by tags, the query would be:
-    ```/student/list/for-home?tags=PHP,Laravel```
+    ```/student/resume/list?tags=PHP,Laravel```
     - To filter by both specialization and tags:
-    ```/student/list/for-home?specialization=frontend&tags=php,react```
+    ```/student/resume/list?specialization=frontend&tags=php,react```
 
 ---
 
