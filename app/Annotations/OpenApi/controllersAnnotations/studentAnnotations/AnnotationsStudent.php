@@ -32,7 +32,7 @@ class AnnotationsStudent
      *                     @OA\Property(property="surname", type="string",example="Doe"),
      *                     @OA\Property(property="photo",description="Student Image Path",
      *                          type="string",
-     *                          example="https://itaperfils.eurecatacademy.org/img/stud_1.png"),
+     *                          example="/img/stud_1.png"),
      *                     @OA\Property(property="status", type="enum",example="Active"),
      *                     @OA\Property(property="id", type="uuid",example="9b7dae57-447f-48dc-b175-d243f093bb37")
      *                 )

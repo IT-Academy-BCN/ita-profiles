@@ -5,8 +5,8 @@ export const fetchAboutData = async (studentUUID: string | null) => {
 
         try {
           const response = await axios.get(
-            `https://itaperfils.eurecatacademy.org/api/v1/student/${studentUUID}/detail/for-home`,
-          
+            `/api/v1/student/${studentUUID}/detail/for-home`,
+
           )
           return response.data.data;
         } catch (error) {
@@ -14,5 +14,5 @@ export const fetchAboutData = async (studentUUID: string | null) => {
           console.error('Error fetching about data:', error)
           throw error
         }
-        
+
      }

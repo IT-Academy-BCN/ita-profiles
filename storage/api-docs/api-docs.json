@@ -1126,7 +1126,7 @@
                                                     "photo": {
                                                         "description": "Student Image Path",
                                                         "type": "string",
-                                                        "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
+                                                        "example": "/img/stud_1.png"
                                                     },
                                                     "status": {
                                                         "type": "enum",
@@ -1730,7 +1730,7 @@
                                             "photo": {
                                                 "description": "Student Image Path",
                                                 "type": "string",
-                                                "example": "https://itaperfils.eurecatacademy.org/img/stud_1.png"
+                                                "example": "/img/stud_1.png"
                                             },
                                             "tags": {
                                                 "type": "array",

@@ -5,7 +5,7 @@ import { SelectedStudentIdContext } from '../../../../context/StudentIdContext'
 import { configureMockAdapter } from '../../../setup'
 
 const mock = configureMockAdapter()
-const baseApi = 'https://itaperfils.eurecatacademy.org'
+const baseApi = ''
 const studentUUID = 'abc'
 const setStudentUUID = () => {}
 

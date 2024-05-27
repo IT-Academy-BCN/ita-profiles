@@ -76,7 +76,7 @@ class AnnotationsStudentList
      *                    property="photo",
      *                    description="Student Image Path",
      *                     type="string",
-     *                     example="https://itaperfils.eurecatacademy.org/img/stud_1.png"),
+     *                     example="/img/stud_1.png"),
      *                 @OA\Property(
      *                   property="tags",
      *                   type="array",

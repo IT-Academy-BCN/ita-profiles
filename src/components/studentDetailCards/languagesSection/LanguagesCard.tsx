@@ -8,7 +8,7 @@ const LanguagesCard: React.FC = () => {
   const [languages, setLanguages] = useState<TLanguage[]>([])
   const [error, setError] = useState('')
 
-  const endpointLanguages = `https://itaperfils.eurecatacademy.org/api/v1/students/${studentUUID}/languages`
+  const endpointLanguages = `/api/v1/students/${studentUUID}/languages`
 
   useEffect(() => {
     if (studentUUID) {
