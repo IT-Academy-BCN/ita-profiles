@@ -1,3 +1,4 @@
+
 import React, { useContext } from 'react'
 import { SmallScreenContext } from '../../context/SmallScreenContext'
 import type { TSmallScreenContext } from '../../interfaces/interfaces'
