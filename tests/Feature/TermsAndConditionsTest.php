@@ -60,7 +60,7 @@ class TermsAndConditionsTest extends TestCase
 
     public function testTermsEndpointIsValid()
     {
-        $response = $this->get('/api/terms');
+        $response = $this->get('/login/terms-and-conditions');
 
         $response->assertStatus(200);
     }
