@@ -14,10 +14,10 @@ class TermsAndConditionsTest extends TestCase
 
     public function testTermsEndpointReturnsLoremIpsum()
     {
-        $response = $this->get('/login/terms-and-conditions');
+        $response = $this->get('/terms-and-conditions');
 
         $response->assertStatus(200);
-        $response->assertJson(['content' => 'Lorem ipsum dolor sit amet...']);
+        $response->assertJson(['content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi veniam voluptates aperiam laborum est necessitatibus repellendus inventore quis nemo beatae odio, reiciendis quaerat laboriosam harum rerum ab veritatis tempore optio.']);
     }
 
     /**
@@ -25,7 +25,7 @@ class TermsAndConditionsTest extends TestCase
      */
     public function testTermsContentIsNotEmpty()
     {
-        $response = $this->get('/login/terms-and-conditions');
+        $response = $this->get('login/terms-and-conditions');
 
         $response->assertStatus(200);
         $this->assertNotEmpty($response->json('content'));
@@ -37,7 +37,7 @@ class TermsAndConditionsTest extends TestCase
 
     public function testTermsContentIsString()
     {
-        $response = $this->get('/login/terms-and-conditions');
+        $response = $this->get('login/terms-and-conditions');
 
         $response->assertStatus(200);
         $this->assertIsString($response->json('content'));
@@ -49,7 +49,7 @@ class TermsAndConditionsTest extends TestCase
 
     public function testTermsResponseHasJsonHeader()
     {
-        $response = $this->get('/login/terms-and-conditions');
+        $response = $this->get('login/terms-and-conditions');
 
         $response->assertHeader('Content-Type', 'application/json');
     }
@@ -60,7 +60,7 @@ class TermsAndConditionsTest extends TestCase
 
     public function testTermsEndpointIsValid()
     {
-        $response = $this->get('/login/terms-and-conditions');
+        $response = $this->get('login/terms-and-conditions');
 
         $response->assertStatus(200);
     }

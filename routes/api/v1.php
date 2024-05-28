@@ -32,7 +32,7 @@ use LaravelLang\Publisher\Console\Add;
 
 //No Auth
 Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::post('login/terms-and-conditions', [TermsAndConditionsController::class, 'terms-and-conditions'])->name('terms-and-conditions');
+Route::get('/terms-and-conditions', [TermsAndConditionsController::class, 'getTermsAndConditions'])->name('login.terms-and-conditions');
 Route::post('/students', [StudentController::class, 'store'])->name('student.create');
 Route::get('/students', [StudentController::class, 'index'])->name('students.list');
 Route::get('/students/{id}', [StudentController::class, 'show'])->name('student.show');

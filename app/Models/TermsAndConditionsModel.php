@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class TermsAndConditionsModel extends Model
 {
-    protected $filiable = ['content'];
+    protected $fillable = ['content'];
 }
