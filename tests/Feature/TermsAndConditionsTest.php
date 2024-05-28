@@ -53,4 +53,15 @@ class TermsAndConditionsTest extends TestCase
 
         $response->assertHeader('Content-Type', 'application/json');
     }
+
+    /**
+     * Test endpoind is valid.
+     */
+
+    public function testTermsEndpointIsValid()
+    {
+        $response = $this->get('/api/terms');
+
+        $response->assertStatus(200);
+    }
 }
