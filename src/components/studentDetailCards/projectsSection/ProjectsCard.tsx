@@ -52,7 +52,7 @@ const ProjectsCard: React.FC = () => {
     >
       <div className="flex justify-between">
         <h3 className="text-lg font-bold">Proyectos</h3>
-        <div className="h-3 self-end">
+        <div className="xl:h-3 xl:self-end hidden xl:block">
           <button type="button" onClick={scrollLeft}>
             <img src={ArrowLeft} alt="arrow left" className="w-5" />
           </button>
@@ -61,7 +61,7 @@ const ProjectsCard: React.FC = () => {
           </button>
         </div>
       </div>
-      <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
+      <div ref={carouselRef} className="xl:flex-row gap-3 overflow-x-hidden flex flex-col">
         {projects.map((project) => (
           <div
             key={project.uuid}
