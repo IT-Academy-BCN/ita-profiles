@@ -18,7 +18,7 @@ describe('LanguagesCard component', () => {
   afterAll(() => {
     mock.restore();
   });
-  
+
   const studentUUID = '123'; // You can replace this with a sample UUID
   const setStudentUUID = () => {}
   const languagesData = [
@@ -28,7 +28,7 @@ describe('LanguagesCard component', () => {
 
   test('renders languages correctly', async () => {
 
-    mock.onGet(`https://itaperfils.eurecatacademy.org/api/v1/students/${studentUUID}/languages`).reply(200, { languages: languagesData });
+    mock.onGet(`//localhost:8000/api/v1/students/${studentUUID}/languages`).reply(200, { languages: languagesData });
 
     render(
       <SelectedStudentIdContext.Provider
@@ -47,9 +47,9 @@ describe('LanguagesCard component', () => {
     expect(languageElements[1]).toHaveTextContent('English');
   });
 
-  test('renders error message when request fails', async () => {  
+  test('renders error message when request fails', async () => {
 
-    mock.onGet(`https://itaperfils.eurecatacademy.org/api/v1/students/${studentUUID}/languages`).reply(500, { error: 'Internal Server Error' });
+    mock.onGet(`//localhost:8000/api/v1/students/${studentUUID}/languages`).reply(500, { error: 'Internal Server Error' });
 
     render(
       <SelectedStudentIdContext.Provider

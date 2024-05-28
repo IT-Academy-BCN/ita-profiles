@@ -53,7 +53,7 @@ describe('CollaborationCard component', () => {
   test('renders collaboration data correctly', async () => {
     mock
       .onGet(
-        `https://itaperfils.eurecatacademy.org/api/v1/students/${studentUUID}/collaborations`,
+        `//localhost:8000/api/v1/students/${studentUUID}/collaborations`,
       )
       .reply(200, { collaborations: collaborationData })
 

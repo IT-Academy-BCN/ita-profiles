@@ -41,7 +41,7 @@ class ModalityTest extends TestCase
 
         Resume::where('student_id', $studentId)->delete();
 
-        $response = $this->getJson(route('modality', ['studentId' => $studentId]));
+        $response = $this->getJson(route('student.modality', ['studentId' => $studentId]));
 
         $response->assertStatus(404);
     }

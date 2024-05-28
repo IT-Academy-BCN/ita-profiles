@@ -8,7 +8,7 @@ const mockStudentCard: IStudentList = {
   id: 'abc123',
   fullname: 'John',
   subtitle: 'Doe',
-  photo: 'https://itaperfils.eurecatacademy.org/img/stud_2.png',
+  photo: '/img/stud_2.png',
   tags: [
     { id: 1, name: 'react' },
     { id: 2, name: 'php' },

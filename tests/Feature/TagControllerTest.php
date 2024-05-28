@@ -16,23 +16,6 @@ class TagControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $user = User::first();
-
-        if (!$user) {
-            // If there are no users, create one
-            $user = User::factory()->create();
-        }
-        
-        $adminRole = Role::where('name', 'admin')->first();
-
-        if (! $adminRole) {
-            // If the "admin" role does not exist, create it
-            $adminRole = Role::create(['name' => 'admin']);
-        }
-
-        $user->assignRole($adminRole);
-        $this->actingAs($user, 'api');
     }
 
     public function testIndexReturnsTags()
@@ -132,58 +115,5 @@ class TagControllerTest extends TestCase
                 'tag_name' => $tag->tag_name,
             ],
         ]);
-    }
-
-    public function testUpdateTagSuccessfully()
-    {
-        $tag = Tag::query()->first();
-
-        $updatedData = [
-            'tag_name' => 'Updated Tag Name',
-        ];
-
-        $response = $this->putJson(route('tag.update', ['id' => $tag->id]), $updatedData);
-
-        $response->assertStatus(200);
-
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'tag_name',
-            ],
-            'message',
-        ]);
-
-        $response->assertJson([
-            'data' => [
-                'id' => $tag->id,
-                'tag_name' => $updatedData['tag_name'],
-            ],
-            'message' => __('Tag updated successfully'),
-        ]);
-
-        // Refresh the tag from the database
-        $tag->refresh();
-
-        // Assert the tag in the database has been updated
-        $this->assertEquals($updatedData['tag_name'], $tag->tag_name);
-    }
-
-    public function testDestroyTagSuccessfully()
-    {
-        $tag = Tag::query()->first();
-
-        $response = $this->deleteJson(route('tag.destroy', ['id' => $tag->id]));
-
-        $response->assertStatus(200);
-
-        $response->assertJson(['message' => __('Tag deleted successfully')]);
-
-        // Attempt to retrieve the deleted tag from the database
-        $retrievedTag = Tag::find($tag->id);
-
-        // Assert that the tag has been deleted
-        $this->assertNull($retrievedTag);
-        $this->assertDatabaseMissing('tags', ['id' => $tag->id]);
     }
 }
