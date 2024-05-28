@@ -30,4 +30,16 @@ class TermsAndConditionsTest extends TestCase
         $response->assertStatus(200);
         $this->assertNotEmpty($response->json('content'));
     }
+
+    /**
+     * Test content is string.
+     */
+
+    public function testTermsContentIsString()
+    {
+        $response = $this->get('/api/terms');
+
+        $response->assertStatus(200);
+        $this->assertIsString($response->json('content'));
+    }
 }
