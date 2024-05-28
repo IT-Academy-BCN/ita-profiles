@@ -42,4 +42,15 @@ class TermsAndConditionsTest extends TestCase
         $response->assertStatus(200);
         $this->assertIsString($response->json('content'));
     }
+
+    /**
+     * Test has a JSON Header.
+     */
+
+    public function testTermsResponseHasJsonHeader()
+    {
+        $response = $this->get('/login/terms-and-conditions');
+
+        $response->assertHeader('Content-Type', 'application/json');
+    }
 }
