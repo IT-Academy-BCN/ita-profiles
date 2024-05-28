@@ -13,12 +13,21 @@ class TermsAndConditionsTest extends TestCase
      */
 
     public function testTermsEndpointReturnsLoremIpsum()
-{
-    $response = $this->get('/login/terms-and-conditions');
+    {
+        $response = $this->get('/login/terms-and-conditions');
 
-    $response->assertStatus(200);
-    $response->assertJson(['content' => 'Lorem ipsum dolor sit amet...']); 
-}
+        $response->assertStatus(200);
+        $response->assertJson(['content' => 'Lorem ipsum dolor sit amet...']);
+    }
 
+    /**
+     * Test is not empty.
+     */
+    public function testTermsContentIsNotEmpty()
+    {
+        $response = $this->get('/login/terms-and-conditions');
 
+        $response->assertStatus(200);
+        $this->assertNotEmpty($response->json('content'));
+    }
 }
