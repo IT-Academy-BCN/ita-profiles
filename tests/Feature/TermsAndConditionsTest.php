@@ -37,7 +37,7 @@ class TermsAndConditionsTest extends TestCase
 
     public function testTermsContentIsString()
     {
-        $response = $this->get('/api/terms');
+        $response = $this->get('/login/terms-and-conditions');
 
         $response->assertStatus(200);
         $this->assertIsString($response->json('content'));
