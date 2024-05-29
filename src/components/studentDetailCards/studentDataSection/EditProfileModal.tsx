@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react'
-
+import axios from 'axios'
 import { useStudentIdContext } from '../../../context/StudentIdContext'
 import { TAbout } from '../../../interfaces/interfaces'
 
 const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
     const [formData, setFormData] = useState<TAbout | null>(studentData)
-    const { closeEditModal } = useStudentIdContext()
+    const { studentUUID, closeEditModal } = useStudentIdContext()
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -45,7 +46,17 @@ const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
             }
         }
     }
-
+    const handleSave = async () => {
+        const url = `https://itaperfils.eurecatacademy.org/api/v1/students/${studentUUID}` // Assuming studentUUID is accessible
+        try {
+            await axios.put(url, formData)
+            // Handle success logic
+            closeEditModal()
+        } catch (error) {
+            // Handle error logic
+            console.error('Error updating profile:', error)
+        }
+    }
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-120 relative flex flex-col items-center rounded-lg bg-white py-8 ps-10 px-5">
@@ -136,6 +147,7 @@ const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
                         <button
                             type="submit"
                             className="w-102 h-14 cursor-pointer rounded-lg border-none bg-primary text-white text-sm font-semibold w-60"
+                            onClick={handleSave}
                         >
                             Aceptar
                         </button>
