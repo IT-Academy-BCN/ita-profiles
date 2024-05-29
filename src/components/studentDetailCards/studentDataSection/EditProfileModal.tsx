@@ -4,6 +4,45 @@ import { TAbout } from '../../../interfaces/interfaces'
 const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
     const [formData, setFormData] = useState<TAbout | null>(studentData)
 
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        if (formData) {
+            if (e.target.id === 'githubUrl') {
+                setFormData({
+                    ...formData,
+                    social_media: {
+                        ...formData.social_media,
+                        github: {
+                            url: e.target.value,
+                        },
+                        linkedin: {
+                            // Don't change LinkedIn URL here
+                            ...formData.social_media.linkedin,
+                        },
+                    },
+                })
+            } else if (e.target.id === 'linkedinUrl') {
+                // Handle LinkedIn input
+                setFormData({
+                    ...formData,
+                    social_media: {
+                        ...formData.social_media,
+                        linkedin: {
+                            url: e.target.value,
+                        },
+                        github: {
+                            // Don't change GitHub URL here
+                            ...formData.social_media.github,
+                        },
+                    },
+                })
+            } else {
+                setFormData({ ...formData, [e.target.id]: e.target.value })
+            }
+        }
+    }
+
     return (
         <div
             data-testid="EditProfileModal"
