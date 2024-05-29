@@ -18,7 +18,13 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
 }) => {
     const [isChecked, setIsChecked] = useState(false)
     const [checkError, setCheckError] = useState(false)
+    const [showTerms, setShowTerms] = useState(false)
 
+    const handleTermsPopup = () => {
+        setShowTerms(!showTerms)
+        console.log("showTerms -->",showTerms);
+        
+    }
     const {
         register,
         handleSubmit,
@@ -155,7 +161,10 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 />
                                 Acepto los
                             </label>
-                            <a className='underline cursor-pointer'>
+                            <a
+                                className="underline cursor-pointer"
+                                onClick={handleTermsPopup}
+                            >
                                 términos legales
                             </a>
                         </div>
