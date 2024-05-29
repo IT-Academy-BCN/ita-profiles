@@ -1,14 +1,17 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+
+import { useStudentIdContext } from '../../../context/StudentIdContext'
 import { TAbout } from '../../../interfaces/interfaces'
 
 const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
     const [formData, setFormData] = useState<TAbout | null>(studentData)
+    const { closeEditModal } = useStudentIdContext()
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
         if (formData) {
-            if (e.target.id === 'githubUrl') {
+            if (e.target.id === 'github.url') {
                 setFormData({
                     ...formData,
                     social_media: {
@@ -22,7 +25,7 @@ const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
                         },
                     },
                 })
-            } else if (e.target.id === 'linkedinUrl') {
+            } else if (e.target.id === 'linkedin.url') {
                 // Handle LinkedIn input
                 setFormData({
                     ...formData,
@@ -44,66 +47,81 @@ const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
     }
 
     return (
-        <div
-            data-testid="EditProfileModal"
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-        >
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-120 relative flex flex-col items-center rounded-lg bg-white py-8 ps-10 px-5">
                 <h2 className="text-lg self-start font-bold md:text-2xl">
                     Editar Datos
                 </h2>
                 <form className="flex flex-col space-y-4 w-72">
                     <div className="overflow-y-auto h-96 grid grid-cols-1 pe-5">
-                        <div data-testid="profile-fullname">
-                            <p>Nombre y apellidos</p>
+                        <div>
+                            <p className="text-xs text-gray-500 pb-1 pt-2">
+                                Nombre y apellidos
+                            </p>
                             <input
+                                value={formData?.fullname}
+                                onChange={handleInputChange}
                                 type="text"
                                 id="fullname"
-                                value=""
-                                onChange={}
                                 className="border-gray-500 w-full rounded-lg border p-2 px-4 py-4 font-semibold text-sm "
                             />
                         </div>
-                        <div data-testid="profile-subtitle">
-                            <p>Titular</p>
+
+                        <div>
+                            {' '}
+                            <p className="text-xs text-gray-500 pb-1 pt-3">
+                                Titular
+                            </p>
                             <input
                                 type="text"
+                                value={formData?.subtitle}
+                                onChange={handleInputChange}
                                 id="subtitle"
-                                value=""
-                                onChange={}
-                                className="border-gray-500 w-full rounded-lg border p-2 px-4 py-4 font-semibold text-sm "
+                                className="border-gray-500 w-full rounded-lg border p-2 px-4 py-4 font-semibold text-sm"
                             />
                         </div>
+
                         <hr className="h-px my-3 bg-gray-200 border-1" />
-                        <div data-testid="profile-github">
-                            <p>Link perfil de Github</p>
+
+                        <div>
+                            {' '}
+                            <p className="text-xs text-gray-500 pb-1">
+                                Link perfil de Github
+                            </p>
                             <input
+                                value={formData?.social_media.github.url}
+                                onChange={handleInputChange}
                                 type="text"
-                                id="githubUrl"
-                                value=""
-                                onChange={}
+                                id="github.url"
                                 className="border-gray-500 w-full rounded-lg border p-2 px-4 py-4 font-semibold text-sm "
                             />
                         </div>
-                        <div data-testid="profile-linkedin">
-                            <p>Link perfil de Linkedin</p>
+
+                        <div>
+                            {' '}
+                            <p className="text-xs text-gray-500 pb-1 pt-3">
+                                Link perfil de Linkedin
+                            </p>
                             <input
+                                value={formData?.social_media.linkedin.url}
+                                onChange={handleInputChange}
                                 type="text"
-                                id="linkendinUrl"
-                                value=""
-                                onChange={}
-                                className="border-gray-500 w-full rounded-lg border p-2 px-4 py-4 font-semibold text-sm "
+                                id="linkedin.url"
+                                className="border-gray-500 w-full rounded-lg border p-2 px-4 py-4 font-semibold text-sm"
                             />
                         </div>
+
                         <hr className="h-px my-3 bg-gray-200 border-1" />
-                        <div data-testid="profile-description">
-                            <p>Descripción</p>
-                            <input
-                                type="text"
-                                id="description"
-                                value=""
-                                onChange={}
-                                className="border-gray-500 w-full rounded-lg border p-2 px-4 py-4 font-semibold text-sm "
+
+                        <div>
+                            <p className="text-xs text-gray-500 pb-1">
+                                Descripción
+                            </p>
+                            <textarea
+                                value={formData?.about}
+                                onChange={handleInputChange}
+                                id="about"
+                                className="border-gray-500 w-full rounded-lg border p-2 px-4 py-4 font-semibold text-sm"
                             />
                         </div>
                     </div>
@@ -111,20 +129,19 @@ const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
                         <button
                             type="button"
                             className="w-102 h-14 cursor-pointer rounded-lg border border-gray-500 bg-white text-gray-500 text-sm font-semibold  w-60"
-                            onClick={}
+                            onClick={closeEditModal}
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
                             className="w-102 h-14 cursor-pointer rounded-lg border-none bg-primary text-white text-sm font-semibold w-60"
-                            onClick={}
                         >
                             Aceptar
                         </button>
                     </div>
                 </form>
-            </div>{' '}
+            </div>
         </div>
     )
 }
