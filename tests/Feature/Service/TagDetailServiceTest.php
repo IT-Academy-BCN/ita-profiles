@@ -10,7 +10,6 @@ use App\Models\Tag;
 use App\Service\Tag\TagDetailService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
 class TagDetailServiceTest extends TestCase
 {
     use DatabaseTransactions;
@@ -30,7 +29,7 @@ class TagDetailServiceTest extends TestCase
             'tag_name' => 'Test Tag',
         ]);
 
-        $data = $this->tagDetailService->execute((string)$tag->id);
+        $data = $this->tagDetailService->execute($tag->id);
 
         $this->assertEquals([
             'id' => $tag->id,
@@ -40,12 +39,12 @@ class TagDetailServiceTest extends TestCase
         ], $data);
     }
 
-    public function testTagDetailsNotFound() : void
+    public function testTagDetailsNotFound(): void
     {
-        $nonExistentTagId = 'non-existent-tag-id';
+        $nonExistentTagId = 0;
 
         $this->expectException(ModelNotFoundException::class);
-        
+
         $this->tagDetailService->execute($nonExistentTagId);
     }
 
