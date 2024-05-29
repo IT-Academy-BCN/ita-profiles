@@ -68,6 +68,22 @@ const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
                             />
                         </div>
                     </div>
+                    <div className="flex items-center justify-center gap-2 me-3 pt-5">
+                        <button
+                            type="button"
+                            className="w-102 h-14 cursor-pointer rounded-lg border border-gray-500 bg-white text-gray-500 text-sm font-semibold  w-60"
+                            onClick={}
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            type="submit"
+                            className="w-102 h-14 cursor-pointer rounded-lg border-none bg-primary text-white text-sm font-semibold w-60"
+                            onClick={}
+                        >
+                            Aceptar
+                        </button>
+                    </div>
                 </form>
             </div>{' '}
         </div>
