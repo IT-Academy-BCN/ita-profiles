@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { UserSchema } from '../../schemes/schemas'
+import TermsPopUp from './TermsPopUp'
 
 type RegisterPopupProps = {
     onClose: () => void
@@ -177,6 +178,8 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 Debes aceptar los términos
                             </p>
                         )}
+                        {showTerms && <TermsPopUp handleTermsPopup={handleTermsPopup} 
+                        />}
                     </div>
                     <button
                         type="button"
