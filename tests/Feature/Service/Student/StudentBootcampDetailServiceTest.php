@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Service;
+namespace Tests\Feature\Service\Student;
 
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
