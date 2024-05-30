@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Service;
+namespace Tests\Feature\Service\Student;
 
 use Tests\TestCase;
 use App\Models\Resume;
