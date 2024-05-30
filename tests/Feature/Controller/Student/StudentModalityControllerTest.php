@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Controller;
+namespace Tests\Feature\Controller\Student;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

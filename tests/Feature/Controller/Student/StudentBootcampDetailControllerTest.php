@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Controller;
+namespace Tests\Feature\Controller\Student;
 
 use App\Models\Bootcamp;
 use App\Models\Resume;
