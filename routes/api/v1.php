@@ -10,6 +10,7 @@ use App\Http\Controllers\api\Student\{
     StudentLanguagesDetailController,
     StudentListController,
     StudentProjectsDetailController,
+    SpecializationListController
 };
 use App\Http\Controllers\api\Tag\{
     TagDetailController,
@@ -21,7 +22,7 @@ use App\Http\Controllers\api\Tag\{
 use App\Http\Controllers\api\{
     
     DevelopmentListController,
-    SpecializationListController,
+
 };
 
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
