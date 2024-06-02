@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Service\User;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

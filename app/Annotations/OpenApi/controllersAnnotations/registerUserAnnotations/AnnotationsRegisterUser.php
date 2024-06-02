@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Annotations\OpenApi\ControllersAnnotations\RegisterUserAnnotations;
+namespace App\Annotations\OpenApi\ControllersAnnotations\registerUserAnnotations;
 
 class AnnotationsRegisterUser
 {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Requests;
 
@@ -31,7 +32,7 @@ class RegisterRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users',
             'specialization' => 'required|in:Frontend,Backend,Fullstack,Data Science,Not Set',
             'password' => 'required|confirmed|string|regex:/^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$/',
-            'terms' =>  'required|in:true' 
+            'terms' =>  'required|in:true'
         ];
     }
 

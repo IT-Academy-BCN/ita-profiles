@@ -1,20 +1,22 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Feature\Controller\User;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use Illuminate\Testing\TestResponse;
 
 class RegisterUserControllerTest extends TestCase
 {
-    use DatabaseTransactions;//ensures that any database modifications made during testing are reverted once the test is complete
+    use DatabaseTransactions;
 
     protected function setUp(): void
     {
         parent::setUp();
     }
 
-    private function createUserData()
+    private function createUserData(): array
     {
         $userData['username'] = 'test_username';
         $userData['dni'] = '27827083G';
@@ -27,7 +29,7 @@ class RegisterUserControllerTest extends TestCase
         return $userData;
     }
 
-    public function test_user_creation_with_valid_data()
+    public function test_user_creation_with_valid_data(): void
     {
         $userData = $this->createUserData();
         $response = $this->json('POST', '/api/v1/register', $userData);
@@ -40,7 +42,7 @@ class RegisterUserControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_creation_with_invalid_data()
+    public function test_user_creation_with_invalid_data(): void
     {
         $response = $this->json('POST', 'api/v1/register', [
             'username' => 667677,
@@ -55,7 +57,7 @@ class RegisterUserControllerTest extends TestCase
         $response->assertJsonValidationErrors(['username','dni', 'email', 'password']);
     }
 
-    public function test_required_fields_for_user_creation()
+    public function test_required_fields_for_user_creation(): void
     {
         $response = $this->json('POST', 'api/v1/register', []);
 
