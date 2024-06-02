@@ -10,20 +10,17 @@ use App\Http\Controllers\api\Student\{
     StudentLanguagesDetailController,
     StudentListController,
     StudentProjectsDetailController,
+    SpecializationListController
 };
 use App\Http\Controllers\api\Tag\{
     TagDetailController,
     TagListController,
     TagStoreController,
     TagController,
+    DevelopmentListController
 
 };
 
-use App\Http\Controllers\api\{
-    
-    DevelopmentListController,
-    SpecializationListController,
-};
 
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');

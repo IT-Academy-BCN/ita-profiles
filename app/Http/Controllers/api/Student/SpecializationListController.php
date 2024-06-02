@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
-use App\Service\SpecializationListService;
+use App\Service\Student\SpecializationListService;
 use Illuminate\Http\JsonResponse;
 use Exception;
 
