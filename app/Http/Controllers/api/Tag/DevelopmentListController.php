@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\api\Tag;
 
 use App\Http\Controllers\Controller;
-use App\Service\DevelopmentListService;
+use App\Service\Tag\DevelopmentListService;
 use Illuminate\Http\JsonResponse;
 use Exception;
 

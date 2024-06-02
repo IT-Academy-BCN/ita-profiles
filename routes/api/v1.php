@@ -16,14 +16,10 @@ use App\Http\Controllers\api\Tag\{
     TagDetailController,
     TagListController,
     TagController,
+    DevelopmentListController
 
 };
 
-use App\Http\Controllers\api\{
-    
-    DevelopmentListController,
-
-};
 
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
