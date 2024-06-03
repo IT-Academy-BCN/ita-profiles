@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,5 +21,11 @@ class Tag extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class, 'student_has_tags', 'tag_id', 'student_id');
+    }
+
+    public function toArray(): array {
+        $result = parent::toArray();
+        $result['id'] = $this->getAttributeValue('id');
+        return $result;
     }
 }
