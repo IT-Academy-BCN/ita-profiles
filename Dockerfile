@@ -53,15 +53,6 @@ RUN composer clear-cache && composer install
 RUN php artisan key:generate
 RUN php artisan config:cache
 
-RUN docker network connect app-network mysql
-RUN docker network connect app-network php
-RUN docker network connect app-network node
-RUN docker network connect app-network webserver
-
-RUN php artisan migrate
-RUN php artisan db:seed
-RUN php artisan passport:install --force --no-interaction
-
 # Exponer el puerto 9000
 EXPOSE 9000
 
