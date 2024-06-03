@@ -9,23 +9,23 @@ use App\Models\Tag;
 
 class TagDetailService
 {
-    public function execute(string $tagId): array
+    public function execute(int $tagId): array
     {
         return $this->getTagDetailsById($tagId);
     }
 
-    public function getTagDetailsById(string $tagId): array
+    public function getTagDetailsById(int $tagId): array
     {
         $tag = $this->getTag($tagId);
         return [
             'id' => $tag->id,
             'tag_name' => $tag->tag_name,
             'created_at' => $tag->created_at,
-            'updated_at' => $tag->updated_at
+            'updated_at' => $tag->updated_at,
         ];
     }
 
-    private function getTag(string $tagId): Tag
+    private function getTag(int $tagId): Tag
     {
         $tag = Tag::find($tagId);
 

@@ -19,7 +19,7 @@ class TagDetailController extends Controller
         $this->tagDetailsService = $tagDetailsService;
     }
 
-    public function __invoke($tagId): JsonResponse
+    public function __invoke(int $tagId): JsonResponse
     {
         try {
             $service = $this->tagDetailsService->execute($tagId);

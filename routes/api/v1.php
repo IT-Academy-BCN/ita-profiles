@@ -15,6 +15,7 @@ use App\Http\Controllers\api\Student\{
 use App\Http\Controllers\api\Tag\{
     TagDetailController,
     TagListController,
+    TagUpdateController,
     TagController,
     DevelopmentListController
 
@@ -39,7 +40,7 @@ Route::prefix('tags')->group(function () {
     Route::get('/', TagListController::class)->name('tag.list');
     Route::post('/', [TagController::class, 'store'])->name('tag.create');
     Route::get('/{tagId}', TagDetailController::class)->name('tag.detail');
-    Route::put('/{id}', [TagController::class, 'update'])->name('tag.update');
+    Route::put('/{tagId}', TagUpdateController::class)->name('tag.update');
 });
 // ! OLD ROUTES BLOCK
 Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
