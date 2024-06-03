@@ -816,7 +816,7 @@
                     "Student -> Resume"
                 ],
                 "summary": "Retrieve a specialization list from resume model enum",
-                "operationId": "48a099805fc747c3b2f8cd5f55038a47",
+                "operationId": "31b3611fe369eb5f7f1091d784635ad7",
                 "responses": {
                     "200": {
                         "description": "Successful. Specialization list retrieved from enum",
@@ -1432,7 +1432,7 @@
                     "Tags"
                 ],
                 "summary": "Retrieve a development list ",
-                "operationId": "c2b401adb6631f377c6e1cfbe4495159",
+                "operationId": "15cae32dd5588397d7865010cb95ef57",
                 "responses": {
                     "200": {
                         "description": "Successful. Development list retrieved from json file",
@@ -1806,7 +1806,7 @@
                     "name": "AdditionalTraining"
                 }
             },
-            "AnnotationsAdmin": {
+            "AdminAnnotation": {
                 "title": "Admin",
                 "description": "Admin Model",
                 "properties": {
@@ -1874,7 +1874,7 @@
                     "name": "Collaboration"
                 }
             },
-            "AnnotationsRecruiter": {
+            "RecruiterAnnotation": {
                 "title": "Recruiter",
                 "description": "Recruiter Model",
                 "properties": {
@@ -1909,7 +1909,7 @@
                     "name": "Recruiter"
                 }
             },
-            "AnnotationsStudent": {
+            "StudentAnnotation": {
                 "title": "Student",
                 "description": "Student Model",
                 "properties": {
@@ -1997,7 +1997,7 @@
                     "name": "Tag"
                 }
             },
-            "AnnotationsUser": {
+            "UserAnnotation": {
                 "title": "User",
                 "description": "User Model",
                 "properties": {
