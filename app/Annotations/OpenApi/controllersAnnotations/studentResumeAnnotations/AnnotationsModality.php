@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Annotations\OpenApi\controllersAnnotations\modalityAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
 
 use OpenApi\Annotations as OA;
 
@@ -10,18 +10,19 @@ class AnnotationsModality
 {
     /**
      * @OA\Get(
-     *     path="/modality/{studentId}",
-     *     operationId="invokeResume",
+     *     path="/student/{studentId}/resume/modality/",
+     *     operationId="getStudentResumeModality",
      *     summary="Get the modality of a specific resume",
      *     description="Returns the modality of a specific student's resume  ",
-     *     tags={"Modality"},
+     *     tags={"Student -> Resume"},
      *     @OA\Parameter(
      *         name="studentId",
      *         in="path",
-     *         description="UUID of the student to get the resume modality",
+     *         description="Student ID",
      *         required=true,
      *         @OA\Schema(
-     *             type="string"
+     *             type="string",
+     *             format="uuid"
      *         )
      *     ),
      *     @OA\Response(

@@ -1,0 +1,25 @@
+FROM php:8.1.27-apache
+WORKDIR /var/www/html
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    build-essential
+
+# Agregar las siguientes líneas para instalar Node.js y npm
+RUN apt-get update && apt-get install -y curl gnupg
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
+
+COPY . /var/www/html/
+
+# Copiar el script de inicialización
+COPY init.sh /usr/local/bin/init.sh
+RUN chmod +x /usr/local/bin/init.sh
+
+# levanta npm
+RUN node -v && npm -v
+RUN npm install
+RUN npm run build
+
+EXPOSE 80

@@ -1,19 +1,34 @@
 services:
-    laravel-docker:
+    frontend:
         depends_on:
             - mysql
-        container_name: itaprofilesbackend-app
+        container_name: itaprofiles-frontend
+        command: ["npm", "run", "start"]
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: FrontendDockerFile
         ports:
-            - "8000:80"
+            - "80:80"
+        volumes:
+            - .:/var/www/html
+        networks:
+            - itaprofiles
+
+    backend:
+        depends_on:
+            - mysql
+        container_name: itaprofiles-backend
+        build:
+            context: .
+            dockerfile: BackendDockerFile
+        ports:
+            - "8000:8000"
         volumes:
             - .:/var/www/html
         command: >
-            bash -c "composer install && cp .env.docker .env && php artisan key:generate && php artisan migrate:fresh && php artisan db:seed && php artisan serve --host=0.0.0.0 --port=80 && php artisan config:cache"
+            bash -c "composer install && cp .env.docker .env && php artisan key:generate && php artisan migrate:fresh && php artisan db:seed && php artisan passport:install && php artisan serve --host=0.0.0.0 --port=80 && php artisan config:cache"
         networks:
-            - itabackend
+            - itaprofiles
 
     mysql:
         container_name: itaprofilesbackend-mysql
@@ -24,20 +39,22 @@ services:
             MYSQL_PASSWORD: password
             MYSQL_ROOT_PASSWORD: root_password
         ports:
-            - "3306:3306"
+            - "3308:3306"
         volumes:
             - ./docker/mysql-data:/var/lib/mysql
         networks:
-            - itabackend
+            - itaprofiles
 
     phpmyadmin:
         image: phpmyadmin:latest
+        depends_on:
+            - mysql
         ports:
-            - 9015:80
+            - "9015:80"
         environment:
             - PMA_ARBITRARY=1
         networks:
-            - itabackend
+            - itaprofiles
 
 networks:
-    itabackend:
+    itaprofiles:
