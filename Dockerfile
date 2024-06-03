@@ -53,6 +53,8 @@ RUN composer clear-cache && composer install
 RUN php artisan key:generate
 RUN php artisan config:cache
 
+RUN chmod +x /var/www/html/start.sh
+
 # Exponer el puerto 9000
 EXPOSE 9000
 
