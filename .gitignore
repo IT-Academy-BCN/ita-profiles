@@ -1,4 +1,8 @@
+/.fleet
+/.idea
+/.vscode
 /.phpunit.cache
+/build
 /node_modules
 /public/build
 /public/hot
@@ -15,6 +19,4 @@ Homestead.yaml
 auth.json
 npm-debug.log
 yarn-error.log
-/.fleet
-/.idea
-/.vscode
+
