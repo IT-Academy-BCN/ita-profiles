@@ -6,8 +6,8 @@ namespace App\Http\Controllers\api\Tag;
 
 use App\Exceptions\TagNotFoundException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tag\TagUpdateRequest;
-use App\Service\Tag\TagUpdateService;
+use App\Http\Requests\TagRequest;
+use App\Service\TagUpdateService;
 use Illuminate\Http\JsonResponse;
 use Exception;
 
@@ -20,11 +20,11 @@ class TagUpdateController extends Controller
         $this->tagUpdateService = $tagUpdateService;
     }
 
-    public function __invoke(TagUpdateRequest $request, int $tagId): JsonResponse
+    public function __invoke(TagRequest $request, int $tagId): JsonResponse
     {
         try {
             $service = $this->tagUpdateService->execute($request->validated(), $tagId);
-            return response()->json(['tag' => $service]);
+            return response()->json(['tags' => $service]);
         } catch (TagNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {

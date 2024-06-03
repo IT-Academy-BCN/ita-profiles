@@ -62,11 +62,12 @@ It returns a list of languages along with any other relevant information, such a
      *      ),
      *     @OA\Response(
         *     response=404,
-        *     description="Student or Resume not found",
+        *     description="Language not found or Student not found or Resume not found",
         *     @OA\JsonContent(
         *         type="object",
-        *         @OA\Property(property="message", type="string", example="No s'ha trobat cap estudiant amb aquest ID {studentId}"),
-        *         @OA\Property(property="message2", type="string", example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}")
+        *         @OA\Property(property="message", type="string", example="L'estudiant amb ID: {studentId} no té informat cap idioma al seu currículum"),
+        *         @OA\Property(property="message2", type="string", example="No s'ha trobat cap estudiant amb aquest ID {studentId}"),
+        *         @OA\Property(property="message3", type="string", example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}")
         *     )
      *     ),
      *     @OA\Response(

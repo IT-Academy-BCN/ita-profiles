@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Tag;
+namespace App\Service;
 
 use App\Models\Resume;
 

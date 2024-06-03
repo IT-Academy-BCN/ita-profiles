@@ -21,7 +21,7 @@ class TagListService
 
     }
 
-    private function mapTagDetails(object $tags): array // TODO Check if here we can use the TagResource instead
+    private function mapTagDetails(object $tags): array
     {
         return $tags->map(function ($tag) {
             return [

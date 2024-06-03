@@ -64,20 +64,13 @@ class AnnotationsStudentCollaboration
      *     ),
      *
      *     @OA\Response(
-     *          response=404,
-     *          description="Student or Resume not found",
-     *          @OA\JsonContent(
-     *              @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  example="No s'ha trobat cap estudiant amb aquest ID {studentId}"
-     *              ),
-     *              @OA\Property(
-     *                  property="message2",
-     *                  type="string",
-     *                  example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
-     *              )
-     *          )
+     *         response=404,
+     *         description="Collaborations not found or Student not found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Collaborations not found for the student with ID: {studentId}"),
+     *             @OA\Property(property="message2", type="string", example="No student found with ID: {studentId}")
+     *         )
      *     ),
      *
      *     @OA\Response(

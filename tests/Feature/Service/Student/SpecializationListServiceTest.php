@@ -6,7 +6,7 @@ namespace Tests\Feature\Service\Student;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Service\Student\SpecializationListService;
+use App\Service\SpecializationListService;
 use Database\Factories\ResumeFactory;
 use App\Models\Resume;
 

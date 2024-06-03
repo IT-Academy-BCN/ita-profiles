@@ -8,8 +8,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Database\Factories\ResumeFactory;
 use App\Models\Resume;
-use App\Http\Controllers\api\Tag\DevelopmentListController;
-use App\Service\Tag\DevelopmentListService;
+use App\Http\Controllers\api\DevelopmentListController;
+use App\Service\DevelopmentListService;
 
 class DevelopmentListControllerTest extends TestCase
 {
