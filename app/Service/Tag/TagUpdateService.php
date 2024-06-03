@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\Tag;
 
 use App\Exceptions\TagNotFoundException;
 use App\Models\Tag;
@@ -17,12 +17,16 @@ class TagUpdateService
 
     public function updateTag(array $data, int $tagId): TagResource
     {
+        $tag = $this->getTagOrThrowException($tagId);
+        $tag->update($data);
+        return new TagResource($tag);
+    }
+    public function getTagOrThrowException($tagId): Tag
+    {
         $tag = Tag::find($tagId);
         if (!$tag) {
             throw new TagNotFoundException($tagId);
         }
-        $tag->update($data);
-
-        return new TagResource($tag);
+        return $tag;
     }
 }

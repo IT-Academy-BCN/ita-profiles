@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Tag;
 
+use App\Http\Resources\TagResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Tag;
 
@@ -25,7 +26,7 @@ class TagDetailService
         ];
     }
 
-    private function getTag(int $tagId): Tag
+    private function getTag(int $tagId): TagResource
     {
         $tag = Tag::find($tagId);
 
@@ -33,6 +34,6 @@ class TagDetailService
             throw new ModelNotFoundException("Tag not found with id {$tagId}");
         }
 
-        return $tag;
+        return new TagResource($tag);
     }
 }

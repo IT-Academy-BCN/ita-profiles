@@ -6,7 +6,7 @@ namespace Tests\Feature\Service\Tag;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Service\DevelopmentListService;
+use App\Service\Tag\DevelopmentListService;
 use Database\Factories\ResumeFactory;
 use App\Models\Resume;
 

@@ -8,8 +8,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Database\Factories\ResumeFactory;
 use App\Models\Resume;
-use App\Http\Controllers\api\SpecializationListController;
-use App\Service\SpecializationListService;
+use App\Http\Controllers\api\Student\SpecializationListController;
+use App\Service\Student\SpecializationListService;
 
 class SpecializationListControllerTest extends TestCase
 {

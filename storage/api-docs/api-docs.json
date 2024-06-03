@@ -857,6 +857,7 @@
                 "description": "Creates a new tag.",
                 "operationId": "createTag",
                 "requestBody": {
+                    "description": "New Tag name.\n\n- Tag field is **required**, must be a **string**, **less than 75 characters** and **unique** on database",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -879,9 +880,46 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "tag": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "tag_name": {
+                                                    "type": "string",
+                                                    "example": "New Tag Name"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Tag created successfully."
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "tag_name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The tag_name field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -898,99 +936,6 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Error creating the tag. Please try again."
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/tags/{id}": {
-            "put": {
-                "tags": [
-                    "Tags"
-                ],
-                "summary": "Update details of a specific tag.",
-                "description": "Updates details of a specific tag based on the provided ID.",
-                "operationId": "updateTag",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the tag to be updated",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "tag_name": {
-                                        "type": "string",
-                                        "example": "Updated Tag"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Tag details retrieved successfully.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
-                                            "tag_name": {
-                                                "type": "string",
-                                                "example": "Laravel"
-                                            },
-                                            "created_at": {
-                                                "type": "string",
-                                                "format": "date-time",
-                                                "example": "2024-01-25T12:34:56Z"
-                                            },
-                                            "updated_at": {
-                                                "type": "string",
-                                                "format": "date-time",
-                                                "example": "2024-01-25T12:34:56Z"
-                                            },
-                                            "message": {
-                                                "type": "string",
-                                                "example": "Tag updated successfully."
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Tag not found.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Tag not found."
                                         }
                                     },
                                     "type": "object"
@@ -1066,6 +1011,114 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Tag not found with id {tagId}."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Update details of a specific tag.",
+                "description": "Updates details of a specific tag based on the provided ID.",
+                "operationId": "updateTag",
+                "parameters": [
+                    {
+                        "name": "tagId",
+                        "in": "path",
+                        "description": "ID of the tag to be updated.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "New Tag name.\n\n- Tag field is **required**, must be a **string**, **less than 75 characters** and **unique** on database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tag_name": {
+                                        "type": "string",
+                                        "example": "Updated Tag"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tag updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "tag": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "tag_name": {
+                                                    "type": "string",
+                                                    "example": "Laravel"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tag not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No s'ha trobat cap etiqueta amb aquest ID: {tagId}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "El camp tag name és obligatori."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "tag_name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "El camp tag name és obligatori."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
