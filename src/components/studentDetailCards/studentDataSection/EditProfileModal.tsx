@@ -46,24 +46,31 @@ const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
             }
         }
     }
-    const handleSave = async () => {
+    const handleSave = async (e: React.FormEvent) => {
+        e.preventDefault()
         const url = `https://itaperfils.eurecatacademy.org/api/v1/students/${studentUUID}` // Assuming studentUUID is accessible
+
         try {
             await axios.put(url, formData)
             // Handle success logic
+
             closeEditModal()
         } catch (error) {
             // Handle error logic
             console.error('Error updating profile:', error)
         }
     }
+
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-120 relative flex flex-col items-center rounded-lg bg-white py-8 ps-10 px-5">
                 <h2 className="text-lg self-start font-bold md:text-2xl">
                     Editar Datos
                 </h2>
-                <form className="flex flex-col space-y-4 w-72">
+                <form
+                    className="flex flex-col space-y-4 w-72"
+                    onSubmit={handleSave}
+                >
                     <div className="overflow-y-auto h-96 grid grid-cols-1 pe-5">
                         <div>
                             <p className="text-xs text-gray-500 pb-1 pt-2">
@@ -147,7 +154,6 @@ const EditProfileModal = ({ studentData }: { studentData: TAbout }) => {
                         <button
                             type="submit"
                             className="w-102 h-14 cursor-pointer rounded-lg border-none bg-primary text-white text-sm font-semibold w-60"
-                            onClick={handleSave}
                         >
                             Aceptar
                         </button>
