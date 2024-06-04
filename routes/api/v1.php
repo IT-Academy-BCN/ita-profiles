@@ -13,14 +13,13 @@ use App\Http\Controllers\api\Student\{
     SpecializationListController
 };
 use App\Http\Controllers\api\Tag\{
-    TagDetailController,
     TagListController,
+    TagStoreController,
+    TagDetailController,
     TagUpdateController,
-    TagController,
     DevelopmentListController
 
 };
-
 
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
@@ -38,7 +37,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
 
 Route::prefix('tags')->group(function () {
     Route::get('/', TagListController::class)->name('tag.list');
-    Route::post('/', [TagController::class, 'store'])->name('tag.create');
+    Route::post('/', TagStoreController::class)->name('tag.store');
     Route::get('/{tagId}', TagDetailController::class)->name('tag.detail');
     Route::put('/{tagId}', TagUpdateController::class)->name('tag.update');
 });
