@@ -8,7 +8,7 @@ up: ## Bring up the Docker containers and build images if necessary
 down: ## Stop and remove the Docker containers
 	docker compose down
 
-full-restart: ## Perform a full restart: stop containers, remove all data, and bring up again
+reboot: ## Perform a full restart: stop containers, remove all data, and bring up again
 	docker compose down
 	docker system prune --all -f
 	docker volume prune -f
@@ -23,7 +23,7 @@ full-restart: ## Perform a full restart: stop containers, remove all data, and b
 	docker network connect app-network node
 	docker network connect app-network webserver
 
-start: ## Start the Laravel server in the container
+serve: ## Start the Laravel server in the container
 	docker exec -it php php artisan serve --host=0.0.0.0 --port=8000
 
 composer-install: ## Run 'composer install' inside the container
@@ -32,10 +32,18 @@ composer-install: ## Run 'composer install' inside the container
 composer-update: ## Run 'composer update' inside the container
 	docker exec -it php composer update
 
+setup: ## Does the setup of basic project's features like migrations, seeds, swagger, resets caches, key, passport...
+	docker exec -it php php artisan migrate
+	docker exec -it php php artisan db:seed
+	docker exec -it php php artisan l5-swagger:generate
+	docker exec -it php php artisan key:generate
+	docker exec -it php php artisan passport:install
+	docker exec -it php php artisan config:cache
+
 shell: ## Enters the specified container. Usage: make shell CONTAINER=<container_name>
 	docker exec -it $(CONTAINER) bash
 
-run-tests: ## Run PHPUnit tests inside the container
+test: ## Run PHPUnit tests inside the container
 	docker exec -it php ./vendor/bin/phpunit -c phpunit.xml ./tests/ --testdox
 
 swagger-generate: ## Generate Swagger documentation
