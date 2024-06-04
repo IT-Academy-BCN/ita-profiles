@@ -54,7 +54,16 @@ setup: ## Does the setup of basic project's features like composer install, migr
 	docker exec -it php php artisan passport:install --force --no-interaction
 
 render-setup:
+	bash -c 'if [ -f /var/www/html/bootstrap/cache/config.php ]; then rm /var/www/html/bootstrap/cache/config.php; fi'
 	composer install
+	composer clear-cache
+	composer dump-autoload
+	php artisan cache:clear
+	php artisan config:clear
+	php artisan optimize
+	php artisan clear-compiled
+	php artisan key:generate
+	php artisan config:cache
 	php artisan migrate:fresh --seed
 	php artisan l5-swagger:generate
 	cp .env.docker .env
