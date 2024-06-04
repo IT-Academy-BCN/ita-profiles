@@ -40,7 +40,7 @@ const TermsPopUp: React.FC<TermsPopUpProps> = ({ handleTermsPopup }) => {
                 Términos y Condiciones
             </h2>
             <div className="overflow-auto flex flex-col p-5">
-                {termsAndConditions}
+                {termsAndConditions ? termsAndConditions : error}
             </div>
         </div>
     )
