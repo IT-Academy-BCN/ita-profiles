@@ -11,9 +11,6 @@ COPY . /var/www/html
 # Instalar dependencias de Node.js
 RUN npm install
 
-RUN mkdir -p /var/www/html/build
-RUN chmod +rw /var/www/html/build
-
 # Construir la aplicación React
 RUN npm run build
 
@@ -45,16 +42,8 @@ COPY --from=node /var/www/html/build /var/www/html/build
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Copiar el script init-laravel.sh
-RUN mkdir -p /var/www/html/storage/framework/cache/data && chmod -R 775 /var/www/html/storage/framework/cache/data
-RUN chown -R www-data:www-data /var/www/html/storage
-
 # write a line to force COPY .env.docker /var/www/html/.env
 COPY .env.docker /var/www/html/.env
-
-RUN composer clear-cache && composer install
-RUN php artisan key:generate
-RUN php artisan config:cache
 
 # Exponer el puerto 9000
 EXPOSE 9000
