@@ -36,9 +36,24 @@ setup: ## Does the setup of basic project's features like composer install, migr
 	docker exec -it php composer install
 	docker exec -it php php artisan migrate:fresh --seed
 	docker exec -it php php artisan l5-swagger:generate
-	docker exec -it php php artisan key:generate
-	docker exec -it php php artisan passport:install
+	docker exec -it php cp .env.docker .env
+	docker exec -it php php artisan config:clear
 	docker exec -it php php artisan config:cache
+	docker exec -it php php artisan cache:clear
+	docker exec -it php php artisan key:generate
+	docker exec -it php php artisan passport:install --force --no-interaction
+
+render-setup:
+	composer install
+	php artisan migrate:fresh --seed
+	php artisan l5-swagger:generate
+	cp .env.docker .env
+	php artisan config:clear
+	php artisan config:cache
+	php artisan cache:clear
+	php artisan key:generate
+	php artisan passport:install --force --no-interaction
+
 
 shell: ## Enters the specified container. Usage: make shell CONTAINER=<container_name>
 	docker exec -it $(CONTAINER) bash

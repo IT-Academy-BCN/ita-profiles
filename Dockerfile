@@ -11,6 +11,9 @@ COPY . /var/www/html
 # Instalar dependencias de Node.js
 RUN npm install
 
+RUN mkdir -p /var/www/html/build
+RUN chmod +rw /var/www/html/build
+
 # Construir la aplicación React
 RUN npm run build
 
@@ -37,7 +40,7 @@ COPY . /var/www/html
 WORKDIR /var/www/html
 
 # Copiar archivos de Node.js desde la fase node
-COPY --from=node /var/www/html /var/www/html
+COPY --from=node /var/www/html/build /var/www/html/build
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
