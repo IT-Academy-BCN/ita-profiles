@@ -32,9 +32,9 @@ composer-install: ## Run 'composer install' inside the container
 composer-update: ## Run 'composer update' inside the container
 	docker exec -it php composer update
 
-setup: ## Does the setup of basic project's features like migrations, seeds, swagger, resets caches, key, passport...
+setup: ## Does the setup of basic project's features like composer install, migrations, seeds, swagger, resets caches, key, passport...
+	docker exec -it php composer install
 	docker exec -it php php artisan migrate
-	docker exec -it php php artisan db:seed
 	docker exec -it php php artisan l5-swagger:generate
 	docker exec -it php php artisan key:generate
 	docker exec -it php php artisan passport:install
