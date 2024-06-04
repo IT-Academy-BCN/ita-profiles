@@ -1,3 +1,16 @@
+docker compose down
+docker system prune --all -f
+docker volume prune -f
+docker network prune -f
+if [ $$(docker network ls | grep app-network) ]; then sh ./bin/disconnect_and_remove_network.sh; fi
+docker network create app-network
+if [ -d "./node_modules" ]; then sudo rm -Rf ./node_modules; fi
+if [ -d "./vendor" ]; then sudo rm -Rf ./vendor; fi
+docker compose up --build -d
+docker network connect app-network mysql
+docker network connect app-network php
+docker network connect app-network node
+docker network connect app-network webserver
 docker exec -it php bash -c 'if [ -f /var/www/html/bootstrap/cache/config.php ]; then rm /var/www/html/bootstrap/cache/config.php; fi'
 docker exec -it php composer install
 docker exec -it php composer clear-cache
