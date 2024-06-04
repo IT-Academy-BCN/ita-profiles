@@ -14,7 +14,7 @@ jobs:
         run: |
           sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && git checkout ."
           sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && git pull origin develop"
-          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && sed -i 's|^L5_SWAGGER_CONST_HOST=.*|L5_SWAGGER_CONST_HOST=https://itaperfils.eurecatacademy.org|' .env"
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && sed -i 's|^L5_SWAGGER_CONST_HOST=.*|L5_SWAGGER_CONST_HOST=|' .env"
           sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && sed -i 's|^API_VERSION=.*|API_VERSION=/api/v1/|' .env"
           sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && sed -i 's|^DB_CONNECTION=.*|DB_CONNECTION=mysql|' .env"
           sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /var/www/html/ita-profiles-backend && sed -i 's|^DB_HOST=.*|DB_HOST=127.0.0.1|' .env"

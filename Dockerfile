@@ -1,34 +1,51 @@
-FROM php:8.1.27-apache
+### SECCION DE NODE
+# Fase de construcción de Node.js
+FROM node:22 AS node
+
+# Establecer el directorio de trabajo
 WORKDIR /var/www/html
 
-RUN a2enmod rewrite
+# Copiar archivos de React
+COPY . /var/www/html
 
+# Instalar dependencias de Node.js
+RUN npm install
+
+# Construir la aplicación React
+RUN npm run build
+
+
+### SECCION COMBINADA
+# Fase final, combinando ambas
+FROM php:8.1-fpm as php
+
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    libicu-dev \
-    libmariadb-dev \
-    unzip zip \
-    zlib1g-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    git \
-    libzip-dev \
-    && pecl install xdebug \
-    && docker-php-ext-install gettext intl pdo_mysql zip bcmath gd \
-    && docker-php-ext-enable xdebug
+    libzip-dev libfreetype6-dev \
+    libjpeg62-turbo-dev libpng-dev libonig-dev \
+    libxml2-dev libpq-dev libicu-dev libxslt1-dev \
+    libmcrypt-dev libssl-dev git zip unzip && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Copiar archivos de PHP desde la fase php
+COPY . /var/www/html
 
+# Establecer el directorio de trabajo
+WORKDIR /var/www/html
 
-# Exponer el puerto 8000
-#EXPOSE 80
-#
-## Iniciar el servidor web de PHP
-CMD ["php", "artisan", "cache:clear"]
-CMD ["php", "artisan", "config:clear"]
-CMD ["php", "artisan", "config:cache"]
+# Copiar archivos de Node.js desde la fase node
+COPY --from=node /var/www/html/build /var/www/html/build
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+# write a line to force COPY .env.docker /var/www/html/.env
+COPY .env.docker /var/www/html/.env
+
+# Exponer el puerto 9000
+EXPOSE 9000
+
+CMD ["php-fpm"]

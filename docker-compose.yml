@@ -1,43 +1,67 @@
+version: '3.7'
+
 services:
-    laravel-docker:
+    webserver:
+        container_name: webserver
+        image: nginx:latest
+        ports:
+            - "80:80"
+            - "8000:8000"
+        volumes:
+            - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./:/var/www/html
         depends_on:
-            - mysql
-        container_name: itaprofilesbackend-app
+            - php
+            - node
+        networks:
+            - app-network
+
+    php:
+        container_name: php
+        image: php:8.1-fpm
+        restart: unless-stopped
+        tty: true
+        working_dir: /var/www/html
         build:
             context: .
             dockerfile: Dockerfile
-        ports:
-            - "8000:80"
+        depends_on:
+            - mysql
         volumes:
-            - .:/var/www/html
-        command: >
-            bash -c "composer install && cp .env.docker .env && php artisan key:generate && php artisan migrate:fresh && php artisan db:seed && php artisan serve --host=0.0.0.0 --port=80 && php artisan config:cache"
+            - ./:/var/www/html
         networks:
-            - itabackend
+            - app-network
+
+    node:
+        container_name: node
+        image: node:22
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/var/www/html
+        expose:
+            - "80"
+        networks:
+            - app-network
 
     mysql:
-        container_name: itaprofilesbackend-mysql
-        image: mysql:latest
-        environment:
-            MYSQL_DATABASE: laravel
-            MYSQL_USER: user
-            MYSQL_PASSWORD: password
-            MYSQL_ROOT_PASSWORD: root_password
+        container_name: mysql
+        image: mysql:8.0
         ports:
             - "3306:3306"
-        volumes:
-            - ./docker/mysql-data:/var/lib/mysql
-        networks:
-            - itabackend
-
-    phpmyadmin:
-        image: phpmyadmin:latest
-        ports:
-            - 9015:80
         environment:
-            - PMA_ARBITRARY=1
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=laravel
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=password
+        volumes:
+            - mysql-data:/var/lib/mysql
         networks:
-            - itabackend
+            - app-network
+
+volumes:
+    mysql-data:
 
 networks:
-    itabackend:
+    app-network:

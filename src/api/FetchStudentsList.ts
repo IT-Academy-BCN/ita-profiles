@@ -14,7 +14,7 @@ export const FetchStudentsListHome = async (selectedRoles:Array<string>= []) => 
     }
 
     // Construir la URL completa con la cadena de consulta
-    const url = `https://itaperfils.eurecatacademy.org/api/v1/student/list/for-home${queryParams ? `?${queryParams}` : ''}`;
+    const url = `//localhost:8000/api/v1/student/list/for-home${queryParams ? `?${queryParams}` : ''}`;
 
     const response = await axios.get<IStudentList[]>(url);
     return response.data;
