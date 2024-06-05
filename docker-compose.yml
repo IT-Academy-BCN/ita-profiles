@@ -34,7 +34,7 @@ services:
 
     node:
         container_name: node
-        image: node:22
+        image: node:22.2.0-bullseye
         build:
             context: .
             dockerfile: Dockerfile

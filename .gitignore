@@ -2,6 +2,7 @@
 /.idea
 /.vscode
 /.phpunit.cache
+/build
 /node_modules
 /public/build
 /public/hot
