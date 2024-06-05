@@ -1,19 +1,21 @@
 ### SECCION DE NODE
 # Fase de construcción de Node.js
-FROM node:22 AS node
+FROM node:22.2.0-bullseye AS node
+
+# Copiar archivos de React
+COPY . /var/www/html
 
 # Establecer el directorio de trabajo
 WORKDIR /var/www/html
 
-# Copiar archivos de React
-COPY . /var/www/html
+# Install npm
+RUN apt update && apt install -y nodejs npm
 
 # Instalar dependencias de Node.js
 RUN npm install
 
 # Construir la aplicación React
 RUN npm run build
-
 
 ### SECCION COMBINADA
 # Fase final, combinando ambas
