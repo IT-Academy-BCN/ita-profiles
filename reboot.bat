@@ -21,7 +21,7 @@ docker exec -it php php artisan optimize
 docker exec -it php php artisan clear-compiled
 docker exec -it php php artisan key:generate
 docker exec -it php php artisan config:cache
-docker exec -it php php artisan migrate:fresh 
+docker exec -it php php artisan migrate:fresh
 docker exec -it php php artisan db:seed
 docker exec -it php php artisan l5-swagger:generate
 docker exec -it php cp .env.docker .env
@@ -30,3 +30,5 @@ docker exec -it php php artisan config:cache
 docker exec -it php php artisan cache:clear
 docker exec -it php php artisan key:generate
 docker exec -it php php artisan passport:install --force --no-interaction
+docker exec -it node npm install
+docker exec -it node npm run build
