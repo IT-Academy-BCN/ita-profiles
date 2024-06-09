@@ -8,6 +8,7 @@ RUN npm install -g typescript
 
 COPY . .
 
+RUN npm install
 RUN npm run build
 
 FROM php:8.1-fpm as php-stage
