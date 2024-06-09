@@ -30,3 +30,5 @@ docker exec -it php php artisan config:cache
 docker exec -it php php artisan cache:clear
 docker exec -it php php artisan key:generate
 docker exec -it php php artisan passport:install --force --no-interaction
+docker exec -it node npm install
+docker exec -it node npm run build

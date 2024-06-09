@@ -8,9 +8,6 @@ RUN npm install -g typescript
 
 COPY . .
 
-RUN npm install
-RUN npm run build
-
 FROM php:8.1-fpm as php-stage
 
 WORKDIR /var/www/html
@@ -33,7 +30,6 @@ CMD ["php-fpm"]
 FROM nginx:latest as nginx-stage
 COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=php-stage /var/www/html /var/www/html
-COPY --from=node-stage /var/www/html/build /var/www/html/build
 
 EXPOSE 80
 EXPOSE 8000
