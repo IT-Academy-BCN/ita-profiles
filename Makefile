@@ -3,7 +3,8 @@
 CONTAINER ?= php
 
 up: ## Bring up the Docker containers and build images if necessary
-	docker compose up --build -d
+	docker compose build --no-cache
+	docker compose up -d
 
 down: ## Stop and remove the Docker containers
 	docker compose down
@@ -17,7 +18,8 @@ reboot: ## Perform a full restart: stop containers, remove all data, and bring u
 	docker network create app-network
 	if [ -d "./node_modules" ]; then sudo rm -Rf ./node_modules; fi
 	if [ -d "./vendor" ]; then sudo rm -Rf ./vendor; fi
-	docker compose up --build -d
+	docker compose --verbose build --no-cache
+	docker compose up -d
 	docker network connect app-network mysql
 	docker network connect app-network php
 	docker network connect app-network node
@@ -37,16 +39,16 @@ setup: ## Does the setup of basic project's features like composer install, migr
 	docker exec -it php composer install
 	docker exec -it php composer clear-cache
 	docker exec -it php composer dump-autoload
+	docker exec -it php cp .env.docker .env
 	docker exec -it php php artisan cache:clear
 	docker exec -it php php artisan config:clear
 	docker exec -it php php artisan optimize
 	docker exec -it php php artisan clear-compiled
 	docker exec -it php php artisan key:generate
 	docker exec -it php php artisan config:cache
-
+	docker exec -it php chmod 777 -R storage
 	docker exec -it php php artisan migrate:fresh --seed
 	docker exec -it php php artisan l5-swagger:generate
-	docker exec -it php cp .env.docker .env
 	docker exec -it php php artisan config:clear
 	docker exec -it php php artisan config:cache
 	docker exec -it php php artisan cache:clear

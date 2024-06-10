@@ -33,26 +33,26 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
         formState: { errors },
     } = useForm<TFormSchema>({ resolver: zodResolver(UserSchema) })
 
-    const sendRegister: SubmitHandler<TFormSchema> = async (data) => {
-        try {
-            if (isChecked) {
-                // This creates a user in db.json.
-                const response = await axios.post(
-                    'http://localhost:3000/users/register',
-                    data,
-                )
-                // eslint-disable-next-line no-console
-                console.log('response de register =>', response.data)
-                reset()
-                onClose()
-            } else {
-                setCheckError(true)
-            }
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.log(error)
-        }
+  const sendRegister: SubmitHandler<TFormSchema> = async (data) => {
+    try {
+      if (isChecked) {
+        // This creates a user in db.json.
+        const response = await axios.post(
+          '//localhost:3000/users/register',
+          data,
+        )
+        // eslint-disable-next-line no-console
+        console.log('response de register =>', response.data)
+        reset()
+        onClose()
+      } else {
+        setCheckError(true)
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error)
     }
+  }
 
     return (
         <div className="w-120 relative flex flex-col items-center rounded-lg bg-white p-5 md:p-20">

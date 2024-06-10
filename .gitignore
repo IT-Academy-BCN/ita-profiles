@@ -2,13 +2,13 @@
 /.idea
 /.vscode
 /.phpunit.cache
-/build
 /node_modules
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
+/build
 /storage/api-docs/api-docs.json
 .env
 .env.backup
