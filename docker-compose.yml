@@ -37,12 +37,14 @@ services:
 
     node:
         container_name: node
-        image: node:22.2.0-bullseye
+        image: node:22.2.0
         restart: unless-stopped
         tty: true
         build:
             context: .
             target: node-stage
+        entrypoint:
+            - /var/www/html/entrypoint_node.sh
         volumes:
             - ./:/var/www/html
         expose:

@@ -55,8 +55,6 @@ setup: ## Does the setup of basic project's features like composer install, migr
 	docker exec -it php php artisan cache:clear
 	docker exec -it php php artisan key:generate
 	docker exec -it php php artisan passport:install --force --no-interaction
-	docker exec -it node npm install
-	docker exec -it node npm run build
 
 render-setup:
 	bash -c 'if [ -f /var/www/html/bootstrap/cache/config.php ]; then rm /var/www/html/bootstrap/cache/config.php; fi'
@@ -77,8 +75,6 @@ render-setup:
 	php artisan cache:clear
 	php artisan key:generate
 	php artisan passport:install --force --no-interaction
-	npm install
-	npm run build
 
 cache-clear: ## Clear the cache
 	docker exec -it php php artisan config:clear

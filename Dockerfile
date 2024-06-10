@@ -2,11 +2,9 @@ FROM node:22.2.0 AS node-stage
 
 WORKDIR /var/www/html
 
-COPY package.json package-lock.json ./
-RUN npm ci --cache /tmp/empty-cache
+RUN mkdir -p /var/www/html/build
 RUN npm install -g typescript
 
-COPY . .
 
 FROM php:8.1-fpm as php-stage
 
@@ -24,13 +22,20 @@ COPY .env.docker /var/www/html/.env
 
 EXPOSE 9000
 
+COPY ./entrypoint.sh /var/www/html/entrypoint.sh
+RUN chmod +x /var/www/html/entrypoint.sh
+ENTRYPOINT ["/var/www/html/entrypoint.sh"]
+
 CMD ["php-fpm"]
 
 
 FROM nginx:latest as nginx-stage
 COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=php-stage /var/www/html /var/www/html
+COPY --from=node-stage /var/www/html/build /var/www/html/build
+RUN chmod -R 777 /var/www/html/build
 
 EXPOSE 80
 EXPOSE 8000
+
 CMD ["nginx", "-g", "daemon off;"]
