@@ -16,6 +16,8 @@ services:
         depends_on:
             - php
             - node
+        networks:
+            - app-network
 
     php:
         container_name: php
@@ -30,6 +32,8 @@ services:
             - mysql
         volumes:
             - ./:/var/www/html
+        networks:
+            - app-network
 
     node:
         container_name: node
@@ -45,6 +49,8 @@ services:
             - ./:/var/www/html
         expose:
             - "80"
+        networks:
+            - app-network
         environment:
             - NODE_ENV=development
 
@@ -60,6 +66,11 @@ services:
             - MYSQL_PASSWORD=password
         volumes:
             - mysql-data:/var/lib/mysql
+        networks:
+            - app-network
 
 volumes:
     mysql-data:
+
+networks:
+    app-network:
