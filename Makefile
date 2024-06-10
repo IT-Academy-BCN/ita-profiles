@@ -39,6 +39,7 @@ setup: ## Does the setup of basic project's features like composer install, migr
 	docker exec -it php composer install
 	docker exec -it php composer clear-cache
 	docker exec -it php composer dump-autoload
+	docker exec -it php cp .env.docker .env
 	docker exec -it php php artisan cache:clear
 	docker exec -it php php artisan config:clear
 	docker exec -it php php artisan optimize
@@ -46,10 +47,8 @@ setup: ## Does the setup of basic project's features like composer install, migr
 	docker exec -it php php artisan key:generate
 	docker exec -it php php artisan config:cache
 	docker exec -it php chmod 777 -R storage
-
 	docker exec -it php php artisan migrate:fresh --seed
 	docker exec -it php php artisan l5-swagger:generate
-	docker exec -it php cp .env.docker .env
 	docker exec -it php php artisan config:clear
 	docker exec -it php php artisan config:cache
 	docker exec -it php php artisan cache:clear
