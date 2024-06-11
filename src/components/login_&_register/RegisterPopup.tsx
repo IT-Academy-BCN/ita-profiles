@@ -31,7 +31,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
       if (isChecked) {
         // This creates a user in db.json.
         const response = await axios.post(
-          'http://localhost:3000/users/register',
+          '//localhost:3000/users/register',
           data,
         )
         // eslint-disable-next-line no-console
