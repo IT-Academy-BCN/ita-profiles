@@ -22,3 +22,4 @@ chmod 777 -R storage
 
 # Ejecuta el comando recibido como argumento del entrypoint
 exec "$@"
+
