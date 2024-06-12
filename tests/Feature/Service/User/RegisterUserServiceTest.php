@@ -9,7 +9,7 @@ use Tests\TestCase;
 use App\Http\Requests\RegisterRequest;
 use App\Models\Resume;
 use App\Models\Student;
-use Service\User\UserRegisterService;
+use App\Service\User\UserRegisterService;
 
 class RegisterUserServiceTest extends TestCase
 {

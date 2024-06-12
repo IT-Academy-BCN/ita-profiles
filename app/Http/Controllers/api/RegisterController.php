@@ -8,7 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Service\User\UserRegisterService;
+use App\Service\User\UserRegisterService;
 use Exception;
 use PDOException;
 
