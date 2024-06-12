@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Service;
+namespace Tests\Unit\Service;
 
 use App\Service\StudentListService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
