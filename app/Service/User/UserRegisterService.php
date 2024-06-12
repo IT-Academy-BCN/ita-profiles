@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Service\User;
+namespace App\Service\User;
 
 use App\Models\Resume;
 use App\Models\Student;
@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use PDOException;
+use Illuminate\Support\Facades\Auth;
 
 class UserRegisterService
 {
@@ -39,11 +40,15 @@ class UserRegisterService
             $resume->student_id = $student->id;
             $resume->specialization = $input['specialization'] ?? null;
             $resume->save();
-
-            // Genera el token de acceso
-            $success['token'] = $user->createToken('ITAcademy')->accessToken;
+			
+			// Genera el token de acceso
+            $success['token'] = $user->createToken('Token')->accessToken;
+           
 
             DB::commit();
+            
+            
+            
 
             $success['email'] = $user->email;
             // Devuelve el email del usuario y el token
@@ -52,5 +57,8 @@ class UserRegisterService
             DB::rollBack();
             return false;
         }
+        
+        
+        
     }
 }

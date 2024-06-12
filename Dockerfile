@@ -6,7 +6,7 @@ RUN mkdir -p /var/www/html/build
 RUN npm install -g typescript
 
 
-FROM php:8.1-fpm as php-stage
+FROM php:8.2-fpm as php-stage
 
 WORKDIR /var/www/html
 
