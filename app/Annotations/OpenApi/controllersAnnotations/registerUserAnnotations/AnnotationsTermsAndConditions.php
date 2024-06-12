@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\studentResumeAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\TermsAndConditionsAnnotations;
 
 class AnnotationsTermsAndConditions
 {   
