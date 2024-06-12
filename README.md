@@ -7,11 +7,6 @@ ITA Profiles is a project from IT Academy post-specialization course that allows
 
 The project now integrates both frontend and backend functionalities to provide a seamless experience for users.
 
-We have a "production" url for this project placed here:
-
-Backend: https://ita-profiles.onrender.com/api/documentation
-
-Frontend: https://ita-profiles.netlify.app/
 
 ## How to install the project
 
@@ -22,22 +17,16 @@ We use docker containers to share the same versions of PHP and MySQL around all 
 2. Once Docker is installed, go to the project's root folder and build the containers by running:
 
 ```shell
-docker compose up -d
+docker compose up --build -d
 ```
 
-3. After the containers are built, run the following command to ensure Swagger styles and JavaScript run properly:
-
-```shell
-docker compose exec -it laravel-docker php artisan config:cache
-```
-
-4. Verify that the containers are running by executing:
+3. Verify that the containers are running by executing:
 
 ```shell
 docker ps
 ```
 
-5. You can now run commands inside the container using the following format:
+4. You can now run commands inside the container using the following format:
 
 ```shell
 docker exec -it <app-container-name> <the-command>
@@ -46,9 +35,9 @@ docker exec -it <app-container-name> <the-command>
 For example:
 
 ```shell
-docker exec -it laravel-docker composer install
-docker exec -it laravel-docker php artisan migrate:fresh
-docker exec -it laravel-docker php artisan db:seed
+docker exec -it php composer install
+docker exec -it php php artisan migrate:fresh
+docker exec -it php php artisan db:seed
 ```
 
 ### Local Addresses

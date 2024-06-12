@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Student;
 
 use Tests\TestCase;
-use App\Http\Controllers\Api\ModalityController;
+use App\Http\Controllers\api\ModalityController;
 use App\Service\Student\ModalityService;
 
 class ModalityControllerUnitTest extends TestCase

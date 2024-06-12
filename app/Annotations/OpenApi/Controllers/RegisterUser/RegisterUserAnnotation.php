@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types=1);
+namespace App\Annotations\OpenApi\controllersAnnotations\registerUserAnnotations;
 
-namespace App\Annotations\OpenApi\Controllers\RegisterUser;
-
-class RegisterUserAnnotation
+class AnnotationsRegisterUser
 {
     /**
      * @OA\Post(
