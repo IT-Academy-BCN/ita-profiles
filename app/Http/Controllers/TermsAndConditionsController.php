@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\TermsAndConditionsService;
+use App\Service\TermsAndConditionsService;
 use Exception;
 
 class TermsAndConditionsController extends Controller

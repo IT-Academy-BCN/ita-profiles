@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Service\TermsAndConditionsService;
 
 class TermsAndConditionsTest extends TestCase
 {
@@ -50,7 +51,7 @@ class TermsAndConditionsTest extends TestCase
     public function testTermsServiceThrowsException()
     {
         // Simula una excepción en el servicio
-        $this->mock(\App\Services\TermsAndConditionsService::class, function ($mock) {
+        $this->mock(TermsAndConditionsService::class, function ($mock) {
             $mock->shouldReceive('getTermsAndConditions')->andThrow(new \Exception('Test exception'));
         });
 
@@ -63,7 +64,7 @@ class TermsAndConditionsTest extends TestCase
     public function testTermsServiceReturnsCustomContent()
     {
         // Simula un contenido diferente en el servicio
-        $this->mock(\App\Services\TermsAndConditionsService::class, function ($mock) {
+        $this->mock(TermsAndConditionsService::class, function ($mock) {
             $mock->shouldReceive('getTermsAndConditions')->andReturn('Custom content for testing');
         });
 
