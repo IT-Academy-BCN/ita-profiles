@@ -10,82 +10,10 @@ class AnnotationsRegisterUser
      *      operationId="registerUser",
      *      summary="Register a new user",
      *      tags={"UserRegister"},
+     *     description="
+- Create a new user: In the Request body There are already base data to test the endpoint but you can change them if you want.
+- Returns: the user token and the user email if the user was created successfully.",
      *
-     *
-     * 		@OA\Parameter(
-     * 			name="username",
-     *         in="path",
-     *         description="Username of the new user",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         ),
-     *  	),
-     *
-     *      @OA\Parameter(
-     * 			name="dni",
-     *         in="path",
-     *         description="DNI/NIE of the new user",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         ),
-     *  	),
-     *
-     *      @OA\Parameter(
-     * 			name="email",
-     *         in="path",
-     *         description="Email of the new user",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             format="email"
-     *         ),
-     *  	),
-     *
-     *      @OA\Parameter(
-     *          name="specialization",
-     *          in="path",
-     *          description="Specialization of the new user",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="string"
-     *          ),
-     *      ),
-     *
-     * 		@OA\Parameter(
-     * 			name="password",
-     *         in="path",
-     *         description="Password of the new user",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             format="password"
-     *         ),
-     *     ),
-     *
-     *      @OA\Parameter(
-     * 			name="password_confirmation",
-     *         in="path",
-     *         description="Password confirmation",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             format="password"
-     *         ),
-     *     ),
-     *
-     *      @OA\Parameter(
-     *          name="terms",
-     *          in="path",
-     *          description="Acceptance of terms and conditions",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="string",
-     *              format="boolean"
-     *          ),
-     *      ),
-
      *      @OA\RequestBody(
      *           @OA\JsonContent(
      *              type="object",

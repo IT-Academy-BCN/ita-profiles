@@ -17,76 +17,8 @@
                     "UserRegister"
                 ],
                 "summary": "Register a new user",
+                "description": "\n- Create a new user: In the Request body There are already base data to test the endpoint but you can change them if you want.\n- Returns: the user token and the user email if the user was created successfully.",
                 "operationId": "registerUser",
-                "parameters": [
-                    {
-                        "name": "username",
-                        "in": "path",
-                        "description": "Username of the new user",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "dni",
-                        "in": "path",
-                        "description": "DNI/NIE of the new user",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "email",
-                        "in": "path",
-                        "description": "Email of the new user",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "email"
-                        }
-                    },
-                    {
-                        "name": "specialization",
-                        "in": "path",
-                        "description": "Specialization of the new user",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "path",
-                        "description": "Password of the new user",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "password"
-                        }
-                    },
-                    {
-                        "name": "password_confirmation",
-                        "in": "path",
-                        "description": "Password confirmation",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "password"
-                        }
-                    },
-                    {
-                        "name": "terms",
-                        "in": "path",
-                        "description": "Acceptance of terms and conditions",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "boolean"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
