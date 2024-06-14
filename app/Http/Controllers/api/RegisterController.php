@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\api;
@@ -7,57 +8,34 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Service\User\UserRegisterService;
 use Exception;
-use PDOException;
 
 class RegisterController extends Controller
 {
 
-    private UserRegisterService $userService;
+    private UserRegisterService $userRegisterService;
 
-    public function __construct(UserRegisterService $userService)
+    public function __construct(UserRegisterService $userRegisterService)
     {
-        $this->userService = $userService;
+        $this->userRegisterService = $userRegisterService;
     }
 
     public function register(RegisterRequest $request): JsonResponse
     {
-        $dataRegister = $request->only(['username', 'dni', 'email', 'specialization', 'password']);
+        $input = $request->only(['username', 'dni', 'email', 'specialization', 'password']);
 
         DB::beginTransaction();
 
         try {
-            $result = $this->userService->createUser($dataRegister);
+            $result = $this->userRegisterService->createUser($input);
 
-            if ($result !== false) {
-                DB::commit();
-                return response()->json([
-                    'message'=> 'User registered successfully.',
-                    'email'=> $result['email'],
-                    'token'=> $result['token']
-                ], 200);
-            } else {
-                DB::rollBack();
-                return response()->json([
-                    'message'=> 'ProcessFailed. User register Failed', 400
-                ]);
-            }
-        } catch (PDOException $e) {
-            DB::rollBack();
-            Log::error('Database error during user registration:', [
-                'exception' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json('Database error occurred during registration.', 500);
+            DB::commit();
+
+            return response()->json($result, 200);
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error('Error during user registration:', [
-                'exception' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json('An error occurred during registration. Please try again later.', 500);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 }
