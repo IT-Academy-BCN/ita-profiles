@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { fetchTermsAndConditions } from '../../api/FetchTermsAndConditions'
 
 type TermsPopUpProps = {
     handleTermsPopup: () => void
@@ -14,21 +14,13 @@ const TermsPopUp: React.FC<TermsPopUpProps> = ({ handleTermsPopup }) => {
         content: '',
     })
 
-    const endpointTermsandConditions =
-        'http://localhost:8000/api/v1/terms-and-conditions'
-
     useEffect(() => {
-        axios
-            .get(endpointTermsandConditions, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then((response) => setTermsAndConditions(response.data))
-            .catch((err) => {
-                throw err
-            })
-    }, []) // Only run once after the initial render
+        const fetchTermsAndCo = async () => {
+            const data = await fetchTermsAndConditions()
+            setTermsAndConditions(data)
+        }
+        fetchTermsAndCo()
+    }, [])
 
     return (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-10 bg-white flex flex-col items-center rounded-lg p-10 md:p-20">
