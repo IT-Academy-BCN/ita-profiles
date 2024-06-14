@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Student;
 
 use Tests\TestCase;
-use App\Http\Controllers\Api\StudentProjectsDetailController;
+use App\Http\Controllers\api\StudentProjectsDetailController;
 use App\Service\Student\StudentProjectsDetailService;
 
 class StudentProjectsDetailControllerUnitTest extends TestCase

@@ -1,42 +1,41 @@
-FROM php:8.1.27-apache
+FROM node:22.2.0 AS node-stage
+
 WORKDIR /var/www/html
 
-RUN a2enmod rewrite
+RUN mkdir -p /var/www/html/build
+RUN npm install -g typescript
+
+
+FROM php:8.1-fpm as php-stage
+
+WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y \
-    wait-for-it \
-    libicu-dev \
-    libmariadb-dev \
-    unzip zip \
-    zlib1g-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    git \
-    libzip-dev \
-    && pecl install xdebug \
-    && docker-php-ext-install gettext intl pdo_mysql zip bcmath gd \
-    && docker-php-ext-enable xdebug
+    libzip-dev libfreetype6-dev \
+    libjpeg62-turbo-dev libpng-dev libonig-dev \
+    libxml2-dev libpq-dev libicu-dev libxslt1-dev \
+    libmcrypt-dev libssl-dev git zip unzip && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+COPY .env.docker /var/www/html/.env
 
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
+EXPOSE 9000
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY ./entrypoint.sh /var/www/html/entrypoint.sh
+RUN chmod +x /var/www/html/entrypoint.sh
+ENTRYPOINT ["/var/www/html/entrypoint.sh"]
+
+CMD ["php-fpm"]
+
+
+FROM nginx:latest as nginx-stage
+COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=php-stage /var/www/html /var/www/html
+COPY --from=node-stage /var/www/html/build /var/www/html/build
+RUN chmod -R 777 /var/www/html/build
 
 EXPOSE 80
 EXPOSE 8000
 
-COPY . /var/www/html/
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --working-dir=/var/www/html
-RUN cp .env.docker .env
-RUN php artisan key:generate
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/wait-for-it.sh
-RUN chmod +x /usr/local/bin/wait-for-it.sh
-
-# Copiar el script de inicialización
-COPY init.sh /usr/local/bin/init.sh
-RUN chmod +x /usr/local/bin/init.sh
-
-CMD ["/usr/local/bin/init.sh"]
+CMD ["nginx", "-g", "daemon off;"]

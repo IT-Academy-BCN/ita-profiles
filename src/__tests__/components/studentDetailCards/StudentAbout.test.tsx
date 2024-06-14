@@ -38,7 +38,7 @@ describe('StudentDataCard', () => {
   test('renders student data correctly', async () => {
     mock
       .onGet(
-        `/api/v1/student/${studentUUID}/detail/for-home`,
+        `//localhost:8000/api/v1/student/${studentUUID}/detail/for-home`,
       )
       .reply(200, aboutData);
 

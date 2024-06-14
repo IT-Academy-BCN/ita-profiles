@@ -24,9 +24,9 @@ const StudentFiltersProvider: React.FC = () => {
   )
 
   const urlRoles =
-    '/api/v1/specialization/list'
+    '//localhost:8000/api/v1/specialization/list'
   const urlDevelopment =
-    '/api/v1/development/list'
+    '//localhost:8000/api/v1/development/list'
 
   const fetchData = async (
     url: string,

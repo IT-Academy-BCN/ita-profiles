@@ -28,7 +28,7 @@ describe('LanguagesCard component', () => {
 
   test('renders languages correctly', async () => {
 
-    mock.onGet(`/api/v1/students/${studentUUID}/languages`).reply(200, { languages: languagesData });
+    mock.onGet(`//localhost:8000/api/v1/students/${studentUUID}/languages`).reply(200, { languages: languagesData });
 
     render(
       <SelectedStudentIdContext.Provider
@@ -49,7 +49,7 @@ describe('LanguagesCard component', () => {
 
   test('renders error message when request fails', async () => {
 
-    mock.onGet(`/api/v1/students/${studentUUID}/languages`).reply(500, { error: 'Internal Server Error' });
+    mock.onGet(`//localhost:8000/api/v1/students/${studentUUID}/languages`).reply(500, { error: 'Internal Server Error' });
 
     render(
       <SelectedStudentIdContext.Provider

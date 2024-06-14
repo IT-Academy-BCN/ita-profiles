@@ -5,7 +5,7 @@ export const fetchModalityData = async (studentUUID: string | null) => {
 
         try {
           const response = await axios.get(
-            `/api/v1/modality/${studentUUID}`,
+            `//localhost:8000/api/v1/modality/${studentUUID}`,
 
           )
           return response.data

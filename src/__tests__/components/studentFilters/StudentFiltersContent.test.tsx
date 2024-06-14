@@ -36,11 +36,11 @@ describe('StudentFiltersProvider', () => {
   test('renders student filters correctly', async () => {
     // Mock API responses
     mock
-      .onGet('/api/v1/specialization/list')
+      .onGet('//localhost:8000/api/v1/specialization/list')
       .reply(200, rolesData);
 
     mock
-      .onGet('/api/v1/development/list')
+      .onGet('//localhost:8000/api/v1/development/list')
       .reply(200, developmentData);
 
     let getByText: RenderResult['getByText'];

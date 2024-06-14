@@ -5,7 +5,7 @@ export const fetchBootcampData = async (studentUUID: string | null) => {
 
         try {
           const response = await axios.get(
-            `/api/v1/students/${studentUUID}/bootcamp`,
+            `//localhost:8000/api/v1/students/${studentUUID}/bootcamp`,
 
           )
           return response.data
