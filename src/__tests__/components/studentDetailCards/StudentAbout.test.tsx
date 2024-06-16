@@ -22,7 +22,7 @@ describe('StudentDataCard', () => {
   const studentUUID = '123';
   const setStudentUUID = () => { };
   const aboutData = [
-    { 
+    {
       id: 1,
       fullname: 'John Doe',
       subtitle: 'Software Developer',
@@ -38,7 +38,7 @@ describe('StudentDataCard', () => {
   test('renders student data correctly', async () => {
     mock
       .onGet(
-        `https://itaperfils.eurecatacademy.org/api/v1/student/${studentUUID}/detail/for-home`,
+        `//localhost:8000/api/v1/student/${studentUUID}/detail/for-home`,
       )
       .reply(200, aboutData);
 
@@ -49,10 +49,10 @@ describe('StudentDataCard', () => {
         <StudentDataCard />
       </SelectedStudentIdContext.Provider>,
     );
-   
-  
-    
+
+
+
   });
 
-  
+
 });

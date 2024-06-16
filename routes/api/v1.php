@@ -12,15 +12,20 @@ use App\Http\Controllers\api\Student\{
     StudentProjectsDetailController,
     SpecializationListController
 };
+
 use App\Http\Controllers\api\Tag\{
     TagListController,
     TagStoreController,
     TagDetailController,
     TagUpdateController,
     DevelopmentListController
-
 };
 
+use App\Http\Controllers\api\{
+    RegisterController
+};
+
+Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
