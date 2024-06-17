@@ -38,8 +38,6 @@ services:
     node:
         container_name: node
         image: node:22.2.0
-        restart: unless-stopped
-        tty: true
         build:
             context: .
             target: node-stage
