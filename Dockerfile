@@ -34,6 +34,8 @@ COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=php-stage /var/www/html /var/www/html
 COPY --from=node-stage /var/www/html/build /var/www/html/build
 RUN chmod -R 777 /var/www/html/build
+RUN chmod -R 777 /var/www/html/node_modules
+RUN chmod -R 777 /var/www/html/vendor
 
 EXPOSE 80
 EXPOSE 8000
