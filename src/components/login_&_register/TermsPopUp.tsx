@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { fetchTermsAndConditions } from '../../api/FetchTermsAndConditions'
 
 type TermsPopUpProps = {
@@ -10,23 +10,27 @@ type TTerms = {
 }
 
 const TermsPopUp: React.FC<TermsPopUpProps> = ({ handleTermsPopup }) => {
-    const [termsAndConditions, setTermsAndConditions] = useState<TTerms>({
-        content: '',
-    })
+    const [termsAndConditions, setTermsAndConditions] = useState<TTerms | null>(
+        null,
+    )
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         const fetchTermsAndCo = async () => {
-            const data = await fetchTermsAndConditions()
-            setTermsAndConditions(data)
+            try {
+                const data = await fetchTermsAndConditions()
+                setTermsAndConditions(data)
+            } catch (error) {
+                console.error('Error fetching terms and conditions:', error)
+            } finally {
+                setLoading(false)
+            }
         }
         fetchTermsAndCo()
     }, [])
 
     return (
-        <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-10 bg-white flex flex-col items-center rounded-lg p-10 md:p-20"
-            data-testid="TermsPopup"
-        >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full z-10 bg-white flex flex-col items-center rounded-lg p-10 md:p-20">
             <button
                 type="button"
                 className="absolute right-2 top-2 h-8 w-8 cursor-pointer rounded-full border-none bg-transparent"
@@ -38,7 +42,7 @@ const TermsPopUp: React.FC<TermsPopUpProps> = ({ handleTermsPopup }) => {
                 Términos y Condiciones
             </h2>
             <div className="overflow-auto flex flex-col p-5 bg-gray-100 rounded-lg">
-                {termsAndConditions.content}
+                {loading ? 'Loading...' : termsAndConditions?.content}
             </div>
         </div>
     )
