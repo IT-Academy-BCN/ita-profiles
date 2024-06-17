@@ -19,7 +19,7 @@ class Resume extends Model
         'modality' => 'array',
     ];
 
-    public function student()
+    public function student():BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
