@@ -1,37 +1,35 @@
 <?php
 
-use App\Http\Controllers\api\AdditionalTrainingListController;
-use App\Http\Controllers\api\AdminController;
-use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\DevelopmentListController;
-use App\Http\Controllers\api\ModalityController;
-use App\Http\Controllers\api\RecruiterController;
-use App\Http\Controllers\api\StudentController;
-use App\Http\Controllers\api\StudentListController;
-use App\Http\Controllers\api\StudentCollaborationController;
-use App\Http\Controllers\api\StudentProjectsDetailController;
-use App\Http\Controllers\api\StudentBootcampDetailController;
-use App\Http\Controllers\api\StudentDetailController;
-use App\Http\Controllers\api\TagController;
-use App\Http\Controllers\api\SpecializationListController;
-use App\Http\Controllers\api\StudentLanguagesDetailController;
-use App\Http\Controllers\TermsAndConditionsController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\{
-    AdditionalTrainingListController,
-    DevelopmentListController,
-    ModalityController,
-    RegisterController,
-    StudentListController,
-    StudentCollaborationController,
-    StudentProjectsDetailController,
+use App\Http\Controllers\api\Student\{
+    StudentAdditionalTrainingListController,
+    StudentModalityController,
     StudentBootcampDetailController,
+    StudentCollaborationDetailController,
     StudentDetailController,
-    TagController,
-    SpecializationListController,
-    StudentLanguagesDetailController
+    StudentLanguagesDetailController,
+    StudentListController,
+    StudentProjectsDetailController,
+    SpecializationListController
+    
 };
-Route::post('/register', [RegisterController::class, 'register'])->name('register');
+
+use App\Http\Controllers\api\Tag\{
+    TagListController,
+    TagStoreController,
+    TagDetailController,
+    TagUpdateController,
+    DevelopmentListController
+};
+
+use App\Http\Controllers\api\{
+    RegisterController,
+    TermsAndConditionsController
+    
+};
+
+Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
+Route::get('/terms-and-conditions', [TermsAndConditionsController::class, 'getTermsAndConditions'])->name('terms-and-conditions');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
@@ -39,18 +37,18 @@ Route::get('student/resume/list', StudentListController::class)->name('students.
 Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('detail', StudentDetailController::class)->name('student.details');
     Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
-    Route::get('collaborations', StudentCollaborationController::class)->name('student.collaborations');
+    Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
-    Route::get('additionaltraining', AdditionalTrainingListController::class)->name('student.additionaltraining');
+    Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
-    Route::get('modality', ModalityController::class)->name('student.modality');
+    Route::get('modality', StudentModalityController::class)->name('student.modality');
 });
 
 Route::prefix('tags')->group(function () {
-    Route::get('/', [TagController::class, 'index'])->name('tag.index');
-    Route::post('/', [TagController::class, 'store'])->name('tag.create');
-    Route::get('/{id}', [TagController::class, 'show'])->name('tag.show');
-    Route::put('/{id}', [TagController::class, 'update'])->name('tag.update');
+    Route::get('/', TagListController::class)->name('tag.list');
+    Route::post('/', TagStoreController::class)->name('tag.store');
+    Route::get('/{tagId}', TagDetailController::class)->name('tag.detail');
+    Route::put('/{tagId}', TagUpdateController::class)->name('tag.update');
 });
 // ! OLD ROUTES BLOCK
 Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
