@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\TermsAndConditionsAnnotations;
+namespace App\Annotations\OpenApi\controllersAnnotations\registerUserAnnotations;
 
 class AnnotationsTermsAndConditions
 {   
     /**
      * @OA\Get(
-     *     path="/register/terms-and-conditions",
+     *     path="/terms-and-conditions",
      *     tags={"Terms and Conditions"},
      *     summary="Get terms and conditions",
      *     description="Get register terms and conditions .",
