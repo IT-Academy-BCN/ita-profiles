@@ -86,6 +86,9 @@ shell: ## Enters the specified container. Usage: make shell CONTAINER=<container
 test: ## Run PHPUnit tests inside the container
 	docker exec -it php ./vendor/bin/phpunit -c phpunit.xml ./tests/ --testdox
 
+test-method: ## Run a PHPUnit test inside the container for a given method inside a test
+	docker exec -it php ./vendor/bin/phpunit -c phpunit.xml $(FILE) --filter=$(METHOD) --testdox
+
 swagger-generate: ## Generate Swagger documentation
 	docker exec -it php php artisan l5-swagger:generate
 

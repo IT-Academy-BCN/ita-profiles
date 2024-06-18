@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AcceptedTermsRule extends Rule
 {
-    private $acceptedValues = ['yes', 'on', true, 1]; // Accepted values for terms acceptance
+    private $acceptedValues = ['yes', 'on', true, 1]; 
 
     public function passes($attribute, $value): bool
     {
@@ -17,6 +17,6 @@ class AcceptedTermsRule extends Rule
 
     public function message(): string
     {
-        return 'You must accept the terms and conditions.'; // Customizable error message
+        return 'You must accept the terms and conditions.';
     }
 }
