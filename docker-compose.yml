@@ -67,9 +67,9 @@ services:
             - mysql-data:/var/lib/mysql
         networks:
             - app-network
-            
+
     redis:
-        container_name: itaprofilesbackend-redis
+        container_name: redis
         image: redis:latest
         command: ["redis-server", "/etc/redis/redis.conf"]
         ports:
