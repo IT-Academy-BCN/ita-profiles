@@ -11,6 +11,7 @@ use App\Http\Controllers\api\Student\{
     StudentListController,
     StudentProjectsDetailController,
     SpecializationListController
+    
 };
 
 use App\Http\Controllers\api\Tag\{
@@ -22,10 +23,13 @@ use App\Http\Controllers\api\Tag\{
 };
 
 use App\Http\Controllers\api\{
-    RegisterController
+    RegisterController,
+    TermsAndConditionsController
+    
 };
 
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
+Route::get('/terms-and-conditions', [TermsAndConditionsController::class, 'getTermsAndConditions'])->name('terms-and-conditions');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 
