@@ -16,18 +16,24 @@ export const UserSchema = z
     username: z.string().min(1, {
       message: 'El nombre de usuario es requerido',
     }),
+
     dni: z.union([regexDNI, regexNIE]),
+
     email: z.string().email({ message: 'Este email no es válido' }),
+
     specialization: z
       .string()
       .min(1, { message: 'La especialización es requerida' }),
+
     password: z.string().min(8, {
       message: 'La contraseña debe tener al menos 8 caracteres',
     }),
+
     confirmPassword: z
       .string()
       .min(1, { message: 'Confirmar contraseña es requerido' }),
   })
+  
   .refine((data) => data.password === data.confirmPassword, {
     message: 'La contraseña no coincide',
     path: ['confirmPassword'],

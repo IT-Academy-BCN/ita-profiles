@@ -31,11 +31,11 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
       if (isChecked) {
         // This creates a user in db.json.
         const response = await axios.post(
-          '//localhost:3000/users/register',
+          '//localhost:8000/api/v1/register',
           data,
         )
         // eslint-disable-next-line no-console
-        console.log('response de register =>', response.data)
+        console.log('register response =>', response.data)
         reset()
         onClose()
       } else {
@@ -119,7 +119,6 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               <option value="backend">Backend</option>
               <option value="fullstack">Fullstack</option>
               <option value="dataScience">Data Science</option>
-
             </select>
 
             {errors.specialization && (
