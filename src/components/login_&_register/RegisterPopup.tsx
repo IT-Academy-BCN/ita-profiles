@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-redundant-roles */
+/* eslint-disable no-console */
+/* eslint-disable react/button-has-type */
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import React, { useState } from 'react'
@@ -23,9 +26,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
 
     const handleTermsPopup = () => {
         setShowTerms(!showTerms)
-        console.log("showTerms -->",showTerms);
-        
+        console.log('showTerms -->', showTerms)
     }
+
     const {
         register,
         handleSubmit,
@@ -33,31 +36,32 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
         formState: { errors },
     } = useForm<TFormSchema>({ resolver: zodResolver(UserSchema) })
 
-  const sendRegister: SubmitHandler<TFormSchema> = async (data) => {
-    try {
-      if (isChecked) {
-        // This creates a user in db.json.
-        const response = await axios.post(
-          '//localhost:3000/users/register',
-          data,
-        )
-        // eslint-disable-next-line no-console
-        console.log('response de register =>', response.data)
-        reset()
-        onClose()
-      } else {
-        setCheckError(true)
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+    const sendRegister: SubmitHandler<TFormSchema> = async (data) => {
+        try {
+            if (isChecked) {
+                // This creates a user in db.json.
+                const response = await axios.post(
+                    '//localhost:3000/users/register',
+                    data,
+                )
+                console.log('response de register =>', response.data)
+                reset()
+                onClose()
+            } else {
+                setCheckError(true)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
-  }
 
     return (
         <div className="w-120 relative flex flex-col items-center rounded-lg bg-white p-5 md:p-20">
             <h2 className="text-lg font-bold md:text-2xl">Registro</h2>
-            <form className="flex flex-col space-y-4">
+            <form
+                className="flex flex-col space-y-4"
+                onSubmit={handleSubmit(sendRegister)}
+            >
                 <button
                     type="button"
                     className="absolute right-2 top-2 h-8 w-8 cursor-pointer rounded-full border-none bg-transparent"
@@ -75,7 +79,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                             placeholder="DNI o NIE"
                         />
                         {errors.dni && (
-                            <p className="text-error">{`${errors.dni?.message}`}</p>
+                            <p className="text-error">{errors.dni.message}</p>
                         )}
                     </div>
                     <div>
@@ -87,7 +91,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                             placeholder="Username"
                         />
                         {errors.username && (
-                            <p className="text-error">{`${errors.username?.message}`}</p>
+                            <p className="text-error">
+                                {errors.username.message}
+                            </p>
                         )}
                     </div>
                 </div>
@@ -101,7 +107,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                             placeholder="Password"
                         />
                         {errors.password && (
-                            <p className="text-error">{`${errors.password?.message}`}</p>
+                            <p className="text-error">
+                                {errors.password.message}
+                            </p>
                         )}
                     </div>
                     <div>
@@ -113,7 +121,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                             placeholder="Email"
                         />
                         {errors.email && (
-                            <p className="text-error">{`${errors.email?.message}`}</p>
+                            <p className="text-error">{errors.email.message}</p>
                         )}
                     </div>
                 </div>
@@ -127,10 +135,11 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                             placeholder="Confirm Password"
                         />
                         {errors.confirmPassword && (
-                            <p className="text-error">{`${errors.confirmPassword?.message}`}</p>
+                            <p className="text-error">
+                                {errors.confirmPassword.message}
+                            </p>
                         )}
                     </div>
-
                     <div>
                         <input
                             type="text"
@@ -140,7 +149,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                             placeholder="Specialization"
                         />
                         {errors.specialization && (
-                            <p className="text-error">{`${errors.specialization.message}`}</p>
+                            <p className="text-error">
+                                {errors.specialization.message}
+                            </p>
                         )}
                     </div>
                 </div>
@@ -162,12 +173,19 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 />
                                 Acepto los
                             </label>
-                            <a
+                            <button
+                                type="button"
                                 className="underline cursor-pointer"
                                 onClick={handleTermsPopup}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ')
+                                        handleTermsPopup()
+                                }}
                             >
                                 términos legales
-                            </a>
+                            </button>
                         </div>
                         {checkError && (
                             <p
@@ -178,13 +196,13 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 Debes aceptar los términos
                             </p>
                         )}
-                        {showTerms && <TermsPopUp handleTermsPopup={handleTermsPopup} 
-                        />}
+                        {showTerms && (
+                            <TermsPopUp handleTermsPopup={handleTermsPopup} />
+                        )}
                     </div>
                     <button
-                        type="button"
+                        type="submit"
                         className="w-102 mr-6 h-12 cursor-pointer rounded-lg border-none bg-primary text-white md:h-12 md:w-60 md:text-lg"
-                        onClick={handleSubmit(sendRegister)}
                     >
                         Register
                     </button>
