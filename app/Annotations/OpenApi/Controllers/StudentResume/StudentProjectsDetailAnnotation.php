@@ -79,7 +79,7 @@ class StudentProjectsDetailAnnotation
    *      ),
    *      @OA\Response(
    *          response=404,
-   *          description="Student,Projects or Resume not found",
+   *          description="Student or Resume not found",
    *          @OA\JsonContent(
    *              @OA\Property(
    *                  property="message",
@@ -88,11 +88,6 @@ class StudentProjectsDetailAnnotation
    *              ),
    *              @OA\Property(
    *                  property="message2",
-   *                  type="string",
-   *                  example="L'estudiant amb ID: {studentId} no té cap projecte informat al seu currículum"
-   *              ),
-   *              @OA\Property(
-   *                  property="message3",
    *                  type="string",
    *                  example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
    *              )

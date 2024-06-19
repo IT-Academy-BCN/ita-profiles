@@ -9,32 +9,32 @@ use App\Models\Project;
 use App\Models\Tag;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
-use App\Exceptions\ProjectNotFoundException;
+use Illuminate\Database\Eloquent\Collection;
 
 class StudentProjectsDetailService
 {
 
-    public function execute($uuid)
+    public function execute(string $studentId):array
     {
-        $student = $this->getStudent($uuid);
+        $student = $this->getStudent($studentId);
         $resume = $this->getResume($student);
         $projects = $this->getProjects($resume);
 
         return $this->formatProjectsDetail($projects);
     }
 
-    private function getStudent($uuid)
+    private function getStudent(string $studentId):Student
     {
-        $student = Student::where('id', $uuid)->with('resume')->first();
+        $student = Student::where('id', $studentId)->with('resume')->first();
 
         if (!$student) {
-            throw new StudentNotFoundException($uuid);
+            throw new StudentNotFoundException($studentId);
         }
 
         return $student;
     }
 
-    private function getResume($student)
+    private function getResume(object $student):mixed
     {
         $resume = $student->resume;
 
@@ -45,19 +45,14 @@ class StudentProjectsDetailService
         return $resume;
     }
 
-    private function getProjects($resume)
+    private function getProjects(object $resume):Collection
     {
         $projectIds = json_decode($resume->project_ids);
         $projects = Project::findMany($projectIds);
-
-        if ($projects->isEmpty()) {
-            throw new ProjectNotFoundException($resume->student_id);
-        }
-
         return $projects;
     }
 
-    private function formatProjectsDetail($projects)
+    private function formatProjectsDetail(Collection $projects):array
     {
         return 
             $projects->map(function ($project) {

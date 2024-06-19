@@ -27,6 +27,7 @@ class StudentBootcampDetailAnnotation
      *              format="uuid"
      *          )
      *      ),
+     * 
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -59,35 +60,36 @@ class StudentBootcampDetailAnnotation
      *              )
      *          )
      *      ),
+     * 
      *      @OA\Response(
-     *          response=404,
-     *          description="Student or resume not found",
-     *          @OA\JsonContent(
-     *              @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  example="No s'ha trobat cap estudiant amb aquest ID {studentId}"
-     *              ),
-     *              @OA\Property(
-     *                  property="message2",
-     *                  type="string",
-     *                  example="L'estudiant amb ID: {studentId} no té cap projecte informat al seu currículum"
-     *              )
-     *          )
-     *      )
-     * )
-    * @OA\Response(
-    *         response=500,
-    *         description="Server error",
-    *         @OA\JsonContent(
-    *             @OA\Property(
-    *             property="message",
-    *             type="string",
-    *             example="Hi ha hagut un error"
-    *             )
-    *         )
-    *     )
-    * )
+     *               response=404,
+     *               description="Student or Resume not found",
+     *               @OA\JsonContent(
+     *                   @OA\Property(
+     *                       property="message",
+     *                       type="string",
+     *                       example="No s'ha trobat cap estudiant amb aquest ID {studentId}"
+     *                   ),
+     *                   @OA\Property(
+     *                       property="message2",
+     *                       type="string",
+     *                       example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+     *                   )
+     *               )
+     *        ),
+     * 
+     *        @OA\Response(
+     *                response=500,
+     *                description="Server error",
+     *                @OA\JsonContent(
+     *                    @OA\Property(
+     *                    property="message",
+     *                    type="string",
+     *                    example="Hi ha hagut un error"
+     *                    )
+     *                )
+     *            )
+     *        )
      */
     public function __invoke()
     {

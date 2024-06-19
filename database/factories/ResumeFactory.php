@@ -22,10 +22,14 @@ class ResumeFactory extends Factory
 
     public function definition(): array
     {
+        $developmentOptions = ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'];
+        $development = $this->faker->randomElement($developmentOptions);
+
         $tagsIds = json_encode($this->faker->randomElements((range(1, 26)), 4));
         $projectIds = Project::factory()->count(2)->create()->pluck('id')->toArray();
         $additionalTrainingsIds = AdditionalTraining::factory()->count(2)->create()->pluck('id')->toArray();
         $collaborationsIds = Collaboration::factory()->count(2)->create()->pluck('id')->toArray();
+
         return [
             'student_id' =>  Student::factory()->create()->id,
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
@@ -35,6 +39,7 @@ class ResumeFactory extends Factory
             'specialization' => $this->faker->randomElement(
                 ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
             ),
+            'development' => $development,
             'project_ids' => json_encode($projectIds),
             'about' => $this->faker->paragraph,
             'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),
@@ -43,4 +48,21 @@ class ResumeFactory extends Factory
         ];
     }
 
+    public function specificSpecialization(string $specialization): Factory
+    {
+        return $this->state(function (array $attributes) use ($specialization) {
+            return [
+                'specialization' => $specialization,
+            ];
+        });
+    }
+
+    public function specificDevelopment($data): Factory
+    {
+        return $this->state(function (array $attributes) use ($data) {
+            return [
+                'development' => $data,
+            ];
+        });
+    }
 }

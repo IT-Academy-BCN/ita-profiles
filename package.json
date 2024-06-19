@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite --port 80 --host",
-    "dev": "vite --host",
+    "dev": "vite --port 7000 --host",
     "build": "tsc && vite build",
     "test": "vitest",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
