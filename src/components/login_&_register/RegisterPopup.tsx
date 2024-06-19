@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable no-console */
 /* eslint-disable react/button-has-type */
@@ -26,7 +27,6 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
 
     const handleTermsPopup = () => {
         setShowTerms(!showTerms)
-        console.log('showTerms -->', showTerms)
     }
 
     const {
@@ -44,14 +44,14 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                     '//localhost:3000/users/register',
                     data,
                 )
-                console.log('response de register =>', response.data)
+                response.data
                 reset()
                 onClose()
             } else {
                 setCheckError(true)
             }
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
