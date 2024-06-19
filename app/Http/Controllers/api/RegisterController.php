@@ -7,9 +7,11 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use App\Service\User\UserRegisterService;
-use Exception;
+use Illuminate\Support\Facades\{
+    DB,
+    Log,
+};
 
 class RegisterController extends Controller
 {
@@ -33,9 +35,13 @@ class RegisterController extends Controller
             DB::commit();
 
             return response()->json($result, 200);
-        } catch (Exception $e) {
+        } catch (\DomainException $e) {
             DB::rollBack();
-            return response()->json(['error' => $e->getMessage()], 400);
+            Log::error('Domain exception:', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return response()->json(null, $e->getCode()); // We want the error is only shown in log report
         }
     }
 }
