@@ -4,9 +4,16 @@ declare(strict_types=1);
 
 namespace App\Service\User;
 
-use App\Models\Resume;
-use App\Models\Student;
-use App\Models\User;
+use App\Models\{
+    Resume,
+    Student,
+    User,
+};
+use App\Exceptions\{
+    UserRegisterException,
+    ResumeCreateException,
+    TokenGenerateException,
+};
 use Exception;
 use PDOException;
 use Error;
@@ -17,9 +24,8 @@ class UserRegisterService
     {
         $input['password'] = bcrypt($input['password']);
 
-        $user = $this->createUserRecord($input);
-        // var_dump($user->id);exit;
-        $student = $this->createStudentRecord($user->id);
+        $user = $this->executeCreateUser($input);
+        $student = $this->createStudentRecord($user->id, $input);
         $this->createResumeRecord($student->id, $input['specialization'] ?? null);
         $success['token'] = $this->generateAccessToken($user);
         $success['email'] = $user->email;
@@ -27,28 +33,38 @@ class UserRegisterService
         return $success;
     }
 
-    private function createUserRecord(array $input): User
+    private function executeCreateUser(array $input): User
     {
         try {
-            return User::create($input);
-        } catch (PDOException $e) {
-            throw new Exception('Error al crear el usuario en la base de datos: ' . $e->getMessage());
-        } catch (Error $e) {
-            throw new Exception('Error inesperado al crear el usuario: ' . $e->getMessage());
+            return $this->createUserRecord($input);
+        } catch (PDOException | Error $e) {
+            throw new Exception('Error al crear el usuario: ' . $e->getMessage(), 500);
         }
     }
 
-    private function createStudentRecord(string $userId): Student
+    private function createUserRecord(array $input): User
+    {
+        try {
+            foreach ($input as $key => $value) {
+                if (empty($value)) {
+                    throw new UserRegisterException("El campo '$key' no puede estar vacío.", $input);
+                }
+            }
+            return User::create($input);
+        } catch (PDOException | Error $e) {
+            throw new UserRegisterException('Error al crear el usuario en la base de datos: ' . $e->getMessage(), $input);
+        }
+    }
+
+    private function createStudentRecord(string $userId, array $input): Student
     {
         try {
             $student = new Student;
             $student->user_id = $userId;
             $student->save();
             return $student;
-        } catch (PDOException $e) {
-            throw new Exception('Error al crear el estudiante en la base de datos: ' . $e->getMessage());
-        } catch (Error $e) {
-            throw new Exception('Error inesperado al crear el estudiante: ' . $e->getMessage());
+        } catch (PDOException | Error $e) {
+            throw new UserRegisterException('Error al crear el estudiante en la base de datos: ' . $e->getMessage(), $input);
         }
     }
 
@@ -59,10 +75,8 @@ class UserRegisterService
             $resume->student_id = $studentId;
             $resume->specialization = $specialization;
             $resume->save();
-        } catch (PDOException $e) {
-            throw new Exception('Error al crear el resume en la base de datos: ' . $e->getMessage());
-        } catch (Error $e) {
-            throw new Exception('Error inesperado al crear el resume: ' . $e->getMessage());
+        } catch (PDOException | Error $e) {
+            throw new ResumeCreateException('Error al crear el resume: ' . $e->getMessage());
         }
     }
 
@@ -71,7 +85,7 @@ class UserRegisterService
         try {
             return $user->createToken('ITAcademy')->accessToken;
         } catch (Exception $e) {
-            throw new Exception('Error al generar el token de acceso: ' . $e->getMessage());
+            throw new TokenGenerateException('Error al generar el token de acceso: ' . $e->getMessage());
         }
     }
 }

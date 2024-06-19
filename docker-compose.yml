@@ -68,6 +68,7 @@ services:
         networks:
             - app-network
 
+<<<<<<< HEAD
     redis:
         container_name: redis
         image: redis:latest
@@ -77,6 +78,15 @@ services:
         volumes:
           - ./docker/redis/.conf/redis.conf:/etc/redis/redis.conf
           - ./docker/redis/data:/var/lib/redis/
+=======
+    phpmyadmin:
+        container_name: phpmyadmin
+        image: phpmyadmin:latest
+        ports:
+            - 9015:80
+        environment:
+            - PMA_ARBITRARY=1
+>>>>>>> 44fd60c (Corrections: comments in Refactored userRegister)
         networks:
             - app-network
 
