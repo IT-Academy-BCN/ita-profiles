@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\authAnnotations;
+namespace App\Annotations\OpenApi\Controllers\SignInUser;
 
-class AnnotationsAuth
+class SignInUserAnnotations
 {
     
    
@@ -10,7 +10,7 @@ class AnnotationsAuth
      * @OA\Post(
      *      path="/signin",
      *      operationId="signin",
-     *      tags={"Authentication"},
+     *      tags={"SignInUser"},
      *      summary="Signin",
      *      description="Sign in a user with their email and password.",
      *		
