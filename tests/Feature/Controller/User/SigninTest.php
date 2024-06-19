@@ -2,14 +2,7 @@
 declare(strict_types=1);
 
 use Tests\TestCase;
-use PHPUnit\Framework\Attributes\Depends;
 use App\Models\User;
-
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 
 /**
  * //@runTestsInSeparateProcesses
@@ -20,9 +13,9 @@ class SigninTest extends TestCase
 {	
 	//Before running test the SigninTestSeeder class must be run!
 	//php artisan db:seed --class=SigninTestSeeder
-	use DatabaseTransactions;
+	//use DatabaseTransactions;
 
-	public static $users = array(
+	public static array $users = array(
 		array(
 			'dni' => 'NODNI',
 			'password' => 'passwordOne',
@@ -53,7 +46,7 @@ class SigninTest extends TestCase
 		)
 	);
 	
-	public $usersRegistered = array(
+	public array $usersRegistered = array(
 		array( //Valid NIF and Password YES Registered User - Pos 5
 			'dni' => '48332312C',
 			'password' => 'passOnePass',
@@ -76,7 +69,7 @@ class SigninTest extends TestCase
 		$response->assertStatus($expectedStatusCode);
 	}
 	
-    static function signinProvider()
+    static function signinProvider(): array
     {
         $array = array(
 			array(
@@ -115,4 +108,3 @@ class SigninTest extends TestCase
 	
 }
 
-?>

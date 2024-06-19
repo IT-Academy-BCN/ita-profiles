@@ -16,8 +16,7 @@ class UserService
 	
 	public function __construct()
 	{
-		$this->key_hash_mac = env('KEY_HASH_MAC', "CHANGE_MY_IN_ENV_Password");
-		
+		$this->key_hash_mac = env('KEY_HASH_MAC', "CHANGE_MY_IN_ENV_Password");		
 		$this->redis = new Redis();
 		
 	}
@@ -79,7 +78,6 @@ class UserService
 		// Create JWT
 		$jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
 
-		
 		return $jwt;
 	}
 
@@ -120,4 +118,3 @@ class UserService
 	
 }
 
-?>

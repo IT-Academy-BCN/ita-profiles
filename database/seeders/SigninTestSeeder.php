@@ -28,8 +28,6 @@ class SigninTestSeeder extends Seeder
         foreach($this->usersRegistered as $newUser){
 			
 			$user = new User();
-			//$user = new $mockProduct();
-			//$user->name = "";
 			$user->username = "";
 			$user->email = $newUser['dni']."@mail.com";
 			$user->dni = $newUser['dni'];

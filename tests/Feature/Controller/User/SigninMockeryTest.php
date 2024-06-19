@@ -2,14 +2,7 @@
 declare(strict_types=1);
 
 use Tests\TestCase;
-use PHPUnit\Framework\Attributes\Depends;
 use App\Models\User;
-
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 
 /**
  * @runTestsInSeparateProcesses
@@ -17,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class SigninMockeryTest extends TestCase
 {	
-	use DatabaseTransactions;
+	//use DatabaseTransactions;
 	
 	private $mockery;
 	
@@ -27,7 +20,7 @@ class SigninMockeryTest extends TestCase
 		$this->mockery = Mockery::mock('overload:App\Models\User');
 	}
 	
-	public static $users = array(
+	public static array $users = array(
 		array(
 			'dni' => 'NODNI',
 			'password' => 'passwordOne',
@@ -58,7 +51,7 @@ class SigninMockeryTest extends TestCase
 		)
 	);
 	
-	public $usersRegistered = array(
+	public array $usersRegistered = array(
 		array( //Valid NIF and Password YES Registered User - Pos 5
 			'dni' => '48332312C',
 			'password' => 'passOnePass',
@@ -103,66 +96,6 @@ class SigninMockeryTest extends TestCase
 		}
 		
 		$this->app->instance('overload:App\Models\User', $this->mockery);	
-		
-		return $randID;
-	}
-	
-	private function mockGetUserIDByDNI(string $userDNI, string $password, bool $addDBBool = True)
-	{
-		$randID = rand(1,100);
-		if($addDBBool == True)
-        {
-			$returnUser = new App\Models\User;
-			
-			$returnUser->id = intval($randID);
-			$returnUser->name = "";
-			$returnUser->surname = "";
-			$returnUser->email = $userDNI."@mail.com";
-			$returnUser->dni = $userDNI;
-			$returnUser->password = $password ? bcrypt($password) : bcrypt("password") ;
-			
-		}else{
-			$returnUser = False;
-		}
-		
-		$returnCollection = collect([$returnUser]);
-        
-		$this->mockery->shouldReceive('where')
-			->once()
-			->with('dni', $userDNI)
-			->andReturn($returnCollection);
-		
-		$this->app->instance('overload:App\Models\User', $this->mockery);	
-		
-		return $randID;
-	}
-	
-	private function mockCheckUserCredentials(string $userDNI, string $password, bool $addDBBool = True)
-	{
-		$randID = rand(1,100);
-       
-        if($addDBBool == True)
-        {
-			$returnUser = new App\Models\User;
-			
-			$returnUser->id = intval($randID);
-			$returnUser->name = "Name";
-			$returnUser->surname = "Surname";
-			$returnUser->email = $userDNI."@mail.com";
-			$returnUser->dni = $userDNI;
-			//$returnUser->password = ($password ? bcrypt($password) : bcrypt('WrongPassword') );
-			$returnUser->password =  bcrypt($password);
-			
-		}else{
-			$returnUser = Null;	
-		}
-		
-		$returnCollection = collect([$returnUser]);
-		$this->mockery->shouldReceive('where')
-			->once()
-			->with('dni', $userDNI)
-			->andReturn($returnCollection);
-		$this->app->instance('overload:App\Models\User', $this->mockery);
 		
 		return $randID;
 	}
@@ -227,4 +160,3 @@ class SigninMockeryTest extends TestCase
 	
 }
 
-?>

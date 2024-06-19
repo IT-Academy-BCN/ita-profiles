@@ -1,15 +1,10 @@
 <?php
-//declare(strict_types=1);
 
 use App\Service;
 use Tests\TestCase;
-use PHPUnit\Framework\Attributes\Depends;
 use App\Models\User;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 
 use App\Service\User\UserService;
 
@@ -46,8 +41,7 @@ class UserServiceTest extends TestCase
 			$returnUser = new App\Models\User;
 			
 			$returnUser->id = intval($randID);
-			$returnUser->name = "Name";
-			$returnUser->surname = "Surname";
+			$returnUser->username = "Surname";
 			$returnUser->email = $userDNI."@mail.com";
 			$returnUser->dni = $userDNI;
 			$returnUser->password = ($corerctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword') );
@@ -72,7 +66,7 @@ class UserServiceTest extends TestCase
         
     }
 
-    static function checkUserCredentialsProvider()
+    static function checkUserCredentialsProvider(): array
     {
         $array = array(
 			array(
@@ -140,8 +134,7 @@ class UserServiceTest extends TestCase
 			$returnUser = new App\Models\User;
 			
 			$returnUser->id = intval($randID);
-			$returnUser->name = "";
-			$returnUser->surname = "";
+			$returnUser->username = "";
 			$returnUser->email = $userDNI."@mail.com";
 			$returnUser->dni = $userDNI;
 			$returnUser->password = bcrypt("password") ;
@@ -288,4 +281,3 @@ class UserServiceTest extends TestCase
 
 }
 
-?>
