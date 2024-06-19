@@ -22,7 +22,7 @@ const TermsPopUp: React.FC<TermsPopUpProps> = ({ handleTermsPopup }) => {
                 const data = await fetchTermsAndConditions()
                 setTermsAndConditions(data)
             } catch (error) {
-                console.error('Error fetching terms and conditions:', error)
+                throw new Error('Error fetching Terms and Conditions')
             } finally {
                 setLoading(false)
             }

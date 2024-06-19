@@ -7,7 +7,7 @@ export const fetchTermsAndConditions = async () => {
     const response = await axios.get(`${BASE_URL}/terms-and-conditions`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching terms and conditions:', error);
-    throw error;
+    throw new Error("Error fetching terms and conditions");
+   
   }
 };
