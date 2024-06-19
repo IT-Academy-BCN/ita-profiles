@@ -20,13 +20,11 @@ class UserFactory extends Factory
         $faker = \Faker\Factory::create();
 
         return [
-            'name' => $faker->firstName(),
-            'surname' => $faker->lastName(),
-            'dni' => $faker->unique()->regexify('[A-Z0-9]{9}'),
+            'username' => $faker->userName(),
+            'dni' => $faker->unique()->regexify('[1-9]{8}[A-Z]'),
             'email' => $faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => bcrypt('password123'), // O puedes usar Faker para generar contraseñas aleatorias
-            'remember_token' => Str::random(10),
         ];
     }
 

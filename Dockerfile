@@ -1,34 +1,42 @@
-FROM php:8.1.27-apache
+FROM node:22.2.0 AS node-stage
+
 WORKDIR /var/www/html
 
-RUN a2enmod rewrite
+RUN mkdir -p /var/www/html/build
+RUN npm install -g typescript
+
+
+FROM php:8.1-fpm as php-stage
+
+WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y \
-    libicu-dev \
-    libmariadb-dev \
-    unzip zip \
-    zlib1g-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    git \
-    libzip-dev \
-    && pecl install xdebug \
-    && docker-php-ext-install gettext intl pdo_mysql zip bcmath gd \
-    && docker-php-ext-enable xdebug
+    libzip-dev libfreetype6-dev \
+    libjpeg62-turbo-dev libpng-dev libonig-dev \
+    libxml2-dev libpq-dev libicu-dev libxslt1-dev \
+    libmcrypt-dev libssl-dev git zip unzip && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+COPY .env.docker /var/www/html/.env
 
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
+EXPOSE 9000
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY ./entrypoint.sh /var/www/html/entrypoint.sh
+RUN chmod +x /var/www/html/entrypoint.sh
+ENTRYPOINT ["/var/www/html/entrypoint.sh"]
+
+CMD ["php-fpm"]
 
 
-# Exponer el puerto 8000
-#EXPOSE 80
-#
-## Iniciar el servidor web de PHP
-CMD ["php", "artisan", "cache:clear"]
-CMD ["php", "artisan", "config:clear"]
-CMD ["php", "artisan", "config:cache"]
+FROM nginx:latest as nginx-stage
+COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=php-stage /var/www/html /var/www/html
+COPY --from=node-stage /var/www/html/build /var/www/html/build
+RUN chmod -R 777 /var/www/html/build
+
+EXPOSE 80
+EXPOSE 8000
+
+CMD ["nginx", "-g", "daemon off;"]
+

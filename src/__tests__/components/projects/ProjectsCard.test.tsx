@@ -44,10 +44,10 @@ describe('ProjectsCard component', () => {
   test('renders projects correctly', async () => {
     mock
       .onGet(
-        `https://itaperfils.eurecatacademy.org/api/v1/students/${studentUUID}/projects`,
+        `//localhost:8000/api/v1/students/${studentUUID}/projects`,
       )
       .reply(200, projectsData)
-  
+
     render(
       <SelectedStudentIdContext.Provider
         value={{ studentUUID, setStudentUUID }}
@@ -55,10 +55,10 @@ describe('ProjectsCard component', () => {
         <ProjectsCard />
       </SelectedStudentIdContext.Provider>,
     )
-  
+
     // Wait for projects to load
     const projectsElement = screen.getByText('Proyectos');
-  
+
     // Check if projects are rendered correctly
     expect(projectsElement).toBeInTheDocument();
   })
