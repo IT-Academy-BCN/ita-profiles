@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Annotations\OpenApi\controllersAnnotations\registerUserAnnotations;
+namespace App\Annotations\OpenApi\Controllers\RegisterUser;
 
 class AnnotationsTermsAndConditions
 {   
