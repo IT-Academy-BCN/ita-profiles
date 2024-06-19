@@ -1,10 +1,11 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 use App\Http\Requests\SigninRequest;
 use App\Service\User\UserService;
@@ -23,7 +24,7 @@ class AuthController extends Controller
 
 	
     
-    public function signin(SigninRequest $request)
+    public function signin(SigninRequest $request): JsonResponse
 	{
 		
 		if($this->userService->checkUserCredentials($request->dni, $request->password) == True)
@@ -36,7 +37,7 @@ class AuthController extends Controller
 				$storedBool = $this->userService->storeUserIDAndTokenRedis($userID, $jwt);
 				if($storedBool == True){
 					$userDTO = new UserDTO(
-						$userID,
+						(string)$userID,
 						$jwt
 					);
 					

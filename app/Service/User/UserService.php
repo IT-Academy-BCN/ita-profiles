@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Service\User;
 
 use Illuminate\Support\Facades\Redis;
@@ -41,7 +41,7 @@ class UserService
 		}
 	}
 	
-	public function getUserIDByDNI(string $userDNI): string | bool
+	public function getUserIDByDNI(string $userDNI): string  | int | bool
 	{
 		$user = User::where('dni', $userDNI)->first();
 		
@@ -54,10 +54,16 @@ class UserService
 	
 	
 	//public function generateJWToken(string $userID, string $issuerID)
-	public function generateJWToken(string $userID): string
+	public function generateJWToken(string | int $userID): string
 	{
+		if(is_numeric($userID)){
+			$userID = (string)$userID;
+		}
+		
+		
 		// Create token header as a JSON string
 		$header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
+		
 		
 		// Create token payload as a JSON string
 		$payload = json_encode(['user_id' => $userID]);
@@ -83,8 +89,12 @@ class UserService
 
 	
 
-	public function storeUserIDAndTokenRedis(string $userID,string $token): bool
+	public function storeUserIDAndTokenRedis( string | int $userID, string $token): bool
 	{
+		if(is_numeric($userID)){
+			$userID = (string)$userID;
+		}
+		
 		try{
 			
 			$result = Redis::set($this->JWTokenRedisPre . $userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
@@ -99,8 +109,13 @@ class UserService
 		}
 	}
 
-	public function getJWTokenByUserID(string $userID): string | bool
+	public function getJWTokenByUserID(string | int $userID): string | int | bool
 	{
+		if(is_numeric($userID)){
+			$userID = (string)$userID;
+		}
+		
+		
 		try{
 			
 			$jwt = $result = Redis::get('user:0:JWToken_'.$userID); //35 seconds 30*60=1800

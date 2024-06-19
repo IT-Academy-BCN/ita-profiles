@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 use App\Service;
 use Tests\TestCase;
 use App\Models\User;
@@ -181,9 +181,9 @@ class UserServiceTest extends TestCase
     
 
     /**
-     * @dataProvider getUserIDByDNIProvider
+     * @dataProvider generateJWTokenProvider
      */ 
-    public function testGenerateJWToken(string $userID ,bool $expectedOutput)
+    public function testGenerateJWToken(string | int $userID ,bool $expectedOutput)
     {
 		$jwt = $this->service->generateJWToken($userID);
 		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt);//(^[\w-]*\.[\w-]*\.[\w-]*$)
@@ -207,6 +207,14 @@ class UserServiceTest extends TestCase
 			array(
 				'abc', //userID
 				False // Expected Output
+				),
+			array(
+				123, //userID
+				True // Expected Output
+				),
+			array(
+				021, //userID
+				True // Expected Output
 				),
 			);
 		
