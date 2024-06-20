@@ -11,6 +11,13 @@ type RegisterPopupProps = {
 }
 
 type TFormSchema = z.infer<typeof UserSchema>
+const user = {
+  dni: '12345678A',
+  email: 'a@gmail.com',
+  username: 'user',
+  specialization: 'Frontend',
+  password: '12345678'
+}
 
 const RegisterPopup: React.FC<RegisterPopupProps> = ({
   onClose,
@@ -32,8 +39,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
         // This creates a user in db.json.
         const response = await axios.post(
           '//localhost:8000/api/v1/register',
-          data,
+          user
         )
+        console.log('data response =>', user);
         // eslint-disable-next-line no-console
         console.log('register response =>', response.data)
         reset()
@@ -44,6 +52,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error)
+      console.log('data response =>', user)
     }
   }
 
