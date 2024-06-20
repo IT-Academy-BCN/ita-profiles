@@ -12,7 +12,7 @@ class DniNieRuleTest extends TestCase
      * A basic feature test example.
      */
     /** @test */
-    public function test_valid_nif_passes_validation()
+    public function testValidNifPassesValidation()
     {
         $validator = Validator::make(['dni' => '83749707Z'], [
             'dni' => [new DniNieRule()],
@@ -22,7 +22,7 @@ class DniNieRuleTest extends TestCase
     }
 
     /** @test */
-    public function test_invalid_nif_fails_validation()
+    public function testInvalidNifFailsValidation()
     {
         $validator = Validator::make(['dni' => '12345678B'], [
             'dni' => [new DniNieRule()],
@@ -32,7 +32,7 @@ class DniNieRuleTest extends TestCase
     }
 
     /** @test */
-    public function test_valid_nie_passes_validation()
+    public function testValidNiePassesValidation()
     {
         $validator = Validator::make(['dni' => 'X7959970S'], [
             'dni' => [new DniNieRule()],
@@ -42,7 +42,7 @@ class DniNieRuleTest extends TestCase
     }
 
     /** @test */
-    public function test_invalid_nie_fails_validation()
+    public function testInvalidNieFailsValidation()
     {
         $validator = Validator::make(['dni' => 'X1234567C'], [
             'dni' => [new DniNieRule()],
