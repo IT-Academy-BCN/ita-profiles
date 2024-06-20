@@ -11,3 +11,5 @@ docker network connect app-network mysql
 docker network connect app-network php
 docker network connect app-network node
 docker network connect app-network webserver
+docker network connect app-network redis
+
