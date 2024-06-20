@@ -12,11 +12,13 @@ type RegisterPopupProps = {
 
 type TFormSchema = z.infer<typeof UserSchema>
 const user = {
-  dni: '12345678A',
-  email: 'a@gmail.com',
-  username: 'user',
-  specialization: 'Frontend',
-  password: '12345678'
+  dni: '23121527H',
+  email: 'userRand02@gmail.com',
+  username: 'userRand02',
+  specialization: 'Backend',
+  password: 'PassPass123!',
+  password_confirmation: 'PassPass123!',
+  terms: 'true'
 }
 
 const RegisterPopup: React.FC<RegisterPopupProps> = ({
