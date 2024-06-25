@@ -59,8 +59,8 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
   }
 
   return (
-    <div className="w-120 relative flex flex-col items-center rounded-lg bg-white p-5 md:p-20">
-      <h2 className="text-lg font-bold md:text-2xl">Registro</h2>
+    <div className="relative flex flex-col items-center rounded-lg bg-white px-24 py-16 md:px-32">
+      <h2 className="text-2xl mb-4 font-bold">Registro</h2>
 
       <form className="flex flex-col space-y-4">
 
@@ -72,17 +72,16 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
         </button>
 
         <div className="grid grid-cols-2 gap-4">
-
           <div>
             <input
               {...register('dni')}
               type="text"
               id="dni"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+              className="border-gray-300 w-full rounded-lg border px-6 py-4 focus:border-blue-300 focus:outline-none focus:ring"
               placeholder="DNI o NIE"
             />
             {errors.dni && (
-              <p className="text-error">{`${errors.dni?.message}`}</p>
+              <p className="text-error text-sm">{`${errors.dni?.message}`}</p>
             )}
           </div>
 
@@ -91,11 +90,11 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               {...register('email')}
               type="email"
               id="email"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+              className="border-gray-300 w-full rounded-lg border px-6 py-4 focus:border-blue-300 focus:outline-none focus:ring"
               placeholder="Email"
             />
             {errors.email && (
-              <p className="text-error">{`${errors.email?.message}`}</p>
+              <p className="text-error text-sm">{`${errors.email?.message}`}</p>
             )}
           </div>
 
@@ -104,11 +103,11 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               {...register('username')}
               type="text"
               id="username"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+              className="border-gray-300 w-full rounded-lg border px-6 py-4 focus:border-blue-300 focus:outline-none focus:ring"
               placeholder="Username"
             />
             {errors.username && (
-              <p className="text-error">{`${errors.username?.message}`}</p>
+              <p className="text-error text-sm">{`${errors.username?.message}`}</p>
             )}
           </div>
 
@@ -117,13 +116,13 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
             type="text"
             {...register('specialization')}
             id="specialization"
-            className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+            className="border-gray-300 w-full rounded-lg border px-6 py-4 focus:border-blue-300 focus:outline-none focus:ring"
             placeholder="Especialización"
             /> */}
             <select
               {...register('specialization')}
               id="specialization"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2">
+              className="border-gray-300 w-full rounded-lg border px-6 py-4 focus:border-blue-300 focus:outline-none focus:ring">
 
               <option value="placeholder" style={{color: "#9da3ae"}} selected>Especialización</option>
               <option value="frontend">Frontend</option>
@@ -133,7 +132,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
             </select>
 
             {errors.specialization && (
-              <p className="text-error">{`${errors.specialization.message}`}</p>
+              <p className="text-error text-sm">{`${errors.specialization.message}`}</p>
             )}
           </div>
 
@@ -142,11 +141,11 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                 {...register('password')}
                 type="password"
                 id="password"
-                className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+                className="border-gray-300 w-full rounded-lg border px-6 py-4 focus:border-blue-300 focus:outline-none focus:ring"
                 placeholder="Contraseña"
               />
               {errors.password && (
-                <p className="text-error">{`${errors.password?.message}`}</p>
+                <p className="text-error text-sm">{`${errors.password?.message}`}</p>
               )}
             </div>
 
@@ -155,17 +154,15 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               type="password"
               {...register('confirmPassword')}
               id="confirmPassword"
-              className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+              className="border-gray-300 w-full rounded-lg border px-6 py-4 focus:border-blue-300 focus:outline-none focus:ring"
               placeholder="Repetir contraseña"
             />
             {errors.confirmPassword && (
-              <p className="text-error">{`${errors.confirmPassword?.message}`}</p>
+              <p className="text-error text-sm">{`${errors.confirmPassword?.message}`}</p>
             )}
           </div>
-        </div>
 
-        <div className="flex items-center justify-center space-x-8 p-4 md:p-5 ">
-          <div className="flex flex-col">
+          <div className="mt-8 flex flex-col justify-center">
             <div className="flex items-center gap-1">
               <input
                 type="checkbox"
@@ -176,24 +173,27 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               />
               <label htmlFor="acceptTerms" className=" mr-2 text-sm">
                 Acepto{' '}
-                <span style={{ textDecoration: 'underline' }}>
+                <span className='cursor-pointer' style={{ textDecoration: 'underline' }}>
                   términos legales
                 </span>
               </label>
-            </div>
-            {checkError && (
-              <p className={`${isChecked ? 'hidden' : 'text-error'}`}>
-                Debes aceptar los términos legales para completar el registro.
-              </p>
-            )}
+            </div>            
           </div>
 
           <button
             type="button"
-            className="w-102 mr-6 h-12 cursor-pointer rounded-lg border-none bg-primary text-white md:h-12 md:w-60 md:text-lg"
+            className="mt-8 h-12 cursor-pointer rounded-lg border-none bg-primary text-white font-bold"
             onClick={handleSubmit(sendRegister)}>
             Registro
           </button>
+        </div>
+        <div className='text-sm'>
+          {checkError && (
+            <p className={`${isChecked ? 'hidden' : 'text-error'}`}>
+              Debes aceptar los términos legales para completar el registro
+            </p>
+          )}      
+
         </div>
       </form>
 
@@ -201,9 +201,8 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
         <button
           type="button"
           onClick={onOpenLoginPopup}
-          className="cursor-pointer font-bold text-black-2"
-          style={{ textDecoration: 'underline' }}
-        >
+          className="mt-8 cursor-pointer font-bold text-black-2"
+          style={{ textDecoration: 'underline' }}>
           ¿Tienes cuenta? acceder
         </button>
       </div>
