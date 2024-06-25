@@ -5,9 +5,13 @@ import { ILoginForm } from '../../interfaces/interfaces'
 
 type LoginPopupProps = {
   onClose: () => void
+  onOpenRegisterPopup: () => void
 }
 
-const LoginPopup: React.FC<LoginPopupProps> = ({ onClose }) => {
+const LoginPopup: React.FC<LoginPopupProps> = ({ 
+  onClose,
+  onOpenRegisterPopup,
+}) => {
   const { handleSubmit, register } = useForm<ILoginForm>()
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
@@ -70,6 +74,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ onClose }) => {
           type="button"
           className="cursor-pointer font-bold"
           style={{ textDecoration: 'underline' }}
+          onClick={onOpenRegisterPopup}
         >
           ¿No tienes cuenta? crear una
         </button>

@@ -18,6 +18,7 @@ const UserNavbar: React.FC = () => {
 
   const handleOpenRegisterPopup = () => {
     setIsRegisterPopupOpen(true)
+    setIsLoginPopupOpen(false)
     setIsRestrictedPopupOpen(false)
   }
 
@@ -28,6 +29,7 @@ const UserNavbar: React.FC = () => {
   const handleOpenLoginPopup = () => {
     setIsLoginPopupOpen(true)
     setIsRegisterPopupOpen(false)
+    setIsRestrictedPopupOpen(false)
   }
 
   const handleCloseLoginPopup = () => {
@@ -108,7 +110,9 @@ const UserNavbar: React.FC = () => {
       {isLoginPopupOpen && (
         <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50">
           <LoginPopup 
-            onClose={handleCloseLoginPopup} />
+            onClose={handleCloseLoginPopup}
+            onOpenRegisterPopup={handleOpenRegisterPopup}
+          />
         </div>
       )}
     </div>
