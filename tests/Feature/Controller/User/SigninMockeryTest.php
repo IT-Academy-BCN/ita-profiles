@@ -1,8 +1,16 @@
 <?php
 declare(strict_types=1);
 
+namespace Tests\Feature\Controller\User;
+
 use Tests\TestCase;
 use App\Models\User;
+
+//use App\Service;
+use Mockery;
+//use Mockery\MockInterface;
+
+
 
 /**
  * @runTestsInSeparateProcesses
@@ -68,7 +76,8 @@ class SigninMockeryTest extends TestCase
 		$randID = rand(1,100);
 		if($expectedStatusCode == 200)
         {
-			$returnUser = new App\Models\User;
+			//$returnUser = new App\Models\User;
+			$returnUser = new User;
 			
 			$returnUser->id = intval($randID);
 			$returnUser->name = "";
