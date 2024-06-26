@@ -41,7 +41,7 @@ class UserServiceTest extends TestCase
         
         if($addDBBool == True)
         {	
-			//$returnUser = new App\Models\User;
+
 			$returnUser = new User;
 			
 			$returnUser->id = intval($randID);
@@ -135,7 +135,7 @@ class UserServiceTest extends TestCase
 		$randID = rand(1,100);
 		if($addDBBool == True)
         {
-			//$returnUser = new App\Models\User;
+
 			$returnUser = new User;
 			
 			$returnUser->id = intval($randID);
