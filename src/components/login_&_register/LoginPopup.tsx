@@ -12,18 +12,17 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   onClose,
   onOpenRegisterPopup,
 }) => {
+
   const { handleSubmit, register } = useForm<ILoginForm>()
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
-      const response = await axios.post('//localhost:3000/login', data)
-      // eslint-disable-next-line no-console
-      console.log('El data de login =>', response.data)
+      const response = await axios.post('//localhost:8000/api/v1/signin', data)
+      console.log('login data =>', response.data)
       // token se devuelve solo cuando utilizamos email y password.
       // Imposible modificar los campos a dni y password.
       onClose()
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log('el error =>', e)
+      console.log('error =>', e)
     }
   }
 
@@ -43,7 +42,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
           id="dni"
           className="border-gray-300 w-full rounded-lg border p-4 my-2 focus:border-blue-300 focus:outline-none focus:ring"
           placeholder="DNI o NIE"
-          {...register('email')}
+          {...register('dni')}
         />
         <input
           type="password"
