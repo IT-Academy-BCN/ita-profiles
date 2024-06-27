@@ -16,8 +16,9 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   const { handleSubmit, register } = useForm<ILoginForm>()
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
-      const response = await axios.post('//localhost:8000/api/v1/signin', data)
-      console.log('login data =>', response.data)
+      console.log("data we're trying to send =>", data);
+      await axios.post('//localhost:8000/api/v1/signin', data)
+      // console.log('login data =>', response.data)
       // token se devuelve solo cuando utilizamos email y password.
       // Imposible modificar los campos a dni y password.
       onClose()
