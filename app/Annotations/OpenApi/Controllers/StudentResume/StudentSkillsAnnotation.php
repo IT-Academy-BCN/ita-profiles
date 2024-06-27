@@ -39,7 +39,7 @@ class StudentSkillsAnnotation
      * 
      * 
      *     @OA\Response(
-     *         response=200,
+     *         response=204,
      *         description="Success. Returns the skills.",
      * 
      *         @OA\JsonContent(

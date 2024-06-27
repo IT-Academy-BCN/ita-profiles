@@ -27,7 +27,7 @@ class StudentSkillsController extends Controller
     {
         try {
 			//Check if body skills field is a valid JSON
-			if($this->StudentSkillsService->fieldIsValidSkillsJson($request->skills)!= True)
+			if($this->StudentSkillsService->fieldIsValidSkillsJson($request->skills) != True)
 			{
 				return response()->json(['status' => 'failure'], 402);
 			}
@@ -36,7 +36,7 @@ class StudentSkillsController extends Controller
             $service = $this->StudentSkillsService->updateSkillsByStudentId($studentId, $request->skills);
             //return response()->json(['modality' => $service]);
             if($service == True){
-				return response()->json(['skills' => $request->skills, 'status' => 'success']);
+				return response()->json(['skills' => $request->skills, 'status' => 'success'], 204);
 			}else{
 				return response()->json(['status' => 'failure'], 401);
 			}

@@ -14,7 +14,7 @@ class StudentSkillsService
     public function updateSkillsByStudentId(string $studentId, string $skills): Exception | bool
     {
 		
-		if(json_decode($skills) == null){
+		if(json_decode($skills) == null AND $skills != "[]"){
 			return False;
 		}
 
@@ -39,7 +39,7 @@ class StudentSkillsService
         return True;
     }
     
-    public function getSkillsByStudentId(string $studentId, string $skills): array | Exception
+    public function getSkillsByStudentId(string $studentId): array | Exception
     {
         $student = Student::find($studentId);
 
@@ -64,9 +64,10 @@ class StudentSkillsService
     {
 		$result = json_decode($field, True);
 		
-		if($result == Null){
+		/*if($result == Null){
 			return False;
-		}
+		}*/
+
 		
 		try{
 			
