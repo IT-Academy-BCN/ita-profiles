@@ -33,19 +33,18 @@ class StudentSkillsControllerTest extends TestCase
 		
 		$studentIDReal = Student::first()->id;
 		
-        $userData = $this->createUserData();
         $response = $this->json('PUT', 'api/v1/student/'.$studentIDReal.'/resume/skills', $request);
 		
 		
 		if($expectedResult == True){
-			$response->assertStatus(204);
-			$response->assertJson(['message' => 'User registered successfully.']);
+			$response->assertStatus(200);
+			$response->assertJson(['status' => 'success']);
 			$this->assertDatabaseHas('resumes', [
-				'skills' => json_encode($userData['skills']),
-				'id' => $studentID,
+				'skills' => json_encode($request['skills']),
+				'student_id' => $studentIDReal,
 			]);
 		}else{
-			 $response->assertStatus(200);
+			 $response->assertStatus(402);
 		
 		}
         
@@ -61,21 +60,21 @@ class StudentSkillsControllerTest extends TestCase
 			array(
 				$studentID, //Sutudent ID
 				array(
-					'skills' => '[]'
+					'skills' => []
 				),
 				True //Result
 				),
 			array(
 				$studentID, //Sutudent ID
 				array(
-					'skills' => '["php","react"]'
+					'skills' => ["php","react"]
 				),
 				True //Result
 				),
 			array(
 				$studentID, //Sutudent ID
 				array(
-					'skills' => '["html5", "css", "postman"]'
+					'skills' => ["html5", "css", "postman"]
 				),
 				True //Result
 				),

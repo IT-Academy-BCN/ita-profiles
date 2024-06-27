@@ -32,11 +32,10 @@ class StudentSkillsController extends Controller
 				return response()->json(['status' => 'failure'], 402);
 			}
 			
-			
             $service = $this->StudentSkillsService->updateSkillsByStudentId($studentId, $request->skills);
-            //return response()->json(['modality' => $service]);
+
             if($service == True){
-				return response()->json(['skills' => $request->skills, 'status' => 'success'], 204);
+				return response()->json(['skills' => $request->skills, 'status' => 'success'], 200);
 			}else{
 				return response()->json(['status' => 'failure'], 401);
 			}
