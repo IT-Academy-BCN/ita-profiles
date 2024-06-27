@@ -17,6 +17,15 @@ class SkillsRequest extends FormRequest
         return true;
     }
 
+
+
+	protected function prepareForValidation()
+	{
+		$this->merge([
+			'skills' => json_encode($this->skills)
+		]);
+	}
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +34,9 @@ class SkillsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'skills' => 'nullable|string'
+            //'skills' => 'nullable|string'
+            'skills' => 'json'
+            //'skills' => 'nullable|string'
         ];
     }
 

@@ -13,6 +13,11 @@ class StudentSkillsService
 
     public function updateSkillsByStudentId(string $studentId, string $skills): Exception | bool
     {
+		
+		if(json_decode($skills) == null){
+			return False;
+		}
+
         $student = Student::find($studentId);
 
         if (!$student) {
@@ -50,11 +55,43 @@ class StudentSkillsService
             //return False;
         }
 
-        $skills = $resume->skills;
+        $skills = json_decode($resume->skills, False);
 
         return (array) $skills;
     }
     
+    public function fieldIsValidSkillsJson(string $field):  bool
+    {
+		$result = json_decode($field, True);
+		
+		if($result == Null){
+			return False;
+		}
+		
+		try{
+			
+			if(is_array($result))
+			{
+				//Check if the array is multidimensional:
+				if (count($result) == count($result, COUNT_RECURSIVE)) 
+				{
+				  //echo 'array is not multidimensional';
+				  return True;
+				}
+				else
+				{
+				  //echo 'array is multidimensional';
+				  return False;
+				}
+			}else{
+				return False;
+			}
+			
+		}catch (Exception $e) {
+			echo 'Caught exception: ',  $e->getMessage(), "\n";
+			return False;
+		}
+	}
     
     
 }
