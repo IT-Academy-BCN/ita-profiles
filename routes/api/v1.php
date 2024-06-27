@@ -10,7 +10,8 @@ use App\Http\Controllers\api\Student\{
     StudentLanguagesDetailController,
     StudentListController,
     StudentProjectsDetailController,
-    SpecializationListController
+    SpecializationListController,   
+    StudentUpdateProjectController,   
 };
 
 use App\Http\Controllers\api\Tag\{
@@ -39,7 +40,8 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
-    Route::get('modality', StudentModalityController::class)->name('student.modality');
+    Route::get('modality', StudentModalityController::class)->name('student.modality');   
+    Route::put('projects/{projectId}', StudentUpdateProjectController::class)->name('student.updateproject');   
 });
 
 Route::prefix('tags')->group(function () {
