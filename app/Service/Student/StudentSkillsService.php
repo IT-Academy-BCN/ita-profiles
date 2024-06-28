@@ -29,9 +29,10 @@ class StudentSkillsService
             //return False;
         }
         
+        
         $skills_array = json_decode($skills);
         
-        $tags = Tag::where('tag_name',$skills_array);
+        $tags = Tag::whereIn('tag_name',$skills_array);
         
         $additionalTagsIds = $tags->pluck('id')->toArray();
         
