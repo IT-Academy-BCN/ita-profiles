@@ -26,11 +26,6 @@ class StudentSkillsController extends Controller
     public function __invoke(SkillsRequest $request, string $studentId): JsonResponse
     {
         try {
-			//Check if body skills field is a valid JSON
-			if($this->StudentSkillsService->fieldIsValidSkillsJson($request->skills) != True)
-			{
-				return response()->json(['status' => 'failure'], 402);
-			}
 			
             $service = $this->StudentSkillsService->updateSkillsByStudentId($studentId, $request->skills);
 
