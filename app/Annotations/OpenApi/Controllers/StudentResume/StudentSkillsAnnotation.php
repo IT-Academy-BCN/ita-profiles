@@ -10,7 +10,7 @@ class StudentSkillsAnnotation
      *     operationId="updateSkillsByStudentId",
      *     tags={"Student -> Resume"},
      *     summary="Update Student Skills.",
-     *     description="Retrieve details of a specific student. No authentication required.",
+     *     description="Update the skills/tags of a given student by student ID",
      * 
      *      
      *     @OA\Parameter(
