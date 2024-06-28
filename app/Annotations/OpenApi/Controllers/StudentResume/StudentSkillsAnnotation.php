@@ -33,7 +33,7 @@ class StudentSkillsAnnotation
      *                 type="string",
      *                 example="react"
      *             ),
-     *              example={"react", "php", "html", "css", "tailwind"}),
+     *              example={"React", "PHP", "Java", "Nodejs"}),
      *          )
      *      ),
      * 

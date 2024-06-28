@@ -53,9 +53,7 @@ class StudentSkillsServiceTest extends TestCase
     
     static function updateSkillsByStudentIdProvider()
     {
-		//$student = new Student;
-		//$studentID = $student->first()->id;
-		//$studentID = Student::first()->id;
+
 		$studentID = '4';
 		
 		$array = array(

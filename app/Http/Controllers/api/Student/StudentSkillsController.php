@@ -29,8 +29,7 @@ class StudentSkillsController extends Controller
 			
             $service = $this->StudentSkillsService->updateSkillsByStudentId($studentId, $request->skills);
 			return response()->json(['status' => 'success'], 200);
-			
-            
+
             
         } catch (StudentNotFoundException | ResumeNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
