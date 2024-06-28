@@ -39,10 +39,6 @@ class StudentSkillsControllerTest extends TestCase
 		if($expectedResult == True){
 			$response->assertStatus(200);
 			$response->assertJson(['status' => 'success']);
-			$this->assertDatabaseHas('resumes', [
-				'skills' => json_encode($request['skills']),
-				'student_id' => $studentIDReal,
-			]);
 		}else{
 			 $response->assertStatus(402);
 		

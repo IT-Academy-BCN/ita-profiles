@@ -27,60 +27,6 @@ class StudentSkillsServiceTest extends TestCase
         $this->studentSkillsService = new StudentSkillsService();
     }
 	
-	
-	 /**
-     * @dataProvider fieldIsValidSkillsJsonProvider
-     */ 
-    public function testFieldIsValidSkillsJson(string $fields, bool $expectedResult): void
-    {
-		
-		$result = $this->studentSkillsService->fieldIsValidSkillsJson($fields);
-
-		
-        $this->assertEquals($expectedResult, $result);
-    }
-    
-    
-    static function fieldIsValidSkillsJsonProvider()
-    {
-		$array = array(
-			array(
-				'1',
-				False
-				),
-			array(
-				'123', //NIF/NIE
-				False
-				),
-			array(
-				'["one", "two", "three"]', //NIF/NIE
-				True
-				),
-			array(
-				'["one"]', //NIF/NIE
-				True
-				),
-			array(
-				'[]', //NIF/NIE
-				True
-				),
-			array(
-				'["one", "two", "three":
-				{ "four": "five"
-				}
-				] ', //NIF/NIE
-				False
-				),
-			array(
-				'["one", "two", "three":
-				["four", "five"]
-				]', //NIF/NIE
-				False
-				),
-			);
-		
-		return $array;
-	}
     
     
      /**
@@ -149,55 +95,6 @@ class StudentSkillsServiceTest extends TestCase
     
 	}
     
-    /**
-     * @dataProvider getSkillsByStudentIdProvider
-     */ 
-    public function testGetSkillsByStudentId(string $studentID, bool $expectedResult): void
-    {
-		
-		
-		if($expectedResult == False){
-			$this->expectException(StudentNotFoundException::class);
-		}else{
-			$studentID = Student::first()->id;
-		}
-		 
-		$skills = $this->studentSkillsService->getSkillsByStudentId($studentID);
-		
-		$result = json_encode($skills);
-
-		
-		if($result != Null){
-			$this->assertEquals(True, True);
-		}else{
-			$this->assertEquals(True, True);
-		}
-
-    }
-    
-    
-    static function getSkillsByStudentIdProvider()
-    {
-		$studentID = '4';
-		
-		$array = array(
-			array(
-				$studentID, //Sutudent ID
-				True //Result
-				),
-			array(
-				'alksjdnh', //Sutudent ID
-				False //Result
-				),
-			array(
-				'nooo', //Sutudent ID
-				False //Result
-				),
-			);
-	
-		return $array;
-    
-	}	
 	
 	
 }

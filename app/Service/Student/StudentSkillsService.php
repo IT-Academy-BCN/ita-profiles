@@ -7,11 +7,42 @@ namespace App\Service\Student;
 use App\Models\Student;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
+use App\Models\AdditionalTraining;
 
 class StudentSkillsService
 {
+	
+	public function updateSkillsByStudentId(string $studentId, string $skills): Exception | bool
+    {
+	
+		$student = Student::find($studentId);
 
-    public function updateSkillsByStudentId(string $studentId, string $skills): Exception | bool
+        if (!$student) {
+            throw new StudentNotFoundException($studentId);
+            //return False;
+        }
+
+        $resume = $student->resume()->first();
+
+        if (!$resume) {
+            throw new ResumeNotFoundException($studentId);
+            //return False;
+        }
+        
+        $skills_array = json_decode($skills);
+        
+        $additionalTrainings = AdditionalTraining::where('course_name',$skills_array);
+        
+        $additionalTrainingIds = $additionalTrainings->pluck('id')->toArray();
+        
+        $resume->additional_trainings_ids = json_encode($additionalTrainingIds);   
+        
+        return True;
+        
+	}
+	
+	
+    public function updateSkillsByStudentIdOld(string $studentId, string $skills): Exception | bool
     {
 		
 		if(json_decode($skills) == null AND $skills != "[]"){
@@ -38,7 +69,7 @@ class StudentSkillsService
         //return (array) $modality;
         return True;
     }
-    
+    /*
     public function getSkillsByStudentId(string $studentId): array | Exception
     {
         $student = Student::find($studentId);
@@ -58,7 +89,7 @@ class StudentSkillsService
         $skills = json_decode($resume->skills, False);
 
         return (array) $skills;
-    }
+    }*/
     
     public function fieldIsValidSkillsJson(string $field):  bool
     {
