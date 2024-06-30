@@ -30,6 +30,7 @@ services:
             target: php-stage
         depends_on:
             - mysql
+            - redis
         volumes:
             - ./:/var/www/html
         networks:
@@ -67,6 +68,7 @@ services:
         networks:
             - app-network
 
+
     phpmyadmin:
         container_name: phpmyadmin
         image: phpmyadmin:latest
@@ -74,6 +76,16 @@ services:
             - 9015:80
         environment:
             - PMA_ARBITRARY=1
+
+    redis:
+        container_name: redis
+        image: redis:latest
+        command: ["redis-server", "/etc/redis/redis.conf"]
+        ports:
+            - "6379:6379"
+        volumes:
+          - ./docker/redis/.conf/redis.conf:/etc/redis/redis.conf
+          - ./docker/redis/data:/var/lib/redis/
         networks:
             - app-network
 
