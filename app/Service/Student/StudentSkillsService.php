@@ -18,16 +18,13 @@ class StudentSkillsService
 
         if (!$student) {
             throw new StudentNotFoundException($studentId);
-            //return False;
         }
 
         $resume = $student->resume()->first();
 
         if (!$resume) {
             throw new ResumeNotFoundException($studentId);
-            //return False;
         }
-        
         
         $skills_array = json_decode($skills);
         
