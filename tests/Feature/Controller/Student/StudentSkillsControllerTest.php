@@ -7,7 +7,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Testing\TestResponse;
 
-use App\Models\Student;
+//use App\Models\Student;
+use App\Models\Resume;
 
 class StudentSkillsControllerTest extends TestCase
 {
@@ -31,7 +32,7 @@ class StudentSkillsControllerTest extends TestCase
 	public function testStudentSkillsControllerSuccess(string $studentID, array $request, bool $expectedResult): void
     {
 		
-		$studentIDReal = Student::first()->id;
+		$studentIDReal = Resume::first()->student_id;
 		
         $response = $this->json('PUT', 'api/v1/student/'.$studentIDReal.'/resume/skills', $request);
 		

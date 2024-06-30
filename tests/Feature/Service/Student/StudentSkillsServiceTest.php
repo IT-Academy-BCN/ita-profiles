@@ -39,7 +39,7 @@ class StudentSkillsServiceTest extends TestCase
 		if($expectedResult == False){
 			$this->expectException(StudentNotFoundException::class);
 		}else{
-			$studentID = Student::first()->id;
+			$studentID = Resume::first()->student_id;
 		}
 		 
 		$result = $this->studentSkillsService->updateSkillsByStudentId($studentID, $skills);
