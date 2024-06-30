@@ -81,30 +81,4 @@ class StudentSkillsControllerTest extends TestCase
     
 	}
 	
-	
-
-    /*
-
-    public function test_user_creation_with_invalid_data(): void
-    {
-        $response = $this->json('POST', 'api/v1/register', [
-            'username' => 667677,
-            'dni' => 'Invalid DNI',
-            'email' => 'invalid_email',
-            'terms' => 'false',
-            'password' => 'invalid_password',
-            'password_confirmation' => 'invalid_password_confirmation',
-        ]);
-
-        $response->assertStatus(422); // 422 Unprocessable Entity
-        $response->assertJsonValidationErrors(['username','dni', 'email', 'password']);
-    }
-
-    public function test_required_fields_for_user_creation(): void
-    {
-        $response = $this->json('POST', 'api/v1/register', []);
-
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['username','dni', 'email', 'password']);
-    }*/
 }
