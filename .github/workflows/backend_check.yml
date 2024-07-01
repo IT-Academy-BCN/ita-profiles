@@ -19,14 +19,6 @@ jobs:
           MYSQL_PASSWORD: secret
         ports:
           - 3306:3306
-      redis:
-        image: redis:latest
-        command: [ "redis-server", "/etc/redis/redis.conf" ]
-        ports:
-          - "6379:6379"
-        volumes:
-          - ./docker/redis/.conf/redis.conf:/etc/redis/redis.conf
-          - ./docker/redis/data:/var/lib/redis/
 
     steps:
       - name: Checkout código
@@ -36,6 +28,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
+
+      - name: Preparar configuración de Redis
+        run: |
+          mkdir -p /tmp/redis-data
+          cp ./docker/redis/.conf/redis.conf /tmp/redis.conf
+          docker run -d --name redis-server -p 6379:6379 -v /tmp/redis.conf:/usr/local/etc/redis/redis.conf -v /tmp/redis-data:/data redis:latest redis-server /usr/local/etc/redis/redis.conf
 
       - name: Instalar dependencias
         run: composer install
@@ -50,6 +48,11 @@ jobs:
           echo "DB_DATABASE=laravel_test" >> .env
           echo "DB_USERNAME=laravel_user" >> .env
           echo "DB_PASSWORD=secret" >> .env
+          echo "CACHE_DRIVER=array" >> .env
+          echo "KEY_HASH_MAC=token_password" >> .env
+          echo "REDIS_CLIENT=predis" >> .env
+          echo "REDIS_HOST=localhost" >> .env
+          echo "REDIS_PASSWORD=password" >> .env
 
       - name: Generar clave de aplicación
         run: php artisan key:generate
