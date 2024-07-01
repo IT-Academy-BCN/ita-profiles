@@ -11,11 +11,8 @@ use App\Http\Controllers\api\Student\{
     StudentListController,
     StudentProjectsDetailController,
     SpecializationListController,
-<<<<<<< HEAD
     UpdateStudentSkillsController
-=======
     StudentSkillsController
->>>>>>> 8ad8705 (AddFileCheckBackend)
 };
 
 use App\Http\Controllers\api\Tag\{
@@ -45,11 +42,8 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
-<<<<<<< HEAD
     Route::put('skills', UpdateStudentSkillsController::class)->name('student.skills');
-=======
     Route::put('skills', StudentSkillsController::class)->name('student.skills');
->>>>>>> 8ad8705 (AddFileCheckBackend)
 });
 
 Route::prefix('tags')->group(function () {
