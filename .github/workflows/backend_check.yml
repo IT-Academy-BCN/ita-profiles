@@ -48,6 +48,11 @@ jobs:
           echo "DB_DATABASE=laravel_test" >> .env
           echo "DB_USERNAME=laravel_user" >> .env
           echo "DB_PASSWORD=secret" >> .env
+          echo "CACHE_DRIVER=array" >> .env
+          echo "KEY_HASH_MAC=token_password" >> .env
+          echo "REDIS_CLIENT=predis" >> .env
+          echo "REDIS_HOST=redis" >> .env
+          echo "REDIS_PASSWORD=password" >> .env
 
       - name: Generar clave de aplicación
         run: php artisan key:generate
