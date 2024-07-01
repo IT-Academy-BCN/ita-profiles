@@ -51,7 +51,7 @@ jobs:
           echo "CACHE_DRIVER=array" >> .env
           echo "KEY_HASH_MAC=token_password" >> .env
           echo "REDIS_CLIENT=predis" >> .env
-          echo "REDIS_HOST=redis" >> .env
+          echo "REDIS_HOST=localhost" >> .env
           echo "REDIS_PASSWORD=password" >> .env
 
       - name: Generar clave de aplicación
