@@ -8,7 +8,7 @@ use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
 use App\Models\Tag;
 
-class StudentSkillsService
+class UpdateStudentSkillsService
 {
 	
 	public function updateSkillsByStudentId(string $studentId, string $skills): Exception | bool

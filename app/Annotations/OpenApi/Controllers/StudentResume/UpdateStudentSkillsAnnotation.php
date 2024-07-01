@@ -1,8 +1,8 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Annotations\OpenApi\Controllers\StudentResume;
 
-class StudentSkillsAnnotation
+class UpdateStudentSkillsAnnotation
 {
     /**
      * @OA\Put (
@@ -29,41 +29,46 @@ class StudentSkillsAnnotation
      *              type="object",
      *              @OA\Property(property="skills", type="array", 
      * 
-     *              @OA\Items(
-     *                 type="string",
-     *                 example="react"
+     *                  @OA\Items(
+     *                      type="string",
+     *                      example="react"
+     *                  ),
+     *              example={"React", "PHP", "Java", "Nodejs"}
      *             ),
-     *              example={"React", "PHP", "Java", "Nodejs"}),
      *          )
      *      ),
      * 
      * 
      *     @OA\Response(
-     *         response=204,
+     *         response=200,
      *         description="Success. Returns the skills.",
      * 
      *         @OA\JsonContent(
      *             type="array",
      *             
      *             @OA\Items(
-     *             type="object",
+     *                  type="object",
      * 
-     *             @OA\Property(
-     *                 property="skills",
-     *                 type="string",
-     *                 example="php:react:javascript:node:html5",
-     *             ),
-     *             @OA\Property(
-     *                 property="status",
-     *                 type="string",
-     *                 example="succes/failure",
-     *             )
+     *                  @OA\Property(
+     *                      property="skills",
+     *                      type="string",
+     *                      example="php:react:javascript:node:html5",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="status",
+     *                      type="string",
+     *                      example="succes/failure",
+     *                  )
      *             )
      *         )
      *     ),
      *     @OA\Response(
      *         response=404,
      *         description="No hem trobat cap estudiant amb aquest ID"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation Error"
      *     ),
      *     @OA\Response(
      *         response=500,
