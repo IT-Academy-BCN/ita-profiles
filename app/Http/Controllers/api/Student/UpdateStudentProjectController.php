@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
-use App\Service\Student\StudentUpdateProjectService;
+use App\Service\Student\UpdateStudentProjectService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ProjectNotFoundException;
 
-class StudentUpdateProjectController extends Controller
+class UpdateStudentProjectController extends Controller
 {
     private $studentUpdateProjectService;
 
-    public function __construct(StudentUpdateProjectService $studentUpdateProjectService)
+    public function __construct(UpdateStudentProjectService $studentUpdateProjectService)
     {
         $this->studentUpdateProjectService = $studentUpdateProjectService;
     }

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ProjectNotFoundException;
 
-class StudentUpdateProjectService
+class UpdateStudentProjectService
 {
     public function execute(string $studentId, string $projectId, array $data): void
     {
