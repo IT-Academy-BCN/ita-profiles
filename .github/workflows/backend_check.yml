@@ -19,13 +19,6 @@ jobs:
           MYSQL_PASSWORD: secret
         ports:
           - 3306:3306
-      redis:
-        image: redis:latest
-        ports:
-          - "6379:6379"
-        volumes:
-          - ./docker/redis/.conf/redis.conf:/etc/redis/redis.conf
-          - ./docker/redis/data:/var/lib/redis/
 
     steps:
       - name: Checkout código
