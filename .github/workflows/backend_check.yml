@@ -22,12 +22,11 @@ jobs:
 
       redis:
         image: redis:latest
-        command: [ "redis-server", "/etc/redis/redis.conf" ]
         ports:
           - "6379:6379"
         volumes:
-          - ./docker/redis/.conf/redis.conf:/etc/redis/redis.conf
-          - ./docker/redis/data:/var/lib/redis/
+          - ./docker/redis/.conf/redis.conf:/usr/local/etc/redis/redis.conf
+          - ./docker/redis/data:/data
 
     steps:
       - name: Checkout código
