@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Student;
@@ -14,7 +13,6 @@ use Illuminate\Support\Facades\{
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Service\Student\UpdateStudentProfileService;
-
 
 class UpdateStudentProfileController extends Controller
 {
@@ -31,8 +29,7 @@ class UpdateStudentProfileController extends Controller
 
         DB::beginTransaction();
         try {
-            $wasStudentUpdated = $this->updateStudentProfileService->execute($studentId, $dataStudentProfileUpdate);
-
+            $this->updateStudentProfileService->execute($studentId, $dataStudentProfileUpdate);
             DB::commit();
 
                 return response()->json([

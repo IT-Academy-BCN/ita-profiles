@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\App;
 
 class UpdateStudentRequest extends FormRequest
 {
@@ -13,6 +14,7 @@ class UpdateStudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        App::setLocale('es');
         return true;
     }
 
@@ -26,15 +28,11 @@ class UpdateStudentRequest extends FormRequest
         return [
             'name' => 'required|string|regex:/^([^0-9]*)$/',
             'surname' => 'required|string|regex:/^([^0-9]*)$/',
-            'email' => 'required|string|email|max:255|unique:users',
             'subtitle' => 'required|string',
-            'bootcamp' => 'required|in:Front end Developer,PHP Developer,Java Developer,Nodejs Developer',
+            'github_url' => 'string|url|max:60|nullable',
+            'linkedin_url' => 'string|url|max:60|nullable',
             'about' => 'string|nullable',
-            'cv' => 'string|max:125|nullable',
-            'linkedin' => 'string|url|max:60|nullable',
-            'github' => 'string|url|max:60|nullable',
         ];
-
     }
 
     /**
