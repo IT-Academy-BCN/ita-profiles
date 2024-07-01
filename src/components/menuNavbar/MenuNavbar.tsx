@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ItAcademyLogo } from '../../assets/svg'
+import { Link } from 'react-router-dom'
 
 const MenuNavbar = () => {
   const [activeItem, setActiveItem] = useState('Perfiles')
@@ -14,7 +15,9 @@ const MenuNavbar = () => {
   return (
     <nav className="hidden gap-28 w-44 flex-none px-6 py-7 md:flex md:flex-col">
       <div>
-        <img src={ItAcademyLogo} alt="itAcademy Logo" />
+        <Link to={'/'}>
+          <img src={ItAcademyLogo} alt="itAcademy Logo" />
+        </Link>
       </div>
       <div className="flex flex-col gap-9">
         {menuItems.map((item) => (
