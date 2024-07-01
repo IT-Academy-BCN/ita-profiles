@@ -19,21 +19,16 @@ jobs:
           MYSQL_PASSWORD: secret
         ports:
           - 3306:3306
-
       redis:
         image: redis:latest
+        command: [ "redis-server", "/etc/redis/redis.conf" ]
         ports:
           - "6379:6379"
         volumes:
-          - /tmp/redis.conf:/usr/local/etc/redis/redis.conf
-          - /tmp/redis-data:/data
+          - ./docker/redis/.conf/redis.conf:/etc/redis/redis.conf
+          - ./docker/redis/data:/var/lib/redis/
 
     steps:
-      - name: Preparar configuración de Redis en directorio temporal
-        run: |
-          mkdir -p /tmp/redis-data
-          cp ./docker/redis/.conf/redis.conf /tmp/redis.conf
-
       - name: Checkout código
         uses: actions/checkout@v2
 
@@ -41,6 +36,15 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
+
+      - name: Preparar configuración de Redis
+        run: |
+          mkdir -p /tmp/redis-data
+          cp ./docker/redis/.conf/redis.conf /tmp/redis.conf
+          docker run -d --name redis-server -p 6379:6379 -v /tmp/redis.conf:/usr/local/etc/redis/redis.conf -v /tmp/redis-data:/data redis:latest redis-server /usr/local/etc/redis/redis.conf
+
+      - name: Instalar dependencias
+        run: composer install
 
       - name: Configurar .env para pruebas
         run: |
@@ -52,16 +56,6 @@ jobs:
           echo "DB_DATABASE=laravel_test" >> .env
           echo "DB_USERNAME=laravel_user" >> .env
           echo "DB_PASSWORD=secret" >> .env
-
-      - name: Cache Composer dependencies
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Instalar dependencias
-        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Generar clave de aplicación
         run: php artisan key:generate
@@ -77,3 +71,4 @@ jobs:
 
       - name: Ejecutar PHPUnit
         run: php artisan test
+
