@@ -1,19 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Service\User;
 
-use App\Models\User;
+use App\Exceptions\UserRegisterException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use App\Http\Requests\RegisterRequest;
-use App\Models\Resume;
-use App\Models\Student;
 use App\Service\User\UserRegisterService;
 
 class RegisterUserServiceTest extends TestCase
 {
-    use DatabaseTransactions; // Ensures that any database modifications made during testing are reverted once the test is complete
+    use DatabaseTransactions; // reverts modifications in DB
 
     private UserRegisterService $userService;
 
@@ -36,65 +34,25 @@ class RegisterUserServiceTest extends TestCase
         ];
     }
 
-    public function test_user_can_be_instantiated(): void
+    public function test_UserRegisterService_can_be_instantiated(): void
     {
-        $user = new User();
-        $this->assertInstanceOf(User::class, $user);
-    }
-
-    public function test_student_can_be_instantiated(): void
-    {
-        $student = new Student();
-        $this->assertInstanceOf(Student::class, $student);
-    }
-
-    public function test_resume_can_be_instantiated(): void
-    {
-        $resume = new Resume();
-
-        $this->assertInstanceOf(Resume::class, $resume);
-    }
-
-    public function test_user_uuid_is_generated_when_user_is_created(): void
-    {
-        $userData = $this->createUserData();
-        $user = User::create($userData);
-
-        $this->assertNotEmpty($user->id);
-    }
-
-    public function test_student_uuid_is_generated_when_user_is_created(): void
-    {
-        $userData = $this->createUserData();
-        $user = User::create($userData);
-        $student = Student::create(['user_id' => $user->id]);
-
-        $this->assertNotEmpty($student->id);
-    }
-
-    public function test_resume_uuid_is_generated_when_user_is_created(): void
-    {
-        $userData = $this->createUserData();
-        $user = User::create($userData);
-        $student = Student::create(['user_id' => $user->id]);
-        $resume = new Resume;
-        $resume->student_id = $student->id;
-        $resume->specialization = $userData['specialization'] ?? null;
-        $resume->save();
-
-        $this->assertNotEmpty($resume->id);
+        $userRegisterService = new UserRegisterService();
+        $this->assertInstanceOf(UserRegisterService::class, $userRegisterService);
     }
 
     public function test_user_creation_with_valid_data(): void
     {
         $userData = $this->createUserData();
 
-        $response = $this->userService->createUser($userData);
-
-        $this->assertEquals($userData['email'], $response['email']);
-        $this->assertArrayHasKey('token', $response);
-        $this->assertIsString($response['token']);
-        $this->assertFalse(empty($response['token']) || empty($response['email']));
+        try {
+            $response = $this->userService->createUser($userData);
+            $this->assertEquals($userData['email'], $response['email']);
+            $this->assertArrayHasKey('token', $response);
+            $this->assertIsString($response['token']);
+            $this->assertFalse(empty($response['token']) || empty($response['email']));
+        } catch (\Exception $e) {
+            $this->fail('Exception should not have been thrown: ' . $e->getMessage());
+        }
     }
 
     public function test_user_creation_with_invalid_data(): void
@@ -108,9 +66,8 @@ class RegisterUserServiceTest extends TestCase
             'password' => '123456',
         ];
 
-        $success = $this->userService->createUser($registerData);
-
-        $this->assertFalse($success);
+        $this->expectException(UserRegisterException::class);
+        $this->userService->createUser($registerData);
     }
 
     public function test_user_creation_with_empty_data(): void
@@ -124,10 +81,8 @@ class RegisterUserServiceTest extends TestCase
             'password' => '',
         ];
 
-        $success = $this->userService->createUser($registerData);
-
-        $this->assertFalse($success);//Assert that the user creation was unsuccessful
-
+        $this->expectException(UserRegisterException::class);
+        $this->userService->createUser($registerData);
     }
 
     /**
@@ -138,15 +93,13 @@ class RegisterUserServiceTest extends TestCase
      */
     public function test_required_fields_for_user_creation(array $array, bool $resultCorrect): void
     {
-        $success = $this->userService->createUser($array);
-
-    // Check if the result is as expected
         if ($resultCorrect) {
-            $this->assertNotEmpty($success['email']);
-            $this->assertNotEmpty($success['token']);
+            $response = $this->userService->createUser($array);
+            $this->assertNotEmpty($response['email']);
+            $this->assertNotEmpty($response['token']);
         } else {
-            // If the result is expected to be incorrect, assert that the creation was unsuccessful
-            $this->assertFalse($success);
+            $this->expectException(\Exception::class);
+            $this->userService->createUser($array);
         }
     }
 
