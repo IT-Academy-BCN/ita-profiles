@@ -25,12 +25,14 @@ jobs:
         ports:
           - "6379:6379"
         volumes:
-          - ./docker/redis/.conf/redis.conf:/usr/local/etc/redis/redis.conf
-          - ./docker/redis/data:/data
+          - /tmp/redis.conf:/usr/local/etc/redis/redis.conf
+          - /tmp/redis-data:/data
 
     steps:
-      - name: Cambiar permisos de los directorios y archivos
-        run: sudo chmod -R 777 ./docker/redis/.conf ./docker/redis/data
+      - name: Preparar configuración de Redis en directorio temporal
+        run: |
+          mkdir -p /tmp/redis-data
+          cp ./docker/redis/.conf/redis.conf /tmp/redis.conf
 
       - name: Checkout código
         uses: actions/checkout@v2
@@ -75,4 +77,3 @@ jobs:
 
       - name: Ejecutar PHPUnit
         run: php artisan test
-
