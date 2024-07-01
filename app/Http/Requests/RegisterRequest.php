@@ -52,6 +52,7 @@ class RegisterRequest extends FormRequest
             'dni.regex' => 'El dni no debe contener caracteres especiales',
 
             // email
+            'email.email' => 'Debe tener un formato email',
             'email.required' => 'El email es requerido',
             'email.string' => 'El email debe ser un texto',
             'email.max' => 'El email no debe ser mayor a :max caracteres',
