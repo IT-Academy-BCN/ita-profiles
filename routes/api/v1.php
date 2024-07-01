@@ -11,7 +11,7 @@ use App\Http\Controllers\api\Student\{
     StudentListController,
     StudentProjectsDetailController,
     SpecializationListController,
-    UpdateStudentSkillsController
+    UpdateStudentSkillsController,
     StudentSkillsController
 };
 
