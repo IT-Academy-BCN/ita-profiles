@@ -19,6 +19,7 @@ jobs:
           MYSQL_PASSWORD: secret
         ports:
           - 3306:3306
+
       redis:
         image: redis:latest
         command: [ "redis-server", "/etc/redis/redis.conf" ]
@@ -37,9 +38,6 @@ jobs:
         with:
           php-version: 8.1
 
-      - name: Instalar dependencias
-        run: composer install
-
       - name: Configurar .env para pruebas
         run: |
           echo "APP_KEY=" >> .env
@@ -50,6 +48,16 @@ jobs:
           echo "DB_DATABASE=laravel_test" >> .env
           echo "DB_USERNAME=laravel_user" >> .env
           echo "DB_PASSWORD=secret" >> .env
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Instalar dependencias
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Generar clave de aplicación
         run: php artisan key:generate
@@ -65,4 +73,3 @@ jobs:
 
       - name: Ejecutar PHPUnit
         run: php artisan test
-
