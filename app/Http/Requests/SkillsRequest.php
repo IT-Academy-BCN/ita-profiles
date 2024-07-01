@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 declare(strict_types=1);
+=======
+
+>>>>>>> 8ad8705 (AddFileCheckBackend)
 namespace App\Http\Requests;
 
 use App\Rules\DniNieRule;
@@ -9,12 +13,19 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SkillsRequest extends FormRequest
 {
+<<<<<<< HEAD
 
+=======
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+>>>>>>> 8ad8705 (AddFileCheckBackend)
     public function authorize(): bool
     {
         return true;
     }
 
+<<<<<<< HEAD
 
 
 	protected function prepareForValidation()
@@ -42,12 +53,21 @@ class SkillsRequest extends FormRequest
 	}
 
     /**
+=======
+    /**
+     * Get the validation rules that apply to the request.
+     *
+>>>>>>> 8ad8705 (AddFileCheckBackend)
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
+<<<<<<< HEAD
             'skills' => 'json'
+=======
+            'skills' => 'nullable|string'
+>>>>>>> 8ad8705 (AddFileCheckBackend)
         ];
     }
 

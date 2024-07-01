@@ -1,4 +1,4 @@
-name: frontend_check
+name: pr_check
 
 on:
   pull_request:
