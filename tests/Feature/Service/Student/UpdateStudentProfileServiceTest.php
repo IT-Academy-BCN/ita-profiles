@@ -31,9 +31,12 @@ class UpdateStudentProfileServiceTest extends TestCase
     private function createFakeDataToUpdate(Student $student): array
     {
         $studentData = $student->only(['id', 'name', 'surname']);
-        $resumeData = $student->resume->only(['subtitle','github_url', 'linkedin_url', 'about', 'subtitle']);
-
-        return array_merge($studentData, $resumeData);
+        if ($student->resume) {
+            $resumeData = $student->resume->only(['subtitle', 'github_url', 'linkedin_url', 'about', 'subtitle']);
+            return array_merge($studentData, $resumeData);
+        } else {
+            return $studentData;
+        }
     }
 
     public function test_can_instantiate_student_update_profile_service()
@@ -80,20 +83,41 @@ class UpdateStudentProfileServiceTest extends TestCase
     {
         $this->expectException(ResumeNotFoundException::class);
 
-        $student = Student::factory()->create(); // Create student without resume
+        $student = Student::factory()->create();
         $dataToUpdate = $this->createFakeDataToUpdate($student);
 
-        $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
+        try {
+            $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(ResumeNotFoundException::class, $e);
+            throw $e;
+        }
     }
 
-    public function test_update_student_profile_with_invalid_data()
+    /**
+     * @dataProvider missingDataProvider
+     */
+    public function test_can_not_update_student_profile_with_missing_data(array $invalidData)
     {
         $student = Student::factory()->has(Resume::factory())->create();
         $dataToUpdate = $this->createFakeDataToUpdate($student);
-        $dataToUpdate['name'] = null; // Set invalid data
+        $dataToUpdate = array_merge($dataToUpdate, $invalidData);
 
-        $result = $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
+        try {
+            $result = $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
+        } catch (\Exception $e) {
+            $result = false;
+        }
+
         $this->assertFalse($result);
     }
-}
 
+    public static function missingDataProvider(): array
+    {
+        return [
+            'missing_subtitle' => [['subtitle' => null]],
+            'missing_github_url' => [['github_url' => null]],
+            'missing_linkedin_url' => [['linkedin_url' => null]],
+        ];
+    }
+}

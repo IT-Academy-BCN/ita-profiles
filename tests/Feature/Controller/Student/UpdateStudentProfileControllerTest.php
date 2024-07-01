@@ -26,17 +26,17 @@ class UpdateStudentProfileControllerTest extends TestCase
         $student = Student::factory()->for($user)->create();
         $resume = Resume::factory()->for($student)->create();
 
-        $dataToUpdate []= array_merge(
+        return array_merge(
             $student->only(['id', 'name', 'surname']),
             $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about'])
         );
 
-        return $dataToUpdate;
     }
 
     public function test_can_update_student_profile(): void
     {
         $dataToUpdate = $this->createFakeDataToUpdate();
+        // var_dump($dataToUpdate);exit;
         $response = $this->json('PUT', 'api/v1/student/' . $dataToUpdate['id'] . '/resume/profile', $dataToUpdate);
 
         $response->assertStatus(200);

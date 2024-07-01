@@ -9,9 +9,9 @@ use Throwable;
 
 class StudentNotFoundException extends Exception
 {
-    public const MESSAGE = 'No s\'ha trobat cap estudiant amb aquest ID: %s';
+    public const MESSAGE = 'No se ha encontrado ningun estudiante con ID: %s';
 
-    public function __construct(string $studentId, $code = 404, Throwable $previous = null)
+    public function __construct(string | int $studentId, $code = 404, Throwable $previous = null)
     {
         $message = sprintf(self::MESSAGE, $studentId);
         parent::__construct($message, $code, $previous);
