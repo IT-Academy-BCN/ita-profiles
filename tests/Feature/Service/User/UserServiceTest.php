@@ -1,15 +1,18 @@
 <?php
 declare(strict_types=1);
+
+
+namespace Tests\Feature\Service\User;
+
 use App\Service;
 use Tests\TestCase;
 use App\Models\User;
-
-
 
 use App\Service\User\UserService;
 
 use Illuminate\Database\Eloquent\Collection;
 
+use Mockery;
 
 /**
  * @runTestsInSeparateProcesses
@@ -38,7 +41,8 @@ class UserServiceTest extends TestCase
         
         if($addDBBool == True)
         {	
-			$returnUser = new App\Models\User;
+
+			$returnUser = new User;
 			
 			$returnUser->id = intval($randID);
 			$returnUser->username = "Surname";
@@ -131,7 +135,8 @@ class UserServiceTest extends TestCase
 		$randID = rand(1,100);
 		if($addDBBool == True)
         {
-			$returnUser = new App\Models\User;
+
+			$returnUser = new User;
 			
 			$returnUser->id = intval($randID);
 			$returnUser->username = "";
