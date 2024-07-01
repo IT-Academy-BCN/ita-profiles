@@ -29,10 +29,11 @@ jobs:
           - ./docker/redis/data:/data
 
     steps:
-      - name: Checkout código sin eliminar directorios específicos
+      - name: Cambiar permisos de los directorios y archivos
+        run: sudo chmod -R 777 ./docker/redis/.conf ./docker/redis/data
+
+      - name: Checkout código
         uses: actions/checkout@v2
-        with:
-          clean: false
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
