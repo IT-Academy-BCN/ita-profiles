@@ -21,7 +21,6 @@ jobs:
           - 3306:3306
       redis:
         image: redis:latest
-        command: [ "redis-server", "/etc/redis/redis.conf" ]
         ports:
           - "6379:6379"
         volumes:
