@@ -26,16 +26,17 @@ class UpdateStudentProfileControllerTest extends TestCase
         $student = Student::factory()->for($user)->create();
         $resume = Resume::factory()->for($student)->create();
 
-        return array_merge(
+        $dataToUpdate []= array_merge(
             $student->only(['id', 'name', 'surname']),
             $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about'])
         );
+
+        return $dataToUpdate;
     }
 
     public function test_can_update_student_profile(): void
     {
         $dataToUpdate = $this->createFakeDataToUpdate();
-
         $response = $this->json('PUT', 'api/v1/student/' . $dataToUpdate['id'] . '/resume/profile', $dataToUpdate);
 
         $response->assertStatus(200);
@@ -58,7 +59,6 @@ class UpdateStudentProfileControllerTest extends TestCase
     public function test_can_not_update_student_profile_with_invalid_data(): void
     {
         $dataToUpdate = $this->createFakeDataToUpdate();
-
         $response = $this->json('PUT', 'api/v1/student/' . $dataToUpdate['id'] . '/resume/profile', [
             'name' => '77878',
             'surname' => '889655',
@@ -75,7 +75,6 @@ class UpdateStudentProfileControllerTest extends TestCase
     public function test_required_fields_to_update_student_profile(): void
     {
         $dataToUpdate = $this->createFakeDataToUpdate();
-
         $response = $this->json('PUT', 'api/v1/student/' . $dataToUpdate['id'] . '/resume/profile', []);
 
         $response->assertStatus(422);
