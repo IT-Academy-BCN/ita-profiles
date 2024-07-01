@@ -29,8 +29,10 @@ jobs:
           - ./docker/redis/data:/data
 
     steps:
-      - name: Checkout código
+      - name: Checkout código sin eliminar directorios específicos
         uses: actions/checkout@v2
+        with:
+          clean: false
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -73,17 +75,3 @@ jobs:
       - name: Ejecutar PHPUnit
         run: php artisan test
 
-      - name: Detener servicios
-        run: |
-          sudo service mysql stop
-          sudo service redis-server stop
-
-      - name: Ajustar permisos
-        run: |
-          sudo chown -R $USER:$USER ./docker/redis/data
-          sudo chown -R $USER:$USER ./docker/redis/.conf
-
-      - name: Eliminar directorios
-        run: |
-          rm -rf ./docker/redis/data
-          rm -rf ./docker/redis/.conf
