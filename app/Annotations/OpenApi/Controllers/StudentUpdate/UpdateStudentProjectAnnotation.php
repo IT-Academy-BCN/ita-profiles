@@ -104,17 +104,7 @@ class UpdateStudentProjectAnnotation
    *              )
    *          )
    *      ),
-   *      @OA\Response(
-   *          response=401,
-   *          description="Unauthorized",
-   *          @OA\JsonContent(
-   *              @OA\Property(
-   *                  property="message",
-   *                  type="string",
-   *                  example="Unauthorized"
-   *              )
-   *          )
-   *      ),
+   *     
    *      @OA\Response(
    *          response=500,
    *          description="Server error",
