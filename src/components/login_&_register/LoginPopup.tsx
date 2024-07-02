@@ -2,6 +2,8 @@ import axios from 'axios'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ILoginForm } from '../../interfaces/interfaces'
+import { useNavigate } from 'react-router-dom'
+import { useLogin } from '../../context/LoginContext'
 
 type LoginPopupProps = {
   onClose: () => void
@@ -13,13 +15,17 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   onOpenRegisterPopup,
 }) => {
 
+  const { login } = useLogin();
+  const navigate = useNavigate();
   const { handleSubmit, register } = useForm<ILoginForm>()
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
       console.log("data we're trying to send =>", data);
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
       console.log('login data =>', response.data)
+      login(response.data.token);
       onClose()
+      navigate('/profile')
     } catch (e) {
       console.log('error =>', e)
     }
