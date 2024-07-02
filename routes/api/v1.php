@@ -33,14 +33,14 @@ Route::get('/specialization/list', SpecializationListController::class)->name('r
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 
 Route::get('student/resume/list', StudentListController::class)->name('students.list');
-Route::middleware('auth:api')->prefix('student/{studentId}/resume')->group(function () {
+Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('detail', StudentDetailController::class)->name('student.details');
     Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
     Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
-    Route::get('modality', StudentModalityController::class)->name('student.modality');   
+    Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');   
 });
 

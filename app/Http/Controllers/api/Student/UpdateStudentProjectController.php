@@ -7,7 +7,7 @@ namespace App\Http\Controllers\api\Student;
 use App\Http\Controllers\Controller;
 use App\Service\Student\UpdateStudentProjectService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateStudentProjectRequest;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ProjectNotFoundException;
 
@@ -20,9 +20,10 @@ class UpdateStudentProjectController extends Controller
         $this->studentUpdateProjectService = $studentUpdateProjectService;
     }
 
-    public function __invoke(Request $request, $studentId, $projectId): JsonResponse
+    public function __invoke(UpdateStudentProjectRequest $request, $studentId, $projectId): JsonResponse
     {
-        $data = $request->all();
+       $data = $request->all();       
+       
         try {
             $this->studentUpdateProjectService->execute($studentId, $projectId, $data);
             return response()->json(['message' => 'El projecte s\'ha actualitzat'], 200);
