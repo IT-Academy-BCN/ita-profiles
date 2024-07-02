@@ -9,7 +9,7 @@ use Throwable;
 
 class StudentNotFoundException extends Exception
 {
-    public const MESSAGE = 'No se ha encontrado ningun estudiante con ID: %s';
+    public const MESSAGE = 'No s\'ha trobat cap estudiant amb aquest ID: %s';
 
     public function __construct(string | int $studentId, $code = 404, Throwable $previous = null)
     {
