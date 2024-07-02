@@ -2,11 +2,22 @@ import { useState } from 'react'
 import { Lock, ArrowDown, BurgerMenu } from '../../assets/svg'
 import LoginPopup from '../login_&_register/LoginPopup'
 import RegisterPopup from '../login_&_register/RegisterPopup'
+import { useLogin } from '../../context/LoginContext'
 
 const UserNavbar: React.FC = () => {
   const [isRestrictedPopupOpen, setIsRestrictedPopupOpen] = useState(false)
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false)
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false)
+
+  const { isLoggedIn, logout} = useLogin();
+  const handleButtonClick = () => {
+    if (isLoggedIn) {
+      logout();
+    } else {
+      handleOpenRestrictedPopup();
+    }
+  };
+
 
   const handleOpenRestrictedPopup = () => {
     setIsRestrictedPopupOpen(true)
@@ -63,9 +74,9 @@ const UserNavbar: React.FC = () => {
         <button
           type="button"
           className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
-          onClick={handleOpenRestrictedPopup}
+          onClick={handleButtonClick}
         >
-          Login/registro
+          {isLoggedIn ? 'Logout' : 'Login/registro'}
         </button>
       </div>
 
