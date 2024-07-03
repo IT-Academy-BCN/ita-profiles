@@ -8,11 +8,16 @@ import { useLogin } from '../../context/LoginContext'
 type LoginPopupProps = {
   onClose: () => void
   onOpenRegisterPopup: () => void
+  user: {
+    id: string,
+    token: string
+  }
 }
 
 const LoginPopup: React.FC<LoginPopupProps> = ({ 
   onClose,
   onOpenRegisterPopup,
+  user
 }) => {
 
   const { login } = useLogin();
@@ -20,10 +25,9 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   const { handleSubmit, register } = useForm<ILoginForm>()
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
-      console.log("data we're trying to send =>", data);
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
-      console.log('login data =>', response.data)
-      login(response.data.token);
+      user = response.data
+      login(user);
       onClose()
       navigate('/profile')
     } catch (e) {
