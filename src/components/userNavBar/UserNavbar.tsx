@@ -61,14 +61,14 @@ const UserNavbar: React.FC = () => {
           <div
             tabIndex={0}
             role="button"
-            className="flex items-center gap-1 text-gray"
-          >
+            className="flex items-center gap-1 text-gray-3"
+            >
             ES
             <img src={ArrowDown} alt="Vector" />
           </div>
-          <ul className="menu dropdown-content absolute left-0 top-12 z-[1] rounded-lg bg-base-100 shadow">
-            <li className="text-gray">Español</li>
-            <li className="text-gray">English</li>
+          <ul className="menu dropdown-content absolute left-0 top-12 z-[1] rounded-lg bg-base-100 shadow gap-2 p-4">
+            <li className="text-gray-3">Español</li>
+            <li className="text-gray-3">English</li>
           </ul>
         </div>
         <button
