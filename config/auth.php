@@ -13,9 +13,10 @@ return [
     |
     */
 
+    // Changed the default value to api because in this case we're using passport.
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => env('AUTH_GUARD', 'api'),
+        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
     /*
