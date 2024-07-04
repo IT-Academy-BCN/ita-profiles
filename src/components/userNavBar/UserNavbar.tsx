@@ -3,6 +3,9 @@ import { Lock, ArrowDown, BurgerMenu } from '../../assets/svg'
 import LoginPopup from '../login_&_register/LoginPopup'
 import RegisterPopup from '../login_&_register/RegisterPopup'
 import { useLogin } from '../../context/LoginContext'
+import { Settings } from '../../assets/svg'
+import { UserIcon } from '../../assets/svg'
+import { Link } from 'react-router-dom'
 
 const UserNavbar: React.FC = () => {
   const [isRestrictedPopupOpen, setIsRestrictedPopupOpen] = useState(false)
@@ -71,13 +74,29 @@ const UserNavbar: React.FC = () => {
             <li className="text-gray-3">English</li>
           </ul>
         </div>
-        <button
-          type="button"
-          className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
-          onClick={handleButtonClick}
-        >
-          {isLoggedIn ? 'Logout' : 'Login/registro'}
-        </button>
+        {isLoggedIn 
+          ? <div className='flex gap-4'>
+              <button 
+                className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
+                onClick={logout}
+                >
+                <img src={Settings} alt="Settings button" />
+              </button> 
+              <Link 
+                className="rounded-lg bg-white px-3 py-2 font-medium text-gray" 
+                to={'/profile'}
+                >
+                <img src={UserIcon} alt="User icon button" />
+              </Link>             
+            </div>
+           
+          : <button
+              type="button"
+              className="rounded-lg bg-white px-3 py-2 font-medium text-gray-3"
+              onClick={handleButtonClick}
+              >
+                Login/registro
+            </button>}        
       </div>
 
       {isRestrictedPopupOpen && (
