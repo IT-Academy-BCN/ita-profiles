@@ -13,7 +13,7 @@ class StudentUpdateProfileAnnotation
      *      path="/student/{studentId}/resume/profile",
      *      operationId="updateStudentProfile",
      *      tags={"Student -> Resume"},
-     *      summary="Updates the student's profile by passing the studentId as a parameter on the endpoint",
+     *      summary="Updates the student's profile",
      *      description="
 - Update a student's profile: You must provide a valid studentId as a parameter on the endpoint. In the Request body there are already base data for the rest of the fields to test the endpoint, but you can change them if you want.
 
@@ -39,15 +39,16 @@ class StudentUpdateProfileAnnotation
      *              @OA\Property(property="github_url", type="string", example="https://github.com/joeDoe"),
      *              @OA\Property(property="linkedin_url", type="string", example="https://linkedin.com/joeDoe"),
      *              @OA\Property(property="about", type="string", example="lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
+     *              @OA\Property(property="tags_ids", type="array", @OA\Items(type="integer"), example="[3, 7, 9]"),
      *          )
      *      ),
      *
      *       @OA\Response(
      *          response=200,
-     *          description="El perfil del estudiante se actualizo correctamente",
+     *          description="Successful operation",
      *          @OA\JsonContent(
      *              type="object",
-     *              @OA\Property(property="profile", type="string", example="El perfil del estudiante se actualizo correctamente"),
+     *              @OA\Property(property="profile", type="string", example="El perfil de l'estudiant s'actualitza correctament"),
      *          )
      *      ),
      *
@@ -75,12 +76,12 @@ class StudentUpdateProfileAnnotation
      *                   @OA\Property(
      *                       property="name",
      *                       type="string",
-     *                       example="El campo nombre es obligatorio."
+     *                       example="El camp nom és obligatori."
      *                   ),
      *                   @OA\Property(
      *                       property="surname",
      *                       type="string",
-     *                       example="El campo apellidos es obligatorio."
+     *                       example="El camp apellidos és obligatori."
      *                   )
      *               )
      *        ),
@@ -92,7 +93,7 @@ class StudentUpdateProfileAnnotation
      *                    @OA\Property(
      *                    property="message",
      *                    type="string",
-     *                    example="El perfil del estudiante no se pudo actualizar, por favor intentelo de nuevo"
+     *                    example="El perfil de l'estudiant no s'ha pogut actualitzar, per favor el nou objectiu"
      *                    )
      *                )
      *            )

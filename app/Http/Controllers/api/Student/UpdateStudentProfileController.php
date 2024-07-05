@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Student;
 
+use App\Exceptions\ResumeNotFoundException;
+use App\Exceptions\StudentNotFoundException;
 use Illuminate\Http\{
     JsonResponse,
 };
@@ -25,7 +27,7 @@ class UpdateStudentProfileController extends Controller
 
     public function __invoke(UpdateStudentRequest $request, string $studentId): JsonResponse
     {
-        $dataStudentProfileUpdate = $request->only(['name', 'surname', 'subtitle' , 'github_url', 'linkedin_url', 'about']);
+        $dataStudentProfileUpdate = $request->only(['name', 'surname', 'subtitle' , 'github_url', 'linkedin_url', 'about', 'tags_ids']);
 
         DB::beginTransaction();
         try {
@@ -33,15 +35,22 @@ class UpdateStudentProfileController extends Controller
             DB::commit();
 
                 return response()->json([
-                    'profile'=> 'El perfil del estudiante se actualizo correctamente'
+                    'profile'=> 'El perfil de l\'estudiant s\'actualitza correctament'
                 ], 200);
-        } catch (\DomainException $e) {
+        }catch (StudentNotFoundException | ResumeNotFoundException $e) {
             DB::rollBack();
-            Log::error('Domain exception:', [
+            Log::error('Exception:', [
                 'exception' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            return response()->json('El perfil del estudiante no se pudo actualizar, por favor intentelo de nuevo', 500);
+            return response()->json($e->getMessage(), $e->getCode());
+        }catch (\Exception $e ) {
+            DB::rollBack();
+            Log::error('Exception:', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return response()->json('El perfil de l\'estudiant no s\'ha pogut actualitzar, per favor el nou objectiu', 500);
         }
 
     }

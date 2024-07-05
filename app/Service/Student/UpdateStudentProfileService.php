@@ -11,18 +11,16 @@ use App\Exceptions\{
 
 class UpdateStudentProfileService
 {
-    public function execute(string $studentId, array $data): bool
+    public function execute(string $studentId, array $data): void
     {
-        return $this->updateStudentProfile($data, $studentId);
+        $this->updateStudentProfile($studentId, $data);
     }
 
-    public function updateStudentProfile(array $data, string $studentId):bool
+    public function updateStudentProfile(string $studentId, array $data):void
     {
         $student = $this->getStudentById($studentId);
-        $wasStudentUPdated = $this->updateStudent($data, $student);
-        $wasResumeUpdated = $this->updateResume($data, $student);
-
-        return $wasStudentUPdated && $wasResumeUpdated;
+        $this->updateStudent($student, $data);
+        $this->updateResume($student, $data);
     }
 
     private function getStudentById(string $studentId): Student
@@ -33,24 +31,27 @@ class UpdateStudentProfileService
         return $student;
     }
 
-    private function updateStudent(array $data, Student $student):bool
+    private function updateStudent(Student $student, array $data):void
     {
-        return $student->update([
+        $student->update([
             'name' => $data['name'],
             'surname' => $data['surname'],
         ]);
     }
 
-    private function updateResume(array $data, Student $student):bool
+    private function updateResume(Student $student, array $data):void
     {
         $resume =  $student->resume;
-        if (!$resume) throw new ResumeNotFoundException($student->id);
+        if (!$resume){
+            throw new ResumeNotFoundException($student->id);
+        }
 
-        return $resume->update([
+        $resume->update([
             'subtitle' => $data['subtitle'],
             'github_url' => $data['github_url'],
             'linkedin_url' => $data['linkedin_url'],
             'about' => $data['about'],
+            'tags_ids' => $data['tags_ids']
         ]);
     }
 

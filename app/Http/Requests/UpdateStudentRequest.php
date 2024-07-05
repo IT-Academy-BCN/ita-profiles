@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Tag;
+use App\Rules\UniqueTagsIdsRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -14,7 +16,6 @@ class UpdateStudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        App::setLocale('es');
         return true;
     }
 
@@ -26,15 +27,16 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|regex:/^([^0-9]*)$/',
-            'surname' => 'required|string|regex:/^([^0-9]*)$/',
-            'subtitle' => 'required|string',
-            'github_url' => 'string|url|max:60|nullable',
-            'linkedin_url' => 'string|url|max:60|nullable',
+            'name' => 'sometimes|string|regex:/^([^0-9]*)$/',
+            'surname' => 'sometimes|string|regex:/^([^0-9]*)$/',
+            'subtitle' => 'sometimes|string',
+            'github_url' => 'sometimes|url|max:60|nullable',
+            'linkedin_url' => 'sometimes|url|max:60|nullable',
             'about' => 'string|nullable',
+            'tags_ids' => ['required', 'array', new UniqueTagsIdsRule(),]
         ];
     }
-
+    
     /**
      * If validator fails returns the exception in json form
      *

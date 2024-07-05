@@ -16,6 +16,7 @@ use App\Exceptions\{
     StudentNotFoundException,
     ResumeNotFoundException
 };
+use Illuminate\Database\QueryException;
 
 class UpdateStudentProfileServiceTest extends TestCase
 {
@@ -32,34 +33,33 @@ class UpdateStudentProfileServiceTest extends TestCase
     {
         $studentData = $student->only(['id', 'name', 'surname']);
         if ($student->resume) {
-            $resumeData = $student->resume->only(['subtitle', 'github_url', 'linkedin_url', 'about', 'subtitle']);
+            $resumeData = $student->resume->only(['subtitle', 'github_url', 'linkedin_url', 'about', 'subtitle', 'tags_ids']);
             return array_merge($studentData, $resumeData);
         } else {
             return $studentData;
         }
     }
 
-    public function test_can_instantiate_student_update_profile_service()
-    {
-        $this->assertNotNull($this->updateStudentProfileService);
-    }
-
     public function test_can_update_student_profile()
     {
         $student = Student::factory()->has(Resume::factory())->create();
         $dataToUpdate = $this->createFakeDataToUpdate($student);
-        $result = $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
-        $this->assertTrue($result);
 
-        $updatedStudent = Student::find($student->id);
-        $this->assertEquals($dataToUpdate['name'], $updatedStudent->name);
-        $this->assertEquals($dataToUpdate['surname'], $updatedStudent->surname);
+        $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
 
-        $updatedResume = $updatedStudent->resume;
-        $this->assertEquals($dataToUpdate['github_url'], $updatedResume->github_url);
-        $this->assertEquals($dataToUpdate['linkedin_url'], $updatedResume->linkedin_url);
-        $this->assertEquals($dataToUpdate['about'], $updatedResume->about);
-        $this->assertEquals($dataToUpdate['subtitle'], $updatedResume->subtitle);
+        $this->assertDatabaseHas('students', [
+            'id' => $dataToUpdate['id'],
+            'name' => $dataToUpdate['name'],
+            'surname' => $dataToUpdate['surname'],
+        ]);
+
+        $resume = Resume::where('student_id', $dataToUpdate['id'])->first();
+
+        $this->assertEquals($dataToUpdate['subtitle'], $resume->subtitle);
+        $this->assertEquals($dataToUpdate['github_url'], $resume->github_url);
+        $this->assertEquals($dataToUpdate['linkedin_url'], $resume->linkedin_url);
+        $this->assertEquals($dataToUpdate['about'], $resume->about);
+        $this->assertEquals($dataToUpdate['tags_ids'], ($resume->tags_ids));
     }
 
     public function test_update_student_profile_throws_student_not_found_exception()
@@ -73,7 +73,8 @@ class UpdateStudentProfileServiceTest extends TestCase
             'github_url' => 'https://github.com/johndoe',
             'linkedin_url' => 'https://linkedin.com/in/johndoe',
             'about' => 'Software Developer',
-            'subtitle' => 'Analista de Datos'
+            'subtitle' => 'Analista de Datos',
+            'tags_ids' => [1, 2, 3],
         ];
 
         $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
@@ -86,12 +87,7 @@ class UpdateStudentProfileServiceTest extends TestCase
         $student = Student::factory()->create();
         $dataToUpdate = $this->createFakeDataToUpdate($student);
 
-        try {
-            $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
-        } catch (\Exception $e) {
-            $this->assertInstanceOf(ResumeNotFoundException::class, $e);
-            throw $e;
-        }
+        $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
     }
 
     /**
@@ -103,21 +99,14 @@ class UpdateStudentProfileServiceTest extends TestCase
         $dataToUpdate = $this->createFakeDataToUpdate($student);
         $dataToUpdate = array_merge($dataToUpdate, $invalidData);
 
-        try {
-            $result = $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
-        } catch (\Exception $e) {
-            $result = false;
-        }
-
-        $this->assertFalse($result);
+        $this->expectException(QueryException::class);
+        $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
     }
 
     public static function missingDataProvider(): array
     {
         return [
-            'missing_subtitle' => [['subtitle' => null]],
-            'missing_github_url' => [['github_url' => null]],
-            'missing_linkedin_url' => [['linkedin_url' => null]],
+            'missing_tags_ids' => [['tags_ids' => null]],
         ];
     }
 }

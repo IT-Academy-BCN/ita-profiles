@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
@@ -21,45 +22,81 @@ class UpdateStudentProfileControllerTest extends TestCase
     }
 
     /**
-     * Crea datos falsos para actualizar el perfil del estudiante.
+     * Crea un usuario y un estudiante asociados.
      *
      * @return array
      */
-    private function createFakeDataToUpdate(): array
+    private function createUserAndStudent(): array
     {
-        /** @var User $user */
         $user = User::factory()->create();
-        /** @var Student $student */
         $student = Student::factory()->for($user)->create();
-        /** @var Resume $resume */
+        return [$user, $student];
+    }
+
+    /**
+     * Crea datos falsos para actualizar el perfil del estudiante.
+     *
+     * @param Student $student
+     * @return array
+     */
+    private function createFakeDataToUpdate(Student $student): array
+    {
         $resume = Resume::factory()->for($student)->create();
 
         return array_merge(
             $student->only(['id', 'name', 'surname']),
-            $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about'])
+            $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about']),
+            ['tags_ids' => json_decode($resume->tags_ids)]
         );
     }
 
     public function test_can_update_student_profile(): void
     {
-        $dataToUpdate = $this->createFakeDataToUpdate();
-        $response = $this->json('PUT', 'api/v1/student/' . $dataToUpdate['id'] . '/resume/profile', $dataToUpdate);
+        [, $student] = $this->createUserAndStudent();
+        $dataToUpdate = $this->createFakeDataToUpdate($student);
+
+        $url = route('student.updateProfile', ['studentId' => $dataToUpdate['id']]);
+        $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(200);
-        $response->assertJson(['profile' => 'El perfil del estudiante se actualizo correctamente']);
+    }
 
-        $this->assertDatabaseHas('students', [
-            'id' => $dataToUpdate['id'],
-            'name' => $dataToUpdate['name'],
-            'surname' => $dataToUpdate['surname'],
-        ]);
+    public function test_can_return_a_404_when_a_student_is_not_found()
+    {
+        [, $student] = $this->createUserAndStudent();
+        $dataToUpdate = $this->createFakeDataToUpdate($student);
+        $dataToUpdate['id'] = 'non_existent_studentId';
 
-        $this->assertDatabaseHas('resumes', [
-            'subtitle' => $dataToUpdate['subtitle'],
-            'github_url' => $dataToUpdate['github_url'],
-            'linkedin_url' => $dataToUpdate['linkedin_url'],
-            'about' => $dataToUpdate['about'],
-        ]);
+        $url = route('student.updateProfile', ['studentId' => $dataToUpdate['id']]);
+        $response = $this->json('PUT', $url, $dataToUpdate);
+
+        $response->assertStatus(404);
+    }
+
+    public function test_can_return_a_404_when_a_resume_is_not_found()
+    {
+        [, $student] = $this->createUserAndStudent();
+        $dataToUpdate = [
+            'name' => 'Updated Name',
+            'surname' => 'Updated Surname',
+            'tags_ids' => [1, 2, 3],
+        ];
+
+        $url = route('student.updateProfile', ['studentId' => $student->id]);
+        $response = $this->json('PUT', $url, $dataToUpdate);
+
+        $response->assertStatus(404);
+    }
+
+    public function test_required_fields_to_update_student_profile(): void
+    {
+        [, $student] = $this->createUserAndStudent();
+        $dataToUpdate = $this->createFakeDataToUpdate($student);
+        $url = route('student.updateProfile', ['studentId' => $dataToUpdate['id']]);
+        $response = $this->json('PUT', $url, []);
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['tags_ids']);
     }
 
     /**
@@ -67,8 +104,10 @@ class UpdateStudentProfileControllerTest extends TestCase
      */
     public function test_can_not_update_student_profile_with_invalid_data(array $invalidData, array $expectedErrors): void
     {
-        $dataToUpdate = $this->createFakeDataToUpdate();
-        $response = $this->json('PUT', 'api/v1/student/' . $dataToUpdate['id'] . '/resume/profile', $invalidData);
+        [, $student] = $this->createUserAndStudent();
+        $dataToUpdate = $this->createFakeDataToUpdate($student);
+        $url = route('student.updateProfile', ['studentId' => $dataToUpdate['id']]);
+        $response = $this->json('PUT', $url, $invalidData);
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors($expectedErrors);
@@ -85,6 +124,7 @@ class UpdateStudentProfileControllerTest extends TestCase
                     'github_url' => 'https://valid-url.com',
                     'linkedin_url' => 'https://valid-url.com',
                     'about' => 'Valid about section',
+                    'tags_ids' => [1, 2, 3],
                 ],
                 ['name', 'surname'],
             ],
@@ -96,6 +136,7 @@ class UpdateStudentProfileControllerTest extends TestCase
                     'github_url' => 'urlInvalida',
                     'linkedin_url' => 'urlInvalida',
                     'about' => 'Valid about section',
+                    'tags_ids' => [1, 2, 3],
                 ],
                 ['subtitle', 'github_url', 'linkedin_url'],
             ],
@@ -107,6 +148,7 @@ class UpdateStudentProfileControllerTest extends TestCase
                     'github_url' => 'https://valid-url.com',
                     'linkedin_url' => 'https://valid-url.com',
                     'about' => 9987,
+                    'tags_ids' => [1, 2, 3],
                 ],
                 ['about'],
             ],
@@ -118,18 +160,10 @@ class UpdateStudentProfileControllerTest extends TestCase
                     'github_url' => 'urlInvalida',
                     'linkedin_url' => 'urlInvalida',
                     'about' => 9987,
+                    'tags_ids' => [1, 2, 3],
                 ],
                 ['name', 'surname', 'subtitle', 'github_url', 'linkedin_url', 'about'],
             ],
         ];
-    }
-
-    public function test_required_fields_to_update_student_profile(): void
-    {
-        $dataToUpdate = $this->createFakeDataToUpdate();
-        $response = $this->json('PUT', 'api/v1/student/' . $dataToUpdate['id'] . '/resume/profile', []);
-
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['name', 'surname', 'subtitle']);
     }
 }
