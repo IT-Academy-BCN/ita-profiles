@@ -2,9 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Tag;
+use App\Rules\UniqueTagsIdsRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\App;
 
 class UpdateStudentRequest extends FormRequest
 {
@@ -24,19 +27,16 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|regex:/^([^0-9]*)$/',
-            'surname' => 'required|string|regex:/^([^0-9]*)$/',
-            'email' => 'required|string|email|max:255|unique:users',
-            'subtitle' => 'required|string',
-            'bootcamp' => 'required|in:Front end Developer,PHP Developer,Java Developer,Nodejs Developer',
+            'name' => 'sometimes|string|regex:/^([^0-9]*)$/',
+            'surname' => 'sometimes|string|regex:/^([^0-9]*)$/',
+            'subtitle' => 'sometimes|string',
+            'github_url' => 'sometimes|url|max:60|nullable',
+            'linkedin_url' => 'sometimes|url|max:60|nullable',
             'about' => 'string|nullable',
-            'cv' => 'string|max:125|nullable',
-            'linkedin' => 'string|url|max:60|nullable',
-            'github' => 'string|url|max:60|nullable',
+            'tags_ids' => ['required', 'array', new UniqueTagsIdsRule(),]
         ];
-
     }
-
+    
     /**
      * If validator fails returns the exception in json form
      *
