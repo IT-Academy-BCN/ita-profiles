@@ -21,10 +21,9 @@ class UpdateStudentProjectController extends Controller
     }
 
     public function __invoke(UpdateStudentProjectRequest $request, $studentId, $projectId): JsonResponse
-    {
-       $data = $request->all();       
-       
+    {       
         try {
+            $data = $request->all();            
             $this->studentUpdateProjectService->execute($studentId, $projectId, $data);
             return response()->json(['message' => 'El projecte s\'ha actualitzat'], 200);
         } catch (StudentNotFoundException | ProjectNotFoundException $e) {
