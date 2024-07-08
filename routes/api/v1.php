@@ -12,7 +12,8 @@ use App\Http\Controllers\api\Student\{
     StudentProjectsDetailController,
     SpecializationListController,   
     UpdateStudentProjectController,
-    UpdateStudentSkillsController
+    UpdateStudentSkillsController,
+    UpdateStudentProfileController
 };
 
 use App\Http\Controllers\api\Tag\{
@@ -44,6 +45,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
     Route::put('skills', UpdateStudentSkillsController::class)->name('student.skills');
+    Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
 });
 
 Route::prefix('tags')->group(function () {

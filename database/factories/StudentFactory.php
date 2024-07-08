@@ -25,8 +25,9 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-                'name' => fake()->name(),
-                'surname' => fake()->lastName(),
+                'id' => fake()->uuid(),
+                'name' => fake()->regexify('[A-Za-z]{5,10}'),
+                'surname' => fake()->regexify('[A-Za-z]{5,10}'),
                 'photo' =>   fake()->url(),
                 'status' => StudentStatus::ACTIVE,
             ];

@@ -119,5 +119,19 @@ test-connectivity:
 	docker exec -it node bash -c "timeout 1 bash -c '</dev/tcp/webserver/80' && echo 'node to webserver: OK' || echo 'node to webserver: Failed'"
 	docker exec -it node bash -c "timeout 1 bash -c '</dev/tcp/mysql/3306' && echo 'node to mysql: OK' || echo 'node to mysql: Failed'"
 
+xdebug-on: ## Enable xdebug
+	docker exec -it php bash -c "echo 'zend_extension=xdebug' > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+	echo 'xdebug.mode=debug,coverage' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+	echo 'xdebug.start_with_request=yes' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+	echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+	docker compose restart php
+	docker exec -it php php artisan key:generate
+
+
+xdebug-off: ## Disable xdebug
+	docker exec -it php rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+	docker compose restart php
+	docker exec -it php php artisan key:generate
+
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
