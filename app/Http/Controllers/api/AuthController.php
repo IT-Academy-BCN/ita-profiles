@@ -27,15 +27,13 @@ class AuthController extends Controller
 
 	public function signin(SigninRequest $request): JsonResponse
 	{
-
-		// Check if user with the email exists.
-		$user = User::where('dni', $request['dni'])->first();
+		// Get user object by DNI
+		$user = $this->userService->getUserByDNI($request->dni);
 
 		// Pass the user object to checkUserCredentials
 		if ($user && $this->userService->checkUserCredentials($user, $request['password'])) {
-			// Generate token using Laravel Passport
-			$token = $user->createToken('loginToken')->accessToken;
-
+			// Generate token using Laravel Passport.
+			$token = $this->userService->generateJWToken($user);
 			// Store user ID and token in Redis
 			$stored = $this->userService->storeUserIDAndTokenRedis($user->id, $token);
 
