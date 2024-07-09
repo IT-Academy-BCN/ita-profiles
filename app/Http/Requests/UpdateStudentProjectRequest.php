@@ -2,14 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Tag;
-use App\Rules\UniqueTagsIdsRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\App;
 
-class UpdateStudentRequest extends FormRequest
+class UpdateStudentProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,16 +24,14 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|regex:/^([^0-9]*)$/',
-            'surname' => 'sometimes|string|regex:/^([^0-9]*)$/',
-            'subtitle' => 'sometimes|string',
-            'github_url' => 'sometimes|url|max:60|nullable',
-            'linkedin_url' => 'sometimes|url|max:60|nullable',
-            'about' => 'string|nullable',
-            'tags_ids' => ['required', 'array', new UniqueTagsIdsRule(),]
+            'project_name' => 'string|regex:/^([^0-9]*)$/|nullable',
+            'company_name' => 'string|regex:/^([^0-9]*)$/|nullable',
+            'tags' => 'array|nullable', 
+            'github_url' => 'string|url|max:60|nullable',
+            'project_url' => 'string|url|max:60|nullable',
         ];
     }
-    
+
     /**
      * If validator fails returns the exception in json form
      *
