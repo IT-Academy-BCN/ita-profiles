@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 interface LoginContextProps {
-  token2: string | null;
+  token: string | null;
   login: (user: {id: string, token: string}) => void;
   logout: () => void;
   isLoggedIn: boolean;
@@ -38,7 +38,7 @@ const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
 
   return (
-    <LoginContext.Provider value={{ token2: token, login, logout, isLoggedIn }}>
+    <LoginContext.Provider value={{ token: token, login, logout, isLoggedIn }}>
       {children}
     </LoginContext.Provider>
   );
