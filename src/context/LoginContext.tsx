@@ -10,7 +10,7 @@ interface LoginContextProps {
 const LoginContext = createContext<LoginContextProps | undefined>(undefined);
 
 const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const login = (user: {id: string, token: string}) => {
