@@ -50,7 +50,7 @@ class UpdateStudentProfileController extends Controller
                 'exception' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            return response()->json('El perfil de l\'estudiant no s\'ha pogut actualitzar, per favor el nou objectiu', 500);
+            return response()->json('El perfil de l\'estudiant no s\'ha pogut actualitzar, si us plau proveu-ho de nou', 500);
         }
 
     }

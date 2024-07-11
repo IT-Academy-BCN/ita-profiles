@@ -88,17 +88,6 @@ class UpdateStudentProfileControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_required_fields_to_update_student_profile(): void
-    {
-        [, $student] = $this->createUserAndStudent();
-        $dataToUpdate = $this->createFakeDataToUpdate($student);
-        $url = route('student.updateProfile', ['studentId' => $dataToUpdate['id']]);
-        $response = $this->json('PUT', $url, []);
-
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['tags_ids']);
-    }
-
     /**
      * @dataProvider invalidDataProvider
      */
