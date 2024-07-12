@@ -6,8 +6,13 @@ namespace Tests\Feature\Controller\Student;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Testing\TestResponse;
+use Mockery;
+use Laravel\Passport\Client;
+use Laravel\Passport\Passport;
 
+use App\Http\Middleware\EnsureStudentOwner;
 use App\Models\Resume;
+use App\Models\User;
 
 class UpdateStudentSkillsControllerTest extends TestCase
 {
@@ -24,6 +29,21 @@ class UpdateStudentSkillsControllerTest extends TestCase
 	public function testUpdateStudentSkillsControllerSuccess(array $request): void
     {
 		
+		//Mockering middleware
+		$ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
+		$ensureStudentMiddleware->shouldReceive('handle')->once()
+			->andReturnUsing(function($request, \Closure $next) {
+				return $next($request);
+			});
+		$this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
+		
+		//Mockery Passport
+		Passport::actingAs(
+			User::factory()->create(),
+			['check-status']
+		);
+		
+		
 		$studentIDReal = Resume::first()->student_id;
 		
         $response = $this->json('PUT', 'api/v1/student/'.$studentIDReal.'/resume/skills', $request);
@@ -32,6 +52,18 @@ class UpdateStudentSkillsControllerTest extends TestCase
 		$response->assertJson(['status' => 'success']);
   
     }
+    /*
+    public function testUpdateStudentSkillsControllerSuccess(array $request): void
+    {
+		
+		$studentIDReal = Resume::first()->student_id;
+		
+        $response = $this->json('PUT', 'api/v1/student/'.$studentIDReal.'/resume/skills', $request);
+		
+		$response->assertStatus(200);
+		$response->assertJson(['status' => 'success']);
+  
+    }*/
 	
 	
 	
@@ -68,6 +100,19 @@ class UpdateStudentSkillsControllerTest extends TestCase
      */
 	public function testUpdateStudentSkillsControllerValidationFaliure(array $request): void
     {
+		//Mockering middleware
+		$ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
+		$ensureStudentMiddleware->shouldReceive('handle')->once()
+			->andReturnUsing(function($request, \Closure $next) {
+				return $next($request);
+			});
+		$this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
+		
+		//Mockery Passport
+		Passport::actingAs(
+			User::factory()->create(),
+			['check-status']
+		);
 		
 		$studentIDReal = Resume::first()->student_id;
 		
@@ -76,6 +121,17 @@ class UpdateStudentSkillsControllerTest extends TestCase
 		$response->assertStatus(422);
         
     }
+    /*
+     * public function testUpdateStudentSkillsControllerValidationFaliure(array $request): void
+    {
+		
+		$studentIDReal = Resume::first()->student_id;
+		
+        $response = $this->json('PUT', 'api/v1/student/'.$studentIDReal.'/resume/skills', $request);
+		
+		$response->assertStatus(422);
+        
+    }*/
 	
 	
 	

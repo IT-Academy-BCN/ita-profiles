@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redis;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use App\Exceptions\UserNotFoundException;
 
 class UserService
 {
@@ -53,7 +54,8 @@ class UserService
 
 		if (!$user) {
 			// Return exception instead of false.
-			return false;
+			//return false;
+			throw new UserNotFoundException($userDNI);
 		}
 		// I think here it should return an exception instead of false.
 		return $user;
