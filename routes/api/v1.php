@@ -29,6 +29,11 @@ use App\Http\Controllers\api\{
     AuthController
 };
 
+use App\Http\Middleware\{
+    EnsureStudentOwner
+};
+
+
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
@@ -44,7 +49,8 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
-    Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api')->name('student.skills');
+    //Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api')->name('student.skills');
+    Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api', EnsureStudentOwner::Class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
 });
 
