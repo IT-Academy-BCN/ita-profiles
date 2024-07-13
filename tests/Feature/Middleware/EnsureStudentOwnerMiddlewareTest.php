@@ -11,6 +11,8 @@ use App\Http\Middleware\EnsureStudentOwner;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\Resume;
+use Illuminate\Foundation\Testing\WithFaker;
 
 use Mockery;
 use Illuminate\Support\Facades\Event;
@@ -68,15 +70,19 @@ class EnsureStudentOwnerMiddlewareTest extends TestCase
         $student = Student::factory()->create(['user_id' => $user->id, 'id' => '1']);
 		$student_2 = Student::factory()->create(['user_id' => $user_2->id,'id' => '2']);
 		
+		$resume = Resume::factory()->create(['student_id' => $student->id, 'id' => '1']);
+		
 		$user->save();
 		$user_2->save();
 		$student->save();
 		$student_2->save();
+		$resume->save();
 		
         // Ensure the authenticated user is the first user
         $this->actingAs($user);
 		
 		$address = '/api/v1/student/' . $student->id . '/resume/skills';
+		//dd($address);
 		
         // Define the route with middleware applied
         Route::put('/api/v1/student/{studentId}/resume/skills', function () {
@@ -84,8 +90,9 @@ class EnsureStudentOwnerMiddlewareTest extends TestCase
         })->middleware(EnsureStudentOwner::class);
 
         // Simulate a request with a mismatched parameter
-        $response = $this->put($address);
-		
+        $data = array('skills' => ["html5", "css", "postman"]);
+        //$response = $this->put($address, $data);
+		$response = $this->json('PUT', $address, $data);
 		//Check that the codes are none of the middleware (redundancy)
 		$this->assertNotEquals($response->getStatusCode(), 401);
 		$this->assertNotEquals($response->getStatusCode(), 402);
