@@ -59,8 +59,8 @@ class AuthController extends Controller
 				], 401));
 			}
 		
-		} catch (UserNotFoundException) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode());
+		} catch (UserNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()],$e->getCode() ?:  500);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
         }

@@ -5,6 +5,7 @@ namespace Tests\Feature\Controller\User;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Exceptions\UserNotFoundException;
 
 /**
  * //@runTestsInSeparateProcesses
@@ -79,14 +80,6 @@ class SigninTest extends TestCase
 				422
 				),
 			array(
-				self::$users[1],
-				401
-				),
-			array(
-				self::$users[2],
-				401
-				),
-			array(
 				self::$users[3],
 				422
 				),
@@ -103,6 +96,33 @@ class SigninTest extends TestCase
 				200
 				),
 			
+			);
+		return $array;
+    }
+	
+	
+	/**
+     * @dataProvider signinNotUserFoundProvider
+     *
+     */     
+    public function testSigninNotUserFound($data, $expectedStatusCode)
+    {
+		$response = $this->postJson('/api/v1/signin', $data);
+		$response->assertStatus($expectedStatusCode);
+		//$this->expectException(UserNotFoundException::class);
+	}
+	
+    static function signinNotUserFoundProvider(): array
+    {
+        $array = array(
+			array(
+				self::$users[1],
+				401
+				),
+			array(
+				self::$users[2],
+				401
+				)
 			);
 		return $array;
     }
