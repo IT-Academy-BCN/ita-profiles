@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Service\User;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Models\User;
 
@@ -18,6 +19,7 @@ use Mockery;
  */
 class UserServiceTest extends TestCase
 {
+	use DatabaseTransactions;
 	private $service;
 	public $mockery;
 
@@ -25,13 +27,50 @@ class UserServiceTest extends TestCase
 	{
 		parent::setUp();
 		$this->service = new UserService();
-		$this->mockery = Mockery::mock('overload:App\Models\User');
+		//$this->mockery = Mockery::mock('overload:App\Models\User');
 	}
 
 	/**
 	 * @dataProvider checkUserCredentialsProvider
 	 *
 	 */
+	public function testCheckUserCredentials(string $userDNI, string $password, bool $correctPasswordBool, bool $addDBBool, bool $expectedOutput)
+	{
+		$randID = rand(1, 100);
+		/*
+		if ($addDBBool == True) {
+			$returnUser = new User;
+			$returnUser->id = intval($randID);
+			$returnUser->username = "Surname";
+			$returnUser->email = $userDNI . "@mail.com";
+			$returnUser->dni = $userDNI;
+			$returnUser->password = ($correctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword'));
+		} else {
+			$returnUser = Null;
+		}*/
+		$user = User::factory()->create(['id' => $randID, 'dni' => $userDNI,  'password' => ($correctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword'))]);
+		$user ->save();
+		
+		// I think this is not necessary if we use the model in the function instead of a DNI.
+		// $returnCollection = collect([$returnUser]);
+
+		// $this->mockery->shouldReceive('where')
+		// 	->with('dni', $userDNI)
+		// 	->andReturn($returnCollection);
+
+		// $this->app->instance('overload:App\Models\User', $this->mockery);
+
+		//Perform the call to the function to be tested, checking first if returnUser is not null:
+		$result = false;
+		if ($user !== null) {
+			$result = $this->service->checkUserCredentials($user, $password);
+		}
+
+		//Assert Result
+		$this->assertEquals($expectedOutput, $result);
+	}
+	
+	/*
 	public function testCheckUserCredentials(string $userDNI, string $password, bool $correctPasswordBool, bool $addDBBool, bool $expectedOutput)
 	{
 		$randID = rand(1, 100);
@@ -64,7 +103,7 @@ class UserServiceTest extends TestCase
 
 		//Assert Result
 		$this->assertEquals($expectedOutput, $result);
-	}
+	}*/
 
 	static function checkUserCredentialsProvider(): array
 	{
@@ -129,6 +168,47 @@ class UserServiceTest extends TestCase
 	{
 
 		$randID = rand(1, 100);
+		/*
+		if ($addDBBool == True) {
+
+			$returnUser = new User;
+
+			$returnUser->id = intval($randID);
+			$returnUser->username = "";
+			$returnUser->email = $userDNI . "@mail.com";
+			$returnUser->dni = $userDNI;
+			$returnUser->password = bcrypt("password");
+		} else {
+			$returnUser = False;
+		}
+
+		$returnCollection = collect([$returnUser]);
+		
+		$this->mockery->shouldReceive('where')
+			->with('dni', $userDNI)
+			->andReturn($returnCollection);
+		*/
+		if ($addDBBool == True) {
+			$user = User::factory()->create(['id' => $randID, 'dni' => $userDNI]);
+			$user ->save();
+		} else {
+			$returnUser = False;
+		}
+
+		
+		$id = $this->service->getUserIDByDNI($userDNI);
+
+		//Assert Result
+		if ($expectedOutput == False) {
+			$this->assertEquals(False, $id);
+		} else {
+			$this->assertEquals($randID, $id);
+		}
+	}
+	/*public function testGetUserIDByDNI(string $userDNI, bool $addDBBool, bool $expectedOutput)
+	{
+
+		$randID = rand(1, 100);
 		if ($addDBBool == True) {
 
 			$returnUser = new User;
@@ -156,7 +236,7 @@ class UserServiceTest extends TestCase
 		} else {
 			$this->assertEquals($randID, $id);
 		}
-	}
+	}*/
 
 
 	static function getUserIDByDNIProvider()
@@ -183,7 +263,11 @@ class UserServiceTest extends TestCase
 	 */
 	public function testGenerateJWToken(string | int $userID, bool $expectedOutput)
 	{
-		$jwt = $this->service->generateJWToken($userID);
+		
+		$user = \App\Models\User::factory()->create(['id' => '1']);
+		$user->save();
+		
+		$jwt = $this->service->generateJWToken($user);
 		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt); //(^[\w-]*\.[\w-]*\.[\w-]*$)
 		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)', $jwt);
 
@@ -194,6 +278,21 @@ class UserServiceTest extends TestCase
 			$this->assertEquals(true, false);
 		}
 	}
+	
+	/*
+	public function testGenerateJWToken(string | int $userID, bool $expectedOutput)
+	{
+		$jwt = $this->service->generateJWToken($userID);
+		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt); //(^[\w-]*\.[\w-]*\.[\w-]*$)
+		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)', $jwt);
+
+		if ($resultOne == true && $resultTwo == true) {
+			// shouldn't this check use $expectedOutput instead of true?
+			$this->assertEquals(true, true);
+		} else {
+			$this->assertEquals(true, false);
+		}
+	}*/
 
 	static function generateJWTokenProvider()
 	{

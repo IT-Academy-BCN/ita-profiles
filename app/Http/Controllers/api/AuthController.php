@@ -11,6 +11,7 @@ use App\Http\Requests\SigninRequest;
 use App\Service\User\UserService;
 use App\DTO\UserDTO;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Exceptions\UserNotFoundException;
 
 use App\Models\User;
 
@@ -23,8 +24,52 @@ class AuthController extends Controller
 		$this->userService = $userService;
 	}
 
+	
+	public function signin(SigninRequest $request): JsonResponse
+	{
+		try{
+			
+			// Get user object by DNI
+			$user = $this->userService->getUserByDNI($request->dni);
 
+			// Pass the user object to checkUserCredentials
+			if ($this->userService->checkUserCredentials($user, $request['password'])) {
+				// Generate token using Laravel Passport.
+				$token = $this->userService->generateJWToken($user);
+				// Store user ID and token in Redis
+				$stored = $this->userService->storeUserIDAndTokenRedis($user->id, $token);
 
+				if ($stored) {
+					$userDTO = new UserDTO(
+						(string)$user->id,
+						$token
+					);
+					// Return success response
+					return response()->json($userDTO, 200);
+				} else {
+					// Handle error in storing token
+					throw new HttpResponseException(response()->json([
+						'message' => __('Failed to store session information. Please try again.')
+					], 500));
+				}
+			} else {
+				// Return error response for invalid credentials
+				throw new HttpResponseException(response()->json([
+					'message' => __('Wrong User Identication or Password.')
+				], 401));
+			}
+		
+		} catch (UserNotFoundException) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
+        }
+		
+		
+	}
+	
+	
+	/*
 	public function signin(SigninRequest $request): JsonResponse
 	{
 		// Get user object by DNI
@@ -95,5 +140,5 @@ class AuthController extends Controller
 		// 			)], 401));
 		// 	}
 
-	}
+	}*/
 }
