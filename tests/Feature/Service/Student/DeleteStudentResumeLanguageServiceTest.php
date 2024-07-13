@@ -32,7 +32,7 @@ class DeleteStudentResumeLanguageServiceTest extends TestCase
         $this->deleteStudentResumeLanguageService = new DeleteStudentResumeLanguageService();
     }
 
-    private function createARandomLanguageId(): string
+    private function getARandomLanguageId(): string
     {
         $languageIds = Language::pluck('id')->toArray();
         return $languageIds[array_rand($languageIds)];
@@ -43,7 +43,7 @@ class DeleteStudentResumeLanguageServiceTest extends TestCase
         $user = User::factory()->create();
         $student = Student::factory()->for($user)->create();
         $resume = Resume::factory()->for($student)->create();
-        $languageId = $this->createARandomLanguageId();
+        $languageId = $this->getARandomLanguageId();
         $resume->languages()->attach($languageId);
 
         return [$student, $resume, $languageId];
@@ -76,7 +76,7 @@ class DeleteStudentResumeLanguageServiceTest extends TestCase
         $this->expectException(StudentNotFoundException::class);
 
         $invalidStudentId = 'invalid-student-id';
-        $languageId = $this->createARandomLanguageId();
+        $languageId = $this->getARandomLanguageId();
 
         $this->deleteStudentResumeLanguageService->execute($invalidStudentId, $languageId);
     }
@@ -87,7 +87,7 @@ class DeleteStudentResumeLanguageServiceTest extends TestCase
 
         $user = User::factory()->create();
         $student = Student::factory()->for($user)->create();
-        $languageId = $this->createARandomLanguageId();
+        $languageId = $this->getARandomLanguageId();
 
         $this->deleteStudentResumeLanguageService->execute($student->id, $languageId);
     }
@@ -99,7 +99,7 @@ class DeleteStudentResumeLanguageServiceTest extends TestCase
         $user = User::factory()->create();
         $student = Student::factory()->for($user)->create();
         Resume::factory()->for($student)->create();
-        $languageId = $this->createARandomLanguageId();
+        $languageId = $this->getARandomLanguageId();
 
         $this->deleteStudentResumeLanguageService->execute($student->id, $languageId);
     }
