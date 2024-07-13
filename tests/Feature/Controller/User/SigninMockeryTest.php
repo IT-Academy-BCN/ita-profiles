@@ -7,9 +7,10 @@ use Tests\TestCase;
 use App\Models\User;
 
 use Mockery;
+use Laravel\Passport\Client;
+use Laravel\Passport\Passport;
 
-
-
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 /**
  * @runTestsInSeparateProcesses
@@ -18,13 +19,13 @@ use Mockery;
 class SigninMockeryTest extends TestCase
 {	
 	//use DatabaseTransactions;
-	
-	private $mockery;
+	use DatabaseTransactions;
+	//private $mockery;
 	
 	public function setUp(): void
 	{
 		parent::setUp();
-		$this->mockery = Mockery::mock('overload:App\Models\User');
+		//$this->mockery = Mockery::mock('overload:App\Models\User');
 	}
 	
 	public static array $users = array(
@@ -93,6 +94,52 @@ class SigninMockeryTest extends TestCase
        
         if($expectedStatusCode = 200){
 			$this->mockery->shouldReceive('where')
+			->once()
+			->with('dni', $userDNI)
+			->andReturn($returnCollection);
+			
+			//Mockery Passport
+			Passport::actingAs(
+				User::factory()->create(),
+				['check-status']
+			);
+		
+			
+		}else{
+			$this->mockery->shouldReceive('where')
+			->once()
+			->with('dni', $userDNI)
+			->andReturn($returnCollection);
+		}
+		
+		$this->app->instance('overload:App\Models\User', $this->mockery);	
+		
+		return $randID;
+	}
+	/*
+	private function mockSignIn(string $userDNI, string $password, int $expectedStatusCode, bool $addDBBool = True)
+	{
+		$randID = rand(1,100);
+		if($expectedStatusCode == 200)
+        {
+
+			$returnUser = new User;
+			
+			$returnUser->id = intval($randID);
+			$returnUser->name = "";
+			$returnUser->surname = "";
+			$returnUser->email = $userDNI."@mail.com";
+			$returnUser->dni = $userDNI;
+			$returnUser->password = $password ? bcrypt($password) : bcrypt("password") ;
+			
+		}else{
+			$returnUser = False;
+		}
+		$returnCollection = null;
+		$returnCollection = collect([$returnUser]);
+       
+        if($expectedStatusCode = 200){
+			$this->mockery->shouldReceive('where')
 			->twice()
 			->with('dni', $userDNI)
 			->andReturn($returnCollection);
@@ -106,7 +153,7 @@ class SigninMockeryTest extends TestCase
 		$this->app->instance('overload:App\Models\User', $this->mockery);	
 		
 		return $randID;
-	}
+	}*/
 	
 	/**
      * @dataProvider signinProvider
@@ -114,8 +161,11 @@ class SigninMockeryTest extends TestCase
      */   
     public function testSigninMockery($data, $expectedStatusCode)
     {
-		
-		$this->mockSignIn($data['dni'], $data['password'], $expectedStatusCode, True);
+		if($expectedStatusCode == 200){
+			$user = User::factory()->create(['dni'=>$data['dni'], 'password'=>$data['password']]);
+			$user->save();
+		}	
+		//$this->mockSignIn($data['dni'], $data['password'], $expectedStatusCode, True);
 
 		$response = $this->postJson('/api/v1/signin', $data);
 		
@@ -128,7 +178,7 @@ class SigninMockeryTest extends TestCase
     {
         $array = array(
 			array(
-				self::$users[0],
+				[],
 				422
 				),
 			array(
@@ -163,7 +213,7 @@ class SigninMockeryTest extends TestCase
 	protected function tearDown(): void
     {
         parent::tearDown();
-        \Mockery::close(); // Clean up Mockery
+        //\Mockery::close(); // Clean up Mockery
     }
 	
 }
