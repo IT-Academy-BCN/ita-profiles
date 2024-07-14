@@ -33,7 +33,7 @@ class UpdateStudentPhotoAnnotation
      *                     @OA\Schema(
      *                         @OA\Property(
      *                             description="Item image",
-     *                             property="item_image",
+     *                             property="photo",
      *                             type="string", format="binary"
      *                         )
      *                     )
@@ -45,7 +45,7 @@ class UpdateStudentPhotoAnnotation
      * 
      *     @OA\Response(
      *         response=200,
-     *         description="Success. Returns the skills.",
+     *         description="Success. Updates the photo.",
      * 
      *         @OA\JsonContent(
      *             type="array",
@@ -54,14 +54,8 @@ class UpdateStudentPhotoAnnotation
      *                  type="object",
      * 
      *                  @OA\Property(
-     *                      property="skills",
-     *                      type="string",
-     *                      example="php:react:javascript:node:html5",
-     *                  ),
-     *                  @OA\Property(
-     *                      property="status",
-     *                      type="string",
-     *                      example="succes/failure",
+     *                      property="photo",
+     *                      type="string", format="binary"
      *                  )
      *             )
      *         )
