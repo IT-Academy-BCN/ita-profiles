@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Service\Student\AddStudentLanguageService;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
+use App\Exceptions\LanguageNotFoundException;
+use App\Exceptions\LanguageAlreadyExistsException;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\AddStudentLanguageRequest;
 
@@ -27,7 +29,7 @@ class AddStudentLanguageController extends Controller
             $data = $request->all(); 
             $service = $this->addStudentLanguageService->execute($studentId, $data);
             return response()->json(['message' => 'L\'idioma s\'ha afegit', 'languages' => $service]);
-        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
+        } catch (StudentNotFoundException | ResumeNotFoundException | LanguageNotFoundException | LanguageAlreadyExistsException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
