@@ -13,9 +13,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UpdateStudentImageControllerTest extends TestCase
 {
-    //use RefreshDatabase;
     use DatabaseTransactions;
-	
+
     protected function setUp(): void
 	{
 		parent::setUp();
@@ -29,14 +28,10 @@ class UpdateStudentImageControllerTest extends TestCase
 		$user->save();
         $student = Student::factory()->create(['user_id'=>$user->id, 'id'=>(string) Str::uuid()]);
 		$student->save();
-		
+
         $file = UploadedFile::fake()->image('profile.png', 2,2);
-		/*
-        $response = $this->postJson(route('student.updatePhoto', ['studentId' => $student->id]), [
-            'photo' => $file,
-        ]);*/
-        
-        
+
+
         $response = $this->postJson('/api/v1/student/'.$student->id.'/resume/photo',['photo' => $file]);
 
         $response->assertStatus(200)
@@ -44,12 +39,8 @@ class UpdateStudentImageControllerTest extends TestCase
                      'profile' => 'La foto del perfil de l\'estudiant s\'actualitza correctament'
                  ]);
 
-        //Storage::disk('public')->self::assertFileExists('photos/' . $file->hashName());
-        //Storage::disk('public')->assertFileExists('photos/' . $file->hashName());
-        //Storage::disk('public')->assertExists('photos/' . $file->hashName());
         $filename = $student->id . '.profile_photo.' . $file->hashName();
-		//Storage::disk('public')->assertExists('photos/' . $filename);
-		//Storage::disk('public')->exists('photos/' . $filename);
+
         $student->refresh();
         $this->assertEquals($filename, $student->photo);
     }

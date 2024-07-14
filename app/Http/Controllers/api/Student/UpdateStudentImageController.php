@@ -30,20 +30,14 @@ class UpdateStudentImageController extends Controller
 
     public function __invoke(UpdateImageStudentRequest $request, string $studentId): JsonResponse
     {
-		/*
-        $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);*/
 
         DB::beginTransaction();
         try {
 
             if ($request->hasFile('photo')) {
                 $file = $request->file('photo');
-                //$filename = time() . '.' . $file->getClientOriginalExtension();
                 $filename = $studentId . '.profile_photo.' . $file->hashName();
                 $path = $file->storeAs('public/photos', $filename);
-				//dd($studentId);
                 $this->updateStudentImageService->execute($studentId, $filename);
 
                 DB::commit();
@@ -60,7 +54,7 @@ class UpdateStudentImageController extends Controller
                 'exception' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            //return response()->json($e->getMessage(), $e->getCode());
+
             return response()->json($e->getMessage(), 404);
         } catch (\Exception $e) {
             DB::rollBack();
