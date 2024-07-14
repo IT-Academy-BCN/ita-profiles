@@ -5,16 +5,19 @@ namespace App\Http\Controllers\api\Student;
 
 use Illuminate\Http\{
     JsonResponse,
-    Request,
+    Request
 };
 use Illuminate\Support\Facades\{
     DB,
     Log,
-    Storage,
+    Storage
 };
+
 use App\Http\Controllers\Controller;
 use App\Exceptions\StudentNotFoundException;
 use App\Service\Student\UpdateStudentImageService;
+use App\Http\Requests\UpdateImageStudentRequest;
+
 
 class UpdateStudentImageController extends Controller
 {
@@ -25,11 +28,12 @@ class UpdateStudentImageController extends Controller
         $this->updateStudentImageService = $updateStudentImageService;
     }
 
-    public function __invoke(Request $request, string $studentId): JsonResponse
+    public function __invoke(UpdateImageStudentRequest $request, string $studentId): JsonResponse
     {
+		/*
         $request->validate([
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        ]);*/
 
         DB::beginTransaction();
         try {
@@ -38,7 +42,7 @@ class UpdateStudentImageController extends Controller
                 $file = $request->file('photo');
                 $filename = time() . '.' . $file->getClientOriginalExtension();
                 $path = $file->storeAs('public/photos', $filename);
-
+				//dd($studentId);
                 $this->updateStudentImageService->execute($studentId, $filename);
 
                 DB::commit();
@@ -55,7 +59,8 @@ class UpdateStudentImageController extends Controller
                 'exception' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            return response()->json($e->getMessage(), $e->getCode());
+            //return response()->json($e->getMessage(), $e->getCode());
+            return response()->json($e->getMessage(), 404);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Exception:', [

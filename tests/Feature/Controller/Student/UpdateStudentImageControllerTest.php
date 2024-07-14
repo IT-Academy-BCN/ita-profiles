@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Student;
 use Illuminate\Support\Str;
 
@@ -14,21 +15,28 @@ class UpdateStudentImageControllerTest extends TestCase
     use RefreshDatabase;
 
     protected function setUp(): void
-{
-    parent::setUp();
-    Storage::fake('public');
-}
+	{
+		parent::setUp();
+		Storage::fake('public');
+	}
 
     /** @test */
     public function it_updates_the_student_image_successfully()
     {
-        $student = Student::factory()->create();
-
-        $file = UploadedFile::fake()->image('profile.jpg');
-
+		$user = User::factory()->create();
+		$user->save();
+        $student = Student::factory()->create(['user_id'=>$user->id, 'id'=>(string) Str::uuid()]);
+		$student->save();
+		//echo $student->id;
+		
+        $file = UploadedFile::fake()->image('profile.png');
+		
+		/*
         $response = $this->postJson(route('student.updatePhoto', ['studentId' => $student->id]), [
             'photo' => $file,
-        ]);
+        ]);*/
+        
+        $response = $this->postJson('/api/v1/student/'.$student->id.'/resume/photo',['photo' => $file]);
 
         $response->assertStatus(200)
                  ->assertJson([
@@ -44,7 +52,10 @@ class UpdateStudentImageControllerTest extends TestCase
     /** @test */
     public function it_returns_an_error_if_no_photo_is_uploaded()
     {
-        $student = Student::factory()->create();
+        $user = User::factory()->create();
+		$user->save();
+        $student = Student::factory()->create(['user_id'=>$user->id]);
+		$student->save();
 
         $response = $this->postJson(route('student.updatePhoto', ['studentId' => $student->id]), []);
 
@@ -57,7 +68,7 @@ class UpdateStudentImageControllerTest extends TestCase
     {
         $invalidStudentId = Str::uuid();
 
-        $file = UploadedFile::fake()->image('profile.jpg');
+        $file = UploadedFile::fake()->image('profile.png');
 
         $response = $this->postJson(route('student.updatePhoto', ['studentId' => $invalidStudentId]), [
             'photo' => $file,
