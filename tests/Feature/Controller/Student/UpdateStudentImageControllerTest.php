@@ -43,7 +43,9 @@ class UpdateStudentImageControllerTest extends TestCase
                      'profile' => 'La foto del perfil de l\'estudiant s\'actualitza correctament'
                  ]);
 
-                 Storage::disk('public')->self::assertFileExists('photos/' . $file->hashName());
+        //Storage::disk('public')->self::assertFileExists('photos/' . $file->hashName());
+        //Storage::disk('public')->assertFileExists('photos/' . $file->hashName());
+        Storage::disk('public')->assertExists('photos/' . $file->hashName());
 
         $student->refresh();
         $this->assertEquals($file->hashName(), $student->photo);
