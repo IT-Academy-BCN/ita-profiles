@@ -2,18 +2,20 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+//use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Student;
 use Illuminate\Support\Str;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UpdateStudentImageControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
+    //use RefreshDatabase;
+    use DatabaseTransactions;
+	
     protected function setUp(): void
 	{
 		parent::setUp();
@@ -27,14 +29,13 @@ class UpdateStudentImageControllerTest extends TestCase
 		$user->save();
         $student = Student::factory()->create(['user_id'=>$user->id, 'id'=>(string) Str::uuid()]);
 		$student->save();
-		//echo $student->id;
 		
-        $file = UploadedFile::fake()->image('profile.png');
-		
+        $file = UploadedFile::fake()->image('profile.png', 2,2);
 		/*
         $response = $this->postJson(route('student.updatePhoto', ['studentId' => $student->id]), [
             'photo' => $file,
         ]);*/
+        
         
         $response = $this->postJson('/api/v1/student/'.$student->id.'/resume/photo',['photo' => $file]);
 
@@ -48,7 +49,7 @@ class UpdateStudentImageControllerTest extends TestCase
         //Storage::disk('public')->assertExists('photos/' . $file->hashName());
         $filename = $student->id . '.profile_photo.' . $file->hashName();
 		//Storage::disk('public')->assertExists('photos/' . $filename);
-		Storage::disk('public')->exists('photos/' . $filename);
+		//Storage::disk('public')->exists('photos/' . $filename);
         $student->refresh();
         $this->assertEquals($filename, $student->photo);
     }
