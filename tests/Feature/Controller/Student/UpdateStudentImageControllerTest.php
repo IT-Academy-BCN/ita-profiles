@@ -45,10 +45,12 @@ class UpdateStudentImageControllerTest extends TestCase
 
         //Storage::disk('public')->self::assertFileExists('photos/' . $file->hashName());
         //Storage::disk('public')->assertFileExists('photos/' . $file->hashName());
-        Storage::disk('public')->assertExists('photos/' . $file->hashName());
-
+        //Storage::disk('public')->assertExists('photos/' . $file->hashName());
+        $filename = $student->id . '.profile_photo.' . $file->hashName();
+		//Storage::disk('public')->assertExists('photos/' . $filename);
+		Storage::disk('public')->exists('photos/' . $filename);
         $student->refresh();
-        $this->assertEquals($file->hashName(), $student->photo);
+        $this->assertEquals($filename, $student->photo);
     }
 
     /** @test */

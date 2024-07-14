@@ -40,7 +40,8 @@ class UpdateStudentImageController extends Controller
 
             if ($request->hasFile('photo')) {
                 $file = $request->file('photo');
-                $filename = time() . '.' . $file->getClientOriginalExtension();
+                //$filename = time() . '.' . $file->getClientOriginalExtension();
+                $filename = $studentId . '.profile_photo.' . $file->hashName();
                 $path = $file->storeAs('public/photos', $filename);
 				//dd($studentId);
                 $this->updateStudentImageService->execute($studentId, $filename);
