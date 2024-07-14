@@ -19,6 +19,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "friendsofphp/php-cs-fixer": "^3.49",
+        "knuckleswtf/scribe": "^4.37",
         "laravel-lang/common": "^4.0",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

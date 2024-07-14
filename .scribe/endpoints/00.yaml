@@ -1,0 +1,1688 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/documentation
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display Swagger API page.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <title>ITA-Profiles</title>
+              <link rel="stylesheet" type="text/css" href="http://localhost:8000/docs/asset/swagger-ui.css?v=fd5df98cfc0e58ed507042cd86a1f1df">
+              <link rel="icon" type="image/png" href="http://localhost:8000/docs/asset/favicon-32x32.png?v=40d4f2c38d1cd854ad463f16373cbcb6" sizes="32x32"/>
+              <link rel="icon" type="image/png" href="http://localhost:8000/docs/asset/favicon-16x16.png?v=f0ae831196d55d8f4115b6c5e8ec5384" sizes="16x16"/>
+              <style>
+              html
+              {
+                  box-sizing: border-box;
+                  overflow: -moz-scrollbars-vertical;
+                  overflow-y: scroll;
+              }
+              *,
+              *:before,
+              *:after
+              {
+                  box-sizing: inherit;
+              }
+
+              body {
+                margin:0;
+                background: #fafafa;
+              }
+              </style>
+          </head>
+
+          <body>
+          <div id="swagger-ui"></div>
+
+          <script src="http://localhost:8000/docs/asset/swagger-ui-bundle.js?v=bccc97f77bdb8edc590ae3abdf83b9a7"></script>
+          <script src="http://localhost:8000/docs/asset/swagger-ui-standalone-preset.js?v=861c3618a16aefc88e19a052836718e5"></script>
+          <script>
+              window.onload = function() {
+                  // Build a system
+                  const ui = SwaggerUIBundle({
+                      dom_id: '#swagger-ui',
+                      url: "http://localhost:8000/docs/api-docs.json",
+                      operationsSorter: null,
+                      configUrl: null,
+                      validatorUrl: null,
+                      oauth2RedirectUrl: "http://localhost:8000/api/oauth2-callback",
+
+                      requestInterceptor: function(request) {
+                          request.headers['X-CSRF-TOKEN'] = '';
+                          return request;
+                      },
+
+                      presets: [
+                          SwaggerUIBundle.presets.apis,
+                          SwaggerUIStandalonePreset
+                      ],
+
+                      plugins: [
+                          SwaggerUIBundle.plugins.DownloadUrl
+                      ],
+
+                      layout: "StandaloneLayout",
+                      docExpansion : "none",
+                      deepLinking: true,
+                      filter: true,
+                      persistAuthorization: "false",
+
+                  })
+
+                  window.ui = ui
+
+                      }
+          </script>
+          </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/oauth2-callback
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display Oauth2 callback pages.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |
+          <!doctype html>
+          <html lang="en-US">
+          <head>
+              <title>Swagger UI: OAuth2 Redirect</title>
+          </head>
+          <body>
+          <script>
+              'use strict';
+              function run () {
+                  var oauth2 = window.opener.swaggerUIRedirectOauth2;
+                  var sentState = oauth2.state;
+                  var redirectUrl = oauth2.redirectUrl;
+                  var isValid, qp, arr;
+
+                  if (/code|token|error/.test(window.location.hash)) {
+                      qp = window.location.hash.substring(1).replace('?', '&');
+                  } else {
+                      qp = location.search.substring(1);
+                  }
+
+                  arr = qp.split("&");
+                  arr.forEach(function (v,i,_arr) { _arr[i] = '"' + v.replace('=', '":"') + '"';});
+                  qp = qp ? JSON.parse('{' + arr.join() + '}',
+                          function (key, value) {
+                              return key === "" ? value : decodeURIComponent(value);
+                          }
+                  ) : {};
+
+                  isValid = qp.state === sentState;
+
+                  if ((
+                    oauth2.auth.schema.get("flow") === "accessCode" ||
+                    oauth2.auth.schema.get("flow") === "authorizationCode" ||
+                    oauth2.auth.schema.get("flow") === "authorization_code"
+                  ) && !oauth2.auth.code) {
+                      if (!isValid) {
+                          oauth2.errCb({
+                              authId: oauth2.auth.name,
+                              source: "auth",
+                              level: "warning",
+                              message: "Authorization may be unsafe, passed state was changed in server. The passed state wasn't returned from auth server."
+                          });
+                      }
+
+                      if (qp.code) {
+                          delete oauth2.state;
+                          oauth2.auth.code = qp.code;
+                          oauth2.callback({auth: oauth2.auth, redirectUrl: redirectUrl});
+                      } else {
+                          let oauthErrorMsg;
+                          if (qp.error) {
+                              oauthErrorMsg = "["+qp.error+"]: " +
+                                  (qp.error_description ? qp.error_description+ ". " : "no accessCode received from the server. ") +
+                                  (qp.error_uri ? "More info: "+qp.error_uri : "");
+                          }
+
+                          oauth2.errCb({
+                              authId: oauth2.auth.name,
+                              source: "auth",
+                              level: "error",
+                              message: oauthErrorMsg || "[Authorization failed]: no accessCode received from the server."
+                          });
+                      }
+                  } else {
+                      oauth2.callback({auth: oauth2.auth, token: qp, isValid: isValid, redirectUrl: redirectUrl});
+                  }
+                  window.close();
+              }
+
+              if (document.readyState !== 'loading') {
+                  run();
+              } else {
+                  document.addEventListener('DOMContentLoaded', function () {
+                      run();
+                  });
+              }
+          </script>
+          </body>
+          </html>
+        headers:
+          content-type: 'text/html; charset=UTF-8'
+          cache-control: 'no-cache, private'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/v1/register
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      username:
+        name: username
+        description: ':Attribute ha de contenir almenys 3 caràcters.'
+        required: true
+        example: evimcsdhanyaqokqhxaxlpxtchumdkgrbvlrbdqpnuukrxpyobmq
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      dni:
+        name: dni
+        description: ':Attribute no pot ser més gran que 9 caràcters.'
+        required: true
+        example: qyhdi
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      email:
+        name: email
+        description: ':Attribute no és un e-mail vàlid :Attribute no pot ser més gran que 255 caràcters.'
+        required: true
+        example: akuphal@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      specialization:
+        name: specialization
+        description: ''
+        required: true
+        example: Backend
+        type: string
+        enumValues:
+          - Frontend
+          - Backend
+          - Fullstack
+          - 'Data Science'
+          - 'Not Set'
+        exampleWasSpecified: false
+        custom: []
+      password:
+        name: password
+        description: 'Must match the regex /^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$/.'
+        required: true
+        example: '=@A=zY4?|;J)k{8,}'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      terms:
+        name: terms
+        description: ''
+        required: true
+        example: 'true'
+        type: string
+        enumValues:
+          - 'true'
+        exampleWasSpecified: false
+        custom: []
+    cleanBodyParameters:
+      username: evimcsdhanyaqokqhxaxlpxtchumdkgrbvlrbdqpnuukrxpyobmq
+      dni: qyhdi
+      email: akuphal@example.com
+      specialization: Backend
+      password: '=@A=zY4?|;J)k{8,}'
+      terms: 'true'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/v1/development/list
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '["React","Spring","Angular","Laravel"]'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/v1/specialization/list
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '["Frontend","Backend","Fullstack","Data Science"]'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '58'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/v1/signin
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      dni:
+        name: dni
+        description: ''
+        required: true
+        example: blanditiis
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      password:
+        name: password
+        description: ':Attribute ha de contenir almenys 8 caràcters.'
+        required: true
+        example: '\&w$2ChQj~H0>'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanBodyParameters:
+      dni: blanditiis
+      password: '\&w$2ChQj~H0>'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/v1/student/resume/list
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '[{"id":"9fa7b091-ee80-3b2c-803c-8ee0df08afba","fullname":"DtDiV Vwemm","subtitle":"Frontend developer React","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":2,"name":"Ruby on Rails"},{"id":5,"name":"Angular"},{"id":6,"name":"PHP"},{"id":17,"name":"Vue"}]},{"id":"88205084-81fb-31bc-85ab-65e177ce9485","fullname":"HDMttg dgbFCvrICJ","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":4,"name":"Spring Boot"},{"id":7,"name":"C#"},{"id":8,"name":"Redis"},{"id":25,"name":"GitHub"}]},{"id":"a759e271-15d2-3a28-8ad0-64154ad2652b","fullname":"QHlgAq VqwDfWSQfp","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":5,"name":"Angular"},{"id":8,"name":"Redis"},{"id":11,"name":"React"},{"id":25,"name":"GitHub"}]},{"id":"bf042e3f-8373-3a60-8282-93001e72025d","fullname":"ezFLiu NjHDRu","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":8,"name":"Redis"},{"id":15,"name":"C++"},{"id":20,"name":"JQuery"},{"id":23,"name":"Django"}]},{"id":"581dc32e-801f-36c9-8883-6b27ce975f20","fullname":"qvxCMOC iKCVS","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":2,"name":"Ruby on Rails"},{"id":7,"name":"C#"},{"id":10,"name":"Java"},{"id":24,"name":"Python"}]},{"id":"ba263f31-cfe0-3a5d-9228-66fd74885e00","fullname":"cCKZvgO hKhOPq","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":3,"name":"MongoDB"},{"id":5,"name":"Angular"},{"id":10,"name":"Java"},{"id":11,"name":"React"}]},{"id":"21ea38ba-c79d-309b-b6ec-8023c5dbe71e","fullname":"RBINyX vHulMRCps","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":4,"name":"Spring Boot"},{"id":5,"name":"Angular"},{"id":13,"name":"HTML&CSS"},{"id":22,"name":"SQL"}]},{"id":"c572bbbe-ed98-3b36-b548-3cc23d883d67","fullname":"ivthxtUnJj BnjqY","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":8,"name":"Redis"},{"id":9,"name":"Express"},{"id":10,"name":"Java"},{"id":13,"name":"HTML&CSS"}]},{"id":"ab58f33f-e087-39c4-b162-ebaa8a071c05","fullname":"FumJIlGUDk LMmXWcGMf","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":1,"name":"Ruby"},{"id":2,"name":"Ruby on Rails"},{"id":4,"name":"Spring Boot"},{"id":15,"name":"C++"}]},{"id":"9835593b-a3e5-310f-8a72-dd190d35e7da","fullname":"IAXhuacTPJ pobUmGpE","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":4,"name":"Spring Boot"},{"id":7,"name":"C#"},{"id":8,"name":"Redis"},{"id":9,"name":"Express"}]},{"id":"a088cb75-4bb6-3c76-a63c-e4872be314b2","fullname":"jgRXLRPNvy Tnavgq","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":4,"name":"Spring Boot"},{"id":5,"name":"Angular"},{"id":8,"name":"Redis"},{"id":25,"name":"GitHub"}]},{"id":"8d099f73-1265-3191-9f88-00a7b4e4bcc4","fullname":"JgWfTftH fnhpLGiOe","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":7,"name":"C#"},{"id":9,"name":"Express"},{"id":24,"name":"Python"},{"id":26,"name":"C"}]},{"id":"df4fd997-4d91-3c7a-9aaf-dd2e05f913b8","fullname":"SpGENfUpDS CVeRq","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":6,"name":"PHP"},{"id":13,"name":"HTML&CSS"},{"id":19,"name":"Tailwind"},{"id":25,"name":"GitHub"}]},{"id":"46afabbd-5de9-3547-9fdc-5f78e5943fe6","fullname":"oIMHekY GANmPuNMlS","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":6,"name":"PHP"},{"id":12,"name":"Laravel"},{"id":18,"name":"Javascript"},{"id":20,"name":"JQuery"}]},{"id":"d5a46190-c95f-3782-be1e-a83e66ff3d6d","fullname":"syYqBQe uerKttXXz","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":7,"name":"C#"},{"id":8,"name":"Redis"},{"id":21,"name":"Nodejs"},{"id":22,"name":"SQL"}]},{"id":"16f317d0-f2b4-3414-8bcc-19452e46be5e","fullname":"HJNQX oWyEnv","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":3,"name":"MongoDB"},{"id":16,"name":"Bootstrap"},{"id":22,"name":"SQL"},{"id":23,"name":"Django"}]},{"id":"48609214-f055-3609-a107-801ad4e434ff","fullname":"QVJziCN BoiEgB","subtitle":"Full Stack developer en PHP","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":12,"name":"Laravel"},{"id":17,"name":"Vue"},{"id":19,"name":"Tailwind"},{"id":25,"name":"GitHub"}]},{"id":"9ad7adde-c55c-3e70-906e-3a0ff10876d8","fullname":"siLMmL uXKeZKj","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":3,"name":"MongoDB"},{"id":18,"name":"Javascript"},{"id":25,"name":"GitHub"},{"id":26,"name":"C"}]},{"id":"d24a7014-33af-3391-8e65-e3972dd971eb","fullname":"DvrkQWe qwsCmTzUl","subtitle":"Frontend developer React","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":9,"name":"Express"},{"id":15,"name":"C++"},{"id":21,"name":"Nodejs"},{"id":24,"name":"Python"}]},{"id":"041e8f48-f330-308c-8f2c-4c7e27b5f14f","fullname":"UPlFtKYe ITIoDkOPl","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":3,"name":"MongoDB"},{"id":8,"name":"Redis"},{"id":15,"name":"C++"},{"id":26,"name":"C"}]},{"id":"68c6860a-dd1e-36ef-9c86-93a5e4e339af","fullname":"jvxKy bNJTUxsrH","subtitle":"Full Stack developer en PHP","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":1,"name":"Ruby"},{"id":10,"name":"Java"},{"id":16,"name":"Bootstrap"},{"id":18,"name":"Javascript"}]},{"id":"c7e8c4bd-d4fb-34de-8eeb-69fadd68a253","fullname":"yAvWxvz qLLEenk","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":15,"name":"C++"},{"id":19,"name":"Tailwind"},{"id":24,"name":"Python"},{"id":26,"name":"C"}]},{"id":"eb5970b4-7fa5-30dd-820f-ce095706ffb6","fullname":"MMdCChVnEo rklUUNKqf","subtitle":"Full Stack developer en PHP","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":1,"name":"Ruby"},{"id":9,"name":"Express"},{"id":11,"name":"React"},{"id":22,"name":"SQL"}]},{"id":"26774971-cf20-3d54-9c29-d7d2cce68620","fullname":"ARdOAZHpJt aYwyV","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":6,"name":"PHP"},{"id":15,"name":"C++"},{"id":18,"name":"Javascript"},{"id":25,"name":"GitHub"}]},{"id":"a39deab8-4b81-3118-a8cb-c02ad557cda1","fullname":"jutgyO aaMsHXVEEQ","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":6,"name":"PHP"},{"id":13,"name":"HTML&CSS"},{"id":16,"name":"Bootstrap"},{"id":21,"name":"Nodejs"}]},{"id":"364ea36b-a748-3c17-9c6c-75d8ab694465","fullname":"GmNOxi xZHqu","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":1,"name":"Ruby"},{"id":7,"name":"C#"},{"id":9,"name":"Express"},{"id":20,"name":"JQuery"}]},{"id":"a09a5017-670c-3521-930d-151f991996fb","fullname":"FbpEMdKW zuKwBlr","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":4,"name":"Spring Boot"},{"id":5,"name":"Angular"},{"id":16,"name":"Bootstrap"},{"id":18,"name":"Javascript"}]},{"id":"81b92468-ea4d-3a29-9503-d4ae0358561a","fullname":"laHNr IbwBt","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":3,"name":"MongoDB"},{"id":14,"name":"Git"},{"id":17,"name":"Vue"},{"id":26,"name":"C"}]},{"id":"0fb20153-3e24-3cfe-8e0d-233869beb96c","fullname":"TgdLhXrLcz RQWSPmera","subtitle":"Full Stack developer en PHP","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":16,"name":"Bootstrap"},{"id":19,"name":"Tailwind"},{"id":21,"name":"Nodejs"},{"id":23,"name":"Django"}]},{"id":"ccad17d4-68a1-3abd-a2d3-6783feab98cc","fullname":"iDUQCQrhs uElSW","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":3,"name":"MongoDB"},{"id":8,"name":"Redis"},{"id":14,"name":"Git"},{"id":15,"name":"C++"}]},{"id":"a5477bd6-8b49-3c5f-bae1-475d24a7048a","fullname":"hGqmchpj YKQoHv","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":2,"name":"Ruby on Rails"},{"id":5,"name":"Angular"},{"id":6,"name":"PHP"},{"id":17,"name":"Vue"}]},{"id":"9262113d-21ad-30cb-8822-2e67d3f48bde","fullname":"RvNERf LFxAbxWNlP","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":3,"name":"MongoDB"},{"id":5,"name":"Angular"},{"id":25,"name":"GitHub"},{"id":26,"name":"C"}]},{"id":"89e0b827-8d8d-3530-b03a-d8b40bad1f40","fullname":"YZguVzd ankjbsL","subtitle":null,"photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[]}]'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '57'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/student/{studentId}/resume/detail'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"fullname":"UPlFtKYe ITIoDkOPl","subtitle":"Analista de Datos","social_media":{"github":{"url":"https:\/\/github.com\/lupton"},"linkedin":{"url":"https:\/\/linkedin.com\/jerde.isac"}},"about":"Sed iusto expedita voluptatem unde. Voluptas repudiandae voluptatem at eligendi corporis repellat doloribus fuga.","tags":[{"id":3,"name":"MongoDB"},{"id":8,"name":"Redis"},{"id":15,"name":"C++"},{"id":26,"name":"C"}]}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '56'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/student/{studentId}/resume/projects'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"projects":[{"uuid":"9c857ee7-53e8-4e3e-9181-7862d6e401ca","project_name":"Monahan, Boehm and Bauch","company_name":"Abbott LLC","project_url":"http:\/\/www.kuhlman.com\/sint-distinctio-voluptatem-atque-et-qui","tags":[{"id":3,"name":"MongoDB"},{"id":5,"name":"Angular"},{"id":12,"name":"Laravel"},{"id":24,"name":"Python"}],"github_url":"https:\/\/github.com\/nhowe"},{"uuid":"9c857ee7-74ce-44b9-bdc8-c9519fd8c4b0","project_name":"Feest Inc","company_name":"Abbott LLC","project_url":"http:\/\/baumbach.com\/dolore-tempore-rem-qui-atque-itaque-qui.html","tags":[{"id":13,"name":"HTML&CSS"},{"id":15,"name":"C++"},{"id":16,"name":"Bootstrap"},{"id":23,"name":"Django"},{"id":24,"name":"Python"}],"github_url":"https:\/\/github.com\/justice31"}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '55'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/student/{studentId}/resume/collaborations'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"collaborations":[{"uuid":"9c857ee7-f7ce-4102-b584-b2819cf1b0bf","collaboration_name":"Consequuntur quis et.","collaboration_description":"Quae nostrum maxime voluptatem dolores recusandae voluptas earum at. Porro voluptate tempore perspiciatis beatae eius. Laboriosam possimus fugit illum ut.","collaboration_quantity":2},{"uuid":"9c857ee8-4960-41af-ae66-b2da9f019f00","collaboration_name":"Ab magni.","collaboration_description":"Voluptates aspernatur alias unde recusandae odio expedita. Dignissimos ut quia et omnis accusamus. Quam est ad odit reiciendis quis. Dolorem velit ut sunt consequatur numquam incidunt.","collaboration_quantity":10}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '54'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/student/{studentId}/resume/bootcamp'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"bootcamps":[{"bootcamp_id":"810c7bd9-ea34-46da-9e10-074558488e4e","bootcamp_name":"Reskilling - Front End React","bootcamp_end_date":"2024-06-02"}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '53'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/student/{studentId}/resume/additionaltraining'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"additional_trainings":[{"uuid":"9c857ee7-a3eb-4851-9042-bd2b34d1ec8a","course_name":"Dolor voluptatum laboriosam.","study_center":"Kreiger-Keebler","course_beginning_year":2001,"course_ending_year":2020,"duration_hrs":80},{"uuid":"9c857ee7-c9a6-4224-b951-497e2027185d","course_name":"Voluptates sed hic.","study_center":"Ferry and Sons","course_beginning_year":2016,"course_ending_year":2020,"duration_hrs":305}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '52'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/student/{studentId}/resume/languages'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"languages":[{"language_id":"beb57b6f-070c-4a00-93ca-c3b24e98a2bc","language_name":"Angl\u00e8s","language_level":"Natiu"}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '51'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/student/{studentId}/resume/modality'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"modality":["Remot","Presencial"]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '50'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/v1/student/{studentId}/resume/projects/{projectId}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      projectId:
+        name: projectId
+        description: ''
+        required: true
+        example: 9c857ecc-da49-47de-b52d-14ffd759d099
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+      projectId: 9c857ecc-da49-47de-b52d-14ffd759d099
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      project_name:
+        name: project_name
+        description: 'Must match the regex /^([^0-9]*)$/.'
+        required: false
+        example: ''
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      company_name:
+        name: company_name
+        description: 'Must match the regex /^([^0-9]*)$/.'
+        required: false
+        example: '2'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      tags:
+        name: tags
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      github_url:
+        name: github_url
+        description: 'Must be a valid URL. :Attribute no pot ser més gran que 60 caràcters.'
+        required: false
+        example: 'http://russel.com/'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      project_url:
+        name: project_url
+        description: 'Must be a valid URL. :Attribute no pot ser més gran que 60 caràcters.'
+        required: false
+        example: 'http://rohan.com/'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanBodyParameters:
+      project_name: ''
+      company_name: '2'
+      github_url: 'http://russel.com/'
+      project_url: 'http://rohan.com/'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/v1/student/{studentId}/resume/skills'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      skills:
+        name: skills
+        description: 'El camp value ha de ser una cadena JSON vàlida.'
+        required: false
+        example: '["accusantium","nobis"]'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanBodyParameters:
+      skills: '["accusantium","nobis"]'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/v1/student/{studentId}/resume/profile'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'Must match the regex /^([^0-9]*)$/.'
+        required: false
+        example: '67'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      surname:
+        name: surname
+        description: 'Must match the regex /^([^0-9]*)$/.'
+        required: false
+        example: ^
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      subtitle:
+        name: subtitle
+        description: ''
+        required: false
+        example: nam
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      github_url:
+        name: github_url
+        description: 'Must be a valid URL. :Attribute no pot ser més gran que 60 caràcters.'
+        required: false
+        example: 'http://www.corwin.com/culpa-velit-quia-est-sed-occaecati.html'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      linkedin_url:
+        name: linkedin_url
+        description: 'Must be a valid URL. :Attribute no pot ser més gran que 60 caràcters.'
+        required: false
+        example: 'http://sporer.com/odit-harum-velit-sed-qui'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      about:
+        name: about
+        description: ''
+        required: false
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      tags_ids:
+        name: tags_ids
+        description: ''
+        required: true
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanBodyParameters:
+      name: '67'
+      surname: ^
+      subtitle: nam
+      github_url: 'http://www.corwin.com/culpa-velit-quia-est-sed-occaecati.html'
+      linkedin_url: 'http://sporer.com/odit-harum-velit-sed-qui'
+      about: et
+      tags_ids: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/v1/tags
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"tags":[{"id":1,"tag_name":"Ruby","created_at":"2024-07-14T15:41:55.000000Z","updated_at":"2024-07-14T15:41:55.000000Z"},{"id":2,"tag_name":"Ruby on Rails","created_at":"2024-07-14T15:41:56.000000Z","updated_at":"2024-07-14T15:41:56.000000Z"},{"id":3,"tag_name":"MongoDB","created_at":"2024-07-14T15:41:56.000000Z","updated_at":"2024-07-14T15:41:56.000000Z"},{"id":4,"tag_name":"Spring Boot","created_at":"2024-07-14T15:41:56.000000Z","updated_at":"2024-07-14T15:41:56.000000Z"},{"id":5,"tag_name":"Angular","created_at":"2024-07-14T15:41:56.000000Z","updated_at":"2024-07-14T15:41:56.000000Z"},{"id":6,"tag_name":"PHP","created_at":"2024-07-14T15:41:56.000000Z","updated_at":"2024-07-14T15:41:56.000000Z"},{"id":7,"tag_name":"C#","created_at":"2024-07-14T15:41:56.000000Z","updated_at":"2024-07-14T15:41:56.000000Z"},{"id":8,"tag_name":"Redis","created_at":"2024-07-14T15:41:56.000000Z","updated_at":"2024-07-14T15:41:56.000000Z"},{"id":9,"tag_name":"Express","created_at":"2024-07-14T15:41:57.000000Z","updated_at":"2024-07-14T15:41:57.000000Z"},{"id":10,"tag_name":"Java","created_at":"2024-07-14T15:41:57.000000Z","updated_at":"2024-07-14T15:41:57.000000Z"},{"id":11,"tag_name":"React","created_at":"2024-07-14T15:41:57.000000Z","updated_at":"2024-07-14T15:41:57.000000Z"},{"id":12,"tag_name":"Laravel","created_at":"2024-07-14T15:41:57.000000Z","updated_at":"2024-07-14T15:41:57.000000Z"},{"id":13,"tag_name":"HTML&CSS","created_at":"2024-07-14T15:41:57.000000Z","updated_at":"2024-07-14T15:41:57.000000Z"},{"id":14,"tag_name":"Git","created_at":"2024-07-14T15:41:57.000000Z","updated_at":"2024-07-14T15:41:57.000000Z"},{"id":15,"tag_name":"C++","created_at":"2024-07-14T15:41:57.000000Z","updated_at":"2024-07-14T15:41:57.000000Z"},{"id":16,"tag_name":"Bootstrap","created_at":"2024-07-14T15:41:57.000000Z","updated_at":"2024-07-14T15:41:57.000000Z"},{"id":17,"tag_name":"Vue","created_at":"2024-07-14T15:41:57.000000Z","updated_at":"2024-07-14T15:41:57.000000Z"},{"id":18,"tag_name":"Javascript","created_at":"2024-07-14T15:41:58.000000Z","updated_at":"2024-07-14T15:41:58.000000Z"},{"id":19,"tag_name":"Tailwind","created_at":"2024-07-14T15:41:58.000000Z","updated_at":"2024-07-14T15:41:58.000000Z"},{"id":20,"tag_name":"JQuery","created_at":"2024-07-14T15:41:58.000000Z","updated_at":"2024-07-14T15:41:58.000000Z"},{"id":21,"tag_name":"Nodejs","created_at":"2024-07-14T15:41:58.000000Z","updated_at":"2024-07-14T15:41:58.000000Z"},{"id":22,"tag_name":"SQL","created_at":"2024-07-14T15:41:58.000000Z","updated_at":"2024-07-14T15:41:58.000000Z"},{"id":23,"tag_name":"Django","created_at":"2024-07-14T15:41:58.000000Z","updated_at":"2024-07-14T15:41:58.000000Z"},{"id":24,"tag_name":"Python","created_at":"2024-07-14T15:41:58.000000Z","updated_at":"2024-07-14T15:41:58.000000Z"},{"id":25,"tag_name":"GitHub","created_at":"2024-07-14T15:41:58.000000Z","updated_at":"2024-07-14T15:41:58.000000Z"},{"id":26,"tag_name":"C","created_at":"2024-07-14T15:41:59.000000Z","updated_at":"2024-07-14T15:41:59.000000Z"}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '49'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/v1/tags
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      tag_name:
+        name: tag_name
+        description: ':Attribute no pot ser més gran que 75 caràcters.'
+        required: true
+        example: vxdtevdbfis
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanBodyParameters:
+      tag_name: vxdtevdbfis
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/tags/{tagId}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      tagId:
+        name: tagId
+        description: ''
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      tagId: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":1,"tag_name":"Ruby","created_at":"2024-07-14T15:41:55.000000Z","updated_at":"2024-07-14T15:41:55.000000Z"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '48'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/v1/tags/{tagId}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      tagId:
+        name: tagId
+        description: ''
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      tagId: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/v1/student/list/for-home
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '[{"id":"9fa7b091-ee80-3b2c-803c-8ee0df08afba","fullname":"DtDiV Vwemm","subtitle":"Frontend developer React","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":2,"name":"Ruby on Rails"},{"id":5,"name":"Angular"},{"id":6,"name":"PHP"},{"id":17,"name":"Vue"}]},{"id":"88205084-81fb-31bc-85ab-65e177ce9485","fullname":"HDMttg dgbFCvrICJ","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":4,"name":"Spring Boot"},{"id":7,"name":"C#"},{"id":8,"name":"Redis"},{"id":25,"name":"GitHub"}]},{"id":"a759e271-15d2-3a28-8ad0-64154ad2652b","fullname":"QHlgAq VqwDfWSQfp","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":5,"name":"Angular"},{"id":8,"name":"Redis"},{"id":11,"name":"React"},{"id":25,"name":"GitHub"}]},{"id":"bf042e3f-8373-3a60-8282-93001e72025d","fullname":"ezFLiu NjHDRu","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":8,"name":"Redis"},{"id":15,"name":"C++"},{"id":20,"name":"JQuery"},{"id":23,"name":"Django"}]},{"id":"581dc32e-801f-36c9-8883-6b27ce975f20","fullname":"qvxCMOC iKCVS","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":2,"name":"Ruby on Rails"},{"id":7,"name":"C#"},{"id":10,"name":"Java"},{"id":24,"name":"Python"}]},{"id":"ba263f31-cfe0-3a5d-9228-66fd74885e00","fullname":"cCKZvgO hKhOPq","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":3,"name":"MongoDB"},{"id":5,"name":"Angular"},{"id":10,"name":"Java"},{"id":11,"name":"React"}]},{"id":"21ea38ba-c79d-309b-b6ec-8023c5dbe71e","fullname":"RBINyX vHulMRCps","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":4,"name":"Spring Boot"},{"id":5,"name":"Angular"},{"id":13,"name":"HTML&CSS"},{"id":22,"name":"SQL"}]},{"id":"c572bbbe-ed98-3b36-b548-3cc23d883d67","fullname":"ivthxtUnJj BnjqY","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":8,"name":"Redis"},{"id":9,"name":"Express"},{"id":10,"name":"Java"},{"id":13,"name":"HTML&CSS"}]},{"id":"ab58f33f-e087-39c4-b162-ebaa8a071c05","fullname":"FumJIlGUDk LMmXWcGMf","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":1,"name":"Ruby"},{"id":2,"name":"Ruby on Rails"},{"id":4,"name":"Spring Boot"},{"id":15,"name":"C++"}]},{"id":"9835593b-a3e5-310f-8a72-dd190d35e7da","fullname":"IAXhuacTPJ pobUmGpE","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":4,"name":"Spring Boot"},{"id":7,"name":"C#"},{"id":8,"name":"Redis"},{"id":9,"name":"Express"}]},{"id":"a088cb75-4bb6-3c76-a63c-e4872be314b2","fullname":"jgRXLRPNvy Tnavgq","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":4,"name":"Spring Boot"},{"id":5,"name":"Angular"},{"id":8,"name":"Redis"},{"id":25,"name":"GitHub"}]},{"id":"8d099f73-1265-3191-9f88-00a7b4e4bcc4","fullname":"JgWfTftH fnhpLGiOe","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":7,"name":"C#"},{"id":9,"name":"Express"},{"id":24,"name":"Python"},{"id":26,"name":"C"}]},{"id":"df4fd997-4d91-3c7a-9aaf-dd2e05f913b8","fullname":"SpGENfUpDS CVeRq","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":6,"name":"PHP"},{"id":13,"name":"HTML&CSS"},{"id":19,"name":"Tailwind"},{"id":25,"name":"GitHub"}]},{"id":"46afabbd-5de9-3547-9fdc-5f78e5943fe6","fullname":"oIMHekY GANmPuNMlS","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":6,"name":"PHP"},{"id":12,"name":"Laravel"},{"id":18,"name":"Javascript"},{"id":20,"name":"JQuery"}]},{"id":"d5a46190-c95f-3782-be1e-a83e66ff3d6d","fullname":"syYqBQe uerKttXXz","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":7,"name":"C#"},{"id":8,"name":"Redis"},{"id":21,"name":"Nodejs"},{"id":22,"name":"SQL"}]},{"id":"16f317d0-f2b4-3414-8bcc-19452e46be5e","fullname":"HJNQX oWyEnv","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":3,"name":"MongoDB"},{"id":16,"name":"Bootstrap"},{"id":22,"name":"SQL"},{"id":23,"name":"Django"}]},{"id":"48609214-f055-3609-a107-801ad4e434ff","fullname":"QVJziCN BoiEgB","subtitle":"Full Stack developer en PHP","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":12,"name":"Laravel"},{"id":17,"name":"Vue"},{"id":19,"name":"Tailwind"},{"id":25,"name":"GitHub"}]},{"id":"9ad7adde-c55c-3e70-906e-3a0ff10876d8","fullname":"siLMmL uXKeZKj","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":3,"name":"MongoDB"},{"id":18,"name":"Javascript"},{"id":25,"name":"GitHub"},{"id":26,"name":"C"}]},{"id":"d24a7014-33af-3391-8e65-e3972dd971eb","fullname":"DvrkQWe qwsCmTzUl","subtitle":"Frontend developer React","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":9,"name":"Express"},{"id":15,"name":"C++"},{"id":21,"name":"Nodejs"},{"id":24,"name":"Python"}]},{"id":"041e8f48-f330-308c-8f2c-4c7e27b5f14f","fullname":"UPlFtKYe ITIoDkOPl","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":3,"name":"MongoDB"},{"id":8,"name":"Redis"},{"id":15,"name":"C++"},{"id":26,"name":"C"}]},{"id":"68c6860a-dd1e-36ef-9c86-93a5e4e339af","fullname":"jvxKy bNJTUxsrH","subtitle":"Full Stack developer en PHP","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":1,"name":"Ruby"},{"id":10,"name":"Java"},{"id":16,"name":"Bootstrap"},{"id":18,"name":"Javascript"}]},{"id":"c7e8c4bd-d4fb-34de-8eeb-69fadd68a253","fullname":"yAvWxvz qLLEenk","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":15,"name":"C++"},{"id":19,"name":"Tailwind"},{"id":24,"name":"Python"},{"id":26,"name":"C"}]},{"id":"eb5970b4-7fa5-30dd-820f-ce095706ffb6","fullname":"MMdCChVnEo rklUUNKqf","subtitle":"Full Stack developer en PHP","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":1,"name":"Ruby"},{"id":9,"name":"Express"},{"id":11,"name":"React"},{"id":22,"name":"SQL"}]},{"id":"26774971-cf20-3d54-9c29-d7d2cce68620","fullname":"ARdOAZHpJt aYwyV","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":6,"name":"PHP"},{"id":15,"name":"C++"},{"id":18,"name":"Javascript"},{"id":25,"name":"GitHub"}]},{"id":"a39deab8-4b81-3118-a8cb-c02ad557cda1","fullname":"jutgyO aaMsHXVEEQ","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":6,"name":"PHP"},{"id":13,"name":"HTML&CSS"},{"id":16,"name":"Bootstrap"},{"id":21,"name":"Nodejs"}]},{"id":"364ea36b-a748-3c17-9c6c-75d8ab694465","fullname":"GmNOxi xZHqu","subtitle":"Backend developer Java","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":1,"name":"Ruby"},{"id":7,"name":"C#"},{"id":9,"name":"Express"},{"id":20,"name":"JQuery"}]},{"id":"a09a5017-670c-3521-930d-151f991996fb","fullname":"FbpEMdKW zuKwBlr","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[{"id":4,"name":"Spring Boot"},{"id":5,"name":"Angular"},{"id":16,"name":"Bootstrap"},{"id":18,"name":"Javascript"}]},{"id":"81b92468-ea4d-3a29-9503-d4ae0358561a","fullname":"laHNr IbwBt","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":3,"name":"MongoDB"},{"id":14,"name":"Git"},{"id":17,"name":"Vue"},{"id":26,"name":"C"}]},{"id":"0fb20153-3e24-3cfe-8e0d-233869beb96c","fullname":"TgdLhXrLcz RQWSPmera","subtitle":"Full Stack developer en PHP","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":16,"name":"Bootstrap"},{"id":19,"name":"Tailwind"},{"id":21,"name":"Nodejs"},{"id":23,"name":"Django"}]},{"id":"ccad17d4-68a1-3abd-a2d3-6783feab98cc","fullname":"iDUQCQrhs uElSW","subtitle":"Ingeniero de Software","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":3,"name":"MongoDB"},{"id":8,"name":"Redis"},{"id":14,"name":"Git"},{"id":15,"name":"C++"}]},{"id":"a5477bd6-8b49-3c5f-bae1-475d24a7048a","fullname":"hGqmchpj YKQoHv","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_2.png","tags":[{"id":2,"name":"Ruby on Rails"},{"id":5,"name":"Angular"},{"id":6,"name":"PHP"},{"id":17,"name":"Vue"}]},{"id":"9262113d-21ad-30cb-8822-2e67d3f48bde","fullname":"RvNERf LFxAbxWNlP","subtitle":"Analista de Datos","photo":"http:\/\/localhost:8000\/img\/stud_3.png","tags":[{"id":3,"name":"MongoDB"},{"id":5,"name":"Angular"},{"id":25,"name":"GitHub"},{"id":26,"name":"C"}]},{"id":"89e0b827-8d8d-3530-b03a-d8b40bad1f40","fullname":"YZguVzd ankjbsL","subtitle":null,"photo":"http:\/\/localhost:8000\/img\/stud_1.png","tags":[]}]'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '47'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/student/{id}/detail/for-home'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the student.'
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      id: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"fullname":"UPlFtKYe ITIoDkOPl","subtitle":"Analista de Datos","social_media":{"github":{"url":"https:\/\/github.com\/lupton"},"linkedin":{"url":"https:\/\/linkedin.com\/jerde.isac"}},"about":"Sed iusto expedita voluptatem unde. Voluptas repudiandae voluptatem at eligendi corporis repellat doloribus fuga.","tags":[{"id":3,"name":"MongoDB"},{"id":8,"name":"Redis"},{"id":15,"name":"C++"},{"id":26,"name":"C"}]}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '46'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/students/{student}/projects'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      student:
+        name: student
+        description: 'The student.'
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      student: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"projects":[{"uuid":"9c857ee7-53e8-4e3e-9181-7862d6e401ca","project_name":"Monahan, Boehm and Bauch","company_name":"Abbott LLC","project_url":"http:\/\/www.kuhlman.com\/sint-distinctio-voluptatem-atque-et-qui","tags":[{"id":3,"name":"MongoDB"},{"id":5,"name":"Angular"},{"id":12,"name":"Laravel"},{"id":24,"name":"Python"}],"github_url":"https:\/\/github.com\/nhowe"},{"uuid":"9c857ee7-74ce-44b9-bdc8-c9519fd8c4b0","project_name":"Feest Inc","company_name":"Abbott LLC","project_url":"http:\/\/baumbach.com\/dolore-tempore-rem-qui-atque-itaque-qui.html","tags":[{"id":13,"name":"HTML&CSS"},{"id":15,"name":"C++"},{"id":16,"name":"Bootstrap"},{"id":23,"name":"Django"},{"id":24,"name":"Python"}],"github_url":"https:\/\/github.com\/justice31"}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '45'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/students/{student}/collaborations'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      student:
+        name: student
+        description: 'The student.'
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      student: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"collaborations":[{"uuid":"9c857ee7-f7ce-4102-b584-b2819cf1b0bf","collaboration_name":"Consequuntur quis et.","collaboration_description":"Quae nostrum maxime voluptatem dolores recusandae voluptas earum at. Porro voluptate tempore perspiciatis beatae eius. Laboriosam possimus fugit illum ut.","collaboration_quantity":2},{"uuid":"9c857ee8-4960-41af-ae66-b2da9f019f00","collaboration_name":"Ab magni.","collaboration_description":"Voluptates aspernatur alias unde recusandae odio expedita. Dignissimos ut quia et omnis accusamus. Quam est ad odit reiciendis quis. Dolorem velit ut sunt consequatur numquam incidunt.","collaboration_quantity":10}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '44'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/students/{id}/bootcamp'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the student.'
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      id: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"bootcamps":[{"bootcamp_id":"810c7bd9-ea34-46da-9e10-074558488e4e","bootcamp_name":"Reskilling - Front End React","bootcamp_end_date":"2024-06-02"}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '43'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/students/{student}/additionaltraining'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      student:
+        name: student
+        description: 'The student.'
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      student: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"additional_trainings":[{"uuid":"9c857ee7-a3eb-4851-9042-bd2b34d1ec8a","course_name":"Dolor voluptatum laboriosam.","study_center":"Kreiger-Keebler","course_beginning_year":2001,"course_ending_year":2020,"duration_hrs":80},{"uuid":"9c857ee7-c9a6-4224-b951-497e2027185d","course_name":"Voluptates sed hic.","study_center":"Ferry and Sons","course_beginning_year":2016,"course_ending_year":2020,"duration_hrs":305}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '42'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/students/{id}/languages'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the student.'
+        required: true
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      id: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"languages":[{"language_id":"beb57b6f-070c-4a00-93ca-c3b24e98a2bc","language_name":"Angl\u00e8s","language_level":"Natiu"}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '41'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/v1/modality/{studentId}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      studentId:
+        name: studentId
+        description: ''
+        required: true
+        example: minus
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+    cleanUrlParameters:
+      studentId: minus
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 404
+        content: '{"message":"No s''ha trobat cap estudiant amb aquest ID: minus"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '40'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

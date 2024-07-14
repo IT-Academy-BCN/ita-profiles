@@ -1,0 +1,3022 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+paths:
+  /api/documentation:
+    get:
+      summary: 'Display Swagger API page.'
+      operationId: displaySwaggerAPIPage
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>ITA-Profiles</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"http://localhost:8000/docs/asset/swagger-ui.css?v=fd5df98cfc0e58ed507042cd86a1f1df\">\n    <link rel=\"icon\" type=\"image/png\" href=\"http://localhost:8000/docs/asset/favicon-32x32.png?v=40d4f2c38d1cd854ad463f16373cbcb6\" sizes=\"32x32\"/>\n    <link rel=\"icon\" type=\"image/png\" href=\"http://localhost:8000/docs/asset/favicon-16x16.png?v=f0ae831196d55d8f4115b6c5e8ec5384\" sizes=\"16x16\"/>\n    <style>\n    html\n    {\n        box-sizing: border-box;\n        overflow: -moz-scrollbars-vertical;\n        overflow-y: scroll;\n    }\n    *,\n    *:before,\n    *:after\n    {\n        box-sizing: inherit;\n    }\n\n    body {\n      margin:0;\n      background: #fafafa;\n    }\n    </style>\n</head>\n\n<body>\n<div id=\"swagger-ui\"></div>\n\n<script src=\"http://localhost:8000/docs/asset/swagger-ui-bundle.js?v=bccc97f77bdb8edc590ae3abdf83b9a7\"></script>\n<script src=\"http://localhost:8000/docs/asset/swagger-ui-standalone-preset.js?v=861c3618a16aefc88e19a052836718e5\"></script>\n<script>\n    window.onload = function() {\n        // Build a system\n        const ui = SwaggerUIBundle({\n            dom_id: '#swagger-ui',\n            url: \"http://localhost:8000/docs/api-docs.json\",\n            operationsSorter: null,\n            configUrl: null,\n            validatorUrl: null,\n            oauth2RedirectUrl: \"http://localhost:8000/api/oauth2-callback\",\n\n            requestInterceptor: function(request) {\n                request.headers['X-CSRF-TOKEN'] = '';\n                return request;\n            },\n\n            presets: [\n                SwaggerUIBundle.presets.apis,\n                SwaggerUIStandalonePreset\n            ],\n\n            plugins: [\n                SwaggerUIBundle.plugins.DownloadUrl\n            ],\n\n            layout: \"StandaloneLayout\",\n            docExpansion : \"none\",\n            deepLinking: true,\n            filter: true,\n            persistAuthorization: \"false\",\n\n        })\n\n        window.ui = ui\n\n            }\n</script>\n</body>\n</html>\n"
+      tags:
+        - Endpoints
+      security: []
+  /api/oauth2-callback:
+    get:
+      summary: 'Display Oauth2 callback pages.'
+      operationId: displayOauth2CallbackPages
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!doctype html>\n<html lang=\"en-US\">\n<head>\n    <title>Swagger UI: OAuth2 Redirect</title>\n</head>\n<body>\n<script>\n    'use strict';\n    function run () {\n        var oauth2 = window.opener.swaggerUIRedirectOauth2;\n        var sentState = oauth2.state;\n        var redirectUrl = oauth2.redirectUrl;\n        var isValid, qp, arr;\n\n        if (/code|token|error/.test(window.location.hash)) {\n            qp = window.location.hash.substring(1).replace('?', '&');\n        } else {\n            qp = location.search.substring(1);\n        }\n\n        arr = qp.split(\"&\");\n        arr.forEach(function (v,i,_arr) { _arr[i] = '\"' + v.replace('=', '\":\"') + '\"';});\n        qp = qp ? JSON.parse('{' + arr.join() + '}',\n                function (key, value) {\n                    return key === \"\" ? value : decodeURIComponent(value);\n                }\n        ) : {};\n\n        isValid = qp.state === sentState;\n\n        if ((\n          oauth2.auth.schema.get(\"flow\") === \"accessCode\" ||\n          oauth2.auth.schema.get(\"flow\") === \"authorizationCode\" ||\n          oauth2.auth.schema.get(\"flow\") === \"authorization_code\"\n        ) && !oauth2.auth.code) {\n            if (!isValid) {\n                oauth2.errCb({\n                    authId: oauth2.auth.name,\n                    source: \"auth\",\n                    level: \"warning\",\n                    message: \"Authorization may be unsafe, passed state was changed in server. The passed state wasn't returned from auth server.\"\n                });\n            }\n\n            if (qp.code) {\n                delete oauth2.state;\n                oauth2.auth.code = qp.code;\n                oauth2.callback({auth: oauth2.auth, redirectUrl: redirectUrl});\n            } else {\n                let oauthErrorMsg;\n                if (qp.error) {\n                    oauthErrorMsg = \"[\"+qp.error+\"]: \" +\n                        (qp.error_description ? qp.error_description+ \". \" : \"no accessCode received from the server. \") +\n                        (qp.error_uri ? \"More info: \"+qp.error_uri : \"\");\n                }\n\n                oauth2.errCb({\n                    authId: oauth2.auth.name,\n                    source: \"auth\",\n                    level: \"error\",\n                    message: oauthErrorMsg || \"[Authorization failed]: no accessCode received from the server.\"\n                });\n            }\n        } else {\n            oauth2.callback({auth: oauth2.auth, token: qp, isValid: isValid, redirectUrl: redirectUrl});\n        }\n        window.close();\n    }\n\n    if (document.readyState !== 'loading') {\n        run();\n    } else {\n        document.addEventListener('DOMContentLoaded', function () {\n            run();\n        });\n    }\n</script>\n</body>\n</html>\n"
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/register:
+    post:
+      summary: ''
+      operationId: postApiV1Register
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: ':Attribute ha de contenir almenys 3 caràcters.'
+                  example: evimcsdhanyaqokqhxaxlpxtchumdkgrbvlrbdqpnuukrxpyobmq
+                dni:
+                  type: string
+                  description: ':Attribute no pot ser més gran que 9 caràcters.'
+                  example: qyhdi
+                email:
+                  type: string
+                  description: ':Attribute no és un e-mail vàlid :Attribute no pot ser més gran que 255 caràcters.'
+                  example: akuphal@example.com
+                specialization:
+                  type: string
+                  description: ''
+                  example: Backend
+                  enum:
+                    - Frontend
+                    - Backend
+                    - Fullstack
+                    - 'Data Science'
+                    - 'Not Set'
+                password:
+                  type: string
+                  description: 'Must match the regex /^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$/.'
+                  example: '=@A=zY4?|;J)k{8,}'
+                terms:
+                  type: string
+                  description: ''
+                  example: 'true'
+                  enum:
+                    - 'true'
+              required:
+                - username
+                - dni
+                - email
+                - specialization
+                - password
+                - terms
+      security: []
+  /api/v1/development/list:
+    get:
+      summary: ''
+      operationId: getApiV1DevelopmentList
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - React
+                  - Spring
+                  - Angular
+                  - Laravel
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/specialization/list:
+    get:
+      summary: ''
+      operationId: getApiV1SpecializationList
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - Frontend
+                  - Backend
+                  - Fullstack
+                  - 'Data Science'
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/signin:
+    post:
+      summary: ''
+      operationId: postApiV1Signin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dni:
+                  type: string
+                  description: ''
+                  example: blanditiis
+                password:
+                  type: string
+                  description: ':Attribute ha de contenir almenys 8 caràcters.'
+                  example: '\&w$2ChQj~H0>'
+              required:
+                - dni
+                - password
+      security: []
+  /api/v1/student/resume/list:
+    get:
+      summary: ''
+      operationId: getApiV1StudentResumeList
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example:
+                  -
+                    id: 9fa7b091-ee80-3b2c-803c-8ee0df08afba
+                    fullname: 'DtDiV Vwemm'
+                    subtitle: 'Frontend developer React'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 2
+                        name: 'Ruby on Rails'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 17
+                        name: Vue
+                  -
+                    id: 88205084-81fb-31bc-85ab-65e177ce9485
+                    fullname: 'HDMttg dgbFCvrICJ'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: a759e271-15d2-3a28-8ad0-64154ad2652b
+                    fullname: 'QHlgAq VqwDfWSQfp'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 11
+                        name: React
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: bf042e3f-8373-3a60-8282-93001e72025d
+                    fullname: 'ezFLiu NjHDRu'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 20
+                        name: JQuery
+                      -
+                        id: 23
+                        name: Django
+                  -
+                    id: 581dc32e-801f-36c9-8883-6b27ce975f20
+                    fullname: 'qvxCMOC iKCVS'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 2
+                        name: 'Ruby on Rails'
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 10
+                        name: Java
+                      -
+                        id: 24
+                        name: Python
+                  -
+                    id: ba263f31-cfe0-3a5d-9228-66fd74885e00
+                    fullname: 'cCKZvgO hKhOPq'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 10
+                        name: Java
+                      -
+                        id: 11
+                        name: React
+                  -
+                    id: 21ea38ba-c79d-309b-b6ec-8023c5dbe71e
+                    fullname: 'RBINyX vHulMRCps'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 13
+                        name: 'HTML&CSS'
+                      -
+                        id: 22
+                        name: SQL
+                  -
+                    id: c572bbbe-ed98-3b36-b548-3cc23d883d67
+                    fullname: 'ivthxtUnJj BnjqY'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 10
+                        name: Java
+                      -
+                        id: 13
+                        name: 'HTML&CSS'
+                  -
+                    id: ab58f33f-e087-39c4-b162-ebaa8a071c05
+                    fullname: 'FumJIlGUDk LMmXWcGMf'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 1
+                        name: Ruby
+                      -
+                        id: 2
+                        name: 'Ruby on Rails'
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 15
+                        name: C++
+                  -
+                    id: 9835593b-a3e5-310f-8a72-dd190d35e7da
+                    fullname: 'IAXhuacTPJ pobUmGpE'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 9
+                        name: Express
+                  -
+                    id: a088cb75-4bb6-3c76-a63c-e4872be314b2
+                    fullname: 'jgRXLRPNvy Tnavgq'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: 8d099f73-1265-3191-9f88-00a7b4e4bcc4
+                    fullname: 'JgWfTftH fnhpLGiOe'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 24
+                        name: Python
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: df4fd997-4d91-3c7a-9aaf-dd2e05f913b8
+                    fullname: 'SpGENfUpDS CVeRq'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 13
+                        name: 'HTML&CSS'
+                      -
+                        id: 19
+                        name: Tailwind
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: 46afabbd-5de9-3547-9fdc-5f78e5943fe6
+                    fullname: 'oIMHekY GANmPuNMlS'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 12
+                        name: Laravel
+                      -
+                        id: 18
+                        name: Javascript
+                      -
+                        id: 20
+                        name: JQuery
+                  -
+                    id: d5a46190-c95f-3782-be1e-a83e66ff3d6d
+                    fullname: 'syYqBQe uerKttXXz'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 21
+                        name: Nodejs
+                      -
+                        id: 22
+                        name: SQL
+                  -
+                    id: 16f317d0-f2b4-3414-8bcc-19452e46be5e
+                    fullname: 'HJNQX oWyEnv'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 22
+                        name: SQL
+                      -
+                        id: 23
+                        name: Django
+                  -
+                    id: 48609214-f055-3609-a107-801ad4e434ff
+                    fullname: 'QVJziCN BoiEgB'
+                    subtitle: 'Full Stack developer en PHP'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 12
+                        name: Laravel
+                      -
+                        id: 17
+                        name: Vue
+                      -
+                        id: 19
+                        name: Tailwind
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: 9ad7adde-c55c-3e70-906e-3a0ff10876d8
+                    fullname: 'siLMmL uXKeZKj'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 18
+                        name: Javascript
+                      -
+                        id: 25
+                        name: GitHub
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: d24a7014-33af-3391-8e65-e3972dd971eb
+                    fullname: 'DvrkQWe qwsCmTzUl'
+                    subtitle: 'Frontend developer React'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 21
+                        name: Nodejs
+                      -
+                        id: 24
+                        name: Python
+                  -
+                    id: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+                    fullname: 'UPlFtKYe ITIoDkOPl'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: 68c6860a-dd1e-36ef-9c86-93a5e4e339af
+                    fullname: 'jvxKy bNJTUxsrH'
+                    subtitle: 'Full Stack developer en PHP'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 1
+                        name: Ruby
+                      -
+                        id: 10
+                        name: Java
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 18
+                        name: Javascript
+                  -
+                    id: c7e8c4bd-d4fb-34de-8eeb-69fadd68a253
+                    fullname: 'yAvWxvz qLLEenk'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 19
+                        name: Tailwind
+                      -
+                        id: 24
+                        name: Python
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: eb5970b4-7fa5-30dd-820f-ce095706ffb6
+                    fullname: 'MMdCChVnEo rklUUNKqf'
+                    subtitle: 'Full Stack developer en PHP'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 1
+                        name: Ruby
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 11
+                        name: React
+                      -
+                        id: 22
+                        name: SQL
+                  -
+                    id: 26774971-cf20-3d54-9c29-d7d2cce68620
+                    fullname: 'ARdOAZHpJt aYwyV'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 18
+                        name: Javascript
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: a39deab8-4b81-3118-a8cb-c02ad557cda1
+                    fullname: 'jutgyO aaMsHXVEEQ'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 13
+                        name: 'HTML&CSS'
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 21
+                        name: Nodejs
+                  -
+                    id: 364ea36b-a748-3c17-9c6c-75d8ab694465
+                    fullname: 'GmNOxi xZHqu'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 1
+                        name: Ruby
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 20
+                        name: JQuery
+                  -
+                    id: a09a5017-670c-3521-930d-151f991996fb
+                    fullname: 'FbpEMdKW zuKwBlr'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 18
+                        name: Javascript
+                  -
+                    id: 81b92468-ea4d-3a29-9503-d4ae0358561a
+                    fullname: 'laHNr IbwBt'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 14
+                        name: Git
+                      -
+                        id: 17
+                        name: Vue
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: 0fb20153-3e24-3cfe-8e0d-233869beb96c
+                    fullname: 'TgdLhXrLcz RQWSPmera'
+                    subtitle: 'Full Stack developer en PHP'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 19
+                        name: Tailwind
+                      -
+                        id: 21
+                        name: Nodejs
+                      -
+                        id: 23
+                        name: Django
+                  -
+                    id: ccad17d4-68a1-3abd-a2d3-6783feab98cc
+                    fullname: 'iDUQCQrhs uElSW'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 14
+                        name: Git
+                      -
+                        id: 15
+                        name: C++
+                  -
+                    id: a5477bd6-8b49-3c5f-bae1-475d24a7048a
+                    fullname: 'hGqmchpj YKQoHv'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 2
+                        name: 'Ruby on Rails'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 17
+                        name: Vue
+                  -
+                    id: 9262113d-21ad-30cb-8822-2e67d3f48bde
+                    fullname: 'RvNERf LFxAbxWNlP'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 25
+                        name: GitHub
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: 89e0b827-8d8d-3530-b03a-d8b40bad1f40
+                    fullname: 'YZguVzd ankjbsL'
+                    subtitle: null
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags: []
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/student/{studentId}/resume/detail':
+    get:
+      summary: ''
+      operationId: getApiV1StudentStudentIdResumeDetail
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      fullname: 'UPlFtKYe ITIoDkOPl'
+                      subtitle: 'Analista de Datos'
+                      social_media:
+                        github:
+                          url: 'https://github.com/lupton'
+                        linkedin:
+                          url: 'https://linkedin.com/jerde.isac'
+                      about: 'Sed iusto expedita voluptatem unde. Voluptas repudiandae voluptatem at eligendi corporis repellat doloribus fuga.'
+                      tags:
+                        -
+                          id: 3
+                          name: MongoDB
+                        -
+                          id: 8
+                          name: Redis
+                        -
+                          id: 15
+                          name: C++
+                        -
+                          id: 26
+                          name: C
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        fullname: 'UPlFtKYe ITIoDkOPl'
+                        subtitle: 'Analista de Datos'
+                        social_media:
+                          github:
+                            url: 'https://github.com/lupton'
+                          linkedin:
+                            url: 'https://linkedin.com/jerde.isac'
+                        about: 'Sed iusto expedita voluptatem unde. Voluptas repudiandae voluptatem at eligendi corporis repellat doloribus fuga.'
+                        tags:
+                          -
+                            id: 3
+                            name: MongoDB
+                          -
+                            id: 8
+                            name: Redis
+                          -
+                            id: 15
+                            name: C++
+                          -
+                            id: 26
+                            name: C
+                    items:
+                      type: object
+                      properties:
+                        fullname:
+                          type: string
+                          example: 'UPlFtKYe ITIoDkOPl'
+                        subtitle:
+                          type: string
+                          example: 'Analista de Datos'
+                        social_media:
+                          type: object
+                          properties:
+                            github:
+                              type: object
+                              properties:
+                                url:
+                                  type: string
+                                  example: 'https://github.com/lupton'
+                            linkedin:
+                              type: object
+                              properties:
+                                url:
+                                  type: string
+                                  example: 'https://linkedin.com/jerde.isac'
+                        about:
+                          type: string
+                          example: 'Sed iusto expedita voluptatem unde. Voluptas repudiandae voluptatem at eligendi corporis repellat doloribus fuga.'
+                        tags:
+                          type: array
+                          example:
+                            -
+                              id: 3
+                              name: MongoDB
+                            -
+                              id: 8
+                              name: Redis
+                            -
+                              id: 15
+                              name: C++
+                            -
+                              id: 26
+                              name: C
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: MongoDB
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/student/{studentId}/resume/projects':
+    get:
+      summary: ''
+      operationId: getApiV1StudentStudentIdResumeProjects
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  projects:
+                    -
+                      uuid: 9c857ee7-53e8-4e3e-9181-7862d6e401ca
+                      project_name: 'Monahan, Boehm and Bauch'
+                      company_name: 'Abbott LLC'
+                      project_url: 'http://www.kuhlman.com/sint-distinctio-voluptatem-atque-et-qui'
+                      tags:
+                        -
+                          id: 3
+                          name: MongoDB
+                        -
+                          id: 5
+                          name: Angular
+                        -
+                          id: 12
+                          name: Laravel
+                        -
+                          id: 24
+                          name: Python
+                      github_url: 'https://github.com/nhowe'
+                    -
+                      uuid: 9c857ee7-74ce-44b9-bdc8-c9519fd8c4b0
+                      project_name: 'Feest Inc'
+                      company_name: 'Abbott LLC'
+                      project_url: 'http://baumbach.com/dolore-tempore-rem-qui-atque-itaque-qui.html'
+                      tags:
+                        -
+                          id: 13
+                          name: 'HTML&CSS'
+                        -
+                          id: 15
+                          name: C++
+                        -
+                          id: 16
+                          name: Bootstrap
+                        -
+                          id: 23
+                          name: Django
+                        -
+                          id: 24
+                          name: Python
+                      github_url: 'https://github.com/justice31'
+                properties:
+                  projects:
+                    type: array
+                    example:
+                      -
+                        uuid: 9c857ee7-53e8-4e3e-9181-7862d6e401ca
+                        project_name: 'Monahan, Boehm and Bauch'
+                        company_name: 'Abbott LLC'
+                        project_url: 'http://www.kuhlman.com/sint-distinctio-voluptatem-atque-et-qui'
+                        tags:
+                          -
+                            id: 3
+                            name: MongoDB
+                          -
+                            id: 5
+                            name: Angular
+                          -
+                            id: 12
+                            name: Laravel
+                          -
+                            id: 24
+                            name: Python
+                        github_url: 'https://github.com/nhowe'
+                      -
+                        uuid: 9c857ee7-74ce-44b9-bdc8-c9519fd8c4b0
+                        project_name: 'Feest Inc'
+                        company_name: 'Abbott LLC'
+                        project_url: 'http://baumbach.com/dolore-tempore-rem-qui-atque-itaque-qui.html'
+                        tags:
+                          -
+                            id: 13
+                            name: 'HTML&CSS'
+                          -
+                            id: 15
+                            name: C++
+                          -
+                            id: 16
+                            name: Bootstrap
+                          -
+                            id: 23
+                            name: Django
+                          -
+                            id: 24
+                            name: Python
+                        github_url: 'https://github.com/justice31'
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          example: 9c857ee7-53e8-4e3e-9181-7862d6e401ca
+                        project_name:
+                          type: string
+                          example: 'Monahan, Boehm and Bauch'
+                        company_name:
+                          type: string
+                          example: 'Abbott LLC'
+                        project_url:
+                          type: string
+                          example: 'http://www.kuhlman.com/sint-distinctio-voluptatem-atque-et-qui'
+                        tags:
+                          type: array
+                          example:
+                            -
+                              id: 3
+                              name: MongoDB
+                            -
+                              id: 5
+                              name: Angular
+                            -
+                              id: 12
+                              name: Laravel
+                            -
+                              id: 24
+                              name: Python
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: MongoDB
+                        github_url:
+                          type: string
+                          example: 'https://github.com/nhowe'
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/student/{studentId}/resume/collaborations':
+    get:
+      summary: ''
+      operationId: getApiV1StudentStudentIdResumeCollaborations
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  collaborations:
+                    -
+                      uuid: 9c857ee7-f7ce-4102-b584-b2819cf1b0bf
+                      collaboration_name: 'Consequuntur quis et.'
+                      collaboration_description: 'Quae nostrum maxime voluptatem dolores recusandae voluptas earum at. Porro voluptate tempore perspiciatis beatae eius. Laboriosam possimus fugit illum ut.'
+                      collaboration_quantity: 2
+                    -
+                      uuid: 9c857ee8-4960-41af-ae66-b2da9f019f00
+                      collaboration_name: 'Ab magni.'
+                      collaboration_description: 'Voluptates aspernatur alias unde recusandae odio expedita. Dignissimos ut quia et omnis accusamus. Quam est ad odit reiciendis quis. Dolorem velit ut sunt consequatur numquam incidunt.'
+                      collaboration_quantity: 10
+                properties:
+                  collaborations:
+                    type: array
+                    example:
+                      -
+                        uuid: 9c857ee7-f7ce-4102-b584-b2819cf1b0bf
+                        collaboration_name: 'Consequuntur quis et.'
+                        collaboration_description: 'Quae nostrum maxime voluptatem dolores recusandae voluptas earum at. Porro voluptate tempore perspiciatis beatae eius. Laboriosam possimus fugit illum ut.'
+                        collaboration_quantity: 2
+                      -
+                        uuid: 9c857ee8-4960-41af-ae66-b2da9f019f00
+                        collaboration_name: 'Ab magni.'
+                        collaboration_description: 'Voluptates aspernatur alias unde recusandae odio expedita. Dignissimos ut quia et omnis accusamus. Quam est ad odit reiciendis quis. Dolorem velit ut sunt consequatur numquam incidunt.'
+                        collaboration_quantity: 10
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          example: 9c857ee7-f7ce-4102-b584-b2819cf1b0bf
+                        collaboration_name:
+                          type: string
+                          example: 'Consequuntur quis et.'
+                        collaboration_description:
+                          type: string
+                          example: 'Quae nostrum maxime voluptatem dolores recusandae voluptas earum at. Porro voluptate tempore perspiciatis beatae eius. Laboriosam possimus fugit illum ut.'
+                        collaboration_quantity:
+                          type: integer
+                          example: 2
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/student/{studentId}/resume/bootcamp':
+    get:
+      summary: ''
+      operationId: getApiV1StudentStudentIdResumeBootcamp
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  bootcamps:
+                    -
+                      bootcamp_id: 810c7bd9-ea34-46da-9e10-074558488e4e
+                      bootcamp_name: 'Reskilling - Front End React'
+                      bootcamp_end_date: '2024-06-02'
+                properties:
+                  bootcamps:
+                    type: array
+                    example:
+                      -
+                        bootcamp_id: 810c7bd9-ea34-46da-9e10-074558488e4e
+                        bootcamp_name: 'Reskilling - Front End React'
+                        bootcamp_end_date: '2024-06-02'
+                    items:
+                      type: object
+                      properties:
+                        bootcamp_id:
+                          type: string
+                          example: 810c7bd9-ea34-46da-9e10-074558488e4e
+                        bootcamp_name:
+                          type: string
+                          example: 'Reskilling - Front End React'
+                        bootcamp_end_date:
+                          type: string
+                          example: '2024-06-02'
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/student/{studentId}/resume/additionaltraining':
+    get:
+      summary: ''
+      operationId: getApiV1StudentStudentIdResumeAdditionaltraining
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  additional_trainings:
+                    -
+                      uuid: 9c857ee7-a3eb-4851-9042-bd2b34d1ec8a
+                      course_name: 'Dolor voluptatum laboriosam.'
+                      study_center: Kreiger-Keebler
+                      course_beginning_year: 2001
+                      course_ending_year: 2020
+                      duration_hrs: 80
+                    -
+                      uuid: 9c857ee7-c9a6-4224-b951-497e2027185d
+                      course_name: 'Voluptates sed hic.'
+                      study_center: 'Ferry and Sons'
+                      course_beginning_year: 2016
+                      course_ending_year: 2020
+                      duration_hrs: 305
+                properties:
+                  additional_trainings:
+                    type: array
+                    example:
+                      -
+                        uuid: 9c857ee7-a3eb-4851-9042-bd2b34d1ec8a
+                        course_name: 'Dolor voluptatum laboriosam.'
+                        study_center: Kreiger-Keebler
+                        course_beginning_year: 2001
+                        course_ending_year: 2020
+                        duration_hrs: 80
+                      -
+                        uuid: 9c857ee7-c9a6-4224-b951-497e2027185d
+                        course_name: 'Voluptates sed hic.'
+                        study_center: 'Ferry and Sons'
+                        course_beginning_year: 2016
+                        course_ending_year: 2020
+                        duration_hrs: 305
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          example: 9c857ee7-a3eb-4851-9042-bd2b34d1ec8a
+                        course_name:
+                          type: string
+                          example: 'Dolor voluptatum laboriosam.'
+                        study_center:
+                          type: string
+                          example: Kreiger-Keebler
+                        course_beginning_year:
+                          type: integer
+                          example: 2001
+                        course_ending_year:
+                          type: integer
+                          example: 2020
+                        duration_hrs:
+                          type: integer
+                          example: 80
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/student/{studentId}/resume/languages':
+    get:
+      summary: ''
+      operationId: getApiV1StudentStudentIdResumeLanguages
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  languages:
+                    -
+                      language_id: beb57b6f-070c-4a00-93ca-c3b24e98a2bc
+                      language_name: Anglès
+                      language_level: Natiu
+                properties:
+                  languages:
+                    type: array
+                    example:
+                      -
+                        language_id: beb57b6f-070c-4a00-93ca-c3b24e98a2bc
+                        language_name: Anglès
+                        language_level: Natiu
+                    items:
+                      type: object
+                      properties:
+                        language_id:
+                          type: string
+                          example: beb57b6f-070c-4a00-93ca-c3b24e98a2bc
+                        language_name:
+                          type: string
+                          example: Anglès
+                        language_level:
+                          type: string
+                          example: Natiu
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/student/{studentId}/resume/modality':
+    get:
+      summary: ''
+      operationId: getApiV1StudentStudentIdResumeModality
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  modality:
+                    - Remot
+                    - Presencial
+                properties:
+                  modality:
+                    type: array
+                    example:
+                      - Remot
+                      - Presencial
+                    items:
+                      type: string
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/student/{studentId}/resume/projects/{projectId}':
+    put:
+      summary: ''
+      operationId: putApiV1StudentStudentIdResumeProjectsProjectId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_name:
+                  type: string
+                  description: 'Must match the regex /^([^0-9]*)$/.'
+                  example: ''
+                company_name:
+                  type: string
+                  description: 'Must match the regex /^([^0-9]*)$/.'
+                  example: '2'
+                tags:
+                  type: object
+                  description: ''
+                  example: null
+                  properties: {  }
+                github_url:
+                  type: string
+                  description: 'Must be a valid URL. :Attribute no pot ser més gran que 60 caràcters.'
+                  example: 'http://russel.com/'
+                project_url:
+                  type: string
+                  description: 'Must be a valid URL. :Attribute no pot ser més gran que 60 caràcters.'
+                  example: 'http://rohan.com/'
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: projectId
+        description: ''
+        example: 9c857ecc-da49-47de-b52d-14ffd759d099
+        required: true
+        schema:
+          type: string
+  '/api/v1/student/{studentId}/resume/skills':
+    put:
+      summary: ''
+      operationId: putApiV1StudentStudentIdResumeSkills
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                skills:
+                  type: string
+                  description: 'El camp value ha de ser una cadena JSON vàlida.'
+                  example: '["accusantium","nobis"]'
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/student/{studentId}/resume/profile':
+    put:
+      summary: ''
+      operationId: putApiV1StudentStudentIdResumeProfile
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must match the regex /^([^0-9]*)$/.'
+                  example: '67'
+                surname:
+                  type: string
+                  description: 'Must match the regex /^([^0-9]*)$/.'
+                  example: ^
+                subtitle:
+                  type: string
+                  description: ''
+                  example: nam
+                github_url:
+                  type: string
+                  description: 'Must be a valid URL. :Attribute no pot ser més gran que 60 caràcters.'
+                  example: 'http://www.corwin.com/culpa-velit-quia-est-sed-occaecati.html'
+                linkedin_url:
+                  type: string
+                  description: 'Must be a valid URL. :Attribute no pot ser més gran que 60 caràcters.'
+                  example: 'http://sporer.com/odit-harum-velit-sed-qui'
+                about:
+                  type: string
+                  description: ''
+                  example: et
+                tags_ids:
+                  type: object
+                  description: ''
+                  example: []
+                  properties: {  }
+              required:
+                - tags_ids
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  /api/v1/tags:
+    get:
+      summary: ''
+      operationId: getApiV1Tags
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  tags:
+                    -
+                      id: 1
+                      tag_name: Ruby
+                      created_at: '2024-07-14T15:41:55.000000Z'
+                      updated_at: '2024-07-14T15:41:55.000000Z'
+                    -
+                      id: 2
+                      tag_name: 'Ruby on Rails'
+                      created_at: '2024-07-14T15:41:56.000000Z'
+                      updated_at: '2024-07-14T15:41:56.000000Z'
+                    -
+                      id: 3
+                      tag_name: MongoDB
+                      created_at: '2024-07-14T15:41:56.000000Z'
+                      updated_at: '2024-07-14T15:41:56.000000Z'
+                    -
+                      id: 4
+                      tag_name: 'Spring Boot'
+                      created_at: '2024-07-14T15:41:56.000000Z'
+                      updated_at: '2024-07-14T15:41:56.000000Z'
+                    -
+                      id: 5
+                      tag_name: Angular
+                      created_at: '2024-07-14T15:41:56.000000Z'
+                      updated_at: '2024-07-14T15:41:56.000000Z'
+                    -
+                      id: 6
+                      tag_name: PHP
+                      created_at: '2024-07-14T15:41:56.000000Z'
+                      updated_at: '2024-07-14T15:41:56.000000Z'
+                    -
+                      id: 7
+                      tag_name: 'C#'
+                      created_at: '2024-07-14T15:41:56.000000Z'
+                      updated_at: '2024-07-14T15:41:56.000000Z'
+                    -
+                      id: 8
+                      tag_name: Redis
+                      created_at: '2024-07-14T15:41:56.000000Z'
+                      updated_at: '2024-07-14T15:41:56.000000Z'
+                    -
+                      id: 9
+                      tag_name: Express
+                      created_at: '2024-07-14T15:41:57.000000Z'
+                      updated_at: '2024-07-14T15:41:57.000000Z'
+                    -
+                      id: 10
+                      tag_name: Java
+                      created_at: '2024-07-14T15:41:57.000000Z'
+                      updated_at: '2024-07-14T15:41:57.000000Z'
+                    -
+                      id: 11
+                      tag_name: React
+                      created_at: '2024-07-14T15:41:57.000000Z'
+                      updated_at: '2024-07-14T15:41:57.000000Z'
+                    -
+                      id: 12
+                      tag_name: Laravel
+                      created_at: '2024-07-14T15:41:57.000000Z'
+                      updated_at: '2024-07-14T15:41:57.000000Z'
+                    -
+                      id: 13
+                      tag_name: 'HTML&CSS'
+                      created_at: '2024-07-14T15:41:57.000000Z'
+                      updated_at: '2024-07-14T15:41:57.000000Z'
+                    -
+                      id: 14
+                      tag_name: Git
+                      created_at: '2024-07-14T15:41:57.000000Z'
+                      updated_at: '2024-07-14T15:41:57.000000Z'
+                    -
+                      id: 15
+                      tag_name: C++
+                      created_at: '2024-07-14T15:41:57.000000Z'
+                      updated_at: '2024-07-14T15:41:57.000000Z'
+                    -
+                      id: 16
+                      tag_name: Bootstrap
+                      created_at: '2024-07-14T15:41:57.000000Z'
+                      updated_at: '2024-07-14T15:41:57.000000Z'
+                    -
+                      id: 17
+                      tag_name: Vue
+                      created_at: '2024-07-14T15:41:57.000000Z'
+                      updated_at: '2024-07-14T15:41:57.000000Z'
+                    -
+                      id: 18
+                      tag_name: Javascript
+                      created_at: '2024-07-14T15:41:58.000000Z'
+                      updated_at: '2024-07-14T15:41:58.000000Z'
+                    -
+                      id: 19
+                      tag_name: Tailwind
+                      created_at: '2024-07-14T15:41:58.000000Z'
+                      updated_at: '2024-07-14T15:41:58.000000Z'
+                    -
+                      id: 20
+                      tag_name: JQuery
+                      created_at: '2024-07-14T15:41:58.000000Z'
+                      updated_at: '2024-07-14T15:41:58.000000Z'
+                    -
+                      id: 21
+                      tag_name: Nodejs
+                      created_at: '2024-07-14T15:41:58.000000Z'
+                      updated_at: '2024-07-14T15:41:58.000000Z'
+                    -
+                      id: 22
+                      tag_name: SQL
+                      created_at: '2024-07-14T15:41:58.000000Z'
+                      updated_at: '2024-07-14T15:41:58.000000Z'
+                    -
+                      id: 23
+                      tag_name: Django
+                      created_at: '2024-07-14T15:41:58.000000Z'
+                      updated_at: '2024-07-14T15:41:58.000000Z'
+                    -
+                      id: 24
+                      tag_name: Python
+                      created_at: '2024-07-14T15:41:58.000000Z'
+                      updated_at: '2024-07-14T15:41:58.000000Z'
+                    -
+                      id: 25
+                      tag_name: GitHub
+                      created_at: '2024-07-14T15:41:58.000000Z'
+                      updated_at: '2024-07-14T15:41:58.000000Z'
+                    -
+                      id: 26
+                      tag_name: C
+                      created_at: '2024-07-14T15:41:59.000000Z'
+                      updated_at: '2024-07-14T15:41:59.000000Z'
+                properties:
+                  tags:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        tag_name: Ruby
+                        created_at: '2024-07-14T15:41:55.000000Z'
+                        updated_at: '2024-07-14T15:41:55.000000Z'
+                      -
+                        id: 2
+                        tag_name: 'Ruby on Rails'
+                        created_at: '2024-07-14T15:41:56.000000Z'
+                        updated_at: '2024-07-14T15:41:56.000000Z'
+                      -
+                        id: 3
+                        tag_name: MongoDB
+                        created_at: '2024-07-14T15:41:56.000000Z'
+                        updated_at: '2024-07-14T15:41:56.000000Z'
+                      -
+                        id: 4
+                        tag_name: 'Spring Boot'
+                        created_at: '2024-07-14T15:41:56.000000Z'
+                        updated_at: '2024-07-14T15:41:56.000000Z'
+                      -
+                        id: 5
+                        tag_name: Angular
+                        created_at: '2024-07-14T15:41:56.000000Z'
+                        updated_at: '2024-07-14T15:41:56.000000Z'
+                      -
+                        id: 6
+                        tag_name: PHP
+                        created_at: '2024-07-14T15:41:56.000000Z'
+                        updated_at: '2024-07-14T15:41:56.000000Z'
+                      -
+                        id: 7
+                        tag_name: 'C#'
+                        created_at: '2024-07-14T15:41:56.000000Z'
+                        updated_at: '2024-07-14T15:41:56.000000Z'
+                      -
+                        id: 8
+                        tag_name: Redis
+                        created_at: '2024-07-14T15:41:56.000000Z'
+                        updated_at: '2024-07-14T15:41:56.000000Z'
+                      -
+                        id: 9
+                        tag_name: Express
+                        created_at: '2024-07-14T15:41:57.000000Z'
+                        updated_at: '2024-07-14T15:41:57.000000Z'
+                      -
+                        id: 10
+                        tag_name: Java
+                        created_at: '2024-07-14T15:41:57.000000Z'
+                        updated_at: '2024-07-14T15:41:57.000000Z'
+                      -
+                        id: 11
+                        tag_name: React
+                        created_at: '2024-07-14T15:41:57.000000Z'
+                        updated_at: '2024-07-14T15:41:57.000000Z'
+                      -
+                        id: 12
+                        tag_name: Laravel
+                        created_at: '2024-07-14T15:41:57.000000Z'
+                        updated_at: '2024-07-14T15:41:57.000000Z'
+                      -
+                        id: 13
+                        tag_name: 'HTML&CSS'
+                        created_at: '2024-07-14T15:41:57.000000Z'
+                        updated_at: '2024-07-14T15:41:57.000000Z'
+                      -
+                        id: 14
+                        tag_name: Git
+                        created_at: '2024-07-14T15:41:57.000000Z'
+                        updated_at: '2024-07-14T15:41:57.000000Z'
+                      -
+                        id: 15
+                        tag_name: C++
+                        created_at: '2024-07-14T15:41:57.000000Z'
+                        updated_at: '2024-07-14T15:41:57.000000Z'
+                      -
+                        id: 16
+                        tag_name: Bootstrap
+                        created_at: '2024-07-14T15:41:57.000000Z'
+                        updated_at: '2024-07-14T15:41:57.000000Z'
+                      -
+                        id: 17
+                        tag_name: Vue
+                        created_at: '2024-07-14T15:41:57.000000Z'
+                        updated_at: '2024-07-14T15:41:57.000000Z'
+                      -
+                        id: 18
+                        tag_name: Javascript
+                        created_at: '2024-07-14T15:41:58.000000Z'
+                        updated_at: '2024-07-14T15:41:58.000000Z'
+                      -
+                        id: 19
+                        tag_name: Tailwind
+                        created_at: '2024-07-14T15:41:58.000000Z'
+                        updated_at: '2024-07-14T15:41:58.000000Z'
+                      -
+                        id: 20
+                        tag_name: JQuery
+                        created_at: '2024-07-14T15:41:58.000000Z'
+                        updated_at: '2024-07-14T15:41:58.000000Z'
+                      -
+                        id: 21
+                        tag_name: Nodejs
+                        created_at: '2024-07-14T15:41:58.000000Z'
+                        updated_at: '2024-07-14T15:41:58.000000Z'
+                      -
+                        id: 22
+                        tag_name: SQL
+                        created_at: '2024-07-14T15:41:58.000000Z'
+                        updated_at: '2024-07-14T15:41:58.000000Z'
+                      -
+                        id: 23
+                        tag_name: Django
+                        created_at: '2024-07-14T15:41:58.000000Z'
+                        updated_at: '2024-07-14T15:41:58.000000Z'
+                      -
+                        id: 24
+                        tag_name: Python
+                        created_at: '2024-07-14T15:41:58.000000Z'
+                        updated_at: '2024-07-14T15:41:58.000000Z'
+                      -
+                        id: 25
+                        tag_name: GitHub
+                        created_at: '2024-07-14T15:41:58.000000Z'
+                        updated_at: '2024-07-14T15:41:58.000000Z'
+                      -
+                        id: 26
+                        tag_name: C
+                        created_at: '2024-07-14T15:41:59.000000Z'
+                        updated_at: '2024-07-14T15:41:59.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        tag_name:
+                          type: string
+                          example: Ruby
+                        created_at:
+                          type: string
+                          example: '2024-07-14T15:41:55.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2024-07-14T15:41:55.000000Z'
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1Tags
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tag_name:
+                  type: string
+                  description: ':Attribute no pot ser més gran que 75 caràcters.'
+                  example: vxdtevdbfis
+              required:
+                - tag_name
+      security: []
+  '/api/v1/tags/{tagId}':
+    get:
+      summary: ''
+      operationId: getApiV1TagsTagId
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 1
+                    tag_name: Ruby
+                    created_at: '2024-07-14T15:41:55.000000Z'
+                    updated_at: '2024-07-14T15:41:55.000000Z'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      tag_name:
+                        type: string
+                        example: Ruby
+                      created_at:
+                        type: string
+                        example: '2024-07-14T15:41:55.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-07-14T15:41:55.000000Z'
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: ''
+      operationId: putApiV1TagsTagId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: tagId
+        description: ''
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/v1/student/list/for-home:
+    get:
+      summary: ''
+      operationId: getApiV1StudentListForHome
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example:
+                  -
+                    id: 9fa7b091-ee80-3b2c-803c-8ee0df08afba
+                    fullname: 'DtDiV Vwemm'
+                    subtitle: 'Frontend developer React'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 2
+                        name: 'Ruby on Rails'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 17
+                        name: Vue
+                  -
+                    id: 88205084-81fb-31bc-85ab-65e177ce9485
+                    fullname: 'HDMttg dgbFCvrICJ'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: a759e271-15d2-3a28-8ad0-64154ad2652b
+                    fullname: 'QHlgAq VqwDfWSQfp'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 11
+                        name: React
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: bf042e3f-8373-3a60-8282-93001e72025d
+                    fullname: 'ezFLiu NjHDRu'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 20
+                        name: JQuery
+                      -
+                        id: 23
+                        name: Django
+                  -
+                    id: 581dc32e-801f-36c9-8883-6b27ce975f20
+                    fullname: 'qvxCMOC iKCVS'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 2
+                        name: 'Ruby on Rails'
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 10
+                        name: Java
+                      -
+                        id: 24
+                        name: Python
+                  -
+                    id: ba263f31-cfe0-3a5d-9228-66fd74885e00
+                    fullname: 'cCKZvgO hKhOPq'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 10
+                        name: Java
+                      -
+                        id: 11
+                        name: React
+                  -
+                    id: 21ea38ba-c79d-309b-b6ec-8023c5dbe71e
+                    fullname: 'RBINyX vHulMRCps'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 13
+                        name: 'HTML&CSS'
+                      -
+                        id: 22
+                        name: SQL
+                  -
+                    id: c572bbbe-ed98-3b36-b548-3cc23d883d67
+                    fullname: 'ivthxtUnJj BnjqY'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 10
+                        name: Java
+                      -
+                        id: 13
+                        name: 'HTML&CSS'
+                  -
+                    id: ab58f33f-e087-39c4-b162-ebaa8a071c05
+                    fullname: 'FumJIlGUDk LMmXWcGMf'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 1
+                        name: Ruby
+                      -
+                        id: 2
+                        name: 'Ruby on Rails'
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 15
+                        name: C++
+                  -
+                    id: 9835593b-a3e5-310f-8a72-dd190d35e7da
+                    fullname: 'IAXhuacTPJ pobUmGpE'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 9
+                        name: Express
+                  -
+                    id: a088cb75-4bb6-3c76-a63c-e4872be314b2
+                    fullname: 'jgRXLRPNvy Tnavgq'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: 8d099f73-1265-3191-9f88-00a7b4e4bcc4
+                    fullname: 'JgWfTftH fnhpLGiOe'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 24
+                        name: Python
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: df4fd997-4d91-3c7a-9aaf-dd2e05f913b8
+                    fullname: 'SpGENfUpDS CVeRq'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 13
+                        name: 'HTML&CSS'
+                      -
+                        id: 19
+                        name: Tailwind
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: 46afabbd-5de9-3547-9fdc-5f78e5943fe6
+                    fullname: 'oIMHekY GANmPuNMlS'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 12
+                        name: Laravel
+                      -
+                        id: 18
+                        name: Javascript
+                      -
+                        id: 20
+                        name: JQuery
+                  -
+                    id: d5a46190-c95f-3782-be1e-a83e66ff3d6d
+                    fullname: 'syYqBQe uerKttXXz'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 21
+                        name: Nodejs
+                      -
+                        id: 22
+                        name: SQL
+                  -
+                    id: 16f317d0-f2b4-3414-8bcc-19452e46be5e
+                    fullname: 'HJNQX oWyEnv'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 22
+                        name: SQL
+                      -
+                        id: 23
+                        name: Django
+                  -
+                    id: 48609214-f055-3609-a107-801ad4e434ff
+                    fullname: 'QVJziCN BoiEgB'
+                    subtitle: 'Full Stack developer en PHP'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 12
+                        name: Laravel
+                      -
+                        id: 17
+                        name: Vue
+                      -
+                        id: 19
+                        name: Tailwind
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: 9ad7adde-c55c-3e70-906e-3a0ff10876d8
+                    fullname: 'siLMmL uXKeZKj'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 18
+                        name: Javascript
+                      -
+                        id: 25
+                        name: GitHub
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: d24a7014-33af-3391-8e65-e3972dd971eb
+                    fullname: 'DvrkQWe qwsCmTzUl'
+                    subtitle: 'Frontend developer React'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 21
+                        name: Nodejs
+                      -
+                        id: 24
+                        name: Python
+                  -
+                    id: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+                    fullname: 'UPlFtKYe ITIoDkOPl'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: 68c6860a-dd1e-36ef-9c86-93a5e4e339af
+                    fullname: 'jvxKy bNJTUxsrH'
+                    subtitle: 'Full Stack developer en PHP'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 1
+                        name: Ruby
+                      -
+                        id: 10
+                        name: Java
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 18
+                        name: Javascript
+                  -
+                    id: c7e8c4bd-d4fb-34de-8eeb-69fadd68a253
+                    fullname: 'yAvWxvz qLLEenk'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 19
+                        name: Tailwind
+                      -
+                        id: 24
+                        name: Python
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: eb5970b4-7fa5-30dd-820f-ce095706ffb6
+                    fullname: 'MMdCChVnEo rklUUNKqf'
+                    subtitle: 'Full Stack developer en PHP'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 1
+                        name: Ruby
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 11
+                        name: React
+                      -
+                        id: 22
+                        name: SQL
+                  -
+                    id: 26774971-cf20-3d54-9c29-d7d2cce68620
+                    fullname: 'ARdOAZHpJt aYwyV'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 15
+                        name: C++
+                      -
+                        id: 18
+                        name: Javascript
+                      -
+                        id: 25
+                        name: GitHub
+                  -
+                    id: a39deab8-4b81-3118-a8cb-c02ad557cda1
+                    fullname: 'jutgyO aaMsHXVEEQ'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 13
+                        name: 'HTML&CSS'
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 21
+                        name: Nodejs
+                  -
+                    id: 364ea36b-a748-3c17-9c6c-75d8ab694465
+                    fullname: 'GmNOxi xZHqu'
+                    subtitle: 'Backend developer Java'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 1
+                        name: Ruby
+                      -
+                        id: 7
+                        name: 'C#'
+                      -
+                        id: 9
+                        name: Express
+                      -
+                        id: 20
+                        name: JQuery
+                  -
+                    id: a09a5017-670c-3521-930d-151f991996fb
+                    fullname: 'FbpEMdKW zuKwBlr'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags:
+                      -
+                        id: 4
+                        name: 'Spring Boot'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 18
+                        name: Javascript
+                  -
+                    id: 81b92468-ea4d-3a29-9503-d4ae0358561a
+                    fullname: 'laHNr IbwBt'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 14
+                        name: Git
+                      -
+                        id: 17
+                        name: Vue
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: 0fb20153-3e24-3cfe-8e0d-233869beb96c
+                    fullname: 'TgdLhXrLcz RQWSPmera'
+                    subtitle: 'Full Stack developer en PHP'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 16
+                        name: Bootstrap
+                      -
+                        id: 19
+                        name: Tailwind
+                      -
+                        id: 21
+                        name: Nodejs
+                      -
+                        id: 23
+                        name: Django
+                  -
+                    id: ccad17d4-68a1-3abd-a2d3-6783feab98cc
+                    fullname: 'iDUQCQrhs uElSW'
+                    subtitle: 'Ingeniero de Software'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 8
+                        name: Redis
+                      -
+                        id: 14
+                        name: Git
+                      -
+                        id: 15
+                        name: C++
+                  -
+                    id: a5477bd6-8b49-3c5f-bae1-475d24a7048a
+                    fullname: 'hGqmchpj YKQoHv'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_2.png'
+                    tags:
+                      -
+                        id: 2
+                        name: 'Ruby on Rails'
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 6
+                        name: PHP
+                      -
+                        id: 17
+                        name: Vue
+                  -
+                    id: 9262113d-21ad-30cb-8822-2e67d3f48bde
+                    fullname: 'RvNERf LFxAbxWNlP'
+                    subtitle: 'Analista de Datos'
+                    photo: 'http://localhost:8000/img/stud_3.png'
+                    tags:
+                      -
+                        id: 3
+                        name: MongoDB
+                      -
+                        id: 5
+                        name: Angular
+                      -
+                        id: 25
+                        name: GitHub
+                      -
+                        id: 26
+                        name: C
+                  -
+                    id: 89e0b827-8d8d-3530-b03a-d8b40bad1f40
+                    fullname: 'YZguVzd ankjbsL'
+                    subtitle: null
+                    photo: 'http://localhost:8000/img/stud_1.png'
+                    tags: []
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/student/{id}/detail/for-home':
+    get:
+      summary: ''
+      operationId: getApiV1StudentIdDetailForHome
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      fullname: 'UPlFtKYe ITIoDkOPl'
+                      subtitle: 'Analista de Datos'
+                      social_media:
+                        github:
+                          url: 'https://github.com/lupton'
+                        linkedin:
+                          url: 'https://linkedin.com/jerde.isac'
+                      about: 'Sed iusto expedita voluptatem unde. Voluptas repudiandae voluptatem at eligendi corporis repellat doloribus fuga.'
+                      tags:
+                        -
+                          id: 3
+                          name: MongoDB
+                        -
+                          id: 8
+                          name: Redis
+                        -
+                          id: 15
+                          name: C++
+                        -
+                          id: 26
+                          name: C
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        fullname: 'UPlFtKYe ITIoDkOPl'
+                        subtitle: 'Analista de Datos'
+                        social_media:
+                          github:
+                            url: 'https://github.com/lupton'
+                          linkedin:
+                            url: 'https://linkedin.com/jerde.isac'
+                        about: 'Sed iusto expedita voluptatem unde. Voluptas repudiandae voluptatem at eligendi corporis repellat doloribus fuga.'
+                        tags:
+                          -
+                            id: 3
+                            name: MongoDB
+                          -
+                            id: 8
+                            name: Redis
+                          -
+                            id: 15
+                            name: C++
+                          -
+                            id: 26
+                            name: C
+                    items:
+                      type: object
+                      properties:
+                        fullname:
+                          type: string
+                          example: 'UPlFtKYe ITIoDkOPl'
+                        subtitle:
+                          type: string
+                          example: 'Analista de Datos'
+                        social_media:
+                          type: object
+                          properties:
+                            github:
+                              type: object
+                              properties:
+                                url:
+                                  type: string
+                                  example: 'https://github.com/lupton'
+                            linkedin:
+                              type: object
+                              properties:
+                                url:
+                                  type: string
+                                  example: 'https://linkedin.com/jerde.isac'
+                        about:
+                          type: string
+                          example: 'Sed iusto expedita voluptatem unde. Voluptas repudiandae voluptatem at eligendi corporis repellat doloribus fuga.'
+                        tags:
+                          type: array
+                          example:
+                            -
+                              id: 3
+                              name: MongoDB
+                            -
+                              id: 8
+                              name: Redis
+                            -
+                              id: 15
+                              name: C++
+                            -
+                              id: 26
+                              name: C
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: MongoDB
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the student.'
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/students/{student}/projects':
+    get:
+      summary: ''
+      operationId: getApiV1StudentsStudentProjects
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  projects:
+                    -
+                      uuid: 9c857ee7-53e8-4e3e-9181-7862d6e401ca
+                      project_name: 'Monahan, Boehm and Bauch'
+                      company_name: 'Abbott LLC'
+                      project_url: 'http://www.kuhlman.com/sint-distinctio-voluptatem-atque-et-qui'
+                      tags:
+                        -
+                          id: 3
+                          name: MongoDB
+                        -
+                          id: 5
+                          name: Angular
+                        -
+                          id: 12
+                          name: Laravel
+                        -
+                          id: 24
+                          name: Python
+                      github_url: 'https://github.com/nhowe'
+                    -
+                      uuid: 9c857ee7-74ce-44b9-bdc8-c9519fd8c4b0
+                      project_name: 'Feest Inc'
+                      company_name: 'Abbott LLC'
+                      project_url: 'http://baumbach.com/dolore-tempore-rem-qui-atque-itaque-qui.html'
+                      tags:
+                        -
+                          id: 13
+                          name: 'HTML&CSS'
+                        -
+                          id: 15
+                          name: C++
+                        -
+                          id: 16
+                          name: Bootstrap
+                        -
+                          id: 23
+                          name: Django
+                        -
+                          id: 24
+                          name: Python
+                      github_url: 'https://github.com/justice31'
+                properties:
+                  projects:
+                    type: array
+                    example:
+                      -
+                        uuid: 9c857ee7-53e8-4e3e-9181-7862d6e401ca
+                        project_name: 'Monahan, Boehm and Bauch'
+                        company_name: 'Abbott LLC'
+                        project_url: 'http://www.kuhlman.com/sint-distinctio-voluptatem-atque-et-qui'
+                        tags:
+                          -
+                            id: 3
+                            name: MongoDB
+                          -
+                            id: 5
+                            name: Angular
+                          -
+                            id: 12
+                            name: Laravel
+                          -
+                            id: 24
+                            name: Python
+                        github_url: 'https://github.com/nhowe'
+                      -
+                        uuid: 9c857ee7-74ce-44b9-bdc8-c9519fd8c4b0
+                        project_name: 'Feest Inc'
+                        company_name: 'Abbott LLC'
+                        project_url: 'http://baumbach.com/dolore-tempore-rem-qui-atque-itaque-qui.html'
+                        tags:
+                          -
+                            id: 13
+                            name: 'HTML&CSS'
+                          -
+                            id: 15
+                            name: C++
+                          -
+                            id: 16
+                            name: Bootstrap
+                          -
+                            id: 23
+                            name: Django
+                          -
+                            id: 24
+                            name: Python
+                        github_url: 'https://github.com/justice31'
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          example: 9c857ee7-53e8-4e3e-9181-7862d6e401ca
+                        project_name:
+                          type: string
+                          example: 'Monahan, Boehm and Bauch'
+                        company_name:
+                          type: string
+                          example: 'Abbott LLC'
+                        project_url:
+                          type: string
+                          example: 'http://www.kuhlman.com/sint-distinctio-voluptatem-atque-et-qui'
+                        tags:
+                          type: array
+                          example:
+                            -
+                              id: 3
+                              name: MongoDB
+                            -
+                              id: 5
+                              name: Angular
+                            -
+                              id: 12
+                              name: Laravel
+                            -
+                              id: 24
+                              name: Python
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 3
+                              name:
+                                type: string
+                                example: MongoDB
+                        github_url:
+                          type: string
+                          example: 'https://github.com/nhowe'
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: student
+        description: 'The student.'
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/students/{student}/collaborations':
+    get:
+      summary: ''
+      operationId: getApiV1StudentsStudentCollaborations
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  collaborations:
+                    -
+                      uuid: 9c857ee7-f7ce-4102-b584-b2819cf1b0bf
+                      collaboration_name: 'Consequuntur quis et.'
+                      collaboration_description: 'Quae nostrum maxime voluptatem dolores recusandae voluptas earum at. Porro voluptate tempore perspiciatis beatae eius. Laboriosam possimus fugit illum ut.'
+                      collaboration_quantity: 2
+                    -
+                      uuid: 9c857ee8-4960-41af-ae66-b2da9f019f00
+                      collaboration_name: 'Ab magni.'
+                      collaboration_description: 'Voluptates aspernatur alias unde recusandae odio expedita. Dignissimos ut quia et omnis accusamus. Quam est ad odit reiciendis quis. Dolorem velit ut sunt consequatur numquam incidunt.'
+                      collaboration_quantity: 10
+                properties:
+                  collaborations:
+                    type: array
+                    example:
+                      -
+                        uuid: 9c857ee7-f7ce-4102-b584-b2819cf1b0bf
+                        collaboration_name: 'Consequuntur quis et.'
+                        collaboration_description: 'Quae nostrum maxime voluptatem dolores recusandae voluptas earum at. Porro voluptate tempore perspiciatis beatae eius. Laboriosam possimus fugit illum ut.'
+                        collaboration_quantity: 2
+                      -
+                        uuid: 9c857ee8-4960-41af-ae66-b2da9f019f00
+                        collaboration_name: 'Ab magni.'
+                        collaboration_description: 'Voluptates aspernatur alias unde recusandae odio expedita. Dignissimos ut quia et omnis accusamus. Quam est ad odit reiciendis quis. Dolorem velit ut sunt consequatur numquam incidunt.'
+                        collaboration_quantity: 10
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          example: 9c857ee7-f7ce-4102-b584-b2819cf1b0bf
+                        collaboration_name:
+                          type: string
+                          example: 'Consequuntur quis et.'
+                        collaboration_description:
+                          type: string
+                          example: 'Quae nostrum maxime voluptatem dolores recusandae voluptas earum at. Porro voluptate tempore perspiciatis beatae eius. Laboriosam possimus fugit illum ut.'
+                        collaboration_quantity:
+                          type: integer
+                          example: 2
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: student
+        description: 'The student.'
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/students/{id}/bootcamp':
+    get:
+      summary: ''
+      operationId: getApiV1StudentsIdBootcamp
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  bootcamps:
+                    -
+                      bootcamp_id: 810c7bd9-ea34-46da-9e10-074558488e4e
+                      bootcamp_name: 'Reskilling - Front End React'
+                      bootcamp_end_date: '2024-06-02'
+                properties:
+                  bootcamps:
+                    type: array
+                    example:
+                      -
+                        bootcamp_id: 810c7bd9-ea34-46da-9e10-074558488e4e
+                        bootcamp_name: 'Reskilling - Front End React'
+                        bootcamp_end_date: '2024-06-02'
+                    items:
+                      type: object
+                      properties:
+                        bootcamp_id:
+                          type: string
+                          example: 810c7bd9-ea34-46da-9e10-074558488e4e
+                        bootcamp_name:
+                          type: string
+                          example: 'Reskilling - Front End React'
+                        bootcamp_end_date:
+                          type: string
+                          example: '2024-06-02'
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the student.'
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/students/{student}/additionaltraining':
+    get:
+      summary: ''
+      operationId: getApiV1StudentsStudentAdditionaltraining
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  additional_trainings:
+                    -
+                      uuid: 9c857ee7-a3eb-4851-9042-bd2b34d1ec8a
+                      course_name: 'Dolor voluptatum laboriosam.'
+                      study_center: Kreiger-Keebler
+                      course_beginning_year: 2001
+                      course_ending_year: 2020
+                      duration_hrs: 80
+                    -
+                      uuid: 9c857ee7-c9a6-4224-b951-497e2027185d
+                      course_name: 'Voluptates sed hic.'
+                      study_center: 'Ferry and Sons'
+                      course_beginning_year: 2016
+                      course_ending_year: 2020
+                      duration_hrs: 305
+                properties:
+                  additional_trainings:
+                    type: array
+                    example:
+                      -
+                        uuid: 9c857ee7-a3eb-4851-9042-bd2b34d1ec8a
+                        course_name: 'Dolor voluptatum laboriosam.'
+                        study_center: Kreiger-Keebler
+                        course_beginning_year: 2001
+                        course_ending_year: 2020
+                        duration_hrs: 80
+                      -
+                        uuid: 9c857ee7-c9a6-4224-b951-497e2027185d
+                        course_name: 'Voluptates sed hic.'
+                        study_center: 'Ferry and Sons'
+                        course_beginning_year: 2016
+                        course_ending_year: 2020
+                        duration_hrs: 305
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          example: 9c857ee7-a3eb-4851-9042-bd2b34d1ec8a
+                        course_name:
+                          type: string
+                          example: 'Dolor voluptatum laboriosam.'
+                        study_center:
+                          type: string
+                          example: Kreiger-Keebler
+                        course_beginning_year:
+                          type: integer
+                          example: 2001
+                        course_ending_year:
+                          type: integer
+                          example: 2020
+                        duration_hrs:
+                          type: integer
+                          example: 80
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: student
+        description: 'The student.'
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/students/{id}/languages':
+    get:
+      summary: ''
+      operationId: getApiV1StudentsIdLanguages
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  languages:
+                    -
+                      language_id: beb57b6f-070c-4a00-93ca-c3b24e98a2bc
+                      language_name: Anglès
+                      language_level: Natiu
+                properties:
+                  languages:
+                    type: array
+                    example:
+                      -
+                        language_id: beb57b6f-070c-4a00-93ca-c3b24e98a2bc
+                        language_name: Anglès
+                        language_level: Natiu
+                    items:
+                      type: object
+                      properties:
+                        language_id:
+                          type: string
+                          example: beb57b6f-070c-4a00-93ca-c3b24e98a2bc
+                        language_name:
+                          type: string
+                          example: Anglès
+                        language_level:
+                          type: string
+                          example: Natiu
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the student.'
+        example: 041e8f48-f330-308c-8f2c-4c7e27b5f14f
+        required: true
+        schema:
+          type: string
+  '/api/v1/modality/{studentId}':
+    get:
+      summary: ''
+      operationId: getApiV1ModalityStudentId
+      description: ''
+      parameters: []
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: "No s'ha trobat cap estudiant amb aquest ID: minus"
+                properties:
+                  message:
+                    type: string
+                    example: "No s'ha trobat cap estudiant amb aquest ID: minus"
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: studentId
+        description: ''
+        example: minus
+        required: true
+        schema:
+          type: string
+tags:
+  -
+    name: Endpoints
+    description: ''
