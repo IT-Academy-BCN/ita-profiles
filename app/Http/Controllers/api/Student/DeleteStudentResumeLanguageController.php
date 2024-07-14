@@ -36,9 +36,7 @@ class DeleteStudentResumeLanguageController extends Controller
             $this->deleteStudentResumeLanguageService->execute($studentId, $languageId);
 
             DB::commit();
-            return response()->json([
-                'message' => 'L\'idioma ha estat eliminat correctament!'
-            ], 200);
+            return response()->json([], 200);
         } catch (StudentNotFoundException | ResumeNotFoundException | StudentLanguageResumeNotFoundException $e) {
             DB::rollBack();
             Log::error('Exception:', [
