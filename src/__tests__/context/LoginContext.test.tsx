@@ -10,8 +10,16 @@ const LoginContextTestComponent: React.FC = () => {
     <div>
       <div>Token: {token}</div>
       <div>Is Logged In: {isLoggedIn.toString()}</div>
-      <button onClick={() => login({ id: '1', token: 'test-token' })}>Login</button>
-      <button onClick={logout}>Logout</button>
+      <button
+        type='button'
+        onClick={() => login({ id: '1', token: 'test-token' })}>
+          Login
+      </button>
+      <button
+        type='button' 
+        onClick={logout}>
+          Logout
+      </button>
     </div>
   );
 };
