@@ -47,7 +47,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
     Route::put('skills', UpdateStudentSkillsController::class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
-    Route::post('addlanguage', AddStudentLanguageController::class)->name('student.addlanguage');
+    Route::post('languages', AddStudentLanguageController::class)->name('student.addlanguage');
 });
 
 Route::prefix('tags')->group(function () {

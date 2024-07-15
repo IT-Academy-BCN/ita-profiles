@@ -23,12 +23,12 @@ class AddStudentLanguageController extends Controller
         $this->addStudentLanguageService = $addStudentLanguageService;
     }
 
-    public function store(AddStudentLanguageRequest $request, string $studentId): JsonResponse
+    public function __invoke(AddStudentLanguageRequest $request, string $studentId): JsonResponse
     {
         try {
             $data = $request->all(); 
-            $service = $this->addStudentLanguageService->execute($studentId, $data);
-            return response()->json(['message' => 'L\'idioma s\'ha afegit', 'languages' => $service]);
+            $this->addStudentLanguageService->execute($studentId, $data);
+            return response()->json(['message' => 'L\'idioma s\'ha afegit']);
         } catch (StudentNotFoundException | ResumeNotFoundException | LanguageNotFoundException | LanguageAlreadyExistsException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {
