@@ -16,8 +16,7 @@ use App\Exceptions\UserNotFoundInRedisException;
 use App\Exceptions\UserNotStoredInRedisException;
 use App\Exceptions\CouldNotCreateJWTokenPassportException;
 
-
-use App\Models\User;
+use Exception;
 
 class AuthController extends Controller
 {
@@ -27,17 +26,15 @@ class AuthController extends Controller
 	{
 		$this->userService = $userService;
 	}
-	
+
 	public function signin(SigninRequest $request): JsonResponse
 	{
-		try{
-			
+		try {
 			// Get user object by DNI
 			$user = $this->userService->getUserByDNI($request->dni);
 
 			// Pass the user object to checkUserCredentials
-			if ($this->userService->checkUserCredentials($user, $request['password']))
-			{
+			if ($this->userService->checkUserCredentials($user, $request['password'])) {
 				// Generate token using Laravel Passport.
 				$token = $this->userService->generateJWToken($user);
 				// Store user ID and token in Redis
@@ -49,25 +46,16 @@ class AuthController extends Controller
 				);
 				// Return success response
 				return response()->json($userDTO, 200);
-
-			}else{
+			} else {
 				// Return error response for invalid credentials
 				throw new HttpResponseException(response()->json([
 					'message' => ('Wrong User Identication or Password.')
 				], 401));
 			}
-		
+		} catch (UserNotFoundException | UserNotFoundInRedisException | UserNotStoredInRedisException | CouldNotCreateJWTokenPassportException $e) {
+			return response()->json(['message' => $e->getMessage()], $e->getCode() ?:  500);
+		} catch (Exception $e) {
+			return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
 		}
-		catch(UserNotFoundException | UserNotFoundInRedisException | UserNotStoredInRedisException | CouldNotCreateJWTokenPassportException $e)
-		{
-            return response()->json(['message' => $e->getMessage()], $e->getCode() ?:  500);
-        
-        }
-        catch(Exception $e)
-        {
-            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
-        }
-			
 	}
-	
 }
