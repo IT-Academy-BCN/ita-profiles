@@ -12,7 +12,7 @@ class SigninTest extends TestCase
 {	
 	//Before running test the SigninTestSeeder class must be run!
 	//php artisan db:seed --class=SigninTestSeeder
-	//use DatabaseTransactions;
+	
 	/**
      * @dataProvider signinProvider
      *
@@ -20,7 +20,6 @@ class SigninTest extends TestCase
     public function testSigninSuccess($data)
     {
 		$response = $this->postJson('/api/v1/signin', $data);
-		
 		$response->assertStatus(200);
 	}
 	
@@ -51,7 +50,6 @@ class SigninTest extends TestCase
     public function testSigninValidationError($data)
     {
 		$response = $this->postJson('/api/v1/signin', $data);
-		
 		$response->assertStatus(422);
 	}
 	
@@ -79,8 +77,7 @@ class SigninTest extends TestCase
 			);
 		return $array;
 	}
-	
-	
+
 	
 	/**
      * @dataProvider signinNotUserFoundProvider
@@ -90,7 +87,6 @@ class SigninTest extends TestCase
     {
 		$response = $this->postJson('/api/v1/signin', $data);
 		$response->assertStatus(401);
-		//$this->expectException(UserNotFoundException::class);
 	}
 	
     static function signinNotUserFoundProvider(): array
