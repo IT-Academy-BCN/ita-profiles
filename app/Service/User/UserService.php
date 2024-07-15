@@ -9,6 +9,9 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use App\Exceptions\UserNotFoundException;
+use App\Exceptions\UserNotFoundInRedisException;
+use App\Exceptions\UserNotStoredInRedisException;
+use App\Exceptions\CouldNotCreateJWTokenPassportException;
 
 class UserService
 {
@@ -53,8 +56,6 @@ class UserService
 		$user = User::where('dni', $userDNI)->first();
 
 		if (!$user) {
-			// Return exception instead of false.
-			//return false;
 			throw new UserNotFoundException($userDNI);
 		}
 		// I think here it should return an exception instead of false.
@@ -63,33 +64,12 @@ class UserService
 
 	public function generateJWToken(User $user): string
 	{
-		// if(is_numeric($userID)){
-		// 	$userID = (string)$userID;
-		// }
-
-		// 	// Create token header as a JSON string
-		// 	$header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-
-		// 	// Create token payload as a JSON string
-		// 	$payload = json_encode(['user_id' => $userID]);
-
-		// 	// Encode Header to Base64Url String
-		// 	$base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
-
-		// 	// Encode Payload to Base64Url String
-		// 	$base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
-
-		// 	// Create Signature Hash
-		// 	//https://www.php.net/manual/en/function.hash-hmac.php
-		// 	$signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $this->key_hash_mac, true);
-
-		// 	// Encode Signature to Base64Url String
-		// 	$base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
-
-		// 	// Create JWT
-		// 	$jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
 		$jwt = $user->createToken('loginToken')->accessToken;
-
+		
+		if(!$jwt){
+			throw new CouldNotCreateJWTokenPassportException($user->id);
+		}
+		
 		return $jwt;
 	}
 
@@ -99,15 +79,16 @@ class UserService
 			$userID = (string)$userID;
 		}
 
-		try {
+		try
+		{
 			$result = Redis::set($this->JWTokenRedisPre . $userID, $token, 'EX', $this->expirationTime_s); //35 seconds 30*60=1800
-			if ($result == True) {
-				return True;
-			} else {
-				return False;
+			if (!$result) {
+				throw new UserNotStoredInRedisException($userID);
 			}
-		} catch (Exception $e) {
-			return False;
+			return True;
+			
+		}catch (Exception $e) {
+			throw new UserNotStoredInRedisException($userID);
 		}
 	}
 
@@ -120,13 +101,16 @@ class UserService
 		try {
 			$jwt = $result = Redis::get('user:0:JWToken_' . $userID); //35 seconds 30*60=1800
 
-			if (is_string($jwt)) {
-				return $jwt;
-			} else {
-				return False;
+			if(!$jwt)
+			{
+				throw new UserNotFoundInRedisException($userID);
 			}
-		} catch (Exception $e) {
-			return False;
+
+			return $jwt;
+			
+
+		}catch(Exception $e) {
+			throw new UserNotFoundInRedisException($userID);
 		}
 	}
 }
