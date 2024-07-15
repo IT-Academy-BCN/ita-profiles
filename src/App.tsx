@@ -1,5 +1,5 @@
-import SmallScreenProvider from './context/SmallScreenContext'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import SmallScreenProvider from './context/SmallScreenContext'
 import Home from './pages/Home'
 import StudentProfilePage from './pages/StudentProfilePage'
 import './styles/App.css'

@@ -1,8 +1,8 @@
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ILoginForm } from '../../interfaces/interfaces'
-import { useNavigate } from 'react-router-dom'
 import { useLogin } from '../../context/LoginContext'
 
 type LoginPopupProps = {

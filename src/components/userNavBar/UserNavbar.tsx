@@ -1,16 +1,42 @@
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { Lock, ArrowDown, BurgerMenu } from '../../assets/svg'
+import { Lock, ArrowDown, BurgerMenu, Settings, UserIcon } from '../../assets/svg'
 import LoginPopup from '../login_&_register/LoginPopup'
 import RegisterPopup from '../login_&_register/RegisterPopup'
 import { useLogin } from '../../context/LoginContext'
-import { Settings } from '../../assets/svg'
-import { UserIcon } from '../../assets/svg'
-import { Link } from 'react-router-dom'
 
 const UserNavbar: React.FC = () => {
   const [isRestrictedPopupOpen, setIsRestrictedPopupOpen] = useState(false)
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false)
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false)
+
+  const handleOpenRestrictedPopup = () => {
+    setIsRestrictedPopupOpen(true)
+  }
+  
+  const handleCloseRestrictedPopup = () => {
+    setIsRestrictedPopupOpen(false)
+  }
+  
+  const handleOpenRegisterPopup = () => {
+    setIsRegisterPopupOpen(true)
+    setIsLoginPopupOpen(false)
+    setIsRestrictedPopupOpen(false)
+  }
+  
+  const handleCloseRegisterPopup = () => {
+    setIsRegisterPopupOpen(false)
+  }
+  
+  const handleOpenLoginPopup = () => {
+    setIsLoginPopupOpen(true)
+    setIsRegisterPopupOpen(false)
+    setIsRestrictedPopupOpen(false)
+  }
+  
+  const handleCloseLoginPopup = () => {
+    setIsLoginPopupOpen(false)
+  }
 
   const { isLoggedIn, logout} = useLogin();
   const handleButtonClick = () => {
@@ -20,36 +46,7 @@ const UserNavbar: React.FC = () => {
       handleOpenRestrictedPopup();
     }
   };
-
-
-  const handleOpenRestrictedPopup = () => {
-    setIsRestrictedPopupOpen(true)
-  }
-
-  const handleCloseRestrictedPopup = () => {
-    setIsRestrictedPopupOpen(false)
-  }
-
-  const handleOpenRegisterPopup = () => {
-    setIsRegisterPopupOpen(true)
-    setIsLoginPopupOpen(false)
-    setIsRestrictedPopupOpen(false)
-  }
-
-  const handleCloseRegisterPopup = () => {
-    setIsRegisterPopupOpen(false)
-  }
-
-  const handleOpenLoginPopup = () => {
-    setIsLoginPopupOpen(true)
-    setIsRegisterPopupOpen(false)
-    setIsRestrictedPopupOpen(false)
-  }
-
-  const handleCloseLoginPopup = () => {
-    setIsLoginPopupOpen(false)
-  }
-
+  
   return (
     <div className="flex w-full items-center justify-between md:justify-end">
       <div className="md:hidden">
@@ -77,6 +74,7 @@ const UserNavbar: React.FC = () => {
         {isLoggedIn 
           ? <div className='flex gap-4'>
               <button 
+                type='button'
                 className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
                 onClick={logout}
                 >
@@ -84,7 +82,7 @@ const UserNavbar: React.FC = () => {
               </button> 
               <Link 
                 className="rounded-lg bg-white px-3 py-2 font-medium text-gray" 
-                to={'/profile'}
+                to='/profile'
                 >
                 <img src={UserIcon} alt="User icon button" />
               </Link>             

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import StudentProfileDetail from './StudentProfileDetail';
 import MenuNavbar from '../menuNavbar/MenuNavbar';
 import UserNavbar from '../userNavBar/UserNavbar';

@@ -4,11 +4,11 @@ import '@testing-library/jest-dom/extend-expect';
 import { LoginProvider, useLogin } from '../../context/LoginContext';
 
 const LoginContextTestComponent: React.FC = () => {
-  const { token2, login, logout, isLoggedIn } = useLogin();
+  const { token, login, logout, isLoggedIn } = useLogin();
 
   return (
     <div>
-      <div>Token: {token2}</div>
+      <div>Token: {token}</div>
       <div>Is Logged In: {isLoggedIn.toString()}</div>
       <button onClick={() => login({ id: '1', token: 'test-token' })}>Login</button>
       <button onClick={logout}>Logout</button>

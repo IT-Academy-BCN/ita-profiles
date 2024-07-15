@@ -1,10 +1,10 @@
+import { BrowserRouter } from 'react-router-dom'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { describe, test, expect, beforeEach, beforeAll, afterEach, afterAll, vi } from 'vitest'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import LoginPopup from '../../../components/login_&_register/LoginPopup'
 import { LoginContext } from '../../../context/LoginContext'
-import { BrowserRouter } from 'react-router-dom'
 
 // Mock the navigate function from react-router-dom
 const mockNavigate = vi.fn()
