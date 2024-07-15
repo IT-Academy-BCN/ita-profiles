@@ -37,19 +37,6 @@ class UserService
 		return true;
 	}
 
-	// This function could get ID from user model instead of doing it from DNI to avoid another query (GetUserID) 
-	// or just use $user->id in the rest of functions and instead of passing an ID pass the user object.
-	public function getUserIDByDNI(string $userDNI): string  | int | bool
-	{
-		$user = User::where('dni', $userDNI)->first();
-
-		if ($user && $user->id) {
-			return $user->id;
-		}
-		// I think here it should return an exception instead of false.
-		return false;
-	}
-
 	// If we finally use this function we have to create the tests.
 	public function getUserByDNI(string $userDNI): User | bool
 	{
