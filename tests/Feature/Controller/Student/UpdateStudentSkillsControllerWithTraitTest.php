@@ -18,11 +18,16 @@ use App\Models\Student;
 use App\Policies\UserPolicy;
 use Illuminate\Auth\Access\Response;
 
+use Tests\Traits\MockEnsureStudentOwnerMiddleware;
+use Tests\Traits\MockUserPolicy;
 
-class UpdateStudentSkillsControllerTest extends TestCase
+
+class UpdateStudentSkillsControllerWithTraitTest extends TestCase
 {
     use DatabaseTransactions;
-
+	//use MockEnsureStudentOwnerMiddleware;
+	//use MockUserPolicy;
+	
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,28 +39,14 @@ class UpdateStudentSkillsControllerTest extends TestCase
 	public function testUpdateStudentSkillsControllerSuccess(array $request): void
     {
 		
-		//Mockering middleware
-		$ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
-		$ensureStudentMiddleware->shouldReceive('handle')->once()
-			->andReturnUsing(function($request, \Closure $next) {
-				return $next($request);
-			});
-		$this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
-		
-		//Mockering Policy
-		$userPolicyMockery= Mockery::mock('App\Policies\UserPolicy');
-		$userPolicyMockery->shouldReceive('canAccessResource')->once()
-			->andReturn(Response::allow());
-		$this->app->instance('App\Policies\UserPolicy', $userPolicyMockery);
-		
 		
 		$user = User::factory()->create();
 		$student = Student::factory()->create(['user_id'=>$user->id]);
 		$resume = Resume::factory()->create(['student_id'=>$student->id]);
 		
-		$user->save();
-		$student->save();
-		$resume->save();
+		//$user->save();
+		//$student->save();
+		//$resume->save();
 		
 		//Authentuication for Passport
 		Passport::actingAs(
@@ -63,13 +54,13 @@ class UpdateStudentSkillsControllerTest extends TestCase
 			['check-status']
 		);
 		
-		
         $response = $this->json('PUT', 'api/v1/student/'.$student->id.'/resume/skills', $request);
 		
 		$response->assertStatus(200);
 		$response->assertJson(['status' => 'success']);
   
-    }	
+    }
+	
 	
 	
 	static function updateStudentSkillsControllerSuccessProvider()
@@ -105,13 +96,6 @@ class UpdateStudentSkillsControllerTest extends TestCase
      */
 	public function testUpdateStudentSkillsControllerValidationFaliure(array $request): void
     {
-		//Mockering middleware
-		$ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
-		$ensureStudentMiddleware->shouldReceive('handle')->once()
-			->andReturnUsing(function($request, \Closure $next) {
-				return $next($request);
-			});
-		$this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
 		
 		$user = User::factory()->create();
 		$student = Student::factory()->create(['user_id'=>$user->id]);
@@ -127,12 +111,12 @@ class UpdateStudentSkillsControllerTest extends TestCase
 			['check-status']
 		);
 		
-		
         $response = $this->json('PUT', 'api/v1/student/'.$student->id.'/resume/skills', $request);
 		
 		$response->assertStatus(422);
         
     }
+	
 	
 	static function updateStudentSkillsControllerValidationFaliureProvider()
     {
