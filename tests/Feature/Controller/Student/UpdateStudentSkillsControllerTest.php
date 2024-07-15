@@ -14,6 +14,10 @@ use App\Http\Middleware\EnsureStudentOwner;
 use App\Models\Resume;
 use App\Models\User;
 
+use App\Policies\UserPolicy;
+use Illuminate\Auth\Access\Response;
+
+
 class UpdateStudentSkillsControllerTest extends TestCase
 {
     use DatabaseTransactions;
@@ -37,7 +41,14 @@ class UpdateStudentSkillsControllerTest extends TestCase
 			});
 		$this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
 		
-		//Mockery Passport
+		//Mockering Policy
+		$userPolicyMockery= Mockery::mock('App\Policies\UserPolicy');
+		$userPolicyMockery->shouldReceive('canAccessResource')->once()
+			->andReturn(Response::allow());
+		$this->app->instance('App\Policies\UserPolicy', $userPolicyMockery);
+		
+		
+		//Authentuication for Passport
 		Passport::actingAs(
 			User::factory()->create(),
 			['check-status']
