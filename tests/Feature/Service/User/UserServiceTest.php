@@ -13,12 +13,6 @@ use App\Service\User\UserService;
 
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserNotFoundInRedisException;
-use App\Exceptions\UserNotStoredInRedisException;
-use App\Exceptions\CouldNotCreateJWTokenPassportException;
-
-use Illuminate\Support\Facades\DB;
-
-
 
 class UserServiceTest extends TestCase
 {
@@ -29,72 +23,61 @@ class UserServiceTest extends TestCase
 	{
 		parent::setUp();
 		$this->service = new UserService();
-	}	
-	
+	}
+
 	/**
 	 * @dataProvider checkUserCredentialsSuccessProvider
 	 *
 	 */
-	public function testCheckUserCredentialsSuccess(string $userDNI, string $password, bool $correctPasswordBool, bool $addDBBool, bool $expectedOutput)
+	public function testCheckUserCredentialsSuccess(string $userDNI, string $password, bool $correctPasswordBool, bool $expectedOutput)
 	{
+		$user = User::factory()->create(['dni' => $userDNI, 'password' => ($correctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword'))]);
+		$user->save();
 
-		$user = User::factory()->create(['dni' => $userDNI,  'password' => ($correctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword'))]);
-		$user ->save();
-
-		//Perform the call to the function to be tested, checking first if returnUser is not null:
 		$result = $this->service->checkUserCredentials($user, $password);
 
-
-		//Assert Result
 		$this->assertEquals($expectedOutput, $result);
 	}
-	
+
 	static function checkUserCredentialsSuccessProvider(): array
 	{
 		$array = array(
 			array(
 				'69818630Z',
 				'password',
-				True, //Add In "DB" With True/False Password
-				True, //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
+				true, // Correct Password bool
+				true // Expected Output
 			),
 			array(
 				'X6849947H',
 				'password',
-				True, //Add In "DB" With True/False Password
-				True, //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
+				true, // Correct Password bool
+				true // Expected Output
 			),
 			array(
 				'48332312C',
 				'passOnePass',
-				True, //Add In "DB" With True/False Password
-				True,  //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
+				true, // Correct Password bool
+				true // Expected Output
 			)
 		);
 		return $array;
 	}
-	
-	
+
 	/**
 	 * @dataProvider checkUserCredentialsFailurePasswordProvider
 	 *
 	 */
 	public function testCheckUserCredentialsFailurePassword(string $userDNI, string $password)
 	{
-		$user = User::factory()->create([ 'dni' => $userDNI,  'password' => bcrypt('WrongPassword') ]);
+		$user = User::factory()->create(['dni' => $userDNI,  'password' => bcrypt('WrongPassword')]);
 		$user->save();
 
-		//Perform the call to the function to be tested, checking first if returnUser is not null:
 		$result = $this->service->checkUserCredentials($user, $password);
 
-
-		//Assert Result
-		$this->assertEquals(False, $result);
+		$this->assertEquals(false, $result);
 	}
-	
+
 	static function checkUserCredentialsFailurePasswordProvider(): array
 	{
 		$array = array(
@@ -109,27 +92,23 @@ class UserServiceTest extends TestCase
 		);
 		return $array;
 	}
-	
-	
-	
-	
+
+
 	/**
 	 * @dataProvider getUserByDNISuccessProvider
 	 */
 	public function testGetUserByDNI(string $userDNI)
 	{
-
 		$user = User::factory()->create(['dni' => $userDNI]);
 		$user->save();
 		$user->refresh();
-		
+
 		$user_return = $this->service->getUserByDNI($userDNI);
-		$user_refreshed = User::where('dni',$user->dni)->first();
+		$user_refreshed = User::where('dni', $user->dni)->first();
 		$this->assertEquals($user_refreshed->getAttributes(), $user_return->getAttributes());
 		$this->assertEquals($user->getAttributes(), $user_return->getAttributes());
-
 	}
-	
+
 	static function getUserByDNISuccessProvider()
 	{
 		$array = array(
@@ -140,21 +119,17 @@ class UserServiceTest extends TestCase
 
 		return $array;
 	}
-	
+
 	/**
 	 * @dataProvider getUserByDNIUserNotFoundProvider
 	 */
 	public function testGetUserByDNIUserNotFound(string $userDNI)
 	{
-
 		$this->expectException(UserNotFoundException::class);
-		
-		$user_return = $this->service->getUserByDNI($userDNI);
-	
-		$this->assertEquals($user, $user_return);
 
+		$this->service->getUserByDNI($userDNI);
 	}
-	
+
 	static function getUserByDNIUserNotFoundProvider()
 	{
 		$array = array(
@@ -170,24 +145,18 @@ class UserServiceTest extends TestCase
 	/**
 	 * @dataProvider generateJWTokenProvider
 	 */
-	public function testGenerateJWToken(string | int $userID, bool $expectedOutput)
+	public function testGenerateJWToken()
 	{
-		
 		$user = User::factory()->create();
 		$user->save();
-		
+
 		$jwt = $this->service->generateJWToken($user);
 		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt); //(^[\w-]*\.[\w-]*\.[\w-]*$)
 		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)', $jwt);
 
-		if ($resultOne == true && $resultTwo == true) {
-			// shouldn't this check use $expectedOutput instead of true?
-			$this->assertEquals(true, true);
-		} else {
-			$this->assertEquals(true, false);
-		}
+		$this->assertEquals($resultOne, true);
+		$this->assertEquals($resultTwo, true);
 	}
-	
 
 
 	static function generateJWTokenProvider()
@@ -217,12 +186,12 @@ class UserServiceTest extends TestCase
 			array(
 				'Z123', //userID
 				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-				True // Expected Output
+				true // Expected Output
 			),
 			array(
 				'abc', //userID
 				'abc',
-				True // Expected Output
+				true // Expected Output
 			),
 		);
 
@@ -244,18 +213,18 @@ class UserServiceTest extends TestCase
 		$array = array(
 			array(
 				'Z123', //userID
-				True // Expected Output
+				true // Expected Output
 			),
 			array(
 				'abc', //userID
-				True // Expected Output
+				true // Expected Output
 			)
 		);
 
 		return $array;
 	}
-	
-	
+
+
 	/**
 	 * @dataProvider getJWTokenByUserIDFailureProvider
 	 */
@@ -271,13 +240,12 @@ class UserServiceTest extends TestCase
 		$array = array(
 			array(
 				'ZZZZZZZZZ981273', //userID
-				False // Expected Output
+				false // Expected Output
 			)
 		);
 
 		return $array;
 	}
-	
 
 
 	protected function tearDown(): void
