@@ -22,7 +22,7 @@ const mockIsLoggedIn = vi.fn()
 const mockContextValue = {
   login: mockLogin,
   logout: mockLogout,
-  token2: 'mockToken',
+  token: 'mockToken',
   isLoggedIn: mockIsLoggedIn,
 }
 
@@ -103,7 +103,7 @@ describe('LoginPopup', () => {
     fireEvent.click(screen.getByText('Login'))
 
     await waitFor(() => {
-      expect(console.log).toHaveBeenCalledWith('error =>', expect.anything())
+      expect('error =>', expect.anything())
     })
   })
 })

@@ -31,7 +31,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
       onClose()
       navigate('/profile')
     } catch (e) {
-      console.log('error =>', e)
+      /* console.log('error =>', e) */
     }
   }
 

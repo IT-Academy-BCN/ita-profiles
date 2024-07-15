@@ -29,11 +29,11 @@ const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     setIsLoggedIn(Boolean(storedToken)); 
-    console.log("token cambió:", token);
+    /* console.log("token cambió:", token); */
   }, [token]);
 
   useEffect(() => {
-    console.log("isLoggedIn cambió:", isLoggedIn);
+    /* console.log("isLoggedIn cambió:", isLoggedIn); */
   }, [isLoggedIn]);
 
 
