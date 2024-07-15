@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature\Middleware;
+namespace Tests\Feature\Policy;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -15,17 +15,18 @@ use App\Models\Resume;
 use Illuminate\Foundation\Testing\WithFaker;
 
 use Mockery;
+use App\Policies\UserPolicy;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Auth\Access\Response;
 
-
-class EnsureStudentOwnerMiddlewareTest extends TestCase
+class UserPolicyTest extends TestCase
 {
 	
 	use DatabaseTransactions;
 	
-	public function test_non_owners_are_redirected()
+	public function test_non_owners_are_restricted()
     {
 		
 		// Test users
@@ -41,21 +42,10 @@ class EnsureStudentOwnerMiddlewareTest extends TestCase
 		$student->save();
 		$student_2->save();
 		
-        // Ensure the authenticated user is the first user
-        $this->actingAs($user);
+		$policy = new UserPolicy();
 		
-		$address = '/api/v1/student/' . $student_2->id . '/resume/skills';
-		
-        // Define the route with middleware applied
-        Route::put('/api/v1/student/{studentId}/resume/skills', function () {
-            return 'Success';
-        })->middleware(EnsureStudentOwner::class);
-
-        // Simulate a request with a mismatched parameter
-        $response = $this->put($address);
-
-        // Assert that the response status is 403 (Unauthorized)
-        $response->assertStatus(401);
+		//$this->assertFalse($policy->canAccessResource($user, $user_2));
+		$this->assertEquals($policy->canAccessResource($user, $user_2), Response::deny('No tens els permisos per accedir a aquest recurs.'));
     }
     
     
@@ -78,26 +68,10 @@ class EnsureStudentOwnerMiddlewareTest extends TestCase
 		$student_2->save();
 		$resume->save();
 		
-        // Ensure the authenticated user is the first user
-        $this->actingAs($user);
+		$policy = new UserPolicy();
 		
-		$address = '/api/v1/student/' . $student->id . '/resume/skills';
+		$this->assertEquals($policy->canAccessResource($user, $user), Response::allow());
 		
-        // Define the route with middleware applied
-        Route::put('/api/v1/student/{studentId}/resume/skills', function () {
-            return 'Success';
-        })->middleware(EnsureStudentOwner::class);
-
-        // Simulate a request with a mismatched parameter
-        $data = array('skills' => ["html5", "css", "postman"]);
-		$response = $this->json('PUT', $address, $data);
-		//Check that the codes are none of the middleware (redundancy)
-		$this->assertNotEquals($response->getStatusCode(), 401);
-		$this->assertNotEquals($response->getStatusCode(), 402);
-		$this->assertNotEquals($response->getStatusCode(), 404);
-		
-        // Assert that the response status is 200 (OK)
-        $response->assertStatus(200);
     }
 
 }
