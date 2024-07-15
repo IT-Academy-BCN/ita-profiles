@@ -29,94 +29,16 @@ class UserServiceTest extends TestCase
 	{
 		parent::setUp();
 		$this->service = new UserService();
-	}
-
+	}	
+	
 	/**
-	 * @dataProvider checkUserCredentialsProvider
-	 *
-	 */
-	public function testCheckUserCredentials(string $userDNI, string $password, bool $correctPasswordBool, bool $addDBBool, bool $expectedOutput)
-	{
-		$randID = rand(1, 100);
-		$user = User::factory()->create(['id' => $randID, 'dni' => $userDNI,  'password' => ($correctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword'))]);
-		$user ->save();
-
-		//Perform the call to the function to be tested, checking first if returnUser is not null:
-		$result = false;
-		if ($user !== null) {
-			$result = $this->service->checkUserCredentials($user, $password);
-		}
-
-		//Assert Result
-		$this->assertEquals($expectedOutput, $result);
-	}
-	
-	static function checkUserCredentialsProvider(): array
-	{
-		$array = array(
-			array(
-				'69818630Z', //NIF/NIE
-				'password', //Password
-				False, //Add In "DB" With True/False Password
-				False, //Add In "DB" (True = Yes , False = No)
-				False // Expected Output
-			),
-			array(
-				'X6849947H',
-				'password',
-				False, //Add In "DB" With True/False Password
-				False, //Add In "DB" (True = Yes , False = No)
-				False // Expected Output
-			),
-			array(
-				'69818630Z',
-				'password',
-				True, //Add In "DB" With True/False Password
-				True, //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
-			),
-			array(
-				'X6849947H',
-				'password',
-				True, //Add In "DB" With True/False Password
-				True, //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
-			),
-			array(
-				'69818630Z',
-				'password',
-				False, //Add In "DB" With True/False Password
-				True, //Add In "DB" (True = Yes , False = No)
-				False // Expected Output
-			),
-			array(
-				'X6849947H',
-				'password',
-				False, //Add In "DB" With True/False Password
-				True,  //Add In "DB" (True = Yes , False = No)
-				False // Expected Output
-			),
-			array(
-				'48332312C',
-				'passOnePass',
-				True, //Add In "DB" With True/False Password
-				True,  //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
-			),
-		);
-		return $array;
-	}
-	
-	
-	
-		/**
-	 * @dataProvider checkUserCredentialsProvider
+	 * @dataProvider checkUserCredentialsSuccessProvider
 	 *
 	 */
 	public function testCheckUserCredentialsSuccess(string $userDNI, string $password, bool $correctPasswordBool, bool $addDBBool, bool $expectedOutput)
 	{
-		$randID = rand(1, 100);
-		$user = User::factory()->create(['id' => $randID, 'dni' => $userDNI,  'password' => ($correctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword'))]);
+
+		$user = User::factory()->create(['dni' => $userDNI,  'password' => ($correctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword'))]);
 		$user ->save();
 
 		//Perform the call to the function to be tested, checking first if returnUser is not null:
@@ -162,8 +84,7 @@ class UserServiceTest extends TestCase
 	 */
 	public function testCheckUserCredentialsFailurePassword(string $userDNI, string $password)
 	{
-		$randID = rand(1, 100);
-		$user = User::factory()->create(['id' => $randID, 'dni' => $userDNI,  'password' => bcrypt('WrongPassword') ]);
+		$user = User::factory()->create([ 'dni' => $userDNI,  'password' => bcrypt('WrongPassword') ]);
 		$user->save();
 
 		//Perform the call to the function to be tested, checking first if returnUser is not null:
@@ -205,6 +126,7 @@ class UserServiceTest extends TestCase
 		$user_return = $this->service->getUserByDNI($userDNI);
 		$user_refreshed = User::where('dni',$user->dni)->first();
 		$this->assertEquals($user_refreshed->getAttributes(), $user_return->getAttributes());
+		$this->assertEquals($user->getAttributes(), $user_return->getAttributes());
 
 	}
 	
@@ -251,7 +173,7 @@ class UserServiceTest extends TestCase
 	public function testGenerateJWToken(string | int $userID, bool $expectedOutput)
 	{
 		
-		$user = \App\Models\User::factory()->create(['id' => '1']);
+		$user = User::factory()->create();
 		$user->save();
 		
 		$jwt = $this->service->generateJWToken($user);
