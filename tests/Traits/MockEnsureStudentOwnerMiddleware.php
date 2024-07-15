@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Tests\Traits;
 use Illuminate\Support\Facades\Route;
+use Mockery;
 
 trait MockEnsureStudentOwnerMiddleware{
 	
@@ -10,9 +11,9 @@ trait MockEnsureStudentOwnerMiddleware{
      *
      * @return void
      */
-    function MockEnsureStudentOwnerMiddleware(\Closure $callback)
+    function beginMockEnsureStudentOwnerMiddleware()
     { 
-		/*
+		
 		//Mockering middleware
 		$ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
 		$ensureStudentMiddleware->shouldReceive('handle')
@@ -20,11 +21,17 @@ trait MockEnsureStudentOwnerMiddleware{
 				return $next($request);
 			});
 		$this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
-		*/
 		
-		Route::middleware([\App\Http\Middleware\EnsureStudentOwnerMiddleware::class])->group(function () use ($callback) {
+		/*
+		Route::middleware([\App\Http\Middleware\EnsureStudentOwner::class])->group(function () use ($callback) {
             $callback();
         });
-		
+		*/
 	}
+	
+	protected function setUp(): void
+    {
+        parent::setUp();
+        $this->beginMockEnsureStudentOwnerMiddleware();
+    }
 }

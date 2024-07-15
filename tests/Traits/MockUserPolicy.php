@@ -3,10 +3,12 @@ declare(strict_types=1);
 namespace Tests\Traits;
 
 use Illuminate\Support\Facades\Gate;
+use Mockery;
+use Illuminate\Auth\Access\Response;
 
 trait MockUserPolicy
 {
-    protected function mockUserPolicy(string $method, bool $returnValue)
+    protected function mockUserPolicy()
     {	
 		/*
         Gate::define("user.$method", function () use ($returnValue) {

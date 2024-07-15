@@ -23,7 +23,7 @@ class EnsureStudentOwner
         //$studentID  = request()->route('studentId');
         if(!$studentID){
             echo $studentID;
-            return response()->json(['error' => 'URL Not found'], 404);
+            return response()->json(['error' => 'URL Not found'], 407); //404
         }
 
         //Obtain the user ID from the JWToken using passport:
@@ -36,7 +36,7 @@ class EnsureStudentOwner
         $user = User::find($userID);
         $student = Student::find($studentID);
         if(!$user || !$student){
-            return response()->json(['error' => 'URL Error'], 404);
+            return response()->json(['error' => 'URL Error'], 407);  //404
         }
 
         //If userID is the same in Student continue as success:
