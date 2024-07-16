@@ -9,7 +9,9 @@ use App\Models\{
     Student,
     User
 };
+use App\Service\Student\UpdateStudentProfileService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Mockery\MockInterface;
 use Tests\TestCase;
 
 class UpdateStudentProfileControllerTest extends TestCase
@@ -21,41 +23,34 @@ class UpdateStudentProfileControllerTest extends TestCase
         parent::setUp();
     }
 
-    /**
-     * Crea un usuario y un estudiante asociados.
-     *
-     * @return array
-     */
-    private function createUserAndStudent(): array
+    private function createUser():User
     {
-        $user = User::factory()->create();
-        $student = Student::factory()->for($user)->create();
-        return [$user, $student];
+        return User::factory()->create();
     }
 
-    /**
-     * Crea datos falsos para actualizar el perfil del estudiante.
-     *
-     * @param Student $student
-     * @return array
-     */
-    private function createFakeDataToUpdate(Student $student): array
+    private function createStudent(User $user):Student
     {
-        $resume = Resume::factory()->for($student)->create();
+        return Student::factory()->for($user)->create();
+    }
 
-        return array_merge(
-            $student->only(['id', 'name', 'surname']),
-            $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about']),
-            ['tags_ids' => json_decode($resume->tags_ids)]
-        );
+    private function createResume(Student $student):Resume
+    {
+        return Resume::factory()->for($student)->create();
     }
 
     public function test_can_update_student_profile(): void
     {
-        [, $student] = $this->createUserAndStudent();
-        $dataToUpdate = $this->createFakeDataToUpdate($student);
+        $user = $this->createUser();
+        $student = $this->createStudent($user);
+        $resume = $this->createResume($student);
 
-        $url = route('student.updateProfile', ['studentId' => $dataToUpdate['id']]);
+        $dataToUpdate = array_merge(
+            $student->only(['id', 'name', 'surname']),
+            $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about']),
+            ['tags_ids' => json_decode($resume->tags_ids)]
+        );
+
+        $url = route('student.updateProfile', ['studentId' => $student->id]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(200);
@@ -63,11 +58,14 @@ class UpdateStudentProfileControllerTest extends TestCase
 
     public function test_can_return_a_404_when_a_student_is_not_found()
     {
-        [, $student] = $this->createUserAndStudent();
-        $dataToUpdate = $this->createFakeDataToUpdate($student);
-        $dataToUpdate['id'] = 'non_existent_studentId';
+        $studentId = "non-exiten-student";
+        $dataToUpdate = [
+            'name' => 'Updated Name',
+            'surname' => 'Updated Surname',
+            'tags_ids' => [1, 2, 3],
+        ];
 
-        $url = route('student.updateProfile', ['studentId' => $dataToUpdate['id']]);
+        $url = route('student.updateProfile', ['studentId' => $studentId]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(404);
@@ -75,7 +73,9 @@ class UpdateStudentProfileControllerTest extends TestCase
 
     public function test_can_return_a_404_when_a_resume_is_not_found()
     {
-        [, $student] = $this->createUserAndStudent();
+        $user = $this->createUser();
+        $student = $this->createStudent($user);
+
         $dataToUpdate = [
             'name' => 'Updated Name',
             'surname' => 'Updated Surname',
@@ -93,9 +93,10 @@ class UpdateStudentProfileControllerTest extends TestCase
      */
     public function test_can_not_update_student_profile_with_invalid_data(array $invalidData, array $expectedErrors): void
     {
-        [, $student] = $this->createUserAndStudent();
-        $dataToUpdate = $this->createFakeDataToUpdate($student);
-        $url = route('student.updateProfile', ['studentId' => $dataToUpdate['id']]);
+        $user = $this->createUser();
+        $student = $this->createStudent($user);
+
+        $url = route('student.updateProfile', ['studentId' => $student->id]);
         $response = $this->json('PUT', $url, $invalidData);
 
         $response->assertStatus(422);
@@ -155,4 +156,28 @@ class UpdateStudentProfileControllerTest extends TestCase
             ],
         ];
     }
+
+    public function test_can_return_a_500_on_internal_server_error(): void
+    {
+        $this->mock(UpdateStudentProfileService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('execute')
+                ->andThrow(new \Exception('Internal Server Error'));
+        });
+
+        $user = $this->createUser();
+        $student = $this->createStudent($user);
+        $resume = $this->createResume($student);
+
+        $dataToUpdate = array_merge(
+            $student->only(['id', 'name', 'surname']),
+            $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about']),
+            ['tags_ids' => json_decode($resume->tags_ids)]
+        );
+
+        $url = route('student.updateProfile', ['studentId' => $student->id]);
+        $response = $this->json('PUT', $url, $dataToUpdate);
+
+        $response->assertStatus(500);
+    }
+
 }
