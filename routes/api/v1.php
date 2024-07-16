@@ -11,8 +11,11 @@ use App\Http\Controllers\api\Student\{
     StudentListController,
     StudentProjectsDetailController,
     SpecializationListController,
-    StudentImageController,
-    UpdateStudentImageController
+    UpdateStudentProjectController,
+    UpdateStudentSkillsController,
+    UpdateStudentProfileController,
+    UpdateStudentImageController,
+
 };
 
 use App\Http\Controllers\api\Tag\{
@@ -42,6 +45,9 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
+    Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
+    Route::put('skills', UpdateStudentSkillsController::class)->name('student.skills');
+    Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
     Route::post('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
 });
 
