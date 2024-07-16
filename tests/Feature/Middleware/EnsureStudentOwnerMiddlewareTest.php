@@ -67,10 +67,6 @@ class EnsureStudentOwnerMiddlewareTest extends TestCase
         // Simulate a request with a mismatched parameter
         $data = array('skills' => ["html5", "css", "postman"]);
         $response = $this->json('PUT', $address, $data);
-        //Check that the codes are none of the middleware (redundancy)
-        $this->assertNotEquals($response->getStatusCode(), 401);
-        $this->assertNotEquals($response->getStatusCode(), 402);
-        $this->assertNotEquals($response->getStatusCode(), 404);
 
         $response->assertStatus(200);
     }

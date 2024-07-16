@@ -32,7 +32,6 @@ class UserServiceTest extends TestCase
 	public function testCheckUserCredentialsSuccess(string $userDNI, string $password)
 	{
 		$user = User::factory()->create(['dni' => $userDNI, 'password' => bcrypt($password)]);
-		$user->save();
 
 		$result = $this->service->checkUserCredentials($user, $password);
 
@@ -67,7 +66,6 @@ class UserServiceTest extends TestCase
 		$this->expectException(InvalidCredentialsException::class);
 
 		$user = User::factory()->create(['dni' => $userDNI, 'password' => bcrypt('WrongPassword')]);
-		$user->save();
 
 		$this->service->checkUserCredentials($user, $password);
 	}
@@ -94,7 +92,7 @@ class UserServiceTest extends TestCase
 	public function testGetUserByDNI(string $userDNI)
 	{
 		$user = User::factory()->create(['dni' => $userDNI]);
-		$user->save();
+
 		$user->refresh();
 
 		$user_return = $this->service->getUserByDNI($userDNI);
@@ -142,7 +140,6 @@ class UserServiceTest extends TestCase
 	public function testGenerateJWToken()
 	{
 		$user = User::factory()->create();
-		$user->save();
 
 		$jwt = $this->service->generateJWToken($user);
 		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt);

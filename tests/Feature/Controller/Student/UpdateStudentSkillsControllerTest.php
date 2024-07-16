@@ -47,10 +47,6 @@ class UpdateStudentSkillsControllerTest extends TestCase
 		$student = Student::factory()->create(['user_id' => $user->id]);
 		$resume = Resume::factory()->create(['student_id' => $student->id]);
 
-		$user->save();
-		$student->save();
-		$resume->save();
-
 		//Authentuication for Passport
 		Passport::actingAs(
 			$user,
@@ -104,10 +100,6 @@ class UpdateStudentSkillsControllerTest extends TestCase
 		$user = User::factory()->create();
 		$student = Student::factory()->create(['user_id' => $user->id]);
 		$resume = Resume::factory()->create(['student_id' => $student->id]);
-
-		$user->save();
-		$student->save();
-		$resume->save();
 
 		//Authentuication for Passport
 		Passport::actingAs(

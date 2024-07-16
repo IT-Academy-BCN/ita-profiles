@@ -30,15 +30,12 @@ class MockUserPolicyTraitTest extends TestCase
     {
         // Define a custom route for testing
         $user = User::factory()->create();
-        $user_2 = User::factory()->create();
-        $user->save();
-        $user_2->save();
 
         $this->app['router']->get('/test-policy', function () {
             // Fetch the authenticated user
             $user = Auth::user();
             $user_2 = User::factory()->create();
-            $user_2->save();
+
             // Perform authorization check
             if (Gate::allows('canAccessResource', $user_2)) {
                 return response('Allowed', 200);

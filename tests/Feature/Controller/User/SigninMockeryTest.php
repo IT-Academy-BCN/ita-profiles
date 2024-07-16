@@ -24,9 +24,7 @@ class SigninMockeryTest extends TestCase
 	 */
 	public function testSigninSuccessMockery($data)
 	{
-
 		$user = User::factory()->create(['dni' => $data['dni'], 'password' => $data['password']]);
-		$user->save();
 
 		$response = $this->postJson('/api/v1/signin', $data);
 
@@ -62,7 +60,6 @@ class SigninMockeryTest extends TestCase
 	{
 		if (array_key_exists('password', $data) && array_key_exists('dni', $data)) {
 			$user = User::factory()->create(['dni' => $data['dni'], 'password' => $data['password']]);
-			$user->save();
 		}
 
 		$response = $this->postJson('/api/v1/signin', $data);
