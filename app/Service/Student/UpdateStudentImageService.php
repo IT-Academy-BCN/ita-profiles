@@ -10,18 +10,18 @@ use Illuminate\Support\Facades\Storage;
 class UpdateStudentImageService
 {
     public function execute(string $studentId, string $filename): void
-    {
-        $student = Student::find($studentId);
+{
+    $student = Student::find($studentId);
 
-        if (!$student) {
-            throw new StudentNotFoundException(" {$studentId}");
-        }
-
-        if ($student->photo) {
-            Storage::delete('public/photos/' . $student->photo);
-        }
-
-        $student->photo = $filename;
-        $student->save();
+    if (!$student) {
+        throw new StudentNotFoundException(" {$studentId}");
     }
+
+    if ($student->photo) {
+        Storage::delete('public/photos/' . $student->photo);
+    }
+
+    $student->photo = $filename;
+    $student->save();
+}
 }
