@@ -26,27 +26,42 @@ use Illuminate\Support\Facades\Route;
 class MockUserPolicyTraitTest extends TestCase
 {
     use DatabaseTransactions;
-	use MockUserPolicy;
+	//use MockUserPolicy;
 	
     protected function setUp(): void
     {
         parent::setUp();
-        $this->mockUserPolicy();
+        //$this->beginMockUserPolicy();
     }
 	
-	
+	/**
+     * Handle database transactions on the specified connections.
+     *
+     * @return void
+     */
 	public function testMockEnsureStudentOwnerMiddlewareSuccess(): void
     {
         
         Route::get('/test-policy', function () {
 			$user = User::factory()->create();
 			$user_2 = User::factory()->create();
+			$user->save();
+			$user_2->save();
 			$policy = new UserPolicy;
-			
-			$policy->canAccessResource($user, $user_2);
-			$user->canAccessResource($user, $user_2);
-			echo "called";
-            return 'Allowed';
+			//$this->beginMockUserPolicy();
+			$result = $policy->canAccessResource($user, $user_2);
+			//$user->canAccessResource($user, $user_2);
+			echo "called\n";
+			echo $result."\n";
+			var_dump($result);
+			return 'Allowed';
+			if($result === Response::allow()){
+				return 'Allowed';
+			}else{
+				 return 'Restricted';
+			}	
+				
+           
         });
         
 
