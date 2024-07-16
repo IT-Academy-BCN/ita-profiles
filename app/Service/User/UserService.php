@@ -12,6 +12,7 @@ use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserNotFoundInRedisException;
 use App\Exceptions\UserNotStoredInRedisException;
 use App\Exceptions\CouldNotCreateJWTokenPassportException;
+use App\Exceptions\InvalidCredentialsException;
 
 class UserService
 {
@@ -27,14 +28,13 @@ class UserService
 
 	public function checkUserCredentials(User $user, string $password): bool
 	{
-		// Maybe here we should use exceptions to handle the error instead of returning false
 		if (!$user || !Hash::check($password, $user->password)) {
-			return false;
+			throw new InvalidCredentialsException();
 		}
 		return true;
 	}
 
-	public function getUserByDNI(string $userDNI): User | Exception
+	public function getUserByDNI(string $userDNI): User
 	{
 		$user = User::where('dni', $userDNI)->first();
 
@@ -44,7 +44,7 @@ class UserService
 		return $user;
 	}
 
-	public function generateJWToken(User $user): string | Exception
+	public function generateJWToken(User $user): string
 	{
 		$jwt = $user->createToken('loginToken')->accessToken;
 
@@ -54,7 +54,7 @@ class UserService
 		return $jwt;
 	}
 
-	public function storeUserIDAndTokenRedis(string | int $userID, string $token): bool | Exception
+	public function storeUserIDAndTokenRedis(string | int $userID, string $token): bool
 	{
 		if (is_numeric($userID)) {
 			$userID = (string)$userID;
@@ -71,7 +71,7 @@ class UserService
 		}
 	}
 
-	public function getJWTokenByUserID(string | int $userID): string | Exception
+	public function getJWTokenByUserID(string | int $userID): string
 	{
 		if (is_numeric($userID)) {
 			$userID = (string)$userID;

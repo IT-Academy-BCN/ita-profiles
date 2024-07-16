@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Service\User;
 
+use App\Exceptions\InvalidCredentialsException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Models\User;
@@ -64,12 +65,12 @@ class UserServiceTest extends TestCase
 	 */
 	public function testCheckUserCredentialsFailurePassword(string $userDNI, string $password)
 	{
-		$user = User::factory()->create(['dni' => $userDNI,  'password' => bcrypt('WrongPassword')]);
+		$this->expectException(InvalidCredentialsException::class);
+
+		$user = User::factory()->create(['dni' => $userDNI, 'password' => bcrypt('WrongPassword')]);
 		$user->save();
 
-		$result = $this->service->checkUserCredentials($user, $password);
-
-		$this->assertEquals(false, $result);
+		$this->service->checkUserCredentials($user, $password);
 	}
 
 	static function checkUserCredentialsFailurePasswordProvider(): array
@@ -209,7 +210,6 @@ class UserServiceTest extends TestCase
 
 		$this->assertEquals($resultOne, true);
 		$this->assertEquals($resultTwo, true);
-		
 	}
 	static function getJWTokenByUserIDProvider()
 	{

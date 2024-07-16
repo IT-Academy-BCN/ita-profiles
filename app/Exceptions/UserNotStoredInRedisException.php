@@ -9,7 +9,7 @@ use Throwable;
 
 class UserNotStoredInRedisException extends Exception
 {
-    public const MESSAGE = 'It was not possible to store the JWT in Redis of the User with ID %s';
+    public const MESSAGE = 'No ha estat possible emmagatzemar el JWT a Redis de l\'usuari amb ID %s';
 
     public function __construct(string $user_id, $code = 401, Throwable $previous = null)
     {
