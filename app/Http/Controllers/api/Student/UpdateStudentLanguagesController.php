@@ -10,56 +10,33 @@ use Illuminate\Support\Facades\Log;
 
 class UpdateStudentLanguagesController extends Controller
 {
-  public function __invoke(string $studentId, Request $request): JsonResponse
-  {
-    try {
-      // Validar la solicitud (misma lógica que antes)
+    public function __invoke(string $studentId, Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'language_name' => 'required|exists:languages,language_name',
+            'language_level' => 'required|in:Bàsic,Intermedi,Avançat,Natiu'
+        ]);
 
-      $data = $request->validate([
-        'language_name' => 'required|string',
-        'language_level' => 'required|string|in:Bàsic,Intermedi,Avançat,Natiu',
-      ]);
+        $student = Student::find($studentId);
 
-      Log::info('Request received', ['studentId' => $studentId, 'requestData' => $request->all()]);
+        $resume = $student->resume;
 
-      // Buscar el estudiante (misma lógica que antes)
+        $languages = $resume->languages;
 
-      $student = Student::find($studentId);
+        // search the language_id combination of the language_name and language_level on languages table
+        $language_combination = $languages->where('language_name', $data['language_name'])->where('language_level', $data['language_level'])->first();
 
-      // Verificar si el estudiante se encontró (misma lógica que antes)
+        $language_combination_id = $language_combination->id;
 
-      Log::info('Student found', ['student' => $student]);
+        // update the language_id of language in $languages
 
-      // Obtener el currículum del estudiante (misma lógica que antes)
+        foreach ($languages as $language) {
+            if ($language->id == $language_combination_id) {
+                $language->id = $language_combination_id;
+            }
 
-      $resume = $student->resume;
-
-      // Verificar si el currículum se encontró (misma lógica que antes)
-
-      Log::info('Resume found', ['resume' => $resume]);
-
-      // Buscar el lenguaje por nombre y nivel (misma lógica que antes)
-
-      $language = $resume->languages()
-        ->where('language_name', $data['language_name'])
-        ->where('language_level', $data['language_level'])
-        ->first();
-
-      // Verificar si el lenguaje se encontró (misma lógica que antes)
-
-      Log::info('Language found', ['language' => $language]);
-
-      // Actualizar el pivote language_resume (método actualizado)
-      $resume->languages()->attach($language->id, ['language_level' => $data['language_level']]);
-
-      Log::info('Language level updated', ['language_id' => $language->id]);
-
-      // Retornar los lenguajes actualizados del currículum (misma lógica que antes)
-
-      return response()->json($resume->languages, 200);
-    } catch (\Exception $e) {
-      Log::error('An error occurred', ['exception' => $e]);
-      return response()->json(['error' => 'An error occurred while processing the request'], 500);
+            $language->save();
+        }
+        return response()->json('Language updated successfully', 200);
     }
-  }
 }
