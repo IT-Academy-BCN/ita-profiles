@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Requests;
@@ -23,7 +24,7 @@ class SkillsRequest extends FormRequest
         {
             throw new HttpResponseException(response()->json(['errors' => "Skills must be an array, empty arrays valid"], 422));
         }
-        
+
         try{
 
             $encodedSkills = json_encode($this->skills);
@@ -38,7 +39,7 @@ class SkillsRequest extends FormRequest
         } catch (\Exception $e) {
             throw new HttpResponseException(response()->json(['errors' => $e ], 422));
         }
-		
+
 	}
 
 
