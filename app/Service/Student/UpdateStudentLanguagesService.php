@@ -10,7 +10,7 @@ use App\Exceptions\{
 };
 use App\Models\Language;
 
-class UpdateStudentProfileService
+class UpdateStudentLanguagesService
 {
     public function execute(string $studentId, array $data): void
     {
