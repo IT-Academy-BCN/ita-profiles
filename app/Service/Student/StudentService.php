@@ -18,15 +18,13 @@ class StudentService
 	{
 	}
 
-	public function findUserByStudentID(string $studentID): User | Exception
+	public function findUserByStudentID(string $studentID): User
 	{
-		// Fetch the Student model instance by id
 		$student = Student::find($studentID);
 		if (!$student) {
 			throw new StudentNotFoundException($studentID);
 		}
 
-		// Fetch the User model associated with the Student's user_id
 		$user = User::find($student->user_id);
 		if (!$user) {
 			throw new UserNotFoundException($student->user_id);

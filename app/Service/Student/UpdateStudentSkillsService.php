@@ -15,7 +15,6 @@ class UpdateStudentSkillsService
 
     public function updateSkillsByStudentId(string $studentId, string $skills): Exception | bool
     {
-
         $student = Student::find($studentId);
 
         if (!$student) {

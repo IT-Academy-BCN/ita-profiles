@@ -9,11 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Service\Student\UpdateStudentSkillsService;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
+use App\Exceptions\UserNotFoundException;
 use Illuminate\Http\JsonResponse;
 
 use App\Http\Requests\SkillsRequest;
-use App\Models\User;
-use App\Models\Student;
 
 use App\Service\Student\StudentService;
 
@@ -32,16 +31,15 @@ class UpdateStudentSkillsController extends Controller
     public function __invoke(SkillsRequest $request, string $studentId): JsonResponse
     {
         try {
-				
-			// Fetch the User model associated with the Student's user_id
+            // IF USING POLICIES: Fetch the User model associated with the Student's user_id
             $userProfile = $this->studentService->findUserByStudentID($studentId);
-			// Use the 'canAccessResource' policy method to authorize the request
+            // Use the 'canAccessResource' policy method to authorize the request
             $this->authorize('canAccessResource', $userProfile);
 
-            $service = $this->updateStudentSkillsService->updateSkillsByStudentId($studentId, $request->skills);
+            $this->updateStudentSkillsService->updateSkillsByStudentId($studentId, $request->skills);
 
             return response()->json(['status' => 'success'], 200);
-        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
+        } catch (UserNotFoundException | StudentNotFoundException | ResumeNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);

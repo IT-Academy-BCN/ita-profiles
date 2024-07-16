@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-
 namespace Tests\Feature\Service\User;
 
-use App\Exceptions\InvalidCredentialsException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Models\User;
 
 use App\Service\User\UserService;
 
+use App\Exceptions\InvalidCredentialsException;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\UserNotFoundInRedisException;
 
@@ -77,7 +76,7 @@ class UserServiceTest extends TestCase
 	{
 		$array = array(
 			array(
-				'69818630Z', //NIF/NIE
+				'69818630Z',
 				'password'
 			),
 			array(
@@ -108,7 +107,7 @@ class UserServiceTest extends TestCase
 	{
 		$array = array(
 			array(
-				'69818630Z' //NIF/NIE
+				'69818630Z'
 			),
 		);
 
@@ -146,7 +145,7 @@ class UserServiceTest extends TestCase
 		$user->save();
 
 		$jwt = $this->service->generateJWToken($user);
-		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt); //(^[\w-]*\.[\w-]*\.[\w-]*$)
+		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt);
 		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)', $jwt);
 
 		$this->assertEquals($resultOne, true);
@@ -175,6 +174,7 @@ class UserServiceTest extends TestCase
 		$result = $this->service->storeUserIDAndTokenRedis($userID, $jwt);
 		$this->assertEquals($result, $expectedOutput);
 	}
+	
 	static function storeUserIDAndTokenRedisProvider()
 	{
 		$array = array(
@@ -200,10 +200,7 @@ class UserServiceTest extends TestCase
 	{
 		//ToDo - Important - Hide Connection And Check Redis Network Communication
 		//ToDo - Or just use a testing database
-		/*
-		$result = $this->service->getJWTokenByUserID($userID);
-		$this->assertEquals($result, $expectedOutput);
-		*/
+
 		$jwt = $this->service->getJWTokenByUserID($userID);
 		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt); //(^[\w-]*\.[\w-]*\.[\w-]*$)
 		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)', $jwt);

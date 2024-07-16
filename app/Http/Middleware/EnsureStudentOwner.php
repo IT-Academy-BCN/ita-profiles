@@ -20,7 +20,7 @@ class EnsureStudentOwner
     {
         //Extract the value of the parameter studentId from the route:
         $studentID = $request->route('studentId');
-        //$studentID  = request()->route('studentId');
+
         if(!$studentID){
             echo $studentID;
             return response()->json(['error' => 'URL Not found'], 407); //404
@@ -43,9 +43,9 @@ class EnsureStudentOwner
         if($user->id === $student->user_id){
             return $next($request);
         }else{
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Unauthorized'], 403);
         }
         
-        
+
     }
 }
