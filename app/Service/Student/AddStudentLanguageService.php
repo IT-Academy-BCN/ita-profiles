@@ -10,8 +10,8 @@ use App\Models\Student;
 use App\Models\Resume;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
-use App\Exceptions\LanguageNotFoundException;
 use App\Exceptions\LanguageAlreadyExistsException;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class AddStudentLanguageService
@@ -50,7 +50,7 @@ class AddStudentLanguageService
         $language = Language::find($languageId);
 
         if (!$language) {
-            throw new LanguageNotFoundException($languageId);
+            throw new Exception;
         }
         return $language;
     }
