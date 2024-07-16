@@ -16,44 +16,44 @@ class UpdateStudentProfileService
         $this->updateStudentProfile($studentId, $data);
     }
 
-    public function updateStudentProfile(string $studentId, array $data):void
+    public function updateStudentProfile(string $studentId, array $data): void
     {
         $student = $this->getStudentById($studentId);
-        $this->updateStudent($student, $data);
+        $this->updateFields($student, $data, ['name', 'surname']);
         $this->updateResume($student, $data);
     }
 
     private function getStudentById(string $studentId): Student
     {
         $student = Student::find($studentId);
-        if (!$student) throw new StudentNotFoundException($studentId);
+        if (!$student) {
+            throw new StudentNotFoundException($studentId);
+        }
 
         return $student;
     }
 
-    private function updateStudent(Student $student, array $data):void
+    private function updateFields($model, array $data, array $fields): void
     {
-        $student->update([
-            'name' => $data['name'],
-            'surname' => $data['surname'],
-        ]);
+        $updateData = [];
+        foreach ($fields as $field) {
+            if (isset($data[$field])) {
+                $updateData[$field] = $data[$field];
+            }
+        }
+
+        if (!empty($updateData)) {
+            $model->update($updateData);
+        }
     }
 
-    private function updateResume(Student $student, array $data):void
+    private function updateResume(Student $student, array $data): void
     {
-        $resume =  $student->resume;
-        if (!$resume){
+        $resume = $student->resume;
+        if (!$resume) {
             throw new ResumeNotFoundException($student->id);
         }
 
-        $resume->update([
-            'subtitle' => $data['subtitle'],
-            'github_url' => $data['github_url'],
-            'linkedin_url' => $data['linkedin_url'],
-            'about' => $data['about'],
-            'tags_ids' => $data['tags_ids']
-        ]);
+        $this->updateFields($resume, $data, ['subtitle', 'github_url', 'linkedin_url', 'about', 'tags_ids']);
     }
-
 }
-

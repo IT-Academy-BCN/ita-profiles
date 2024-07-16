@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Student;
 
@@ -27,33 +26,30 @@ class UpdateStudentProfileController extends Controller
 
     public function __invoke(UpdateStudentRequest $request, string $studentId): JsonResponse
     {
-        $dataStudentProfileUpdate = $request->only(['name', 'surname', 'subtitle' , 'github_url', 'linkedin_url', 'about', 'tags_ids']);
+        $dataStudentProfileUpdate = $request->validated();
 
         DB::beginTransaction();
         try {
             $this->updateStudentProfileService->execute($studentId, $dataStudentProfileUpdate);
             DB::commit();
 
-                return response()->json([
-                    'profile'=> 'El perfil de l\'estudiant s\'actualitza correctament'
-                ], 200);
-        }catch (StudentNotFoundException | ResumeNotFoundException $e) {
+            return response()->json([
+                'profile' => 'El perfil de l\'estudiant s\'actualitza correctament'
+            ], 200);
+        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
             DB::rollBack();
             Log::error('Exception:', [
                 'exception' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
             return response()->json($e->getMessage(), $e->getCode());
-        }catch (\Exception $e ) {
+        } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Exception:', [
                 'exception' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            return response()->json('El perfil de l\'estudiant no s\'ha pogut actualitzar, per favor el nou objectiu', 500);
+            return response()->json('El perfil de l\'estudiant no s\'ha pogut actualitzar, si us plau proveu-ho de nou', 500);
         }
-
     }
-
-
 }
