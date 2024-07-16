@@ -15,26 +15,27 @@ use App\Http\Requests\SkillsRequest;
 use App\Models\User;
 use App\Models\Student;
 
+use App\Service\Student\StudentService;
+
 
 class UpdateStudentSkillsController extends Controller
 {
     private UpdateStudentSkillsService $updateStudentSkillsService;
+    private StudentService $studentService;
 
-    public function __construct(UpdateStudentSkillsService $updateStudentSkillsService)
+    public function __construct(UpdateStudentSkillsService $updateStudentSkillsService, StudentService $studentService)
     {
         $this->updateStudentSkillsService = $updateStudentSkillsService;
+        $this->studentService = $studentService;
     }
 
     public function __invoke(SkillsRequest $request, string $studentId): JsonResponse
     {
         try {
-            // Fetch the Student model instance by id
-            $student = Student::find($studentId);
-
-            // Fetch the User model associated with the Student's user_id
-            $userProfile = User::where('id', $student->user_id)->firstOrFail();
-
-            // Use the 'canAccessResource' policy method to authorize the request
+				
+			// Fetch the User model associated with the Student's user_id
+            $userProfile = $this->studentService->findUserByStudentID($studentId);
+			// Use the 'canAccessResource' policy method to authorize the request
             $this->authorize('canAccessResource', $userProfile);
 
             $service = $this->updateStudentSkillsService->updateSkillsByStudentId($studentId, $request->skills);
