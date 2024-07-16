@@ -23,7 +23,6 @@ class UpdateStudentImageServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->studentUpdateImageService = new UpdateStudentImageService();
     }
     

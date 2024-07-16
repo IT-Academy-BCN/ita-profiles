@@ -36,7 +36,7 @@ class UpdateStudentImageService
 
 	public function createImageNameByStudentIDAndFileHash(string $studentID, string $fileHashName): string
 	{
-		$filename = time(). $studentID . $this->photo_infix . $fileHashName;
+		$filename = time() . ".". $studentID . $this->photo_infix . $fileHashName;
 		return $filename;
 	}
 
