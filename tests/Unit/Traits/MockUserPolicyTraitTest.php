@@ -28,49 +28,15 @@ use Illuminate\Support\Facades\Route;
 class MockUserPolicyTraitTest extends TestCase
 {
     use DatabaseTransactions;
-	//use MockUserPolicy;
+	use MockUserPolicy;
 	
     protected function setUp(): void
     {
         parent::setUp();
-        //$this->beginMockUserPolicy();
+        $this->beginMockUserPolicy();
     }
 	
-	/**
-     * Handle database transactions on the specified connections.
-     *
-     * @return void
-     */
-	//public function testMockEnsureStudentOwnerMiddlewareSuccess(): void
-    //{
-        
-       /*
-        Route::get('/test-policy', function () {
-			$user = User::factory()->create();
-			$user_2 = User::factory()->create();
-			$user->save();
-			$user_2->save();
-			$policy = new UserPolicy;
-			//$this->beginMockUserPolicy();
-			$result = $policy->canAccessResource($user, $user_2);
-			//$user->canAccessResource($user, $user_2);
-			 // Use the 'canAccessResource' policy method to authorize the request
-            $this->authorize('canAccessResource', $userProfile);
-			echo "called\n";
-			echo $result."\n";
-			var_dump($result);
-			return 'Allowed';
-			if($result === Response::allow()){
-				return 'Allowed';
-			}else{
-				 return 'Restricted';
-			}	
-				
-           
-        });*/
-        
-        
-    public function testMockEnsureStudentOwnerMiddlewareSuccess(): void
+    public function testMockUserPolicySuccess(): void
     {
         // Define a custom route for testing
         $user = User::factory()->create();
@@ -90,21 +56,13 @@ class MockUserPolicyTraitTest extends TestCase
 			if (Gate::allows('canAccessResource', $user_2)) {
 				return response('Allowed', 200);
 			}
-			
 			return response('Forbidden', 403);
-            
-            
-            //return response()->json(['message' => 'Authorized']);
         });
 
         $response = $this->actingAs($user)->get('/test-policy');
+        //It should be 403 but thanks to mockery it must be 200
         $response->assertStatus(200);
-        //$response->assertSee('Allowed');
-        //var_dump($response);
-        //echo var_dump($response) . "\n";
-        //$response->assertOk();
-        //$this->assertEquals('Allowed', $response);
-  
+
     }
 	
 }

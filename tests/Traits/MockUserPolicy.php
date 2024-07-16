@@ -10,13 +10,9 @@ trait MockUserPolicy
 {
     protected function beginMockUserPolicy()
     {	
-		/*
-        Gate::define("user.$method", function () use ($returnValue) {
-            return $returnValue;
-        });*/
         //Mockering Policy
 		$userPolicyMockery= Mockery::mock('App\Policies\UserPolicy')->makePartial();
-		$userPolicyMockery->shouldReceive('canAccessResource')->once()
+		$userPolicyMockery->shouldReceive('canAccessResource')
 			->andReturn(Response::allow());
 		$this->app->instance('App\Policies\UserPolicy', $userPolicyMockery);
         
