@@ -15,7 +15,20 @@ use Tests\TestCase;
 class UpdateStudentImageServiceTest extends TestCase
 {
     use DatabaseTransactions;
+	
+	protected UpdateStudentImageService $studentUpdateImageService;
+	private string $photos_path = 'public/photos/';
+	
+	
+    protected function setUp(): void
+    {
+        parent::setUp();
 
+        $this->studentUpdateImageService = new UpdateStudentImageService();
+    }
+    
+	
+	
     /** @test */
     public function it_updates_student_image_path_in_database()
     {
@@ -29,8 +42,7 @@ class UpdateStudentImageServiceTest extends TestCase
         $file = UploadedFile::fake()->image('test_image.png');
         $filename = 'new_image.png';
 
-        $service = new UpdateStudentImageService();
-        $service->updateStudentImagePathInDatabaseByStudentID($studentId, $filename);
+        $this->studentUpdateImageService->updateStudentImagePathInDatabaseByStudentID($studentId, $filename);
 
         $student->refresh();
         $this->assertEquals($filename, $student->photo);
@@ -45,22 +57,20 @@ class UpdateStudentImageServiceTest extends TestCase
     {
         $nonExistingStudentId = 'non_existing_id';
         $filename = 'new_image.png';
-
-        $service = new UpdateStudentImageService();
+        
         $this->expectException(StudentNotFoundException::class);
-        $service->updateStudentImagePathInDatabaseByStudentID($nonExistingStudentId, $filename);
+        $this->studentUpdateImageService->updateStudentImagePathInDatabaseByStudentID($nonExistingStudentId, $filename);
     }
 
     /** @test */
     public function it_stores_photo_in_storage_by_filename()
     {
-         $file = UploadedFile::fake()->image('test_image.png');
-         $filename = 'test_image.png';
+		$file = UploadedFile::fake()->image('test_image.png');
+		$filename = 'test_image.png';
 
-         $service = new UpdateStudentImageService();
-         $service->storePhotoInStorageByFileName($file, $filename);
+		$this->studentUpdateImageService->storePhotoInStorageByFileName($file, $filename);
 
-        $this->assertTrue(Storage::disk('public')->exists('photos/' . $filename));
+		$this->assertTrue(Storage::disk('public')->exists('photos/' . $filename));
     }
 
 

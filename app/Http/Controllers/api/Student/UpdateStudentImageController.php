@@ -8,9 +8,7 @@ use Illuminate\Http\{
     Request
 };
 use Illuminate\Support\Facades\{
-    DB,
-    Log,
-    Storage
+    Log
 };
 
 use App\Http\Controllers\Controller;
@@ -46,7 +44,6 @@ class UpdateStudentImageController extends Controller
 
 		} catch (StudentNotFoundException $e) {
 
-			DB::rollBack();
 			Log::error('Exception:', [
 				'exception' => $e->getMessage(),
 				'trace' => $e->getTraceAsString(),
@@ -55,7 +52,6 @@ class UpdateStudentImageController extends Controller
 
 		} catch (\Exception $e) {
 
-			DB::rollBack();
 			Log::error('Exception:', [
 				'exception' => $e->getMessage(),
 				'trace' => $e->getTraceAsString(),
