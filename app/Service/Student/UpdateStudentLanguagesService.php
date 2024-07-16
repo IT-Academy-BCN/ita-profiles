@@ -4,38 +4,51 @@ declare(strict_types=1);
 
 namespace App\Service\Student;
 
+use App\Models\Resume;
 use App\Models\Student;
-use App\Exceptions\{
-    StudentNotFoundException,
-};
 use App\Models\Language;
+use Illuminate\Support\Facades\DB;
+use App\Exceptions\StudentNotFoundException;
 
 class UpdateStudentLanguagesService
 {
-    public function execute(string $studentId, array $data): void
+    public function execute(string $studentId, array $languages): void
     {
-        $this->updateStudentLanguagesLevel($studentId, $data);
+        DB::transaction(function () use ($studentId, $languages) {
+            $this->updateStudentLanguagesLevel($studentId, $languages);
+        });
     }
 
-    public function updateStudentLanguagesLevel(string $studentId, array $data): void
+    private function updateStudentLanguagesLevel(string $studentId, array $languages): void
     {
-        $languages = $this->getLanguageByStudentId($studentId);
-        $this->updateLangues($languages, $data);
+        $student = $this->getStudentById($studentId);
+        $resume = $student->resume;
+
+        foreach ($languages as $languageData) {
+            $language = $this->getLanguageByName($resume, $languageData['language_name']);
+            if ($language) {
+                $this->updateLanguage($language, $languageData['language_level']);
+            }
+        }
     }
 
-    private function getLanguageByStudentId(string $studentId): Language
+    private function getStudentById(string $studentId): Student
     {
         $student = Student::find($studentId);
-        if (!$student) throw new StudentNotFoundException($studentId);
-        $languages = $student->resume->languages;
+        if (!$student) throw new StudentNotFoundException("Student with ID $studentId not found");
 
-        return $languages;
+        return $student;
     }
 
-    private function updateLangues(Language $languages, array $data): void
+    private function getLanguageByName(Resume $resume, string $languageName): ?Language
     {
-        $languages->update([
-            'language_level' => $data['language_level']
+        return $resume->languages()->where('language_name', $languageName)->first();
+    }
+
+    private function updateLanguage(Language $language, string $level): void
+    {
+        $language->update([
+            'language_level' => $level
         ]);
     }
 }

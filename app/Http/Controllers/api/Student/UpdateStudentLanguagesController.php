@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateStudentLanguagesRequest;
 use App\Service\Student\UpdateStudentLanguagesService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class UpdateStudentLanguagesController extends Controller
@@ -21,23 +20,20 @@ class UpdateStudentLanguagesController extends Controller
 
     public function __invoke(UpdateStudentLanguagesRequest $request, string $studentId): JsonResponse
     {
-        $dateStudentLanguagesUpdate = $request->validated();
+        $data = $request->validated();
 
-        DB::beginTransaction();
         try {
-            $this->updateStudentLanguagesService->execute($studentId, $dateStudentLanguagesUpdate);
-            DB::commit();
+            $this->updateStudentLanguagesService->execute($studentId, $data['languages']);
 
             return response()->json([
                 'message' => 'Student languages updated successfully',
             ], 200);
         } catch (StudentNotFoundException $e) {
-            DB::rollBack();
             Log::error('Exception:', [
                 'exception' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            return response()->json("No s'ha pogut actualtizar el nivell del llenguatge de l'estudiant", 500);
+            return response()->json("No s'ha pogut actualitzar el nivell dels llenguatges de l'estudiant", 500);
         }
     }
 }
