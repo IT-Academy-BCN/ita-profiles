@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateRecruiterRequest extends FormRequest
+class UpdateStudentProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,19 @@ class UpdateRecruiterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|regex:/^([^0-9]*)$/',
-            'surname' => 'string|regex:/^([^0-9]*)$/',
-            'email' => 'string|email|max:255|unique:users',
-            'company' => 'string',
-            'sector' => 'string',
+            'project_name' => 'string|regex:/^([^0-9]*)$/|nullable',
+            'company_name' => 'string|regex:/^([^0-9]*)$/|nullable',
+            'tags' => 'array|nullable', 
+            'github_url' => 'string|url|max:60|nullable',
+            'project_url' => 'string|url|max:60|nullable',
         ];
     }
 
+    /**
+     * If validator fails returns the exception in json form
+     *
+     * @return array
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));

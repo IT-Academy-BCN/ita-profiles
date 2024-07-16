@@ -68,6 +68,16 @@ services:
         networks:
             - app-network
 
+    phpmyadmin:
+        container_name: phpmyadmin
+        image: phpmyadmin:latest
+        ports:
+            - 9015:80
+        environment:
+            - PMA_ARBITRARY=1
+        networks:
+            - app-network
+
     redis:
         container_name: redis
         image: redis:latest
