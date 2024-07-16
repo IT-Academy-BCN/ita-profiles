@@ -5,10 +5,11 @@ namespace App\Http\Controllers\api\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateStudentLanguagesRequest;
 use App\Service\Student\UpdateStudentLanguageService;
+use Illuminate\Http\JsonResponse;
 
-class StudentController extends Controller
+class UpdateStudentLanguagesController extends Controller
 {
-    public function updateLanguage(UpdateStudentLanguagesRequest $request, string $studentId)
+    public function __invoke(UpdateStudentLanguagesRequest $request, string $studentId): JsonResponse
     {
         $data = $request->validated();
 
