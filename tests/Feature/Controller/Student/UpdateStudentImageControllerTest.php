@@ -16,6 +16,8 @@ use Illuminate\Filesystem\FilesystemAdapter;
 class UpdateStudentImageControllerTest extends TestCase
 {
     use DatabaseTransactions;
+	private string $photos_path = 'public/photos/';
+
 
     protected function setUp(): void
 	{
@@ -39,12 +41,14 @@ class UpdateStudentImageControllerTest extends TestCase
              ->assertJson([
                  'profile' => 'La foto del perfil de l\'estudiant s\'actualitza correctament'
              ]);
+		
+		$student->refresh();
+		
+		// Get the contents of the file as a string
+		$fileContents = file_get_contents($file->path());
 
-    $filename = $student->id . '.profile_photo.' . $file->hashName();
-
-    $student->refresh();
-    $this->assertEquals($filename, $student->photo);
-}
+		$this->assertEquals($fileContents, Storage::get($this->photos_path . $student->photo));
+	}
 
     /** @test */
     public function it_returns_an_error_if_no_photo_is_uploaded()

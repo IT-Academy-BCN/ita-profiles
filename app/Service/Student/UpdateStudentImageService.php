@@ -6,22 +6,43 @@ namespace App\Service\Student;
 use App\Models\Student;
 use App\Exceptions\StudentNotFoundException;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class UpdateStudentImageService
 {
-    public function execute(string $studentId, string $filename): void
-{
-    $student = Student::find($studentId);
+	
+	private string $photo_infix = '.profile_photo.';
+	private string $photos_path = 'public/photos/';
+	
+    public function updateStudentImagePathInDatabaseByStudentID(string $studentID, string $filename): Student | Exception
+	{
+		$student = Student::find($studentID);
 
-    if (!$student) {
-        throw new StudentNotFoundException(" {$studentId}");
-    }
+		if(!$student){
+			throw new StudentNotFoundException($studentID);
+		}
 
-    if ($student->photo) {
-        Storage::delete('public/photos/' . $student->photo);
-    }
+		if($student->photo){
+			Storage::delete( $this->photos_path . $student->photo);
+		}
 
-    $student->photo = $filename;
-    $student->save();
-}
+		$student->photo = $filename;
+		$student->update();
+		
+		return $student;
+		
+	}
+	
+	public function createImageNameByStudentIDAndFileHash(string $studentID, string $fileHashName): string
+	{
+		$filename = time(). $studentID . $this->photo_infix . $fileHashName;
+		return $filename;
+	}
+	
+	
+	public function storePhotoInStorageByFileName(UploadedFile $file, string $filename)
+	{
+		$path = $file->storeAs($this->photos_path, $filename);
+	}
+	
 }
