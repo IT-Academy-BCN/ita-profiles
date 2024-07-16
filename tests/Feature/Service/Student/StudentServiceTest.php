@@ -11,6 +11,7 @@ use App\Service\Student\StudentService;
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\StudentNotFoundException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\DB;
 
 class StudentServiceTest extends TestCase
 {
@@ -21,6 +22,8 @@ class StudentServiceTest extends TestCase
     {
         parent::setUp();
         $this->studentService = new StudentService();
+        // Disable foreign key checks
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
     }
 
     /**
@@ -79,6 +82,14 @@ class StudentServiceTest extends TestCase
             ['studentID1', 'nonExistingUserID1'],
             ['studentID2', 'nonExistingUserID2'],
         ];
+    }
+    
+    protected function tearDown(): void
+    {
+        // Enable foreign key checks
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        parent::tearDown();
     }
 
 }
