@@ -38,15 +38,19 @@ class DeleteStudentResumeLanguageServiceTest extends TestCase
         return $languageIds[array_rand($languageIds)];
     }
 
-    private function createStudentWithResumeAndLanguage(): array
+    private function createUser():User
     {
-        $user = User::factory()->create();
-        $student = Student::factory()->for($user)->create();
-        $resume = Resume::factory()->for($student)->create();
-        $languageId = $this->getARandomLanguageId();
-        $resume->languages()->attach($languageId);
+        return User::factory()->create();
+    }
 
-        return [$student, $resume, $languageId];
+    private function createStudent(User $user):Student
+    {
+        return Student::factory()->for($user)->create();
+    }
+
+    private function createResume(Student $student):Resume
+    {
+        return Resume::factory()->for($student)->create();
     }
 
     public function test_can_instantiate_DeleteStudentResumeLanguageService(): void
@@ -56,7 +60,11 @@ class DeleteStudentResumeLanguageServiceTest extends TestCase
 
     public function test_can_delete_student_resume_language(): void
     {
-        [$student, $resume, $languageId] = $this->createStudentWithResumeAndLanguage();
+        $user = $this->createUser();
+        $student = $this->createStudent($user);
+        $resume = $this->createResume($student);
+        $languageId = $this->getARandomLanguageId();
+        $resume->languages()->attach($languageId);
 
         $this->assertDatabaseHas('language_resume', [
             'resume_id' => $resume->id,
@@ -85,8 +93,8 @@ class DeleteStudentResumeLanguageServiceTest extends TestCase
     {
         $this->expectException(ResumeNotFoundException::class);
 
-        $user = User::factory()->create();
-        $student = Student::factory()->for($user)->create();
+        $user = $this->createUser();
+        $student = $this->createStudent($user);
         $languageId = $this->getARandomLanguageId();
 
         $this->deleteStudentResumeLanguageService->execute($student->id, $languageId);
@@ -96,9 +104,9 @@ class DeleteStudentResumeLanguageServiceTest extends TestCase
     {
         $this->expectException(StudentLanguageResumeNotFoundException::class);
 
-        $user = User::factory()->create();
-        $student = Student::factory()->for($user)->create();
-        Resume::factory()->for($student)->create();
+        $user = $this->createUser();
+        $student = $this->createStudent($user);
+        $this->createResume($student);
         $languageId = $this->getARandomLanguageId();
 
         $this->deleteStudentResumeLanguageService->execute($student->id, $languageId);
