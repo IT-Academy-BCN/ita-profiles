@@ -14,7 +14,7 @@ class UpdateStudentImageService
         $student = Student::find($studentId);
 
         if (!$student) {
-            throw new StudentNotFoundException("Student not found with ID {$studentId}");
+            throw new StudentNotFoundException(" {$studentId}");
         }
 
         if ($student->photo) {

@@ -46,7 +46,7 @@ class UpdateStudentImageController extends Controller
                     'profile'=> 'La foto del perfil de l\'estudiant s\'actualitza correctament'
                 ], 200);
             } else {
-                throw new \Exception('No foto');
+                throw new \Exception('No foto detectada');
             }
         } catch (StudentNotFoundException $e) {
             DB::rollBack();
