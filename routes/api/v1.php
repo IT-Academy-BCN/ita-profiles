@@ -8,9 +8,10 @@ use App\Http\Controllers\api\Student\{
     StudentCollaborationDetailController,
     StudentDetailController,
     StudentLanguagesDetailController,
+    UpdateStudentLanguagesController,
     StudentListController,
     StudentProjectsDetailController,
-    SpecializationListController,   
+    SpecializationListController,
     UpdateStudentProjectController,
     UpdateStudentSkillsController,
     UpdateStudentProfileController
@@ -42,6 +43,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
+    Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
     Route::put('skills', UpdateStudentSkillsController::class)->name('student.skills');
