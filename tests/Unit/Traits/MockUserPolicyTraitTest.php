@@ -42,7 +42,10 @@ class MockUserPolicyTraitTest extends TestCase
 			$user = User::factory()->create();
 			$user_2 = User::factory()->create();
 			$policy = new UserPolicy;
+			
 			$policy->canAccessResource($user, $user_2);
+			$user->canAccessResource($user, $user_2);
+			echo "called";
             return 'Allowed';
         });
         

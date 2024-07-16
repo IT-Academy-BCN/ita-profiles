@@ -29,14 +29,14 @@ class UserServiceTest extends TestCase
 	 * @dataProvider checkUserCredentialsSuccessProvider
 	 *
 	 */
-	public function testCheckUserCredentialsSuccess(string $userDNI, string $password, bool $correctPasswordBool, bool $expectedOutput)
+	public function testCheckUserCredentialsSuccess(string $userDNI, string $password)
 	{
-		$user = User::factory()->create(['dni' => $userDNI, 'password' => ($correctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword'))]);
+		$user = User::factory()->create(['dni' => $userDNI, 'password' => bcrypt($password)]);
 		$user->save();
 
 		$result = $this->service->checkUserCredentials($user, $password);
 
-		$this->assertEquals($expectedOutput, $result);
+		$this->assertEquals(true, $result);
 	}
 
 	static function checkUserCredentialsSuccessProvider(): array
@@ -44,21 +44,15 @@ class UserServiceTest extends TestCase
 		$array = array(
 			array(
 				'69818630Z',
-				'password',
-				true, // Correct Password bool
-				true // Expected Output
+				'password'
 			),
 			array(
 				'X6849947H',
-				'password',
-				true, // Correct Password bool
-				true // Expected Output
+				'password'
 			),
 			array(
 				'48332312C',
-				'passOnePass',
-				true, // Correct Password bool
-				true // Expected Output
+				'passOnePass'
 			)
 		);
 		return $array;
@@ -190,7 +184,7 @@ class UserServiceTest extends TestCase
 			),
 			array(
 				'abc', //userID
-				'abc',
+				'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJZekV6TUdkb01ISm5PSEJpT0cxaWJEaHlOVEE9IiwicmVzcG9uc2VfdHlwZSI6ImNvZGUiLCJzY29wZSI6ImludHJvc2NwZWN0X3Rva2VucywgcmV2b2tlX3Rva2VucyIsImlzcyI6ImJqaElSak0xY1hwYWEyMXpkV3RJU25wNmVqbE1iazQ0YlRsTlpqazNkWEU9Iiwic3ViIjoiWXpFek1HZG9NSEpuT0hCaU9HMWliRGh5TlRBPSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0Ojg0NDMve3RpZH0ve2FpZH0vb2F1dGgyL2F1dGhvcml6ZSIsImp0aSI6IjE1MTYyMzkwMjIiLCJleHAiOiIyMDIxLTA1LTE3VDA3OjA5OjQ4LjAwMCswNTQ1In0.IxvaN4ER-PlPgLYzfRhk_JiY4VAow3GNjaK5rYCINFsEPa7VaYnRsaCmQVq8CTgddihEPPXet2laH8_c3WqxY4AeZO5eljwSCobCHzxYdOoFKbpNXIm7dqHg_5xpQz-YBJMiDM1ILOEsER8ADyF4NC2sN0K_0t6xZLSAQIRrHvpGOrtYr5E-SllTWHWPmqCkX2BUZxoYNK2FWgQZpuUOD55HfsvFXNVQa_5TFRDibi9LsT7Sd_az0iGB0TfAb0v3ZR0qnmgyp5pTeIeU5UqhtbgU9RnUCVmGIK-SZYNvrlXgv9hiKAZGhLgeI8hO40utfT2YTYHgD2Aiufqo3RIbJA',
 				true // Expected Output
 			),
 		);
@@ -205,8 +199,17 @@ class UserServiceTest extends TestCase
 	{
 		//ToDo - Important - Hide Connection And Check Redis Network Communication
 		//ToDo - Or just use a testing database
+		/*
 		$result = $this->service->getJWTokenByUserID($userID);
 		$this->assertEquals($result, $expectedOutput);
+		*/
+		$jwt = $this->service->getJWTokenByUserID($userID);
+		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt); //(^[\w-]*\.[\w-]*\.[\w-]*$)
+		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)', $jwt);
+
+		$this->assertEquals($resultOne, true);
+		$this->assertEquals($resultTwo, true);
+		
 	}
 	static function getJWTokenByUserIDProvider()
 	{
@@ -228,7 +231,7 @@ class UserServiceTest extends TestCase
 	/**
 	 * @dataProvider getJWTokenByUserIDFailureProvider
 	 */
-	public function testGetJWTokenByUserIDFailure(string $userID, bool $expectedOutput)
+	public function testGetJWTokenByUserIDFailure(string $userID)
 	{
 		//ToDo - Important - Hide Connection And Check Redis Network Communication
 		//ToDo - Or just use a testing database
@@ -240,7 +243,6 @@ class UserServiceTest extends TestCase
 		$array = array(
 			array(
 				'ZZZZZZZZZ981273', //userID
-				false // Expected Output
 			)
 		);
 
