@@ -4,51 +4,63 @@ declare(strict_types=1);
 
 namespace App\Service\Student;
 
-use App\Models\Resume;
-use App\Models\Student;
 use App\Models\Language;
-use Illuminate\Support\Facades\DB;
+use App\Models\Student;
+use App\Models\Resume;
 use App\Exceptions\StudentNotFoundException;
+use App\Exceptions\ResumeNotFoundException;
+use App\Exceptions\LanguageNotFoundException;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
-class UpdateStudentLanguagesService
+class UpdateStudentLanguageService
 {
-    public function execute(string $studentId, array $languages): void
+    public function execute(string $studentId, array $languageData): void
     {
-        DB::transaction(function () use ($studentId, $languages) {
-            $this->updateStudentLanguagesLevel($studentId, $languages);
+        DB::transaction(function () use ($studentId, $languageData) {
+            $this->updateLanguageLevel($studentId, $languageData);
         });
     }
 
-    private function updateStudentLanguagesLevel(string $studentId, array $languages): void
+    private function updateLanguageLevel(string $studentId, array $languageData): void
     {
-        $student = $this->getStudentById($studentId);
-        $resume = $student->resume;
+        $student = $this->getStudent($studentId);
+        $resume = $this->getResumeByStudent($student);
+        $languageId = $languageData['language_id'];
+        $newLevel = $languageData['language_level'];
 
-        foreach ($languages as $languageData) {
-            $language = $this->getLanguageByName($resume, $languageData['language_name']);
-            if ($language) {
-                $this->updateLanguage($language, $languageData['language_level']);
-            }
+        $this->validateLanguageExists($languageId);
+
+        if (!$resume->languages()->where('languages.id', $languageId)->exists()) {
+            throw new LanguageNotFoundException("Language with ID $languageId is not associated with student");
         }
+
+        $resume->languages()->updateExistingPivot($languageId, ['language_level' => $newLevel]);
     }
 
-    private function getStudentById(string $studentId): Student
+    private function getStudent(string $studentId): Student
     {
         $student = Student::find($studentId);
-        if (!$student) throw new StudentNotFoundException("Student with ID $studentId not found");
-
+        if (!$student) {
+            throw new StudentNotFoundException("Student with ID $studentId not found");
+        }
         return $student;
     }
 
-    private function getLanguageByName(Resume $resume, string $languageName): ?Language
+    private function getResumeByStudent(Student $student): Resume
     {
-        return $resume->languages()->where('language_name', $languageName)->first();
+        $resume = $student->resume()->first();
+        if (!$resume) {
+            throw new ResumeNotFoundException("Resume not found for student with ID {$student->id}");
+        }
+        return $resume;
     }
 
-    private function updateLanguage(Language $language, string $level): void
+    private function validateLanguageExists(string $languageId): void
     {
-        $language->update([
-            'language_level' => $level
-        ]);
+        $language = Language::find($languageId);
+        if (!$language) {
+            throw new LanguageNotFoundException("Language with ID $languageId not found");
+        }
     }
 }
