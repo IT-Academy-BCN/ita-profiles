@@ -49,9 +49,6 @@ class MockUserPolicyTraitTest extends TestCase
 			$user = Auth::user();
 			$user_2 = User::factory()->create();
 			$user_2->save();
-            //$this->authorize('canAccessResource', $user);
-            //return 'Allowed';
-            
             // Perform authorization check
 			if (Gate::allows('canAccessResource', $user_2)) {
 				return response('Allowed', 200);

@@ -21,12 +21,6 @@ trait MockEnsureStudentOwnerMiddleware{
 				return $next($request);
 			});
 		$this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
-		
-		/*
-		Route::middleware([\App\Http\Middleware\EnsureStudentOwner::class])->group(function () use ($callback) {
-            $callback();
-        });
-		*/
 	}
 	
 	protected function setUp(): void
