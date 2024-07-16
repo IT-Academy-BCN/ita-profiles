@@ -41,10 +41,9 @@ class UpdateStudentImageControllerTest extends TestCase
              ->assertJson([
                  'profile' => 'La foto del perfil de l\'estudiant s\'actualitza correctament'
              ]);
-		
+
 		$student->refresh();
-		
-		// Get the contents of the file as a string
+
 		$fileContents = file_get_contents($file->path());
 
 		$this->assertEquals($fileContents, Storage::get($this->photos_path . $student->photo));
@@ -64,6 +63,7 @@ class UpdateStudentImageControllerTest extends TestCase
         $response->assertJsonValidationErrors(['photo']);
     }
 
+
     /** @test */
     public function it_returns_an_error_if_the_student_is_not_found()
     {
@@ -77,6 +77,7 @@ class UpdateStudentImageControllerTest extends TestCase
 
         $response->assertStatus(404);
     }
+
 
     /** @test */
     public function it_returns_an_error_if_the_photo_is_too_large()
@@ -97,7 +98,8 @@ class UpdateStudentImageControllerTest extends TestCase
     }
 
 
-   /** @test */
+
+    /** @test */
    public function it_returns_an_error_if_the_file_type_is_not_supported()
    {
       $user = User::factory()->create();
