@@ -30,8 +30,9 @@ class UpdateStudentCollaborationsService
         foreach ($collaborations as $i => $collaboration) {
             if (isset($updatedCollaborations->collaborations[$i])) {
                 $collaboration->collaboration_quantity = $updatedCollaborations->collaborations[$i];
-                $collaboration->update();
+                //$collaboration->update();
             }
         }
+        $collaborations->each->update();
     }
 }
