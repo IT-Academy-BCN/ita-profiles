@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\api\Student\{
     DeleteStudentResumeLanguageController,
     StudentAdditionalTrainingListController,
@@ -12,10 +13,10 @@ use App\Http\Controllers\api\Student\{
     StudentListController,
     StudentProjectsDetailController,
     SpecializationListController,
+    UpdateStudentCollaborationsController,
     UpdateStudentProjectController,
     UpdateStudentSkillsController,
-    UpdateStudentProfileController
-};
+    UpdateStudentProfileController};
 
 use App\Http\Controllers\api\Tag\{
     TagListController,
@@ -47,6 +48,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
     Route::put('skills', UpdateStudentSkillsController::class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
+    Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
     Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });
 
