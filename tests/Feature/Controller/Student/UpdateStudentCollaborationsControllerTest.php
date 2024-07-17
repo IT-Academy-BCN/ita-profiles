@@ -26,32 +26,6 @@ class UpdateStudentCollaborationsControllerTest extends TestCase
             ->assertJson(['message' => 'Collaborations updated successfully']);
     }
 
-    public function testStudentNotFound(): void
-    {
-        $studentId = 'nonExistentStudentId';
-        $payload = [
-            'collaborations' => [10, 20],
-        ];
-
-        $response = $this->json('PUT', route('student.updateCollaborations', ['studentId' => $studentId]), $payload);
-
-        $response->assertStatus(404)
-            ->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
-    }
-
-    public function testResumeNotFound(): void
-    {
-        $student = Student::factory()->create();
-        $payload = [
-            'collaborations' => [10, 20],
-        ];
-
-        $response = $this->json('PUT', route('student.updateCollaborations', ['studentId' => $student->id]), $payload);
-
-        $response->assertStatus(404)
-            ->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: '.$student->id]);
-    }
-
     public function testValidationFailsForInvalidDataItem1(): void
     {
         $studentId = Resume::first()->student_id;

@@ -39,7 +39,7 @@ class UpdateStudentCollaborationsControllerAnnotation
      *           )
      *       ),
      *
-     *          @OA\Response(
+     *     @OA\Response(
      *          response=200,
      *          description="Collaborations updated successfully",
      *
