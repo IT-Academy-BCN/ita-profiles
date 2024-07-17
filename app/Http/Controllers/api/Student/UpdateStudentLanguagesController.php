@@ -4,9 +4,9 @@ namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\Language;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class UpdateStudentLanguagesController extends Controller
 {
@@ -17,26 +17,37 @@ class UpdateStudentLanguagesController extends Controller
             'language_level' => 'required|in:Bàsic,Intermedi,Avançat,Natiu'
         ]);
 
-        $student = Student::find($studentId);
+        // Buscar el estudiante
+        $student = Student::findOrFail($studentId);
 
+        // Obtener el resume del estudiante
         $resume = $student->resume;
 
-        $languages = $resume->languages;
+        // Buscar la combinación de language_name y language_level en la tabla languages
+        $language = Language::where('language_name', $data['language_name'])
+            ->where('language_level', $data['language_level'])
+            ->firstOrFail();
 
-        // search the language_id combination of the language_name and language_level on languages table
-        $language_combination = $languages->where('language_name', $data['language_name'])->where('language_level', $data['language_level'])->first();
+        $languagesToUpdate = $resume->languages;
 
-        $language_combination_id = $language_combination->id;
 
-        // update the language_id of language in $languages
 
-        foreach ($languages as $language) {
-            if ($language->id == $language_combination_id) {
-                $language->id = $language_combination_id;
+        foreach ($languagesToUpdate as $languageToUpdate) {
+            if ($language->language_name === $languageToUpdate->language_name) {
+                $languageToUpdate->pivot->language_level = $data['language_level'];
+
+                return response()->json([
+                    'message' => 'Language updated successfully',
+                ]);
             }
-
-            $language->save();
         }
-        return response()->json('Language updated successfully', 200);
+
+
+
+
+        // return response()->json([
+        //     'message' => 'Language updated successfully',
+        //     'languages' => $resume->languages
+        // ], 200);
     }
 }
