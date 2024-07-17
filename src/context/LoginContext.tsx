@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 interface LoginContextProps {
   token: string | null;
@@ -36,9 +36,15 @@ const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     /* console.log("isLoggedIn cambió:", isLoggedIn); */
   }, [isLoggedIn]);
 
+  const contextValue = useMemo(() => ({
+    token,
+    login,
+    logout,
+    isLoggedIn
+  }), [token, isLoggedIn]);
 
   return (
-    <LoginContext.Provider value={{ token: token, login, logout, isLoggedIn }}>
+    <LoginContext.Provider value={contextValue}>
       {children}
     </LoginContext.Provider>
   );
