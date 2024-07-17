@@ -26,11 +26,13 @@ class UpdateStudentCollaborationsService
         $collaborationsIds = json_decode($resume->collaborations_ids);
         $collaborations = Collaboration::findMany($collaborationsIds);
 
+        // We need to update the 'collaboration_quantity' field that hold the collaboration numbers shown on front end.
         foreach ($collaborations as $i => $collaboration) {
             if (isset($updatedCollaborations->collaborations[$i])) {
                 $collaboration->collaboration_quantity = $updatedCollaborations->collaborations[$i];
+                //$collaboration->update();
             }
         }
-        $collaborations->each->save();
+        $collaborations->each->update();
     }
 }
