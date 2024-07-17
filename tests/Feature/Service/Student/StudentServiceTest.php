@@ -27,9 +27,9 @@ class StudentServiceTest extends TestCase
     }
 
     /**
-     * @dataProvider findUserByStudentIDSuccessProvider
+     * @dataProvider canSuccessFindingAUserByStudentIdProvider
      */
-    public function testFindUserByStudentIDSuccess(string $studentID, string $userID)
+    public function testCanSuccessFindingAUserByStudentId(string $studentID, string $userID)
     {
         $user = User::factory()->create(['id' => $userID]);
         $student = Student::factory()->create(['id' => $studentID, 'user_id' => $user->id]);
@@ -40,7 +40,7 @@ class StudentServiceTest extends TestCase
         $this->assertEquals($user->id, $foundUser->id);
     }
 
-    static function findUserByStudentIDSuccessProvider(): array
+    static function canSuccessFindingAUserByStudentIdProvider(): array
     {
         return [
             ['studentID1', 'userID1'],
@@ -49,15 +49,15 @@ class StudentServiceTest extends TestCase
     }
 
     /**
-     * @dataProvider findUserByStudentIDNotFoundProvider
+     * @dataProvider canReturnNotFoundWhenFindingAUserByStudentIdProvider
      */
-    public function testFindUserByStudentIDNotFound(string $studentID)
+    public function testCanReturnNotFoundWhenFindingAUserByStudentId(string $studentID)
     {
         $this->expectException(StudentNotFoundException::class);
         $this->studentService->findUserByStudentID($studentID);
     }
 
-    static function findUserByStudentIDNotFoundProvider(): array
+    static function canReturnNotFoundWhenFindingAUserByStudentIdProvider(): array
     {
         return [
             ['nonExistingStudentID1'],
@@ -66,9 +66,9 @@ class StudentServiceTest extends TestCase
     }
 
     /**
-     * @dataProvider findUserByStudentIDUserNotFoundProvider
+     * @dataProvider canReturnUserNotFoundWhenFindingAUserByStudentIdProvider
      */
-    public function testFindUserByStudentIDUserNotFound(string $studentID, string $userID)
+    public function testCanReturnUserNotFoundWhenFindingAUserByStudentId(string $studentID, string $userID)
     {
         $student = Student::factory()->create(['id' => $studentID, 'user_id' => $userID]);
 
@@ -76,7 +76,7 @@ class StudentServiceTest extends TestCase
         $this->studentService->findUserByStudentID($student->id);
     }
 
-    static function findUserByStudentIDUserNotFoundProvider(): array
+    static function canReturnUserNotFoundWhenFindingAUserByStudentIdProvider(): array
     {
         return [
             ['studentID1', 'nonExistingUserID1'],

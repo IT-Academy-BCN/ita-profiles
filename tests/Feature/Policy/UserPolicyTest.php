@@ -20,7 +20,7 @@ class UserPolicyTest extends TestCase
 
 	use DatabaseTransactions;
 
-	public function testNonOwnersAreRestricted()
+	public function testCanRestrictNonOwners()
 	{
 		$user = User::factory()->create(['id' => '1']);
 		$user_2 = User::factory()->create(['id' => '2']);
@@ -34,7 +34,7 @@ class UserPolicyTest extends TestCase
 	}
 
 
-	public function testOwnersAreAllowed()
+	public function testCanAllowOwners()
 	{
 		$user = User::factory()->create(['id' => '1']);
 		$user_2 = User::factory()->create(['id' => '2']);

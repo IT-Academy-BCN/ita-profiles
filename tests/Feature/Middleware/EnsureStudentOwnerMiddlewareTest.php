@@ -20,7 +20,7 @@ class EnsureStudentOwnerMiddlewareTest extends TestCase
 
     use DatabaseTransactions;
 
-    public function testNonOwnersAreRedirected()
+    public function testCanRedirectNonOwners()
     {
         $user = User::factory()->create(['id' => '1']);
         $user_2 = User::factory()->create(['id' => '2']);
@@ -44,7 +44,7 @@ class EnsureStudentOwnerMiddlewareTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function testOwnersAreAllowed()
+    public function testCanAllowOwners()
     {
         $user = User::factory()->create(['id' => '1']);
         $user_2 = User::factory()->create(['id' => '2']);

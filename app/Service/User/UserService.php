@@ -54,12 +54,8 @@ class UserService
 		return $jwt;
 	}
 
-	public function storeUserIDAndTokenRedis(string | int $userID, string $token): bool
+	public function storeUserIDAndTokenRedis(string $userID, string $token): bool
 	{
-		if (is_numeric($userID)) {
-			$userID = (string)$userID;
-		}
-
 		try {
 			$result = Redis::set($this->JWTokenRedisPre . $userID, $token, 'EX', $this->expirationTime_s);
 			if (!$result) {
@@ -71,12 +67,8 @@ class UserService
 		}
 	}
 
-	public function getJWTokenByUserID(string | int $userID): string
+	public function getJWTokenByUserID(string $userID): string
 	{
-		if (is_numeric($userID)) {
-			$userID = (string)$userID;
-		}
-
 		$jwt = Redis::get('user:0:JWToken_' . $userID);
 
 		if (!$jwt) {

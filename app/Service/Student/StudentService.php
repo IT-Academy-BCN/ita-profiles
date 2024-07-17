@@ -6,18 +6,12 @@ namespace App\Service\Student;
 
 use App\Models\User;
 use App\Models\Student;
-use Exception;
 
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\StudentNotFoundException;
 
 class StudentService
 {
-
-	public function __construct()
-	{
-	}
-
 	public function findUserByStudentID(string $studentID): User
 	{
 		$student = Student::find($studentID);
