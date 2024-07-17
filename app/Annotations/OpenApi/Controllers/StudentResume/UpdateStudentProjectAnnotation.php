@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Annotations\OpenApi\Controllers\StudentUpdate;
+namespace App\Annotations\OpenApi\Controllers\StudentResume;
 
 use OpenApi\Annotations as OA;
 
@@ -20,8 +20,7 @@ class UpdateStudentProjectAnnotation
    *          required=true,
    *          @OA\Schema(
    *              type="string",
-   *              format="uuid",
-   *              example="9c66cd66-3585-4f7d-bb8d-ef7db39dddcf"
+   *              format="uuid"
    *          )
    *      ),
    *      @OA\Parameter(
@@ -31,8 +30,7 @@ class UpdateStudentProjectAnnotation
    *          required=true,
    *          @OA\Schema(
    *              type="string",
-   *              format="uuid",
-   *              example="9c66cd66-0211-49e5-a8f1-a169fc8bb199"
+   *              format="uuid"            
    *          )
    *      ),
    *      @OA\RequestBody(
