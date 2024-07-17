@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\Student\{StudentAdditionalTrainingListController,
+
+use App\Http\Controllers\api\Student\{
+    DeleteStudentResumeLanguageController,
+    StudentAdditionalTrainingListController,
     StudentModalityController,
     StudentBootcampDetailController,
     StudentCollaborationDetailController,
@@ -46,7 +49,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::put('skills', UpdateStudentSkillsController::class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
     Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
-
+    Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });
 
 Route::prefix('tags')->group(function () {
