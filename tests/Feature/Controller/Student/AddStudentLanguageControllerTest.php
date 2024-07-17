@@ -107,7 +107,7 @@ class AddStudentLanguageControllerTest extends TestCase
         ]);
     }
 
-    public function testAddStudentLanguageControllerReturns404ForDuplicateLanguage(): void
+    public function testAddStudentLanguageControllerReturns409ForDuplicateLanguage(): void
     {
         $languageToAdd = $this->language->id;
         $studentId = $this->student->id;
@@ -122,7 +122,7 @@ class AddStudentLanguageControllerTest extends TestCase
             'language_id' =>  $languageToAdd,
         ]);
 
-        $response->assertStatus(404);
+        $response->assertStatus(409);
 
         $response->assertJson(['message' => sprintf('L\'idioma %s ja existeix al perfil de l\'estudiant %s', $languageToAdd, $studentId)]);
     }
