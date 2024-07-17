@@ -26,12 +26,14 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
+      // eslint-disable-next-line
       user = response.data
       login(user);
       onClose()
       navigate('/profile')
     } catch (e) {
-      /* console.log('error =>', e) */
+      // eslint-disable-next-line no-console
+      console.log('error =>', e)
     }
   }
 
