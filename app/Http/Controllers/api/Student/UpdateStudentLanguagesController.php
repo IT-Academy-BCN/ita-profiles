@@ -42,6 +42,11 @@ class UpdateStudentLanguagesController extends Controller
             }
         }
 
+        return \response()->json([
+            'message' => 'Language not found'
+        ]);
+
+
 
 
 
