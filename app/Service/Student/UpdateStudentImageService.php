@@ -15,7 +15,7 @@ class UpdateStudentImageService
 	private string $photo_infix = '.profile_photo.';
 	private string $photos_path = 'public/photos/';
 
-    public function updateStudentImagePathInDatabaseByStudentID(string $studentID, string $filename): Student | Exception
+    public function updateStudentImagePathInDatabaseByStudentID(string $studentID, string $filename): Student
 	{
 		$student = Student::find($studentID);
 
@@ -41,9 +41,9 @@ class UpdateStudentImageService
 	}
 
 
-	public function storePhotoInStorageByFileName(UploadedFile $file, string $filename)
+	public function storePhotoInStorageByFileName(UploadedFile $file, string $filename): void
 	{
-		$path = $file->storeAs($this->photos_path, $filename);
+		$file->storeAs($this->photos_path, $filename);
 	}
 
 }

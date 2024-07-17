@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Feature;
 
@@ -25,8 +26,8 @@ class UpdateStudentImageControllerTest extends TestCase
 		Storage::fake('public');
 	}
 
-    /** @test */
-    public function it_updates_the_student_image_successfully()
+
+    public function testItUpdatesStudentImageSuccessfully()
     {
        $user = User::factory()->create();
        $student = Student::factory()->create(['user_id' => $user->id]);
@@ -39,7 +40,7 @@ class UpdateStudentImageControllerTest extends TestCase
 
        $response->assertStatus(200)
              ->assertJson([
-                 'profile' => 'La foto del perfil de l\'estudiant s\'actualitza correctament'
+                 'profile' => "La foto del perfil de l'estudiant s'actualitzat correctament"
              ]);
 
 		$student->refresh();
@@ -49,8 +50,8 @@ class UpdateStudentImageControllerTest extends TestCase
 		$this->assertEquals($fileContents, Storage::get($this->photos_path . $student->photo));
 	}
 
-    /** @test */
-    public function it_returns_an_error_if_no_photo_is_uploaded()
+
+    public function testCanReturnErrorWhenNoImageIsUploaded()
     {
         $user = User::factory()->create();
 		$user->save();
@@ -64,8 +65,8 @@ class UpdateStudentImageControllerTest extends TestCase
     }
 
 
-    /** @test */
-    public function it_returns_an_error_if_the_student_is_not_found()
+
+    public function testCanReturnErrorWhenStudentIsNotFound()
     {
         $invalidStudentId = Str::uuid();
 
@@ -79,8 +80,8 @@ class UpdateStudentImageControllerTest extends TestCase
     }
 
 
-    /** @test */
-    public function it_returns_an_error_if_the_photo_is_too_large()
+
+    public function testCanReturnErrorIfImageIsTooLarge()
     {
        $user = User::factory()->create();
        $user->save();
@@ -99,8 +100,8 @@ class UpdateStudentImageControllerTest extends TestCase
 
 
 
-    /** @test */
-   public function it_returns_an_error_if_the_file_type_is_not_supported()
+
+   public function testCanReturnErrorIfFileTypeIsNotSupported()
    {
       $user = User::factory()->create();
       $user->save();

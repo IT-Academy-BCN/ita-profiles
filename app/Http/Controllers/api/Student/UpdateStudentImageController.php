@@ -38,7 +38,7 @@ class UpdateStudentImageController extends Controller
 
 
 			return response()->json([
-				'profile' => 'La foto del perfil de l\'estudiant s\'actualitza correctament'
+				'profile' => "La foto del perfil de l'estudiant s'actualitzat correctament"
 			], 200);
 
 

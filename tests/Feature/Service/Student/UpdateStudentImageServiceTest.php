@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit\Service\Student;
 
@@ -15,21 +16,21 @@ use Tests\TestCase;
 class UpdateStudentImageServiceTest extends TestCase
 {
     use DatabaseTransactions;
-	
+
 	protected UpdateStudentImageService $studentUpdateImageService;
 	private string $photos_path = 'public/photos/';
-	
-	
+
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->studentUpdateImageService = new UpdateStudentImageService();
     }
-    
-	
-	
-    /** @test */
-    public function it_updates_student_image_path_in_database()
+
+
+
+
+    public function testItUpdatesStudentImagePathInDatabase()
     {
         $student = Student::factory()->create();
         $studentId = $student->id;
@@ -51,18 +52,18 @@ class UpdateStudentImageServiceTest extends TestCase
         }
     }
 
-    /** @test */
-    public function it_throws_exception_if_student_not_found()
+
+    public function testCanThrowExceptionIfStudentIsNotFound()
     {
         $nonExistingStudentId = 'non_existing_id';
         $filename = 'new_image.png';
-        
+
         $this->expectException(StudentNotFoundException::class);
         $this->studentUpdateImageService->updateStudentImagePathInDatabaseByStudentID($nonExistingStudentId, $filename);
     }
 
-    /** @test */
-    public function it_stores_photo_in_storage_by_filename()
+
+    public function testCanStoreImageInStorageByFilename()
     {
 		$file = UploadedFile::fake()->image('test_image.png');
 		$filename = 'test_image.png';
