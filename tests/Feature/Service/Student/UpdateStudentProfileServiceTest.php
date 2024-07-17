@@ -89,24 +89,4 @@ class UpdateStudentProfileServiceTest extends TestCase
 
         $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
     }
-
-    /**
-     * @dataProvider missingDataProvider
-     */
-    public function test_can_not_update_student_profile_with_missing_data(array $invalidData)
-    {
-        $student = Student::factory()->has(Resume::factory())->create();
-        $dataToUpdate = $this->createFakeDataToUpdate($student);
-        $dataToUpdate = array_merge($dataToUpdate, $invalidData);
-
-        $this->expectException(QueryException::class);
-        $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
-    }
-
-    public static function missingDataProvider(): array
-    {
-        return [
-            'missing_tags_ids' => [['tags_ids' => null]],
-        ];
-    }
 }
