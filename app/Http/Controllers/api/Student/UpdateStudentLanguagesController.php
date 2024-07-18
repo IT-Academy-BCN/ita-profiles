@@ -6,12 +6,10 @@ namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateStudentLanguagesRequest;
-use App\Models\Student;
-use App\Models\Language;
 use App\Service\Student\UpdateStudentLanguagesService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Exception;
+use Illuminate\Support\Facades\Log;
 
 class UpdateStudentLanguagesController extends Controller
 {
@@ -40,9 +38,11 @@ class UpdateStudentLanguagesController extends Controller
                 return response()->json(['message' => 'Language not found for this student'], 404);
             }
         } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'Student or Language not found', 'error' => $e->getMessage()], 404);
+            Log::error('Model not found', ['error' => $e->getMessage(), 'studentId' => $studentId, 'data' => $request->all()]);
+            return response()->json(['message' => 'Student or Language not found'], 404);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'An error occurred while updating the language', 'error' => $e->getMessage()], 500);
+            Log::error('Error updating student language', ['error' => $e->getMessage(), 'studentId' => $studentId, 'data' => $request->all()]);
+            return response()->json(['message' => 'An error occurred while updating the language'], 500);
         }
     }
 }

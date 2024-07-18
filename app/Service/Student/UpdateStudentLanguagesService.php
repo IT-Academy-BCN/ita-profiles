@@ -7,6 +7,7 @@ namespace App\Service\Student;
 use App\Models\Language;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class UpdateStudentLanguagesService
 {
@@ -16,6 +17,7 @@ class UpdateStudentLanguagesService
             $student = Student::findOrFail($studentId);
             return $student;
         } catch (ModelNotFoundException $e) {
+            Log::error('Student not found', ['studentId' => $studentId, 'error' => $e->getMessage()]);
             throw new ModelNotFoundException('Student not found');
         }
     }
@@ -26,6 +28,7 @@ class UpdateStudentLanguagesService
             $resume = $student->resume()->firstOrFail();
             return $resume;
         } catch (ModelNotFoundException $e) {
+            Log::error('Resume not found for the student', ['studentId' => $student->id, 'error' => $e->getMessage()]);
             throw new ModelNotFoundException('Resume not found for the student');
         }
     }
@@ -33,10 +36,10 @@ class UpdateStudentLanguagesService
     public function getResumeLanguages($resume)
     {
         try {
-            // Return a collection of Language models directly without converting to an array
             $languages = $resume->languages()->get();
             return $languages;
         } catch (ModelNotFoundException $e) {
+            Log::error('Languages not found for the resume', ['resumeId' => $resume->id, 'error' => $e->getMessage()]);
             throw new ModelNotFoundException('Languages not found for the resume');
         }
     }
@@ -49,22 +52,28 @@ class UpdateStudentLanguagesService
                 ->firstOrFail();
             return $language;
         } catch (ModelNotFoundException $e) {
+            Log::error('Language not found', ['language_name' => $languageName, 'language_level' => $languageLevel, 'error' => $e->getMessage()]);
             throw new ModelNotFoundException('Language not found');
         }
     }
 
     public function updateStudentLanguage($resume, $languageName, $languageLevel): bool
     {
-        $newLanguage = $this->findLanguageByNameAndLevel($languageName, $languageLevel);
-        $languagesToUpdate = $this->getResumeLanguages($resume);
+        try {
+            $newLanguage = $this->findLanguageByNameAndLevel($languageName, $languageLevel);
+            $languagesToUpdate = $this->getResumeLanguages($resume);
 
-        foreach ($languagesToUpdate as $languageToUpdate) {
-            if ($languageToUpdate->language_name === $languageName) {
-                $resume->languages()->updateExistingPivot($languageToUpdate->id, ['language_id' => $newLanguage->id]);
-                return true; // Language updated successfully
+            foreach ($languagesToUpdate as $languageToUpdate) {
+                if ($languageToUpdate->language_name === $languageName) {
+                    $resume->languages()->updateExistingPivot($languageToUpdate->id, ['language_id' => $newLanguage->id]);
+                    return true;
+                }
             }
-        }
 
-        return false; // Language not found
+            return false;
+        } catch (\Exception $e) {
+            Log::error('Error updating student language', ['resumeId' => $resume->id, 'languageName' => $languageName, 'languageLevel' => $languageLevel, 'error' => $e->getMessage()]);
+            throw new \Exception('Error updating student language');
+        }
     }
 }
