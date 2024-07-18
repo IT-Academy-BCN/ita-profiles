@@ -9,8 +9,8 @@ class UpdateStudentLanguagesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'language_id' => 'required|exists:languages,id',
-            'language_level' => 'required|string'
+            'language_name' => 'required|exists:languages,language_name',
+            'language_level' => 'required|in:Bàsic,Intermedi,Avançat,Natiu'
         ];
     }
 }

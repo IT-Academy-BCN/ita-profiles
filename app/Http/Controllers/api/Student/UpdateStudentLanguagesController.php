@@ -1,23 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateStudentLanguagesRequest;
 use App\Models\Student;
 use App\Models\Language;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class UpdateStudentLanguagesController extends Controller
 {
-    public function __invoke(string $studentId, Request $request): JsonResponse
+    public function __invoke(string $studentId, UpdateStudentLanguagesRequest $request): JsonResponse
     {
         // Validar los datos de la request
-        $data = $request->validate([
-            'language_name' => 'required|exists:languages,language_name',
-            'language_level' => 'required|in:Bàsic,Intermedi,Avançat,Natiu'
-        ]);
+        $data = $request->validated();
 
         // Encontrar el estudiante por ID
         $student = Student::findOrFail($studentId);
@@ -25,6 +24,11 @@ class UpdateStudentLanguagesController extends Controller
         // Obtener el CV del estudiante y sus lenguajes
         $resume = $student->resume;
         $languagesToUpdate = $resume->languages;
+
+        Log::info("The actual languages of the student are:", [
+            'student_id' => $studentId,
+            'languages' => $languagesToUpdate->pluck('language_name')
+        ]);
 
         // Encontrar el lenguaje solicitado por nombre y nivel
         $newLanguage = Language::where('language_name', $data['language_name'])
