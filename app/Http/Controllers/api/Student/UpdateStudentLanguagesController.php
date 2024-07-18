@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateStudentLanguagesRequest;
 use App\Models\Student;
 use App\Models\Language;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
 
 class UpdateStudentLanguagesController extends Controller
 {
@@ -25,11 +24,6 @@ class UpdateStudentLanguagesController extends Controller
         $resume = $student->resume;
         $languagesToUpdate = $resume->languages;
 
-        Log::info("The actual languages of the student are:", [
-            'student_id' => $studentId,
-            'languages' => $languagesToUpdate->pluck('language_name')
-        ]);
-
         // Encontrar el lenguaje solicitado por nombre y nivel
         $newLanguage = Language::where('language_name', $data['language_name'])
             ->where('language_level', $data['language_level'])
@@ -43,15 +37,6 @@ class UpdateStudentLanguagesController extends Controller
             if ($languageToUpdate->language_name === $data['language_name']) {
                 // Actualizar el language_id en la tabla pivote
                 $resume->languages()->updateExistingPivot($languageToUpdate->id, ['language_id' => $newLanguage->id]);
-
-                // Log para confirmar la transacción
-                Log::info("Language updated successfully", [
-                    'student_id' => $studentId,
-                    'old_language_id' => $languageToUpdate->id,
-                    'new_language_id' => $newLanguage->id,
-                    'language_name' => $data['language_name'],
-                    'language_level' => $data['language_level']
-                ]);
 
                 $languageFound = true;
 
