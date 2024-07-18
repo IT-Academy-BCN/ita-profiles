@@ -69,6 +69,7 @@ class UpdateStudentLanguagesService
                     return true;
                 }
             }
+
             return false;
         } catch (\Exception $e) {
             Log::error('Error updating student language', ['resumeId' => $resume->id, 'languageName' => $languageName, 'languageLevel' => $languageLevel, 'error' => $e->getMessage()]);
