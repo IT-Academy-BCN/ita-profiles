@@ -9,47 +9,55 @@ use App\Http\Requests\UpdateStudentLanguagesRequest;
 use App\Models\Student;
 use App\Models\Language;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 
 class UpdateStudentLanguagesController extends Controller
 {
     public function __invoke(string $studentId, UpdateStudentLanguagesRequest $request): JsonResponse
     {
-        // Validar los datos de la request
-        $data = $request->validated();
+        try {
+            // Validar los datos de la request
+            $data = $request->validated();
 
-        // Encontrar el estudiante por ID
-        $student = Student::findOrFail($studentId);
+            // Encontrar el estudiante por ID
+            $student = Student::findOrFail($studentId);
 
-        // Obtener el CV del estudiante y sus lenguajes
-        $resume = $student->resume;
-        $languagesToUpdate = $resume->languages;
+            // Obtener el CV del estudiante y sus lenguajes
+            $resume = $student->resume;
+            $languagesToUpdate = $resume->languages;
 
-        // Encontrar el lenguaje solicitado por nombre y nivel
-        $newLanguage = Language::where('language_name', $data['language_name'])
-            ->where('language_level', $data['language_level'])
-            ->firstOrFail();
+            // Encontrar el lenguaje solicitado por nombre y nivel
+            $newLanguage = Language::where('language_name', $data['language_name'])
+                ->where('language_level', $data['language_level'])
+                ->firstOrFail();
 
-        // Variable para verificar si el lenguaje fue encontrado
-        $languageFound = false;
+            // Actualizar el language_id en la tabla pivote
+            foreach ($languagesToUpdate as $languageToUpdate) {
+                if ($languageToUpdate->language_name === $data['language_name']) {
+                    $resume->languages()->updateExistingPivot($languageToUpdate->id, ['language_id' => $newLanguage->id]);
 
-        // Actualizar el language_id en la tabla pivote
-        foreach ($languagesToUpdate as $languageToUpdate) {
-            if ($languageToUpdate->language_name === $data['language_name']) {
-                // Actualizar el language_id en la tabla pivote
-                $resume->languages()->updateExistingPivot($languageToUpdate->id, ['language_id' => $newLanguage->id]);
-
-                $languageFound = true;
-
-                return response()->json([
-                    'message' => 'Language updated successfully',
-                ]);
+                    return response()->json([
+                        'message' => 'Language updated successfully',
+                    ]);
+                }
             }
-        }
 
-        if (!$languageFound) {
+            // Si no se encontró el lenguaje
             return response()->json([
-                'message' => 'Language not found'
-            ]);
+                'message' => 'Language not found for this student'
+            ], 404);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Student or Language not found',
+                'error' => $e->getMessage()
+            ], 404);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while updating the language',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 }
