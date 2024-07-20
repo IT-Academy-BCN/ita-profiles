@@ -10,6 +10,7 @@ use App\Models\Collaboration;
 use App\Models\Project;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Cache;
 
 class ResumeFactory extends Factory
 {
@@ -34,12 +35,21 @@ class ResumeFactory extends Factory
         $additionalTrainingsIds = AdditionalTraining::factory()->count(2)->create()->pluck('id')->toArray();
         $collaborationsIds = Collaboration::factory()->count(2)->create()->pluck('id')->toArray();
 
+        // TEMPORARY: This is used to create add the two users to the first two students.
+        static $studentIndex = 0; // Keep track of the number of students created
+        $userIds = Cache::get('test_user_ids', []);
+        // Assign a user ID to the first students, then default to null
+        $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
+        $studentIndex++; // Increment the index for each student created
+
         return [
-            'student_id' =>  Student::factory()->create()->id,
+            'student_id' => Student::factory()->create([
+                'user_id' => $userId, // This will be null after the first two students
+            ])->id,
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
             'linkedin_url' => $this->faker->parse('https://linkedin.com/') . $this->faker->userName,
             'github_url' => $this->faker->parse('https://github.com/') . $this->faker->userName,
-            'tags_ids' => $tagsIds ,
+            'tags_ids' => $tagsIds,
             'specialization' => $this->faker->randomElement(
                 ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
             ),

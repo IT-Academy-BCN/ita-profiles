@@ -11,7 +11,7 @@ class UpdateStudentSkillsAnnotation
      *     tags={"Student -> Resume"},
      *     summary="Update Student Skills.",
      *     description="Update the skills/tags of a given student by student ID",
-     * 
+     *     security={{"bearerAuth":{}}},
      *      
      *     @OA\Parameter(
      *         name="studentId",
