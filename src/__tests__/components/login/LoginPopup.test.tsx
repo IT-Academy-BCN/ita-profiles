@@ -91,7 +91,7 @@ describe('LoginPopup', () => {
   })
 
   test('shows error message on failed form submission', async () => {
-    mockAxios.onPost('//localhost:8000/api/v1/signin').reply(400)
+    mockAxios.onPost('//localhost:8000/api/v1/signin').reply(401)
 
     fireEvent.input(screen.getByPlaceholderText('DNI o NIE'), {
       target: { value: 'dni123' },

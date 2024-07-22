@@ -4,6 +4,9 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ILoginForm } from '../../interfaces/interfaces'
 import { useLogin } from '../../context/LoginContext'
+import { z } from 'zod'
+import { UserSchema } from '../../schemes/schemas'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 type LoginPopupProps = {
   onClose: () => void
@@ -14,6 +17,8 @@ type LoginPopupProps = {
   }
 }
 
+type TFormSchema = z.infer<typeof UserSchema>
+
 const LoginPopup: React.FC<LoginPopupProps> = ({ 
   onClose,
   onOpenRegisterPopup,
@@ -22,7 +27,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
 
   const { login } = useLogin();
   const navigate = useNavigate();
-  const { handleSubmit, register } = useForm<ILoginForm>()
+  const { handleSubmit, register, formState: { errors }, } = useForm<TFormSchema>({ resolver: zodResolver(UserSchema) })
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
@@ -55,6 +60,9 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
           placeholder="DNI o NIE"
           {...register('dni')}
         />
+        {errors.dni && (
+          <p className="text-error">{`${errors.dni?.message}`}</p>
+        )}
         <input
           type="password"
           id="password"
@@ -62,6 +70,9 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
           placeholder="Contraseña"
           {...register('password')}
         />
+        {errors.password && (
+          <p className="text-error">{`${errors.password?.message}`}</p>
+        )}
         <div className="ml-16 mb-4 mt-2 text-center text-sm">
           <button
             type="button"
