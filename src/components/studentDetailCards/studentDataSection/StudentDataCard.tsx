@@ -35,8 +35,6 @@ const StudentDataCard: React.FC = () => {
   return (
     <div data-testid="StudentDataCard">
       {aboutData.map((studentData, index) => (
-        // El, id del usuario no se encuentra y da Warning (Each child in a list should have a unique "key" prop),  
-        // mientras se soluciona, el index evita el Warning.
         <div key={studentData.id || index} className="flex flex-col gap-4">
           <div className="flex gap-3">
             <img
