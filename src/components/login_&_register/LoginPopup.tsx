@@ -30,12 +30,14 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   const { handleSubmit, register, formState: { errors }, } = useForm<TFormSchema>({ resolver: zodResolver(LoginUserSchema) })
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
+      console.log("Yes it is called....");
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
       // eslint-disable-next-line
       user = response.data
       login(user);
       onClose()
       navigate('/profile')
+      console.log("To The end...");
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log('error =>', e)
@@ -83,11 +85,12 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
           </button>
         </div>
         <button
+          //type="submit"
           type="button"
           className="h-12 w-full my-4 rounded-lg bg-primary font-bold text-white"
           onClick={handleSubmit(handleLogin)}
         >
-          Login
+          Login Now
         </button>
       </form>
       <div className="mt-4 text-center">
