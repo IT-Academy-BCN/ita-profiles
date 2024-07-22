@@ -42,13 +42,15 @@ class ResumeFactory extends Factory
         $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
         $studentIndex++; // Increment the index for each student created
 
+        $gitHubUsername = ['nachoa88', 'StephaneCarteaux', 'laravel', 'php', 'react'];
+
         return [
             'student_id' => Student::factory()->create([
                 'user_id' => $userId, // This will be null after the first two students
             ])->id,
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
             'linkedin_url' => $this->faker->parse('https://linkedin.com/') . $this->faker->userName,
-            'github_url' => $this->faker->parse('https://github.com/') . $this->faker->userName,
+            'github_url' => $this->faker->parse('https://github.com/') . $this->faker->randomElement($gitHubUsername),
             'tags_ids' => $tagsIds,
             'specialization' => $this->faker->randomElement(
                 ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
