@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\api\Student\{
     DeleteStudentResumeLanguageController,
+    GetStudentImageController,
     StudentAdditionalTrainingListController,
     StudentModalityController,
     StudentBootcampDetailController,
@@ -50,6 +51,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
+    Route::get('photo', GetStudentImageController::class)->name('student.photo.get');
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
     //Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api')->name('student.skills');
     Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.skills');
