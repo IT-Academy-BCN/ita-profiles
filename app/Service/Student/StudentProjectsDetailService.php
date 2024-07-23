@@ -9,12 +9,13 @@ use App\Models\Project;
 use App\Models\Tag;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
+use App\Models\Resume;
 use Illuminate\Database\Eloquent\Collection;
 
 class StudentProjectsDetailService
 {
 
-    public function execute(string $studentId):array
+    public function execute(string $studentId): array
     {
         $student = $this->getStudent($studentId);
         $resume = $this->getResume($student);
@@ -23,7 +24,7 @@ class StudentProjectsDetailService
         return $this->formatProjectsDetail($projects);
     }
 
-    private function getStudent(string $studentId):Student
+    private function getStudent(string $studentId): Student
     {
         $student = Student::where('id', $studentId)->with('resume')->first();
 
@@ -34,7 +35,7 @@ class StudentProjectsDetailService
         return $student;
     }
 
-    private function getResume(object $student):mixed
+    public function getResume(Student $student): Resume
     {
         $resume = $student->resume;
 
@@ -45,16 +46,16 @@ class StudentProjectsDetailService
         return $resume;
     }
 
-    private function getProjects(object $resume):Collection
+    private function getProjects(object $resume): Collection
     {
         $projectIds = json_decode($resume->project_ids);
         $projects = Project::findMany($projectIds);
         return $projects;
     }
 
-    private function formatProjectsDetail(Collection $projects):array
+    private function formatProjectsDetail(Collection $projects): array
     {
-        return 
+        return
             $projects->map(function ($project) {
                 $tags = Tag::findMany(json_decode($project->tags));
                 return [
@@ -71,5 +72,5 @@ class StudentProjectsDetailService
                     'github_url' => $project->github_url,
                 ];
             })->toArray();
-        }
+    }
 }
