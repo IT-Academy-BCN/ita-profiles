@@ -49,8 +49,8 @@ class ResumeFactory extends Factory
                 'user_id' => $userId, // This will be null after the first two students
             ])->id,
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
-            'linkedin_url' => $this->faker->parse('https://linkedin.com/') . $this->faker->userName,
-            'github_url' => $this->faker->parse('https://github.com/') . $this->faker->randomElement($gitHubUsername),
+            'linkedin_url' => 'https://linkedin.com/' . $this->faker->userName,
+            'github_url' => 'https://github.com/' . $this->faker->randomElement($gitHubUsername),
             'tags_ids' => $tagsIds,
             'specialization' => $this->faker->randomElement(
                 ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
