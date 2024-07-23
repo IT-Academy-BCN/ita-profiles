@@ -125,7 +125,7 @@ return [
     'required_with' => 'El camp :attribute és obligatori quan hi ha :values.',
     'required_with_all' => 'El camp :attribute és obligatori quan hi ha :values.',
     'required_without' => 'El camp :attribute és obligatori quan no hi ha :values.',
-    'required_without_all' => 'El camp :attribute és obligatori quan no hi ha cap valor dels següents: :values.',
+    'required_without_all' => 'l\'apartat ha de contenir algun dels valors següents: :values.',
     'same' => ':Attribute i :other han de coincidir.',
     'size' => [
         'array' => ':Attribute ha de contenir :size ítems.',
