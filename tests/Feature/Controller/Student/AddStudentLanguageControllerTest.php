@@ -17,20 +17,23 @@ class AddStudentLanguageControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $student;    
+    private const INVALID_STUDENT_ID = 'invalidStudentId';
+    private const NON_EXISTENT_LANGUAGE_ID = 'ab9bb2ed-8bb5-4a3a-bdb2-09cd00000f0b';
+    private const INVALID_LANGUAGE_ID = 'invalidLanguageId';
+    protected $student;
     protected $resume;
     protected $language;
 
     protected function setUp(): void
     {
-        parent::setUp();       
+        parent::setUp();
 
         $this->student = Student::factory()->create();
-        
+
         $this->resume = Resume::factory()->create(['student_id' => $this->student->id]);
 
         //Language has no factory because it has fixed values in the seeder      
-        $this->language = Language::first();    
+        $this->language = Language::first();
     }
     public function testAddStudentLanguageControllerAddsLanguageSuccessfully(): void
     {
@@ -45,15 +48,13 @@ class AddStudentLanguageControllerTest extends TestCase
 
     public function testAddStudentLanguageControllerReturns404ForInvalidStudentUuid(): void
     {
-        $invalidStudentId = 'invalidStudentId';
-
-        $response = $this->postJson(route('student.addLanguage', ['studentId' => $invalidStudentId]), [
+        $response = $this->postJson(route('student.addLanguage', ['studentId' => self::INVALID_STUDENT_ID]), [
             'language_id' => $this->language->id,
         ]);
 
         $response->assertStatus(404);
 
-        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: ' . $invalidStudentId]);
+        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: ' . self::INVALID_STUDENT_ID]);
     }
 
     public function testAddStudentLanguageControllerReturns404ForValidStudentUuidWithoutResume(): void
@@ -71,14 +72,12 @@ class AddStudentLanguageControllerTest extends TestCase
 
     public function testAddStudentLanguageControllerReturns422ForNonExistentLanguageUuid(): void
     {
-        $noExistentLanguageId = 'ab9bb2ed-8bb5-4a3a-bdb2-09cd00000f0b';
-        
         $response = $this->postJson(route('student.addLanguage', ['studentId' => $this->student->id]), [
-            'language_id' => $noExistentLanguageId,
+            'language_id' => self::NON_EXISTENT_LANGUAGE_ID,
         ]);
 
         $response->assertStatus(422);
-        
+
         $response->assertJson([
             'errors' => [
                 'language_id' => [
@@ -89,15 +88,13 @@ class AddStudentLanguageControllerTest extends TestCase
     }
 
     public function testAddStudentLanguageControllerReturns422ForInvalidLanguageUuid(): void
-    {
-        $invalidLanguageId = 'invalidLanguageId';
-        
+    {        
         $response = $this->postJson(route('student.addLanguage', ['studentId' => $this->student->id]), [
-            'language_id' => $invalidLanguageId,
+            'language_id' => self::INVALID_LANGUAGE_ID,
         ]);
 
         $response->assertStatus(422);
-        
+
         $response->assertJson([
             'errors' => [
                 'language_id' => [
@@ -130,7 +127,7 @@ class AddStudentLanguageControllerTest extends TestCase
     public function testAddStudentLanguageControllerCanBeInstantiated(): void
     {
         $languageService = $this->createMock(AddStudentLanguageService::class);
-        
+
         $controller = new AddStudentLanguageController($languageService);
 
         $this->assertInstanceOf(AddStudentLanguageController::class, $controller);
