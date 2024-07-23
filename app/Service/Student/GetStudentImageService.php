@@ -3,10 +3,27 @@ declare(strict_types=1);
 
 namespace App\Service\Student;
 
+use App\Exceptions\StudentNotFoundException;
+use App\Models\Student;
+use Illuminate\Support\Facades\Storage;
+
 class GetStudentImageService
 {
-    public function execute()
+	private string $photos_path = 'public/photos/';
+
+    public function execute(string $studentId)
     {
-        echo "estas dentro de GetStudentImageService";
+        $student = $this->getStudent($studentId);
+        return Storage::get($this->photos_path . $student->photo);
     }
+
+    public function getStudent(string $studentId): Student
+    {
+        $student = Student::find($studentId);
+        if(!$student){
+           throw new StudentNotFoundException($studentId);
+        }
+        return $student;
+    }
+
 }
