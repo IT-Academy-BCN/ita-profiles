@@ -28,7 +28,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
 
   const sendRegister: SubmitHandler<TFormSchema> = async (data) => {
     try {
-      //if (isChecked) {
+      if (isChecked) {
         // This creates a user in db.json.
         const response = await axios.post(
           '//localhost:8000/users/register',
@@ -38,9 +38,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
         console.log('response de register =>', response.data)
         reset()
         onClose()
-      /*} else {
+      } else {
         setCheckError(true)
-      }*/
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error)

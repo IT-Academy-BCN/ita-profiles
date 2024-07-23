@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import React from 'react'
+//import React from 'react'
+import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ILoginForm } from '../../interfaces/interfaces'
 import { useLogin } from '../../context/LoginContext'
@@ -27,6 +28,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
 
   const { login } = useLogin();
   const navigate = useNavigate();
+  const [customError, setCustomError] = useState<string | null>(null);
   const { handleSubmit, register, formState: { errors }, } = useForm<TFormSchema>({ resolver: zodResolver(LoginUserSchema) })
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
@@ -41,6 +43,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log('error =>', e)
+      setCustomError('L\'usuari o la contrasenya son incorrectes.'); // Set custom error message
     }
   }
 
@@ -75,6 +78,11 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
         {errors.password && (
           <p className="text-error">{`${errors.password?.message}`}</p>
         )}
+
+        {customError && (
+          <p className="text-error">{customError}</p> // Display custom error message
+        )}
+
         <div className="ml-16 mb-4 mt-2 text-center text-sm">
           <button
             type="button"

@@ -52,7 +52,6 @@ describe('LoginPopup', () => {
 
   beforeEach(() => {
     render(
-      //<LoginContext.Provider value={...mockContextValue}>
       <LoginContext.Provider value={mockContextValue}>
         <BrowserRouter>
           <LoginPopup {...props} />
@@ -92,7 +91,7 @@ describe('LoginPopup', () => {
   })
 
 
-  it('calls login and navigates on successful form submission', async () => {
+  test('calls login and navigates on successful form submission', async () => {
 
     mockAxios.onPost('//localhost:8000/api/v1/signin').reply(200, {
       id: 'user1',
@@ -106,14 +105,15 @@ describe('LoginPopup', () => {
       target: { value: 'passOnePass' },
     })
 
-    await fireEvent.click(screen.getByRole('button', {
+    fireEvent.click(screen.getByRole('button', {
       name: /Login/i
     }))
     
     await waitFor(() => {
-      console.log('mockOnClose called:', mockOnClose.mock.calls.length);
-      console.log('mockNavigate times called:', mockNavigate.mock.calls.length);
+      //console.log('mockOnClose called:', mockOnClose.mock.calls.length);
+      //console.log('mockNavigate times called:', mockNavigate.mock.calls.length);
       expect(mockOnClose).toHaveBeenCalled();
+      //expect(mockLogin).toHaveBeenCalled();
       expect(mockLogin).toHaveBeenCalledWith({ id: 'user1', token: 'token123' })
       expect(mockNavigate).toHaveBeenCalledWith('/profile')
     });
@@ -126,13 +126,13 @@ describe('LoginPopup', () => {
     mockAxios.onPost('//localhost:8000/api/v1/signin').reply(401)
 
     fireEvent.input(screen.getByPlaceholderText('DNI o NIE'), {
-      target: { value: 'dni123' },
+      target: { value: '48332312C' },
     })
     fireEvent.input(screen.getByPlaceholderText('Contraseña'), {
       target: { value: 'password123' },
     })
 
-    fireEvent.click(screen.getByRole('button', {
+    await fireEvent.click(screen.getByRole('button', {
       name: /Login/i
     }))
 
@@ -140,10 +140,9 @@ describe('LoginPopup', () => {
       expect('error =>', expect.anything())
     })
 
-    const projectsElement = screen.getByText('El usuari o la contrasenya son incorrectes');
-    expect(projectsElement).toBeInTheDocument();
-
-    //Close the message popup - Missing
-    
+    const projectsElement = screen.getByText('L\'usuari o la contrasenya son incorrectes.');
+    await waitFor(() => {
+      expect(projectsElement).toBeInTheDocument();
+    })
   })
 })
