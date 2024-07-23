@@ -90,7 +90,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
           className="h-12 w-full my-4 rounded-lg bg-primary font-bold text-white"
           onClick={handleSubmit(handleLogin)}
         >
-          Login Now
+          Login
         </button>
       </form>
       <div className="mt-4 text-center">
