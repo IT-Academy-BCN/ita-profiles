@@ -28,20 +28,6 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        // Manejo de excepciones para modelos no encontrados
-        $this->renderable(function (ModelNotFoundException $e, $request) {
-            if ($request->is('api/*')) {
-                $model = $e->getModel();
-                return response()->json([
-                    'message' => $model ? "{$model} not found" : 'Resource not found',
-                ], 404);
-            }
-            Log::error('Model not found', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-        });
-
         // Manejo de excepciones de validación (422)
         $this->renderable(function (ValidationException $e, $request) {
             if ($request->is('api/*')) {
@@ -56,21 +42,35 @@ class Handler extends ExceptionHandler
             ]);
         });
 
-        // Manejo de excepciones generales
-        $this->renderable(function (Exception $e, $request) {
+        // Manejo de excepciones de autorización (403)
+        $this->renderable(function (AuthorizationException $e, $request) {
             if ($request->is('api/*')) {
                 return response()->json([
-                    'message' => $e->getMessage(),
-                ], 500);
+                    'message' => 'This action is unauthorized.',
+                ], 403);
             }
-            Log::error('Server error', [
+            Log::error('Authorization error', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+        });
+
+        // Manejo de excepciones para modelos no encontrados (404)
+        $this->renderable(function (ModelNotFoundException $e, $request) {
+            if ($request->is('api/*')) {
+                $model = $e->getModel();
+                return response()->json([
+                    'message' => $model ? "{$model} not found" : 'Resource not found',
+                ], 404);
+            }
+            Log::error('Model not found', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
         });
 
         // Manejo de excepciones HTTP
-        $this->reportable(function (HttpException $e, $request) {
+        $this->renderable(function (HttpException $e, $request) {
             if ($request->is('api/*')) {
                 return response()->json([
                     'message' => $e->getMessage(),
@@ -82,14 +82,14 @@ class Handler extends ExceptionHandler
             ]);
         });
 
-        // Manejo de excepciones de autorización (403)
-        $this->renderable(function (AuthorizationException $e, $request) {
+        // Manejo de excepciones generales (500)
+        $this->renderable(function (Exception $e, $request) {
             if ($request->is('api/*')) {
                 return response()->json([
-                    'message' => 'This action is unauthorized.',
-                ], 403);
+                    'message' => $e->getMessage(),
+                ], 500);
             }
-            Log::error('Authorization error', [
+            Log::error('Server error', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
