@@ -140,9 +140,10 @@ describe('LoginPopup', () => {
       expect('error =>', expect.anything())
     })
 
-    const projectsElement = screen.getByText('L\'usuari o la contrasenya son incorrectes.');
+    const projectsElement = screen.getByText('El usuario o la contraseña son incorrectos.');
     await waitFor(() => {
       expect(projectsElement).toBeInTheDocument();
     })
+    console.log('In Order to launch the tests.');
   })
 })

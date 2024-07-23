@@ -43,7 +43,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log('error =>', e)
-      setCustomError('L\'usuari o la contrasenya son incorrectes.'); // Set custom error message
+      setCustomError('El usuario o la contraseña son incorrectos.'); // Set custom error message
     }
   }
 
