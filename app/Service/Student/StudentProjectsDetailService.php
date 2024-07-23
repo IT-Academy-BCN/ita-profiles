@@ -34,7 +34,7 @@ class StudentProjectsDetailService
         return $student;
     }
 
-    private function getResume(object $student):mixed
+    public function getResume(object $student):mixed
     {
         $resume = $student->resume;
 
