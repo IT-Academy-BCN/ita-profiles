@@ -16,7 +16,9 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentCollaborationsController,
     UpdateStudentProjectController,
     UpdateStudentSkillsController,
-    UpdateStudentProfileController};
+    UpdateStudentProfileController,
+    AddStudentLanguageController
+};
 
 use App\Http\Controllers\api\Tag\{
     TagListController,
@@ -54,6 +56,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     //Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api')->name('student.skills');
     Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
+    Route::post('languages', AddStudentLanguageController::class)->name('student.addLanguage');  
     Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
     Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });
