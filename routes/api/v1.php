@@ -18,7 +18,9 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentCollaborationsController,
     UpdateStudentProjectController,
     UpdateStudentSkillsController,
-    UpdateStudentProfileController
+    UpdateStudentProfileController,
+    UpdateStudentImageController,
+
 };
 
 use App\Http\Controllers\api\Tag\{
@@ -57,7 +59,7 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
     Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
-    Route::post('languages', AddStudentLanguageController::class)->name('student.addLanguage');  
+    Route::post('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
     Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
     Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });
