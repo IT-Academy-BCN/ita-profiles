@@ -25,9 +25,7 @@ vi.mock("react-router-dom", async () => {
 
 // Mock functions for the context
 const mockLogin = vi.fn().mockImplementation((user: { id: string; token: string }) => {});
-const mockLogout = vi.fn().mockImplementation(() => {});
 const mockIsLoggedIn = vi.fn();
-const mockOnClose = vi.fn();
 // Create the mock context value
 const mockContextValue = {
   token: 'mockToken',
@@ -75,12 +73,14 @@ describe('LoginPopup', () => {
   test('renders projects correctly', async () => {
 
     // Wait for projects to load
-    //const projectsElement = screen.getByText('Login');
     const projectsElement = screen.getByText('Recordar/cambiar contraseña');
+    const projectsLoginElement =  screen.getByRole('button', {
+      name: /Login/i
+    })
     
-
     // Check if projects are rendered correctly
     expect(projectsElement).toBeInTheDocument();
+    expect(projectsLoginElement).toBeInTheDocument();
   })
 
 
@@ -88,6 +88,7 @@ describe('LoginPopup', () => {
 
     fireEvent.click(screen.getByText('✕'))
     expect(mockOnClose).toHaveBeenCalled()
+  
   })
 
 
@@ -105,7 +106,6 @@ describe('LoginPopup', () => {
       target: { value: 'passOnePass' },
     })
 
-    //fireEvent.click(screen.getByText('Login'))
     await fireEvent.click(screen.getByRole('button', {
       name: /Login/i
     }))
@@ -114,7 +114,6 @@ describe('LoginPopup', () => {
       console.log('mockOnClose called:', mockOnClose.mock.calls.length);
       console.log('mockNavigate times called:', mockNavigate.mock.calls.length);
       expect(mockOnClose).toHaveBeenCalled();
-      //expect(mockLogin).toHaveBeenCalled()
       expect(mockLogin).toHaveBeenCalledWith({ id: 'user1', token: 'token123' })
       expect(mockNavigate).toHaveBeenCalledWith('/profile')
     });
@@ -140,5 +139,11 @@ describe('LoginPopup', () => {
     await waitFor(() => {
       expect('error =>', expect.anything())
     })
+
+    const projectsElement = screen.getByText('El usuari o la contrasenya son incorrectes');
+    expect(projectsElement).toBeInTheDocument();
+
+    //Close the message popup - Missing
+    
   })
 })
