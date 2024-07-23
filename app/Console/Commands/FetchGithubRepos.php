@@ -37,39 +37,38 @@ class FetchGithubRepos extends Command
      */
     public function handle()
     {
-        // Aquí llamaríamos al service.
-        //$gitHubUsernames = $this->getGitHubUsernamesService->GetGitHubUsernames();
+        $gitHubUsernames = $this->getGitHubUsernamesService->GetGitHubUsernames();
 
         $client = new Client();
 
         // Y creo que algo así debería ser el foreach para recorrer todos los users, pero no estoy del todo seguro
-        // foreach ($gitHubUsernames as $user) {
-        //     $response = $client->get("https://api.github.com/users/{$user['github_username']}/repos", [
-        //         'headers' => [
-        //             'Accept' => 'application/vnd.github.v3+json',
-        //             'User-Agent' => 'LaravelApp'
-        //         ]
-        //     ]);
+        foreach ($gitHubUsernames as $user) {
+            $response = $client->get("https://api.github.com/users/{$user['github_username']}/repos", [
+                'headers' => [
+                    'Accept' => 'application/vnd.github.v3+json',
+                    'User-Agent' => 'LaravelApp'
+                ]
+            ]);
 
-        //     $repos = json_decode($response->getBody(), true);
+            $repos = json_decode($response->getBody(), true);
 
-        //     foreach ($repos as $repo) {
-        //         $this->info("User: {$user['github_username']}, Repository Name: " . $repo['name']);
-        //     }
-        // }
-
-        $response = $client->get("https://api.github.com/users/StephaneCarteaux/repos", [
-            'headers' => [
-                'Accept' => 'application/vnd.github.v3+json',
-                'User-Agent' => 'LaravelApp'
-            ]
-        ]);
-
-        $repos = json_decode($response->getBody(), true);
-
-        foreach ($repos as $repo) {
-            $this->info("Repository Name: " . $repo['name']);
-            //dd ($this->info);
+            foreach ($repos as $repo) {
+                $this->info("User: {$user['github_username']}, Repository Name: " . $repo['name']);
+            }
         }
+        // DEJO ESTE COMENTADO QUE ES LO QUE HABÍA ANTES
+        // $response = $client->get("https://api.github.com/users/StephaneCarteaux/repos", [
+        //     'headers' => [
+        //         'Accept' => 'application/vnd.github.v3+json',
+        //         'User-Agent' => 'LaravelApp'
+        //     ]
+        // ]);
+
+        // $repos = json_decode($response->getBody(), true);
+
+        // foreach ($repos as $repo) {
+        //     $this->info("Repository Name: " . $repo['name']);
+        //     //dd ($this->info);
+        // }
     }
 }

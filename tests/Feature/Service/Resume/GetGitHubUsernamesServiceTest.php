@@ -5,31 +5,26 @@ declare(strict_types=1);
 use App\Models\Resume;
 use PHPUnit\Framework\TestCase;
 use App\Service\Resume\GetGitHubUsernamesService;
-use App\Service\Student\StudentProjectsDetailService;
-use App\Service\Student\StudentService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class GetGitHubUsernamesTest extends TestCase
+class GetGitHubUsernamesServiceTest extends TestCase
 {
     use DatabaseTransactions;
-    private $studentService;
-    private $studentProjectsDetailService;
+    private $service;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->studentService = new StudentService();
-        $this->studentProjectsDetailService = new StudentProjectsDetailService();
+        $this->service = new GetGitHubUsernamesService();
     }
 
 
     public function testGetGitHubUsernames()
     {
-        // Hay que rehacer el test!!!
+        // VER POR QUE NO PILLA EL RESUME FACTORY Y DA ERROR
         // $resumes = Resume::factory()->count(5)->create();
 
-        // $service = new GetGitHubUsernamesService($this->studentService, $this->studentProjectsDetailService);
-        // $gitHubUsernames = $service->GetGitHubUsernames();
+        // $gitHubUsernames = $this->service->getGitHubUsernames();
 
         // $this->assertIsArray($gitHubUsernames);
         // // Ensure the number of GitHub usernames matches the number of students created
