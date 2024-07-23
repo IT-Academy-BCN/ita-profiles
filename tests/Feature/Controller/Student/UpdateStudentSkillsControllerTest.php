@@ -17,116 +17,115 @@ use Illuminate\Auth\Access\Response;
 
 class UpdateStudentSkillsControllerTest extends TestCase
 {
-	use DatabaseTransactions;
+    use DatabaseTransactions;
 
-	protected function setUp(): void
-	{
-		parent::setUp();
-	}
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
 
-	/**
-	 * @dataProvider updateStudentSkillsControllerSuccessProvider
-	 */
-	public function testUpdateStudentSkillsControllerSuccess(array $request): void
-	{
-		//Mockering middleware
-		$ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
-		$ensureStudentMiddleware->shouldReceive('handle')->once()
-			->andReturnUsing(function ($request, \Closure $next) {
-				return $next($request);
-			});
-		$this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
+    /**
+     * @dataProvider updateStudentSkillsControllerSuccessProvider
+     */
+    public function testUpdateStudentSkillsControllerSuccess(array $request): void
+    {
+        //Mockering middleware
+        $ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
+        $ensureStudentMiddleware->shouldReceive('handle')->once()
+            ->andReturnUsing(function ($request, \Closure $next) {
+                return $next($request);
+            });
+        $this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
 
-		//Mockering Policy
-		$userPolicyMockery = Mockery::mock('App\Policies\UserPolicy');
-		$userPolicyMockery->shouldReceive('canAccessResource')->once()
-			->andReturn(Response::allow());
-		$this->app->instance('App\Policies\UserPolicy', $userPolicyMockery);
+        //Mockering Policy
+        $userPolicyMockery = Mockery::mock('App\Policies\UserPolicy');
+        $userPolicyMockery->shouldReceive('canAccessResource')->once()
+            ->andReturn(Response::allow());
+        $this->app->instance('App\Policies\UserPolicy', $userPolicyMockery);
 
-		$user = User::factory()->create();
-		$student = Student::factory()->create(['user_id' => $user->id]);
-		$resume = Resume::factory()->create(['student_id' => $student->id]);
+        $user = User::factory()->create();
+        $student = Student::factory()->create(['user_id' => $user->id]);
+        $resume = Resume::factory()->create(['student_id' => $student->id]);
 
-		//Authentuication for Passport
-		Passport::actingAs(
-			$user,
-			['check-status']
-		);
+        //Authentuication for Passport
+        Passport::actingAs(
+            $user,
+            ['check-status']
+        );
 
-		$response = $this->json('PUT', 'api/v1/student/' . $student->id . '/resume/skills', $request);
+        $response = $this->json('PUT', 'api/v1/student/' . $student->id . '/resume/skills', $request);
 
-		$response->assertStatus(200);
-		$response->assertJson(['status' => 'success']);
-	}
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 'success']);
+    }
 
+    static function updateStudentSkillsControllerSuccessProvider()
+    {
+        $array = array(
+            array(
+                array(
+                    'skills' => []
+                )
+            ),
+            array(
+                array(
+                    'skills' => ["php", "react"]
+                )
+            ),
+            array(
+                array(
+                    'skills' => ["html5", "css", "postman"]
+                )
+            ),
+        );
 
-	static function updateStudentSkillsControllerSuccessProvider()
-	{
-		$array = array(
-			array(
-				array(
-					'skills' => []
-				)
-			),
-			array(
-				array(
-					'skills' => ["php", "react"]
-				)
-			),
-			array(
-				array(
-					'skills' => ["html5", "css", "postman"]
-				)
-			),
-		);
+        return $array;
+    }
 
-		return $array;
-	}
+    /**
+     * @dataProvider updateStudentSkillsControllerValidationFailureProvider
+     */
+    public function testUpdateStudentSkillsControllerValidationFailure(array $request): void
+    {
+        //Mockering middleware
+        $ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
+        $ensureStudentMiddleware->shouldReceive('handle')->once()
+            ->andReturnUsing(function ($request, \Closure $next) {
+                return $next($request);
+            });
+        $this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
 
+        $user = User::factory()->create();
+        $student = Student::factory()->create(['user_id' => $user->id]);
+        $resume = Resume::factory()->create(['student_id' => $student->id]);
 
-	/**
-	 * @dataProvider updateStudentSkillsControllerValidationFailureProvider
-	 */
-	public function testUpdateStudentSkillsControllerValidationFailure(array $request): void
-	{
-		//Mockering middleware
-		$ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
-		$ensureStudentMiddleware->shouldReceive('handle')->once()
-			->andReturnUsing(function ($request, \Closure $next) {
-				return $next($request);
-			});
-		$this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
+        //Authentuication for Passport
+        Passport::actingAs(
+            $user,
+            ['check-status']
+        );
 
-		$user = User::factory()->create();
-		$student = Student::factory()->create(['user_id' => $user->id]);
-		$resume = Resume::factory()->create(['student_id' => $student->id]);
+        $response = $this->json('PUT', 'api/v1/student/' . $student->id . '/resume/skills', $request);
 
-		//Authentuication for Passport
-		Passport::actingAs(
-			$user,
-			['check-status']
-		);
+        $response->assertStatus(422);
+    }
 
-		$response = $this->json('PUT', 'api/v1/student/' . $student->id . '/resume/skills', $request);
+    static function updateStudentSkillsControllerValidationFailureProvider()
+    {
+        $array = array(
+            array(
+                array(
+                    'skills' => "olalala"
+                )
+            ),
+            array(
+                array(
+                    'skills' => 1
+                )
+            )
+        );
 
-		$response->assertStatus(422);
-	}
-
-	static function updateStudentSkillsControllerValidationFailureProvider()
-	{
-		$array = array(
-			array(
-				array(
-					'skills' => "olalala"
-				)
-			),
-			array(
-				array(
-					'skills' => 1
-				)
-			)
-		);
-
-		return $array;
-	}
+        return $array;
+    }
 }
+
