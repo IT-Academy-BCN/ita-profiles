@@ -98,10 +98,10 @@ class AddStudentLanguageServiceTest extends TestCase
 
         $languageData = ['language_id' => $this->language->id];
 
-        // Add language first time
+        // Adds language first time
         $this->service->execute($this->student->id, $languageData);
 
-        // Add same language again
+        // Adds same language again
         $this->service->execute($this->student->id, $languageData);
     }
 }

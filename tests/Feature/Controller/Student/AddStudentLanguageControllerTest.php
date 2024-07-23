@@ -34,7 +34,7 @@ class AddStudentLanguageControllerTest extends TestCase
     }
     public function testAddStudentLanguageControllerAddsLanguageSuccessfully(): void
     {
-        $response = $this->postJson(route('student.addlanguage', ['studentId' => $this->student->id]), [
+        $response = $this->postJson(route('student.addLanguage', ['studentId' => $this->student->id]), [
             'language_id' => $this->language->id,
         ]);
 
@@ -47,7 +47,7 @@ class AddStudentLanguageControllerTest extends TestCase
     {
         $invalidStudentId = 'invalidStudentId';
 
-        $response = $this->postJson(route('student.addlanguage', ['studentId' => $invalidStudentId]), [
+        $response = $this->postJson(route('student.addLanguage', ['studentId' => $invalidStudentId]), [
             'language_id' => $this->language->id,
         ]);
 
@@ -60,7 +60,7 @@ class AddStudentLanguageControllerTest extends TestCase
     {
         $this->resume->delete();
 
-        $response = $this->postJson(route('student.addlanguage', ['studentId' => $this->student->id]), [
+        $response = $this->postJson(route('student.addLanguage', ['studentId' => $this->student->id]), [
             'language_id' => $this->language->id,
         ]);
 
@@ -73,7 +73,7 @@ class AddStudentLanguageControllerTest extends TestCase
     {
         $noExistentLanguageId = 'ab9bb2ed-8bb5-4a3a-bdb2-09cd00000f0b';
         
-        $response = $this->postJson(route('student.addlanguage', ['studentId' => $this->student->id]), [
+        $response = $this->postJson(route('student.addLanguage', ['studentId' => $this->student->id]), [
             'language_id' => $noExistentLanguageId,
         ]);
 
@@ -92,7 +92,7 @@ class AddStudentLanguageControllerTest extends TestCase
     {
         $invalidLanguageId = 'invalidLanguageId';
         
-        $response = $this->postJson(route('student.addlanguage', ['studentId' => $this->student->id]), [
+        $response = $this->postJson(route('student.addLanguage', ['studentId' => $this->student->id]), [
             'language_id' => $invalidLanguageId,
         ]);
 
@@ -113,12 +113,12 @@ class AddStudentLanguageControllerTest extends TestCase
         $studentId = $this->student->id;
 
         // add language
-        $this->postJson(route('student.addlanguage', ['studentId' => $studentId]), [
+        $this->postJson(route('student.addLanguage', ['studentId' => $studentId]), [
             'language_id' =>  $languageToAdd,
         ]);
 
         // add same language again
-        $response = $this->postJson(route('student.addlanguage', ['studentId' => $studentId]), [
+        $response = $this->postJson(route('student.addLanguage', ['studentId' => $studentId]), [
             'language_id' =>  $languageToAdd,
         ]);
 
