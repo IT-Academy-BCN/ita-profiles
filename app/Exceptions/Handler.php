@@ -69,10 +69,16 @@ class Handler extends ExceptionHandler
         // Manejo de excepciones generales y registro de errores 500
         $this->renderable(function (Exception $e, $request) {
             if ($request->is('api/*')) {
+                // Registrar el error antes de retornar la respuesta
+                Log::error($e->getMessage(), [
+                    'exception' => $e,
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                // Retornar la respuesta JSON
                 return response()->json([
                     'message' => $e->getMessage(),
                 ], $e->getCode() ?: 500);
-                Log::error($e->getMessage());
             }
         });
     }
