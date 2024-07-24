@@ -14,7 +14,10 @@ class GetStudentImageService
     public function execute(string $studentId)
     {
         $student = $this->getStudent($studentId);
-        return Storage::get($this->photos_path . $student->photo);
+        if($student->photo !== ""){
+            return Storage::url($this->photos_path . $student->photo);
+        }
+        return null;
     }
 
     public function getStudent(string $studentId): Student
