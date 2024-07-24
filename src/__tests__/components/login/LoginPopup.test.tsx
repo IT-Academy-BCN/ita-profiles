@@ -144,6 +144,7 @@ describe('LoginPopup', () => {
     await waitFor(() => {
       expect(projectsElement).toBeInTheDocument();
     })
+    // eslint-disable-next-line no-console
     console.log('In Order to launch the tests.');
   })
 })
