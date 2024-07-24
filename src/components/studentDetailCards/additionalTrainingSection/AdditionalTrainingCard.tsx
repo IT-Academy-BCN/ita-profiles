@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useStudentIdContext } from '../../../context/StudentIdContext'
 import { TAdditionalTraining } from '../../../interfaces/interfaces'
-import { getAdditionalTraining } from '../../../api/getAdditionalTraining'
+import { FetchAdditionalTraining } from '../../../api/FetchAdditionalTraining'
 
 const AdditionalTrainingCard = () => {
   const { studentUUID } = useStudentIdContext()
@@ -10,7 +10,7 @@ const AdditionalTrainingCard = () => {
   useEffect(() => {
     const getStudentTraining = async () => {
       try {
-        const studentTraining = await getAdditionalTraining(studentUUID)
+        const studentTraining = await FetchAdditionalTraining(studentUUID)
         setAdditionalTraining(studentTraining)
       } catch (error) {
         // eslint-disable-next-line no-console

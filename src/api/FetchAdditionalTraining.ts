@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const getAdditionalTraining = async (studentId: string | null) => {
+export const FetchAdditionalTraining = async (studentId: string | null) => {
   try {
     const response = await axios.get(
       `//localhost:8000/api/v1/student/${studentId}/resume/additionaltraining`,
