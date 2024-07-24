@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-//import React from 'react'
+// import React from 'react'
 import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { ILoginForm } from '../../interfaces/interfaces'
-import { useLogin } from '../../context/LoginContext'
 import { z } from 'zod'
 import { LoginUserSchema } from '../../schemes/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ILoginForm } from '../../interfaces/interfaces'
+import { useLogin } from '../../context/LoginContext'
 
 type LoginPopupProps = {
   onClose: () => void
@@ -32,13 +32,15 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   const { handleSubmit, register, formState: { errors }, } = useForm<TFormSchema>({ resolver: zodResolver(LoginUserSchema) })
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
-      console.log("Yes it is called....");
+      // eslint-disable-next-line no-console
+      console.log("Yes it is called...");
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
       // eslint-disable-next-line
       user = response.data
       login(user);
       onClose()
       navigate('/profile')
+      // eslint-disable-next-line no-console
       console.log("To The end...");
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -93,7 +95,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
           </button>
         </div>
         <button
-          //type="submit"
+          // type="submit"
           type="button"
           className="h-12 w-full my-4 rounded-lg bg-primary font-bold text-white"
           onClick={handleSubmit(handleLogin)}

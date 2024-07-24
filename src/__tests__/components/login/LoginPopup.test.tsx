@@ -7,8 +7,8 @@ import LoginPopup from '../../../components/login_&_register/LoginPopup'
 import { LoginContext } from '../../../context/LoginContext'
 
 
-//Source: https://gist.github.com/CarmeloRicarte/ee7b9908c0ef20eae32428de77a0cd4a
-//But nothing is working...
+// Source: https://gist.github.com/CarmeloRicarte/ee7b9908c0ef20eae32428de77a0cd4a
+// But nothing is working...
 // this is how to mock partial library for mock a method, in this case, useNavigate
 const mockNavigate = vi.fn();
 vi.mock("react-router-dom", async () => {
@@ -24,7 +24,7 @@ vi.mock("react-router-dom", async () => {
 
 
 // Mock functions for the context
-const mockLogin = vi.fn().mockImplementation((user: { id: string; token: string }) => {});
+const mockLogin = vi.fn().mockImplementation(() => {});
 const mockIsLoggedIn = vi.fn();
 // Create the mock context value
 const mockContextValue = {
@@ -110,10 +110,10 @@ describe('LoginPopup', () => {
     }))
     
     await waitFor(() => {
-      //console.log('mockOnClose called:', mockOnClose.mock.calls.length);
-      //console.log('mockNavigate times called:', mockNavigate.mock.calls.length);
+      // console.log('mockOnClose called:', mockOnClose.mock.calls.length);
+      // console.log('mockNavigate times called:', mockNavigate.mock.calls.length);
       expect(mockOnClose).toHaveBeenCalled();
-      //expect(mockLogin).toHaveBeenCalled();
+      // expect(mockLogin).toHaveBeenCalled();
       expect(mockLogin).toHaveBeenCalledWith({ id: 'user1', token: 'token123' })
       expect(mockNavigate).toHaveBeenCalledWith('/profile')
     });
