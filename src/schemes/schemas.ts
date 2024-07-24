@@ -11,7 +11,7 @@ const regexNIE = z
   .regex(nie)
   .max(9, { message: 'El documento deber contener 9 carácteres' });
 
-export const UserSchema = z
+  export const UserSchema = z
   .object({
     username: z.string().min(1, {
       message: 'El nombre de usuario es requerido',
@@ -31,4 +31,12 @@ export const UserSchema = z
   .refine((data) => data.password === data.confirmPassword, {
     message: 'La contraseña no coincide',
     path: ['confirmPassword'],
+  });
+
+  export const LoginUserSchema = z
+  .object({
+    dni: z.union([regexDNI, regexNIE]),
+    password: z.string().min(8, {
+      message: 'La contraseña debe tener al menos 8 caracteres',
+    }),
   });

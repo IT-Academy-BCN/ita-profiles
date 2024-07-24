@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { Provider } from 'react-redux' // Import Provider from react-redux
+import { render } from '../../test-utils'
 import Landing from '../../../components/landing/Landing'
-
 import { store } from '../../../store/store'
 
 describe('StudentDetailsLayout', () => {
