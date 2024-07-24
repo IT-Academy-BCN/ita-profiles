@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Validator;
 use Exception;
+use App\Exceptions\StudentNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class ExceptionHandlerTest extends TestCase
 {
@@ -91,5 +93,36 @@ class ExceptionHandlerTest extends TestCase
             ->assertJson([
                 'message' => 'General exception',
             ]);
+    }
+
+    public function test_unknown_exception()
+    {
+        Route::get('api/test/unknown-exception', function () {
+            throw new StudentNotFoundException('1234-5678-91234');
+        });
+
+        $response = $this->getJson('api/test/unknown-exception');
+
+        $response->assertStatus(404);
+    }
+
+    public function test_logging_error_500()
+    {
+        // Espiar la llamada a Log::error
+        Log::shouldReceive('error')
+            ->once()
+            ->withArgs(function ($message, $context) {
+                return true;
+            });
+
+        // Lanzar una excepción que generará un error 500
+        Route::get('api/test/error-500', function () {
+            throw new Exception('General exception');
+        });
+
+        $response = $this->getJson('api/test/error-500');
+
+        // Verifica que la respuesta tenga el estado 500
+        $response->assertStatus(500);
     }
 }

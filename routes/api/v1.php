@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\api\Student\{
-    AddStudentLanguageController,
     DeleteStudentResumeLanguageController,
     StudentAdditionalTrainingListController,
     StudentModalityController,
@@ -18,7 +17,8 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentCollaborationsController,
     UpdateStudentProjectController,
     UpdateStudentSkillsController,
-    UpdateStudentProfileController
+    UpdateStudentProfileController,
+    AddStudentLanguageController
 };
 
 use App\Http\Controllers\api\Tag\{

@@ -36,10 +36,6 @@ class Handler extends ExceptionHandler
                     'errors' => $e->errors(),
                 ], 422);
             }
-            Log::error('Validation error', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
         });
 
         // Manejo de excepciones de autorización (403)
@@ -49,10 +45,6 @@ class Handler extends ExceptionHandler
                     'message' => 'This action is unauthorized.',
                 ], 403);
             }
-            Log::error('Authorization error', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
         });
 
         // Manejo de excepciones para modelos no encontrados (404)
@@ -63,10 +55,6 @@ class Handler extends ExceptionHandler
                     'message' => $model ? "{$model} not found" : 'Resource not found',
                 ], 404);
             }
-            Log::error('Model not found', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
         });
 
         // Manejo de excepciones HTTP
@@ -76,23 +64,16 @@ class Handler extends ExceptionHandler
                     'message' => $e->getMessage(),
                 ], $e->getStatusCode());
             }
-            Log::error('Http error', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
         });
 
-        // Manejo de excepciones generales (500)
+        // Manejo de excepciones generales y registro de errores 500
         $this->renderable(function (Exception $e, $request) {
             if ($request->is('api/*')) {
                 return response()->json([
                     'message' => $e->getMessage(),
-                ], 500);
+                ], $e->getCode() ?: 500);
+                Log::error($e->getMessage());
             }
-            Log::error('Server error', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
         });
     }
 }
