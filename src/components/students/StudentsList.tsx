@@ -38,7 +38,7 @@ const StudentsList: React.FC = () => {
       {students ? (
         students.map((student) => <StudentCard key={student.id} {...student} />)
       ) : (
-        <p>Loading students data</p>
+        <p className='py-2'>Loading students data</p>
       )}
     </div>
   )
