@@ -2,34 +2,22 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useStudentIdContext } from '../../../context/StudentIdContext'
 import type { TLanguage } from '../../../interfaces/interfaces'
+import { FetchStudentLanguages } from '../../../api/FetchStudentLanguages'
 
 const LanguagesCard: React.FC = () => {
   const { studentUUID } = useStudentIdContext()
   const [languages, setLanguages] = useState<TLanguage[]>([])
-  const [error, setError] = useState('')
-
-  const endpointLanguages = `//localhost:8000/api/v1/students/${studentUUID}/languages`
 
   useEffect(() => {
-    if (studentUUID) {
-      axios
-        .get(endpointLanguages, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          setLanguages(response.data.languages)
-        })
-        .catch((err) => {
-          setError(err.message)
-        })
-    }
-  }, [studentUUID, endpointLanguages])
+    const fetchLanguages = async () => {
+      if (studentUUID) {
+        const data = await FetchStudentLanguages(studentUUID)
+        setLanguages(data)
+      }
+    }    
+    fetchLanguages()
+  }, [studentUUID])
 
-  if (error) {
-    return <p>{error}</p>
-  }
   return (
     <div className="flex flex-col gap-2" data-testid="LanguagesCard">
       <h3 className="text-lg font-bold">Idiomas</h3>
