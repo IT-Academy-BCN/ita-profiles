@@ -6,9 +6,9 @@ namespace App\Service\Resume;
 
 use App\Models\Resume;
 
-class getGitHubUsernamesService
+class GetGitHubUsernamesService
 {
-    public function GetGitHubUsernames(): array
+    public function getGitHubUsernames(): array
     {
         // Get all resumes, maybe this could be refactored to a ResumeService.php function getAll.
         $resumes = Resume::all();

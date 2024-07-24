@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Tests\Feature\Service\Resume;
+
 use App\Models\Resume;
 use PHPUnit\Framework\TestCase;
 use App\Service\Resume\GetGitHubUsernamesService;
@@ -22,7 +24,7 @@ class GetGitHubUsernamesServiceTest extends TestCase
     public function testGetGitHubUsernames()
     {
         // VER POR QUE NO PILLA EL RESUME FACTORY Y DA ERROR
-        // $resumes = Resume::factory()->count(5)->create();
+        $resumes = Resume::factory()->count(5)->create();
 
         // $gitHubUsernames = $this->service->getGitHubUsernames();
 
