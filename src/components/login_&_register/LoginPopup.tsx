@@ -82,7 +82,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
         )}
 
         {customError && (
-          <p className="text-error">{customError}</p> // Display custom error message
+          <p className="text-error py-2">{customError}</p> // Display custom error message
         )}
 
         <div className="ml-16 mb-4 mt-2 text-center text-sm">
