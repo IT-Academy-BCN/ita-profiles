@@ -42,7 +42,7 @@ class ResumeFactory extends Factory
         $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
         $studentIndex++; // Increment the index for each student created
 
-        $gitHubUsername = ['nachoa88', 'StephaneCarteaux', 'laravel', 'php', 'react'];
+        $gitHubUsername = ['nachoa88', 'StephaneCarteaux'];
 
         return [
             'student_id' => Student::factory()->create([
