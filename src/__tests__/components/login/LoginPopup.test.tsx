@@ -146,4 +146,7 @@ describe('LoginPopup', () => {
     })
     console.log('In Order to launch the tests.');
   })
+
+
+  
 })

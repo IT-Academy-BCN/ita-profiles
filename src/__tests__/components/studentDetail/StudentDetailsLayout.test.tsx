@@ -1,5 +1,6 @@
 import { Provider } from 'react-redux'
-import { render } from '@testing-library/react'
+//import { render } from '@testing-library/react'
+import { render } from '../../test-utils'
 import { store } from '../../../store/store'
 import StudentDetailsLayout from '../../../components/studentDetail/StudentDetailsLayout'
 
