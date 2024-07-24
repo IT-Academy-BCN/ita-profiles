@@ -11,8 +11,6 @@ use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ProjectNotFoundException;
-use App\Exceptions\UnauthorizedException;
-
 
 class UpdateStudentProjectService
 {
@@ -52,8 +50,7 @@ class UpdateStudentProjectService
         
         if (isset($data['tags'])) {           
             $tagsArray = $data['tags'];
-            $tags = Tag::whereIn('tag_name', $tagsArray)->get();
-            $tagIds = $tags->pluck('id')->toArray();
+            $tagIds = Tag::whereIn('id', $tagsArray)->pluck('id')->toArray();           
             $project->tags = json_encode($tagIds);
         }
         if (isset($data['company_name'])) {

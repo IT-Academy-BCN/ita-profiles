@@ -24,9 +24,10 @@ class UpdateStudentProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_name' => 'string|regex:/^([^0-9]*)$/|nullable',
-            'company_name' => 'string|regex:/^([^0-9]*)$/|nullable',
-            'tags' => 'array|nullable', 
+            'project_name' => 'string|nullable',
+            'company_name' => 'string|nullable',
+            'tags' => 'array|nullable',
+            'tags.*' => 'integer|exists:tags,id',
             'github_url' => 'string|url|max:60|nullable',
             'project_url' => 'string|url|max:60|nullable',
         ];
