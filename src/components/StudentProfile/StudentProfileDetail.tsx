@@ -7,7 +7,7 @@ import BootcampCard from '../studentDetailCards/bootcampSection/BootcampCard'
 import ModalityCard from '../studentDetailCards/modalitySection/modalityCard'
 import StudentDataCard from '../studentDetailCards/studentDataSection/StudentDataCard'
 import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
-import OtherEducationCard from '../studentDetailCards/otherEducationSection/OtherEducationCard'
+import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
 
 
 const StudentProfileDetail: React.FC = () => {
@@ -30,7 +30,7 @@ const StudentProfileDetail: React.FC = () => {
           <span className="h-0.5 w-full bg-gray-4-base"/>
           <BootcampCard />
           <span className="h-0.5 w-full bg-gray-4-base"/>
-          <OtherEducationCard />
+          <AdditionalTrainingCard />
           <span className="h-0.5 w-full bg-gray-4-base"/>
           <LanguagesCard />
           <span className="h-0.5 w-full bg-gray-4-base"/>
