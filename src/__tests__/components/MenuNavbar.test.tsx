@@ -2,18 +2,6 @@ import MenuNavbar from '../../components/menuNavbar/MenuNavbar'
 import { render } from '../test-utils'
 
 describe('MenuNavbar', () => {
-  beforeEach(() => {
-    render(
-      <MenuNavbar />
-    )
-  })
-  test('should show "MenuNavbar" all the time', () => {
-    const { container } = render(<MenuNavbar />)
-    expect(container).toBeInTheDocument()
-  })
-})
-
-/* describe('MenuNavbar', () => {
   it('should render the MenuNavbar component', () => {
     const { container } = render(<MenuNavbar />)
     expect(container).toBeInTheDocument()
@@ -36,4 +24,4 @@ describe('MenuNavbar', () => {
     expect(getByText('Estadísticas')).toHaveClass('text-gray-3')
     expect(getByText('Guías útiles')).toHaveClass('text-gray-3')
   })
-}) */
+})
