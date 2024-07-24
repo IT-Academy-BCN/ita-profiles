@@ -17,7 +17,8 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentCollaborationsController,
     UpdateStudentProjectController,
     UpdateStudentSkillsController,
-    UpdateStudentProfileController
+    UpdateStudentProfileController,
+    AddStudentLanguageController
 };
 
 use App\Http\Controllers\api\Tag\{
