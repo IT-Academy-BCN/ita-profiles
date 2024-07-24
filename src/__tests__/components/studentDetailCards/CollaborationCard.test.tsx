@@ -52,15 +52,11 @@ describe('CollaborationCard component', () => {
 
   test('renders collaboration data correctly', async () => {
     mock
-      .onGet(
-        `//localhost:8000/api/v1/students/${studentUUID}/collaborations`,
-      )
+      .onGet(`//localhost:8000/api/v1/student/${studentUUID}/resume/collaborations`,)
       .reply(200, { collaborations: collaborationData })
 
     render(
-      <SelectedStudentIdContext.Provider
-        value={{ studentUUID, setStudentUUID }}
-      >
+      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
         <CollaborationCard />
       </SelectedStudentIdContext.Provider>,
     )
