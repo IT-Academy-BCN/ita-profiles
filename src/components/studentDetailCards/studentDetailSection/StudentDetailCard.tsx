@@ -3,10 +3,10 @@ import { Github, Linkedin } from '../../../assets/svg'
 import { Stud1 as ProfilePicture } from '../../../assets/img'
 import { TAbout, ITag } from '../../../interfaces/interfaces'
 import { useStudentIdContext } from '../../../context/StudentIdContext'
-import { fetchAboutData } from '../../../api/FetchStudentsAbout'
+import { fetchStudentDetail } from '../../../api/FetchStudentDetail'
 
 const StudentDataCard: React.FC = () => {
-  const [aboutData, setAboutData] = useState<TAbout[]>([])
+  const [aboutData, setDetailData] = useState<TAbout[]>([])
   const { studentUUID } = useStudentIdContext()
   const [showFullDescription, setShowFullDescription] = useState(false)
 
@@ -15,20 +15,18 @@ const StudentDataCard: React.FC = () => {
   }
 
   useEffect(() => {
-    const getStudentData = async () => {
+    const getStudentDetailData = async () => {
       try {
         if (studentUUID) {
-          const studentAbout = await fetchAboutData(studentUUID)
-          setAboutData(studentAbout)
+          const studentDetailData = await fetchStudentDetail(studentUUID)
+          setDetailData(studentDetailData)
         }
       } catch (error) {
         throw new Error('Failed to obtain student data')
       }
     }
-
-    if (studentUUID) {
-      getStudentData()
-    }
+    
+      getStudentDetailData()
   }, [studentUUID])
 
 

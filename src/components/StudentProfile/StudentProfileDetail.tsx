@@ -5,7 +5,7 @@ import ProjectsCard from '../studentDetailCards/projectsSection/ProjectsCard'
 import CollaborationCard from '../studentDetailCards/collaborationSection/CollaborationCard'
 import BootcampCard from '../studentDetailCards/bootcampSection/BootcampCard'
 import ModalityCard from '../studentDetailCards/modalitySection/modalityCard'
-import StudentDataCard from '../studentDetailCards/studentDataSection/StudentDataCard'
+import StudentDataCard from '../studentDetailCards/studentDetailSection/StudentDetailCard'
 import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
 import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
 
