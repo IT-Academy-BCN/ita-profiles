@@ -25,9 +25,6 @@ class GetGitHubUsernamesServiceTest extends TestCase
 
     public function testGetGitHubUsernamesServiceReturnsArray()
     {
-        $validUrl = 'https://github.com/user1';
-        $invalidUrl = 'https://notgithub.com/user2';
-
         $resume = Resume::factory()->create([
             'github_url' => 'https://github.com/user1',
         ]);
@@ -37,4 +34,16 @@ class GetGitHubUsernamesServiceTest extends TestCase
         $this->assertIsArray($gitHubUsernames);
 
     }
+
+    public function testExceptionThrownForInvalidGitHubUrl()
+{
+    $this->expectException(\Exception::class);
+    $this->expectExceptionMessage("Invalid GitHub URL: https://notgithub.com/user2");
+
+    Resume::factory()->create([
+        'github_url' => 'https://notgithub.com/user2',
+    ]);
+
+    $this->getGitHubUsernamesService->getGitHubUsernames();
+}
 }
