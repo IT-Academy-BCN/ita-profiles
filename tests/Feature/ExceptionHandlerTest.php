@@ -85,15 +85,6 @@ class ExceptionHandlerTest extends TestCase
             ]);
     }
 
-    public function test_general_exception()
-    {
-        $response = $this->getJson('api/test/general-error');
-
-        $response->assertStatus(500)
-            ->assertJson([
-                'message' => 'General exception',
-            ]);
-    }
 
     public function test_unknown_exception()
     {
@@ -106,23 +97,20 @@ class ExceptionHandlerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_logging_error_500()
+
+    public function test_general_exception()
     {
-        // Espiar la llamada a Log::error
+        // Mock del log
         Log::shouldReceive('error')
-            ->once()
+            ->atLeast()->once()
             ->withArgs(function ($message, $context) {
-                return true;
+                return $message === 'General exception' && isset($context['exception']);
             });
 
-        // Lanzar una excepción que generará un error 500
-        Route::get('api/test/error-500', function () {
-            throw new Exception('General exception');
-        });
-
-        $response = $this->getJson('api/test/error-500');
-
-        // Verifica que la respuesta tenga el estado 500
-        $response->assertStatus(500);
+        $response = $this->getJson('api/test/general-error');
+        $response->assertStatus(500)
+            ->assertJson([
+                'message' => 'General exception',
+            ]);
     }
 }

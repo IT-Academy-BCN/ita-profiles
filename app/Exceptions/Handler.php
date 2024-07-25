@@ -57,15 +57,6 @@ class Handler extends ExceptionHandler
             }
         });
 
-        // Manejo de excepciones HTTP
-        $this->renderable(function (HttpException $e, $request) {
-            if ($request->is('api/*')) {
-                return response()->json([
-                    'message' => $e->getMessage(),
-                ], $e->getStatusCode());
-            }
-        });
-
         // Manejo de excepciones generales y registro de errores 500
         $this->renderable(function (Exception $e, $request) {
             if ($request->is('api/*')) {
@@ -75,10 +66,13 @@ class Handler extends ExceptionHandler
                     'trace' => $e->getTraceAsString(),
                 ]);
 
+                // Determinar el código de estado HTTP apropiado
+                $status = $e instanceof HttpException ? $e->getStatusCode() : ($e->getCode() ?: 500);
+
                 // Retornar la respuesta JSON
                 return response()->json([
                     'message' => $e->getMessage(),
-                ], $e->getCode() ?: 500);
+                ], $status);
             }
         });
     }
