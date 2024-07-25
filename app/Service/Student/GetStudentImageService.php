@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Storage;
 
 class GetStudentImageService
 {
-	private string $photos_path = 'public/photos/';
+    private const PHOTOS_PATH = 'public/photos/';
 
     public function execute(string $studentId)
     {
         $student = $this->getStudent($studentId);
-        if($student->photo !== ""){
-            return Storage::url($this->photos_path . $student->photo);
+        if ($student->photo != null && $student->photo != "") {
+            return Storage::url(self::PHOTOS_PATH . $student->photo);
         }
         return null;
     }
@@ -23,10 +23,9 @@ class GetStudentImageService
     public function getStudent(string $studentId): Student
     {
         $student = Student::find($studentId);
-        if(!$student){
-           throw new StudentNotFoundException($studentId);
+        if (!$student) {
+            throw new StudentNotFoundException($studentId);
         }
         return $student;
     }
-
 }

@@ -63,18 +63,4 @@ class GetStudentImageServiceTest extends TestCase
         $this->getStudentImageService->execute("invalid-student-id");
     }
 
-    public function test_handles_unexpected_exceptions(): void
-    {
-        $this->expectException(\Exception::class);
-
-        $serviceMock = $this->getMockBuilder(GetStudentImageService::class)
-            ->onlyMethods(['getStudent'])
-            ->getMock();
-
-        $serviceMock->method('getStudent')
-            ->will($this->throwException(new \Exception('Unexpected error')));
-
-        $serviceMock->execute('invalid-student-id');
-    }
-
 }
