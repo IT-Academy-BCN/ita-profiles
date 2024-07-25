@@ -17,12 +17,6 @@ class GetStudentImageController extends Controller
         try {
             $studentPhoto = $this->getStudentImageService->execute($studentId);
                 return response()->json($studentPhoto, 200);
-		} catch (StudentNotFoundException $e) {
-			Log::error('Exception:', [
-				'exception' => $e->getMessage(),
-				'trace' => $e->getTraceAsString(),
-			]);
-			return response()->json($e->getMessage(), 404);
 		} catch (\Exception $e) {
 			Log::error('Exception:', [
 				'exception' => $e->getMessage(),
