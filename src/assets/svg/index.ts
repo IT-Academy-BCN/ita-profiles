@@ -12,6 +12,7 @@ import Lock from './lock-dynamic-color.svg'
 import Pencil from './pencil.svg'
 import Dots from './three-dots.svg'
 import UserIcon from './userIcon.svg'
+import Settings from './settings.svg'
 
 export {
   ArrowDown,
@@ -28,4 +29,5 @@ export {
   Pencil,
   Dots,
   UserIcon,
+  Settings,
 }
