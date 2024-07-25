@@ -5,32 +5,36 @@ declare(strict_types=1);
 namespace Tests\Feature\Service\Resume;
 
 use App\Models\Resume;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 use App\Service\Resume\GetGitHubUsernamesService;
+use App\Service\Resume\ResumeService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class GetGitHubUsernamesServiceTest extends TestCase
 {
     use DatabaseTransactions;
-    private $service;
+    private $getGitHubUsernamesService;
+    private $resumeService;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->service = new GetGitHubUsernamesService();
+        $this->resumeService = new ResumeService();
+        $this->getGitHubUsernamesService = new GetGitHubUsernamesService($this->resumeService);
     }
 
-
-    public function testGetGitHubUsernames()
+    public function testGetGitHubUsernamesServiceReturnsArray()
     {
-        // VER POR QUE NO PILLA EL RESUME FACTORY Y DA ERROR
-        $resumes = Resume::factory()->count(5)->create();
+        $validUrl = 'https://github.com/user1';
+        $invalidUrl = 'https://notgithub.com/user2';
 
-        // $gitHubUsernames = $this->service->getGitHubUsernames();
+        $resume = Resume::factory()->create([
+            'github_url' => 'https://github.com/user1',
+        ]);
 
-        // $this->assertIsArray($gitHubUsernames);
-        // // Ensure the number of GitHub usernames matches the number of students created
-        // $this->assertCount(5, $gitHubUsernames);
+        $gitHubUsernames = $this->getGitHubUsernamesService->getGitHubUsernames();
+
+        $this->assertIsArray($gitHubUsernames);
 
     }
 }

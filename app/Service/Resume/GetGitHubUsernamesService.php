@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace App\Service\Resume;
 
-use App\Models\Resume;
-
 class GetGitHubUsernamesService
 {
+    private $resumeService;
+
+    public function __construct(ResumeService $resumeService)
+    {
+        $this->resumeService = $resumeService;
+    }
+    
     public function getGitHubUsernames(): array
     {
-        // Get all resumes, maybe this could be refactored to a ResumeService.php function getAll.
-        $resumes = Resume::all();
+        $resumes = $this->resumeService->getAll();
         $gitHubUsernames = [];
         foreach ($resumes as $resume) {
             // Quedaría hacer verificaciones... con el handler que prepara Iván o try catch.
             // VALIDATIONS
             if (!is_null($resume->github_url)) {
-                // We remove the 'https://github.com/' from github_url and leave only the username.
                 $gitHubUsername = str_replace('https://github.com/', '', $resume->github_url);
 
                 $gitHubUsernames[] = [
