@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Service\Resume;
 
+use App\Models\Project;
 use App\Models\Resume;
 use Tests\TestCase;
 use App\Service\Resume\ResumeService;
@@ -40,5 +41,25 @@ class ResumeServiceTest extends TestCase
         $this->expectException(ModelNotFoundException::class);
 
         $this->resumeService->getAll();
+    }
+
+    public function testItGetsResumeByProjectId()
+    {
+        $project = Project::factory()->create();
+        $resume = Resume::factory()->create([
+            'project_ids' => json_encode([$project->id]),
+        ]);
+
+        $resumeService = new ResumeService();
+        $foundResume = $resumeService->getResumeByProjectId($project->id);
+
+        $this->assertEquals($resume->id, $foundResume->id);
+    }
+
+    public function testItThrowsExceptionWhenNoResumeIsFoundByProjectId()
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $this->resumeService->getResumeByProjectId('non-existing-id');
     }
 }
