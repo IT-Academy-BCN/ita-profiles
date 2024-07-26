@@ -22,7 +22,7 @@ class FetchGithubRepos extends Command
      */
     protected $description = 'Fetch GitHub repos for github_url fields in resumes table';
 
-    // Ha agregado aquí el service para luego llamar a la función, 
+    // Ha agregado aquí el service para luego llamar a la función,
     // no sé si lo debemos hacer así o directamente desde el handle.
     private $getGitHubUsernamesService;
 
@@ -37,6 +37,7 @@ class FetchGithubRepos extends Command
      */
     public function handle()
     {
+        /*
         $gitHubUsernames = $this->getGitHubUsernamesService->GetGitHubUsernames();
 
         $client = new Client();
@@ -56,19 +57,9 @@ class FetchGithubRepos extends Command
                 $this->info("User: {$user['github_username']}, Repository Name: " . $repo['name']);
             }
         }
-        // DEJO ESTE COMENTADO QUE ES LO QUE HABÍA ANTES
-        // $response = $client->get("https://api.github.com/users/StephaneCarteaux/repos", [
-        //     'headers' => [
-        //         'Accept' => 'application/vnd.github.v3+json',
-        //         'User-Agent' => 'LaravelApp'
-        //     ]
-        // ]);
+        */
 
-        // $repos = json_decode($response->getBody(), true);
+        echo "Ejecutado a: " . date('Y-m-d H:i:s') . "Z\n";
 
-        // foreach ($repos as $repo) {
-        //     $this->info("Repository Name: " . $repo['name']);
-        //     //dd ($this->info);
-        // }
     }
 }
