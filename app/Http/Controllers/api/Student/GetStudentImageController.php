@@ -15,7 +15,7 @@ class GetStudentImageController extends Controller
     {
         try {
             $studentPhoto = $this->getStudentImageService->execute($studentId);
-                return response()->json($studentPhoto, 200);
+                return response()->json(['photo'=>$studentPhoto], 200);
 		} catch (\Exception $e) {
 			Log::error('Exception:', [
 				'exception' => $e->getMessage(),
