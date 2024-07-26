@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Student;
 
-use App\Exceptions\StudentNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Service\Student\GetStudentImageService;
 use Illuminate\Support\Facades\Log;

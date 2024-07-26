@@ -3,9 +3,13 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
-use App\Models\Student;
-use App\Models\User;
+use App\Models\{
+    Student,
+    User
+};
+use App\Service\Student\GetStudentImageService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Mockery\MockInterface;
 use Tests\TestCase;
 
 class GetStudentImageControllerTest extends TestCase
@@ -71,6 +75,23 @@ class GetStudentImageControllerTest extends TestCase
         $response->assertJson([]);
     }
 
+    public function test_can_return_a_500_on_internal_server_error(): void
+    {
+        $this->mock(GetStudentImageService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('execute')
+                ->andThrow(new \Exception('Internal Server Error'));
+        });
+        $user = $this->createUser();
+        $student = $this->createStudent($user);
+        $token = $this->getUserToken($user);
+        $studentId = $student->id;
 
+        $url = route('student.photo.get', $studentId);
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token
+        ])->get($url);
+
+        $response->assertStatus(500);
+    }
 
 }
