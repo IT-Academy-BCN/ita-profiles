@@ -26,9 +26,9 @@ COPY .env.docker /var/www/html/.env
 
 EXPOSE 9000
 
-COPY ./entrypoint.sh /var/www/html/entrypoint.sh
-RUN chmod +x /var/www/html/entrypoint.sh
-ENTRYPOINT ["/var/www/html/entrypoint.sh"]
+#COPY ./entrypoint.sh /var/www/html/entrypoint.sh
+#RUN chmod +x /var/www/html/entrypoint.sh
+#ENTRYPOINT ["/var/www/html/entrypoint.sh"]
 
 CMD ["php-fpm"]
 
