@@ -11,6 +11,7 @@ cp .env.docker .env
 
 php artisan optimize
 php artisan clear-compiled
+
 #Wait untill MYSQL Connection is ready:
 #Fresh or not fresh...
 until php artisan migrate:fresh --seed
