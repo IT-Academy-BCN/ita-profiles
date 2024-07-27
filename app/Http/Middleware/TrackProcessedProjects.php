@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
-class TrackProcessedResumeIds
+class TrackProcessedProjects
 {
     /**
      * Handle an incoming request.
@@ -17,8 +17,8 @@ class TrackProcessedResumeIds
     public function handle(Request $request, Closure $next): Response
     {
         // Initialize a list of processed studentIds if not exists
-        if (!Session::has('processed_resume_ids')) {
-            Session::put('processed_resume_ids', []);
+        if (!Session::has('processed_projects')) {
+            Session::put('processed_projects', []);
         }
 
         return $next($request);

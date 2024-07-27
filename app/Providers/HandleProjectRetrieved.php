@@ -2,22 +2,21 @@
 
 namespace App\Providers;
 
-use App\Models\Resume;
-use App\Providers\ProjectRetrieved;
-use App\Service\Resume\ResumeService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Service\Resume\GetGitHubUsernamesService;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class HandleProjectRetrieved
 {
+    private GetGitHubUsernamesService $getGitHubUsernamesService;
+
     /**
      * Create the event listener.
      */
-    public function __construct()
+    public function __construct(GetGitHubUsernamesService  $getGitHubUsernamesService )
     {
-        //
+        $this->getGitHubUsernamesService = $getGitHubUsernamesService;
     }
 
     /**
@@ -26,16 +25,15 @@ class HandleProjectRetrieved
     public function handle(ProjectRetrieved $event): void
     {
         $project = $event->project;
-        $resumeService = new ResumeService();
-        $resume = $resumeService->getResumeByProjectId($project->id);
-        $resumeId = $resume->id;
-        $processedResumeIds = Session::get('processed_resume_ids', []);
+        $gitHubUsername = $this->getGitHubUsernamesService->getSingleGitHubUsername($project);
+        $processedProjects = Session::get('processed_projects', []);
 
-        if (!in_array($resumeId, $processedResumeIds)) {
-            // Mark resumeId as processed
-            Session::push('processed_resume_ids', $resumeId);
+        if (!in_array($gitHubUsername, $processedProjects)) {
+            // Mark GitHub username as processed
+            Session::push('processed_projects', $gitHubUsername);
 
-            Log::info("Sending project model for resumeId: " . $resumeId);
+            Log::info("Sending project model for resumeId: " . $gitHubUsername);
+
         }
 
     }
