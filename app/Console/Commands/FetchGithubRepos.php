@@ -16,7 +16,7 @@ class FetchGithubRepos extends Command
      *
      * @var string
      */
-    protected $signature = 'app:fetch-github-repos';
+    protected $signature = 'app:fetch-github-repos {--username=}';
 
     /**
      * The console command description.
@@ -38,19 +38,15 @@ class FetchGithubRepos extends Command
      */
     public function handle()
     {
-        // This is for now, it should be passed as argument from the listener to the Service.
-        $project = Project::firstOrFail();
-        // The service should be called in the listener, not here.
-        $gitHubUsername = $this->getGitHubUsernamesService->getSingleGitHubUsername($project);
-
+        $gitHubUsername = $this->option('username');
         // First we fetch the repositories from GitHub API and store them in an array.
         $repos = $this->fetchRepositories($gitHubUsername);
 
         // Then we save the repositories as Projects in the database.
-        $this->saveRepositoriesAsProjects($repos);
+        // $this->saveRepositoriesAsProjects($repos);
 
         // Get the resume that matches the given GitHub username.
-        $resume = $this->getGitHubUsernamesService->getResumeByGitHubUsername($gitHubUsername);
+        // $resume = $this->getGitHubUsernamesService->getResumeByGitHubUsername($gitHubUsername);
         // Pluck the repositories in the array of projects for the given resume.
 
         echo "Ejecutado a: " . date('Y-m-d H:i:s') . "Z\n";
@@ -113,6 +109,6 @@ class FetchGithubRepos extends Command
     // Save the new Projects id in the array of project_ids in the resume table.
     public function saveProjectsInResume(array $projects): void
     {
-        
+
     }
 }

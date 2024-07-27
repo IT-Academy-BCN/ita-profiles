@@ -32,8 +32,12 @@ class HandleProjectRetrieved
             // Mark GitHub username as processed
             Session::push('processed_projects', $gitHubUsername);
 
-            Log::info("Sending project model for resumeId: " . $gitHubUsername);
+            Log::info("Sending GitHub username: " . $gitHubUsername);
 
+            // Call the FetchGithubRepos command
+            Artisan::call('app:fetch-github-repos', [
+                '--username' => $gitHubUsername
+            ]);
         }
 
     }
