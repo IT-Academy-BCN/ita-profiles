@@ -16,9 +16,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('app:fetch-github-repos')
-            ->everyMinute()
-            ->appendOutputTo('./storage/logs/cron.log');
+        // $schedule->command('app:fetch-github-repos')
+        //     ->everyMinute()
+        //     ->appendOutputTo('./storage/logs/cron.log');
     }
 
     /**
