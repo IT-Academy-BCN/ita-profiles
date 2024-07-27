@@ -26,6 +26,7 @@ class ProjectFactory extends Factory
             'tags' => json_encode($this->getTagObjects()),
             'github_url' => $this->faker->parse('https://github.com/') . $this->faker->userName,
             'project_url' => $this->faker->url,
+            'github_repository_id' => null,
         ];
     }
 }

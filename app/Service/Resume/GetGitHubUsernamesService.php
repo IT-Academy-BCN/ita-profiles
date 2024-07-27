@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Resume;
 
 use App\Models\Project;
+use App\Models\Resume;
 
 class GetGitHubUsernamesService
 {
@@ -22,7 +23,7 @@ class GetGitHubUsernamesService
     public function getSingleGitHubUsername(Project $project): string
     {
         $resume = $this->resumeService->getResumeByProjectId($project->id);
-        
+
         // For now I'll use if statement and Exception... if it's needed can be converted to try catch
         if (is_null($resume->github_url)) {
             throw new \Exception("GutHub url not found");
@@ -37,7 +38,20 @@ class GetGitHubUsernamesService
         return $username;
     }
 
+    // Find the resume from the given github username
+    public function getResumeByGitHubUsername(string $gitHubUsername): Resume
+    {
+        // Find first resume with the given github username at the end of the github_url
+        $resume = Resume::where('github_url', 'regexp', "https://github.com/$gitHubUsername$")->first();
     
+        if (is_null($resume)) {
+            throw new \Exception("Resume not found for GitHub username: " . $gitHubUsername);
+        }
+    
+        return $resume;
+    }
+
+
     // This method is no longer needed, but I'll keep it for now. TESTS DONE.
     public function getGitHubUsernames(): array
     {
