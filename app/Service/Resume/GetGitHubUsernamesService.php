@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Resume;
 
+use App\Models\Project;
+
 class GetGitHubUsernamesService
 {
     private $resumeService;
@@ -13,6 +15,30 @@ class GetGitHubUsernamesService
         $this->resumeService = $resumeService;
     }
 
+    // We have two possibilities here:
+    // 1) Get the Resume using project_id and from there get the GitHub username (implemented).
+    // 2) Get the GitHub username directly from project->github_url and trim the /projectname from url (not implemented).
+    // MISSING TESTS!!!
+    public function getSingleGitHubUsername(Project $project): string
+    {
+        $resume = $this->resumeService->getResumeByProjectId($project->id);
+        
+        // For now I'll use if statement and Exception... if it's needed can be converted to try catch
+        if (is_null($resume->github_url)) {
+            throw new \Exception("GutHub url not found");
+        }
+
+        $parsedUrl = parse_url($resume->github_url);
+        if ($parsedUrl['host'] !== 'github.com' || empty($parsedUrl['path'])) {
+            throw new \Exception("Invalid GitHub URL: " . $resume->github_url);
+        }
+
+        $username = trim($parsedUrl['path'], '/');
+        return $username;
+    }
+
+    
+    // This method is no longer needed, but I'll keep it for now. TESTS DONE.
     public function getGitHubUsernames(): array
     {
         $resumes = $this->resumeService->getAll();
