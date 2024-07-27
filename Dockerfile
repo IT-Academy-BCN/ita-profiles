@@ -30,9 +30,9 @@ RUN touch /var/log/cron.log
 
 EXPOSE 9000
 
-COPY ./entrypoint.sh /var/www/html/entrypoint.sh
-RUN chmod +x /var/www/html/entrypoint.sh
-ENTRYPOINT ["/var/www/html/entrypoint.sh"]
+#COPY ./entrypoint.sh /var/www/html/entrypoint.sh
+#RUN chmod +x /var/www/html/entrypoint.sh
+#ENTRYPOINT ["/var/www/html/entrypoint.sh"]
 
 CMD ["sh", "-c", "cron && php-fpm"]
 
