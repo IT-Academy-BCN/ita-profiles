@@ -20,6 +20,7 @@ class StudentListController extends Controller
 
     public function __invoke(Request $request)
     {
+        //Estaría bien hacer validaciones en las entradas??
         try {
             $specializationsString = $request->get('specialization');
             $specializations = $specializationsString ? explode(',', $specializationsString) : null;
