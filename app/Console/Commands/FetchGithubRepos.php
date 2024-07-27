@@ -46,8 +46,12 @@ class FetchGithubRepos extends Command
         // First we fetch the repositories from GitHub API and store them in an array.
         $repos = $this->fetchRepositories($gitHubUsername);
 
-        // Then we store the repositories as Projects in the database.
-        $this->storeRepositoriesAsProjects($repos);
+        // Then we save the repositories as Projects in the database.
+        $this->saveRepositoriesAsProjects($repos);
+
+        // Get the resume that matches the given GitHub username.
+        $resume = $this->getGitHubUsernamesService->getResumeByGitHubUsername($gitHubUsername);
+        // Pluck the repositories in the array of projects for the given resume.
 
         echo "Ejecutado a: " . date('Y-m-d H:i:s') . "Z\n";
     }
@@ -80,26 +84,35 @@ class FetchGithubRepos extends Command
         return $response->json();
     }
 
-    public function storeRepositoriesAsProjects(array $repos): void
+    public function saveRepositoriesAsProjects(array $repos): void
     {
         foreach ($repos as $repo) {
             // Need a fucking Company because this DB is a CACA.
             $company = Company::firstOrFail();
 
-            $project = Project::create([
-                'user' => $repo['owner']['login'],
-                'name' => $repo['name'],
-                'github_url' => $repo['html_url'],
-                // Laguages will be another FOLLON, because it's store as an array of id, so we should match the id of language...
-                //'tags' => $repo['languages_url'],
-                // Mandatory... CACA.
-                'company_id' => $company->id,
-                // Github repo id could be useful in order to know if it should create or update a Project...
-                // But we should create the column for Project table.
-                // 'github_repository_id' => $repo['id'],
-            ]);
+            $project = Project::updateOrCreate(
+                // Search criteria: Github repo id could be useful for this, if id exists it updates and if not,
+                // creates a new Project... But for this to work I had to create the column for Project table.
+                ['github_repository_id' => $repo['id']], 
+                [
+                    'user' => $repo['owner']['login'],
+                    'name' => $repo['name'],
+                    'github_url' => $repo['html_url'],
+                    // Laguages will be another FOLLÓN, because it's store as an array of id, so we should match the id of language...
+                    //'tags' => $repo['languages_url'],
+                    // Mandatory... CACA. We should be able to null field an set a "Freelance" value in case is null.
+                    'company_id' => $company->id,
+                    'github_repository_id' => $repo['id'],
+                ]
+            );
 
-            $this->info("Project created: " . $project);
+            $this->info("Project created or updated: " . $project);
         }
+    }
+
+    // Save the new Projects id in the array of project_ids in the resume table.
+    public function saveProjectsInResume(array $projects): void
+    {
+        
     }
 }
