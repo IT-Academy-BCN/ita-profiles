@@ -56,7 +56,8 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
-    Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
+    Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateProject');
+    //Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api')->name('student.skills');
     Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
     Route::post('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
