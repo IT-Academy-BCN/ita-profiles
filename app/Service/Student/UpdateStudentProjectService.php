@@ -11,23 +11,28 @@ use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ProjectNotFoundException;
+use Exception;
 
 class UpdateStudentProjectService
 {
     public function execute(string $studentId, string $projectId, array $data): void
     {
         DB::transaction(function () use ($studentId, $projectId, $data) {
-            $this->getStudent($studentId);
+            $student = $this->getStudent($studentId);
             $project = $this->getProject($projectId);
             $this->updateProject($project, $data);
         });
     }
 
-    private function getStudent(string $studentId): void
+    private function getStudent(string $studentId): Student
     {          
-        if (!Student::find($studentId)) {
+        $student = Student::find($studentId);
+
+        if (!$student) {
             throw new StudentNotFoundException($studentId);
-        }       
+        }
+        
+        return $student;
     }
 
     private function getProject(string $projectId): Project
@@ -43,8 +48,7 @@ class UpdateStudentProjectService
    
     private function updateProject(Project $project, array $data): void
     {
-        $project->name = $data['project_name'] ?? $project->name;
-        //$project->tags = json_encode($data['tags'] ?? json_decode($project->tags));
+        $project->name = $data['project_name'] ?? $project->name;       
         $project->github_url = $data['github_url'] ?? $project->github_url;
         $project->project_url = $data['project_url'] ?? $project->project_url;
         
@@ -59,6 +63,6 @@ class UpdateStudentProjectService
             $company->save();
             }   
 
-        $project->save();
+        $project->update();
     }
 }
