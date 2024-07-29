@@ -17,9 +17,9 @@ class UpdateStudentProjectServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $student;
-    protected $project;
-    protected $company;
+    protected Student $student;
+    protected Project $project;
+    protected Company $company;
 
     protected function setUp(): void
     {
@@ -49,9 +49,11 @@ class UpdateStudentProjectServiceTest extends TestCase
         $this->assertEquals('Project One', $updatedProject->name);
 
         $updatedTags = json_decode($updatedProject->tags, true);
-        #$this->assertEquals(['1', '2'], $updatedTags);
-        $this->assertContains(1, $updatedTags);
-        $this->assertContains( 2, $updatedTags);
+       
+        // if assertEquals doesn't work, try the opcional assertContains
+        $this->assertEquals(['1', '2'], $updatedTags);
+        //$this->assertContains(1, $updatedTags);
+        //$this->assertContains( 2, $updatedTags);
 
         $this->assertEquals('https://github.com/project1', $updatedProject->github_url);
         $this->assertEquals('https://project1.com', $updatedProject->project_url);
