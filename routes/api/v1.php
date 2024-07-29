@@ -18,12 +18,8 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentProjectController,
     UpdateStudentSkillsController,
     UpdateStudentProfileController,
-<<<<<<< HEAD
     UpdateStudentImageController,
-
-=======
     AddStudentLanguageController
->>>>>>> main
 };
 
 use App\Http\Controllers\api\Tag\{
