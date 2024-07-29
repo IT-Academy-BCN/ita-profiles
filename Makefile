@@ -135,3 +135,12 @@ xdebug-off: ## Disable xdebug
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+switch-branch: ## Switch the branch for docker compose newest versions
+	./bin/switch-branch-linux.sh
+
+switch-branch-old: ## Switch the branch for docker compose older versions
+	./bin/switch-branch-linux-old.sh
+
+
+

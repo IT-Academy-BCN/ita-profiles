@@ -7,19 +7,32 @@ fi
 
 # Ejecuta las instrucciones de Composer y Artisan
 composer install
-cp .env.docker .env
+
+if [ ! -f .env ]; then
+    echo "[WARNING] - .env File Not Found! Using .env.docker File as .env"
+    cp .env.docker .env
+fi
+
 
 php artisan optimize
 php artisan clear-compiled
-php artisan migrate:fresh --seed
+
+#Wait untill MYSQL Connection is ready:
+#Fresh or not fresh...
+until php artisan migrate:fresh --seed
+do
+  echo "Waiting for database connection..."
+  # wait for 5 seconds before check again
+  sleep 10
+done
+
 php artisan l5-swagger:generate
 php artisan key:generate
 php artisan passport:install --force --no-interaction
 php artisan config:clear
 php artisan config:cache
 php artisan cache:clear
+php artisan route:clear
 chmod 777 -R storage
 
-# Ejecuta el comando recibido como argumento del entrypoint
-exec "$@"
-
+php-fpm
