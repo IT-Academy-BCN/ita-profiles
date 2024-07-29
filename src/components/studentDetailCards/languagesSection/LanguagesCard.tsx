@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useStudentIdContext } from '../../../context/StudentIdContext'
 import type { TLanguage } from '../../../interfaces/interfaces'
