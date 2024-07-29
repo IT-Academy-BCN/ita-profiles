@@ -2,7 +2,7 @@ import {  useContext, useEffect, useState } from 'react'
 import StudentCard from './StudentCard'
 import { useAppSelector } from '../../hooks/ReduxHooks'
 import { IStudentList } from '../../interfaces/interfaces'
-import { FetchStudentsListHome } from '../../api/FetchStudentsList'
+import { FetchStudentsList } from '../../api/FetchStudentsList'
 import { StudentFiltersContext } from '../../context/StudentFiltersContext';
 
 const StudentsList: React.FC = () => {
@@ -17,7 +17,7 @@ const StudentsList: React.FC = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const studentsList = await FetchStudentsListHome( studentFilterContext?.selectedRoles || []);
+        const studentsList = await FetchStudentsList( studentFilterContext?.selectedRoles || []);
         setStudents(studentsList);
       } catch (error) {
         // eslint-disable-next-line no-console
