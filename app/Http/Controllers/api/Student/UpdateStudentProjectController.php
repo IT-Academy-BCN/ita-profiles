@@ -13,18 +13,18 @@ use App\Exceptions\ProjectNotFoundException;
 
 class UpdateStudentProjectController extends Controller
 {
-    private $studentUpdateProjectService;
+    private $studentupdateProjectService;
 
-    public function __construct(UpdateStudentProjectService $studentUpdateProjectService)
+    public function __construct(UpdateStudentProjectService $studentupdateProjectService)
     {
-        $this->studentUpdateProjectService = $studentUpdateProjectService;
+        $this->studentupdateProjectService = $studentupdateProjectService;
     }
 
     public function __invoke(UpdateStudentProjectRequest $request, $studentId, $projectId): JsonResponse
     {       
         try {
             $data = $request->all();            
-            $this->studentUpdateProjectService->execute($studentId, $projectId, $data);
+            $this->studentupdateProjectService->execute($studentId, $projectId, $data);
             return response()->json(['message' => 'El projecte s\'ha actualitzat'], 200);
         } catch (StudentNotFoundException | ProjectNotFoundException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getCode());
