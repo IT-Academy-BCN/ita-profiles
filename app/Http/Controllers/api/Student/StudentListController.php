@@ -20,7 +20,6 @@ class StudentListController extends Controller
 
     public function __invoke(Request $request)
     {
-        //Estaría bien hacer validaciones en las entradas??
         try {
             $specializationsString = $request->get('specialization');
             $specializations = $specializationsString ? explode(',', $specializationsString) : null;
@@ -36,5 +35,9 @@ class StudentListController extends Controller
                 'message' => $resumesNotFoundException->getMessage()
             ], $resumesNotFoundException->getCode()));
         }
+
+        /*El method __invoke, devulve una array de coincidencia en formato json, utilizandose del servicio 
+        'studentListService' y teniendo en cuenta los parámetros del request. A parte te devulve un msj de error 
+        por alguna excepción.*/
     }
 }
