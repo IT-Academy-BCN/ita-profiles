@@ -5,7 +5,7 @@ docker network prune -f
 docker network create app-network
 @REM if [ -d "./node_modules" ]; then sudo rm -Rf ./node_modules; fi
 @REM if [ -d "./vendor" ]; then sudo rm -Rf ./vendor; fi
-docker compose up
+docker compose up -d
 docker network connect app-network mysql
 docker network connect app-network php
 docker network connect app-network node
