@@ -7,7 +7,12 @@ fi
 
 # Ejecuta las instrucciones de Composer y Artisan
 composer install
-cp .env.docker .env
+
+if [ ! -f .env ]; then
+    echo "[WARNING] - .env File Not Found! Using .env.docker File as .env"
+    cp .env.docker .env
+fi
+
 
 php artisan optimize
 php artisan clear-compiled
