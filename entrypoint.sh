@@ -28,6 +28,7 @@ php artisan passport:install --force --no-interaction
 php artisan config:clear
 php artisan config:cache
 php artisan cache:clear
+php artisan route:clear
 chmod 777 -R storage
 
 # Ejecuta el comando recibido como argumento del entrypoint
