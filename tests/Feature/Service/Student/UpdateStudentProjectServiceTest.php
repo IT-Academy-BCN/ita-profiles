@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Service\Student;
+namespace Tests\Feature\Service\Student;
 
 use Tests\TestCase;
 use App\Models\Project;
@@ -35,8 +35,8 @@ class UpdateStudentProjectServiceTest extends TestCase
         $service = new UpdateStudentProjectService();
 
         $data = [
-            'name' => 'Project One',
-            'tags' => ['tag1', 'tag2'],
+            'project_name' => 'Project One',
+            'tags' => ['1', '2'],
             'github_url' => 'https://github.com/project1',
             'project_url' => 'https://project1.com',
             'company_name' => 'Company Name'
@@ -49,7 +49,7 @@ class UpdateStudentProjectServiceTest extends TestCase
         $this->assertEquals('Project One', $updatedProject->name);
 
         $updatedTags = json_decode($updatedProject->tags, true);
-        $this->assertEquals(['tag1', 'tag2'], $updatedTags);
+        $this->assertEquals(['1', '2'], $updatedTags);
 
         $this->assertEquals('https://github.com/project1', $updatedProject->github_url);
         $this->assertEquals('https://project1.com', $updatedProject->project_url);

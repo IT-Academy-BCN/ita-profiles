@@ -6,7 +6,7 @@ use OpenApi\Annotations as OA;
 
 class UpdateStudentProjectAnnotation
 {
- /**
+  /**
    * @OA\Put(
    *      path="/student/{studentId}/resume/projects/{projectId}",
    *      operationId="updateStudentProject",
@@ -50,13 +50,14 @@ class UpdateStudentProjectAnnotation
    *                  example="Updated Company Name"
    *              ),
    *              @OA\Property(
-   *                  property="tags",
-   *                  type="array",
-   *                  @OA\Items(
-   *                      type="string",
-   *                      example="Updated Tag"
-   *                  ),
-   *                  description="List of tags associated with the project"
+   *                 property="tags",
+   *                 type="array",
+   *                 description="Array of tag IDs. Pass the complete array of tags to be associated with the project.",
+   *                 example={1, 2, 3},
+   *                 @OA\Items(
+   *                     type="integer",
+   *                     description="Tag ID"
+   *                 )
    *              ),
    *              @OA\Property(
    *                  property="github_url",

@@ -19,18 +19,17 @@ class Resume extends Model
         'modality' => 'array',
     ];
 
-    public function student():BelongsTo
+    public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
     }
 
     public function languages()
     {
-        return $this->belongsToMany(Language::class);
+        return $this->belongsToMany(Language::class, 'language_resume', 'resume_id', 'language_id');
     }
     public function bootcamps()
     {
         return $this->belongsToMany(Bootcamp::class)->withPivot('end_date');
     }
 }
-

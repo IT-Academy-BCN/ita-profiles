@@ -6,6 +6,7 @@ import { SelectedStudentProvider } from './context/StudentIdContext'
 import App from './App'
 import i18n from './locales/i18n'
 import { store } from './store/store'
+import { LoginProvider } from './context/LoginContext'
 
 import './styles/index.css'
 import './styles/normalize.css'
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
         <SelectedStudentProvider>
-          <App />
+          <LoginProvider>
+            <App />
+          </LoginProvider>
         </SelectedStudentProvider>
       </I18nextProvider>
     </Provider>

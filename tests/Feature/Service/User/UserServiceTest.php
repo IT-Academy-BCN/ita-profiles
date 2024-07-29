@@ -1,296 +1,251 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace Tests\Feature\Service\User;
 
-use App\Service;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Models\User;
 
 use App\Service\User\UserService;
 
-use Illuminate\Database\Eloquent\Collection;
+use App\Exceptions\InvalidCredentialsException;
+use App\Exceptions\UserNotFoundException;
+use App\Exceptions\UserNotFoundInRedisException;
 
-use Mockery;
-
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
 class UserServiceTest extends TestCase
 {
+	use DatabaseTransactions;
 	private $service;
-	public $mockery;
 
 	public function setUp(): void
 	{
 		parent::setUp();
 		$this->service = new UserService();
-		$this->mockery = Mockery::mock('overload:App\Models\User');
 	}
 
 	/**
-     * @dataProvider checkUserCredentialsProvider
-     *
-     */
-    public function testCheckUserCredentials(string $userDNI, string $password, bool $correctPasswordBool, bool $addDBBool,bool $expectedOutput)
-    {
+	 * @dataProvider checkUserCredentialsSuccessProvider
+	 *
+	 */
+	public function testCheckUserCredentialsSuccess(string $userDNI, string $password)
+	{
+		$user = User::factory()->create(['dni' => $userDNI, 'password' => bcrypt($password)]);
 
-		$randID = rand(1,100);
+		$result = $this->service->checkUserCredentials($user, $password);
 
-        if($addDBBool == True)
-        {
+		$this->assertEquals(true, $result);
+	}
 
-			$returnUser = new User;
-
-			$returnUser->id = intval($randID);
-			$returnUser->username = "Surname";
-			$returnUser->email = $userDNI."@mail.com";
-			$returnUser->dni = $userDNI;
-			$returnUser->password = ($correctPasswordBool ? bcrypt($password) : bcrypt('WrongPassword') );
-
-		}else{
-			$returnUser = Null;
-		}
-
-        $returnCollection = collect([$returnUser]);
-
-        $this->mockery->shouldReceive('where')
-			->with('dni', $userDNI)
-			->andReturn($returnCollection);
-
-		$this->app->instance('overload:App\Models\User', $this->mockery);
-
-		//Perform the call to the function to be tested:
-		$result = $this->service->checkUserCredentials($userDNI, $password);
-
-		//Assert Result
-		$this->assertEquals($expectedOutput, $result);
-
-    }
-
-    static function checkUserCredentialsProvider(): array
-    {
-        $array = array(
-			array(
-				'69818630Z', //NIF/NIE
-				'password', //Password
-				False, //Add In "DB" With True/False Password
-				False, //Add In "DB" (True = Yes , False = No)
-				False // Expected Output
-				),
-			array(
-				'X6849947H',
-				'password',
-				False, //Add In "DB" With True/False Password
-				False, //Add In "DB" (True = Yes , False = No)
-				False // Expected Output
-				),
+	static function checkUserCredentialsSuccessProvider(): array
+	{
+		$array = array(
 			array(
 				'69818630Z',
-				'password',
-				True, //Add In "DB" With True/False Password
-				True, //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
-				),
+				'password'
+			),
 			array(
 				'X6849947H',
-				'password',
-				True, //Add In "DB" With True/False Password
-				True, //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
-				),
-			array(
-				'69818630Z',
-				'password',
-				False, //Add In "DB" With True/False Password
-				True, //Add In "DB" (True = Yes , False = No)
-				False // Expected Output
-				),
-			array(
-				'X6849947H',
-				'password',
-				False, //Add In "DB" With True/False Password
-				True,  //Add In "DB" (True = Yes , False = No)
-				False // Expected Output
-				),
+				'password'
+			),
 			array(
 				'48332312C',
-				'passOnePass',
-				True, //Add In "DB" With True/False Password
-				True,  //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
-				),
-			);
+				'passOnePass'
+			)
+		);
 		return $array;
-    }
-
-    /**
-     * @dataProvider getUserIDByDNIProvider
-     */
-    public function testGetUserIDByDNI(string $userDNI, bool $addDBBool,bool $expectedOutput)
-    {
-
-		$randID = rand(1,100);
-		if($addDBBool == True)
-        {
-
-			$returnUser = new User;
-
-			$returnUser->id = intval($randID);
-			$returnUser->username = "";
-			$returnUser->email = $userDNI."@mail.com";
-			$returnUser->dni = $userDNI;
-			$returnUser->password = bcrypt("password") ;
-
-		}else{
-			$returnUser = False;
-		}
-
-		$returnCollection = collect([$returnUser]);
-
-		$this->mockery->shouldReceive('where')
-			->with('dni', $userDNI)
-			->andReturn($returnCollection);
-
-		$id = $this->service->getUserIDByDNI($userDNI);
-
-		//Assert Result
-		if($expectedOutput == False){
-			$this->assertEquals(False, $id);
-		}else{
-			$this->assertEquals($randID, $id);
-		}
-
 	}
 
+	/**
+	 * @dataProvider checkUserCredentialsFailurePasswordProvider
+	 *
+	 */
+	public function testCheckUserCredentialsFailurePassword(string $userDNI, string $password)
+	{
+		$this->expectException(InvalidCredentialsException::class);
 
-    static function getUserIDByDNIProvider()
-    {
+		$user = User::factory()->create(['dni' => $userDNI, 'password' => bcrypt('WrongPassword')]);
+
+		$this->service->checkUserCredentials($user, $password);
+	}
+
+	static function checkUserCredentialsFailurePasswordProvider(): array
+	{
 		$array = array(
 			array(
-				'69818630Z', //NIF/NIE
-				True, //Add In "DB" (True = Yes , False = No)
-				True // Expected Output
-				),
+				'69818630Z',
+				'password'
+			),
 			array(
-				'69818630Z', //NIF/NIE
-				False, //Add In "DB" (True = Yes , False = No)
-				False // Expected Output
-				),
-			);
-
+				'X6849947H',
+				'password'
+			),
+		);
 		return $array;
 	}
 
 
-    /**
-     * @dataProvider generateJWTokenProvider
-     */
-    public function testGenerateJWToken(string | int $userID ,bool $expectedOutput)
-    {
-		$jwt = $this->service->generateJWToken($userID);
-		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt);//(^[\w-]*\.[\w-]*\.[\w-]*$)
-		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)',$jwt);
+	/**
+	 * @dataProvider getUserByDNISuccessProvider
+	 */
+	public function testGetUserByDNI(string $userDNI)
+	{
+		$user = User::factory()->create(['dni' => $userDNI]);
 
-		if($resultOne == True && $resultTwo == True){
-			$this->assertEquals(True , True);
-		}else{
-			$this->assertEquals(True , False);
-		}
+		$user->refresh();
 
+		$user_return = $this->service->getUserByDNI($userDNI);
+		$user_refreshed = User::where('dni', $user->dni)->first();
+		$this->assertEquals($user_refreshed->getAttributes(), $user_return->getAttributes());
+		$this->assertEquals($user->getAttributes(), $user_return->getAttributes());
 	}
 
-    static function generateJWTokenProvider()
-    {
+	static function getUserByDNISuccessProvider()
+	{
 		$array = array(
 			array(
-				'123', //userID
-				True // Expected Output
-				),
+				'69818630Z'
+			),
+		);
+
+		return $array;
+	}
+
+	/**
+	 * @dataProvider getUserByDNIUserNotFoundProvider
+	 */
+	public function testGetUserByDNIUserNotFound(string $userDNI)
+	{
+		$this->expectException(UserNotFoundException::class);
+
+		$this->service->getUserByDNI($userDNI);
+	}
+
+	static function getUserByDNIUserNotFoundProvider()
+	{
+		$array = array(
 			array(
-				'abc', //userID
-				False // Expected Output
-				),
-			array(
-				123, //userID
-				True // Expected Output
-				),
-			array(
-				021, //userID
-				True // Expected Output
-				),
-			);
+				'95499409M'
+			),
+		);
 
 		return $array;
 	}
 
 
-    /**
-     * @dataProvider storeUserIDAndTokenRedisProvider
-     */
-    public function testStoreUserIDAndTokenRedis(string $userID, string $jwt ,bool $expectedOutput)
-    {
+	/**
+	 * @dataProvider generateJWTokenProvider
+	 */
+	public function testGenerateJWToken()
+	{
+		$user = User::factory()->create();
+
+		$jwt = $this->service->generateJWToken($user);
+		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt);
+		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)', $jwt);
+
+		$this->assertEquals($resultOne, true);
+		$this->assertEquals($resultTwo, true);
+	}
+
+
+	static function generateJWTokenProvider()
+	{
+		return [
+			['123', true],
+			['abc', false],
+			[123, true],
+			[021, true],
+		];
+	}
+
+
+	/**
+	 * @dataProvider storeUserIDAndTokenRedisProvider
+	 */
+	public function testStoreUserIDAndTokenRedis(string $userID, string $jwt, bool $expectedOutput)
+	{
 		//ToDo - Important - Hide Connection And Check Redis Network Communication
 		//ToDo - Or just use a testing database
 		$result = $this->service->storeUserIDAndTokenRedis($userID, $jwt);
 		$this->assertEquals($result, $expectedOutput);
 	}
-    static function storeUserIDAndTokenRedisProvider()
-    {
+	
+	static function storeUserIDAndTokenRedisProvider()
+	{
 		$array = array(
 			array(
 				'Z123', //userID
 				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-				True // Expected Output
-				),
+				true // Expected Output
+			),
 			array(
 				'abc', //userID
-				'abc',
-				True // Expected Output
-				),
-			);
+				'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJZekV6TUdkb01ISm5PSEJpT0cxaWJEaHlOVEE9IiwicmVzcG9uc2VfdHlwZSI6ImNvZGUiLCJzY29wZSI6ImludHJvc2NwZWN0X3Rva2VucywgcmV2b2tlX3Rva2VucyIsImlzcyI6ImJqaElSak0xY1hwYWEyMXpkV3RJU25wNmVqbE1iazQ0YlRsTlpqazNkWEU9Iiwic3ViIjoiWXpFek1HZG9NSEpuT0hCaU9HMWliRGh5TlRBPSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0Ojg0NDMve3RpZH0ve2FpZH0vb2F1dGgyL2F1dGhvcml6ZSIsImp0aSI6IjE1MTYyMzkwMjIiLCJleHAiOiIyMDIxLTA1LTE3VDA3OjA5OjQ4LjAwMCswNTQ1In0.IxvaN4ER-PlPgLYzfRhk_JiY4VAow3GNjaK5rYCINFsEPa7VaYnRsaCmQVq8CTgddihEPPXet2laH8_c3WqxY4AeZO5eljwSCobCHzxYdOoFKbpNXIm7dqHg_5xpQz-YBJMiDM1ILOEsER8ADyF4NC2sN0K_0t6xZLSAQIRrHvpGOrtYr5E-SllTWHWPmqCkX2BUZxoYNK2FWgQZpuUOD55HfsvFXNVQa_5TFRDibi9LsT7Sd_az0iGB0TfAb0v3ZR0qnmgyp5pTeIeU5UqhtbgU9RnUCVmGIK-SZYNvrlXgv9hiKAZGhLgeI8hO40utfT2YTYHgD2Aiufqo3RIbJA',
+				true // Expected Output
+			),
+		);
 
 		return $array;
 	}
 
-	 /**
-     * @dataProvider getJWTokenByUserIDProvider
-     */
-    public function testGetJWTokenByUserID(string $userID ,bool $expectedOutput)
-    {
+	/**
+	 * @dataProvider getJWTokenByUserIDProvider
+	 */
+	public function testGetJWTokenByUserIDSuccess(string $userID, bool $expectedOutput)
+	{
 		//ToDo - Important - Hide Connection And Check Redis Network Communication
 		//ToDo - Or just use a testing database
-		$result = $this->service->getJWTokenByUserID($userID);
-		$this->assertEquals($result, $expectedOutput);
+
+		$jwt = $this->service->getJWTokenByUserID($userID);
+		$resultOne = preg_match('(^[\w-]*\.[\w-]*\.[\w-]*$)', $jwt); //(^[\w-]*\.[\w-]*\.[\w-]*$)
+		$resultTwo = preg_match('(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$)', $jwt);
+
+		$this->assertEquals($resultOne, true);
+		$this->assertEquals($resultTwo, true);
 	}
-    static function getJWTokenByUserIDProvider()
-    {
+	static function getJWTokenByUserIDProvider()
+	{
 		$array = array(
 			array(
 				'Z123', //userID
-				True // Expected Output
-				),
+				true // Expected Output
+			),
 			array(
 				'abc', //userID
-				True // Expected Output
-				),
-			array(
-				'ZZZZZZZZZ981273', //userID
-				False // Expected Output
-				),
-			);
+				true // Expected Output
+			)
+		);
 
 		return $array;
 	}
 
 
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        \Mockery::close(); // Clean up Mockery
-    }
+	/**
+	 * @dataProvider getJWTokenByUserIDFailureProvider
+	 */
+	public function testGetJWTokenByUserIDFailure(string $userID)
+	{
+		//ToDo - Important - Hide Connection And Check Redis Network Communication
+		//ToDo - Or just use a testing database
+		$this->expectException(UserNotFoundInRedisException::class);
+		$result = $this->service->getJWTokenByUserID($userID);
+	}
+	static function getJWTokenByUserIDFailureProvider()
+	{
+		$array = array(
+			array(
+				'ZZZZZZZZZ981273', //userID
+			)
+		);
 
+		return $array;
+	}
+
+
+	protected function tearDown(): void
+	{
+		parent::tearDown();
+	}
 }
-

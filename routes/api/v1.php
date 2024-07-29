@@ -10,6 +10,7 @@ use App\Http\Controllers\api\Student\{
     StudentCollaborationDetailController,
     StudentDetailController,
     StudentLanguagesDetailController,
+    UpdateStudentLanguagesController,
     StudentListController,
     StudentProjectsDetailController,
     SpecializationListController,
@@ -17,8 +18,12 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentProjectController,
     UpdateStudentSkillsController,
     UpdateStudentProfileController,
+<<<<<<< HEAD
     UpdateStudentImageController,
 
+=======
+    AddStudentLanguageController
+>>>>>>> main
 };
 
 use App\Http\Controllers\api\Tag\{
@@ -34,6 +39,10 @@ use App\Http\Controllers\api\{
     AuthController
 };
 
+use App\Http\Middleware\{
+    EnsureStudentOwner
+};
+
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
@@ -47,11 +56,17 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
+    Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
-    Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
-    Route::put('skills', UpdateStudentSkillsController::class)->name('student.skills');
+    Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateProject');
+    //Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api')->name('student.skills');
+    Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
+<<<<<<< HEAD
     Route::post('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
+=======
+    Route::post('languages', AddStudentLanguageController::class)->name('student.addLanguage');
+>>>>>>> main
     Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
     Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });

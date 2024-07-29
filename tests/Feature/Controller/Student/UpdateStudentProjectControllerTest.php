@@ -34,7 +34,7 @@ class UpdateStudentProjectControllerTest extends TestCase
 
     public function testControllerReturns200WithCorrectUuids(): void
     {
-        $response = $this->put(route('student.updateproject', ['studentId' => $this->student->id, 'projectId' => $this->project->id]), [
+        $response = $this->put(route('student.updateProject', ['studentId' => $this->student->id, 'projectId' => $this->project->id]), [
             'project_url' => 'https://new-project-url.com'
         ]);
 
@@ -46,7 +46,7 @@ class UpdateStudentProjectControllerTest extends TestCase
     {
         $invalidUuid = 'invalid_uuid';
 
-        $response = $this->put(route('student.updateproject', ['studentId' => $invalidUuid, 'projectId' => $this->project->id]), [
+        $response = $this->put(route('student.updateProject', ['studentId' => $invalidUuid, 'projectId' => $this->project->id]), [
             'project_url' => 'https://new-project-url.com'
         ]);
 
@@ -58,7 +58,7 @@ class UpdateStudentProjectControllerTest extends TestCase
     {
         $invalidUuid = 'invalid_uuid';
 
-        $response = $this->put(route('student.updateproject', ['studentId' => $this->student->id, 'projectId' => $invalidUuid]), [
+        $response = $this->put(route('student.updateProject', ['studentId' => $this->student->id, 'projectId' => $invalidUuid]), [
             'project_url' => 'https://new-project-url.com'
         ]);
 

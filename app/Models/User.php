@@ -22,11 +22,6 @@ class User extends Authenticatable
 
     public $timestamps = false;
 
-    protected function getDefaultGuardName(): string
-    {
-        return 'web';
-    }
-
     /**
      * The attributes that are mass assignable.
      *

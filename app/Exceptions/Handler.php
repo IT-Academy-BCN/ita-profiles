@@ -2,8 +2,13 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class Handler extends ExceptionHandler
 {
@@ -23,8 +28,52 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        // Manejo de excepciones de validación (422)
+        $this->renderable(function (ValidationException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Validation failed',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
+        });
+
+        // Manejo de excepciones de autorización (403)
+        $this->renderable(function (AuthorizationException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'This action is unauthorized.',
+                ], 403);
+            }
+        });
+
+        // Manejo de excepciones para modelos no encontrados (404)
+        $this->renderable(function (ModelNotFoundException $e, $request) {
+            if ($request->is('api/*')) {
+                $model = $e->getModel();
+                return response()->json([
+                    'message' => $model ? "{$model} not found" : 'Resource not found',
+                ], 404);
+            }
+        });
+
+        // Manejo de excepciones generales y registro de errores 500
+        $this->renderable(function (Exception $e, $request) {
+            if ($request->is('api/*')) {
+                // Registrar el error antes de retornar la respuesta
+                Log::error($e->getMessage(), [
+                    'exception' => $e,
+                    'trace' => $e->getTraceAsString(),
+                ]);
+
+                // Determinar el código de estado HTTP apropiado
+                $status = $e instanceof HttpException ? $e->getStatusCode() : ($e->getCode() ?: 500);
+
+                // Retornar la respuesta JSON
+                return response()->json([
+                    'message' => $e->getMessage(),
+                ], $status);
+            }
         });
     }
 }
