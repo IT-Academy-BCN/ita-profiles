@@ -9,9 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Service\Student\UpdateStudentProjectService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\UpdateStudentProjectRequest;
-use App\Exceptions\StudentNotFoundException;
-use App\Exceptions\ProjectNotFoundException;
-use App\Exceptions\UserNotFoundException;
 use App\Service\Student\StudentService;
 
 class UpdateStudentProjectController extends Controller
@@ -27,18 +24,32 @@ class UpdateStudentProjectController extends Controller
     }
 
     public function __invoke(UpdateStudentProjectRequest $request, $studentId, $projectId): JsonResponse
-    {       
+    {
         try {
             $userProfile = $this->studentService->findUserByStudentID($studentId);
             $this->authorize('canAccessResource', $userProfile);
 
-            $data = $request->all();            
+            $data = $request->all();
             $this->updateStudentProjectService->execute($studentId, $projectId, $data);
             return response()->json(['message' => 'El projecte s\'ha actualitzat'], 200);
-        } catch (UserNotFoundException |StudentNotFoundException | ProjectNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode());
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
+            // Catch any exceptions and return a consistent JSON response
+            $status = $e->getCode() ?: 500;
+            $message = $e->getMessage();
+
+            // Handle specific exceptions for clearer messages
+            if ($message === 'Student not found') {
+                return response()->json(['message' => 'Student not found'], 404);
+            }
+            if ($message === 'Project not found') {
+                return response()->json(['message' => 'Project not found'], 404);
+            }
+            if ($message === 'No tienes permiso para actualizar este proyecto.') {
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
+
+            // Generic error message
+            return response()->json(['message' => $message], $status);
         }
     }
 }
