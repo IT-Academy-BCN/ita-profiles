@@ -35,5 +35,8 @@ class StudentListController extends Controller
                 'message' => $resumesNotFoundException->getMessage()
             ], $resumesNotFoundException->getCode()));
         }
+        /*El método __invoke devuelve un array de coincidencias en formato JSON, utilizando el servicio
+        'studentListService' y teniendo en cuenta los parámetros de la solicitud. Además, devuelve un mensaje de 
+        error en caso de alguna excepción.*/
     }
 }
