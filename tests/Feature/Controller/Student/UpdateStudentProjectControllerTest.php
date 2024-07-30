@@ -34,7 +34,7 @@ class UpdateStudentProjectControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->student = Student::factory()->create();       
+        $this->student = Student::factory()->create();
         $this->project = Project::factory()->create();
         $this->student->resume()->create([
             'project_ids' => json_encode([$this->project->id])
@@ -79,6 +79,46 @@ class UpdateStudentProjectControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
+    public function testControllerReturns403ForProjectBelongingToAnotherStudent(): void
+    {
+        $anotherStudent = Student::factory()->create();
+        $anotherProject = Project::factory()->create();
+        $anotherStudent->resume()->create([
+            'project_ids' => json_encode([$anotherProject->id])
+        ]);
+
+        // Attempt to update another student's project
+        $response = $this->json('PUT', route('student.updateProject', ['studentId' => $this->student->id, 'projectId' => $anotherProject->id]), [
+            'project_url' => 'https://new-project-url.com'
+        ]);
+
+        $response->assertStatus(403);
+        $response->assertJson(['error' => 'Unauthorized']);
+    }
+
+    public function testControllerReturns404ForNonExistentStudent(): void
+    {        
+         //Mockering middleware
+         $ensureStudentMiddleware = Mockery::mock('App\Http\Middleware\EnsureStudentOwner[handle]');
+         $ensureStudentMiddleware->shouldReceive('handle')->once()
+             ->andReturnUsing(function ($request, \Closure $next) {
+                 return $next($request);
+             });
+         $this->app->instance('App\Http\Middleware\EnsureStudentOwner', $ensureStudentMiddleware);
+ 
+         //Mockering Policy
+         $userPolicyMockery = Mockery::mock('App\Policies\UserPolicy');
+         $userPolicyMockery->shouldReceive('canAccessResource')->once()
+             ->andReturn(Response::allow());
+         $this->app->instance('App\Policies\UserPolicy', $userPolicyMockery);
+        
+        $response = $this->json('PUT', route('student.updateProject', ['studentId' => self::INVALID_UUID, 'projectId' => $this->project->id]), [
+            'project_url' => 'https://new-project-url.com'
+        ]);
+
+        $response->assertStatus(404);
+        $response->assertJson(['message' => sprintf(StudentNotFoundException::MESSAGE, self::INVALID_UUID)]);
+    }
     public function testControllerCanBeInstantiated(): void
     {
         $updateStudentProjectService = Mockery::mock(UpdateStudentProjectService::class);

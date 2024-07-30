@@ -21,6 +21,8 @@ class UpdateStudentProjectServiceTest extends TestCase
     protected Project $project;
     protected Company $company;
 
+    protected const INVALID_UUID = 'invalid_uuid';
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -67,7 +69,7 @@ class UpdateStudentProjectServiceTest extends TestCase
         $service = new UpdateStudentProjectService();
 
         $this->expectException(StudentNotFoundException::class);
-        $service->execute('false_student_id', $this->project->id, []);
+        $service->execute(self::INVALID_UUID, $this->project->id, []);
     }
 
     public function testCanThrowProjectNotFoundException(): void
@@ -75,7 +77,7 @@ class UpdateStudentProjectServiceTest extends TestCase
         $service = new UpdateStudentProjectService();
 
         $this->expectException(ProjectNotFoundException::class);
-        $service->execute($this->student->id, 'false_project_id', []);
+        $service->execute($this->student->id, self::INVALID_UUID, []);
     }
 }
 
