@@ -6,9 +6,9 @@ import ProjectsCard from '../studentDetailCards/projectsSection/ProjectsCard'
 import CollaborationCard from '../studentDetailCards/collaborationSection/CollaborationCard'
 import BootcampCard from '../studentDetailCards/bootcampSection/BootcampCard'
 import ModalityCard from '../studentDetailCards/modalitySection/modalityCard'
-import StudentDataCard from '../studentDetailCards/studentDataSection/StudentDataCard'
+import StudentDataCard from '../studentDetailCards/studentDetailSection/StudentDetailCard'
 import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
-import OtherEducationCard from '../studentDetailCards/otherEducationSection/OtherEducationCard'
+import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
 
 type TStudentDetailsContent = {
   handleIsPanelOpen: () => void
@@ -42,7 +42,7 @@ const StudentDetailsContent: React.FC<TStudentDetailsContent> = ({
           <ProjectsCard />
           <CollaborationCard />
           <BootcampCard />
-          <OtherEducationCard />
+          <AdditionalTrainingCard />
           <LanguagesCard />
           <ModalityCard />
         </div>

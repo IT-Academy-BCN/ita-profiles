@@ -1,8 +1,8 @@
 import axios from "axios"
 
-export const FetchStudentsCollaboration = async (studentUUID: string | null) => {
+export const FetchStudentsCollaboration = async (studentId: string | null) => {
     try {
-        const response = await axios.get(`//localhost:8000/api/v1/students/${studentUUID}/collaborations`);
+        const response = await axios.get(`//localhost:8000/api/v1/student/${studentId}/resume/collaborations`);
         return response.data.collaborations;
     } catch (error) {
         throw new Error('Error fetching collaboration');

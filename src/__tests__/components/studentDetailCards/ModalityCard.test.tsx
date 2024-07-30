@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react'
 import { describe, test, expect } from 'vitest'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import ModalityCard from '../../components/studentDetailCards/modalitySection/modalityCard'
+import ModalityCard from '../../../components/studentDetailCards/modalitySection/modalityCard'
 import {
   SelectedStudentProvider,
   SelectedStudentIdContext,
-} from '../../context/StudentIdContext'
+} from '../../../context/StudentIdContext'
 
 describe('ModalityCard', () => {
   beforeEach(() => {
@@ -45,7 +45,7 @@ describe('ModalityCard component', () => {
   test('renders modalities correctly', async () => {
     mock
       .onGet(
-        `//localhost:8000/api/v1/modality/${studentUUID}`,
+        `//localhost:8000/api/v1/student/${studentUUID}/resume/modality/`,
       )
       .reply(200, modalityData)
 

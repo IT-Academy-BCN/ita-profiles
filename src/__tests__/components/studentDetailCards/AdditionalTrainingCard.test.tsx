@@ -1,17 +1,16 @@
 import '@testing-library/jest-dom'
 import { screen, render } from '@testing-library/react'
-import OtherEducationCard from '../../../../components/studentDetailCards/otherEducationSection/OtherEducationCard'
-import { SelectedStudentIdContext } from '../../../../context/StudentIdContext'
-import { configureMockAdapter } from '../../../setup'
+import AdditionalTrainingCard from '../../../components/studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
+import { SelectedStudentIdContext } from '../../../context/StudentIdContext'
+import { configureMockAdapter } from '../../setup'
 
 const mock = configureMockAdapter()
-const baseApi = ''
 const studentUUID = 'abc'
 const setStudentUUID = () => {}
 
-describe('OtherEducationCard', () => {
-  it('should render OtherEducationCard component correctly', () => {
-    const { container } = render(<OtherEducationCard />)
+describe('AdditionalTrainingCard', () => {
+  it('should render AdditionalTrainingCard component correctly', () => {
+    const { container } = render(<AdditionalTrainingCard />)
     expect(container).toBeInTheDocument()
   })
 
@@ -27,14 +26,12 @@ describe('OtherEducationCard', () => {
       },
     ]
     mock
-      .onGet(`${baseApi}//localhost:8000/api/v1/students/${studentUUID}/additionaltraining`)
+      .onGet(`//localhost:8000/api/v1/student/${studentUUID}/resume/additionaltraining`)
       .reply(200, additionalTraining)
 
     render(
-      <SelectedStudentIdContext.Provider
-        value={{ studentUUID, setStudentUUID }}
-      >
-        <OtherEducationCard />
+      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
+        <AdditionalTrainingCard />
       </SelectedStudentIdContext.Provider>,
     )
     expect(screen.getByText('Otra formación')).toBeInTheDocument()

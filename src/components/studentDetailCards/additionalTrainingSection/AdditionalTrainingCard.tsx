@@ -1,36 +1,29 @@
 import { useEffect, useState } from 'react'
 import { useStudentIdContext } from '../../../context/StudentIdContext'
 import { TAdditionalTraining } from '../../../interfaces/interfaces'
-import { getAdditionalTraining } from '../../../api/getAdditionalTraining'
+import { FetchAdditionalTraining } from '../../../api/FetchAdditionalTraining'
 
-const OtherEducationCard = () => {
+const AdditionalTrainingCard = () => {
   const { studentUUID } = useStudentIdContext()
-  const [additionalTraining, setAdditionalTraining] = useState<
-    TAdditionalTraining[] | null
-  >()
-  // const [isLoading, setIsLoading] = useState(true)
+  const [additionalTraining, setAdditionalTraining] = useState<TAdditionalTraining[] | null>()
+
   useEffect(() => {
     const getStudentTraining = async () => {
-      // setIsLoading(true)
       try {
-        const studentTraining = await getAdditionalTraining(studentUUID)
+        const studentTraining = await FetchAdditionalTraining(studentUUID)
         setAdditionalTraining(studentTraining)
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error)
-      } finally {
-        // setIsLoading(false)
       }
     }
     if (studentUUID) {
       getStudentTraining()
     }
   }, [studentUUID])
-  // if (isLoading) {
-  //   return <div>Wait for Additional Training data to load...</div>
-  // }
+
   return (
-    <div data-testid="OtherEducationCard">
+    <div data-testid="AdditionalTrainingCard">
       <h3 className="text-lg font-bold text-black-3">Otra formación</h3>
       <div className="flex flex-col pt-3">
         {additionalTraining?.map((training, index) => (
@@ -54,4 +47,4 @@ const OtherEducationCard = () => {
     </div>
   )
 }
-export default OtherEducationCard
+export default AdditionalTrainingCard
