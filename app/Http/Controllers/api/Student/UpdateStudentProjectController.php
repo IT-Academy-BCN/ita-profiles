@@ -26,8 +26,7 @@ class UpdateStudentProjectController extends Controller
     public function __invoke(UpdateStudentProjectRequest $request, $studentId, $projectId): JsonResponse
     {
         try {
-            $userProfile = $this->studentService->findUserByStudentID($studentId);
-            $this->authorize('canAccessResource', $userProfile);
+            $userProfile = $this->studentService->findUserByStudentID($studentId);        
 
             $data = $request->all();
             $this->updateStudentProjectService->execute($studentId, $projectId, $data);
