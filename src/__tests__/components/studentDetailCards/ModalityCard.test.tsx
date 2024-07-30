@@ -45,7 +45,7 @@ describe('ModalityCard component', () => {
   test('renders modalities correctly', async () => {
     mock
       .onGet(
-        `//localhost:8000/api/v1/modality/${studentUUID}`,
+        `//localhost:8000/api/v1/student/${studentUUID}/resume/modality/`,
       )
       .reply(200, modalityData)
 
