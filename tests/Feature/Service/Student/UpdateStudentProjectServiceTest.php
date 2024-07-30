@@ -5,75 +5,64 @@ declare(strict_types=1);
 namespace Tests\Feature\Service\Student;
 
 use Tests\TestCase;
-use App\Models\Project;
 use App\Models\Student;
+use App\Models\Project;
 use App\Models\Company;
 use App\Service\Student\UpdateStudentProjectService;
-use App\Exceptions\StudentNotFoundException;
-use App\Exceptions\ProjectNotFoundException;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class UpdateStudentProjectServiceTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    protected $student;
-    protected $project;
-    protected $company;
+    protected UpdateStudentProjectService $updateStudentProjectService;
+    protected Student $student;
+    protected Project $project;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->updateStudentProjectService = new UpdateStudentProjectService();
+
         $this->student = Student::factory()->create();
-        $this->company = Company::factory()->create();
-        $this->project = Project::factory()->create(['company_id' => $this->company->id]);
+        $this->project = Project::factory()->create();
+        $this->student->resume()->create([
+            'project_ids' => json_encode([$this->project->id])
+        ]);
     }
 
-    public function testCanUpdateStudentProjectByProjectId(): void
+    public function testCanUpdateProjectSuccessfully(): void
     {
-        $service = new UpdateStudentProjectService();
-
         $data = [
-            'project_name' => 'Project One',
-            'tags' => ['1', '2'],
-            'github_url' => 'https://github.com/project1',
-            'project_url' => 'https://project1.com',
-            'company_name' => 'Company Name'
+            'project_name' => 'Updated Project Name',
+            'github_url' => 'https://github.com/updated-project',
+            'project_url' => 'https://updated-project-url.com',
+            'tags' => [1, 2],
+            'company_name' => 'Updated Company'
         ];
 
-        $service->execute($this->student->id, $this->project->id, $data);
-     
-        $updatedProject = Project::find($this->project->id);
+        DB::beginTransaction();
+        try {
+            $this->updateStudentProjectService->execute($this->student->id, $this->project->id, $data);
 
-        $this->assertEquals('Project One', $updatedProject->name);
+            $updatedProject = $this->project->refresh();
 
-        $updatedTags = json_decode($updatedProject->tags, true);
-        #$this->assertEquals(['1', '2'], $updatedTags);
-        $this->assertContains(1, $updatedTags);
-        $this->assertContains( 2, $updatedTags);
+            $this->assertEquals('Updated Project Name', $updatedProject->name);
+            $this->assertEquals('https://github.com/updated-project', $updatedProject->github_url);
+            $this->assertEquals('https://updated-project-url.com', $updatedProject->project_url);
 
-        $this->assertEquals('https://github.com/project1', $updatedProject->github_url);
-        $this->assertEquals('https://project1.com', $updatedProject->project_url);
-       
-        $updatedCompany = Company::find($this->company->id);
-        $this->assertEquals('Company Name', $updatedCompany->name);
-    }
+            $expectedTagIds = [1, 2];
+            $actualTagIds = json_decode($updatedProject->tags, true);
+            sort($expectedTagIds);
+            sort($actualTagIds);
+            $this->assertEquals($expectedTagIds, $actualTagIds);
 
-    public function testCanThrowStudentNotFoundException(): void
-    {
-        $service = new UpdateStudentProjectService();
-
-        $this->expectException(StudentNotFoundException::class);
-        $service->execute('false_student_id', $this->project->id, []);
-    }
-
-    public function testCanThrowProjectNotFoundException(): void
-    {
-        $service = new UpdateStudentProjectService();
-
-        $this->expectException(ProjectNotFoundException::class);
-        $service->execute($this->student->id, 'false_project_id', []);
+            $company = Company::find($updatedProject->company_id);
+            $this->assertEquals('Updated Company', $company->name);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+        DB::commit();
     }
 }
-

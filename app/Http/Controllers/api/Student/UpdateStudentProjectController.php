@@ -4,32 +4,51 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Student;
 
+use Exception;
 use App\Http\Controllers\Controller;
 use App\Service\Student\UpdateStudentProjectService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\UpdateStudentProjectRequest;
-use App\Exceptions\StudentNotFoundException;
-use App\Exceptions\ProjectNotFoundException;
+use App\Service\Student\StudentService;
 
 class UpdateStudentProjectController extends Controller
 {
-    private $studentUpdateProjectService;
+    private UpdateStudentProjectService $updateStudentProjectService;
 
-    public function __construct(UpdateStudentProjectService $studentUpdateProjectService)
+    private StudentService $studentService;
+
+    public function __construct(UpdateStudentProjectService $updateStudentProjectService, StudentService $studentService)
     {
-        $this->studentUpdateProjectService = $studentUpdateProjectService;
+        $this->updateStudentProjectService = $updateStudentProjectService;
+        $this->studentService = $studentService;
     }
 
     public function __invoke(UpdateStudentProjectRequest $request, $studentId, $projectId): JsonResponse
-    {       
+    {
         try {
-            $data = $request->all();            
-            $this->studentUpdateProjectService->execute($studentId, $projectId, $data);
+            $userProfile = $this->studentService->findUserByStudentID($studentId);        
+
+            $data = $request->all();
+            $this->updateStudentProjectService->execute($studentId, $projectId, $data);
             return response()->json(['message' => 'El projecte s\'ha actualitzat'], 200);
-        } catch (StudentNotFoundException | ProjectNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode());
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
+        } catch (Exception $e) {
+            // Catch any exceptions and return a consistent JSON response
+            $status = $e->getCode() ?: 500;
+            $message = $e->getMessage();
+
+            // Handle specific exceptions for clearer messages
+            if ($message === 'Student not found') {
+                return response()->json(['message' => 'Student not found'], 404);
+            }
+            if ($message === 'Project not found') {
+                return response()->json(['message' => 'Project not found'], 404);
+            }
+            if ($message === 'No tienes permiso para actualizar este proyecto.') {
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
+
+            // Generic error message
+            return response()->json(['message' => $message], $status);
         }
     }
 }
