@@ -6,6 +6,8 @@ const SwitchTheme: React.FC = () => {
   const themeContext = useContext<ThemeContextT>(ThemeContext);
   const { theme, setTheme } = themeContext;
 
+  // esto es una prueba de commit 
+  
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
