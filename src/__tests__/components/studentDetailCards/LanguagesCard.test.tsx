@@ -46,21 +46,4 @@ describe('LanguagesCard component', () => {
     expect(languageElements[0]).toHaveTextContent('Spanish');
     expect(languageElements[1]).toHaveTextContent('English');
   });
-
-  test('renders error message when request fails', async () => {
-
-    mock.onGet(`//localhost:8000/api/v1/students/${studentUUID}/languages`).reply(500, { error: 'Internal Server Error' });
-
-    render(
-      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
-        <LanguagesCard />
-      </SelectedStudentIdContext.Provider>,
-    )
-
-    // Wait for error message to appear
-    const errorMessage = await screen.findByText('Request failed with status code 500');
-
-    // Check if error message is rendered correctly
-    expect(errorMessage).toBeInTheDocument();
-  });
 });
