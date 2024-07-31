@@ -27,7 +27,7 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-      <ToastContainer />
+      {process.env.NODE_ENV && <ToastContainer />}
     </SmallScreenProvider>
   );
 };
