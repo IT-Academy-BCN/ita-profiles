@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Resume;
 
 use App\Models\Resume;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ResumeService
@@ -18,16 +17,5 @@ class ResumeService
         }
 
         return $resume;
-    }
-
-    // No longer needed if the method getSingleGitHubUsername is used.
-    public function getAll(): Collection
-    {
-        $resumes = Resume::all();
-        if ($resumes->isEmpty()) {
-            throw new ModelNotFoundException('No resumes found.');
-        }
-
-        return $resumes;
     }
 }
