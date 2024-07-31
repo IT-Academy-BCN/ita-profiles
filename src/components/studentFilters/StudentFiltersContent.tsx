@@ -93,7 +93,7 @@ const StudentFiltersProvider: React.FC = () => {
                 <label
                   key={tag}
                   className="label cursor-pointer justify-start p-1"
-                  htmlFor="developmentInput"
+                  htmlFor={`developmentInput-${tag}`}
                 >
                   <input
                     type="checkbox"
