@@ -43,11 +43,11 @@ class GetGitHubUsernamesService
     {
         // Find first resume with the given github username at the end of the github_url
         $resume = Resume::where('github_url', 'regexp', "https://github.com/$gitHubUsername$")->first();
-    
+
         if (is_null($resume)) {
             throw new \Exception("Resume not found for GitHub username: " . $gitHubUsername);
         }
-    
+
         return $resume;
     }
 }

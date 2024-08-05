@@ -45,12 +45,12 @@ class FetchGithubRepos extends Command
         $repos = $this->fetchRepositories($gitHubUsername);
 
         // Then we save the repositories as Projects in the database.
-        $projects = $this->saveRepositoriesAsProjects($repos);
+        //$projects = $this->saveRepositoriesAsProjects($repos);
 
         // Finally we save the new Projects id in the array of project_ids in the resume table.
-        $this->saveProjectsInResume($projects, $gitHubUsername);
+        //$this->saveProjectsInResume($projects, $gitHubUsername);
 
-        echo "Ejecutado a: " . date('Y-m-d H:i:s') . "Z\n";
+        Log::info("Ejecutado a: " . date('Y-m-d H:i:s') . "Z");
     }
 
     protected function fetchRepositories(string $gitHubUsername): array
@@ -68,7 +68,7 @@ class FetchGithubRepos extends Command
         /* THIS IS AN ALTERNATIVE, IS WHAT I FOUND IN DOCUMENTATION... I DON'T KNOW IF IT'S BETTER OR NOT (DISCUSS PROS AND CONS).
         DIFFERENCE:
         Guzzle (new Client()): More control and flexibility, but requires more setup and boilerplate code.
-        Laravel HTTP Client (Http::get()): Easier and more convenient to use within Laravel applications, 
+        Laravel HTTP Client (Http::get()): Easier and more convenient to use within Laravel applications,
         with a fluent interface and built-in integration. */
         $response = Http::withHeaders([
             'Accept' => 'application/vnd.github.v3+json',
@@ -119,7 +119,7 @@ class FetchGithubRepos extends Command
         $resume = $this->getGitHubUsernamesService->getResumeByGitHubUsername($gitHubUsername);
         // Get the current project_ids array
         $projectIds = json_decode($resume->project_ids, true) ?? [];
-        
+
         foreach ($projects as $project) {
             // Add the new project ID to the array
             $projectIds[] = $project['id'];
