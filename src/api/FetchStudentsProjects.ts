@@ -1,8 +1,8 @@
 import axios from "axios"
 
-export const FetchStudentsProjects = async (studentUUID: string | null) => {
+export const FetchStudentsProjects = async (studentId: string | null) => {
     try {
-        const response = await axios.get(`//localhost:8000/api/v1/students/${studentUUID}/projects`);
+        const response = await axios.get(`//localhost:8000/api/v1/student/${studentId}/resume/projects`);
         return response.data.projects;
     } catch (error) {
         throw new Error("Error fetching projects");

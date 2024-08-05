@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import axios from "axios";
 import MockAdapter from 'axios-mock-adapter';
-import StudentDataCard from '../../../components/studentDetailCards/studentDataSection/StudentDataCard';
+import StudentDataCard from '../../../components/studentDetailCards/studentDetailSection/StudentDetailCard';
 import { SelectedStudentIdContext} from '../../../context/StudentIdContext';
 
 describe('StudentDataCard', () => {
@@ -38,21 +38,14 @@ describe('StudentDataCard', () => {
   test('renders student data correctly', async () => {
     mock
       .onGet(
-        `//localhost:8000/api/v1/student/${studentUUID}/detail/for-home`,
+        `//localhost:8000/api/v1/student/${studentUUID}/resume/detail`,
       )
       .reply(200, aboutData);
 
     render(
-      <SelectedStudentIdContext.Provider
-        value={{ studentUUID, setStudentUUID }}
-      >
+      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
         <StudentDataCard />
       </SelectedStudentIdContext.Provider>,
     );
-
-
-
   });
-
-
 });

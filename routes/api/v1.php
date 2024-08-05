@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\api\Student\{
     DeleteStudentResumeLanguageController,
+    GetStudentImageController,
     StudentAdditionalTrainingListController,
     StudentModalityController,
     StudentBootcampDetailController,
@@ -18,6 +19,7 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentProjectController,
     UpdateStudentSkillsController,
     UpdateStudentProfileController,
+    UpdateStudentImageController,
     AddStudentLanguageController
 };
 
@@ -53,10 +55,13 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
-    Route::put('projects/{projectId}', UpdateStudentProjectController::class)->name('student.updateproject');
+    Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
+    Route::put('projects/{projectId}', UpdateStudentProjectController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.updateProject');
+    //Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api')->name('student.skills');
     Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
-    Route::post('languages', AddStudentLanguageController::class)->name('student.addLanguage');  
+    Route::post('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
+    Route::post('languages', AddStudentLanguageController::class)->name('student.addLanguage');
     Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
     Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });
@@ -81,4 +86,3 @@ Route::get('/development/list', DevelopmentListController::class)->name('develop
 // Specialization List Endpoint
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 // ! OLD ROUTES BLOCK
-

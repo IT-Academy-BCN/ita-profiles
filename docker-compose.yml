@@ -33,8 +33,10 @@ services:
             - redis
         volumes:
             - ./:/var/www/html
+            - ./entrypoint.sh:/root/entrypoint.sh
         networks:
             - app-network
+        command: ["/root/entrypoint.sh"]
 
     node:
         container_name: node
@@ -65,6 +67,7 @@ services:
             - MYSQL_PASSWORD=password
         volumes:
             - mysql-data:/var/lib/mysql
+            - ./mysql/healthcheck.sh:/root/healthcheck-mysql.sh
         networks:
             - app-network
 

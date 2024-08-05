@@ -1,10 +1,9 @@
 import axios from 'axios'
 
-const baseApi = ''
-export const getAdditionalTraining = async (studentUUID: string | null) => {
+export const FetchAdditionalTraining = async (studentId: string | null) => {
   try {
     const response = await axios.get(
-      `${baseApi}//localhost:8000/api/v1/students/${studentUUID}/additionaltraining`,
+      `//localhost:8000/api/v1/student/${studentId}/resume/additionaltraining`,
     )
     return response.data.additional_trainings
   } catch (err) {

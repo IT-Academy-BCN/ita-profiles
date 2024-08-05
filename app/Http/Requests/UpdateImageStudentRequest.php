@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateStudentProjectRequest extends FormRequest
+class UpdateImageStudentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,9 @@ class UpdateStudentProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_name' => 'string|nullable',
-            'company_name' => 'string|nullable',
-            'tags' => 'array|nullable',
-            'tags.*' => 'integer|exists:tags,id',
-            'github_url' => 'string|url|max:60|nullable',
-            'project_url' => 'string|url|max:60|nullable',
+            'photo' => 'required|image|mimes:jpg,jpeg,png,bmp,svg,webp|max:2048'
         ];
+
     }
 
     /**

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { fireEvent, render } from '@testing-library/react'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import MockAdapter from 'axios-mock-adapter'
-import { FetchStudentsListHome } from '../../../api/FetchStudentsList'
+import { FetchStudentsList } from '../../../api/FetchStudentsList'
 import {
   StudentFiltersProvider,
   StudentFiltersContext,
@@ -12,7 +12,7 @@ import StudentFiltersContent from '../../../components/studentFilters/StudentFil
 
 const mockAxios = new MockAdapter(axios)
 
-describe('FetchStudentsListHome function', () => {
+describe('FetchStudentsList function', () => {
   afterEach(() => {
     mockAxios.reset()
   })
@@ -21,7 +21,7 @@ describe('FetchStudentsListHome function', () => {
     const selectedRoles = ['role1', 'role2']
 
     const expectedUrl =
-      '//localhost:8000/api/v1/student/list/for-home?specialization=role1,role2'
+      '//localhost:8000/api/v1/student/resume/list?specialization=role1,role2'
 
     const mockData = [
       { id: 1, name: 'Student 1' },
@@ -30,7 +30,7 @@ describe('FetchStudentsListHome function', () => {
 
     mockAxios.onGet(expectedUrl).reply(200, mockData)
 
-    const result = await FetchStudentsListHome(selectedRoles)
+    const result = await FetchStudentsList(selectedRoles)
 
     expect(result).toEqual(mockData)
   })
@@ -39,11 +39,11 @@ describe('FetchStudentsListHome function', () => {
     const selectedRoles: string[] = []
 
     const expectedUrl =
-      '//localhost:8000/api/v1/student/list/for-home'
+      '//localhost:8000/api/v1/student/resume/list'
 
     mockAxios.onGet(expectedUrl).reply(500)
 
-    await expect(FetchStudentsListHome(selectedRoles)).rejects.toThrow()
+    await expect(FetchStudentsList(selectedRoles)).rejects.toThrow()
   })
 })
 

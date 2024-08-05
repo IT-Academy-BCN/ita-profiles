@@ -26,7 +26,7 @@ describe("StudentDetailsContent", () => {
     expect(screen.queryByTestId("ProjectsCard")).toBeVisible();
     expect(screen.queryByTestId("CollaborationCard")).toBeVisible();
     expect(screen.queryByTestId("BootcampCard")).toBeVisible();
-    expect(screen.queryByTestId("OtherEducationCard")).toBeVisible();
+    expect(screen.queryByTestId("AdditionalTrainingCard")).toBeVisible();
     expect(screen.queryByTestId("LanguagesCard")).toBeVisible();
     expect(screen.queryByTestId("ModalityCard")).toBeVisible();
   });

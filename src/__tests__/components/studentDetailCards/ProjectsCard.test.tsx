@@ -5,7 +5,6 @@ import MockAdapter from 'axios-mock-adapter';
 import ProjectsCard from '../../../components/studentDetailCards/projectsSection/ProjectsCard';
 import { SelectedStudentIdContext, SelectedStudentProvider } from '../../../context/StudentIdContext';
 
-
 describe('ProjectsCard', () => {
   beforeEach(() => {
     render(
@@ -44,14 +43,12 @@ describe('ProjectsCard component', () => {
   test('renders projects correctly', async () => {
     mock
       .onGet(
-        `//localhost:8000/api/v1/students/${studentUUID}/projects`,
+        `//localhost:8000/api/v1/student/${studentUUID}/resume/projects`,
       )
       .reply(200, projectsData)
 
     render(
-      <SelectedStudentIdContext.Provider
-        value={{ studentUUID, setStudentUUID }}
-      >
+      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
         <ProjectsCard />
       </SelectedStudentIdContext.Provider>,
     )
