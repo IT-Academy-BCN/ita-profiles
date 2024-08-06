@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\Project;
 
 use App\Models\Project;
-use App\Models\Company;
 use App\Service\Resume\ResumeService;
 use GuzzleHttp\Client;
 
@@ -59,13 +58,10 @@ class GitHubProjectsService
         $projects = [];
 
         foreach ($repos as $repo) {
-            // Need a Company because this DB is like it is.
-            $company = Company::firstOrFail();
-
             // Desactivar temporalmente los eventos para evitar disparar el evento retrieved
-            Project::withoutEvents(function () use ($repo, $company, &$project) {
+            Project::withoutEvents(function () use ($repo, &$project) {
                 $project = Project::updateOrCreate(
-                    // Criterio de búsqueda: el ID del repositorio de Github podría ser útil para esto. Si el ID existe, actualiza y si no crea un nuevo Project. 
+                    // Criterio de búsqueda: el ID del repo de Github. Si el ID existe, actualiza y si no crea un nuevo Project. 
                     // Pero para que esto funcione tuve que crear la columna en la tabla Project.
                     ['github_repository_id' => $repo['id']],
                     [
@@ -74,8 +70,6 @@ class GitHubProjectsService
                         'github_url' => $repo['html_url'],
                         // Los lenguajes serán otro problema porque se almacenan como un array de IDs, por lo que deberíamos coincidir el ID del lenguaje...
                         //'tags' => $repo['languages_url'],
-                        // Obligatorio... Se debería poder poner null en el campo y establecer un valor "Freelance" en caso de ser null.
-                        'company_id' => $company->id,
                         'github_repository_id' => $repo['id'],
                     ]
                 );
