@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Project;
 
 use App\Models\Project;
+use App\Models\Tag;
 use App\Service\Resume\ResumeService;
 use GuzzleHttp\Client;
 
@@ -53,13 +54,33 @@ class GitHubProjectsService
         return json_decode($response->getBody()->getContents(), true);
     }
 
+    public function fetchRepoLanguages(string $languagesUrl): array
+    {
+        $client = new Client;
+
+        $response = $client->get($languagesUrl, [
+            'headers' => [
+                'Accept' => 'application/vnd.github.v3+json',
+                'User-Agent' => 'LaravelApp'
+            ],
+            'synchronous' => true
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
     public function saveRepositoriesAsProjects(array $repos): array
     {
         $projects = [];
+        // Cache tags to avoid repeated database queries
+        $allTags = Tag::all()->keyBy('tag_name');
 
         foreach ($repos as $repo) {
+            $languages = $this->fetchRepoLanguages($repo['languages_url']);
+            $languageNames = array_keys($languages);
+            $tagIds = $allTags->only($languageNames)->pluck('id')->toArray();
             // Desactivar temporalmente los eventos para evitar disparar el evento retrieved
-            Project::withoutEvents(function () use ($repo, &$project) {
+            Project::withoutEvents(function () use ($repo, &$project, $tagIds) {
                 $project = Project::updateOrCreate(
                     // Criterio de búsqueda: el ID del repo de Github. Si el ID existe, actualiza y si no crea un nuevo Project. 
                     // Pero para que esto funcione tuve que crear la columna en la tabla Project.
@@ -68,8 +89,7 @@ class GitHubProjectsService
                         'user' => $repo['owner']['login'],
                         'name' => $repo['name'],
                         'github_url' => $repo['html_url'],
-                        // Los lenguajes serán otro problema porque se almacenan como un array de IDs, por lo que deberíamos coincidir el ID del lenguaje...
-                        //'tags' => $repo['languages_url'],
+                        'tags' => json_encode($tagIds),
                         'github_repository_id' => $repo['id'],
                     ]
                 );
