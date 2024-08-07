@@ -6,10 +6,10 @@ namespace App\Service\Student;
 
 use App\Models\Student;
 use App\Models\Project;
+use App\Models\Resume;
 use App\Models\Tag;
 use App\Exceptions\StudentNotFoundException;
 use App\Exceptions\ResumeNotFoundException;
-use App\Models\Resume;
 use Illuminate\Database\Eloquent\Collection;
 
 class StudentProjectsDetailService
@@ -35,7 +35,7 @@ class StudentProjectsDetailService
         return $student;
     }
 
-    public function getResume(Student $student): Resume
+    private function getResume(Student $student): Resume
     {
         $resume = $student->resume;
 
@@ -46,7 +46,7 @@ class StudentProjectsDetailService
         return $resume;
     }
 
-    private function getProjects(object $resume): Collection
+    private function getProjects(Resume $resume): Collection
     {
         $projectIds = json_decode($resume->project_ids);
         $projects = Project::findMany($projectIds);
@@ -61,7 +61,7 @@ class StudentProjectsDetailService
                 return [
                     'uuid' => $project->id,
                     'project_name' => $project->name,
-                    'company_name' => $project->company->name,
+                    'company_name' => $project->company ? $project->company->name : 'Freelance',
                     'project_url' => $project->project_url,
                     'tags' => $tags->map(function ($tag) {
                         return [

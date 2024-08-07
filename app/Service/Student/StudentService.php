@@ -9,7 +9,6 @@ use App\Models\Student;
 
 use App\Exceptions\UserNotFoundException;
 use App\Exceptions\StudentNotFoundException;
-use Illuminate\Database\Eloquent\Collection;
 
 class StudentService
 {
@@ -25,10 +24,5 @@ class StudentService
 			throw new UserNotFoundException($student->user_id);
 		}
 		return $user;
-	}
-
-	public function getAllStudents(): Collection
-	{
-		return Student::all();
 	}
 }

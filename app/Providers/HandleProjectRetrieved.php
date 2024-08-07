@@ -2,66 +2,51 @@
 
 namespace App\Providers;
 
-use App\Service\Project\FetchGitHubReposService;
 use App\Service\Project\ProcessedProjectsService;
-use App\Service\Resume\GetGitHubUsernamesService;
-use Illuminate\Support\Facades\Artisan;
+use App\Service\Project\GitHubProjectsService;
+use App\Service\Resume\ResumeService;
 use Illuminate\Support\Facades\Log;
 
 class HandleProjectRetrieved
 {
-    private GetGitHubUsernamesService $getGitHubUsernamesService;
+    private GitHubProjectsService $gitHubProjectsService;
     private ProcessedProjectsService $processedProjectsService;
-    private FetchGitHubReposService $fetchGitHubReposService;
+    private ResumeService $resumeService;
 
-    /**
-     * Create the event listener.
-     */
-    public function __construct(
-        GetGitHubUsernamesService $getGitHubUsernamesService,
-        ProcessedProjectsService $processedProjectsService,
-        FetchGitHubReposService  $fetchGitHubReposService
-    ) {
-        $this->getGitHubUsernamesService = $getGitHubUsernamesService;
+    // Create the event listener.
+    public function __construct(GitHubProjectsService $gitHubProjectsService, ProcessedProjectsService $processedProjectsService, ResumeService $resumeService)
+    {
+        $this->gitHubProjectsService = $gitHubProjectsService;
         $this->processedProjectsService = $processedProjectsService;
-        $this->fetchGitHubReposService = $fetchGitHubReposService;
+        $this->resumeService = $resumeService;
     }
 
-    /**
-     * Handle the event.
-     */
+    // Handle the event.
     public function handle(ProjectRetrieved $event): void
     {
-         $project = $event->project;
+        $project = $event->project;
 
-         try {
-             $gitHubUsername = $this->getGitHubUsernamesService->getSingleGitHubUsername($project);
-             //Log::info("GitHub username retrieved: " . $gitHubUsername);
-             //Log::info("GitHub username retrieved: " . $project->id);
-         } catch (\Exception $e) {
-             Log::error("Error retrieving GitHub username: " . $e->getMessage());
-             return;
-         }
+        try {
+            $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($project);
+        } catch (\Exception $e) {
+            Log::error("Error retrieving GitHub username: " . $e->getMessage());
+            return;
+        }
 
-         if (!$this->processedProjectsService->hasProcessedProject($gitHubUsername)) {
-             // Marca el GitHub username como procesado
-             $this->processedProjectsService->addProcessedProject($gitHubUsername);
+        if (!$this->processedProjectsService->hasProcessedProject($gitHubUsername)) {
+            // Set the current GitHub username as processed
+            $this->processedProjectsService->addProcessedProject($gitHubUsername);
 
-             Log::info("Sending project model for GitHub username: " . $gitHubUsername);
-
-             try {
-                 // Log the type and value of gitHubUsername
-                 //Log::info("GitHub username before Artisan call: " . $gitHubUsername);
-
-                 // Ejecuta el comando de consola si es necesario
-//                 Artisan::call('app:fetch-github-repos', [
-//                     'gitHubUsername' => $gitHubUsername,
-//                 ]);
-                 $this->fetchGitHubReposService->fetchGitHubRepos($gitHubUsername);
-                 //Log::info("Artisan command executed successfully.");
-             } catch (\Exception $e) {
-                 //Log::error("Error executing Artisan command: " . $e->getMessage());
-             }
-         }
+            try {
+                $repos = $this->gitHubProjectsService->fetchGitHubRepos($gitHubUsername);
+                Log::info("GitHub Repos fetched for: " . $gitHubUsername);
+                $projects = $this->gitHubProjectsService->saveRepositoriesAsProjects($repos);
+                Log::info("Projects saved for: " . $gitHubUsername);
+                $this->resumeService->saveProjectsInResume($projects, $gitHubUsername);
+                Log::info("Projects saved in Resume for: " . $gitHubUsername);
+            } catch (\Exception $e) {
+                Log::error("Error executing Logic: " . $e->getMessage());
+            }
+        }
     }
 }
