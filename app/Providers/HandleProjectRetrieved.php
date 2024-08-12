@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Service\Project\ProcessedProjectsService;
 use App\Service\Project\GitHubProjectsService;
 use App\Service\Resume\ResumeService;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 class HandleProjectRetrieved
@@ -26,9 +28,21 @@ class HandleProjectRetrieved
     {
         $project = $event->project;
 
+        if (!$project->updated_at instanceof Carbon) {
+            Log::warning("The 'updated_at' field is not a Carbon instance for project ID: {$project->id}");
+            return;
+        }
+
+        // We don't want to process the project if updated_at is less than 1 hour ago
+        $minutesBetweenUpdates = 60;
+        if ($project->updated_at->diffInMinutes(now()) < $minutesBetweenUpdates) {
+            Log::info("Project ID: {$project->id} skipped because it was updated less than {$minutesBetweenUpdates} minutes ago.");
+            return;
+        }
+
         try {
             $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($project);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Error retrieving GitHub username: " . $e->getMessage());
             return;
         }
@@ -44,7 +58,7 @@ class HandleProjectRetrieved
                 Log::info("Projects saved for: " . $gitHubUsername);
                 $this->resumeService->saveProjectsInResume($projects, $gitHubUsername);
                 Log::info("Projects saved in Resume for: " . $gitHubUsername);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 Log::error("Error executing Logic: " . $e->getMessage());
             }
         }
