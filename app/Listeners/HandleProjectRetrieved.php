@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace App\Listeners;
 
-use App\Service\Project\ProcessedProjectsService;
+use App\Events\ProjectRetrieved;
 use App\Service\Project\GitHubProjectsService;
+use App\Service\Project\ProcessedProjectsService;
 use App\Service\Resume\ResumeService;
 use Carbon\Carbon;
 use Exception;
