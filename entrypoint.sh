@@ -11,16 +11,7 @@ cp .env.docker .env
 
 php artisan optimize
 php artisan clear-compiled
-#Wait untill MYSQL Connection is ready:
-#Fresh or not fresh...
-until php artisan migrate:fresh --seed
-do
-  echo "Waiting for database connection..."
-  # wait for 5 seconds before check again
-  sleep 10
-done
-#php artisan migrate:fresh --seed
-
+php artisan migrate:fresh --seed
 php artisan l5-swagger:generate
 php artisan key:generate
 php artisan passport:install --force --no-interaction
@@ -30,5 +21,5 @@ php artisan cache:clear
 chmod 777 -R storage
 
 # Ejecuta el comando recibido como argumento del entrypoint
-#exec "$@"
-php-fpm
+exec "$@"
+
