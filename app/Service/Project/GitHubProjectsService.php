@@ -82,7 +82,7 @@ class GitHubProjectsService
             // Desactivar temporalmente los eventos para evitar disparar el evento retrieved
             Project::withoutEvents(function () use ($repo, &$project, $tagIds) {
                 $project = Project::updateOrCreate(
-                    // Criterio de búsqueda: el ID del repo de Github. Si el ID existe, actualiza y si no crea un nuevo Project. 
+                    // Criterio de búsqueda: el ID del repo de Github. Si el ID existe, actualiza y si no crea un nuevo Project.
                     // Pero para que esto funcione tuve que crear la columna en la tabla Project.
                     ['github_repository_id' => $repo['id']],
                     [
