@@ -17,7 +17,6 @@ return new class () extends Migration {
             $table->json('tags')->default(new Expression('(JSON_ARRAY())'));
             $table->string('github_url', 255)->default('');
             $table->string('project_url', 255)->default('');
-            $table->timestamps();
         });
     }
     public function down(): void
