@@ -8,14 +8,22 @@ use App\Models\Project;
 use App\Models\Tag;
 use App\Service\Resume\ResumeService;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class GitHubProjectsService
 {
     private $resumeService;
+    protected $githubToken;
 
     public function __construct(ResumeService $resumeService)
     {
         $this->resumeService = $resumeService;
+        $this->githubToken = config('github.token');
+
+        if (is_null($this->githubToken)) {
+            Log::error("GitHub token not found");
+            throw new \Exception("GitHub token not found");
+        }
     }
 
     // We have two possibilities here:
@@ -46,7 +54,8 @@ class GitHubProjectsService
         $response = $client->get("https://api.github.com/users/{$gitHubUsername}/repos", [
             'headers' => [
                 'Accept' => 'application/vnd.github.v3+json',
-                'User-Agent' => 'LaravelApp'
+                'User-Agent' => 'LaravelApp',
+                'Authorization' => "Bearer {$this->githubToken}"
             ],
             'synchronous' => true
         ]);
@@ -61,7 +70,8 @@ class GitHubProjectsService
         $response = $client->get($languagesUrl, [
             'headers' => [
                 'Accept' => 'application/vnd.github.v3+json',
-                'User-Agent' => 'LaravelApp'
+                'User-Agent' => 'LaravelApp',
+                'Authorization' => "Bearer {$this->githubToken}"
             ],
             'synchronous' => true
         ]);
