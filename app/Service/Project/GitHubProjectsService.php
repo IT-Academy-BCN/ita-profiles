@@ -83,12 +83,12 @@ class GitHubProjectsService
     {
         $projects = [];
         // Cache tags to avoid repeated database queries
-        $allTags = Tag::all()->keyBy('tag_name');
+        $allTags = Tag::all();
 
         foreach ($repos as $repo) {
             $languages = $this->fetchRepoLanguages($repo['languages_url']);
             $languageNames = array_keys($languages);
-            $tagIds = $allTags->only($languageNames)->pluck('id')->toArray();
+            $tagIds = $allTags->whereIn('tag_name', $languageNames)->pluck('id')->toArray();
             // Desactivar temporalmente los eventos para evitar disparar el evento retrieved
             Project::withoutEvents(function () use ($repo, &$project, $tagIds) {
                 $project = Project::updateOrCreate(
