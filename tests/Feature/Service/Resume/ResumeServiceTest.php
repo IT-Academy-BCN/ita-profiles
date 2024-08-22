@@ -16,6 +16,9 @@ class ResumeServiceTest extends TestCase
     use DatabaseTransactions;
     private $resumeService;
     private $project;
+    private $project2;
+    private $project3;
+    private $resume;
 
     public function setUp(): void
     {
@@ -23,39 +26,36 @@ class ResumeServiceTest extends TestCase
         $this->resumeService = new ResumeService();
         // For some reason, if I don't delete the resumes here, the test fails because finds other Resumes...
         Resume::query()->delete();
-
-        // Create the project once and reuse it in all tests
+        // Create the projects once and reuse them for all tests
         $this->project = Project::factory()->create();
+        $this->project2 = Project::factory()->create();
+        $this->project3 = Project::factory()->create();
+        $this->resume = Resume::factory()->create([
+            'github_url' => 'https://github.com/user1',
+            'project_ids' => json_encode([$this->project->id]),
+        ]);
     }
 
     public function testItGetsResumeByProjectId()
     {
-        $resume = Resume::factory()->create([
-            'project_ids' => json_encode([$this->project->id]),
-        ]);
-
         $foundResume = $this->resumeService->getResumeByProjectId($this->project->id);
 
-        $this->assertEquals($resume->id, $foundResume->id);
+        $this->assertEquals($this->resume->id, $foundResume->id);
     }
 
     public function testItThrowsExceptionWhenNoResumeIsFoundByProjectId()
     {
         $this->expectException(ModelNotFoundException::class);
+        $this->expectExceptionMessage('Resume not found.');
 
         $this->resumeService->getResumeByProjectId('non-existing-id');
     }
 
     public function testItGetsResumeByGitHubUsername()
     {
-        $resume = Resume::factory()->create([
-            'github_url' => 'https://github.com/user1',
-            'project_ids' => json_encode([$this->project->id]),
-        ]);
-
         $foundResume = $this->resumeService->getResumeByGitHubUsername('user1');
 
-        $this->assertEquals($resume->id, $foundResume->id);
+        $this->assertEquals($this->resume->id, $foundResume->id);
     }
 
     public function testItThrowsExceptionWhenResumeIsNull()
@@ -64,5 +64,34 @@ class ResumeServiceTest extends TestCase
         $this->expectExceptionMessage("Resume not found for GitHub username: user2");
 
         $this->resumeService->getResumeByGitHubUsername('user2');
+    }
+
+    public function testSaveProjectsInResumeSuccessfully()
+    {
+        // Define new projects to be added
+        $projectsToAdd = [$this->project2, $this->project3];
+
+        // Call the method to save projects in resume
+        $this->resumeService->saveProjectsInResume($projectsToAdd, 'user1');
+
+        // Fetch the updated resume
+        $updatedResume = Resume::find($this->resume->id);
+
+        // Check if the projects were added
+        $projectIds = json_decode($updatedResume->project_ids, true);
+        $this->assertContains($this->project->id, $projectIds);
+        $this->assertContains($this->project2->id, $projectIds);
+        $this->assertContains($this->project3->id, $projectIds);
+    }
+
+    public function testSaveProjectsInResumeThrowsExceptionWhenResumeNotFound()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Error saving projects in Resume: Error retrieving resume by GitHub username: Resume not found for GitHub username: user2");
+        // Define new projects to be added
+        $projectsToAdd = [$this->project2, $this->project3];
+
+        // Call the method with a non-existing GitHub username
+        $this->resumeService->saveProjectsInResume($projectsToAdd, 'user2');
     }
 }
