@@ -28,6 +28,7 @@ class GitHubProjectsServiceTest extends TestCase
         $this->project = Project::factory()->create();
     }
 
+    // TESTS FOR FUNCTION: getGitHubUsername
     public function testItReturnsGitHubUsername()
     {
         $resume = Resume::factory()->create([
@@ -65,5 +66,36 @@ class GitHubProjectsServiceTest extends TestCase
         ]);
 
         $this->gitHubProjectsService->getGitHubUsername($this->project);
+    }
+
+    public function testItReturnsGitHubUsernameWithTrailingSlash()
+    {
+        $resume = Resume::factory()->create([
+            'github_url' => 'https://github.com/user1/',
+            'project_ids' => json_encode([$this->project->id]),
+        ]);
+
+        $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($this->project);
+
+        $this->assertEquals('user1', $gitHubUsername);
+        $this->assertIsString($gitHubUsername);
+    }
+
+    // TESTS FOR FUNCTION: fetchGitHubRepos
+    public function testFetchGitHubReposSuccess()
+    {
+        // Not sure how to test.
+    }
+
+    // TESTS FOR FUNCTION: fetchRepoLanguages
+    public function testFetchRepoLanguagesSuccess()
+    {
+        // Not sure how to test.
+    }
+
+    // TESTS FOR FUNCTION: saveRepositoriesAsProjects
+    public function testSaveRepositoriesAsProjectsSuccess()
+    {
+        // Not sure how to test.
     }
 }
