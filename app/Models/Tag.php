@@ -20,7 +20,7 @@ class Tag extends Model
      */
     public function students()
     {
-        return $this->belongsToMany(Student::class, 'student_has_tags', 'tag_id', 'student_id');
+        return $this->belongsToMany(related: Student::class, table: 'tag_student', foreignPivotKey: 'tag_id', relatedPivotKey: 'student_id');
     }
 
     public function toArray(): array {

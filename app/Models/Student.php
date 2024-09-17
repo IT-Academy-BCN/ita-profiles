@@ -33,4 +33,9 @@ class Student extends Model
     {
         return $this->hasOne(Resume::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(related: Tag::class, table: 'tag_student', foreignPivotKey: 'student_id', relatedPivotKey: 'tag_id');
+    }
 }
