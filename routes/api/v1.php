@@ -46,8 +46,10 @@ Route::get('/specialization/list', SpecializationListController::class)->name('r
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 
 Route::get('student/resume/list', StudentListController::class)->name('students.list');
+
+Route::get('student/{student}/detail', StudentDetailController::class)->name('student.details');
 Route::prefix('student/{studentId}/resume')->group(function () {
-    Route::get('detail', StudentDetailController::class)->name('student.details');
+    // Route::get('detail', StudentDetailController::class)->name('student.details');
     Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
     Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
