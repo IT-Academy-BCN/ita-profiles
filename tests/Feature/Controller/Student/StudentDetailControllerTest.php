@@ -56,8 +56,13 @@ class StudentDetailControllerTest extends TestCase
             'id' => $this->student->id,
             'fullname' => ucfirst($this->student->name) . ' ' . ucfirst($this->student->surname),
             'photo' => $this->student->photo,
-            'status' => ucfirst($this->student->status),
-            'tags' => $this->student->tags->pluck('tag_name')->toArray(),
+            'status' => $this->student->status->value,
+            'tags' => $this->student->tags->map(function ($tag) {
+                return [
+                    'id' => $tag->id,
+                    'tag_name' => $tag->tag_name,
+                ];
+            })->toArray(),
             'resume' => [
                 'subtitle' => $this->resume->subtitle,
                 'social_media' => [

@@ -21,7 +21,7 @@ class StudentResource extends JsonResource
             'id' => $this->id,
             'fullname' => Str::ucfirst($this->name) . " " . Str::ucfirst($this->surname),
             'photo' => $this->photo,
-            'status' => Str::ucfirst($this->status),
+            'status' => $this->status,
             'tags' => TagResource::collection($this->tags),
             'resume' => new ResumeResource($this->resume),
         ];
