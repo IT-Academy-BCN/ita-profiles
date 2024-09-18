@@ -6,7 +6,6 @@ namespace App\Service\Student;
 
 use App\Models\Project;
 use App\Models\Student;
-use App\Models\Company;
 use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -63,18 +62,12 @@ class UpdateStudentProjectService
         $project->name = $data['project_name'] ?? $project->name;
         $project->github_url = $data['github_url'] ?? $project->github_url;
         $project->project_url = $data['project_url'] ?? $project->project_url;
+        $project->company_name = $data['company_name'] ?? $project->company_name;
 
         if (isset($data['tags'])) {
             $tagsArray = $data['tags'];
             $tagIds = Tag::whereIn('id', $tagsArray)->pluck('id')->toArray();
             $project->tags = json_encode($tagIds);
-        }
-        if (isset($data['company_name'])) {
-            $company = Company::find($project->company_id);
-            if ($company) {
-                $company->name = $data['company_name'];
-                $company->save();
-            }
         }
 
         $project->update();

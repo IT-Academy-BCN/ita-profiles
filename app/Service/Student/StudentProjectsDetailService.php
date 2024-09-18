@@ -60,7 +60,7 @@ class StudentProjectsDetailService
                 return [
                     'uuid' => $project->id,
                     'project_name' => $project->name,
-                    'company_name' => $project->company->name,
+                    'company_name' => $project->company_name,
                     'project_url' => $project->project_url,
                     'tags' => $tags->map(function ($tag) {
                         return [

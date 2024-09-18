@@ -7,7 +7,6 @@ namespace Tests\Feature\Service\Student;
 use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Project;
-use App\Models\Company;
 use App\Service\Student\UpdateStudentProjectService;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -50,6 +49,7 @@ class UpdateStudentProjectServiceTest extends TestCase
             $this->assertEquals('Updated Project Name', $updatedProject->name);
             $this->assertEquals('https://github.com/updated-project', $updatedProject->github_url);
             $this->assertEquals('https://updated-project-url.com', $updatedProject->project_url);
+            $this->assertEquals('Updated Company', $updatedProject->company_name);
 
             $expectedTagIds = [1, 2];
             $actualTagIds = json_decode($updatedProject->tags, true);
@@ -57,8 +57,6 @@ class UpdateStudentProjectServiceTest extends TestCase
             sort($actualTagIds);
             $this->assertEquals($expectedTagIds, $actualTagIds);
 
-            $company = Company::find($updatedProject->company_id);
-            $this->assertEquals('Updated Company', $company->name);
         } catch (Exception $e) {
             DB::rollBack();
             throw $e;

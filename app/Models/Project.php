@@ -15,9 +15,4 @@ class Project extends Model
 
     protected $guarded = ['id'];
     public $timestamps = false;
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
 }

@@ -14,16 +14,10 @@ class ProjectsForResume
     {
         $projectIds = [];
 
-        $company = Company::first();
-        if (!$company) {
-            
-            $company = Company::create(['name' => 'Test Company']);
-        }
-
         foreach ($projectNames as $projectName) {
             $project = new Project();
             $project->name = $projectName;
-            $project->company_id = $company->id; 
+            $project->company_name = fake()->company; 
             $project->save();
 
             $projectIds[] = $project->id;

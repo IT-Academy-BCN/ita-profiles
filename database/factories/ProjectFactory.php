@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Company;
 use App\Models\Tag;
 
 class ProjectFactory extends Factory
@@ -21,8 +20,8 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->company,
-            'company_id' => Company::inRandomOrder()->first()->id ?? Company::factory()->create()->id,
+            'name' => $this->faker->sentence(2),
+            'company_name' => $this->faker->company,
             'tags' => json_encode($this->getTagObjects()),
             'github_url' => $this->faker->parse('https://github.com/') . $this->faker->userName,
             'project_url' => $this->faker->url,
