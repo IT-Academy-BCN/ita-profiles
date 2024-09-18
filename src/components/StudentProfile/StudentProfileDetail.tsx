@@ -15,11 +15,8 @@ const StudentProfileDetail: React.FC = () => {
   const { isMobile }: TSmallScreenContext = useContext(SmallScreenContext)
 
   return (
-    <div
-      className={`flex flex-col gap-6 items-center xl:items-end pt-12 ${isMobile ? 'modal-box rounded-2xl pb-10 pl-6' : 'h-full w-full'}
-        }`}
-    >
-      <div className={`overflow-auto ${isMobile ? 'w-full' : 'w-3/4'}`}>
+    <div className={`flex flex-col gap-6 items-center xl:items-end pt-8 ${isMobile ? 'modal-box rounded-2xl pb-10 pl-6' : 'h-full w-3/4'}`}>
+      <div className={`w-full overflow-y-auto pr-8 ${isMobile ? 'w-full' : 'w-3/4'}`}>
         <div className="flex flex-col gap-9">
           <h3 className="hidden text-2xl font-bold md:block">Mi Perfil</h3>
           <StudentDataCard />

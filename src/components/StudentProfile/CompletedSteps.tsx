@@ -23,7 +23,7 @@ const calculateCompletionPercentage = (items: { text: string; checked: boolean }
 const completionPercentage = calculateCompletionPercentage(items);
 
 const CompletedSteps = () => (
-  <div className="flex flex-col gap-4 w-3/4">
+  <div className="flex flex-col gap-4 xl:w-2/4 w-3/4">
     <ProfileProgress completion={completionPercentage} />
     <ul className="list-none p-0">
       {items.map((item) => (
