@@ -5,6 +5,7 @@ namespace Tests\Feature\Controller\Student;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Models\Student;
+use App\Models\Tag;
 
 class StudentDetailControllerTest extends TestCase
 {
@@ -19,6 +20,8 @@ class StudentDetailControllerTest extends TestCase
 
         $this->student = Student::factory()->create();
         $this->resume = $this->student->resume()->create();
+        $tags = Tag::factory()->count(3)->create();
+        $this->resume->tags()->sync($tags->pluck('id'));
     }
 
     public function testStudentDetailsAreFound(): void
