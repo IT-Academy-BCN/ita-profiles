@@ -21,7 +21,7 @@ return new class extends Migration
   {
     Schema::create('admins', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger('user_id');
+      $table->uuid('user_id');
       $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
       $table->timestamps();
     });
