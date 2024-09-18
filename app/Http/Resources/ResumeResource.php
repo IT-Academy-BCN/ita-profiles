@@ -21,8 +21,7 @@ class ResumeResource extends JsonResource
                 'github' => $this->github_url,
                 'linkedin' => $this->linkedin_url,
             ],
-            'about' => $this->about,
-            'tags' => TagResource::collection($this->tags),
+            'about' => $this->about
         ];
     }
 }

@@ -18,10 +18,10 @@ class StudentDetailControllerTest extends TestCase
     {
         parent::setUp();
 
+        $tags = Tag::all()->take(3);
         $this->student = Student::factory()->create();
+        $this->student->tags()->attach($tags->pluck('id'));
         $this->resume = $this->student->resume()->create();
-        $tags = Tag::factory()->count(3)->create();
-        $this->resume->tags()->sync($tags->pluck('id'));
     }
 
     public function testStudentDetailsAreFound(): void
@@ -57,6 +57,7 @@ class StudentDetailControllerTest extends TestCase
             'fullname' => ucfirst($this->student->name) . ' ' . ucfirst($this->student->surname),
             'photo' => $this->student->photo,
             'status' => ucfirst($this->student->status),
+            'tags' => $this->student->tags->pluck('tag_name')->toArray(),
             'resume' => [
                 'subtitle' => $this->resume->subtitle,
                 'social_media' => [
@@ -64,10 +65,6 @@ class StudentDetailControllerTest extends TestCase
                     'linkedin' => $this->resume->linkedin_url,
                 ],
                 'about' => $this->resume->about,
-                'tags' => $this->resume->tags->map(fn($tag) => [
-                    'id' => $tag->id,
-                    'tag_name' => $tag->tag_name,
-                ])->toArray(),
             ]
         ]);
     }
