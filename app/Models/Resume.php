@@ -40,4 +40,9 @@ class Resume extends Model
         // See: https://laravel.com/docs/10.x/eloquent-relationships#many-to-many
         return $this->belongsToMany(Project::class);
     }
+
+    public function additionalTrainings(): BelongsToMany
+    {
+        return $this->belongsToMany(AdditionalTraining::class, 'additional_training_resume', 'resume_id', 'additional_training_id');
+    }
 }
