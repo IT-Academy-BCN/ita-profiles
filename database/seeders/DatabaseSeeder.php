@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ResumeLanguageSeeder::class);
         $this->call(BootcampSeeder::class);
         $this->call(ResumeBootcampSeeder::class);
+        $this->call(TagStudentSeeder::class);
     }
 }
