@@ -42,4 +42,30 @@ class StudentDetailControllerTest extends TestCase
 
         $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $nonExistentStudentId]);
     }
+
+    public function testStudentDetailsJsonFormat(): void
+    {
+        $response = $this->get(route('student.details', ['student' => $this->student]));
+
+        $response->assertStatus(200);
+
+        $response->assertJson([
+            'id' => $this->student->id,
+            'fullname' => ucfirst($this->student->name) . ' ' . ucfirst($this->student->surname),
+            'photo' => $this->student->photo,
+            'status' => ucfirst($this->student->status),
+            'resume' => [
+                'subtitle' => $this->resume->subtitle,
+                'social_media' => [
+                    'github' => $this->resume->github_url,
+                    'linkedin' => $this->resume->linkedin_url,
+                ],
+                'about' => $this->resume->about,
+                'tags' => $this->resume->tags->map(fn($tag) => [
+                    'id' => $tag->id,
+                    'tag_name' => $tag->tag_name,
+                ])->toArray(),
+            ]
+        ]);
+    }
 }
