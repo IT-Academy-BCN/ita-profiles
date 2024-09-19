@@ -16,6 +16,13 @@ export type TchildrenProps = {
   children: ReactNode
 }
 
+// === UserResponseData ===
+export type UserResponseData = {
+  userID: string;
+  token: string;
+  studentID: string
+}
+
 // === SmallScreenContext ===
 export type TSmallScreenContext = {
   isMobile: boolean

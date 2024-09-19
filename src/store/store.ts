@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import ShowUserReducer from './reducers/getUserDetail/apiGetUserDetail'
+import ShowStudenDetails from './reducers/getStudenDetail/studenDetail'
 
 export const store = configureStore({
   reducer: {
     ShowUserReducer,
+    ShowStudenDetails
   },
 })
 
