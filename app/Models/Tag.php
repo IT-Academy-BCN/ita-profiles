@@ -23,6 +23,11 @@ class Tag extends Model
         return $this->belongsToMany(related: Student::class, table: 'tag_student', foreignPivotKey: 'tag_id', relatedPivotKey: 'student_id');
     }
 
+    public function projects()
+    {
+        return $this->belongsToMany(related: Project::class, table: 'tag_project', foreignPivotKey: 'tag_id', relatedPivotKey: 'project_id');
+    }
+
     public function toArray(): array {
         $result = parent::toArray();
         $result['id'] = $this->getAttributeValue('id');

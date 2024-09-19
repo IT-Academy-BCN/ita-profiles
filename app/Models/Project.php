@@ -15,4 +15,10 @@ class Project extends Model
 
     protected $guarded = ['id'];
     public $timestamps = false;
+
+
+    public function tags()
+    {
+        return $this->belongsToMany(related: Tag::class, table: 'tag_project', foreignPivotKey: 'project_id', relatedPivotKey: 'tag_id');
+    }
 }
