@@ -37,8 +37,12 @@ class AuthController extends Controller
 
 			$this->userService->storeUserIDAndTokenRedis($user->id, $token);
 
+			$student = $user->student;
+			$student_id = $student ? $student->id : null;
+
 			$userDTO = new UserDTO(
-				(string)$user->id,
+				$user->id,
+				$student_id,
 				$token
 			);
 

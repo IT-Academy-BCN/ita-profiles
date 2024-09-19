@@ -16,6 +16,11 @@ class SigninTest extends TestCase
 	{
 		$response = $this->postJson('/api/v1/signin', $data);
 		$response->assertStatus(200);
+		$response->assertJsonStructure([
+            'userID',
+            'studentID',
+			'token'
+        ]);
 	}
 
 	static function signinProvider(): array

@@ -13,6 +13,7 @@ return new class () extends Migration {
         Schema::table('student_has_tags', function (Blueprint $table) {
             $table->dropConstrainedForeignId('student_id');
         });
+
         Schema::drop('students');
 
         Schema::create('students', function (Blueprint $table) {
@@ -25,6 +26,12 @@ return new class () extends Migration {
                 ['Active', 'Inactive', 'In a Bootcamp', 'In a Job']
             )->default('Active');
             $table->timestamps();
+        });
+
+        Schema::table('student_has_tags', function (Blueprint $table) {
+            $table->uuid('student_id');
+            $table->foreign('student_id')->references('id')->on('students')
+                ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
@@ -51,6 +58,7 @@ return new class () extends Migration {
             $table->string('github')->nullable();
             $table->timestamps();
         });
+
         Schema::table('student_has_tags', function (Blueprint $table) {
             $table->foreignId('student_id')->constrained()->onDelete('restrict')->onUpdate('cascade');
         });
