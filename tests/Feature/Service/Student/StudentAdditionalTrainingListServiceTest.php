@@ -34,9 +34,7 @@ class StudentAdditionalTrainingListServiceTest extends TestCase
 
         $additionalTraining2 = AdditionalTraining::factory()->create();
 
-        $resume->additional_trainings_ids = json_encode([$additionalTraining1->id, $additionalTraining2->id]);
-
-        $resume->save();
+        $resume->additionalTrainings()->attach([$additionalTraining1->id, $additionalTraining2->id]);
 
         $result = $this->studentAdditionalTrainingService->execute($student->id);
 

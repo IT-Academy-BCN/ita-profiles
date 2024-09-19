@@ -24,9 +24,7 @@ class StudentAdditionalTrainingListControllerTest extends TestCase
 
         $additionalTraining2 = AdditionalTraining::factory()->create();
 
-        $resume->additional_trainings_ids = json_encode([$additionalTraining1->id, $additionalTraining2->id]);
-
-        $resume->save();
+        $resume->additionalTrainings()->attach([$additionalTraining1->id, $additionalTraining2->id]);
 
         $response = $this->getJson(route('student.additionaltraining', ['studentId' => $student->id]));
 
