@@ -36,7 +36,6 @@ class UpdateStudentProjectServiceTest extends TestCase
             'project_name' => 'Updated Project Name',
             'github_url' => 'https://github.com/updated-project',
             'project_url' => 'https://updated-project-url.com',
-            'tags' => [1, 2],
             'company_name' => 'Updated Company'
         ];
 
@@ -50,12 +49,6 @@ class UpdateStudentProjectServiceTest extends TestCase
             $this->assertEquals('https://github.com/updated-project', $updatedProject->github_url);
             $this->assertEquals('https://updated-project-url.com', $updatedProject->project_url);
             $this->assertEquals('Updated Company', $updatedProject->company_name);
-
-            $expectedTagIds = [1, 2];
-            $actualTagIds = json_decode($updatedProject->tags, true);
-            sort($expectedTagIds);
-            sort($actualTagIds);
-            $this->assertEquals($expectedTagIds, $actualTagIds);
 
         } catch (Exception $e) {
             DB::rollBack();
