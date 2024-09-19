@@ -55,7 +55,7 @@ class ResumeFactory extends Factory
             'development' => $development,
             'about' => $this->faker->paragraph,
             'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),
-            'additional_trainings_ids' => json_encode($additionalTrainingsIds),
+           // 'additional_trainings_ids' => json_encode($additionalTrainingsIds),
             'collaborations_ids' => json_encode($collaborationsIds),
         ];
     }
@@ -69,9 +69,14 @@ class ResumeFactory extends Factory
      */
     private function getRandomUniqueElements(array $array, int $count): array
     {
+        if (empty($array) || $count <= 0) {  // Returns empty array if $array is empty or $count is less than or equal to 0
+            return [];
+        }
+        
         $keys = array_rand($array, $count); // Randomly select keys from the array
         if (!is_array($keys)) {
-            $keys = [$keys]; // Ensure $keys is an array
+            $keys = [$keys];
+             // Ensure $keys is an array
         }
         $randomElements = array_intersect_key($array, array_flip($keys)); // Fetch elements from $array based on $keys
         return array_values($randomElements); // Return values as indexed array
