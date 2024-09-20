@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignUuid('resume_id')->references('id')->on('resumes')->onDelete('cascade');
             $table->foreignUuid('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
