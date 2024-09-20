@@ -1,7 +1,5 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { Close } from '../../assets/svg'
-import { SmallScreenContext } from '../../context/SmallScreenContext'
-import type { TSmallScreenContext } from '../../interfaces/interfaces'
 // import ProjectsCard from '../studentDetailCards/projectsSection/ProjectsCard'
 // import CollaborationCard from '../studentDetailCards/collaborationSection/CollaborationCard'
 // import BootcampCard from '../studentDetailCards/bootcampSection/BootcampCard'
@@ -9,9 +7,7 @@ import type { TSmallScreenContext } from '../../interfaces/interfaces'
 import StudentDataCard from '../studentDetailCards/studentDetailSection/StudentDetailCard'
 // import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
 // import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
-import { useAppDispatch } from '../../hooks/ReduxHooks'
-import getStudenDetail from '../../store/reducers/getStudenDetail/thunks/studenDetailThunk'
-import { useStudentIdContext } from '../../context/StudentIdContext'
+import { useStudentDetailHook } from '../../hooks/useStudentDetailHook'
 
 type TStudentDetailsContent = {
   handleIsPanelOpen: () => void
@@ -20,16 +16,7 @@ type TStudentDetailsContent = {
 const StudentDetailsContent: React.FC<TStudentDetailsContent> = ({
   handleIsPanelOpen,
 }) => {
-  const { isMobile }: TSmallScreenContext = useContext(SmallScreenContext)
-  const { studentUUID } = useStudentIdContext()
-  const getStudentProfile = useAppDispatch();
-
-  useEffect(() => {
-    if (studentUUID) {
-      getStudentProfile(getStudenDetail(studentUUID))
-    }
-
-  }, [studentUUID, getStudentProfile])
+  const { isMobile } = useStudentDetailHook()
 
   return (
     <div

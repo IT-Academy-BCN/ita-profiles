@@ -1,6 +1,4 @@
-import React, { useContext, useEffect } from 'react'
-import { SmallScreenContext } from '../../context/SmallScreenContext'
-import type { TSmallScreenContext } from '../../interfaces/interfaces'
+import React from 'react'
 // import ProjectsCard from '../studentDetailCards/projectsSection/ProjectsCard'
 // import CollaborationCard from '../studentDetailCards/collaborationSection/CollaborationCard'
 // import BootcampCard from '../studentDetailCards/bootcampSection/BootcampCard'
@@ -8,18 +6,10 @@ import type { TSmallScreenContext } from '../../interfaces/interfaces'
 import StudentDataCard from '../studentDetailCards/studentDetailSection/StudentDetailCard'
 // import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
 // import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
-import { useAppDispatch } from '../../hooks/ReduxHooks'
-import getStudenDetail from '../../store/reducers/getStudenDetail/thunks/studenDetailThunk'
-
+import { useStudentDetailHook } from '../../hooks/useStudentDetailHook'
 
 const StudentProfileDetail: React.FC = () => {
-
-  const { isMobile }: TSmallScreenContext = useContext(SmallScreenContext)
-  const getStudentProfile = useAppDispatch();
-  const studenSUID = localStorage.getItem("studenSUID")
-  useEffect(() => {
-    getStudentProfile(getStudenDetail(studenSUID))
-  }, [studenSUID, getStudentProfile])
+  const { isMobile } = useStudentDetailHook('user')
 
   return (
     <div
