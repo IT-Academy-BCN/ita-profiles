@@ -2,10 +2,11 @@ import { useRef } from 'react'
 import { Github, Dots, ArrowLeft, ArrowRight } from '../../../assets/svg'
 import { ArrowRightProjects } from '../../../assets/img'
 import { useAppSelector } from '../../../hooks/ReduxHooks'
+import LoadingSpiner from '../../atoms/LoadingSpiner'
 
 const ProjectsCard: React.FC = () => {
   const { studenProjects } = useAppSelector(state => state.ShowStudenReducer)
-  const { projectsData } = studenProjects
+  const { projectsData, isLoadindProjects, isErrorProjects } = studenProjects
 
   const carouselRef = useRef<HTMLDivElement>(null)
   const scrollLeft = () => {
@@ -42,7 +43,9 @@ const ProjectsCard: React.FC = () => {
           </button>
         </div>
       </div>
-      <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
+      {!isLoadindProjects && <LoadingSpiner />}
+      {!isErrorProjects && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
+      {!isLoadindProjects && <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
         {projectsData.map((project) => (
           <div
             key={project.uuid}
@@ -85,7 +88,7 @@ const ProjectsCard: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
     </div>
   )
 }

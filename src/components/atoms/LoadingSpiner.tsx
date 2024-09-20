@@ -1,7 +1,12 @@
-const LoadingSpiner: React.FC = () => (
-    <h2 className='text-xl flex items-center gap-4'>
-        Cargando <span className="loading loading-spinner text-[#C20087]" />
-    </h2>
+const LoadingSpiner: React.FC<{
+    textContent?: string,
+    type?: string,
+    textColor?: string,
+    spinerColor?: string
+}> = ({ textContent = 'Cargando', type = "loading-spinner", textColor = "currentColor", spinerColor = "#C20087" }) => (
+    <small className='text-md flex items-center gap-4'>
+        <i style={{ color: `${textColor}` }}>{textContent}</i> <span className={`loading ${type} text-[${spinerColor}]`} />
+    </small>
 )
 
 export default LoadingSpiner
