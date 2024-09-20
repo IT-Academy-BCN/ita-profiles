@@ -15,4 +15,9 @@ class Project extends Model
 
     protected $guarded = ['id'];
     public $timestamps = false;
+
+    public function resumes()
+    {
+        return $this->belongsToMany(Resume::class, 'resume_project', 'project_id', 'resume_id');
+    }
 }

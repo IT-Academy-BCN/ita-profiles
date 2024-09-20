@@ -32,4 +32,9 @@ class Resume extends Model
     {
         return $this->belongsToMany(Bootcamp::class)->withPivot('end_date');
     }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'resume_project', 'resume_id', 'project_id');
+    }
 }
