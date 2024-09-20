@@ -1,30 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Github, Dots, ArrowLeft, ArrowRight } from '../../../assets/svg'
 import { ArrowRightProjects } from '../../../assets/img'
-import { TProject } from '../../../interfaces/interfaces'
-import { FetchStudentsProjects } from '../../../api/FetchStudentsProjects'
-import { useStudentIdContext } from '../../../context/StudentIdContext'
+import { useAppSelector } from '../../../hooks/ReduxHooks'
 
 const ProjectsCard: React.FC = () => {
-  const [projects, setProjects] = useState<TProject[]>([])
-  const { studentUUID } = useStudentIdContext()
-
-  useEffect(() => {
-    const getProjects = async () => {
-      try {
-        if (studentUUID) {
-          const studentProjects = await FetchStudentsProjects(studentUUID)
-          setProjects(studentProjects)
-        }
-      } catch (error) {
-        throw new Error('Failed to obtain projects')
-      }
-    }
-
-    if (studentUUID) {
-      getProjects()
-    }
-  }, [studentUUID])
+  const { studenProjects } = useAppSelector(state => state.ShowStudenReducer)
+  const { projectsData } = studenProjects
 
   const carouselRef = useRef<HTMLDivElement>(null)
   const scrollLeft = () => {
@@ -62,7 +43,7 @@ const ProjectsCard: React.FC = () => {
         </div>
       </div>
       <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
-        {projects.map((project) => (
+        {projectsData.map((project) => (
           <div
             key={project.uuid}
             className="flex flex-col gap-1 rounded-xl border border-gray-3 px-5 py-3.5 "

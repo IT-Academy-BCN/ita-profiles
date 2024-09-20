@@ -19,7 +19,7 @@ const studenProjects = createSlice({
             state.isErrorProjects = false
         })
         builder.addCase(getStudenProjects.fulfilled, (state, action) => {
-            state.projectsData = action.payload.projects
+            state.projectsData = action.payload
             state.isLoadindProjects = false
             state.isErrorProjects = false
         })
