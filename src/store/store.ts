@@ -1,11 +1,17 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import ShowUserReducer from './reducers/getUserDetail/apiGetUserDetail'
 import ShowStudenDetails from './reducers/getStudenDetail/studenDetail'
+import ShowStudenProjects from './reducers/getStudenProjects/studenProjects'
+
+const studen = combineReducers({
+  studenDetails: ShowStudenDetails,
+  studenProjects: ShowStudenProjects
+})
 
 export const store = configureStore({
   reducer: {
     ShowUserReducer,
-    ShowStudenDetails
+    ShowStudenReducer: studen
   },
 })
 

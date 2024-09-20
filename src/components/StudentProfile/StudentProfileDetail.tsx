@@ -1,11 +1,11 @@
 import React from 'react'
-// import ProjectsCard from '../studentDetailCards/projectsSection/ProjectsCard'
-// import CollaborationCard from '../studentDetailCards/collaborationSection/CollaborationCard'
-// import BootcampCard from '../studentDetailCards/bootcampSection/BootcampCard'
-// import ModalityCard from '../studentDetailCards/modalitySection/modalityCard'
+import ProjectsCard from '../studentDetailCards/projectsSection/ProjectsCard'
+import CollaborationCard from '../studentDetailCards/collaborationSection/CollaborationCard'
+import BootcampCard from '../studentDetailCards/bootcampSection/BootcampCard'
+import ModalityCard from '../studentDetailCards/modalitySection/modalityCard'
 import StudentDataCard from '../studentDetailCards/studentDetailSection/StudentDetailCard'
-// import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
-// import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
+import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
+import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
 import { useStudentDetailHook } from '../../hooks/useStudentDetailHook'
 
 const StudentProfileDetail: React.FC = () => {
@@ -20,7 +20,7 @@ const StudentProfileDetail: React.FC = () => {
         <div className="flex flex-col gap-9">
           <h3 className="hidden text-2xl font-bold md:block">Mi Perfil</h3>
           <StudentDataCard />
-          {/* <span className="h-0.5 w-full bg-gray-4-base" />
+          <span className="h-0.5 w-full bg-gray-4-base" />
           <ProjectsCard />
           <span className="h-0.5 w-full bg-gray-4-base" />
           <CollaborationCard />
@@ -31,7 +31,7 @@ const StudentProfileDetail: React.FC = () => {
           <span className="h-0.5 w-full bg-gray-4-base" />
           <LanguagesCard />
           <span className="h-0.5 w-full bg-gray-4-base" />
-          <ModalityCard /> */}
+          <ModalityCard />
         </div>
       </div>
     </div>

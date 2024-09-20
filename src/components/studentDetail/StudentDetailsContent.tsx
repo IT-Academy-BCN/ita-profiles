@@ -1,12 +1,12 @@
 import React from 'react'
 import { Close } from '../../assets/svg'
-// import ProjectsCard from '../studentDetailCards/projectsSection/ProjectsCard'
-// import CollaborationCard from '../studentDetailCards/collaborationSection/CollaborationCard'
-// import BootcampCard from '../studentDetailCards/bootcampSection/BootcampCard'
-// import ModalityCard from '../studentDetailCards/modalitySection/modalityCard'
+import ProjectsCard from '../studentDetailCards/projectsSection/ProjectsCard'
+import CollaborationCard from '../studentDetailCards/collaborationSection/CollaborationCard'
+import BootcampCard from '../studentDetailCards/bootcampSection/BootcampCard'
+import ModalityCard from '../studentDetailCards/modalitySection/modalityCard'
 import StudentDataCard from '../studentDetailCards/studentDetailSection/StudentDetailCard'
-// import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
-// import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
+import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
+import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
 import { useStudentDetailHook } from '../../hooks/useStudentDetailHook'
 
 type TStudentDetailsContent = {
@@ -37,12 +37,12 @@ const StudentDetailsContent: React.FC<TStudentDetailsContent> = ({
       <div className={`overflow-auto ${isMobile ? 'pr-4' : 'pr-12'}`}>
         <div className="flex flex-col gap-9">
           <StudentDataCard />
-          {/* <ProjectsCard />
+          <ProjectsCard />
           <CollaborationCard />
           <BootcampCard />
           <AdditionalTrainingCard />
           <LanguagesCard />
-          <ModalityCard /> */}
+          <ModalityCard />
         </div>
       </div>
     </div>
