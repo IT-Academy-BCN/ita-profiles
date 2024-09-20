@@ -17,8 +17,8 @@ const StudentDataCard: React.FC = () => {
 
   return (
     <div data-testid="StudentDataCard">
-      {isLoadindAboutData && <LoadingSpiner />}
-      {isErrorAboutData && <strong className='flex items-center gap-4 text-md'><i className='text-red-800'>Failed</i> <span className="loading loading-bars loading-xs" /></strong>}
+      {!isLoadindAboutData && <LoadingSpiner />}
+      {!isErrorAboutData && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
       {!isLoadindAboutData && <div key={aboutData.id} className="flex flex-col gap-4">
         <div className="flex gap-3">
           <img
