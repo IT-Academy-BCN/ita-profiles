@@ -43,8 +43,8 @@ const ProjectsCard: React.FC = () => {
           </button>
         </div>
       </div>
-      {!isLoadindProjects && <LoadingSpiner />}
-      {!isErrorProjects && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
+      {isLoadindProjects && <LoadingSpiner />}
+      {isErrorProjects && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
       {!isLoadindProjects && <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
         {projectsData.map((project) => (
           <div
