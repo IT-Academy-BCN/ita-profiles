@@ -1,4 +1,4 @@
-import StudentProfileDetail from './StudentProfileDetail';
+import StudentProfileContent from './StudentProfileContent';
 import MenuNavbar from '../menuNavbar/MenuNavbar';
 import UserNavbar from '../userNavBar/UserNavbar';
 import CompletedSteps from './CompletedSteps';
@@ -10,7 +10,7 @@ const StudentProfile: React.FC = () => (
       <UserNavbar />
       <div className="flex flex-col xl:h-[90vh] h-full xl:flex-row w-full justify-between items-center rounded-xl bg-white mt-3 pt-20 xl:px-28">
         <CompletedSteps />
-        <StudentProfileDetail />
+        <StudentProfileContent />
       </div>     
     </div>
   </div>
