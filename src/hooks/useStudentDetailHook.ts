@@ -5,22 +5,21 @@ import { useAppDispatch } from "./ReduxHooks";
 import { SmallScreenContext } from "../context/SmallScreenContext";
 import { useStudentIdContext } from "../context/StudentIdContext";
 
-const useStudentDetailHook = (rol?: string) => {
+const useStudentDetailHook = (rol?: string | null) => {
     const { isMobile }: TSmallScreenContext = useContext(SmallScreenContext)
     const { studentUUID } = useStudentIdContext()
     const studenSUID = localStorage.getItem("studenSUID")
     const getStudent = useAppDispatch();
 
     useEffect(() => {
-        if (rol === "user") {
+        if (typeof rol === "string" && rol === "user") {
             getStudent(getStudenDetail(studenSUID))
         } else if (!rol && studentUUID) {
             getStudent(getStudenDetail(studentUUID))
         }
 
-
-
     }, [getStudent, rol, studenSUID, studentUUID])
+
     return { isMobile }
 }
 
