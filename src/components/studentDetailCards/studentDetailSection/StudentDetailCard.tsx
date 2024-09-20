@@ -3,6 +3,7 @@ import { Github, Linkedin } from '../../../assets/svg'
 import { Stud1 as ProfilePicture } from '../../../assets/img'
 import { ITag } from '../../../interfaces/interfaces'
 import { useAppSelector } from '../../../hooks/ReduxHooks'
+import LoadingSpiner from '../../atoms/LoadingSpiner'
 
 const StudentDataCard: React.FC = () => {
   const [showFullDescription, setShowFullDescription] = useState(false)
@@ -10,15 +11,15 @@ const StudentDataCard: React.FC = () => {
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription)
   }
+
   const { aboutData, isErrorAboutData, isLoadindAboutData } = useAppSelector(state => state.ShowStudenDetails)
 
   return (
     <div data-testid="StudentDataCard">
-      {isLoadindAboutData && <h1>Loading ...</h1>}
-      {isErrorAboutData && <h1>failed ...</h1>}
+      {isLoadindAboutData && <LoadingSpiner />}
+      {isErrorAboutData && <h1>Failed ...</h1>}
       {!isLoadindAboutData && <div key={aboutData.id} className="flex flex-col gap-4">
         <div className="flex gap-3">
-
           <img
             src={ProfilePicture}
             alt="Profile"
