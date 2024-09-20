@@ -2,10 +2,12 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import ShowUserReducer from './reducers/getUserDetail/apiGetUserDetail'
 import ShowStudenDetails from './reducers/getStudenDetail/studenDetail'
 import ShowStudenProjects from './reducers/getStudenProjects/studenProjects'
+import ShowStudentCollaborations from './reducers/getStudentCollaborations/studentCollaborations'
 
 const studen = combineReducers({
   studenDetails: ShowStudenDetails,
-  studenProjects: ShowStudenProjects
+  studenProjects: ShowStudenProjects,
+  studentCollaborations: ShowStudentCollaborations
 })
 
 export const store = configureStore({
