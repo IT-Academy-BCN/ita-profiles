@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 import getStudenCollaborations from "./studentCollaborationsThunk";
+import { TCollaboration } from "../../../interfaces/interfaces";
 
 
 const studentCollaborations = createSlice({
@@ -8,7 +9,7 @@ const studentCollaborations = createSlice({
     initialState: {
         isLoadindCollaborations: false,
         isErrorCollaborations: false,
-        collaborationsData: {}
+        collaborationsData: <TCollaboration[]>[]
     },
     reducers: {},
     extraReducers: (builder) => {
