@@ -60,15 +60,6 @@ class ResumeFactory extends Factory
         ];
     }
 
-    public function configure(): self
-    {
-        return $this->afterCreating(function ($resume) {
-            // Assign projects th the pivot table
-            $projects = Project::factory()->count(2)->create();
-            $resume->projects()->attach($projects->pluck('id'));
-        });
-    }
-
     /**
      * Get random unique elements from an array.
      *
