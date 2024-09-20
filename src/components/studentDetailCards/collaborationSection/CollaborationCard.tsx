@@ -6,7 +6,7 @@ import LoadingSpiner from '../../atoms/LoadingSpiner'
 const CollaborationCard: React.FC = () => {
   const { studentCollaborations } = useAppSelector(state => state.ShowStudenReducer)
   const { collaborationsData, isLoadindCollaborations, isErrorCollaborations } = studentCollaborations
-  const [subidos, completados] = collaborationsData
+  const [resourcesCard, challengesCard] = collaborationsData
 
   return (
     <div className="flex flex-col gap-4" data-testid="CollaborationCard">
@@ -21,7 +21,7 @@ const CollaborationCard: React.FC = () => {
               {collaborationsData === undefined ? (
                 <p className="py-2 text-l text-white">-loading-</p>
               ) : (
-                <p className="text-2xl text-white">{subidos.collaboration_quantity}</p>
+                <p className="text-2xl text-white">{resourcesCard.collaboration_quantity}</p>
               )}
               <p className="text-md text-white">Recursos subidos</p>
               <p className="mt-2 text-sm font-light text-white">ita-wiki</p>
@@ -37,7 +37,7 @@ const CollaborationCard: React.FC = () => {
               {collaborationsData === undefined ? (
                 <p className="py-2 text-l text-white">-loading-</p>
               ) : (
-                <p className="text-2xl text-white">{completados.collaboration_quantity}</p>
+                <p className="text-2xl text-white">{challengesCard.collaboration_quantity}</p>
               )}
               <p className="text-md text-white">Retos completados</p>
               <p className="mt-2 text-sm font-light text-white">ita-challenges</p>
