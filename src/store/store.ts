@@ -3,11 +3,13 @@ import ShowUserReducer from './reducers/getUserDetail/apiGetUserDetail'
 import ShowStudenDetails from './reducers/getStudenDetail/studenDetail'
 import ShowStudenProjects from './reducers/getStudenProjects/studenProjects'
 import ShowStudentCollaborations from './reducers/getStudentCollaborations/studentCollaborations'
+import ShowStudentBootcamps from './reducers/getStudentBootcamp/studentBootcamp'
 
 const studen = combineReducers({
   studenDetails: ShowStudenDetails,
   studenProjects: ShowStudenProjects,
-  studentCollaborations: ShowStudentCollaborations
+  studentCollaborations: ShowStudentCollaborations,
+  studentBootcamps: ShowStudentBootcamps
 })
 
 export const store = configureStore({
