@@ -10,21 +10,21 @@ import getStudentCollaborations from "../store/reducers/getStudentCollaborations
 const useStudentDetailHook = (rol?: string | null) => {
     const { isMobile }: TSmallScreenContext = useContext(SmallScreenContext)
     const { studentUUID } = useStudentIdContext()
-    const studenSUID = localStorage.getItem("studenSUID")
+    const studentSUID = localStorage.getItem("studentSUID")
     const getStudent = useAppDispatch();
 
     useEffect(() => {
         if (typeof rol === "string" && rol === "user") {
-            getStudent(getStudenDetail(studenSUID))
-            getStudent(getStudenProjects(studenSUID))
-            getStudent(getStudentCollaborations(studenSUID))
+            getStudent(getStudenDetail(studentSUID))
+            getStudent(getStudenProjects(studentSUID))
+            getStudent(getStudentCollaborations(studentSUID))
         } else if (!rol && studentUUID) {
             getStudent(getStudenDetail(studentUUID))
             getStudent(getStudenProjects(studentUUID))
             getStudent(getStudentCollaborations(studentUUID))
         }
 
-    }, [getStudent, rol, studenSUID, studentUUID])
+    }, [getStudent, rol, studentSUID, studentUUID])
 
     return { isMobile }
 }
