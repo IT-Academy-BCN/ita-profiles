@@ -22,7 +22,7 @@ const aboutData: TAbout = {
 }
 
 const studenDetail = createSlice({
-    name: "studenDetailSlice",
+    name: "studentDetailSlice",
     initialState: {
         isLoadindAboutData: false,
         isErrorAboutData: false,

@@ -11,7 +11,7 @@ const bootcampData: TBootcamp[] = [];
 
 
 const studentBootcamp = createSlice({
-    name: "studenDetailSlice",
+    name: "studentDetailSlice",
     initialState: {
         isLoadindBootcamp: false,
         isErrorBootcamp: false,
