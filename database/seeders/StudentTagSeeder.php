@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Student;
 use App\Models\Tag;
 
-class TagStudentSeeder extends Seeder
+class StudentTagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,7 +26,7 @@ class TagStudentSeeder extends Seeder
      */
     private function getUniquePair(): array
     {
-        $existingPairs = DB::table('tag_student')->pluck('student_id', 'tag_id')->toArray();
+        $existingPairs = DB::table('student_tag')->pluck('student_id', 'tag_id')->toArray();
 
         do {
             $tagId = Tag::inRandomOrder()->value('id');
@@ -45,7 +45,7 @@ class TagStudentSeeder extends Seeder
      */
     private function insertTagStudent(int $tagId, string $studentId): void
     {
-        DB::table('tag_student')->insert([
+        DB::table('student_tag')->insert([
             'tag_id' => $tagId,
             'student_id' => $studentId,
         ]);

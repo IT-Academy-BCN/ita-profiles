@@ -19,6 +19,6 @@ class Project extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(related: Tag::class, table: 'tag_project', foreignPivotKey: 'project_id', relatedPivotKey: 'tag_id');
+        return $this->belongsToMany(related: Tag::class, foreignPivotKey: 'project_id', relatedPivotKey: 'tag_id');
     }
 }

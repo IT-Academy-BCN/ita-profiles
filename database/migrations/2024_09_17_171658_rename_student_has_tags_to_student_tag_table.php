@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::rename('student_has_tags', 'tag_student');
+        Schema::rename('student_has_tags', 'student_tag');
     }
 
     /**
@@ -19,6 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::rename('tag_student', 'student_has_tags');
+        Schema::rename('student_tag', 'student_has_tags');
     }
 };

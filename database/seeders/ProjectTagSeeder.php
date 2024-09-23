@@ -8,7 +8,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TagProjectSeeder extends Seeder
+class ProjectTagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,7 +27,7 @@ class TagProjectSeeder extends Seeder
      */
     private function getUniquePair(): array
     {
-        $existingPairs = DB::table('tag_project')->pluck('project_id', 'tag_id')->toArray();
+        $existingPairs = DB::table('project_tag')->pluck('project_id', 'tag_id')->toArray();
 
         do {
             $tagId = Tag::inRandomOrder()->value('id');
@@ -46,7 +46,7 @@ class TagProjectSeeder extends Seeder
      */
     private function insertTagProject(int $tagId, string $projectId): void
     {
-        DB::table('tag_project')->insert([
+        DB::table('project_tag')->insert([
             'tag_id' => $tagId,
             'project_id' => $projectId,
         ]);

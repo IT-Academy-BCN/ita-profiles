@@ -36,6 +36,6 @@ class Student extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(related: Tag::class, table: 'tag_student', foreignPivotKey: 'student_id', relatedPivotKey: 'tag_id');
+        return $this->belongsToMany(related: Tag::class, foreignPivotKey: 'student_id', relatedPivotKey: 'tag_id');
     }
 }
