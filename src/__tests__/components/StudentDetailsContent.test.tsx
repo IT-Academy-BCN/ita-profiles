@@ -1,11 +1,15 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { Provider } from "react-redux";
 import StudentDetailsContent from "../../components/studentDetail/StudentDetailsContent";
+import { store } from "../../store/store";
 
 describe("StudentDetailsContent", () => {
   test("renders the student details", () => {
     const paneOpenHandler = () => { paneOpenHandler.called = true }
     paneOpenHandler.called = false;
-    render(<StudentDetailsContent handleIsPanelOpen={paneOpenHandler} />);
+    render(<Provider store={store}>
+      <StudentDetailsContent handleIsPanelOpen={paneOpenHandler} />
+    </Provider>);
 
     const detailProfile = screen.getByText('Detalle Perfil');
     expect(detailProfile).toBeInTheDocument();
@@ -20,7 +24,7 @@ describe("StudentDetailsContent", () => {
   test("renders all the different cards", () => {
     const paneOpenHandler = () => { paneOpenHandler.called = true }
     paneOpenHandler.called = false;
-    render(<StudentDetailsContent handleIsPanelOpen={paneOpenHandler} />);
+    render(<Provider store={store}><StudentDetailsContent handleIsPanelOpen={paneOpenHandler} /></Provider>);
 
     expect(screen.queryByTestId("StudentDataCard")).toBeVisible();
     expect(screen.queryByTestId("ProjectsCard")).toBeVisible();
