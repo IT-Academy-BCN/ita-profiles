@@ -5,7 +5,7 @@ import { LoginProvider, useLogin } from '../../context/LoginContext';
 
 const LoginContextTestComponent: React.FC = () => {
   const { token, login, logout, isLoggedIn } = useLogin();
-  const studentID = localStorage.getItem('studentSUID');
+  const studentID = localStorage.getItem('studentID');
 
   return (
     <div>
@@ -31,7 +31,7 @@ describe('LoginProvider', () => {
     localStorage.clear();
   });
 
-  it('should login a user and set the token, studentSUID', () => {
+  it('should login a user and set the token, studentID', () => {
     render(
       <LoginProvider>
         <LoginContextTestComponent />
@@ -44,10 +44,10 @@ describe('LoginProvider', () => {
     expect(screen.getByText('Is Logged In: true')).toBeInTheDocument();
     expect(screen.getByText('Is Student ID: test-studentID')).toBeInTheDocument();
     expect(localStorage.getItem('token')).toBe('test-token');
-    expect(localStorage.getItem('studentSUID')).toBe('test-studentID');
+    expect(localStorage.getItem('studentID')).toBe('test-studentID');
   });
 
-  it('should logout a user and clear the token, studentSUID ', () => {
+  it('should logout a user and clear the token, studentID ', () => {
     render(
       <LoginProvider>
         <LoginContextTestComponent />
@@ -61,12 +61,12 @@ describe('LoginProvider', () => {
     expect(screen.getByText('Is Logged In: false')).toBeInTheDocument();
     expect(screen.getByText('Is Student ID:')).toBeInTheDocument();
     expect(localStorage.getItem('token')).toBeNull();
-    expect(localStorage.getItem('studentSUID')).toBeNull();
+    expect(localStorage.getItem('studentID')).toBeNull();
   });
 
   it('should initialize isLoggedIn based on localStorage', () => {
     localStorage.setItem('token', 'stored-token');
-    localStorage.setItem('studentSUID', 'test-studentID');
+    localStorage.setItem('studentID', 'test-studentID');
     render(
       <LoginProvider>
         <LoginContextTestComponent />
