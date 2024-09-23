@@ -1,9 +1,9 @@
-/* eslint-disable no-param-reassign */
-// import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { TLanguage } from "../../../../interfaces/interfaces";
 // import getStudentLanguagesThunk from "./studentLanguagesThunk";
-// import { TLanguage } from "../../../interfaces/interfaces";
 
-// const languagesData: TLanguage[] = []
+
+const languagesData: TLanguage[] = []
 
 // const studentLanguages = createSlice({
 //     name: "studentLanguagesSlice",
@@ -29,10 +29,18 @@
 //         })
 //     }
 // });
+const studentLanguages = createSlice({
+    name: "studentLanguagesSlice",
+    initialState: {
+        isLoadingLanguages: false,
+        isErrorLanguages: false,
+        languagesData
+    },
+    reducers: {}
+})
 
-// export default studentLanguages.reducer;
 describe("StudentLanguagesTest reducer", () => {
-    it("defined", () => {
-        expect(undefined).toBeDefined();
+    it("should be defined", () => {
+        expect(studentLanguages).toBeDefined();
     })
 })
