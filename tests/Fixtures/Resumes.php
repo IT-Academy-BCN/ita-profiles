@@ -34,7 +34,7 @@ class Resumes
             'modality' => null,
         ]);
     }
-    public static function createResumeWithAllFields($studentId, $subtitle, $linkedinUrl, $githubUrl, $tagsIds, $specialization, $projectIds, $modality, $additionalTrainingsIds): Resume
+    public static function createResumeWithAllFields($studentId, $subtitle, $linkedinUrl, $githubUrl, $tagsIds, $specialization, $projectIds, $modality): Resume
     {
         $specialization = substr($specialization, 0, 255);
 
@@ -61,11 +61,11 @@ class Resumes
         $tagsIds = ['tag1', 'tag2'],
         $specialization = 'Frontend',
         $modality = 'Modality',
-        $additionalTrainingsIds = ['additional_training1', 'additional_training2']
+       
     ): Resume {
         $specialization = substr($specialization, 0, 255);
 
-        $attributes = [
+        $resume = Resume::factory()->create([
             'student_id' => $studentId,
             'subtitle' => $subtitle,
             'linkedin_url' => $linkedinUrl,
@@ -74,8 +74,8 @@ class Resumes
             'specialization' => $specialization,
             'modality' => $modality,
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
-        ];
+        ]);
 
-        return Resume::factory()->create($attributes);
+        return $resume;
     }
 }
