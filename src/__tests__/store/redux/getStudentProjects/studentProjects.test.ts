@@ -1,44 +1,13 @@
-/* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
-import getStudentProjectsThunk from "./studentProjectsThunk";
-import { TProject } from "../../../interfaces/interfaces";
-
-const projectsData: TProject[] = [];
-
-const StudentProjectsSlice = createSlice({
-    name: "studentProjectsSlice",
-    initialState: {
-        isLoadingProjects: false,
-        isErrorProjects: false,
-        projectsData
-    },
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(getStudentProjectsThunk.pending, (state) => {
-            state.isLoadingProjects = true
-            state.isErrorProjects = false
-        })
-        builder.addCase(getStudentProjectsThunk.fulfilled, (state, action) => {
-            state.projectsData = action.payload
-            state.isLoadingProjects = false
-            state.isErrorProjects = false
-        })
-        builder.addCase(getStudentProjectsThunk.rejected, (state) => {
-            state.isLoadingProjects = false
-            state.isErrorProjects = true
-        })
-    }
-});
-
+import studentProjects from "../../../../store/reducers/getStudentProjects/studentProjects";
 
 describe("Student Projects Test (Redux)", () => {
     // should be defined Student Projects Slice
     it("should be defined Student Projects Slice", () => {
-        expect(StudentProjectsSlice).toBeDefined();
+        expect(studentProjects).toBeDefined();
     })
 
     it("should be defined Student Projects return initialState", () => {
-        expect(StudentProjectsSlice.reducer(undefined, {
+        expect(studentProjects(undefined, {
             type: "object",
             payload: []
         })).toEqual({
@@ -48,8 +17,8 @@ describe("Student Projects Test (Redux)", () => {
         });
     })
 
-    it("should be defined Student Projects getStudentProjectsThunk/pending", () => {
-        expect(StudentProjectsSlice.reducer(undefined, {
+    it("should be getStudentProjectsThunk/pending return State", () => {
+        expect(studentProjects(undefined, {
             type: "getStudentProjectsThunk/pending",
             payload: []
         })).toEqual({
@@ -59,8 +28,8 @@ describe("Student Projects Test (Redux)", () => {
         });
     })
 
-    it("should be defined Student Projects getStudentProjectsThunk/fulfilled", () => {
-        expect(StudentProjectsSlice.reducer(undefined, {
+    it("should be getStudentProjectsThunk/fulfilled return State", () => {
+        expect(studentProjects(undefined, {
             type: "getStudentProjectsThunk/fulfilled",
             payload: [
                 {
@@ -105,4 +74,16 @@ describe("Student Projects Test (Redux)", () => {
             ]
         });
     })
+
+    it("should be getStudentProjectsThunk/rejected return State", () => {
+        expect(studentProjects(undefined, {
+            type: "getStudentProjectsThunk/rejected",
+            payload: []
+        })).toEqual({
+            isLoadingProjects: false,
+            isErrorProjects: true,
+            projectsData: []
+        });
+    })
+
 })
