@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Tag;
+use App\Models\User;
+use App\Models\Resume;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Student extends Model
 {
@@ -25,7 +28,7 @@ class Student extends Model
         'user_id'
     ];
 
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -36,6 +39,6 @@ class Student extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(related: Tag::class, foreignPivotKey: 'student_id', relatedPivotKey: 'tag_id');
+        return $this->belongsToMany(related: Tag::class);
     }
 }

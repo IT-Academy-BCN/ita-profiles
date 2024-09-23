@@ -47,15 +47,12 @@ class StudentProjectsDetailService
 
     private function getProjects(object $resume):Collection
     {
-        $projectIds = json_decode($resume->project_ids);
-        $projects = Project::findMany($projectIds);
-        return $projects;
+        return $resume->projects;
     }
 
     private function formatProjectsDetail(Collection $projects):array
     {
-        return
-            $projects->map(function ($project): array {
+        return $projects->map(function ($project): array {
                 return [
                     'uuid' => $project->id,
                     'project_name' => $project->name,
@@ -70,5 +67,5 @@ class StudentProjectsDetailService
                     'github_url' => $project->github_url,
                 ];
             })->toArray();
-        }
+    }
 }

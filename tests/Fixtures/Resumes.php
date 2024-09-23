@@ -38,17 +38,20 @@ class Resumes
     {
         $specialization = substr($specialization, 0, 255);
 
-        return Resume::factory()->create([
+        $resume = Resume::factory()->create([
             'student_id' => $studentId,
             'subtitle' => $subtitle,
             'linkedin_url' => $linkedinUrl,
             'github_url' => $githubUrl,
             'tags_ids' => json_encode($tagsIds),
             'specialization' => $specialization,
-            'project_ids' => json_encode($projectIds),
             'modality' => $modality,
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
         ]);
+
+        $resume->projects()->sync($projectIds);
+
+        return $resume;
     }
     public static function createResumeWithEmptyProjects(
         $studentId,
@@ -69,7 +72,6 @@ class Resumes
             'github_url' => $githubUrl,
             'tags_ids' => json_encode($tagsIds),
             'specialization' => $specialization,
-            'project_ids' => '[]',
             'modality' => $modality,
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
         ];
