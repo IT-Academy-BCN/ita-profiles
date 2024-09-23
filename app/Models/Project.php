@@ -19,6 +19,8 @@ class Project extends Model
 
     public function resumes(): BelongsToMany
     {
-        return $this->belongsToMany(Resume::class, 'resume_project', 'project_id', 'resume_id');
+        // As a guide, we implement Laravel naming conventions for relationships.
+        // See: https://laravel.com/docs/10.x/eloquent-relationships#many-to-many
+        return $this->belongsToMany(Resume::class);
     }
 }

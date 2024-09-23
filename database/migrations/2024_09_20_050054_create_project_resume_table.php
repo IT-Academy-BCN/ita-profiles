@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resume_project', function (Blueprint $table) {
+        Schema::create('project_resume', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('resume_id')->references('id')->on('resumes')->onDelete('cascade');
             $table->foreignUuid('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreignUuid('resume_id')->references('id')->on('resumes')->onDelete('cascade');
         });
     }
 
