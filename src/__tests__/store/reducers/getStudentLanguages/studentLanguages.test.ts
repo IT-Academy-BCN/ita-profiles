@@ -29,13 +29,15 @@ const languagesData: TLanguage[] = []
 //         })
 //     }
 // });
+
+const initialState = {
+    isLoadingLanguages: false,
+    isErrorLanguages: false,
+    languagesData
+}
 const studentLanguages = createSlice({
     name: "studentLanguagesSlice",
-    initialState: {
-        isLoadingLanguages: false,
-        isErrorLanguages: false,
-        languagesData
-    },
+    initialState,
     reducers: {}
 })
 
@@ -43,4 +45,20 @@ describe("StudentLanguagesTest reducer", () => {
     it("should be defined", () => {
         expect(studentLanguages).toBeDefined();
     })
+
+    it("should be initialState defined", () => {
+        expect(initialState).toBeDefined();
+    })
+
+    it("should be return initialState", () => {
+        expect(studentLanguages.reducer(undefined, {
+            type: "object",
+            payload: []
+        })).toEqual({
+            isLoadingLanguages: false,
+            isErrorLanguages: false,
+            languagesData: []
+        });
+    })
+
 })
