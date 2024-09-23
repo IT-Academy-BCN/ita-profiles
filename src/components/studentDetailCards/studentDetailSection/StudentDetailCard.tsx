@@ -12,7 +12,7 @@ const StudentDataCard: React.FC = () => {
     setShowFullDescription(!showFullDescription)
   }
 
-  const { studenDetails } = useAppSelector(state => state.ShowStudenReducer)
+  const { studenDetails } = useAppSelector(state => state.ShowStudentReducer)
   const { aboutData, isErrorAboutData, isLoadindAboutData } = studenDetails
 
   return (

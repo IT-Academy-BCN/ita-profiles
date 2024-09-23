@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchStudentDetail } from "../../../../api/FetchStudentDetail";
+import { fetchStudentDetail } from "../../../api/FetchStudentDetail";
 
 const getStudenDetail = createAsyncThunk(
     "getStudenDetailThunk",
-    async (studenSUID: string | null) => {
-        const response = await fetchStudentDetail(studenSUID)
+    async (studentID: string | null) => {
+        const response = await fetchStudentDetail(studentID)
         return response[0];
     })
 

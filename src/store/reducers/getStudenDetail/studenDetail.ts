@@ -2,7 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { TAbout } from "../../../interfaces/interfaces";
-import getStudenDetail from "./thunks/studenDetailThunk";
+import getStudenDetail from "./studenDetailThunk";
 
 const aboutData: TAbout = {
     id: 0,
@@ -20,8 +20,6 @@ const aboutData: TAbout = {
     photo: '',
     tags: []
 }
-
-
 
 const studenDetail = createSlice({
     name: "studenDetailSlice",
