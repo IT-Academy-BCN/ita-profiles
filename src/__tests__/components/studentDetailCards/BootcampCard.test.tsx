@@ -58,7 +58,7 @@ describe('BootcampCard component', () => {
 
   test('renders bootcamp data correctly', async () => {
     mock
-      .onGet(`//localhost:8000/api/v1/student/${studentUUID}/resume/bootcamp`)
+      .onGet(`//localhost:8000/api/v1/student/${studentUUID}/resume/bootcamp`,)
       .reply(200, { bootcamps: bootcampData })
 
     render(
@@ -68,6 +68,7 @@ describe('BootcampCard component', () => {
         </SelectedStudentIdContext.Provider>
       </Provider>,
     )
+
 
     // Wait for bootcamp name to load
     await waitFor(() => {

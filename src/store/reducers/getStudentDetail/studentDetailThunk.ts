@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchStudentDetail } from "../../../api/FetchStudentDetail";
 
-const getStudenDetail = createAsyncThunk(
-    "getStudenDetailThunk",
+const getStudentDetail = createAsyncThunk(
+    "getStudentDetailThunk",
     async (studentID: string | null) => {
         const response = await fetchStudentDetail(studentID)
         return response[0];
     })
 
-export default getStudenDetail
+export default getStudentDetail

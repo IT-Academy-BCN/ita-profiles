@@ -2,7 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { TAbout } from "../../../interfaces/interfaces";
-import getStudenDetail from "./studenDetailThunk";
+import getStudentDetail from "./studentDetailThunk";
 
 const aboutData: TAbout = {
     id: 0,
@@ -21,7 +21,7 @@ const aboutData: TAbout = {
     tags: []
 }
 
-const studenDetail = createSlice({
+const studentDetail = createSlice({
     name: "studentDetailSlice",
     initialState: {
         isLoadindAboutData: false,
@@ -30,20 +30,20 @@ const studenDetail = createSlice({
     },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getStudenDetail.pending, (state) => {
+        builder.addCase(getStudentDetail.pending, (state) => {
             state.isLoadindAboutData = true
             state.isErrorAboutData = false
         })
-        builder.addCase(getStudenDetail.fulfilled, (state, action) => {
+        builder.addCase(getStudentDetail.fulfilled, (state, action) => {
             state.aboutData = action.payload
             state.isLoadindAboutData = false
             state.isErrorAboutData = false
         })
-        builder.addCase(getStudenDetail.rejected, (state) => {
+        builder.addCase(getStudentDetail.rejected, (state) => {
             state.isLoadindAboutData = false
             state.isErrorAboutData = true
         })
     }
 });
 
-export default studenDetail.reducer;
+export default studentDetail.reducer;

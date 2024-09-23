@@ -5,8 +5,8 @@ import LoadingSpiner from '../../atoms/LoadingSpiner'
 import { Carousel } from '../../atoms/Carousel'
 
 const ProjectsCard: React.FC = () => {
-  const { studenProjects } = useAppSelector(state => state.ShowStudentReducer)
-  const { projectsData, isLoadindProjects, isErrorProjects } = studenProjects
+  const { studentProjects } = useAppSelector(state => state.ShowStudentReducer)
+  const { projectsData, isLoadindProjects, isErrorProjects } = studentProjects
 
   const { scrollLeft, scrollRight, carouselRef } = Carousel()
 

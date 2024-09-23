@@ -3,10 +3,10 @@ import { TSmallScreenContext } from "../interfaces/interfaces";
 import { useAppDispatch } from "./ReduxHooks";
 import { SmallScreenContext } from "../context/SmallScreenContext";
 import { useStudentIdContext } from "../context/StudentIdContext";
-import getStudenDetail from "../store/reducers/getStudenDetail/studenDetailThunk";
-import getStudenProjects from "../store/reducers/getStudenProjects/studenProjectsThunk";
+import getStudentDetail from "../store/reducers/getStudentDetail/studentDetailThunk";
+import getStudentProjects from "../store/reducers/getStudentProjects/studentProjectsThunk";
 import getStudentCollaborations from "../store/reducers/getStudentCollaborations/studentCollaborationsThunk";
-import getStudenBootcamp from "../store/reducers/getStudentBootcamp/getStudenBootcampThunk";
+import getStudentBootcamp from "../store/reducers/getStudentBootcamp/studentBootcampThunk";
 import getStudentLanguages from "../store/reducers/getStudentLanguages/studentLanguagesThunk";
 
 const useStudentDetailHook = (role?: string | null) => {
@@ -17,16 +17,16 @@ const useStudentDetailHook = (role?: string | null) => {
 
     useEffect(() => {
         if (typeof role === "string" && role === "user") {
-            getStudent(getStudenDetail(studentID))
-            getStudent(getStudenProjects(studentID))
+            getStudent(getStudentDetail(studentID))
+            getStudent(getStudentProjects(studentID))
             getStudent(getStudentCollaborations(studentID))
-            getStudent(getStudenBootcamp(studentID))
+            getStudent(getStudentBootcamp(studentID))
             getStudent(getStudentLanguages(studentID))
         } else if (!role && studentUUID) {
-            getStudent(getStudenDetail(studentUUID))
-            getStudent(getStudenProjects(studentUUID))
+            getStudent(getStudentDetail(studentUUID))
+            getStudent(getStudentProjects(studentUUID))
             getStudent(getStudentCollaborations(studentUUID))
-            getStudent(getStudenBootcamp(studentUUID))
+            getStudent(getStudentBootcamp(studentUUID))
             getStudent(getStudentLanguages(studentUUID))
         }
 

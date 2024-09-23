@@ -4,14 +4,14 @@ import LoadingSpiner from '../../atoms/LoadingSpiner'
 
 const BootcampCard: React.FC = () => {
   const { studentBootcamps } = useAppSelector(state => state.ShowStudentReducer)
-  const { bootcampData, isErrorBootcamp, isLoadindBootcamp } = studentBootcamps
+  const { bootcampData, isErrorBootcamp, isLoadingBootcamp } = studentBootcamps
 
   return (
     <div className="flex flex-col gap-4" data-testid="BootcampCard">
       <h3 className="text-lg font-bold">Datos del bootcamp</h3>
-      {isLoadindBootcamp && <LoadingSpiner />}
+      {isLoadingBootcamp && <LoadingSpiner />}
       {isErrorBootcamp && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
-      {!isLoadindBootcamp &&
+      {!isLoadingBootcamp &&
         (bootcampData.length === 0 ? (
           <div className="flex flex-col gap-1 rounded-md bg-gray-5-background p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.25)]">
             <p className="text- font-medium text-black-3">

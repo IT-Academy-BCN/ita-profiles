@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import getStudenProjects from "./studenProjectsThunk";
+import getStudentProjects from "./studentProjectsThunk";
 import { TProject } from "../../../interfaces/interfaces";
 
 const projectsData: TProject[] = [];
 
-const studenProjects = createSlice({
-    name: "studenProjectsSlice",
+const studentProjects = createSlice({
+    name: "studentProjectsSlice",
     initialState: {
         isLoadindProjects: false,
         isErrorProjects: false,
@@ -14,20 +14,20 @@ const studenProjects = createSlice({
     },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getStudenProjects.pending, (state) => {
+        builder.addCase(getStudentProjects.pending, (state) => {
             state.isLoadindProjects = true
             state.isErrorProjects = false
         })
-        builder.addCase(getStudenProjects.fulfilled, (state, action) => {
+        builder.addCase(getStudentProjects.fulfilled, (state, action) => {
             state.projectsData = action.payload
             state.isLoadindProjects = false
             state.isErrorProjects = false
         })
-        builder.addCase(getStudenProjects.rejected, (state) => {
+        builder.addCase(getStudentProjects.rejected, (state) => {
             state.isLoadindProjects = false
             state.isErrorProjects = true
         })
     }
 });
 
-export default studenProjects.reducer;
+export default studentProjects.reducer;
