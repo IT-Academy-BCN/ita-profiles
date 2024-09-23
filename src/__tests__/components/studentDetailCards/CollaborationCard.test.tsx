@@ -2,15 +2,19 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { describe, test, expect } from 'vitest'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import { Provider } from 'react-redux'
 import { SelectedStudentIdContext, SelectedStudentProvider } from '../../../context/StudentIdContext'
 import CollaborationCard from '../../../components/studentDetailCards/collaborationSection/CollaborationCard'
+import { store } from '../../../store/store'
 
 describe('CollaborationCard', () => {
   beforeEach(() => {
     render(
-      <SelectedStudentProvider>
-        <CollaborationCard />
-      </SelectedStudentProvider>,
+      <Provider store={store}>
+        <SelectedStudentProvider>
+          <CollaborationCard />
+        </SelectedStudentProvider>
+      </Provider>,
     )
   })
   test('should show "Collaboration" all the time', () => {
@@ -34,7 +38,7 @@ describe('CollaborationCard component', () => {
   })
 
   const studentUUID = '123' // You can replace this with a sample UUID
-  const setStudentUUID = () => {}
+  const setStudentUUID = () => { }
   const collaborationData = [
     {
       uuid: 'e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e',
@@ -56,9 +60,11 @@ describe('CollaborationCard component', () => {
       .reply(200, { collaborations: collaborationData })
 
     render(
-      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
-        <CollaborationCard />
-      </SelectedStudentIdContext.Provider>,
+      <Provider store={store}>
+        <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
+          <CollaborationCard />
+        </SelectedStudentIdContext.Provider>
+      </Provider>,
     )
 
     await waitFor(() => {
