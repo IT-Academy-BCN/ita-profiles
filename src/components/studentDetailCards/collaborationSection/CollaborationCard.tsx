@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../atoms/LoadingSpiner'
 
 const CollaborationCard: React.FC = () => {
-  const { studentCollaborations } = useAppSelector(state => state.ShowStudenReducer)
+  const { studentCollaborations } = useAppSelector(state => state.ShowStudentReducer)
   const { collaborationsData, isLoadindCollaborations, isErrorCollaborations } = studentCollaborations
   const [resourcesCard, challengesCard] = collaborationsData
 
