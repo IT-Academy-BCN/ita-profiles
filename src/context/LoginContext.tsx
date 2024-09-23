@@ -17,13 +17,13 @@ const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const login = (user: UserResponseData) => {
     setToken(user.token);
     localStorage.setItem('token', user.token);
-    localStorage.setItem('studentSUID', user.studentID);
+    localStorage.setItem('studentID', user.studentID);
     setIsLoggedIn(true);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('studentSUID');
+    localStorage.removeItem('studentID');
     setToken(null);
     setIsLoggedIn(false);
   };

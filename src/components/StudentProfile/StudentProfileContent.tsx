@@ -8,7 +8,7 @@ import LanguagesCard from '../studentDetailCards/languagesSection/LanguagesCard'
 import AdditionalTrainingCard from '../studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
 import { useStudentDetailHook } from '../../hooks/useStudentDetailHook'
 
-const StudentProfileDetail: React.FC = () => {
+const StudentProfileContent: React.FC = () => {
   const { isMobile } = useStudentDetailHook('user')
 
   return (
@@ -38,4 +38,4 @@ const StudentProfileDetail: React.FC = () => {
   )
 }
 
-export default StudentProfileDetail
+export default StudentProfileContent

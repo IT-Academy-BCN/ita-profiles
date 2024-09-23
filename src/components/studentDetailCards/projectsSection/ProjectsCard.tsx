@@ -1,31 +1,14 @@
-import { useRef } from 'react'
 import { Github, Dots, ArrowLeft, ArrowRight } from '../../../assets/svg'
 import { ArrowRightProjects } from '../../../assets/img'
 import { useAppSelector } from '../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../atoms/LoadingSpiner'
+import { Carousel } from '../../atoms/Carousel'
 
 const ProjectsCard: React.FC = () => {
-  const { studenProjects } = useAppSelector(state => state.ShowStudenReducer)
+  const { studenProjects } = useAppSelector(state => state.ShowStudentReducer)
   const { projectsData, isLoadindProjects, isErrorProjects } = studenProjects
 
-  const carouselRef = useRef<HTMLDivElement>(null)
-  const scrollLeft = () => {
-    if (carouselRef.current) {
-      const cardWidth = (carouselRef.current?.firstChild as HTMLElement)
-        ?.offsetWidth
-      const scrollAmount = carouselRef.current.scrollLeft - cardWidth
-      carouselRef.current.scrollLeft = scrollAmount
-    }
-  }
-
-  const scrollRight = () => {
-    if (carouselRef.current) {
-      const cardWidth = (carouselRef.current?.firstChild as HTMLElement)
-        ?.offsetWidth
-      const scrollAmount = carouselRef.current.scrollLeft + cardWidth
-      carouselRef.current.scrollLeft = scrollAmount
-    }
-  }
+  const { scrollLeft, scrollRight, carouselRef } = Carousel()
 
   return (
     <div
@@ -94,3 +77,5 @@ const ProjectsCard: React.FC = () => {
 }
 
 export default ProjectsCard
+
+
