@@ -5,6 +5,8 @@ import { SmallScreenContext } from "../context/SmallScreenContext";
 import { useStudentIdContext } from "../context/StudentIdContext";
 import getStudenDetail from "../store/reducers/getStudenDetail/studenDetailThunk";
 import getStudenProjects from "../store/reducers/getStudenProjects/studenProjectsThunk";
+import getStudentCollaborations from "../store/reducers/getStudentCollaborations/studentCollaborationsThunk";
+import getStudenBootcamp from "../store/reducers/getStudentBootcamp/getStudenBootcampThunk";
 import getStudentLanguages from "../store/reducers/getStudentLanguages/studentLanguagesThunk";
 
 const useStudentDetailHook = (role?: string | null) => {
@@ -17,10 +19,14 @@ const useStudentDetailHook = (role?: string | null) => {
         if (typeof role === "string" && role === "user") {
             getStudent(getStudenDetail(studentID))
             getStudent(getStudenProjects(studentID))
+            getStudent(getStudentCollaborations(studentID))
+            getStudent(getStudenBootcamp(studentID))
             getStudent(getStudentLanguages(studentID))
         } else if (!role && studentUUID) {
             getStudent(getStudenDetail(studentUUID))
             getStudent(getStudenProjects(studentUUID))
+            getStudent(getStudentCollaborations(studentUUID))
+            getStudent(getStudenBootcamp(studentUUID))
             getStudent(getStudentLanguages(studentUUID))
         }
 
