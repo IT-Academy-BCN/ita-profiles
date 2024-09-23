@@ -10,7 +10,7 @@ const bootcampData: TBootcamp[] = [];
 
 
 
-const studenBootcamp = createSlice({
+const studentBootcamp = createSlice({
     name: "studenDetailSlice",
     initialState: {
         isLoadindBootcamp: false,
@@ -35,4 +35,4 @@ const studenBootcamp = createSlice({
     }
 });
 
-export default studenBootcamp.reducer;
+export default studentBootcamp.reducer;
