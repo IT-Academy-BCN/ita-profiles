@@ -34,7 +34,6 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
       // eslint-disable-next-line
       user = response.data
-      console.log(user)
       login(user);
       onClose()
       navigate('/profile')

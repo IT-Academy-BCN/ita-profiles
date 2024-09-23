@@ -2,18 +2,23 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { describe, test, expect } from 'vitest'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import { Provider } from 'react-redux'
 import BootcampCard from '../../../components/studentDetailCards/bootcampSection/BootcampCard'
 import {
   SelectedStudentIdContext,
   SelectedStudentProvider,
 } from '../../../context/StudentIdContext'
+import { store } from '../../../store/store'
 
 describe('BootcampCard', () => {
   beforeEach(() => {
     render(
-      <SelectedStudentProvider>
-        <BootcampCard />
-      </SelectedStudentProvider>,
+      <Provider store={store}>
+        <SelectedStudentProvider>
+          <BootcampCard />
+        </SelectedStudentProvider>
+      </Provider>
+      ,
     )
   })
   test('should show "Bootcamp" all the time', () => {
@@ -37,7 +42,7 @@ describe('BootcampCard component', () => {
   })
 
   const studentUUID = '123' // You can replace this with a sample UUID
-  const setStudentUUID = () => {}
+  const setStudentUUID = () => { }
   const bootcampData = [
     {
       bootcamp_id: '1',
@@ -48,7 +53,7 @@ describe('BootcampCard component', () => {
       bootcamp_id: '2',
       bootcamp_name: 'Data Analyst',
       bootcamp_end_date: 'November 2022',
-    },
+    }
   ]
 
   test('renders bootcamp data correctly', async () => {
@@ -59,9 +64,11 @@ describe('BootcampCard component', () => {
       .reply(200, { bootcamps: bootcampData })
 
     render(
-      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
-        <BootcampCard />
-      </SelectedStudentIdContext.Provider>,
+      <Provider store={store}>
+        <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
+          <BootcampCard />
+        </SelectedStudentIdContext.Provider>
+      </Provider>,
     )
 
     // Wait for bootcamp name to load

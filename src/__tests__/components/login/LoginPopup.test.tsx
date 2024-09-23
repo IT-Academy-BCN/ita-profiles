@@ -24,13 +24,13 @@ vi.mock("react-router-dom", async () => {
 
 
 // Mock functions for the context
-const mockLogin = vi.fn().mockImplementation(() => {});
+const mockLogin = vi.fn().mockImplementation(() => { });
 const mockIsLoggedIn = vi.fn();
 // Create the mock context value
 const mockContextValue = {
   token: 'mockToken',
   login: mockLogin,
-  logout:  mockIsLoggedIn,
+  logout: mockIsLoggedIn,
   isLoggedIn: false,
 }
 
@@ -39,11 +39,11 @@ describe('LoginPopup', () => {
   const mockOnOpenRegisterPopup = vi.fn()
   let mockAxios: MockAdapter
 
-  
+
   const props = {
     onClose: mockOnClose,
     onOpenRegisterPopup: mockOnOpenRegisterPopup,
-    user: { id: '', token: '' },
+    user: { userID: '', token: '', studentID: '' },
   }
 
   beforeAll(() => {
@@ -59,7 +59,7 @@ describe('LoginPopup', () => {
       </LoginContext.Provider>
     )
   })
-  
+
 
   afterEach(() => {
     mockAxios.reset()
@@ -73,10 +73,10 @@ describe('LoginPopup', () => {
 
     // Wait for projects to load
     const projectsElement = screen.getByText('Recordar/cambiar contraseña');
-    const projectsLoginElement =  screen.getByRole('button', {
+    const projectsLoginElement = screen.getByRole('button', {
       name: /Login/i
     })
-    
+
     // Check if projects are rendered correctly
     expect(projectsElement).toBeInTheDocument();
     expect(projectsLoginElement).toBeInTheDocument();
@@ -87,14 +87,14 @@ describe('LoginPopup', () => {
 
     fireEvent.click(screen.getByText('✕'))
     expect(mockOnClose).toHaveBeenCalled()
-  
+
   })
 
 
   test('calls login and navigates on successful form submission', async () => {
 
     mockAxios.onPost('//localhost:8000/api/v1/signin').reply(200, {
-      id: 'user1',
+      userID: 'user1',
       token: 'token123',
     })
 
@@ -108,13 +108,13 @@ describe('LoginPopup', () => {
     fireEvent.click(screen.getByRole('button', {
       name: /Login/i
     }))
-    
+
     await waitFor(() => {
       // console.log('mockOnClose called:', mockOnClose.mock.calls.length);
       // console.log('mockNavigate times called:', mockNavigate.mock.calls.length);
       expect(mockOnClose).toHaveBeenCalled();
       // expect(mockLogin).toHaveBeenCalled();
-      expect(mockLogin).toHaveBeenCalledWith({ id: 'user1', token: 'token123' })
+      expect(mockLogin).toHaveBeenCalledWith({ userID: 'user1', token: 'token123' })
       expect(mockNavigate).toHaveBeenCalledWith('/profile')
     });
 
@@ -149,5 +149,5 @@ describe('LoginPopup', () => {
   })
 
 
-  
+
 })
