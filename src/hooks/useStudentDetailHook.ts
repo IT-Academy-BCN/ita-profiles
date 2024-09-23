@@ -3,34 +3,35 @@ import { TSmallScreenContext } from "../interfaces/interfaces";
 import { useAppDispatch } from "./ReduxHooks";
 import { SmallScreenContext } from "../context/SmallScreenContext";
 import { useStudentIdContext } from "../context/StudentIdContext";
-import getStudentDetail from "../store/reducers/getStudentDetail/studentDetailThunk";
-import getStudentProjects from "../store/reducers/getStudentProjects/studentProjectsThunk";
-import getStudentCollaborations from "../store/reducers/getStudentCollaborations/studentCollaborationsThunk";
-import getStudentBootcamp from "../store/reducers/getStudentBootcamp/studentBootcampThunk";
-import getStudentLanguages from "../store/reducers/getStudentLanguages/studentLanguagesThunk";
+import getStudentBootcampThunk from "../store/reducers/getStudentBootcamp/studentBootcampThunk";
+import getStudentDetailThunk from "../store/reducers/getStudentDetail/studentDetailThunk";
+import getStudentProjectsThunk from "../store/reducers/getStudentProjects/studentProjectsThunk";
+import getStudentCollaborationThunk from "../store/reducers/getStudentCollaborations/studentCollaborationsThunk";
+import getStudentLanguagesThunk from "../store/reducers/getStudentLanguages/studentLanguagesThunk";
+
 
 const useStudentDetailHook = (role?: string | null) => {
     const { isMobile }: TSmallScreenContext = useContext(SmallScreenContext)
     const { studentUUID } = useStudentIdContext()
     const studentID = localStorage.getItem("studentID")
-    const getStudent = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (typeof role === "string" && role === "user") {
-            getStudent(getStudentDetail(studentID))
-            getStudent(getStudentProjects(studentID))
-            getStudent(getStudentCollaborations(studentID))
-            getStudent(getStudentBootcamp(studentID))
-            getStudent(getStudentLanguages(studentID))
+            dispatch(getStudentDetailThunk(studentID))
+            dispatch(getStudentProjectsThunk(studentID))
+            dispatch(getStudentCollaborationThunk(studentID))
+            dispatch(getStudentBootcampThunk(studentID))
+            dispatch(getStudentLanguagesThunk(studentID))
         } else if (!role && studentUUID) {
-            getStudent(getStudentDetail(studentUUID))
-            getStudent(getStudentProjects(studentUUID))
-            getStudent(getStudentCollaborations(studentUUID))
-            getStudent(getStudentBootcamp(studentUUID))
-            getStudent(getStudentLanguages(studentUUID))
+            dispatch(getStudentDetailThunk(studentUUID))
+            dispatch(getStudentProjectsThunk(studentUUID))
+            dispatch(getStudentCollaborationThunk(studentUUID))
+            dispatch(getStudentBootcampThunk(studentUUID))
+            dispatch(getStudentLanguagesThunk(studentUUID))
         }
 
-    }, [getStudent, role, studentID, studentUUID])
+    }, [dispatch, role, studentID, studentUUID])
 
     return { isMobile }
 }

@@ -11,15 +11,12 @@ const StudentDataCard: React.FC = () => {
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription)
   }
-
-  const { studentDetails } = useAppSelector(state => state.ShowStudentReducer)
-  const { aboutData, isErrorAboutData, isLoadindAboutData } = studentDetails
-
+  const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(state => state.ShowStudentReducer.studentDetails)
   return (
     <div data-testid="StudentDataCard">
-      {isLoadindAboutData && <LoadingSpiner />}
-      {isErrorAboutData && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
-      {!isLoadindAboutData && <div key={aboutData.id} className="flex flex-col gap-4">
+      {isLoadingAboutData && <LoadingSpiner />}
+      {isErrorAboutData && <LoadingSpiner />}
+      {!isLoadingAboutData && <div className="flex flex-col gap-4">
         <div className="flex gap-3">
           <img
             src={ProfilePicture}
@@ -33,15 +30,15 @@ const StudentDataCard: React.FC = () => {
                   {aboutData.fullname}
                 </h2>
                 <p className="text-gray-2">
-                  {aboutData.subtitle}
+                  {aboutData.resume.subtitle}
                 </p>
               </div>
               <div className="flex gap-4">
-                <a href={aboutData.social_media.github.url} className="flex gap-1">
+                <a href={aboutData.resume.social_media.github.url} className="flex gap-1">
                   <img src={Github} alt="github icon" />
                   Github
                 </a>
-                <a href={aboutData.social_media.linkedin.url} className="flex gap-1">
+                <a href={aboutData.resume.social_media.linkedin.url} className="flex gap-1">
                   <img src={Linkedin} alt="linkedin icon" />
                   LinkedIn
                 </a>
@@ -55,8 +52,8 @@ const StudentDataCard: React.FC = () => {
             <div>
               <p className="text-sm">
                 {showFullDescription
-                  ? aboutData.about
-                  : `${aboutData.about
+                  ? aboutData && aboutData.resume.about
+                  : `${aboutData.resume.about
                     .split(' ')
                     .slice(0, 15)
                     .join(' ')}...`}
@@ -84,7 +81,7 @@ const StudentDataCard: React.FC = () => {
             </div>
           </div>
           <ul className="flex flex-wrap gap-2">
-            {aboutData.tags.map((tag: ITag) => (
+            {aboutData && aboutData.tags.map((tag: ITag) => (
               <li
                 key={tag.id}
                 className="rounded-md bg-gray-5-background px-2 py-1 text-sm"
@@ -95,6 +92,7 @@ const StudentDataCard: React.FC = () => {
           </ul>
         </div>
       </div>}
+
     </div>
   )
 }

@@ -2,21 +2,23 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { TAbout } from "../../../interfaces/interfaces";
-import getStudentDetail from "./studentDetailThunk";
+import getStudentDetailThunk from "./studentDetailThunk";
 
 const aboutData: TAbout = {
     id: 0,
     fullname: '',
-    subtitle: '',
-    social_media: {
-        github: {
-            url: ''
+    resume: {
+        subtitle: '',
+        social_media: {
+            github: {
+                url: ''
+            },
+            linkedin: {
+                url: ''
+            }
         },
-        linkedin: {
-            url: ''
-        }
+        about: '',
     },
-    about: '',
     photo: '',
     tags: []
 }
@@ -24,23 +26,23 @@ const aboutData: TAbout = {
 const studentDetail = createSlice({
     name: "studentDetailSlice",
     initialState: {
-        isLoadindAboutData: false,
+        isLoadingAboutData: false,
         isErrorAboutData: false,
         aboutData
     },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getStudentDetail.pending, (state) => {
-            state.isLoadindAboutData = true
+        builder.addCase(getStudentDetailThunk.pending, (state) => {
+            state.isLoadingAboutData = true
             state.isErrorAboutData = false
         })
-        builder.addCase(getStudentDetail.fulfilled, (state, action) => {
+        builder.addCase(getStudentDetailThunk.fulfilled, (state, action) => {
             state.aboutData = action.payload
-            state.isLoadindAboutData = false
+            state.isLoadingAboutData = false
             state.isErrorAboutData = false
         })
-        builder.addCase(getStudentDetail.rejected, (state) => {
-            state.isLoadindAboutData = false
+        builder.addCase(getStudentDetailThunk.rejected, (state) => {
+            state.isLoadingAboutData = false
             state.isErrorAboutData = true
         })
     }

@@ -11,7 +11,7 @@ type TSelectedStudentContext = {
 // setStudentUUID which is the function that will get us the uuid
 export const SelectedStudentIdContext = createContext<TSelectedStudentContext>({
   studentUUID: null,
-  setStudentUUID: () => {},
+  setStudentUUID: () => { },
 })
 // The provider ===>
 export const SelectedStudentProvider = ({ children }: TchildrenProps) => {

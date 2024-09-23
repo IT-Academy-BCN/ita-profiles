@@ -56,7 +56,7 @@ describe('CollaborationCard component', () => {
 
   test('renders collaboration data correctly', async () => {
     mock
-      .onGet(`//localhost:8000/api/v1/student/${studentUUID}/resume/collaborations`,)
+      .onGet(`//localhost:8000/api/v1/student/${studentUUID}/resume/collaborations`)
       .reply(200, { collaborations: collaborationData })
 
     render(

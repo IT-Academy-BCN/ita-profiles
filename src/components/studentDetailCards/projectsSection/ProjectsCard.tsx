@@ -6,7 +6,7 @@ import { Carousel } from '../../atoms/Carousel'
 
 const ProjectsCard: React.FC = () => {
   const { studentProjects } = useAppSelector(state => state.ShowStudentReducer)
-  const { projectsData, isLoadindProjects, isErrorProjects } = studentProjects
+  const { projectsData, isLoadingProjects, isErrorProjects } = studentProjects
 
   const { scrollLeft, scrollRight, carouselRef } = Carousel()
 
@@ -26,9 +26,9 @@ const ProjectsCard: React.FC = () => {
           </button>
         </div>
       </div>
-      {isLoadindProjects && <LoadingSpiner />}
+      {isLoadingProjects && <LoadingSpiner />}
       {isErrorProjects && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
-      {!isLoadindProjects && <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
+      {projectsData && <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
         {projectsData.map((project) => (
           <div
             key={project.uuid}

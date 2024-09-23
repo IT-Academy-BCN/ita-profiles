@@ -2,7 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { TBootcamp } from "../../../interfaces/interfaces";
-import getStudentBootcamp from "./studentBootcampThunk";
+import getStudentBootcampThunk from "./studentBootcampThunk";
 
 const bootcampData: TBootcamp[] = [];
 
@@ -15,16 +15,16 @@ const studentBootcamp = createSlice({
     },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getStudentBootcamp.pending, (state) => {
+        builder.addCase(getStudentBootcampThunk.pending, (state) => {
             state.isLoadingBootcamp = true
             state.isErrorBootcamp = false
         })
-        builder.addCase(getStudentBootcamp.fulfilled, (state, action) => {
-            state.bootcampData = action.payload.bootcamps
+        builder.addCase(getStudentBootcampThunk.fulfilled, (state, action) => {
             state.isLoadingBootcamp = false
             state.isErrorBootcamp = false
+            state.bootcampData = action.payload.bootcamps
         })
-        builder.addCase(getStudentBootcamp.rejected, (state) => {
+        builder.addCase(getStudentBootcampThunk.rejected, (state) => {
             state.isLoadingBootcamp = false
             state.isErrorBootcamp = true
         })

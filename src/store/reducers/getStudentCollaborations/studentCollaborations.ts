@@ -1,29 +1,29 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import getStudenCollaborations from "./studentCollaborationsThunk";
+import getStudentCollaborationThunk from "./studentCollaborationsThunk";
 import { TCollaboration } from "../../../interfaces/interfaces";
 
 
 const studentCollaborations = createSlice({
     name: "studentCollaborationsSlice",
     initialState: {
-        isLoadindCollaborations: false,
+        isLoadingCollaborations: false,
         isErrorCollaborations: false,
         collaborationsData: <TCollaboration[]>[]
     },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getStudenCollaborations.pending, (state) => {
-            state.isLoadindCollaborations = true
+        builder.addCase(getStudentCollaborationThunk.pending, (state) => {
+            state.isLoadingCollaborations = true
             state.isErrorCollaborations = false
         })
-        builder.addCase(getStudenCollaborations.fulfilled, (state, action) => {
+        builder.addCase(getStudentCollaborationThunk.fulfilled, (state, action) => {
             state.collaborationsData = action.payload
-            state.isLoadindCollaborations = false
+            state.isLoadingCollaborations = false
             state.isErrorCollaborations = false
         })
-        builder.addCase(getStudenCollaborations.rejected, (state) => {
-            state.isLoadindCollaborations = false
+        builder.addCase(getStudentCollaborationThunk.rejected, (state) => {
+            state.isLoadingCollaborations = false
             state.isErrorCollaborations = true
         })
     }
