@@ -54,8 +54,7 @@ class ResumeFactory extends Factory
             ),
             'development' => $development,
             'about' => $this->faker->paragraph,
-            'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),
-           // 'additional_trainings_ids' => json_encode($additionalTrainingsIds),
+            'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),          
             'collaborations_ids' => json_encode($collaborationsIds),
         ];
     }
