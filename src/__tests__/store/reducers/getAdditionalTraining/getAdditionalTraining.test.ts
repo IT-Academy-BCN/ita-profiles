@@ -25,4 +25,15 @@ describe("additionalTraining", () => {
     expect(initialState.additionalTraining).toMatchObject<TAdditionalTraining[]>([])
   })
 
+  it("should be return initialState", () => {
+    expect(additionalTraining.reducer(undefined, {
+      type: "object",
+      payload: [],
+    })).toEqual({
+      isLoadingAdditionalTraining: false,
+      isErrorAdditionalTraining: false,
+      additionalTraining: [],
+    })
+  })
+
 })
