@@ -27,10 +27,6 @@ class ResumeFactory extends Factory
         $developmentOptions = ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'];
         $development = $this->faker->randomElement($developmentOptions);
 
-        $tagIds = Tag::pluck('id')->toArray();
-        $randomTagIds = $this->getRandomUniqueElements($tagIds, 4);
-        $tagsIds = json_encode($randomTagIds);
-
         $additionalTrainingsIds = AdditionalTraining::factory()->count(2)->create()->pluck('id')->toArray();
         $collaborationsIds = Collaboration::factory()->count(2)->create()->pluck('id')->toArray();
 
@@ -48,7 +44,6 @@ class ResumeFactory extends Factory
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
             'linkedin_url' => $this->faker->parse('https://linkedin.com/') . $this->faker->userName,
             'github_url' => $this->faker->parse('https://github.com/') . $this->faker->userName,
-            'tags_ids' => $tagsIds,
             'specialization' => $this->faker->randomElement(
                 ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
             ),
@@ -58,23 +53,6 @@ class ResumeFactory extends Factory
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
             'collaborations_ids' => json_encode($collaborationsIds),
         ];
-    }
-
-    /**
-     * Get random unique elements from an array.
-     *
-     * @param array $array The array from which to select elements.
-     * @param int $count The number of elements to select.
-     * @return array An array of randomly selected unique elements.
-     */
-    private function getRandomUniqueElements(array $array, int $count): array
-    {
-        $keys = array_rand($array, $count); // Randomly select keys from the array
-        if (!is_array($keys)) {
-            $keys = [$keys]; // Ensure $keys is an array
-        }
-        $randomElements = array_intersect_key($array, array_flip($keys)); // Fetch elements from $array based on $keys
-        return array_values($randomElements); // Return values as indexed array
     }
 
     public function specificSpecialization(string $specialization): Factory

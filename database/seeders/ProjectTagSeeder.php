@@ -26,7 +26,8 @@ class ProjectTagSeeder extends Seeder
     }
     public function assignTagsToStudent(Collection $tags, array $assignedTags): array
     {
-        while (count($assignedTags) < rand(2, 5)) {
+        $requiredTags = rand(2, 5);
+        while (count($assignedTags) < $requiredTags) {
             $tag = $tags->random();
 
             if (!in_array($tag->id, $assignedTags)) {
