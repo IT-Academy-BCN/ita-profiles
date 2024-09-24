@@ -34,7 +34,7 @@ class Resumes
             'modality' => null,
         ]);
     }
-    public static function createResumeWithAllFields($studentId, $subtitle, $linkedinUrl, $githubUrl, $tagsIds, $specialization, $projectIds, $modality): Resume
+    public static function createResumeWithAllFields($studentId, $subtitle, $linkedinUrl, $githubUrl, $tagsIds, $specialization, $projectIds, $modality, $additionalTrainingsIds): Resume
     {
         $specialization = substr($specialization, 0, 255);
 
@@ -45,11 +45,12 @@ class Resumes
             'github_url' => $githubUrl,
             'tags_ids' => json_encode($tagsIds),
             'specialization' => $specialization,
-            'modality' => $modality,
-            'additional_trainings_ids' => json_encode($additionalTrainingsIds),
+            'modality' => $modality,           
         ]);
 
         $resume->projects()->sync($projectIds);
+
+        $resume->additionalTrainings()->sync($additionalTrainingsIds); //añadimos esto y la variable en la función
 
         return $resume;
     }
@@ -72,8 +73,7 @@ class Resumes
             'github_url' => $githubUrl,
             'tags_ids' => json_encode($tagsIds),
             'specialization' => $specialization,
-            'modality' => $modality,
-            'additional_trainings_ids' => json_encode($additionalTrainingsIds),
+            'modality' => $modality,           
         ]);
 
         return $resume;
