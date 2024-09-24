@@ -1,32 +1,17 @@
-import { useEffect, useState } from 'react'
-import { useStudentIdContext } from '../../../context/StudentIdContext'
+import { useAppSelector } from '../../../hooks/ReduxHooks'
 import { TAdditionalTraining } from '../../../interfaces/interfaces'
-import { FetchAdditionalTraining } from '../../../api/FetchAdditionalTraining'
+import LoadingSpiner from '../../atoms/LoadingSpiner'
 
 const AdditionalTrainingCard = () => {
-  const { studentUUID } = useStudentIdContext()
-  const [additionalTraining, setAdditionalTraining] = useState<TAdditionalTraining[] | null>()
-
-  useEffect(() => {
-    const getStudentTraining = async () => {
-      try {
-        const studentTraining = await FetchAdditionalTraining(studentUUID)
-        setAdditionalTraining(studentTraining)
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error)
-      }
-    }
-    if (studentUUID) {
-      getStudentTraining()
-    }
-  }, [studentUUID])
+  const { additionalTraining, isLoadingAdditionalTraining, isErrorAdditionalTraining } = useAppSelector(state => state.ShowStudentReducer.studentAdditionalTraining)
 
   return (
     <div data-testid="AdditionalTrainingCard">
       <h3 className="text-lg font-bold text-black-3">Otra formación</h3>
       <div className="flex flex-col pt-3">
-        {additionalTraining?.map((training, index) => (
+        {isLoadingAdditionalTraining && <LoadingSpiner />}
+        {isErrorAdditionalTraining && <LoadingSpiner />}
+        {additionalTraining && additionalTraining?.map((training: TAdditionalTraining, index) => (
           <div key={training.uuid} className="flex flex-col ">
             <h4 className=" font-bold">{training.course_name}</h4>
             <div className="flex flex-col ">
