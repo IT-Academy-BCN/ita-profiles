@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { TAdditionalTraining } from "../../../../interfaces/interfaces"
 
 const initialState = {
   isLoadingAdditionalTraining: false,
-  isErrorAdditionalTrainingData: false,
-  additionalTrainingD: {},
+  isErrorAdditionalTraining: false,
+  additionalTraining: [],
 }
 const additionalTraining = createSlice({
   name: "additionalTrainingSlice",
@@ -13,10 +14,15 @@ const additionalTraining = createSlice({
 })
 
 describe("additionalTraining", () => {
+
   it("should reducer returned defined", () => {
     expect(additionalTraining.reducer).toBeDefined()
   })
+
   it("should be defined initial State", () => {
     expect(initialState.isLoadingAdditionalTraining).toBeFalsy()
+    expect(initialState.isErrorAdditionalTraining).toBeFalsy()
+    expect(initialState.additionalTraining).toMatchObject<TAdditionalTraining[]>([])
   })
+
 })
