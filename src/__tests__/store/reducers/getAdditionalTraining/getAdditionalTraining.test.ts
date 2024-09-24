@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const initialState = {
+  isLoadingAdditionalTraining: false,
+  isErrorAdditionalTrainingData: false,
+  additionalTrainingD: {},
+}
 const additionalTraining = createSlice({
   name: "additionalTrainingSlice",
-  initialState: {
-    isLoadingAdditionalTraining: false,
-    isErrorAdditionalTrainingData: false,
-    additionalTrainingD: {},
-  },
+  initialState,
   reducers: {},
   extraReducers: {},
 })
@@ -14,5 +15,8 @@ const additionalTraining = createSlice({
 describe("additionalTraining", () => {
   it("should reducer returned defined", () => {
     expect(additionalTraining.reducer).toBeDefined()
+  })
+  it("should be defined initial State", () => {
+    expect(initialState.isLoadingAdditionalTraining).toBeFalsy()
   })
 })
