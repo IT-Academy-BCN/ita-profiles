@@ -50,7 +50,7 @@ class Resumes
 
         $resume->projects()->sync($projectIds);
 
-        $resume->additionalTrainings()->sync($additionalTrainingsIds); //añadimos esto y la variable en la función
+        $resume->additionalTrainings()->sync($additionalTrainingsIds);
 
         return $resume;
     }
