@@ -12,8 +12,7 @@ use Exception;
 
 class UpdateStudentSkillsService
 {
-
-    public function updateSkillsByStudentId(string $studentId, string $skills): Exception | bool
+    public function updateSkillsByStudentId(string $studentId, array $skills): Exception | bool
     {
         $student = Student::find($studentId);
 
@@ -21,20 +20,9 @@ class UpdateStudentSkillsService
             throw new StudentNotFoundException($studentId);
         }
 
-        $resume = $student->resume()->first();
-
-        if (!$resume) {
-            throw new ResumeNotFoundException($studentId);
-        }
-
-        $skills_array = json_decode($skills);
-
-        $tags = Tag::whereIn('tag_name', $skills_array);
-
+        $tags = Tag::whereIn('tag_name', $skills);
         $additionalTagsIds = $tags->pluck('id')->toArray();
-
-        $resume->tags_ids = json_encode($additionalTagsIds);
-        $resume->update();
+        $student->tags()->sync($additionalTagsIds);
 
         return true;
     }
