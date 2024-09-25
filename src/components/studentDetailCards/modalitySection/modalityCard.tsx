@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import remoto from '../../../assets/svg/remoto.svg'
 import { useAppSelector } from '../../../hooks/ReduxHooks'
+import LoadingSpiner from '../../atoms/LoadingSpiner'
 
 const ModalityCard: React.FC = () => {
   const { modality: modalityData, isLoadingModality, isErrorModality } = useAppSelector(state => state.ShowStudentReducer.studentAdditionalModality)
@@ -8,8 +9,8 @@ const ModalityCard: React.FC = () => {
   return (
     <div className="flex flex-col gap-3" data-testid="ModalityCard">
       <h3 className="font-bold text-lg">Modalidad</h3>
-      {isLoadingModality && 'loadingModality'}
-      {isErrorModality && "errorModality"}
+      {isLoadingModality && <LoadingSpiner />}
+      {isErrorModality && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
       {!isLoadingModality && <div className="flex-col items-center ">
         {modalityData.map((modality) => (
           <div key={uuidv4()} className="flex gap-3 py-1">
