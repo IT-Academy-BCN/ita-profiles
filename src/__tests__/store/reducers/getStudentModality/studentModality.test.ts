@@ -46,4 +46,14 @@ describe("studentModality", () => {
         expect(getStudentModalityThunk).toBeDefined()
     })
 
+    it("should be return initialValues", () => {
+        expect(studentModality(undefined, {
+            type: "object",
+            payload: []
+        })).toEqual({
+            isLoadingModality: false,
+            isErrorModality: false,
+            modality: []
+        })
+    })
 })
