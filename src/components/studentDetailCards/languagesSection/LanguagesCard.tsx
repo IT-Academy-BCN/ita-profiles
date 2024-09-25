@@ -2,7 +2,6 @@ import { useAppSelector } from '../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../atoms/LoadingSpiner'
 
 const LanguagesCard: React.FC = () => {
-  /* const [languages, setLanguages] = useState<TLanguage[]>([]) */
   const { studentLanguages } = useAppSelector(state => state.ShowStudentReducer)
   const { languagesData, isLoadingLanguages, isErrorLanguages } = studentLanguages
 
