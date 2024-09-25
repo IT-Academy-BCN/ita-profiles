@@ -1,4 +1,8 @@
+import { TModality } from "../../../../interfaces/interfaces";
 import studentModality from "../../../../store/reducers/getStudentModality/studentModality"
+import getStudentModalityThunk from "../../../../store/reducers/getStudentModality/studentModalityThunk"
+
+const modality: TModality[] = [];
 
 describe("studentModality", () => {
     it("should be defined", () => {
