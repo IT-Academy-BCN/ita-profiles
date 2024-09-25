@@ -51,10 +51,11 @@ class Resumes
             'github_url' => $githubUrl,
             'specialization' => $specialization,
             'modality' => $modality,
-            'additional_trainings_ids' => json_encode($additionalTrainingsIds),
         ]);
         $resume->student->tags()->sync($tagsIds);
         $resume->projects()->sync($projectIds);
+
+        $resume->additionalTrainings()->sync($additionalTrainingsIds);
 
         return $resume;
     }
@@ -66,7 +67,7 @@ class Resumes
         $tagsIds = [12, 6],
         $specialization = 'Frontend',
         $modality = 'Modality',
-        $additionalTrainingsIds = ['additional_training1', 'additional_training2']
+
     ): Resume {
         $specialization = substr($specialization, 0, 255);
 
@@ -77,9 +78,7 @@ class Resumes
             'github_url' => $githubUrl,
             'specialization' => $specialization,
             'modality' => $modality,
-            'additional_trainings_ids' => json_encode($additionalTrainingsIds),
         ]);
-        $resume->student->tags()->sync($tagsIds);
 
         return $resume;
     }
