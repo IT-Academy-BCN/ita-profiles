@@ -1,16 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { TModality } from "../../../interfaces/interfaces";
-import { fetchBootcampData } from "../../../api/FetchStudentBootcamp";
+import getStudentModalityThunk from "./studentModalityThunk";
 
 const modality: TModality[] = [];
-
-const getStudentModalityThunk = createAsyncThunk(
-    "getStudentModalityThunk",
-    async (studenSUID: string | null) => {
-        const response = await fetchBootcampData(studenSUID)
-        return response;
-    })
 
 const studentModality = createSlice({
     name: "studentModalitySlice",

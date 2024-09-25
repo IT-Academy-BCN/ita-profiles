@@ -1,3 +1,5 @@
+import studentModality from "../../../../store/reducers/getStudentModality/studentModality"
+
 describe("studentModality", () => {
     it("should be defined", () => {
         expect(studentModality).toBeDefined()
