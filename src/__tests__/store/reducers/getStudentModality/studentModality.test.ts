@@ -91,4 +91,15 @@ describe("studentModality", () => {
             ]
         })
     })
+
+    it("It is expected to return values when the request is rejected resolution", () => {
+        expect(studentModality(undefined, {
+            type: "getStudentModalityThunk/rejected",
+            payload: []
+        })).toEqual({
+            isLoadingModality: false,
+            isErrorModality: true,
+            modality: []
+        })
+    })
 })
