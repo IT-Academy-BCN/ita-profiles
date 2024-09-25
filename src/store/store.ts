@@ -6,6 +6,7 @@ import ShowStudentCollaborations from './reducers/getStudentCollaborations/stude
 import ShowStudentBootcamps from './reducers/getStudentBootcamp/studentBootcamp'
 import ShowStudentLanguages from './reducers/getStudentLanguages/studentLanguages'
 import ShowStudentAdditionalTraining from './reducers/getAdditionalTraining/studentAdditionalTraining'
+import ShowStudentModality from "./reducers/getStudentModality/studentModality"
 
 const student = combineReducers({
   studentDetails: ShowStudentDetails,
@@ -13,7 +14,8 @@ const student = combineReducers({
   studentCollaborations: ShowStudentCollaborations,
   studentBootcamps: ShowStudentBootcamps,
   studentLanguages: ShowStudentLanguages,
-  studentAdditionalTraining: ShowStudentAdditionalTraining
+  studentAdditionalTraining: ShowStudentAdditionalTraining,
+  studentAdditionalModality: ShowStudentModality
 })
 
 export const store = configureStore({
