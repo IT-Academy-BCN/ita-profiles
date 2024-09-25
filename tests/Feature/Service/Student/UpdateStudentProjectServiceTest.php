@@ -25,9 +25,8 @@ class UpdateStudentProjectServiceTest extends TestCase
 
         $this->student = Student::factory()->create();
         $this->project = Project::factory()->create();
-        $this->student->resume()->create([
-            'project_ids' => json_encode([$this->project->id])
-        ]);
+        $resume = $this->student->resume()->create([]);
+        $resume->projects()->attach($this->project->id);
     }
 
     public function testCanUpdateProjectSuccessfully(): void

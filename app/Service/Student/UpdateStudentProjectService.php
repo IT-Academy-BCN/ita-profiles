@@ -19,7 +19,7 @@ class UpdateStudentProjectService
             $project = $this->getProject($projectId);
 
             // Verificar que el proyecto pertenece al estudiante
-            if (!$this->isProjectOwnedByStudent($studentId, $projectId)) {
+            if (!$this->isProjectOwnedByStudent($student, $project)) {
                 throw new Exception("No tienes permiso para actualizar este proyecto.", 403);
             }
 
@@ -49,12 +49,9 @@ class UpdateStudentProjectService
         return $project;
     }
 
-    private function isProjectOwnedByStudent(string $studentId, string $projectId): bool
+    private function isProjectOwnedByStudent(Student $student, Project $project): bool
     {
-        return Student::where('id', $studentId)
-            ->whereHas('resume', function ($query) use ($projectId) {
-                $query->where('project_ids', 'like', "%$projectId%");
-            })->exists();
+        return $student->resume->projects->contains($project);
     }
 
     private function updateProject(Project $project, array $data): void

@@ -47,14 +47,12 @@ class StudentProjectsDetailService
 
     private function getProjects(object $resume):Collection
     {
-        $projectIds = json_decode($resume->project_ids);
-        $projects = Project::findMany($projectIds);
-        return $projects;
+        return $resume->projects;
     }
 
     private function formatProjectsDetail(Collection $projects):array
     {
-        return 
+        return
             $projects->map(function ($project) {
                 $tags = Tag::findMany(json_decode($project->tags));
                 return [

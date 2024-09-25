@@ -80,7 +80,7 @@ class StudentProjectsDetailServiceTest extends TestCase
         $projects = $service->execute($student->id);
 
         $this->assertIsArray($projects);
-        
+
         $this->assertEmpty($projects);
     }
 

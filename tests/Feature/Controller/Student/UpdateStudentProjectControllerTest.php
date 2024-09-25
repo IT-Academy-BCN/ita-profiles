@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
+use App\Models\Resume;
 use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Project;
@@ -18,6 +19,7 @@ class UpdateStudentProjectControllerTest extends TestCase
     protected Student $student;
     protected Project $project;
     protected User $user;
+    protected Resume $resume;
 
     protected function setUp(): void
     {
@@ -25,9 +27,8 @@ class UpdateStudentProjectControllerTest extends TestCase
 
         $this->student = Student::factory()->create();
         $this->project = Project::factory()->create();
-        $this->student->resume()->create([
-            'project_ids' => json_encode([$this->project->id])
-        ]);
+        $this->resume = $this->student->resume()->create();
+        $this->resume->projects()->attach($this->project->id);
 
         // Create user and assign it to the student
         $this->user = User::factory()->create();

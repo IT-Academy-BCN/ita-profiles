@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Annotations\OpenApi\Controllers\StudentResume;
 
 class StudentDetailAnnotation
@@ -27,33 +26,31 @@ class StudentDetailAnnotation
      *         @OA\JsonContent(
      *             @OA\Property(
      *                 property="data",
-     *                 type="array",
-     *                 @OA\Items(
-     *                     @OA\Property(property="fullname", type="string", example="Katrine Wyman Jacobson"),
+     *                 type="object",
+     *                 @OA\Property(property="id", type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000"),
+     *                 @OA\Property(property="fullname", type="string", example="Katrine Wyman Jacobson"),
+     *                 @OA\Property(property="photo", type="string", nullable=true, example="https://example.com/photo.jpg"),
+     *                 @OA\Property(property="status", type="string", enum={"Active", "Inactive", "In a Bootcamp", "In a Job"}, example="Active"),
+     *                 @OA\Property(
+     *                     property="tags",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=4),
+     *                         @OA\Property(property="tag_name", type="string", example="HTML&CSS")
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     property="resume",
+     *                     type="object",
      *                     @OA\Property(property="subtitle", type="string", example="Full Stack developer en PHP"),
      *                     @OA\Property(
      *                         property="social_media",
      *                         type="object",
-     *                         @OA\Property(
-     *                             property="github",
-     *                             type="object",
-     *                             @OA\Property(property="url", type="string", example="https://github.com/bettie52")
-     *                         ),
-     *                         @OA\Property(
-     *                             property="linkedin",
-     *                             type="object",
-     *                             @OA\Property(property="url", type="string", example="https://linkedin.com/abernathy.dayne")
-     *                         )
+     *                         @OA\Property(property="github", type="string", example="https://github.com/bettie52"),
+     *                         @OA\Property(property="linkedin", type="string", example="https://linkedin.com/abernathy.dayne")
      *                     ),
-     *                     @OA\Property(property="about", type="string", example="Iusto aut debitis soluta facere tempore quisquam. Vel assumenda aliquid quod et eum quos ex. Ipsa ea tempora minima occaecati. Culpa occaecati quod laboriosam reiciendis quia consequuntur."),
-     *                     @OA\Property(
-     *                         property="tags",
-     *                         type="array",
-     *                         @OA\Items(
-     *                             @OA\Property(property="id", type="integer", example=4),
-     *                             @OA\Property(property="name", type="string", example="HTML&CSS")
-     *                         )
-     *                     )
+     *                     @OA\Property(property="about", type="string", example="Iusto aut debitis soluta facere tempore quisquam. Vel assumenda aliquid quod et eum quos ex. Ipsa ea tempora minima occaecati. Culpa occaecati quod laboriosam reiciendis quia consequuntur.")
      *                 )
      *             )
      *         )
