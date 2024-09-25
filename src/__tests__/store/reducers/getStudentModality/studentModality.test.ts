@@ -27,7 +27,7 @@ const studentModality = createSlice({
         builder.addCase(getStudentModalityThunk.fulfilled, (state, action) => {
             state.isLoadingModality = false
             state.isErrorModality = false
-            state.modality = action.payload.bootcamps
+            state.modality = action.payload.modality
         })
         builder.addCase(getStudentModalityThunk.rejected, (state) => {
             state.isLoadingModality = false
@@ -70,6 +70,25 @@ describe("studentModality", () => {
             isLoadingModality: true,
             isErrorModality: false,
             modality: []
+        })
+    })
+
+    it("It is expected to return values when the request is fulfilled resolution", () => {
+        expect(studentModality(undefined, {
+            type: "getStudentModalityThunk/fulfilled",
+            payload: {
+                "modality": [
+                    "Presencial",
+                    "Remot"
+                ]
+            }
+        })).toEqual({
+            isLoadingModality: false,
+            isErrorModality: false,
+            modality: [
+                "Presencial",
+                "Remot"
+            ]
         })
     })
 })
