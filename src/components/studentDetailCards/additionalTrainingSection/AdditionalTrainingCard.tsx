@@ -8,9 +8,9 @@ const AdditionalTrainingCard = () => {
   return (
     <div data-testid="AdditionalTrainingCard">
       <h3 className="text-lg font-bold text-black-3">Otra formación</h3>
-      <div className="flex flex-col pt-3">
-        {isLoadingAdditionalTraining && <LoadingSpiner />}
-        {isErrorAdditionalTraining && <LoadingSpiner />}
+      {isLoadingAdditionalTraining && <LoadingSpiner />}
+      {isErrorAdditionalTraining && <LoadingSpiner />}
+      {!isLoadingAdditionalTraining && <div className="flex flex-col pt-3">
         {additionalTraining && additionalTraining?.map((training: TAdditionalTraining, index) => (
           <div key={training.uuid} className="flex flex-col ">
             <h4 className=" font-bold">{training.course_name}</h4>
@@ -28,7 +28,7 @@ const AdditionalTrainingCard = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
     </div>
   )
 }
