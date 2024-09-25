@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import LanguagesCard from '../../../components/studentDetailCards/languagesSection/LanguagesCard';
@@ -40,13 +40,5 @@ describe('LanguagesCard component', () => {
         </SelectedStudentIdContext.Provider>
       </Provider>
     )
-
-    // Wait for languages to load
-    /* const languageElements = await screen.findAllByRole('listitem'); */
-
-    // Check if languages are rendered correctly
-    /* expect(languageElements).toHaveLength(2);
-    expect(languageElements[0]).toHaveTextContent('Spanish');
-    expect(languageElements[1]).toHaveTextContent('English'); */
   });
 });
