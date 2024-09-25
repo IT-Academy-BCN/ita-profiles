@@ -1,9 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import LanguagesCard from '../../../components/studentDetailCards/languagesSection/LanguagesCard';
-import { SelectedStudentIdContext } from '../../../context/StudentIdContext';
 import { Provider } from 'react-redux';
+import LanguagesCard from '../../../components/studentDetailCards/languagesSection/LanguagesCard';
 import { store } from '../../../store/store';
 
 describe('LanguagesCard component', () => {
@@ -22,7 +21,7 @@ describe('LanguagesCard component', () => {
   });
 
   const studentUUID = '123'; // You can replace this with a sample UUID
-  const setStudentUUID = () => {}
+
   const languagesData = [
     { language_id: 1, language_name: 'Spanish' },
     { language_id: 2, language_name: 'English' },
@@ -35,18 +34,12 @@ describe('LanguagesCard component', () => {
 
     render(
       <Provider store={store}>
-        <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
-          <LanguagesCard />
-        </SelectedStudentIdContext.Provider>
+        <LanguagesCard />
       </Provider>
     )
 
     // Wait for languages to load
-    /* const languageElements = await screen.findAllByRole('listitem'); */
-
-    // Check if languages are rendered correctly
-    /* expect(languageElements).toHaveLength(2);
-    expect(languageElements[0]).toHaveTextContent('Spanish');
-    expect(languageElements[1]).toHaveTextContent('English'); */
+    waitFor(() => expect(screen.getByText('Spanish')).toBeInTheDocument())
+    waitFor(() => expect(screen.getByText('English')).toBeInTheDocument())
   });
 });
