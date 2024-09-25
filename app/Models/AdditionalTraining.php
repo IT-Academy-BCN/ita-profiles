@@ -18,7 +18,9 @@ class AdditionalTraining extends Model
 
     public function resumes(): BelongsToMany
     {
-        return $this->belongsToMany(Resume::class, 'additional_training_resume');
+         // As a guide, we implement Laravel naming conventions for relationships.
+        // See: https://laravel.com/docs/10.x/eloquent-relationships#many-to-many        
+        return $this->belongsToMany(Resume::class);        
     }
 
 }
