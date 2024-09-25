@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Resume extends Model
 {
@@ -24,12 +25,19 @@ class Resume extends Model
         return $this->belongsTo(Student::class);
     }
 
-    public function languages()
+    public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class, 'language_resume', 'resume_id', 'language_id');
     }
-    public function bootcamps()
+    public function bootcamps(): BelongsToMany
     {
         return $this->belongsToMany(Bootcamp::class)->withPivot('end_date');
+    }
+
+    public function projects(): BelongsToMany
+    {
+        // As a guide, we implement Laravel naming conventions for relationships.
+        // See: https://laravel.com/docs/10.x/eloquent-relationships#many-to-many
+        return $this->belongsToMany(Project::class);
     }
 }
