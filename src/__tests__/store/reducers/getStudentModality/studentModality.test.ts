@@ -1,43 +1,3 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchBootcampData } from "../../../../api/FetchStudentBootcamp";
-import { TModality } from "../../../../interfaces/interfaces";
-
-const modality: TModality[] = [];
-
-const getStudentModalityThunk = createAsyncThunk(
-    "getStudentModalityThunk",
-    async (studenSUID: string | null) => {
-        const response = await fetchBootcampData(studenSUID)
-        return response;
-    })
-
-const studentModality = createSlice({
-    name: "studentModalitySlice",
-    initialState: {
-        isLoadingModality: false,
-        isErrorModality: false,
-        modality: []
-    },
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(getStudentModalityThunk.pending, (state) => {
-            state.isLoadingModality = true
-            state.isErrorModality = false
-        })
-        builder.addCase(getStudentModalityThunk.fulfilled, (state, action) => {
-            state.isLoadingModality = false
-            state.isErrorModality = false
-            state.modality = action.payload.modality
-        })
-        builder.addCase(getStudentModalityThunk.rejected, (state) => {
-            state.isLoadingModality = false
-            state.isErrorModality = true
-        })
-    }
-}).reducer;
-
-
-
 describe("studentModality", () => {
     it("should be defined", () => {
         expect(studentModality).toBeDefined()
@@ -62,7 +22,7 @@ describe("studentModality", () => {
         })
     })
 
-    it("It is expected to return values ​​when the request is pending resolution.", () => {
+    it("It is expected to return value ​​when the request is pending resolution.", () => {
         expect(studentModality(undefined, {
             type: "getStudentModalityThunk/pending",
             payload: []
@@ -102,4 +62,5 @@ describe("studentModality", () => {
             modality: []
         })
     })
+
 })
