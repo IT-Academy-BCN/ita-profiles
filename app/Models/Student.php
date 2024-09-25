@@ -36,8 +36,9 @@ class Student extends Model
     {
         return $this->hasOne(Resume::class);
     }
+
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'student_has_tags', 'student_id', 'tag_id');
+        return $this->belongsToMany(related: Tag::class);
     }
 }

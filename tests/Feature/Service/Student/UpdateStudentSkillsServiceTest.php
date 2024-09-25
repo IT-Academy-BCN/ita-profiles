@@ -22,83 +22,83 @@ class UpdateStudentSkillsServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->studentSkillsService = new UpdateStudentSkillsService();
     }
-	
-    
-    
+
+
+
     /**
      * @dataProvider canUpdateStudentSkillsByStudentIdProvider
-     */ 
-    public function testCanUpdateStudentSkillsByStudentId(string $skills): void
+     */
+    public function testCanUpdateStudentSkillsByStudentId(array $skills): void
     {
-		
+
 		$studentID = Resume::first()->student_id;
 		$result = $this->studentSkillsService->updateSkillsByStudentId($studentID, $skills);
 		$this->assertEquals(True, $result);
 
     }
-    
-    
+
+
     static function canUpdateStudentSkillsByStudentIdProvider()
     {
-		
+
 		$array = array(
 			array(
-				'["one", "two", "three"]'
+				["one", "two", "three"]
 				),
 			array(
-				'[]'
+				[]
 				),
 			array(
-				'["one"]'
+				["one"]
 				),
 			array(
-				'["one", "two", "three"]'
+				["one", "two", "three"]
 				),
 			array(
-				'[]',
+				[],
 				),
-			);
-			
+        );
+
 		return $array;
-    
+
 	}
-    
+
 	/**
      * @dataProvider canThrowStudentNotFoundExceptionWhenTheStudentIsMissingByIdProvider
-     */ 
-    public function testCanThrowStudentNotFoundExceptionWhenTheStudentIsMissingById(string $studentID, string $skills): void
+     */
+    public function testCanThrowStudentNotFoundExceptionWhenTheStudentIsMissingById(string $studentID, array $skills): void
     {
 
 		$this->expectException(StudentNotFoundException::class);
-		 
+
 		$result = $this->studentSkillsService->updateSkillsByStudentId($studentID, $skills);
-		
+
     }
-    
-    
+
+
     static function canThrowStudentNotFoundExceptionWhenTheStudentIsMissingByIdProvider()
     {
-		
+
 		$array = array(
 			array(
-				'1',
-				'["one", "two", "three"]'
+				"1",
+				["one", "two", "three"]
 				),
 			array(
-				'HOHOHO',
-				'[]'
+				"HOHOHO",
+				[]
 				),
 			array(
-				'Geil',
-				'["one"]'
+				"Geil",
+				["one"]
 				),
 			);
-			
+
 		return $array;
-    
+
 	}
-	
+
 }

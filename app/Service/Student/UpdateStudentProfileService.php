@@ -19,8 +19,9 @@ class UpdateStudentProfileService
     public function updateStudentProfile(string $studentId, array $data): void
     {
         $student = $this->getStudentById($studentId);
-        $this->updateFields($student, $data, ['name', 'surname']);
+        $this->updateStudent($student, $data);
         $this->updateResume($student, $data);
+        $this->updateStudentTags($student, $data);
     }
 
     private function getStudentById(string $studentId): Student
@@ -33,18 +34,11 @@ class UpdateStudentProfileService
         return $student;
     }
 
-    private function updateFields($model, array $data, array $fields): void
+    public function updateStudent(Student $student, array $data): void
     {
-        $updateData = [];
-        foreach ($fields as $field) {
-            if (isset($data[$field])) {
-                $updateData[$field] = $data[$field];
-            }
-        }
-
-        if (!empty($updateData)) {
-            $model->update($updateData);
-        }
+        $student->name = $data['name'] ?? $student->name;
+        $student->surname = $data['surname'] ?? $student->surname;
+        $student->update($data);
     }
 
     private function updateResume(Student $student, array $data): void
@@ -54,6 +48,17 @@ class UpdateStudentProfileService
             throw new ResumeNotFoundException($student->id);
         }
 
-        $this->updateFields($resume, $data, ['subtitle', 'github_url', 'linkedin_url', 'about', 'tags_ids']);
+        $resume->subtitle = $data['subtitle'] ?? $resume->subtitle;
+        $resume->github_url = $data['github_url'] ?? $resume->github_url;
+        $resume->linkedin_url = $data['linkedin_url'] ?? $resume->linkedin_url;
+        $resume->about = $data['about'] ?? $resume->about;
+        $resume->update($data);
+    }
+
+    private function updateStudentTags(Student $student, array $data): void
+    {
+        if (isset($data['tags_ids'])) {
+        $student->tags()->sync($data['tags_ids']);
+        }
     }
 }

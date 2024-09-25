@@ -31,7 +31,7 @@ class StudentProjectsDetailServiceTest extends TestCase
     {
         $student = Students::aStudent();
 
-        $resume = Resumes::createResumeWithModality($student->id, 'frontend', ['tag1', 'tag2'], 'Presencial');
+        $resume = Resumes::createResumeWithModality($student->id, 'frontend', [11, 13], 'Presencial');
 
         $projectNames = ['Project 1', 'Project 2', 'Project 3'];
 

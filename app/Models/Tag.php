@@ -21,7 +21,12 @@ class Tag extends Model
      */
     public function students()
     {
-        return $this->belongsToMany(Student::class, 'student_has_tags', 'tag_id', 'student_id');
+        return $this->belongsToMany(related: Student::class, foreignPivotKey: 'tag_id', relatedPivotKey: 'student_id');
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(related: Project::class, foreignPivotKey: 'tag_id', relatedPivotKey: 'project_id');
     }
 
     public function toArray(): array {
