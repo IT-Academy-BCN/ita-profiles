@@ -46,15 +46,28 @@ describe("studentModality", () => {
     it("should be defined getStudentModalityThunk", () => {
         expect(getStudentModalityThunk).toBeDefined()
     })
+
     it("should be defined const modality type TModality", () => {
         expect(modality).toBeDefined()
     })
+
     it("should be return initialValues", () => {
         expect(studentModality(undefined, {
             type: "object",
             payload: []
         })).toEqual({
             isLoadingModality: false,
+            isErrorModality: false,
+            modality: []
+        })
+    })
+
+    it("It is expected to return values ​​when the request is pending resolution.", () => {
+        expect(studentModality(undefined, {
+            type: "getStudentModalityThunk/pending",
+            payload: []
+        })).toEqual({
+            isLoadingModality: true,
             isErrorModality: false,
             modality: []
         })
