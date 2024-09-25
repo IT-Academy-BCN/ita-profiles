@@ -3,7 +3,6 @@ import axios from "axios";
 import MockAdapter from 'axios-mock-adapter';
 import { Provider } from 'react-redux'
 import StudentDataCard from '../../../components/studentDetailCards/studentDetailSection/StudentDetailCard';
-import { SelectedStudentIdContext } from '../../../context/StudentIdContext';
 import { store } from '../../../store/store';
 
 
@@ -23,7 +22,7 @@ describe('StudentDataCard', () => {
   });
 
   const studentUUID = '123';
-  const setStudentUUID = () => { };
+
   const aboutData = [
     {
       id: 1,
@@ -47,9 +46,7 @@ describe('StudentDataCard', () => {
 
     render(
       <Provider store={store}>
-        <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
-          <StudentDataCard />
-        </SelectedStudentIdContext.Provider>
+        <StudentDataCard />
       </Provider>,
     );
   });

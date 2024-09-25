@@ -15,7 +15,7 @@ const ModalityCard: React.FC = () => {
         {modalityData.map((modality) => (
           <div key={uuidv4()} className="flex gap-3 py-1">
             <img src={remoto} className="pr-2" alt="remoto" />
-            <p className="text-sm font-semibold text-black-2">{modality}</p>
+            <p className="text-sm font-semibold text-black-2">{modality.toString()}</p>
           </div>
         ))}
       </div>}
