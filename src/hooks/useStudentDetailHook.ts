@@ -9,6 +9,7 @@ import getStudentProjectsThunk from "../store/reducers/getStudentProjects/studen
 import getStudentCollaborationThunk from "../store/reducers/getStudentCollaborations/studentCollaborationsThunk";
 import getStudentLanguagesThunk from "../store/reducers/getStudentLanguages/studentLanguagesThunk";
 import getStudentAdditionalTrainingThunk from "../store/reducers/getAdditionalTraining/studentAdditionalTrainingThunk";
+import getStudentModalityThunk from "../store/reducers/getStudentModality/studentModalityThunk";
 
 const useStudentDetailHook = (role?: string | null) => {
     const { isMobile }: TSmallScreenContext = useContext(SmallScreenContext)
@@ -24,6 +25,7 @@ const useStudentDetailHook = (role?: string | null) => {
             dispatch(getStudentBootcampThunk(studentID))
             dispatch(getStudentLanguagesThunk(studentID))
             dispatch(getStudentAdditionalTrainingThunk(studentID))
+            dispatch(getStudentModalityThunk(studentID))
         } else if (!role && studentUUID) {
             dispatch(getStudentDetailThunk(studentUUID))
             dispatch(getStudentProjectsThunk(studentUUID))
@@ -31,6 +33,7 @@ const useStudentDetailHook = (role?: string | null) => {
             dispatch(getStudentBootcampThunk(studentUUID))
             dispatch(getStudentLanguagesThunk(studentUUID))
             dispatch(getStudentAdditionalTrainingThunk(studentUUID))
+            dispatch(getStudentModalityThunk(studentUUID))
         }
 
     }, [dispatch, role, studentID, studentUUID])
