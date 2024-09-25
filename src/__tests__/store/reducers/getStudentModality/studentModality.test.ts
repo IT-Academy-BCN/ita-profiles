@@ -42,4 +42,8 @@ describe("studentModality", () => {
         expect(studentModality).toBeDefined()
     })
 
+    it("should be defined getStudentModalityThunk", () => {
+        expect(getStudentModalityThunk).toBeDefined()
+    })
+
 })
