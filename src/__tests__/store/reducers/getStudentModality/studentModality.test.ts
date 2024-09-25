@@ -3,6 +3,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchBootcampData } from "../../../../api/FetchStudentBootcamp";
 
+
 const getStudentModalityThunk = createAsyncThunk(
     "getStudentModalityThunk",
     async (studenSUID: string | null) => {
@@ -45,7 +46,9 @@ describe("studentModality", () => {
     it("should be defined getStudentModalityThunk", () => {
         expect(getStudentModalityThunk).toBeDefined()
     })
-
+    it("should be defined const modality type TModality", () => {
+        expect(modality).toBeDefined()
+    })
     it("should be return initialValues", () => {
         expect(studentModality(undefined, {
             type: "object",
