@@ -17,10 +17,7 @@ class AdditionalTraining extends Model
     protected $guarded = ['id'];
 
     public function resumes(): BelongsToMany
-    {
-         // As a guide, we implement Laravel naming conventions for relationships.
-        // See: https://laravel.com/docs/10.x/eloquent-relationships#many-to-many        
+    {               
         return $this->belongsToMany(Resume::class);        
     }
-
 }
