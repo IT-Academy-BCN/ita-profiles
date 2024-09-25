@@ -1,8 +1,8 @@
-// const bootcampData: TBootcamp[] = [];
-
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchBootcampData } from "../../../../api/FetchStudentBootcamp";
+import { TModality } from "../../../../interfaces/interfaces";
 
+const modality: TModality[] = [];
 
 const getStudentModalityThunk = createAsyncThunk(
     "getStudentModalityThunk",
