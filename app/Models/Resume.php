@@ -43,6 +43,6 @@ class Resume extends Model
 
     public function additionalTrainings(): BelongsToMany
     {
-        return $this->belongsToMany(AdditionalTraining::class, 'additional_training_resume', 'resume_id', 'additional_training_id');
+        return $this->belongsToMany(AdditionalTraining::class);        
     }
 }
