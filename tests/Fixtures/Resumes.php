@@ -10,29 +10,35 @@ class Resumes
 {
     public static function createResume($studentId, $specialization, $tagIds): Resume
     {
-        return Resume::factory()->create([
+        $resume = Resume::factory()->create([
             'student_id' => $studentId,
             'specialization' => $specialization,
-            'tags_ids' => json_encode($tagIds),
         ]);
+        $resume->student->tags()->sync($tagIds);
+
+        return $resume;
     }
     public static function createResumeWithModality($studentId, $specialization, $tagIds, $modality): Resume
     {
-        return Resume::factory()->create([
+        $resume = Resume::factory()->create([
             'student_id' => $studentId,
             'specialization' => $specialization,
-            'tags_ids' => json_encode($tagIds),
             'modality' => $modality,
         ]);
+        $resume->student->tags()->sync($tagIds);
+
+        return $resume;
     }
     public static function createResumeWithoutModality($studentId, $specialization, $tagIds): Resume
     {
-        return Resume::factory()->create([
+        $resume = Resume::factory()->create([
             'student_id' => $studentId,
             'specialization' => $specialization,
-            'tags_ids' => json_encode($tagIds),
             'modality' => null,
         ]);
+        $resume->student->tags()->sync($tagIds);
+
+        return $resume;
     }
     public static function createResumeWithAllFields($studentId, $subtitle, $linkedinUrl, $githubUrl, $tagsIds, $specialization, $projectIds, $modality, $additionalTrainingsIds): Resume
     {
@@ -43,12 +49,11 @@ class Resumes
             'subtitle' => $subtitle,
             'linkedin_url' => $linkedinUrl,
             'github_url' => $githubUrl,
-            'tags_ids' => json_encode($tagsIds),
             'specialization' => $specialization,
             'modality' => $modality,
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
         ]);
-
+        $resume->student->tags()->sync($tagsIds);
         $resume->projects()->sync($projectIds);
 
         return $resume;
@@ -58,24 +63,24 @@ class Resumes
         $subtitle = 'Subtitle',
         $linkedinUrl = 'linkedin-url',
         $githubUrl = 'github-url',
-        $tagsIds = ['tag1', 'tag2'],
+        $tagsIds = [12, 6],
         $specialization = 'Frontend',
         $modality = 'Modality',
         $additionalTrainingsIds = ['additional_training1', 'additional_training2']
     ): Resume {
         $specialization = substr($specialization, 0, 255);
 
-        $attributes = [
+        $resume = Resume::factory()->create([
             'student_id' => $studentId,
             'subtitle' => $subtitle,
             'linkedin_url' => $linkedinUrl,
             'github_url' => $githubUrl,
-            'tags_ids' => json_encode($tagsIds),
             'specialization' => $specialization,
             'modality' => $modality,
             'additional_trainings_ids' => json_encode($additionalTrainingsIds),
-        ];
+        ]);
+        $resume->student->tags()->sync($tagsIds);
 
-        return Resume::factory()->create($attributes);
+        return $resume;
     }
 }

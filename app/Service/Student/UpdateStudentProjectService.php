@@ -23,7 +23,7 @@ class UpdateStudentProjectService
                 throw new Exception("No tienes permiso para actualizar este proyecto.", 403);
             }
 
-            $this->updateProject($project, $data);
+            $this->updateProject($project, $student, $data);
         });
     }
 
@@ -54,7 +54,7 @@ class UpdateStudentProjectService
         return $student->resume->projects->contains($project);
     }
 
-    private function updateProject(Project $project, array $data): void
+    private function updateProject(Project $project, Student $student, array $data): void
     {
         $project->name = $data['project_name'] ?? $project->name;
         $project->github_url = $data['github_url'] ?? $project->github_url;
@@ -64,7 +64,7 @@ class UpdateStudentProjectService
         if (isset($data['tags'])) {
             $tagsArray = $data['tags'];
             $tagIds = Tag::whereIn('id', $tagsArray)->pluck('id')->toArray();
-            $project->tags = json_encode($tagIds);
+            $student->tags()->sync($tagIds);
         }
 
         $project->update();
