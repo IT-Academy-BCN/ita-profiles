@@ -20,7 +20,7 @@ class StudentProjectsDetailService
         $resume = $this->getResume($student);
         $projects = $this->getProjects($resume);
 
-        return $this->formatProjectsDetail($projects);
+        return $this->formatProjectsDetail(projects: $projects);
     }
 
     private function getStudent(string $studentId):Student
@@ -52,15 +52,13 @@ class StudentProjectsDetailService
 
     private function formatProjectsDetail(Collection $projects):array
     {
-        return
-            $projects->map(function ($project) {
-                $tags = Tag::findMany(json_decode($project->tags));
+        return $projects->map(function ($project): array {
                 return [
                     'uuid' => $project->id,
                     'project_name' => $project->name,
                     'company_name' => $project->company_name,
                     'project_url' => $project->project_url,
-                    'tags' => $tags->map(function ($tag) {
+                    'tags' => $project->tags->map(callback: function ($tag): array {
                         return [
                             'id' => $tag->id,
                             'name' => $tag->tag_name,
@@ -69,5 +67,5 @@ class StudentProjectsDetailService
                     'github_url' => $project->github_url,
                 ];
             })->toArray();
-        }
+    }
 }

@@ -43,11 +43,10 @@ class UpdateStudentProfileControllerTest extends TestCase
         $user = $this->createUser();
         $student = $this->createStudent($user);
         $resume = $this->createResume($student);
-
         $dataToUpdate = array_merge(
             $student->only(['id', 'name', 'surname']),
             $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about']),
-            ['tags_ids' => json_decode($resume->tags_ids)]
+            ['tags_ids' => [5, 6, 9]]
         );
 
         $url = route('student.updateProfile', ['studentId' => $student->id]);
@@ -171,7 +170,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         $dataToUpdate = array_merge(
             $student->only(['id', 'name', 'surname']),
             $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about']),
-            ['tags_ids' => json_decode($resume->tags_ids)]
+            ['tags_ids' => [2, 3, 7]]
         );
 
         $url = route('student.updateProfile', ['studentId' => $student->id]);

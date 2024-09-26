@@ -17,6 +17,12 @@ class Project extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
 
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(related: Tag::class);
+    }
+
     public function resumes(): BelongsToMany
     {
         // As a guide, we implement Laravel naming conventions for relationships.

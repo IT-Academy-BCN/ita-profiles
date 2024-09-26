@@ -16,17 +16,16 @@ class StudentDetailService
     {
         return $this->getStudentDetailsById($studentId);
     }
-    
+
 
     public function getStudentDetailsById($studentId): array
     {
         $student = $this->getStudent($studentId);
         $resume = $this->getResume($student);
-        $fullName = $this->getFullName($student);
-        $formattedTags = $this->getFormattedTags($resume);
+        $formattedTags = $this->getFormattedTags($student);
 
         return [
-            'fullname' => $fullName,
+            'fullname' => $student->name . ' ' . $student->surname,
             'subtitle' => $resume->subtitle,
             'social_media' => [
                 'github' => [
@@ -63,24 +62,14 @@ class StudentDetailService
         return $resume;
     }
 
-    private function getFullName(Student $student): string
+    private function getFormattedTags(Student $student): array
     {
-        return $student->name . ' ' . $student->surname;
-    }
-
-    private function getFormattedTags(Resume $resume): array
-    {
-        $tagsIds = json_decode($resume->tags_ids, true);
-        $tags = Tag::whereIn('id', $tagsIds)->get(['id', 'tag_name'])->toArray();
-
-        $formattedTags = [];
-        foreach ($tags as $tag) {
-            $formattedTags[] = [
-                'id' => $tag['id'],
-                'name' => $tag['tag_name']
+        return $student->tags->map(function ($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->tag_name
             ];
-        }
-
-        return $formattedTags;
+        })->toArray();
     }
+
 }

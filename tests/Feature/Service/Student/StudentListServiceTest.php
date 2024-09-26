@@ -8,6 +8,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Service\Student\StudentListService;
 use App\Models\Resume;
+use App\Models\Student;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -20,20 +21,23 @@ class StudentListServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->studentListService = new StudentListService();
     }
 
     public function testExecuteReturnsExpectedData(): void
     {
-        $tag = Tag::factory()->create(['tag_name' => 'tag1']);
+        $tag = Tag::factory()->create(attributes: ['tag_name' => 'tag1']);
 
-        $resume = Resume::factory()->create([
-            'specialization' => 'Backend',
-            'tags_ids' => json_encode([$tag->id])
+        $student = Student::factory()->create();
+        $student->tags()->attach($tag->id);
+
+        $resume = Resume::factory()->create(attributes: [
+            'student_id' => $student->id,
+            'specialization' => 'Backend'
         ]);
 
-        $data = $this->studentListService->execute(['Backend'], ['tag1']);
+        $data = $this->studentListService->execute(specializations: ['Backend'], tags: ['tag1']);
 
         $this->assertCount(1, $data);
         $this->assertEquals($resume->student->id, $data[0]['id']);
@@ -43,7 +47,7 @@ class StudentListServiceTest extends TestCase
         $this->assertEquals($tag->id, $data[0]['tags'][0]['id']);
         $this->assertEquals($tag->tag_name, $data[0]['tags'][0]['name']);
     }
-    
+
     public function testExecuteThrowsModelNotFoundExceptionWhenNoResumes(): void
     {
         Resume::query()->delete();
@@ -57,5 +61,4 @@ class StudentListServiceTest extends TestCase
     {
         self::assertInstanceOf(StudentListService::class, $this->studentListService);
     }
-
 }

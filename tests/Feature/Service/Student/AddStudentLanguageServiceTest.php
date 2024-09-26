@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Service\Student;
+namespace Tests\Feature\Service\Student;
 
 use Tests\TestCase;
 use App\Models\Student;
@@ -31,7 +31,7 @@ class AddStudentLanguageServiceTest extends TestCase
 
         $this->student = Student::factory()->create();
         $this->resume = Resume::factory()->create(['student_id' => $this->student->id]);
-        
+
         // Language has no factory because it has fixed values in the seeder
         $this->language = Language::first();
     }
