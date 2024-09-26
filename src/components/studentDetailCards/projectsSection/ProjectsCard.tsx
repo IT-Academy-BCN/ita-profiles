@@ -1,49 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
 import { Github, Dots, ArrowLeft, ArrowRight } from '../../../assets/svg'
 import { ArrowRightProjects } from '../../../assets/img'
-import { TProject } from '../../../interfaces/interfaces'
-import { FetchStudentsProjects } from '../../../api/FetchStudentsProjects'
-import { useStudentIdContext } from '../../../context/StudentIdContext'
+import { useAppSelector } from '../../../hooks/ReduxHooks'
+import LoadingSpiner from '../../atoms/LoadingSpiner'
+import { Carousel } from '../../atoms/Carousel'
 
 const ProjectsCard: React.FC = () => {
-  const [projects, setProjects] = useState<TProject[]>([])
-  const { studentUUID } = useStudentIdContext()
+  const { studentProjects } = useAppSelector(state => state.ShowStudentReducer)
+  const { projectsData, isLoadingProjects, isErrorProjects } = studentProjects
 
-  useEffect(() => {
-    const getProjects = async () => {
-      try {
-        if (studentUUID) {
-          const studentProjects = await FetchStudentsProjects(studentUUID)
-          setProjects(studentProjects)
-        }
-      } catch (error) {
-        throw new Error('Failed to obtain projects')
-      }
-    }
-
-    if (studentUUID) {
-      getProjects()
-    }
-  }, [studentUUID])
-
-  const carouselRef = useRef<HTMLDivElement>(null)
-  const scrollLeft = () => {
-    if (carouselRef.current) {
-      const cardWidth = (carouselRef.current?.firstChild as HTMLElement)
-        ?.offsetWidth
-      const scrollAmount = carouselRef.current.scrollLeft - cardWidth
-      carouselRef.current.scrollLeft = scrollAmount
-    }
-  }
-
-  const scrollRight = () => {
-    if (carouselRef.current) {
-      const cardWidth = (carouselRef.current?.firstChild as HTMLElement)
-        ?.offsetWidth
-      const scrollAmount = carouselRef.current.scrollLeft + cardWidth
-      carouselRef.current.scrollLeft = scrollAmount
-    }
-  }
+  const { scrollLeft, scrollRight, carouselRef } = Carousel()
 
   return (
     <div
@@ -61,8 +26,10 @@ const ProjectsCard: React.FC = () => {
           </button>
         </div>
       </div>
-      <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
-        {projects.map((project) => (
+      {isLoadingProjects && <LoadingSpiner />}
+      {isErrorProjects && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
+      {projectsData && <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
+        {projectsData.map((project) => (
           <div
             key={project.uuid}
             className="flex flex-col gap-1 rounded-xl border border-gray-3 px-5 py-3.5 "
@@ -104,9 +71,11 @@ const ProjectsCard: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div>}
     </div>
   )
 }
 
 export default ProjectsCard
+
+

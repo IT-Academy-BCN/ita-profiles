@@ -1,8 +1,10 @@
 import { render } from '@testing-library/react';
 import axios from "axios";
 import MockAdapter from 'axios-mock-adapter';
+import { Provider } from 'react-redux'
 import StudentDataCard from '../../../components/studentDetailCards/studentDetailSection/StudentDetailCard';
-import { SelectedStudentIdContext} from '../../../context/StudentIdContext';
+import { store } from '../../../store/store';
+
 
 describe('StudentDataCard', () => {
   let mock: MockAdapter;
@@ -20,7 +22,7 @@ describe('StudentDataCard', () => {
   });
 
   const studentUUID = '123';
-  const setStudentUUID = () => { };
+
   const aboutData = [
     {
       id: 1,
@@ -43,9 +45,9 @@ describe('StudentDataCard', () => {
       .reply(200, aboutData);
 
     render(
-      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
+      <Provider store={store}>
         <StudentDataCard />
-      </SelectedStudentIdContext.Provider>,
+      </Provider>,
     );
   });
 });

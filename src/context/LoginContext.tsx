@@ -1,8 +1,9 @@
 import { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { UserResponseData } from '../interfaces/interfaces';
 
 interface LoginContextProps {
   token: string | null;
-  login: (user: {id: string, token: string}) => void;
+  login: (user: UserResponseData) => void;
   logout: () => void;
   isLoggedIn: boolean;
 }
@@ -13,22 +14,23 @@ const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  const login = (user: {id: string, token: string}) => {
+  const login = (user: UserResponseData) => {
     setToken(user.token);
     localStorage.setItem('token', user.token);
+    localStorage.setItem('studentID', user.studentID);
     setIsLoggedIn(true);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('studentID');
     setToken(null);
     setIsLoggedIn(false);
-    
   };
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    setIsLoggedIn(Boolean(storedToken)); 
+    setIsLoggedIn(Boolean(storedToken));
     /* console.log("token cambió:", token); */
   }, [token]);
 

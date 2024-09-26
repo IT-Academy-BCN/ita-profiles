@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const FetchStudentsCollaboration = async (studentId: string | null) => {
+export const fetchStudentsCollaboration = async (studentId: string | null) => {
     try {
         const response = await axios.get(`//localhost:8000/api/v1/student/${studentId}/resume/collaborations`);
         return response.data.collaborations;

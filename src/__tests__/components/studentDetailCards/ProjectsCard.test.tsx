@@ -2,15 +2,19 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import axios from "axios";
 import React from 'react';
 import MockAdapter from 'axios-mock-adapter';
+import { Provider } from 'react-redux';
 import ProjectsCard from '../../../components/studentDetailCards/projectsSection/ProjectsCard';
 import { SelectedStudentIdContext, SelectedStudentProvider } from '../../../context/StudentIdContext';
+import { store } from '../../../store/store';
 
 describe('ProjectsCard', () => {
   beforeEach(() => {
     render(
-      <SelectedStudentProvider>
-        <ProjectsCard />
-      </SelectedStudentProvider>,
+      <Provider store={store}>
+        <SelectedStudentProvider>
+          <ProjectsCard />
+        </SelectedStudentProvider>
+      </Provider>,
     )
   })
   test('should show "Projects" all the time', () => {
@@ -48,9 +52,11 @@ describe('ProjectsCard component', () => {
       .reply(200, projectsData)
 
     render(
-      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
-        <ProjectsCard />
-      </SelectedStudentIdContext.Provider>,
+      <Provider store={store}>
+        <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
+          <ProjectsCard />
+        </SelectedStudentIdContext.Provider>
+      </Provider>,
     )
 
     // Wait for projects to load
@@ -64,21 +70,21 @@ describe('ProjectsCard component', () => {
 describe('scrollLeft and scrollRight functions', () => {
   test('scrollLeft function scrolls left when button is clicked', () => {
     const carouselRef = React.createRef<HTMLDivElement>();
-    render(<ProjectsCard />, { wrapper: ({ children }) => <div ref={carouselRef}>{children}</div> });
+    render(<Provider store={store}><ProjectsCard /></Provider>, { wrapper: ({ children }) => <div ref={carouselRef}>{children}</div> });
     fireEvent.click(screen.getByAltText('arrow left'));
     expect(screen.getByTestId('ProjectsCard').scrollLeft).toBeGreaterThanOrEqual(0);
   });
 
   test('scrollRight function scrolls right when button is clicked', () => {
     const carouselRef = React.createRef<HTMLDivElement>();
-    render(<ProjectsCard />, { wrapper: ({ children }) => <div ref={carouselRef}>{children}</div> });
+    render(<Provider store={store}><ProjectsCard /></Provider>, { wrapper: ({ children }) => <div ref={carouselRef}>{children}</div> });
     fireEvent.click(screen.getByAltText('arrow right'));
     expect(screen.getByTestId('ProjectsCard').scrollLeft).toBeGreaterThanOrEqual(0);
   });
 
   test('carousel width changes after scrolling', () => {
     const carouselRef = React.createRef<HTMLDivElement>();
-    render(<ProjectsCard />, { wrapper: ({ children }) => <div ref={carouselRef}>{children}</div> });
+    render(<Provider store={store}><ProjectsCard /></Provider>, { wrapper: ({ children }) => <div ref={carouselRef}>{children}</div> });
     const initialWidth = screen.getByTestId('ProjectsCard').offsetWidth;
 
     fireEvent.click(screen.getByAltText('arrow left'));
