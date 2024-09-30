@@ -18,7 +18,6 @@ class StudentProjectsDetailControllerTest extends TestCase
     use DatabaseTransactions;
 
     protected $student;
-
     protected $projects;
 
     protected function setUp(): void
@@ -36,7 +35,7 @@ class StudentProjectsDetailControllerTest extends TestCase
 
     public function test_controller_returns_correct_response_with_valid_uuid():void
     {
-        $response = $this->get(route('student.projects', ['studentId' => $this->student->id]));
+        $response = $this->get(route('student.projects', ['student' => $this->student]));
 
         $response->assertStatus(200);
         
@@ -58,9 +57,9 @@ class StudentProjectsDetailControllerTest extends TestCase
     {
         $invalidUuid = 'invalid_uuid';
 
-        $response = $this->get(route('student.projects', ['studentId' => $invalidUuid]));
+        $response = $this->get(route('student.projects', ['student' => $invalidUuid]));
 
-        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: ' . $invalidUuid]);
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $invalidUuid]);
 
         $response->assertStatus(404);
     }
@@ -71,9 +70,9 @@ class StudentProjectsDetailControllerTest extends TestCase
 
         Resume::where('student_id', $student->id)->delete();
 
-        $response = $this->get(route('student.projects', ['studentId' => $student->id]));
+        $response = $this->get(route('student.projects', ['student' => $student]));
 
-        $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $student->id]);
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $student->id]);
         
         $response->assertStatus(404);
     }
