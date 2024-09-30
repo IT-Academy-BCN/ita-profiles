@@ -12,6 +12,7 @@ class StudentProjectsDetailController extends Controller
 {
     public function __invoke(Student $student): JsonResponse
     {
-        return response()->json($student);
+        $projects = $student->resume->projects;
+        return response()->json($projects);
     }
 }
