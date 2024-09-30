@@ -36,15 +36,13 @@ class StudentProjectsDetailControllerTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJsonStructure([
-            '*' => [
-                'id',
-                'name',
-                'github_url',
-                'project_url',
-                'company_name',
-                'pivot' => [
-                    'resume_id',
-                    'project_id'
+            'projects' => [
+                '*' => [
+                    'id',
+                    'name',
+                    'github_url',
+                    'project_url',
+                    'company_name'
                 ]
             ]
         ]);
