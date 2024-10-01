@@ -11,28 +11,18 @@ use App\Exceptions\{
 
 class UpdateStudentProfileService
 {
-    public function execute(string $studentId, array $data): void
+    public function execute(Student $student, array $data): void
     {
-        $this->updateStudentProfile($studentId, $data);
+        $this->updateStudentProfile($student, $data);
     }
 
-    public function updateStudentProfile(string $studentId, array $data): void
+    public function updateStudentProfile(Student $student, array $data): void
     {
-        $student = $this->getStudentById($studentId);
         $this->updateStudent($student, $data);
         $this->updateResume($student, $data);
         $this->updateStudentTags($student, $data);
     }
 
-    private function getStudentById(string $studentId): Student
-    {
-        $student = Student::find($studentId);
-        if (!$student) {
-            throw new StudentNotFoundException($studentId);
-        }
-
-        return $student;
-    }
 
     public function updateStudent(Student $student, array $data): void
     {
