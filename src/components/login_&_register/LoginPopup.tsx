@@ -30,7 +30,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
       // eslint-disable-next-line no-console
-      console.log("Yes it is called...");
+     // console.log("Yes it is called...");
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
       // eslint-disable-next-line
       user = response.data
