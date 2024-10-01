@@ -21,7 +21,14 @@ class ProjectCollection extends ResourceCollection
                     'name' => $project->name,
                     'github_url' => $project->github_url,
                     'project_url' => $project->project_url,
-                    'company_name' => $project->company_name
+                    'company_name' => $project->company_name,
+                    'tags' => $project->tags->map(function ($tag) {
+                        return [
+                            'id' => $tag->id,
+                            // Right now the correct name of the property is tag_name, but it should be renamed to name.
+                            'name' => $tag->name,
+                        ];
+                    }),
                 ];
             }),
         ];

@@ -27,12 +27,18 @@ class StudentProjectsDetailControllerTest extends TestCase
         $resume->projects()->attach($this->projects->pluck('id')->toArray());
     }
 
+    public function testStudentProjectsDetailControllerCanBeInstantiated(): void
+    {
+        $controller = new StudentProjectsDetailController();
+
+        $this->assertInstanceOf(StudentProjectsDetailController::class, $controller);
+    }
+
     public function testStudentProjectsDetailsAreFound(): void
     {
         $response = $this->get(route('student.projects', ['student' => $this->student]));
 
         $response->assertStatus(200);
-
         $response->assertJsonStructure([
             'projects' => [
                 '*' => [
@@ -40,51 +46,46 @@ class StudentProjectsDetailControllerTest extends TestCase
                     'name',
                     'github_url',
                     'project_url',
-                    'company_name'
+                    'company_name',
+                    'tags' => [
+                        '*' => [
+                            'id',
+                            'name'
+                        ]
+                    ]
                 ]
             ]
         ]);
     }
 
-    // public function testStudentProjectsDetailsAreNotFound(): void
-    // {
-    //     $nonExistentStudentId = 'non_existent_student_id';
-
-    //     $response = $this->get(route('student.projects', ['student' => $this->student]));
-
-    //     $response->assertStatus(404);
-
-    //     $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $nonExistentStudentId]);
-    // }
-
-    public function testStudentProjectDetailsControllerReturns404WithInvalidUuid(): void
+    public function testStudentProjectsDetailControllerReturns404WhenStudentNotFound(): void
     {
         $invalidUuid = 'invalid_uuid';
 
         $response = $this->get(route('student.projects', ['student' => $invalidUuid]));
-
-        $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $invalidUuid]);
-
+        
         $response->assertStatus(404);
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $invalidUuid]);
     }
 
-    public function testStudentProjectDetailsControllerReturns404WithNoResume(): void
+    public function testStudentProjectsDetailControllerReturnsEmptyProjectsWhenNoResume(): void
     {
-        // $student = Students::aStudent();
-
         Resume::where('student_id', $this->student->id)->delete();
 
         $response = $this->get(route('student.projects', ['student' => $this->student->id]));
 
-        $response->assertJson(['message' => 'Attempt to read property "projects" on null']);
-
-        $response->assertStatus(404);
+        $response->assertStatus(200);
+        $response->assertJson(['projects' => []]);
     }
 
-    public function testStudentProjectsDetailControllerCanBeInstantiated(): void
+    public function testStudentProjectsDetailControllerReturnsEmptyProjectsWhenNoProjects(): void
     {
-        $controller = new StudentProjectsDetailController();
+        $resume = $this->student->resume;
+        $resume->projects()->detach();
 
-        $this->assertInstanceOf(StudentProjectsDetailController::class, $controller);
+        $response = $this->get(route('student.projects', ['student' => $this->student->id]));
+
+        $response->assertStatus(200);
+        $response->assertJson(['projects' => []]);
     }
 }

@@ -13,7 +13,7 @@ class StudentProjectsDetailController extends Controller
 {
     public function __invoke(Student $student): JsonResponse
     {
-        $projects = $student->resume->projects;
+        $projects = $student->resume?->projects ?? collect();
         return response()->json(new ProjectCollection($projects));
     }
 }
