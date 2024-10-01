@@ -19,9 +19,9 @@ class ProjectCollection extends ResourceCollection
                 return [
                     'id' => $project->id,
                     'name' => $project->name,
+                    'company_name' => $project->company_name,
                     'github_url' => $project->github_url,
                     'project_url' => $project->project_url,
-                    'company_name' => $project->company_name,
                     'tags' => $project->tags->map(function ($tag) {
                         return [
                             'id' => $tag->id,

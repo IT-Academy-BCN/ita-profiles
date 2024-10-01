@@ -44,9 +44,9 @@ class StudentProjectsDetailControllerTest extends TestCase
                 '*' => [
                     'id',
                     'name',
+                    'company_name',
                     'github_url',
                     'project_url',
-                    'company_name',
                     'tags' => [
                         '*' => [
                             'id',
