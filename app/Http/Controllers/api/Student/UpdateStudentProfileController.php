@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\Student;
 
 use App\Exceptions\ResumeNotFoundException;
 use App\Exceptions\StudentNotFoundException;
+use App\Models\Student;
 use Illuminate\Http\{
     JsonResponse,
 };
@@ -24,13 +25,13 @@ class UpdateStudentProfileController extends Controller
         $this->updateStudentProfileService = $updateStudentProfileService;
     }
 
-    public function __invoke(UpdateStudentRequest $request, string $studentId): JsonResponse
+    public function __invoke(UpdateStudentRequest $request, Student $student): JsonResponse
     {
         $dataStudentProfileUpdate = $request->validated();
 
         DB::beginTransaction();
         try {
-            $this->updateStudentProfileService->execute($studentId, $dataStudentProfileUpdate);
+            $this->updateStudentProfileService->execute($student, $dataStudentProfileUpdate);
             DB::commit();
 
             return response()->json([

@@ -45,10 +45,10 @@ class UpdateStudentProfileServiceTest extends TestCase
         $student = Student::factory()->has(Resume::factory())->create();
         $dataToUpdate = $this->createFakeDataToUpdate($student);
 
-        $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
+        $this->updateStudentProfileService->execute($student, $dataToUpdate);
 
         $this->assertDatabaseHas('students', [
-            'id' => $dataToUpdate['id'],
+            'id' => $student->id,
             'name' => $dataToUpdate['name'],
             'surname' => $dataToUpdate['surname'],
         ]);
@@ -62,22 +62,14 @@ class UpdateStudentProfileServiceTest extends TestCase
         $this->assertEquals($dataToUpdate['tags_ids'], ($resume->tags_ids));
     }
 
-    public function test_update_student_profile_throws_student_not_found_exception()
+    public function test_update_student_profile_student_not_found()
     {
-        $this->expectException(StudentNotFoundException::class);
 
-        $dataToUpdate = [
-            'id' => 'non-existent-id',
-            'name' => 'John',
-            'surname' => 'Doe',
-            'github_url' => 'https://github.com/johndoe',
-            'linkedin_url' => 'https://linkedin.com/in/johndoe',
-            'about' => 'Software Developer',
-            'subtitle' => 'Analista de Datos',
-            'tags_ids' => [1, 2, 3],
-        ];
+        $nonExistentStudentId = 12345;
 
-        $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
+        $response = $this->put(route('student.updateProfile', ['student' => $nonExistentStudentId]));
+
+        $response->assertJson(['message' => 'No query results for model [App\Models\Student] ' . $nonExistentStudentId]);
     }
 
     public function test_update_student_profile_throws_resume_not_found_exception()
@@ -87,6 +79,6 @@ class UpdateStudentProfileServiceTest extends TestCase
         $student = Student::factory()->create();
         $dataToUpdate = $this->createFakeDataToUpdate($student);
 
-        $this->updateStudentProfileService->execute($dataToUpdate['id'], $dataToUpdate);
+        $this->updateStudentProfileService->execute($student, $dataToUpdate);
     }
 }

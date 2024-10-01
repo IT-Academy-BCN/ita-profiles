@@ -49,7 +49,7 @@ class UpdateStudentProfileControllerTest extends TestCase
             ['tags_ids' => [5, 6, 9]]
         );
 
-        $url = route('student.updateProfile', ['studentId' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student->id]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(200);
@@ -64,7 +64,7 @@ class UpdateStudentProfileControllerTest extends TestCase
             'tags_ids' => [1, 2, 3],
         ];
 
-        $url = route('student.updateProfile', ['studentId' => $studentId]);
+        $url = route('student.updateProfile', ['student' => $studentId]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(404);
@@ -81,7 +81,7 @@ class UpdateStudentProfileControllerTest extends TestCase
             'tags_ids' => [1, 2, 3],
         ];
 
-        $url = route('student.updateProfile', ['studentId' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student->id]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(404);
@@ -95,7 +95,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         $user = $this->createUser();
         $student = $this->createStudent($user);
 
-        $url = route('student.updateProfile', ['studentId' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student->id]);
         $response = $this->json('PUT', $url, $invalidData);
 
         $response->assertStatus(422);
@@ -173,7 +173,7 @@ class UpdateStudentProfileControllerTest extends TestCase
             ['tags_ids' => [2, 3, 7]]
         );
 
-        $url = route('student.updateProfile', ['studentId' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student->id]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(500);
