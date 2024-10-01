@@ -6,7 +6,7 @@ if [ $(docker network ls | grep app-network) ]; then sh ./disconnect_and_remove_
 docker network create app-network
 if [ -d "../node_modules" ]; then sudo rm -Rf ../node_modules; fi
 if [ -d "../vendor" ]; then sudo rm -Rf ../vendor; fi
-docker-compose up --build -d
+docker compose up --build -d
 docker network connect app-network mysql
 docker network connect app-network php
 docker network connect app-network node
