@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import getStudentCollaborationThunk from "./studentCollaborationsThunk";
+
 import { TCollaboration } from "../../../interfaces/interfaces";
+import { getStudentCollaborationThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
 
 
 const studentCollaborations = createSlice({
@@ -18,7 +19,7 @@ const studentCollaborations = createSlice({
             state.isErrorCollaborations = false
         })
         builder.addCase(getStudentCollaborationThunk.fulfilled, (state, action) => {
-            state.collaborationsData = action.payload
+            state.collaborationsData = action.payload.collaborations
             state.isLoadingCollaborations = false
             state.isErrorCollaborations = false
         })

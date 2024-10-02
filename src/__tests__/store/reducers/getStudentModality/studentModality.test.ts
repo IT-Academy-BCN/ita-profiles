@@ -1,6 +1,7 @@
 import { TModality } from "../../../../interfaces/interfaces";
 import studentModality from "../../../../store/reducers/getStudentModality/studentModality"
-import getStudentModalityThunk from "../../../../store/reducers/getStudentModality/studentModalityThunk"
+import { getStudentModalityThunk } from "../../../../store/thunks/getDetailResourceStudentWithIdThunk";
+// import getStudentModalityThunk from "../../../../store/reducers/_old/studentModalityThunk"
 
 const modality: TModality[] = [];
 

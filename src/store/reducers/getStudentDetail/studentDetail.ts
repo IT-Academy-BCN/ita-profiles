@@ -2,7 +2,8 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { TAbout } from "../../../interfaces/interfaces";
-import getStudentDetailThunk from "./studentDetailThunk";
+import { getStudentDetailThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
+// import getStudentDetailThunk from "./studentDetailThunk";
 
 const aboutData: TAbout = {
     id: 0,

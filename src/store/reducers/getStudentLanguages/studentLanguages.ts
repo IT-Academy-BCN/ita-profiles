@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import getStudentLanguagesThunk from "./studentLanguagesThunk";
+// import getStudentLanguagesThunk from "./studentLanguagesThunk";
 import { TLanguage } from "../../../interfaces/interfaces";
+import { getStudentLanguagesThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
 
 const languagesData: TLanguage[] = []
 
@@ -19,7 +20,7 @@ const studentLanguages = createSlice({
             state.isErrorLanguages = false
         })
         builder.addCase(getStudentLanguagesThunk.fulfilled, (state, action) => {
-            state.languagesData = action.payload
+            state.languagesData = action.payload.languages
             state.isLoadingLanguages = false
             state.isErrorLanguages = false
         })

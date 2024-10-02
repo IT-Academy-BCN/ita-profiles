@@ -41,43 +41,30 @@ describe("additionalTrainingSlice", () => {
   it("should be Implement tests for the get fulfilled", () => {
     expect(additionalTrainingSlice(undefined, {
       type: "getStudentAdditionalTrainingThunk/fulfilled",
-      payload: [
-        {
-          "uuid": "9d159757-2d78-4e32-83f9-8b54ea80b8f1",
-          "course_name": "Quia voluptatum neque recusandae.",
-          "study_center": "Nienow, Rolfson and Blick",
-          "course_beginning_year": 2013,
-          "course_ending_year": 2020,
-          "duration_hrs": 327
-        },
-        {
-          "uuid": "9d159757-471f-48d5-9fc0-70a3aa3439e6",
-          "course_name": "Et accusamus consequatur ad.",
-          "study_center": "Konopelski-Toy",
-          "course_beginning_year": 2016,
-          "course_ending_year": 2016,
-          "duration_hrs": 450
-        }
-      ],
+      payload: {
+        additional_trainings: [
+          {
+            "uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "course_name": "string",
+            "study_center": "string",
+            "course_beginning_year": 0,
+            "course_ending_year": 0,
+            "duration_hrs": 0
+          }
+        ]
+      }
+      ,
     })).toEqual({
       isLoadingAdditionalTraining: false,
       isErrorAdditionalTraining: false,
       additionalTraining: [
         {
-          "uuid": "9d159757-2d78-4e32-83f9-8b54ea80b8f1",
-          "course_name": "Quia voluptatum neque recusandae.",
-          "study_center": "Nienow, Rolfson and Blick",
-          "course_beginning_year": 2013,
-          "course_ending_year": 2020,
-          "duration_hrs": 327
-        },
-        {
-          "uuid": "9d159757-471f-48d5-9fc0-70a3aa3439e6",
-          "course_name": "Et accusamus consequatur ad.",
-          "study_center": "Konopelski-Toy",
-          "course_beginning_year": 2016,
-          "course_ending_year": 2016,
-          "duration_hrs": 450
+          "uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "course_name": "string",
+          "study_center": "string",
+          "course_beginning_year": 0,
+          "course_ending_year": 0,
+          "duration_hrs": 0
         }
       ],
     })

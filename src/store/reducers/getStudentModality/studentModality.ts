@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 import { TModality } from "../../../interfaces/interfaces";
-import getStudentModalityThunk from "./studentModalityThunk";
+import { getStudentModalityThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
+// import getStudentModalityThunk from "./studentModalityThunk";
 
 const modality: TModality[] = [];
 

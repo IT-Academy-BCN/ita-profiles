@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import getStudentProjectsThunk from "./studentProjectsThunk";
+// import getStudentProjectsThunk from "./studentProjectsThunk";
 import { TProject } from "../../../interfaces/interfaces";
+import { getStudentProjectsThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
 
 const projectsData: TProject[] = [];
 
@@ -19,7 +20,7 @@ const studentProjects = createSlice({
             state.isErrorProjects = false
         })
         builder.addCase(getStudentProjectsThunk.fulfilled, (state, action) => {
-            state.projectsData = action.payload
+            state.projectsData = action.payload.projects
             state.isLoadingProjects = false
             state.isErrorProjects = false
         })

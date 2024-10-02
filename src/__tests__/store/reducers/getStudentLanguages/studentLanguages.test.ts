@@ -45,9 +45,11 @@ describe("StudentLanguagesTest reducer", () => {
         expect(studentLanguages(undefined, {
             type: "getStudentLanguagesThunk/fulfilled",
             payload: {
-                language_id: "string",
-                language_name: "string",
-                language_level: "string",
+                languages: {
+                    language_id: "string",
+                    language_name: "string",
+                    language_level: "string",
+                }
             }
         })).toEqual({
             isLoadingLanguages: false,

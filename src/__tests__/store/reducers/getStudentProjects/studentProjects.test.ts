@@ -31,45 +31,41 @@ describe("Student Projects Test (Redux)", () => {
     it("should be getStudentProjectsThunk/fulfilled return State", () => {
         expect(studentProjects(undefined, {
             type: "getStudentProjectsThunk/fulfilled",
-            payload: [
-                {
-                    projects: [
-                        {
-                            uuid: "9becbb14-0267-409b-9c77-9377ce67c9cf",
-                            project_name: "ITA Profiles",
-                            company_name: "Barcelona Activa",
-                            project_url: "https://www.ita-profiles.com",
-                            tags: [
-                                {
-                                    id: 7,
-                                    name: "Bootstrap"
-                                }
-                            ],
-                            project_repository: "string"
-                        }
-                    ]
-                }
-            ]
+            payload:
+            {
+                projects: [
+                    {
+                        uuid: "9becbb14-0267-409b-9c77-9377ce67c9cf",
+                        project_name: "ITA Profiles",
+                        company_name: "Barcelona Activa",
+                        project_url: "https://www.ita-profiles.com",
+                        tags: [
+                            {
+                                id: 7,
+                                name: "Bootstrap"
+                            }
+                        ],
+                        project_repository: "string"
+                    }
+                ]
+            }
+
         })).toEqual({
             isLoadingProjects: false,
             isErrorProjects: false,
             projectsData: [
                 {
-                    projects: [
+                    uuid: "9becbb14-0267-409b-9c77-9377ce67c9cf",
+                    project_name: "ITA Profiles",
+                    company_name: "Barcelona Activa",
+                    project_url: "https://www.ita-profiles.com",
+                    tags: [
                         {
-                            uuid: "9becbb14-0267-409b-9c77-9377ce67c9cf",
-                            project_name: "ITA Profiles",
-                            company_name: "Barcelona Activa",
-                            project_url: "https://www.ita-profiles.com",
-                            tags: [
-                                {
-                                    id: 7,
-                                    name: "Bootstrap"
-                                }
-                            ],
-                            project_repository: "string"
+                            id: 7,
+                            name: "Bootstrap"
                         }
-                    ]
+                    ],
+                    project_repository: "string"
                 }
             ]
         });
