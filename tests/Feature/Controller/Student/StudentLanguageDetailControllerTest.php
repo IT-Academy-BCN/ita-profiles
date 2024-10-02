@@ -62,7 +62,7 @@ class StudentLanguageDetailControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonStructure(structure: [
-            'data' => [
+            'languages' => [
                 '*' =>[
                         'id',
                         'name',
@@ -90,7 +90,7 @@ class StudentLanguageDetailControllerTest extends TestCase
         $response = $this->get(uri: route(name: 'student.languages', parameters: $this->student));
 
         $response->assertStatus(200);
-        $response->assertJson(['data' => []]);
+        $response->assertJson(['languages' => []]);
     }
     public function testReturnsAnEmptyArrayWhenThereAreNotLanguagesForStudent(): void
     {
@@ -100,6 +100,6 @@ class StudentLanguageDetailControllerTest extends TestCase
         $response = $this->get(uri: route(name: 'student.languages', parameters: $this->student));
 
         $response->assertStatus(200);
-        $response->assertJson(['data' => []]);
+        $response->assertJson(['languages' => []]);
     }
 }
