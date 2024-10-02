@@ -38,7 +38,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         return Resume::factory()->for($student)->create();
     }
 
-    public function test_can_update_student_profile(): void
+    public function testCanUpdateStudentProfile(): void
     {
         $user = $this->createUser();
         $student = $this->createStudent($user);
@@ -55,7 +55,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_can_return_a_404_when_a_student_is_not_found()
+    public function testCanReturn404WhenStudentIsNotFound()
     {
         $studentId = "non-exiten-student";
         $dataToUpdate = [
@@ -70,7 +70,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_can_return_a_404_when_a_resume_is_not_found()
+    public function testCanReturn404WhenResumeIsNotFound()
     {
         $user = $this->createUser();
         $student = $this->createStudent($user);
@@ -90,7 +90,7 @@ class UpdateStudentProfileControllerTest extends TestCase
     /**
      * @dataProvider invalidDataProvider
      */
-    public function test_can_not_update_student_profile_with_invalid_data(array $invalidData, array $expectedErrors): void
+    public function testCanNotUpdateStudentProfileWithInvalidData(array $invalidData, array $expectedErrors): void
     {
         $user = $this->createUser();
         $student = $this->createStudent($user);
@@ -156,7 +156,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         ];
     }
 
-    public function test_can_return_a_500_on_internal_server_error(): void
+    public function testCanReturn500(): void
     {
         $this->mock(UpdateStudentProfileService::class, function (MockInterface $mock) {
             $mock->shouldReceive('execute')
