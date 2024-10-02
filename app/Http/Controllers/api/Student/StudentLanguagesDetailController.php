@@ -13,6 +13,6 @@ class StudentLanguagesDetailController extends Controller
     public function __invoke(Student $student): JsonResponse
     {
         $languages = $student->resume?->languages ?? collect();
-        return response()->json(new LanguageCollection(resource: $languages));
+        return response()->json(new LanguageCollection($languages));
     }
 }
