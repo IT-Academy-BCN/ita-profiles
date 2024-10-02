@@ -27,7 +27,9 @@ class StudentCollaborationDetailControllerTest extends TestCase
         $this->resume = $this->student->resume()->create();
     }
 
+    
     public function testStudentCollaborationDetailControllerReturns_200StatusForValidStudentUuidWithCollaborations(): void
+    //public function testStudentCollaborationDetailControllerReturns_200StatusForValidStudentUuidWithoutCollaborations(): void
     {
         $collaboration1 = Collaboration::factory()->create();
 
