@@ -3,15 +3,11 @@
 namespace App\Http\Controllers\api\Student;
 
 use App\Exceptions\ResumeNotFoundException;
-use App\Exceptions\StudentNotFoundException;
 use App\Models\Student;
 use Illuminate\Http\{
     JsonResponse,
 };
-use Illuminate\Support\Facades\{
-    DB,
-    Log
-};
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Service\Student\UpdateStudentProfileService;
@@ -25,6 +21,9 @@ class UpdateStudentProfileController extends Controller
         $this->updateStudentProfileService = $updateStudentProfileService;
     }
 
+    /**
+     * @throws ResumeNotFoundException
+     */
     public function __invoke(UpdateStudentRequest $request, Student $student): JsonResponse
     {
         $dataStudentProfileUpdate = $request->validated();
@@ -33,7 +32,7 @@ class UpdateStudentProfileController extends Controller
 
         return response()->json([
             'profile' => 'El perfil de l\'estudiant s\'actualitza correctament'
-        ], 200);
+        ]);
 
 
     }

@@ -4,18 +4,22 @@ declare(strict_types=1);
 namespace App\Service\Student;
 
 use App\Models\Student;
-use App\Exceptions\{
-    StudentNotFoundException,
-    ResumeNotFoundException
-};
+use App\Exceptions\ResumeNotFoundException;
+
 
 class UpdateStudentProfileService
 {
+    /**
+     * @throws ResumeNotFoundException
+     */
     public function execute(Student $student, array $data): void
     {
         $this->updateStudentProfile($student, $data);
     }
 
+    /**
+     * @throws ResumeNotFoundException
+     */
     public function updateStudentProfile(Student $student, array $data): void
     {
         $this->updateStudent($student, $data);
@@ -30,6 +34,9 @@ class UpdateStudentProfileService
         $student->update($data);
     }
 
+    /**
+     * @throws ResumeNotFoundException
+     */
     private function updateResume(Student $student, array $data): void
     {
         $resume = $student->resume;
