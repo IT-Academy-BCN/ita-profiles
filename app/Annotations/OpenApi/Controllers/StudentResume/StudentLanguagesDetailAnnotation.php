@@ -45,13 +45,13 @@ It returns a list of languages along with any other relevant information, such a
      *                          example="e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e"
      *                      ),
      *                      @OA\Property(
-     *                          property="language_name",
+     *                          property="name",
      *                          type="string",
      *                          description="Language name",
      *                          example="Anglès"
      *                      ),
      *                      @OA\Property(
-     *                          property="language_level",
+     *                          property="level",
      *                          type="string",
      *                          description="The student's proficiency level in the language",
      *                          example="Bàsic"

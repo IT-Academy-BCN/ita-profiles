@@ -19,8 +19,8 @@ class LanguageCollection extends ResourceCollection
             'languages' => $this->collection->map(function ($language): array {
                 return [
                     'id' => $language->id,
-                    'name' => $language->language_name,
-                    'level' => $language->language_level
+                    'name' => $language->name,
+                    'level' => $language->level
                 ];
             })
         ];

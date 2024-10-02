@@ -32,7 +32,7 @@ class UpdateStudentLanguagesController extends Controller
             // Encontrar el idioma por nombre y nivel
             $resume = $this->updateStudentLanguagesService->findStudentResume($student);
 
-            if ($this->updateStudentLanguagesService->updateStudentLanguage($resume, $data['language_name'], $data['language_level'])) {
+            if ($this->updateStudentLanguagesService->updateStudentLanguage($resume, $data['name'], $data['level'])) {
                 return response()->json(['message' => 'Language updated successfully']);
             } else {
                 return response()->json(['message' => 'Language not found for this student'], 404);
