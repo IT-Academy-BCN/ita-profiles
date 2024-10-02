@@ -10,7 +10,7 @@ class SignInUserAnnotations
      *      operationId="signin",
      *      tags={"SignInUser"},
      *      summary="Signin an existent user",
-     *      description="Sign in a user with their DNI and password. Erase one of the two DNIs to test the endpoint.",
+     *      description="Sign in a user with their DNI and password. **Important:** Erase one of the two DNIs (48332312C or Y4527507V) in the request body to test the endpoint.",
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
