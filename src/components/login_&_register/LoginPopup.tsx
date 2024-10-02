@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-// import React from 'react'
 import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -29,19 +28,13 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   const { handleSubmit, register, formState: { errors }, } = useForm<TFormSchema>({ resolver: zodResolver(LoginUserSchema) })
   const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
     try {
-      // eslint-disable-next-line no-console
-     // console.log("Yes it is called...");
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
       // eslint-disable-next-line
       user = response.data
       login(user);
       onClose()
       navigate('/profile')
-      // eslint-disable-next-line no-console
-      console.log("To The end...");
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log('error =>', e)
       setCustomError('El usuario o la contraseña son incorrectos.'); // Set custom error message
     }
   }
