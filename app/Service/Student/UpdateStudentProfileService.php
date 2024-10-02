@@ -23,7 +23,6 @@ class UpdateStudentProfileService
         $this->updateStudentTags($student, $data);
     }
 
-
     public function updateStudent(Student $student, array $data): void
     {
         $student->name = $data['name'] ?? $student->name;

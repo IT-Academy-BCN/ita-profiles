@@ -29,28 +29,12 @@ class UpdateStudentProfileController extends Controller
     {
         $dataStudentProfileUpdate = $request->validated();
 
-        DB::beginTransaction();
-        try {
-            $this->updateStudentProfileService->execute($student, $dataStudentProfileUpdate);
-            DB::commit();
+        $this->updateStudentProfileService->execute($student, $dataStudentProfileUpdate);
 
-            return response()->json([
-                'profile' => 'El perfil de l\'estudiant s\'actualitza correctament'
-            ], 200);
-        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
-            DB::rollBack();
-            Log::error('Exception:', [
-                'exception' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json($e->getMessage(), $e->getCode());
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Exception:', [
-                'exception' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json('El perfil de l\'estudiant no s\'ha pogut actualitzar, si us plau proveu-ho de nou', 500);
-        }
+        return response()->json([
+            'profile' => 'El perfil de l\'estudiant s\'actualitza correctament'
+        ], 200);
+
+
     }
 }
