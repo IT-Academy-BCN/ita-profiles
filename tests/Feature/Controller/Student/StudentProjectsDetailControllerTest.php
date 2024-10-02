@@ -27,14 +27,14 @@ class StudentProjectsDetailControllerTest extends TestCase
         $resume->projects()->attach($this->projects->pluck('id')->toArray());
     }
 
-    public function testStudentProjectsDetailControllerCanBeInstantiated(): void
+    public function testCanInstantiateController(): void
     {
         $controller = new StudentProjectsDetailController();
 
         $this->assertInstanceOf(StudentProjectsDetailController::class, $controller);
     }
 
-    public function testStudentProjectsDetailsAreFound(): void
+    public function testCanFindProjectsDetails(): void
     {
         $response = $this->get(route('student.projects', ['student' => $this->student]));
 
@@ -58,7 +58,7 @@ class StudentProjectsDetailControllerTest extends TestCase
         ]);
     }
 
-    public function testStudentProjectsDetailControllerReturns404WhenStudentNotFound(): void
+    public function testCanReturn404WhenStudentIsNotFound(): void
     {
         $invalidUuid = 'invalid_uuid';
 
@@ -68,7 +68,7 @@ class StudentProjectsDetailControllerTest extends TestCase
         $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $invalidUuid]);
     }
 
-    public function testStudentProjectsDetailControllerReturnsEmptyProjectsWhenNoResume(): void
+    public function testCanReturnEmptyProjectsWhenThereIsNoResume(): void
     {
         Resume::where('student_id', $this->student->id)->delete();
 
@@ -78,7 +78,7 @@ class StudentProjectsDetailControllerTest extends TestCase
         $response->assertJson(['projects' => []]);
     }
 
-    public function testStudentProjectsDetailControllerReturnsEmptyProjectsWhenNoProjects(): void
+    public function testCanReturnEmptyProjectsWhenThereAreNoProjects(): void
     {
         $resume = $this->student->resume;
         $resume->projects()->detach();
