@@ -12,11 +12,8 @@ use Illuminate\Foundation\Testing\{
 };
 use App\Service\Student\UpdateStudentProfileService;
 use Tests\TestCase;
-use App\Exceptions\{
-    StudentNotFoundException,
-    ResumeNotFoundException
-};
-use Illuminate\Database\QueryException;
+use App\Exceptions\ResumeNotFoundException;
+
 
 class UpdateStudentProfileServiceTest extends TestCase
 {
@@ -40,7 +37,10 @@ class UpdateStudentProfileServiceTest extends TestCase
         }
     }
 
-    public function test_can_update_student_profile()
+    /**
+     * @throws ResumeNotFoundException
+     */
+    public function testCanUpdateStudentProfile()
     {
         $student = Student::factory()->has(Resume::factory())->create();
         $dataToUpdate = $this->createFakeDataToUpdate($student);
@@ -62,17 +62,19 @@ class UpdateStudentProfileServiceTest extends TestCase
         $this->assertEquals($dataToUpdate['tags_ids'], ($resume->tags_ids));
     }
 
-    public function test_update_student_profile_student_not_found()
+    public function testCanReturn404SWhenStudentIsNotFound()
     {
 
         $nonExistentStudentId = 12345;
 
         $response = $this->put(route('student.updateProfile', ['student' => $nonExistentStudentId]));
 
+        $response->assertStatus(404);
+
         $response->assertJson(['message' => 'No query results for model [App\Models\Student] ' . $nonExistentStudentId]);
     }
 
-    public function test_update_student_profile_throws_resume_not_found_exception()
+    public function testCanReturnResumeNotFoundExceptionWhenResumeIsNotFound()
     {
         $this->expectException(ResumeNotFoundException::class);
 
