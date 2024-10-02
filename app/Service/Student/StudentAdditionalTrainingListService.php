@@ -32,8 +32,7 @@ class StudentAdditionalTrainingListService
             throw new ResumeNotFoundException($studentId);
         }
         
-        $additionalTrainingIds = json_decode($resume->additional_trainings_ids);
-        $additionalTrainings = AdditionalTraining::findMany($additionalTrainingIds);
+        $additionalTrainings = $resume->additionalTrainings;
 
         return $additionalTrainings->map(function ($additionalTraining) {
             return [

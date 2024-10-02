@@ -21,7 +21,7 @@ class StudentModalityServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->studentModalityService = new StudentModalityService();
     }
 
@@ -31,7 +31,7 @@ class StudentModalityServiceTest extends TestCase
 
         $studentId = $student->id;
 
-        Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
+        Resumes::createResumeWithModality($studentId, 'frontend', [2, 7], 'Presencial');
 
         $result = $this->studentModalityService->execute($studentId);
 
@@ -44,7 +44,7 @@ class StudentModalityServiceTest extends TestCase
 
         $studentId = $student->id;
 
-        Resumes::createResumeWithoutModality($studentId, 'frontend', ['tag1', 'tag2']);
+        Resumes::createResumeWithoutModality($studentId, 'frontend', [9, 10]);
 
         $result = $this->studentModalityService->execute($studentId);
 

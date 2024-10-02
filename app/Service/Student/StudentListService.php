@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 
 class StudentListService
 {
-
     public function execute(?array $specializations = null, ?array $tags = null): array
     {
         $resumes = $this->getResumes($specializations, $tags);
@@ -26,18 +25,18 @@ class StudentListService
         if ($specializations !== null && $specializations[0] != null) {
             $query->whereIn('specialization', $specializations);
         }
-        if ($tags != null) {
-            $query->where(function ($query) use ($tags) {
-                foreach ($tags as $tag) {
 
+        if ($tags != null) {
+            $query->whereHas('student.tags', function ($query) use ($tags) {
+                foreach ($tags as $tag) {
                     $tagId = Tag::where('tag_name', $tag)->value('id');
                     if ($tagId) {
-
-                        $query->orWhereJsonContains('tags_ids', $tagId);
+                        $query->where('tag_id', $tagId);
                     }
                 }
             });
         }
+
         $resumes = $query->get();
 
         if ($resumes->isEmpty()) {
@@ -67,10 +66,12 @@ class StudentListService
 
     private function getMappedTags($resume): array
     {
-        return Tag::whereIn('id', json_decode($resume->tags_ids, true))
-            ->get(['id', 'tag_name'])
+        return $resume->student->tags
             ->map(function ($tag) {
-                return ['id' => $tag->id, 'name' => $tag->tag_name];
+                return [
+                    'id' => $tag->id,
+                    'name' => $tag->tag_name,
+                ];
             })
             ->toArray();
     }

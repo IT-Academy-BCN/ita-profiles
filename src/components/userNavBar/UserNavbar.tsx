@@ -13,32 +13,32 @@ const UserNavbar: React.FC = () => {
   const handleOpenRestrictedPopup = () => {
     setIsRestrictedPopupOpen(true)
   }
-  
+
   const handleCloseRestrictedPopup = () => {
     setIsRestrictedPopupOpen(false)
   }
-  
+
   const handleOpenRegisterPopup = () => {
     setIsRegisterPopupOpen(true)
     setIsLoginPopupOpen(false)
     setIsRestrictedPopupOpen(false)
   }
-  
+
   const handleCloseRegisterPopup = () => {
     setIsRegisterPopupOpen(false)
   }
-  
+
   const handleOpenLoginPopup = () => {
     setIsLoginPopupOpen(true)
     setIsRegisterPopupOpen(false)
     setIsRestrictedPopupOpen(false)
   }
-  
+
   const handleCloseLoginPopup = () => {
     setIsLoginPopupOpen(false)
   }
 
-  const { isLoggedIn, logout} = useLogin();
+  const { isLoggedIn, logout } = useLogin();
   const handleButtonClick = () => {
     if (isLoggedIn) {
       logout();
@@ -46,7 +46,7 @@ const UserNavbar: React.FC = () => {
       handleOpenRestrictedPopup();
     }
   };
-  
+
   return (
     <div className="flex w-full items-center justify-between md:justify-end">
       <div className="md:hidden">
@@ -62,7 +62,7 @@ const UserNavbar: React.FC = () => {
             tabIndex={0}
             role="button"
             className="flex items-center gap-1 text-gray-3"
-            >
+          >
             ES
             <img src={ArrowDown} alt="Vector" />
           </div>
@@ -71,30 +71,30 @@ const UserNavbar: React.FC = () => {
             <li className="text-gray-3">English</li>
           </ul>
         </div>
-        {isLoggedIn 
+        {isLoggedIn
           ? <div className='flex gap-4'>
-              <button 
-                type='button'
-                className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
-                onClick={logout}
-                >
-                <img src={Settings} alt="Settings button" />
-              </button> 
-              <Link 
-                className="rounded-lg bg-white px-3 py-2 font-medium text-gray" 
-                to='/profile'
-                >
-                <img src={UserIcon} alt="User icon button" />
-              </Link>             
-            </div>
-           
+            <button
+              type='button'
+              className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
+              onClick={logout}
+            >
+              <img src={Settings} alt="Settings button" />
+            </button>
+            <Link
+              className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
+              to='/profile'
+            >
+              <img src={UserIcon} alt="User icon button" />
+            </Link>
+          </div>
+
           : <button
-              type="button"
-              className="rounded-lg bg-white px-3 py-2 font-medium text-gray-3"
-              onClick={handleButtonClick}
-              >
-                Login/registro
-            </button>}        
+            type="button"
+            className="rounded-lg bg-white px-3 py-2 font-medium text-gray-3"
+            onClick={handleButtonClick}
+          >
+            Login/registro
+          </button>}
       </div>
 
       {isRestrictedPopupOpen && (
@@ -137,13 +137,14 @@ const UserNavbar: React.FC = () => {
       )}
       {isLoginPopupOpen && (
         <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50">
-          <LoginPopup 
+          <LoginPopup
             onClose={handleCloseLoginPopup}
-            onOpenRegisterPopup={handleOpenRegisterPopup} 
+            onOpenRegisterPopup={handleOpenRegisterPopup}
             user={{
-              id: '',
-              token: ''
-            }}            
+              userID: '',
+              token: '',
+              studentID: ''
+            }}
           />
         </div>
       )}

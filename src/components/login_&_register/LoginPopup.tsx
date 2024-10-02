@@ -6,21 +6,18 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginUserSchema } from '../../schemes/schemas'
-import { ILoginForm } from '../../interfaces/interfaces'
+import { ILoginForm, UserResponseData } from '../../interfaces/interfaces'
 import { useLogin } from '../../context/LoginContext'
 
 type LoginPopupProps = {
   onClose: () => void
   onOpenRegisterPopup: () => void
-  user: {
-    id: string,
-    token: string
-  }
+  user: UserResponseData
 }
 
 type TFormSchema = z.infer<typeof LoginUserSchema>
 
-const LoginPopup: React.FC<LoginPopupProps> = ({ 
+const LoginPopup: React.FC<LoginPopupProps> = ({
   onClose,
   onOpenRegisterPopup,
   user

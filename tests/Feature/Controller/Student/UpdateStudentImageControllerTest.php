@@ -1,18 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Controller\Student;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Student;
-use App\Service\Student\UpdateStudentImageService;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Filesystem\FilesystemAdapter;
 
 class UpdateStudentImageControllerTest extends TestCase
 {

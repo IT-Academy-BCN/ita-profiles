@@ -1,13 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Unit\Service\Student;
+namespace Tests\Feature\Service\Student;
 
 use App\Models\Student;
 use App\Service\Student\UpdateStudentImageService;
 use App\Exceptions\StudentNotFoundException;
-use App\Http\Controllers\api\Student\UpdateStudentImageController;
-use App\Http\Requests\UpdateImageStudentRequest;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;

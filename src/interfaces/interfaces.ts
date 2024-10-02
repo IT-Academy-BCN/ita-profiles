@@ -16,6 +16,13 @@ export type TchildrenProps = {
   children: ReactNode
 }
 
+// === UserResponseData ===
+export type UserResponseData = {
+  userID: string;
+  token: string;
+  studentID: string
+}
+
 // === SmallScreenContext ===
 export type TSmallScreenContext = {
   isMobile: boolean
@@ -64,16 +71,18 @@ export type TLanguage = {
 export type TAbout = {
   id: number
   fullname: string
-  subtitle: string
-  social_media: {
-    github: {
-      url: string
+  resume: {
+    subtitle: string
+    social_media: {
+      github: {
+        url: string
+      }
+      linkedin: {
+        url: string
+      }
     }
-    linkedin: {
-      url: string
-    }
+    about: string
   }
-  about: string
   photo: string
   tags: ITag[]
 }

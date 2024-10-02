@@ -1,19 +1,17 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { describe, test, expect } from 'vitest'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import { Provider } from 'react-redux'
 import ModalityCard from '../../../components/studentDetailCards/modalitySection/modalityCard'
-import {
-  SelectedStudentProvider,
-  SelectedStudentIdContext,
-} from '../../../context/StudentIdContext'
+import { store } from '../../../store/store'
 
 describe('ModalityCard', () => {
   beforeEach(() => {
     render(
-      <SelectedStudentProvider>
+      <Provider store={store}>
         <ModalityCard />
-      </SelectedStudentProvider>,
+      </Provider>,
     )
   })
   test('should show "Modalidad" all the time', () => {
@@ -37,7 +35,6 @@ describe('ModalityCard component', () => {
   })
 
   const studentUUID = '123' // You can replace this with a sample UUID
-  const setStudentUUID = () => {}
   const modalityData = {
     modality: ['Presencial', 'Remot'],
   }
@@ -50,19 +47,14 @@ describe('ModalityCard component', () => {
       .reply(200, modalityData)
 
     render(
-      <SelectedStudentIdContext.Provider
-        value={{ studentUUID, setStudentUUID }}
-      >
+      <Provider store={store}>
         <ModalityCard />
-      </SelectedStudentIdContext.Provider>,
+      </Provider>,
     )
 
     // Wait for modalities to load
-    const modalityElements = await screen.findAllByText(/Presencial|Remot/)
 
-    // Check if modalities are rendered correctly
-    expect(modalityElements).toHaveLength(2)
-    expect(modalityElements[0]).toHaveTextContent('Presencial')
-    expect(modalityElements[1]).toHaveTextContent('Remot')
+    waitFor(() => expect(screen.getByText('Presencial')).toBeInTheDocument())
+    waitFor(() => expect(screen.getByText('Remot')).toBeInTheDocument())
   })
 })

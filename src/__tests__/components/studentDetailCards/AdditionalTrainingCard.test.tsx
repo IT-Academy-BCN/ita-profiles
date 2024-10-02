@@ -1,16 +1,16 @@
 import '@testing-library/jest-dom'
 import { screen, render } from '@testing-library/react'
+import { Provider } from 'react-redux'
 import AdditionalTrainingCard from '../../../components/studentDetailCards/additionalTrainingSection/AdditionalTrainingCard'
-import { SelectedStudentIdContext } from '../../../context/StudentIdContext'
 import { configureMockAdapter } from '../../setup'
+import { store } from '../../../store/store'
 
 const mock = configureMockAdapter()
 const studentUUID = 'abc'
-const setStudentUUID = () => {}
 
 describe('AdditionalTrainingCard', () => {
   it('should render AdditionalTrainingCard component correctly', () => {
-    const { container } = render(<AdditionalTrainingCard />)
+    const { container } = render(<Provider store={store}><AdditionalTrainingCard /></Provider>)
     expect(container).toBeInTheDocument()
   })
 
@@ -30,9 +30,9 @@ describe('AdditionalTrainingCard', () => {
       .reply(200, additionalTraining)
 
     render(
-      <SelectedStudentIdContext.Provider value={{ studentUUID, setStudentUUID }}>
+      <Provider store={store}>
         <AdditionalTrainingCard />
-      </SelectedStudentIdContext.Provider>,
+      </Provider>,
     )
     expect(screen.getByText('Otra formación')).toBeInTheDocument()
   })

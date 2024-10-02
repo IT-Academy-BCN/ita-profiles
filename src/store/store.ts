@@ -1,9 +1,27 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import ShowUserReducer from './reducers/getUserDetail/apiGetUserDetail'
+import ShowStudentDetails from './reducers/getStudentDetail/studentDetail'
+import ShowStudentProjects from './reducers/getStudentProjects/studentProjects'
+import ShowStudentCollaborations from './reducers/getStudentCollaborations/studentCollaborations'
+import ShowStudentBootcamps from './reducers/getStudentBootcamp/studentBootcamp'
+import ShowStudentLanguages from './reducers/getStudentLanguages/studentLanguages'
+import ShowStudentAdditionalTraining from './reducers/getAdditionalTraining/studentAdditionalTraining'
+import ShowStudentModality from "./reducers/getStudentModality/studentModality"
+
+const student = combineReducers({
+  studentDetails: ShowStudentDetails,
+  studentProjects: ShowStudentProjects,
+  studentCollaborations: ShowStudentCollaborations,
+  studentBootcamps: ShowStudentBootcamps,
+  studentLanguages: ShowStudentLanguages,
+  studentAdditionalTraining: ShowStudentAdditionalTraining,
+  studentAdditionalModality: ShowStudentModality
+})
 
 export const store = configureStore({
   reducer: {
     ShowUserReducer,
+    ShowStudentReducer: student
   },
 })
 

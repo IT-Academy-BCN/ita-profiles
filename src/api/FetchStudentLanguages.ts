@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const FetchStudentLanguages = async (studentId: string | null) => {
+export const fetchStudentLanguages = async (studentId: string | null) => {
   try {
     const response = await axios.get(`//localhost:8000/api/v1/student/${studentId}/resume/languages`);
     return response.data.languages;

@@ -24,7 +24,7 @@ class StudentLanguageDetailControllerTest extends TestCase
 
         $this->student = Students::aStudent();
 
-        $resume = Resumes::createResumeWithModality($this->student->id, 'frontend', ['tag1', 'tag2'], 'Presencial');
+        $resume = Resumes::createResumeWithModality($this->student->id, 'frontend', [1, 3], 'Presencial');
 
         LanguagesForResume::createLanguagesForResume($resume, 2);
     }
@@ -61,7 +61,7 @@ class StudentLanguageDetailControllerTest extends TestCase
     public function testStudentLanguageDetailControllerCanBeInstantiated(): void
     {
         $languageService = $this->createMock(StudentLanguageDetailService::class);
-        
+
         $controller = new StudentLanguagesDetailController($languageService);
 
         $this->assertInstanceOf(StudentLanguagesDetailController::class, $controller);
