@@ -17,10 +17,11 @@ return new class extends Migration
             $table->dropColumn('collaborations_ids');
         });
         
-        Schema::create('resumes_to_collaborations', function (Blueprint $table) {
+        Schema::create('resume_collaboration', function (Blueprint $table) {
             //$table->uuid('id')->primary();
-            $table->foreignUuid('resume_id')->references('id')->on('resumes')->onDelete('cascade');;
-            $table->foreignUuid('collaboration_id')->references('id')->on('collaborations')->onDelete('cascade');;
+            $table->foreignUuid('resume_id')->references('id')->on('resumes')->onDelete('cascade');
+            $table->foreignUuid('collaboration_id')->references('id')->on('collaborations')->onDelete('cascade');
+            $table->primary(['resume_id', 'collaboration_id']);
             //collaborations
             $table->timestamps();
         });

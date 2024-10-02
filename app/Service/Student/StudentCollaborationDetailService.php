@@ -30,9 +30,11 @@ class StudentCollaborationDetailService
             throw new ResumeNotFoundException($studentId);
         }
 
-        $collaborationIds = json_decode($resume->collaborations_ids);
-
-        $collaborations = Collaboration::findMany($collaborationIds);
+        //$collaborationIds = json_decode($resume->collaborations_ids);
+        //$collaborations = Collaboration::findMany($collaborationIds);
+        
+        $collaborations = $resume->collaborations();
+        
 
         return $this->mapCollaborationsDetails($collaborations);
     }

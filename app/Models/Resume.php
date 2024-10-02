@@ -45,4 +45,10 @@ class Resume extends Model
     {
         return $this->belongsToMany(AdditionalTraining::class);        
     }
+    
+    public function collaborations()
+    {
+        return $this->belongsToMany(Collaboration::class);
+    }
+    
 }
