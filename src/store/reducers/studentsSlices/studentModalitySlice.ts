@@ -1,17 +1,17 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
-import { TModality } from "../../../interfaces/interfaces";
-import { getStudentModalityThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
+import { createSlice } from '@reduxjs/toolkit'
+import { TModality } from '../../../interfaces/interfaces'
+import { getStudentModalityThunk } from '../../thunks/studentDetailThunkWithID'
 // import getStudentModalityThunk from "./studentModalityThunk";
 
-const modality: TModality[] = [];
+const modality: TModality[] = []
 
-const studentModality = createSlice({
-    name: "studentModalitySlice",
+const studentModalitySlice = createSlice({
+    name: 'studentModalitySlice',
     initialState: {
         isLoadingModality: false,
         isErrorModality: false,
-        modality
+        modality,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -28,7 +28,7 @@ const studentModality = createSlice({
             state.isLoadingModality = false
             state.isErrorModality = true
         })
-    }
+    },
 })
 
-export default studentModality.reducer;
+export default studentModalitySlice.reducer

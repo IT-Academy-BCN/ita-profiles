@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 
-import { createSlice } from "@reduxjs/toolkit";
-import { TAbout } from "../../../interfaces/interfaces";
-import { getStudentDetailThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
+import { createSlice } from '@reduxjs/toolkit'
+import { TAbout } from '../../../interfaces/interfaces'
+import { getStudentDetailThunk } from '../../thunks/studentDetailThunkWithID'
 // import getStudentDetailThunk from "./studentDetailThunk";
 
 const aboutData: TAbout = {
@@ -12,24 +12,24 @@ const aboutData: TAbout = {
         subtitle: '',
         social_media: {
             github: {
-                url: ''
+                url: '',
             },
             linkedin: {
-                url: ''
-            }
+                url: '',
+            },
         },
         about: '',
     },
     photo: '',
-    tags: []
+    tags: [],
 }
 
-const studentDetail = createSlice({
-    name: "studentDetailSlice",
+const studentDetailSlice = createSlice({
+    name: 'studentDetailSlice',
     initialState: {
         isLoadingAboutData: false,
         isErrorAboutData: false,
-        aboutData
+        aboutData,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -46,7 +46,7 @@ const studentDetail = createSlice({
             state.isLoadingAboutData = false
             state.isErrorAboutData = true
         })
-    }
-});
+    },
+})
 
-export default studentDetail.reducer;
+export default studentDetailSlice.reducer

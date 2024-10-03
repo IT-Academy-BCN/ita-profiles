@@ -1,18 +1,16 @@
 /* eslint-disable no-param-reassign */
+import { createSlice } from '@reduxjs/toolkit'
+import { TBootcamp } from '../../../interfaces/interfaces'
+import { getStudentBootcampThunk } from '../../thunks/studentDetailThunkWithID'
 
-import { createSlice } from "@reduxjs/toolkit";
-import { TBootcamp } from "../../../interfaces/interfaces";
-import { getStudentBootcampThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
+const bootcampData: TBootcamp[] = []
 
-
-const bootcampData: TBootcamp[] = [];
-
-const studentBootcamp = createSlice({
-    name: "studentBootcampsSlice",
+const studentBootcampSlice = createSlice({
+    name: 'studentBootcampsSlice',
     initialState: {
         isLoadingBootcamp: false,
         isErrorBootcamp: false,
-        bootcampData
+        bootcampData,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -29,7 +27,7 @@ const studentBootcamp = createSlice({
             state.isLoadingBootcamp = false
             state.isErrorBootcamp = true
         })
-    }
-});
+    },
+})
 
-export default studentBootcamp.reducer;
+export default studentBootcampSlice.reducer

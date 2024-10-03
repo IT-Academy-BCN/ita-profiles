@@ -1,17 +1,17 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 // import getStudentProjectsThunk from "./studentProjectsThunk";
-import { TProject } from "../../../interfaces/interfaces";
-import { getStudentProjectsThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
+import { TProject } from '../../../interfaces/interfaces'
+import { getStudentProjectsThunk } from '../../thunks/studentDetailThunkWithID'
 
-const projectsData: TProject[] = [];
+const projectsData: TProject[] = []
 
-const studentProjects = createSlice({
-    name: "studentProjectsSlice",
+const studentProjectsSlice = createSlice({
+    name: 'studentProjectsSlice',
     initialState: {
         isLoadingProjects: false,
         isErrorProjects: false,
-        projectsData
+        projectsData,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -28,7 +28,7 @@ const studentProjects = createSlice({
             state.isLoadingProjects = false
             state.isErrorProjects = true
         })
-    }
-});
+    },
+})
 
-export default studentProjects.reducer;
+export default studentProjectsSlice.reducer

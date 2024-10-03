@@ -1,17 +1,17 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 // import getStudentLanguagesThunk from "./studentLanguagesThunk";
-import { TLanguage } from "../../../interfaces/interfaces";
-import { getStudentLanguagesThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
+import { TLanguage } from '../../../interfaces/interfaces'
+import { getStudentLanguagesThunk } from '../../thunks/studentDetailThunkWithID'
 
 const languagesData: TLanguage[] = []
 
-const studentLanguages = createSlice({
-    name: "studentLanguagesSlice",
+const studentLanguagesSlice = createSlice({
+    name: 'studentLanguagesSlice',
     initialState: {
         isLoadingLanguages: false,
         isErrorLanguages: false,
-        languagesData
+        languagesData,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -28,7 +28,7 @@ const studentLanguages = createSlice({
             state.isLoadingLanguages = false
             state.isErrorLanguages = true
         })
-    }
-});
+    },
+})
 
-export default studentLanguages.reducer;
+export default studentLanguagesSlice.reducer
