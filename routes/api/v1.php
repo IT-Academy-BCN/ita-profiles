@@ -6,7 +6,6 @@ use App\Http\Controllers\api\Student\{
     DeleteStudentResumeLanguageController,
     GetStudentImageController,
     StudentAdditionalTrainingListController,
-    StudentModalityController,
     StudentBootcampDetailController,
     StudentCollaborationDetailController,
     StudentDetailController,
@@ -61,7 +60,6 @@ Route::put('student/{student}/resume/photo', UpdateStudentImageController::class
 
 Route::prefix('student/{studentId}/resume')->group(function () {
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
-    Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
     Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });

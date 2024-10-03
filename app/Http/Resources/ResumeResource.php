@@ -15,6 +15,7 @@ class ResumeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'modality' => $this->modality,
             'subtitle' => $this->subtitle,
             'social_media' => [
                 'github' => $this->github_url,

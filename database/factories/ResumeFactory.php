@@ -28,15 +28,15 @@ class ResumeFactory extends Factory
         $development = $this->faker->randomElement($developmentOptions);
 
         $additionalTrainingsIds = AdditionalTraining::factory()->count(2)->create()->pluck('id')->toArray();
-        	
+
         // TEMPORARY: This is used to create add the two users to the first two students.
         static $studentIndex = 0; // Keep track of the number of students created
         $userIds = Cache::get('test_user_ids', []);
         // Assign a user ID to the first students, then default to null
         $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
         $studentIndex++; // Increment the index for each student created
-		
-		
+
+
         return [
             'student_id' => Student::factory()->create([
                 'user_id' => $userId, // This will be null after the first two students
@@ -49,7 +49,8 @@ class ResumeFactory extends Factory
             ),
             'development' => $development,
             'about' => $this->faker->paragraph,
-            'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),
+            'modality' => $this->faker->randomElement(['Presencial', 'Híbrid', 'Remot']),
+            'collaborations_ids' => json_encode($collaborationsIds),
         ];
     }
 
