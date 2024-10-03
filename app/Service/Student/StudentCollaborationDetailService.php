@@ -18,24 +18,36 @@ class StudentCollaborationDetailService
 
     public function getCollaborationDetails(string $studentId): array
     {
+		
         $student = Student::find($studentId);
 
         if (!$student) {
             throw new StudentNotFoundException($studentId);
         }
-
+		
         $resume = $student->resume()->first();
-
+		
         if (!$resume) {
             throw new ResumeNotFoundException($studentId);
         }
-
+		
+		//return ["hi","hi2"];
+		
         //$collaborationIds = json_decode($resume->collaborations_ids);
         //$collaborations = Collaboration::findMany($collaborationIds);
         
-        $collaborations = $resume->collaborations();
+        //$collaborations = $resume->collaborations()->toArray();
+        //$collaborations = $resume->collaborations()->collect();
         
-
+        $collaborations = $resume->collaborations();
+        //var_dump($collaborations);
+        
+        if ($collaborations->isEmpty()) {
+			return [];
+		}
+		
+		
+		
         return $this->mapCollaborationsDetails($collaborations);
     }
 

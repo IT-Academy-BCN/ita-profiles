@@ -19,9 +19,9 @@ return new class extends Migration
         
         Schema::create('resume_collaboration', function (Blueprint $table) {
             //$table->uuid('id')->primary();
-            $table->foreignUuid('resume_id')->references('id')->on('resumes')->onDelete('cascade');
-            $table->foreignUuid('collaboration_id')->references('id')->on('collaborations')->onDelete('cascade');
-            $table->primary(['resume_id', 'collaboration_id']);
+            $table->foreignUuid('resume_id')->constrained('resumes')->onDelete('cascade');
+            $table->foreignUuid('collaboration_id')->constrained('collaborations')->onDelete('cascade');
+            //$table->primary(['resume_id', 'collaboration_id']);
             //collaborations
             $table->timestamps();
         });

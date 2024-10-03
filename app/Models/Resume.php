@@ -48,7 +48,7 @@ class Resume extends Model
     
     public function collaborations()
     {
-        return $this->belongsToMany(Collaboration::class);
+        return $this->belongsToMany(Collaboration::class, 'resume_collaboration', 'resume_id', 'collaboration_id');
     }
     
 }
