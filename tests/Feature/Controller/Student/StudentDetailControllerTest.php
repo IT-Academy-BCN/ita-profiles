@@ -64,6 +64,7 @@ class StudentDetailControllerTest extends TestCase
                 ];
             })->toArray(),
             'resume' => [
+                'modality' => $this->resume->modality,
                 'subtitle' => $this->resume->subtitle,
                 'social_media' => [
                     'github' => $this->resume->github_url,

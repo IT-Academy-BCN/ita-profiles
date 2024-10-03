@@ -6,7 +6,6 @@ use App\Http\Controllers\api\Student\{
     DeleteStudentResumeLanguageController,
     GetStudentImageController,
     StudentAdditionalTrainingListController,
-    StudentModalityController,
     StudentBootcampDetailController,
     StudentCollaborationDetailController,
     StudentDetailController,
@@ -56,7 +55,6 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
-    Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.updateProject');
     //Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api')->name('student.skills');
@@ -74,17 +72,3 @@ Route::prefix('tags')->group(function () {
     Route::get('/{tagId}', TagDetailController::class)->name('tag.detail');
     Route::put('/{tagId}', TagUpdateController::class)->name('tag.update');
 });
-// ! OLD ROUTES BLOCK
-Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
-Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
-Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
-Route::get('/students/{student}/collaborations', StudentCollaborationDetailController::class)->name('collaborations.list');
-Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
-Route::get('/students/{student}/additionaltraining', StudentAdditionalTrainingListController::class)->name('additionaltraining.list');
-Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
-Route::get('/modality/{studentId}', StudentModalityController::class)->name('modality');
-// Fake endpoint development
-Route::get('/development/list', DevelopmentListController::class)->name('development.list');
-// Specialization List Endpoint
-Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
-// ! OLD ROUTES BLOCK

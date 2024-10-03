@@ -43,6 +43,6 @@ class Resume extends Model
 
     public function additionalTrainings(): BelongsToMany
     {
-        return $this->belongsToMany(AdditionalTraining::class);        
+        return $this->belongsToMany(AdditionalTraining::class);
     }
 }
