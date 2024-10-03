@@ -49,6 +49,8 @@ Route::get('student/resume/list', StudentListController::class)->name('students.
 
 Route::get('student/{student}/resume/detail', StudentDetailController::class)->name('student.details');
 Route::get('student/{student}/resume/projects', StudentProjectsDetailController::class)->name('student.projects');
+Route::put('student/{student}/resume/projects/{project}', UpdateStudentProjectController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.updateProject');
+
 
 Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
@@ -58,7 +60,6 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
-    Route::put('projects/{projectId}', UpdateStudentProjectController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.updateProject');
     //Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api')->name('student.skills');
     Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.skills');
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
