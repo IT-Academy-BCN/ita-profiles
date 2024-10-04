@@ -14,8 +14,6 @@ class Student extends Model
     use HasFactory;
     use HasUuids;
 
-    public mixed $user;
-
     protected $guarded = ['id'];
 
     public function user(): BelongsTo

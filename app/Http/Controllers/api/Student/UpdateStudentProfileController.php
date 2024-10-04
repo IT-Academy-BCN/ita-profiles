@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\api\Student;
 
-use App\Exceptions\ResumeNotFoundException;
 use App\Models\Student;
-use Illuminate\Http\{
-    JsonResponse,
-};
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateStudentRequest;
+use Illuminate\Http\JsonResponse;
 
 class UpdateStudentProfileController extends Controller
 {
