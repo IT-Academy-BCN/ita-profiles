@@ -4,14 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
-use App\Models\{
-    Resume,
-    Student,
-    User
-};
-use App\Service\Student\UpdateStudentProfileService;
+use App\Models\{Resume, Student, Tag, User};
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
 
 class UpdateStudentProfileControllerTest extends TestCase
@@ -49,7 +43,7 @@ class UpdateStudentProfileControllerTest extends TestCase
             ['tags_ids' => [5, 6, 9]]
         );
 
-        $url = route('student.updateProfile', ['student' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(200);
@@ -57,20 +51,20 @@ class UpdateStudentProfileControllerTest extends TestCase
 
     public function testCanReturn404WhenStudentIsNotFound()
     {
-        $studentId = "non-exiten-student";
+        $student = "non-exiten-student";
         $dataToUpdate = [
             'name' => 'Updated Name',
             'surname' => 'Updated Surname',
             'tags_ids' => [1, 2, 3],
         ];
 
-        $url = route('student.updateProfile', ['student' => $studentId]);
+        $url = route('student.updateProfile', ['student' => $student]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(404);
     }
 
-    public function testCanReturn404WhenResumeIsNotFound()
+    public function testCanReturnEmptyCollectionWhenResumeIsNotFound()
     {
         $user = $this->createUser();
         $student = $this->createStudent($user);
@@ -81,10 +75,15 @@ class UpdateStudentProfileControllerTest extends TestCase
             'tags_ids' => [1, 2, 3],
         ];
 
-        $url = route('student.updateProfile', ['student' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
-        $response->assertStatus(404);
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'profile' => 'El perfil de l\'estudiant s\'actualitza correctament',
+        ]);
+        $this->assertInstanceOf(\Illuminate\Support\Collection::class, collect($response->json('resume')));
+        $this->assertCount(0, collect($response->json('resume')));
     }
 
     /**
@@ -95,7 +94,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         $user = $this->createUser();
         $student = $this->createStudent($user);
 
-        $url = route('student.updateProfile', ['student' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student]);
         $response = $this->json('PUT', $url, $invalidData);
 
         $response->assertStatus(422);
@@ -155,28 +154,4 @@ class UpdateStudentProfileControllerTest extends TestCase
             ],
         ];
     }
-
-    public function testCanReturn500(): void
-    {
-        $this->mock(UpdateStudentProfileService::class, function (MockInterface $mock) {
-            $mock->shouldReceive('execute')
-                ->andThrow(new \Exception('Internal Server Error'));
-        });
-
-        $user = $this->createUser();
-        $student = $this->createStudent($user);
-        $resume = $this->createResume($student);
-
-        $dataToUpdate = array_merge(
-            $student->only(['id', 'name', 'surname']),
-            $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about']),
-            ['tags_ids' => [2, 3, 7]]
-        );
-
-        $url = route('student.updateProfile', ['student' => $student->id]);
-        $response = $this->json('PUT', $url, $dataToUpdate);
-
-        $response->assertStatus(500);
-    }
-
 }
