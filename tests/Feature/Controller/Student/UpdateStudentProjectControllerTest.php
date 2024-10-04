@@ -45,7 +45,7 @@ class UpdateStudentProjectControllerTest extends TestCase
             'project_url' => 'https://new-project-url.com'
         ];
 
-        $response = $this->json('PUT', route('student.updateProject', ['studentId' => $this->student->id, 'projectId' => $this->project->id]), $data);
+        $response = $this->json('PUT', route('student.updateProject', ['student' => $this->student->id, 'project' => $this->project->id]), $data);
 
         $response->assertStatus(200);
         $response->assertJson(['message' => 'El projecte s\'ha actualitzat']);
@@ -57,10 +57,10 @@ class UpdateStudentProjectControllerTest extends TestCase
             'project_url' => 'https://new-project-url.com'
         ];
 
-        $response = $this->json('PUT', route('student.updateProject', ['studentId' => 'invalid_student_id', 'projectId' => $this->project->id]), $data);
+        $response = $this->json('PUT', route('student.updateProject', ['student' => 'invalid_student_id', 'project' => $this->project->id]), $data);
 
         $response->assertStatus(404);
-        $response->assertJson(['error' => 'Student not found']); // Ensure this matches the response from the controller
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] invalid_student_id']); // Ensure this matches the response from the controller
     }
 
     public function testControllerReturns404ForInvalidProjectId(): void
@@ -69,10 +69,10 @@ class UpdateStudentProjectControllerTest extends TestCase
             'project_url' => 'https://new-project-url.com'
         ];
 
-        $response = $this->json('PUT', route('student.updateProject', ['studentId' => $this->student->id, 'projectId' => 'invalid_project_id']), $data);
+        $response = $this->json('PUT', route('student.updateProject', ['student' => $this->student->id, 'project' => 'invalid_project_id']), $data);
 
         $response->assertStatus(404);
-        $response->assertJson(['message' => 'Project not found']); // Ensure this matches the response from the controller
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Project] invalid_project_id']); // Ensure this matches the response from the controller
     }
 
     public function testControllerReturns403ForUnauthorizedUpdate(): void
@@ -84,7 +84,7 @@ class UpdateStudentProjectControllerTest extends TestCase
         ]);
 
         // Try to update a project belonging to another student
-        $response = $this->json('PUT', route('student.updateProject', ['studentId' => $this->student->id, 'projectId' => $anotherProject->id]), [
+        $response = $this->json('PUT', route('student.updateProject', ['student' => $this->student->id, 'project' => $anotherProject->id]), [
             'project_url' => 'https://new-project-url.com'
         ]);
 
