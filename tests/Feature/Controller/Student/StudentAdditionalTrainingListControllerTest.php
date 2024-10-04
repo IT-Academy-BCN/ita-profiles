@@ -38,13 +38,15 @@ class StudentAdditionalTrainingListControllerTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJsonStructure([            
-                '*' => [
+                'additionalTrainings' => [
+                   '*' => [               
                     'id',
                     'course_name',
                     'study_center',
                     'course_beginning_year',
                     'course_ending_year',
                     'duration_hrs'
+                   ]
                 ]
             ]
         );
@@ -61,13 +63,28 @@ class StudentAdditionalTrainingListControllerTest extends TestCase
         $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $invalidUuid]);
     }
 
-    public function testReturns_404ForValidStudentUuidWithoutResume()
+    public function testCanReturnEmptyAdditionalTrainingsWhenNoResume()
     {
         Resume::where('student_id', $this->student->id)->delete();
                 
         $response = $this->getJson(route('student.additionaltraining', ['student' => $this->student]));
 
-        $response->assertStatus(404); //returns 500 for now
+        $response->assertStatus(200);
+       
+        $response->assertJson([]);
+    }
+
+    public function testCanReturnEmptyAdditionalTrainingsWhenNoAdditionalTrainings()
+    {
+       $resume = $this->student->resume;
+
+       $resume->additionalTrainings()->detach();
+                
+        $response = $this->getJson(route('student.additionaltraining', ['student' => $this->student]));
+
+        $response->assertStatus(200);
+      
+        $response->assertJson([]);
     }
 
     public function testCanBeInstantiated(): void
