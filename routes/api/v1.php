@@ -49,9 +49,9 @@ Route::get('student/resume/list', StudentListController::class)->name('students.
 
 Route::get('student/{student}/resume/detail', StudentDetailController::class)->name('student.details');
 Route::put('student/{student}/resume/profile', UpdateStudentProfileController::class)->name('student.updateProfile');
+Route::get('student/{student}/resume/projects', StudentProjectsDetailController::class)->name('student.projects');
 
 Route::prefix('student/{studentId}/resume')->group(function () {
-    Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
     Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
