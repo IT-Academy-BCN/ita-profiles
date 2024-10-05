@@ -8,12 +8,12 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Post(
- *     path="/student/{studentId}/resume/languages",
+ *     path="/student/{student}/resume/languages",
  *     summary="Add a language to the student's resume",
  *     tags={"Student -> Resume"},
  *     description="Add a selected language from the languages table to the student's resume",
  *     @OA\Parameter(
- *         name="studentId",
+ *         name="student",
  *         in="path",
  *         description="UUID of the student",
  *         required=true,
@@ -22,7 +22,7 @@ use OpenApi\Annotations as OA;
  *             format="uuid"
  *         )
  *     ),
- * 
+ *
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -35,7 +35,7 @@ use OpenApi\Annotations as OA;
  *             )
  *         )
  *     ),
- * 
+ *
  *     @OA\Response(
  *         response=200,
  *         description="Language added successfully",
@@ -48,7 +48,7 @@ use OpenApi\Annotations as OA;
  *             )
  *         )
  *     ),
- * 
+ *
  *     @OA\Response(
  *         response=404,
  *         description="Student or Resume not found",
@@ -65,7 +65,7 @@ use OpenApi\Annotations as OA;
  *             )
  *         )
  *     ),
- * 
+ *
  *     @OA\Response(
  *         response=409,
  *         description="Language already exists",
@@ -78,7 +78,7 @@ use OpenApi\Annotations as OA;
  *             )
  *         )
  *     ),
- * 
+ *
  *     @OA\Response(
  *         response=422,
  *         description="Invalid language UUID or Non-existent language UUID",
@@ -104,13 +104,13 @@ use OpenApi\Annotations as OA;
  *                     @OA\Property(
  *                         property="language_id",
  *                         type="string",
- *                         example="Language id és invàlid."           
+ *                         example="Language id és invàlid."
  *                     )
  *                 )
  *             )
  *         )
  *     ),
- * 
+ *
  *     @OA\Response(
  *         response=500,
  *         description="Server Error",
