@@ -19,7 +19,8 @@ class AdditionalTrainingAnnotation {
      *     property="id",
      *     description="Additional Training ID",
      *     type="string",
-     *     format="uuid"
+     *     format="uuid",
+     *     example="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"   
      * )
      * @var string
      */
@@ -29,7 +30,8 @@ class AdditionalTrainingAnnotation {
      * @OA\Property(
      *     property="course_name",
      *     description="Course Name",
-     *     type="string"
+     *     type="string",
+     *     example="Python for Financial Data Analysis"
      * )
      * @var string
      */
@@ -39,7 +41,8 @@ class AdditionalTrainingAnnotation {
      * @OA\Property(
      *     property="study_center",
      *     description="Study Center",
-     *     type="string"
+     *     type="string",
+     *     example="FutureTech Learning Center"
      * )
      * @var string
      */
@@ -50,7 +53,8 @@ class AdditionalTrainingAnnotation {
      *     property="course_beginning_year",
      *     description="Course Beginning Year",
      *     type="integer",
-     *     format="int32"
+     *     format="int32",
+     *     example="2022"
      * )
      * @var int
      */
@@ -61,7 +65,8 @@ class AdditionalTrainingAnnotation {
      *     property="course_ending_year",
      *     description="Course Ending Year",
      *     type="integer",
-     *     format="int32"
+     *     format="int32",
+     *     example="2023"
      * )
      * @var int
      */
@@ -72,7 +77,8 @@ class AdditionalTrainingAnnotation {
      *     property="duration_hrs",
      *     description="Duration in Hours",
      *     type="integer",
-     *     format="int32"
+     *     format="int32",
+     *     example="250"
      * )
      * @var int
      */
