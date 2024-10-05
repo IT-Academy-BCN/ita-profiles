@@ -9,18 +9,15 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Requests\UpdateStudentProjectRequest;
 use App\Models\Project;
 use App\Models\Student;
-// use DragonCode\Contracts\Cashier\Auth\Auth;
-// use Exception;
 
 class UpdateStudentProjectController extends Controller
 {
     public function __invoke(UpdateStudentProjectRequest $request, Student $student, Project $project): JsonResponse
     {
-        // I'll work on authentication later. For now, I'll just comment out the code.
-        // $user = Auth::user();
-        // if ($user->id !== $student->user_id) {
-        //     return response()->json(['message' => 'Unauthorized'], 403);
-        // }
+        // I think this should go to policy: Ensure the project belongs to the student's resume of the Authenticated user.
+        if (!$student->resume->projects->contains($project)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
         $data = $request->validated();
 
@@ -28,6 +25,7 @@ class UpdateStudentProjectController extends Controller
 
         return response()->json([
             'message' => 'El projecte s\'ha actualitzat',
+            // 'project' was not being return, should erase it from the response.
             'project' => $project
         ], 200);
     }
