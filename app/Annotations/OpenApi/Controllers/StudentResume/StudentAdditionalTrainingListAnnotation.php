@@ -2,7 +2,7 @@
 
 namespace App\Annotations\OpenApi\Controllers\StudentResume;
 
-class AdditionalTrainingAnnotation
+class StudentAdditionalTrainingListAnnotation
 {
 /**
  * @OA\Get(

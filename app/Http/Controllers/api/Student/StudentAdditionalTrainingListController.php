@@ -13,7 +13,7 @@ class StudentAdditionalTrainingListController extends Controller
 {
        public function __invoke(Student $student): JsonResponse
     {
-      $additionalTrainings = $student->resume?->additionalTrainings ?? collect();
+      $additionalTrainings = $student->resume?->additionalTrainings?? collect();
     
       return response()->json(new AdditionalTrainingCollection($additionalTrainings));
     }
