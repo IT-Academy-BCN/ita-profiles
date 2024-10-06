@@ -51,7 +51,6 @@ Route::get('student/{student}/resume/detail', StudentDetailController::class)->n
 Route::get('student/{student}/resume/projects', StudentProjectsDetailController::class)->name('student.projects');
 Route::post('student/{student}/resume/languages', AddStudentLanguageController::class)->name('student.addLanguage');
 
-
 Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');

@@ -67,19 +67,6 @@ use OpenApi\Annotations as OA;
  *     ),
  *
  *     @OA\Response(
- *         response=409,
- *         description="Language already exists",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(
- *                 property="message",
- *                 type="string",
- *                 example="L'idioma {languageId} ja existeix al perfil de l'estudiant {studentId}"
- *             )
- *         )
- *     ),
- *
- *     @OA\Response(
  *         response=422,
  *         description="Invalid language UUID or Non-existent language UUID",
  *         @OA\JsonContent(
