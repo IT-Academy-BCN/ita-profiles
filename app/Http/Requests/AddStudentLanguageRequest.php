@@ -25,9 +25,4 @@ class AddStudentLanguageRequest extends FormRequest
                 ]
         ];
     }
-
-    protected function failedValidation(Validator $validator): array
-    {
-        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
-    }
 }
