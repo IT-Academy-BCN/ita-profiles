@@ -14,14 +14,15 @@ class UpdateStudentProjectController extends Controller
 {
     public function __invoke(UpdateStudentProjectRequest $request, Student $student, Project $project): JsonResponse
     {
-        // I think this should go to policy: Ensure the project belongs to the student's resume of the Authenticated user.
-        if (!$student->resume->projects->contains($project)) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        $this->authorize('update', $project);
 
         $data = $request->validated();
 
         $project->update($data);
+
+        if (isset($data['tags'])) {
+            $project->tags()->sync($data['tags']);
+        }
 
         return response()->json([
             'message' => 'El projecte s\'ha actualitzat',

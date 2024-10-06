@@ -16,7 +16,6 @@ class UpdateStudentProjectRequest extends FormRequest
         return [
             'project_name' => 'string|nullable',
             'company_name' => 'string|nullable',
-            // Need to test more to see if this is the correct way to validate tags.
             'tags' => 'array|nullable',
             'tags.*' => 'integer|exists:tags,id',
             'github_url' => 'string|url|max:60|nullable',

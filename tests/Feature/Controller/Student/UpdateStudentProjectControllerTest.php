@@ -89,12 +89,11 @@ class UpdateStudentProjectControllerTest extends TestCase
             'project_ids' => json_encode([$anotherProject->id])
         ]);
 
-        // Try to update a project belonging to another student
         $response = $this->json('PUT', route('student.updateProject', ['student' => $this->student->id, 'project' => $anotherProject->id]), [
             'project_url' => 'https://new-project-url.com'
         ]);
 
         $response->assertStatus(403);
-        $response->assertJson(['message' => 'Unauthorized']);
+        $response->assertJson(['message' => 'This action is unauthorized.']);
     }
 }
