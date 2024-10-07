@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { TBootcamp } from '../../../interfaces/interfaces'
 import { bootcampThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'

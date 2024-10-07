@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { TModality } from '../../../interfaces/interfaces'
 import { modalityThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'

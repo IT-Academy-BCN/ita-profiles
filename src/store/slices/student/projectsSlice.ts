@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { TProject } from '../../../interfaces/interfaces'
 import { projectsThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'

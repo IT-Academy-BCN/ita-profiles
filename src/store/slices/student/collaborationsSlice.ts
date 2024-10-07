@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { TCollaboration } from '../../../interfaces/interfaces'
 import { collaborationThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'

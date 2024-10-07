@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { TLanguage } from '../../../interfaces/interfaces'
 import { languagesThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'

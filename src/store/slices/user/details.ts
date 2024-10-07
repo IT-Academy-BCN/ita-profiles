@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-/* eslint-disable no-param-reassign */
 
 const initialState = {
     isUserPanelOpen: false,
