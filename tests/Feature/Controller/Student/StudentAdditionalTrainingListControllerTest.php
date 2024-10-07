@@ -52,7 +52,7 @@ class StudentAdditionalTrainingListControllerTest extends TestCase
         );
     }
 
-    public function testCanReturn_404WhenStudentIsNotFound()
+    public function testCanReturn404WhenStudentIsNotFound()
     {
         $invalidUuid = 'invalid_uuid';
 
