@@ -1,4 +1,4 @@
-import { getResourceWithAxios } from ".."
+import { getResourceWithAxios } from "../getResourceWithAxios"
 
 type TResumes = {
     bootcamp: string,
