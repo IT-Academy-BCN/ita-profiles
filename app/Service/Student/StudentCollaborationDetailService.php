@@ -31,22 +31,10 @@ class StudentCollaborationDetailService
             throw new ResumeNotFoundException($studentId);
         }
 		
-		//return ["hi","hi2"];
-		
-        //$collaborationIds = json_decode($resume->collaborations_ids);
-        //$collaborations = Collaboration::findMany($collaborationIds);
-        
-        //$collaborations = $resume->collaborations()->toArray();
-        //$collaborations = $resume->collaborations()->collect();
-        
-        $collaborations = $resume->collaborations();
-        //var_dump($collaborations);
-        
-        if ($collaborations->isEmpty()) {
-			return [];
-		}
-		
-		
+		//Thanks To Ivan For Following Line, which I modified a little
+        //$collaborations = $student->resume?->collaborations ?? collect();
+		//$collaborations = $resume->collaborations ?? collect();
+		$collaborations = $resume->collaborations->collect();
 		
         return $this->mapCollaborationsDetails($collaborations);
     }
