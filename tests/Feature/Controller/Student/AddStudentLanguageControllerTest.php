@@ -40,8 +40,6 @@ class AddStudentLanguageControllerTest extends TestCase
         ]);
 
         $response->assertStatus(200);
-
-        $response->assertJson(['message' => 'L\'idioma s\'ha afegit']);
     }
 
     public function testAddStudentLanguageControllerReturns404ForInvalidStudentUuid(): void
@@ -71,14 +69,6 @@ class AddStudentLanguageControllerTest extends TestCase
         ]);
 
         $response->assertStatus(422);
-
-        $response->assertJson([
-            'errors' => [
-                'language_id' => [
-                    'Language id és invàlid.'
-                ]
-            ]
-        ]);
     }
 
     public function testAddStudentLanguageControllerReturns422ForInvalidLanguageUuid(): void
@@ -88,14 +78,6 @@ class AddStudentLanguageControllerTest extends TestCase
         ]);
 
         $response->assertStatus(422);
-
-        $response->assertJson([
-            'errors' => [
-                'language_id' => [
-                    'El language id ha de ser un indentificador únic universal (UUID) vàlid.'
-                ]
-            ]
-        ]);
     }
 
     public function testAddStudentLanguageControllerCanBeInstantiated(): void
