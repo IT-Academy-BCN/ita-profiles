@@ -4,6 +4,11 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/5 * * * *' # Ejecutar cada 5 minutos
 
 jobs:
   pr_check:
@@ -14,6 +19,7 @@ jobs:
         image: mariadb:10.5
         ports:
           - "3306:3306"
+        options: --health-cmd='mysqladmin ping --silent' --health-interval=10s --health-timeout=5s --health-retries=3
         env:
           MARIADB_ROOT_PASSWORD: root
           MARIADB_DATABASE: laravel
@@ -40,6 +46,7 @@ jobs:
 
       - name: Configurar .env para pruebas
         run: |
+          cp .env.example .env
           echo "APP_KEY=" >> .env
           echo "APP_ENV=testing" >> .env
           echo "DB_CONNECTION=mariadb" >> .env
@@ -69,3 +76,67 @@ jobs:
       - name: Ejecutar PHPUnit
         run: php artisan test
 
+  main_health_check:
+    runs-on: ubuntu-latest
+
+    services:
+      mariadb:
+        image: mariadb:10.5
+        ports:
+          - "3306:3306"
+        options: --health-cmd='mysqladmin ping --silent' --health-interval=10s --health-timeout=5s --health-retries=3
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: laravel
+          MARIADB_USER: user
+          MARIADB_PASSWORD: password
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+
+      - name: Preparar configuración de Redis
+        run: |
+          mkdir -p /tmp/redis-data
+          cp ./docker/redis/.conf/redis.conf /tmp/redis.conf
+          docker run -d --name redis-server -p 6379:6379 -v /tmp/redis.conf:/usr/local/etc/redis/redis.conf -v /tmp/redis-data:/data redis:latest redis-server /usr/local/etc/redis/redis.conf
+
+      - name: Instalar dependencias
+        run: composer install
+
+      - name: Configurar .env para pruebas
+        run: |
+          cp .env.example .env
+          echo "APP_KEY=" >> .env
+          echo "APP_ENV=testing" >> .env
+          echo "DB_CONNECTION=mariadb" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=laravel" >> .env
+          echo "DB_USERNAME=user" >> .env
+          echo "DB_PASSWORD=password" >> .env
+          echo "CACHE_DRIVER=array" >> .env
+          echo "KEY_HASH_MAC=token_password" >> .env
+          echo "REDIS_CLIENT=predis" >> .env
+          echo "REDIS_HOST=localhost" >> .env
+          echo "REDIS_PASSWORD=password" >> .env
+
+      - name: Generar clave de aplicación
+        run: php artisan key:generate
+
+      - name: Ejecutar migraciones y seeds
+        run: php artisan migrate --seed
+
+      - name: Inicializar passport
+        run: php artisan passport:install
+
+      - name: Instalar PHPUnit
+        run: composer require --dev phpunit/phpunit
+
+      - name: Ejecutar PHPUnit
+        run: php artisan test
