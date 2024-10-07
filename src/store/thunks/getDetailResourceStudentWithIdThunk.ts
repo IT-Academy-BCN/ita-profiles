@@ -1,23 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getDetailResourceStudentWithId } from "../../api/student/getResourceStudentWithId";
+import { getStudentDetailWithId } from "../../api/student/getStudentDetailWithId";
 
 const getStudentBootcampThunk = createAsyncThunk(
     "getStudentBootcampThunk",
     async (studentId: string | null) => {
-        const response = await getDetailResourceStudentWithId(studentId, "bootcamp")
+        const response = await getStudentDetailWithId(studentId, "bootcamp")
         return response;
     })
 const getStudentCollaborationThunk = createAsyncThunk(
     "getStudentCollaborationThunk",
     async (studentId: string | null) => {
-        const response = await getDetailResourceStudentWithId(studentId, "collaborations")
+        const response = await getStudentDetailWithId(studentId, "collaborations")
         return response;
     })
 const getStudentDetailThunk = createAsyncThunk(
     "getStudentDetailThunk",
     async (studentID: string | null) => {
         try {
-            const response = await getDetailResourceStudentWithId(studentID, "detail")
+            const response = await getStudentDetailWithId(studentID, "detail")
             return response;
         } catch (error) {
             const MyError = error as ErrorEvent
@@ -27,26 +27,26 @@ const getStudentDetailThunk = createAsyncThunk(
 const getStudentLanguagesThunk = createAsyncThunk(
     "getStudentLanguagesThunk",
     async (studentID: string | null) => {
-        const response = await getDetailResourceStudentWithId(studentID, "languages")
+        const response = await getStudentDetailWithId(studentID, "languages")
         return response;
     })
 const getStudentModalityThunk = createAsyncThunk(
     "getStudentModalityThunk",
     async (studenSUID: string | null) => {
-        const response = await getDetailResourceStudentWithId(studenSUID, "modality")
+        const response = await getStudentDetailWithId(studenSUID, "modality")
         return response;
     })
 const getStudentProjectsThunk = createAsyncThunk(
     "getStudentProjectsThunk",
     async (studenSUID: string | null) => {
-        const response = await getDetailResourceStudentWithId(studenSUID, "projects")
+        const response = await getStudentDetailWithId(studenSUID, "projects")
         return response;
     })
 const getStudentAdditionalTrainingThunk = createAsyncThunk(
     "getStudentAdditionalTrainingThunk",
     async (studentID: string | null) => {
         try {
-            const response = await getDetailResourceStudentWithId(studentID, "additionaltraining")
+            const response = await getStudentDetailWithId(studentID, "additionaltraining")
             return response;
         } catch (error) {
             const MyError = error as ErrorEvent
