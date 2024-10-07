@@ -62,8 +62,6 @@ class AddStudentLanguageControllerTest extends TestCase
         ]);
 
         $response->assertStatus(404);
-
-        //$response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
     }
 
     public function testAddStudentLanguageControllerReturns422ForNonExistentLanguageUuid(): void
