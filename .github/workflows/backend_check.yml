@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: laravel_test
-          MYSQL_USER: laravel_user
-          MYSQL_PASSWORD: secret
+      mariadb:
+        image: mariadb:10.5
         ports:
-          - 3306:3306
+          - "3306:3306"
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: laravel
+          MARIADB_USER: user
+          MARIADB_PASSWORD: password
 
     steps:
       - name: Checkout código
@@ -42,7 +42,7 @@ jobs:
         run: |
           echo "APP_KEY=" >> .env
           echo "APP_ENV=testing" >> .env
-          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_CONNECTION=mariadb" >> .env
           echo "DB_HOST=127.0.0.1" >> .env
           echo "DB_PORT=3306" >> .env
           echo "DB_DATABASE=laravel_test" >> .env
