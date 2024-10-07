@@ -1,64 +1,95 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getStudentDetailWithId, resumes } from "../../api/student/getStudentDetailWithId";
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import {
+    getStudentDetailWithId,
+    resumes,
+} from '../../api/student/getStudentDetailWithId'
 
-const getStudentBootcampThunk = createAsyncThunk(
-    "getStudentBootcampThunk",
+const bootcampThunk = createAsyncThunk(
+    'bootcampThunk',
     async (studentId: string | null) => {
-        const response = await getStudentDetailWithId(studentId, resumes.bootcamp)
-        return response;
-    })
-const getStudentCollaborationThunk = createAsyncThunk(
-    "getStudentCollaborationThunk",
+        const response = await getStudentDetailWithId(
+            studentId,
+            resumes.bootcamp,
+        )
+        return response
+    },
+)
+const collaborationThunk = createAsyncThunk(
+    'collaborationThunk',
     async (studentId: string | null) => {
-        const response = await getStudentDetailWithId(studentId, resumes.collaborations)
-        return response;
-    })
-const getStudentDetailThunk = createAsyncThunk(
-    "getStudentDetailThunk",
+        const response = await getStudentDetailWithId(
+            studentId,
+            resumes.collaborations,
+        )
+        return response
+    },
+)
+const detailThunk = createAsyncThunk(
+    'detailThunk',
     async (studentID: string | null) => {
         try {
-            const response = await getStudentDetailWithId(studentID, resumes.detail)
-            return response;
+            const response = await getStudentDetailWithId(
+                studentID,
+                resumes.detail,
+            )
+            return response
         } catch (error) {
             const MyError = error as ErrorEvent
             throw new Error(MyError.message)
         }
-    })
-const getStudentLanguagesThunk = createAsyncThunk(
-    "getStudentLanguagesThunk",
+    },
+)
+const languagesThunk = createAsyncThunk(
+    'languagesThunk',
     async (studentID: string | null) => {
-        const response = await getStudentDetailWithId(studentID, resumes.languages)
-        return response;
-    })
-const getStudentModalityThunk = createAsyncThunk(
-    "getStudentModalityThunk",
+        const response = await getStudentDetailWithId(
+            studentID,
+            resumes.languages,
+        )
+        return response
+    },
+)
+const modalityThunk = createAsyncThunk(
+    'modalityThunk',
     async (studenSUID: string | null) => {
-        const response = await getStudentDetailWithId(studenSUID, resumes.modality)
-        return response;
-    })
-const getStudentProjectsThunk = createAsyncThunk(
-    "getStudentProjectsThunk",
+        const response = await getStudentDetailWithId(
+            studenSUID,
+            resumes.modality,
+        )
+        return response
+    },
+)
+const projectsThunk = createAsyncThunk(
+    'projectsThunk',
     async (studenSUID: string | null) => {
-        const response = await getStudentDetailWithId(studenSUID, resumes.projects)
-        return response;
-    })
-const getStudentAdditionalTrainingThunk = createAsyncThunk(
-    "getStudentAdditionalTrainingThunk",
+        const response = await getStudentDetailWithId(
+            studenSUID,
+            resumes.projects,
+        )
+        return response
+    },
+)
+const additionalTrainingThunk = createAsyncThunk(
+    'additionalTrainingThunk',
     async (studentID: string | null) => {
         try {
-            const response = await getStudentDetailWithId(studentID, resumes.additionaltraining)
-            return response;
+            const response = await getStudentDetailWithId(
+                studentID,
+                resumes.additionaltraining,
+            )
+            return response
         } catch (error) {
             const MyError = error as ErrorEvent
             throw new Error(MyError.message)
         }
-    })
+    },
+)
 export {
-    getStudentBootcampThunk,
-    getStudentCollaborationThunk,
-    getStudentDetailThunk,
-    getStudentLanguagesThunk,
-    getStudentModalityThunk,
-    getStudentProjectsThunk,
-    getStudentAdditionalTrainingThunk
+    bootcampThunk,
+    collaborationThunk,
+    detailThunk,
+    languagesThunk,
+    modalityThunk,
+    projectsThunk,
+    additionalTrainingThunk,
 }

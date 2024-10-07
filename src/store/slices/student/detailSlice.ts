@@ -1,9 +1,6 @@
-/* eslint-disable no-param-reassign */
-
-import { createSlice } from "@reduxjs/toolkit";
-import { TAbout } from "../../../interfaces/interfaces";
-import { getStudentDetailThunk } from "../../thunks/getDetailResourceStudentWithIdThunk";
-// import getStudentDetailThunk from "./studentDetailThunk";
+import { createSlice } from '@reduxjs/toolkit'
+import { TAbout } from '../../../interfaces/interfaces'
+import { detailThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
 
 const aboutData: TAbout = {
     id: 0,
@@ -12,41 +9,41 @@ const aboutData: TAbout = {
         subtitle: '',
         social_media: {
             github: {
-                url: ''
+                url: '',
             },
             linkedin: {
-                url: ''
-            }
+                url: '',
+            },
         },
         about: '',
     },
     photo: '',
-    tags: []
+    tags: [],
 }
 
-const studentDetail = createSlice({
-    name: "studentDetailSlice",
+const detailSlice = createSlice({
+    name: 'detailSlice',
     initialState: {
         isLoadingAboutData: false,
         isErrorAboutData: false,
-        aboutData
+        aboutData,
     },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getStudentDetailThunk.pending, (state) => {
+        builder.addCase(detailThunk.pending, (state) => {
             state.isLoadingAboutData = true
             state.isErrorAboutData = false
         })
-        builder.addCase(getStudentDetailThunk.fulfilled, (state, action) => {
+        builder.addCase(detailThunk.fulfilled, (state, action) => {
             state.aboutData = action.payload
             state.isLoadingAboutData = false
             state.isErrorAboutData = false
         })
-        builder.addCase(getStudentDetailThunk.rejected, (state) => {
+        builder.addCase(detailThunk.rejected, (state) => {
             state.isLoadingAboutData = false
             state.isErrorAboutData = true
         })
-    }
-});
+    },
+})
 
-export default studentDetail.reducer;
+export default detailSlice.reducer
