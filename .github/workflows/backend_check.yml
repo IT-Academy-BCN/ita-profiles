@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
   pr_check:
@@ -45,9 +48,9 @@ jobs:
           echo "DB_CONNECTION=mariadb" >> .env
           echo "DB_HOST=127.0.0.1" >> .env
           echo "DB_PORT=3306" >> .env
-          echo "DB_DATABASE=laravel_test" >> .env
-          echo "DB_USERNAME=laravel_user" >> .env
-          echo "DB_PASSWORD=secret" >> .env
+          echo "DB_DATABASE=laravel" >> .env
+          echo "DB_USERNAME=user" >> .env
+          echo "DB_PASSWORD=password" >> .env
           echo "CACHE_DRIVER=array" >> .env
           echo "KEY_HASH_MAC=token_password" >> .env
           echo "REDIS_CLIENT=predis" >> .env
