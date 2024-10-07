@@ -31,33 +31,10 @@ class StudentCollaborationDetailControllerTest extends TestCase
 
     
     public function testStudentCollaborationDetailControllerReturns_200StatusForValidStudentUuidWithCollaborations(): void
-    //public function testStudentCollaborationDetailControllerReturns_200StatusForValidStudentUuidWithoutCollaborations(): void
     {
-		/*
         $collaboration1 = Collaboration::factory()->create();
 
         $collaboration2 = Collaboration::factory()->create();
-
-        $this->resume->collaborations_ids = json_encode([$collaboration1->id, $collaboration2->id]);
-
-        $this->resume->save();
-
-        $response = $this->getJson(route('student.collaborations', ['studentId' => $this->student->id]));
-
-        $response->assertStatus(200);
-
-        $response->assertJsonStructure(['collaborations']);
-        * */
-        
-        $collaboration1 = Collaboration::factory()->create();
-
-        $collaboration2 = Collaboration::factory()->create();
-
-        //$this->resume->collaborations_ids = json_encode([$collaboration1->id, $collaboration2->id]);
-		
-		//$this->resume = Resume::factory()->create();
-		//Next line needed?
-		//$this->resume->save();
 		
 		DB::table('resume_collaboration')->insert(
 			[
@@ -72,7 +49,6 @@ class StudentCollaborationDetailControllerTest extends TestCase
 			]
 		);
 		
-
         $response = $this->getJson(route('student.collaborations', ['studentId' => $this->student->id]));
 
         $response->assertStatus(200);

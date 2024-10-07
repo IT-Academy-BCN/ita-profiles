@@ -28,8 +28,7 @@ class ResumeFactory extends Factory
         $development = $this->faker->randomElement($developmentOptions);
 
         $additionalTrainingsIds = AdditionalTraining::factory()->count(2)->create()->pluck('id')->toArray();
-        //$collaborationsIds = Collaboration::factory()->count(2)->create()->pluck('id')->toArray();
-	
+        	
         // TEMPORARY: This is used to create add the two users to the first two students.
         static $studentIndex = 0; // Keep track of the number of students created
         $userIds = Cache::get('test_user_ids', []);
@@ -37,15 +36,6 @@ class ResumeFactory extends Factory
         $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
         $studentIndex++; // Increment the index for each student created
 		
-		/*
-		//Insert Data In Pivot Table Resumes-Collaborations
-		DB::table('resumes_to_collaborations')->insert(
-			[
-				'resume_id' => factory(App\ResumeFactory::class)->create()->id,
-				'collaboration_id' => factory(App\CollaborationFactory::class)->create()->id,
-			]
-		);
-		* */
 		
         return [
             'student_id' => Student::factory()->create([
@@ -60,7 +50,6 @@ class ResumeFactory extends Factory
             'development' => $development,
             'about' => $this->faker->paragraph,
             'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),
-            //'collaborations_ids' => json_encode($collaborationsIds),
         ];
     }
 

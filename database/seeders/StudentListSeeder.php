@@ -22,16 +22,14 @@ class StudentListSeeder extends Seeder
         
         $counter = 0;
         foreach($resumes as $resume){
-			//if($counter <= $number){
-				for ($i = 0; $i < 2; $i++) {
-					DB::table('resume_collaboration')->insert(
-						[
-							'resume_id' => $resumes[$counter]->id,
-							'collaboration_id' => $collaborations[$counter*2 + $i]->id,
-						]
-					);
-				}
-			//}
+			for ($i = 0; $i < 2; $i++) {
+				DB::table('resume_collaboration')->insert(
+					[
+						'resume_id' => $resumes[$counter]->id,
+						'collaboration_id' => $collaborations[$counter*2 + $i]->id,
+					]
+				);
+			}
 			$counter++;	
 		}
         

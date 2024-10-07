@@ -38,12 +38,7 @@ class StudentCollaborationDetailServiceTest extends TestCase
         $collaboration1 = Collaboration::factory()->create();
 
         $collaboration2 = Collaboration::factory()->create();
-		
-		/*
-        $resume->collaborations_ids = json_encode([$collaboration1->id, $collaboration2->id]);
 
-        $resume->save();
-		*/
 		DB::table('resume_collaboration')->insert(
 			[
 				'resume_id' => $resume->id,
@@ -56,7 +51,6 @@ class StudentCollaborationDetailServiceTest extends TestCase
 				'collaboration_id' => $collaboration2->id,
 			]
 		);
-		
 		
         $response = $this->studentCollaborationDetailService->execute($student->id);
 

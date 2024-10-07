@@ -31,9 +31,6 @@ class StudentCollaborationDetailService
             throw new ResumeNotFoundException($studentId);
         }
 		
-		//Thanks To Ivan For Following Line, which I modified a little
-        //$collaborations = $student->resume?->collaborations ?? collect();
-		//$collaborations = $resume->collaborations ?? collect();
 		$collaborations = $resume->collaborations->collect();
 		
         return $this->mapCollaborationsDetails($collaborations);
