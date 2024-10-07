@@ -1,4 +1,4 @@
-import { getResourceWithAxios } from ".."
+import { getResourceWithAxios } from "../getResourceWithAxios"
 
 type TResumes = {
     bootcamp: string,
@@ -20,7 +20,7 @@ export const resumes: TResumes = {
 }
 
 
-const getDetailResourceStudentWithId = async (studentId: string | null, ...args: string[]) => {
+const getStudentDetailWithId = async (studentId: string | null, ...args: string[]) => {
 
     const [resource] = args
     const keysResumes = Object.keys(resumes)
@@ -35,5 +35,5 @@ const getDetailResourceStudentWithId = async (studentId: string | null, ...args:
 }
 
 export {
-    getDetailResourceStudentWithId
+    getStudentDetailWithId
 }
