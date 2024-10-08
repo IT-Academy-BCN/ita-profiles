@@ -1,24 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Tests\Feature\Controller\Student;
 
-use Tests\TestCase;
 use App\Models\Student;
+use App\Models\Resume;
 use App\Models\Collaboration;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\api\Student\StudentCollaborationDetailController;
-use App\Service\Student\StudentCollaborationDetailService;
-
-use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class StudentCollaborationDetailControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $student;
-    protected $resume;
+    private Student $student;
+    private Resume $resume;
+    private Collaboration $collaboration;
 
     protected function setUp(): void
     {
@@ -26,64 +22,64 @@ class StudentCollaborationDetailControllerTest extends TestCase
 
         $this->student = Student::factory()->create();
 
-        $this->resume = $this->student->resume()->create();
+        $this->resume = Resume::factory()->create([
+            'student_id' => $this->student->id
+        ]);
+
+        $this->collaboration = Collaboration::factory()->create([
+            'collaboration_name' => 'Test Collaboration',
+            'collaboration_description' => 'Test Description',
+            'collaboration_quantity' => 1
+        ]);
+
+        $this->resume->collaborations()->attach($this->collaboration->id);
     }
 
-    
-    public function testStudentCollaborationDetailControllerReturns_200StatusForValidStudentUuidWithCollaborations(): void
+    public function testStudentCollaborationDetailControllerReturns200StatusForValidStudent(): void
     {
-        $collaboration1 = Collaboration::factory()->create();
-
-        $collaboration2 = Collaboration::factory()->create();
-		
-		DB::table('resume_collaboration')->insert(
-			[
-				'resume_id' => $this->resume->id,
-				'collaboration_id' => $collaboration1->id,
-			]
-		);
-		DB::table('resume_collaboration')->insert(
-			[
-				'resume_id' => $this->resume->id,
-				'collaboration_id' => $collaboration2->id,
-			]
-		);
-		
-        $response = $this->getJson(route('student.collaborations', ['studentId' => $this->student->id]));
+        $response = $this->getJson(route('student.collaborations', ['student' => $this->student->id]));
 
         $response->assertStatus(200);
-
-        $response->assertJsonStructure(['collaborations']);
-        
-        
+        $response->assertJsonStructure([
+            'collaborations' => [
+                '*' => [
+                    'uuid',
+                    'collaboration_name',
+                    'collaboration_description',
+                    'collaboration_quantity'
+                ]
+            ]
+        ]);
     }
 
-    public function testStudentCollaborationDetailControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
+    public function testStudentCollaborationDetailControllerReturnsEmptyArrayForStudentWithoutCollaborations(): void
     {
-        $response = $this->getJson(route('student.collaborations', ['studentId' =>  'nonExistentStudentId']));
+        $studentWithoutCollaborations = Student::factory()->create();
+        $resume = Resume::factory()->create([
+            'student_id' => $studentWithoutCollaborations->id
+        ]);
+
+        $response = $this->getJson(route('student.collaborations', ['student' => $studentWithoutCollaborations->id]));
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'collaborations' => []
+        ]);
+    }
+
+    public function testStudentCollaborationDetailControllerReturns404ForValidStudentUuidWithoutResume(): void
+    {
+        $studentWithoutResume = Student::factory()->create();
+
+        $response = $this->getJson(route('student.collaborations', ['student' => $studentWithoutResume->id]));
 
         $response->assertStatus(404);
-
-        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
     }
 
-    public function testStudentCollaborationDetailControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume(): void
+    public function testStudentCollaborationDetailControllerReturns404ForInvalidStudentUuid(): void
     {
-        $this->student->resume->delete();
-
-        $response = $this->getJson(route('student.collaborations', ['studentId' =>  $this->student->id]));
+        $response = $this->getJson(route('student.collaborations', ['student' => 'invalid-uuid']));
 
         $response->assertStatus(404);
-
-        $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
-    }
-
-    public function testStudentCollaborationDetailControllerCanBeInstantiated(): void
-    {
-        $studentCollaborationService = $this->createMock(StudentCollaborationDetailService::class);
-    
-        $controller = new StudentCollaborationDetailController($studentCollaborationService);
-
-        $this->assertInstanceOf(StudentCollaborationDetailController::class, $controller);
     }
 }
