@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
+use App\Http\Controllers\api\Student\UpdateStudentProjectController;
 use App\Models\Resume;
 use Tests\TestCase;
 use App\Models\Student;
@@ -30,52 +31,57 @@ class UpdateStudentProjectControllerTest extends TestCase
         $this->resume = $this->student->resume()->create();
         $this->resume->projects()->attach($this->project->id);
 
-        // Create user and assign it to the student
         $this->user = User::factory()->create();
         $this->student->user_id = $this->user->id;
         $this->student->save();
 
-        // Authenticate user using Passport
-        Passport::actingAs($this->user, ['check-status']);
+        Passport::actingAs($this->user);
     }
 
-    public function testControllerReturns200WithValidRequest(): void
+    public function testCanInstantiateController(): void
+    {
+        $controller = new UpdateStudentProjectController();
+
+        $this->assertInstanceOf(UpdateStudentProjectController::class, $controller);
+    }
+
+    public function testCanReturn200WithValidRequest(): void
     {
         $data = [
             'project_url' => 'https://new-project-url.com'
         ];
 
-        $response = $this->json('PUT', route('student.updateProject', ['studentId' => $this->student->id, 'projectId' => $this->project->id]), $data);
+        $response = $this->json('PUT', route('student.updateProject', ['student' => $this->student->id, 'project' => $this->project->id]), $data);
 
         $response->assertStatus(200);
         $response->assertJson(['message' => 'El projecte s\'ha actualitzat']);
     }
 
-    public function testControllerReturns404ForInvalidStudentId(): void
+    public function testCanReturn404ForInvalidStudentId(): void
     {
         $data = [
             'project_url' => 'https://new-project-url.com'
         ];
 
-        $response = $this->json('PUT', route('student.updateProject', ['studentId' => 'invalid_student_id', 'projectId' => $this->project->id]), $data);
+        $response = $this->json('PUT', route('student.updateProject', ['student' => 'invalid_student_id', 'project' => $this->project->id]), $data);
 
         $response->assertStatus(404);
-        $response->assertJson(['error' => 'Student not found']); // Ensure this matches the response from the controller
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] invalid_student_id']);
     }
 
-    public function testControllerReturns404ForInvalidProjectId(): void
+    public function testCanReturn404ForInvalidProjectId(): void
     {
         $data = [
             'project_url' => 'https://new-project-url.com'
         ];
 
-        $response = $this->json('PUT', route('student.updateProject', ['studentId' => $this->student->id, 'projectId' => 'invalid_project_id']), $data);
+        $response = $this->json('PUT', route('student.updateProject', ['student' => $this->student->id, 'project' => 'invalid_project_id']), $data);
 
         $response->assertStatus(404);
-        $response->assertJson(['message' => 'Project not found']); // Ensure this matches the response from the controller
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Project] invalid_project_id']);
     }
 
-    public function testControllerReturns403ForUnauthorizedUpdate(): void
+    public function testCanReturn403ForUnauthorizedUpdate(): void
     {
         $anotherStudent = Student::factory()->create();
         $anotherProject = Project::factory()->create();
@@ -83,12 +89,11 @@ class UpdateStudentProjectControllerTest extends TestCase
             'project_ids' => json_encode([$anotherProject->id])
         ]);
 
-        // Try to update a project belonging to another student
-        $response = $this->json('PUT', route('student.updateProject', ['studentId' => $this->student->id, 'projectId' => $anotherProject->id]), [
+        $response = $this->json('PUT', route('student.updateProject', ['student' => $this->student->id, 'project' => $anotherProject->id]), [
             'project_url' => 'https://new-project-url.com'
         ]);
 
         $response->assertStatus(403);
-        $response->assertJson(['message' => 'Unauthorized']); // Ensure this matches the response from the controller
+        $response->assertJson(['message' => 'This action is unauthorized.']);
     }
 }

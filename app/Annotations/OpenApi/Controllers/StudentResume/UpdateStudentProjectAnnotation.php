@@ -8,7 +8,7 @@ class UpdateStudentProjectAnnotation
 {
     /**
      * @OA\Put(
-     *      path="/student/{studentId}/resume/projects/{projectId}",
+     *      path="/student/{student}/resume/projects/{projectId}",
      *      operationId="updateStudentProject",
      *      tags={"Student -> Resume"},
      *      summary="Update a project for a student",
@@ -17,7 +17,7 @@ class UpdateStudentProjectAnnotation
      *          {"bearerAuth": {}}
      *      },
      *      @OA\Parameter(
-     *          name="studentId",
+     *          name="student",
      *          in="path",
      *          description="Student ID",
      *          required=true,
@@ -27,7 +27,7 @@ class UpdateStudentProjectAnnotation
      *          )
      *      ),
      *      @OA\Parameter(
-     *          name="projectId",
+     *          name="project",
      *          in="path",
      *          description="Project ID",
      *          required=true,
@@ -97,12 +97,12 @@ class UpdateStudentProjectAnnotation
      *              @OA\Property(
      *                  property="message",
      *                  type="string",
-     *                  example="Student not found"
+     *                  example="No query results for model [App\\Models\\Student] invalid_student_id']"
      *              ),
      *              @OA\Property(
      *                  property="message2",
      *                  type="string",
-     *                  example="Project not found"
+     *                  example="No query results for model [App\\Models\\Project] invalid_project_id'"
      *              )
      *          )
      *      ),
@@ -113,7 +113,7 @@ class UpdateStudentProjectAnnotation
      *              @OA\Property(
      *                  property="message",
      *                  type="string",
-     *                  example="Unauthorized"
+     *                  example="This action is unauthorized."
      *              )
      *          )
      *      ),
@@ -130,7 +130,5 @@ class UpdateStudentProjectAnnotation
      *      )
      * )
      */
-    public function __invoke()
-    {
-    }
+    public function __invoke() {}
 }
