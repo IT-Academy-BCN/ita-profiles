@@ -47,12 +47,12 @@ class UpdateStudentLanguagesService
     public function findLanguageByNameAndLevel(string $languageName, string $languageLevel): Language
     {
         try {
-            $language = Language::where('language_name', $languageName)
-                ->where('language_level', $languageLevel)
+            $language = Language::where('name', $languageName)
+                ->where('level', $languageLevel)
                 ->firstOrFail();
             return $language;
         } catch (ModelNotFoundException $e) {
-            Log::error('Language not found', ['language_name' => $languageName, 'language_level' => $languageLevel, 'error' => $e->getMessage()]);
+            Log::error('Language not found', ['name' => $languageName, 'level' => $languageLevel, 'error' => $e->getMessage()]);
             throw new ModelNotFoundException('Language not found');
         }
     }
@@ -64,7 +64,7 @@ class UpdateStudentLanguagesService
             $languagesToUpdate = $this->getResumeLanguages($resume);
 
             foreach ($languagesToUpdate as $languageToUpdate) {
-                if ($languageToUpdate->language_name === $languageName) {
+                if ($languageToUpdate->name === $languageName) {
                     $resume->languages()->updateExistingPivot($languageToUpdate->id, ['language_id' => $newLanguage->id]);
                     return true;
                 }

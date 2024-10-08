@@ -24,8 +24,8 @@ describe('LanguagesCard component', () => {
   const studentUUID = '123'; // You can replace this with a sample UUID
   const setStudentUUID = () => { }
   const languagesData = [
-    { language_id: 1, language_name: 'Spanish' },
-    { language_id: 2, language_name: 'English' },
+    { language_id: 1, name: 'Spanish' },
+    { language_id: 2, name: 'English' },
   ];
 
   test('renders languages correctly', async () => {

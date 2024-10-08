@@ -16,7 +16,7 @@ const LanguagesCard: React.FC = () => {
             {languagesData.map((language) => (
               <ul key={language.language_id} className="flex flex-col">
                 <li className="text-sm font-semibold text-black-2">
-                  {language.language_name}
+                  {language.name}
                 </li>
               </ul>
             ))}
