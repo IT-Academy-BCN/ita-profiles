@@ -14,6 +14,8 @@ use Tests\Fixtures\Students;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use Illuminate\Support\Facades\DB;
+
 class StudentCollaborationDetailServiceTest extends TestCase
 {
     use DatabaseTransactions;
@@ -37,10 +39,19 @@ class StudentCollaborationDetailServiceTest extends TestCase
 
         $collaboration2 = Collaboration::factory()->create();
 
-        $resume->collaborations_ids = json_encode([$collaboration1->id, $collaboration2->id]);
-
-        $resume->save();
-
+		DB::table('resume_collaboration')->insert(
+			[
+				'resume_id' => $resume->id,
+				'collaboration_id' => $collaboration1->id,
+			]
+		);
+		DB::table('resume_collaboration')->insert(
+			[
+				'resume_id' => $resume->id,
+				'collaboration_id' => $collaboration2->id,
+			]
+		);
+		
         $response = $this->studentCollaborationDetailService->execute($student->id);
 
         $this->assertIsArray($response);
