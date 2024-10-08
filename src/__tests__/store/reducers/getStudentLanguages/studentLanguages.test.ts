@@ -46,16 +46,16 @@ describe("StudentLanguagesTest reducer", () => {
             type: "getStudentLanguagesThunk/fulfilled",
             payload: {
                 language_id: "string",
-                language_name: "string",
-                language_level: "string",
+                name: "string",
+                level: "string",
             }
         })).toEqual({
             isLoadingLanguages: false,
             isErrorLanguages: false,
             languagesData: {
                 language_id: "string",
-                language_name: "string",
-                language_level: "string",
+                name: "string",
+                level: "string",
             }
         })
     })

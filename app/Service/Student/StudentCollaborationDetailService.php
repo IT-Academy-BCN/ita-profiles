@@ -18,22 +18,21 @@ class StudentCollaborationDetailService
 
     public function getCollaborationDetails(string $studentId): array
     {
+		
         $student = Student::find($studentId);
 
         if (!$student) {
             throw new StudentNotFoundException($studentId);
         }
-
+		
         $resume = $student->resume()->first();
-
+		
         if (!$resume) {
             throw new ResumeNotFoundException($studentId);
         }
-
-        $collaborationIds = json_decode($resume->collaborations_ids);
-
-        $collaborations = Collaboration::findMany($collaborationIds);
-
+		
+		$collaborations = $resume->collaborations->collect();
+		
         return $this->mapCollaborationsDetails($collaborations);
     }
 

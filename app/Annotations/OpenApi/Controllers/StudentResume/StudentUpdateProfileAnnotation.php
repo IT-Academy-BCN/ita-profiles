@@ -10,17 +10,17 @@ class StudentUpdateProfileAnnotation
 {
     /**
      * @OA\Put(
-     *      path="/student/{studentId}/resume/profile",
+     *      path="/student/{student}/resume/profile",
      *      operationId="updateStudentProfile",
      *      tags={"Student -> Resume"},
      *      summary="Updates the student's profile",
      *      description="
-- Update a student's profile: You must provide a valid studentId as a parameter on the endpoint. In the Request body there are already base data for the rest of the fields to test the endpoint, but you can change them if you want.
+- Update a student's profile: You must provide a valid student as a parameter on the endpoint. In the Request body there are already base data for the rest of the fields to test the endpoint, but you can change them if you want.
 
 - Returns: A json message if the student's profile was updated or not.",
      *
      *      @OA\Parameter(
-     *          name="studentId",
+     *          name="student",
      *          description="Student ID",
      *          required=true,
      *          in="path",

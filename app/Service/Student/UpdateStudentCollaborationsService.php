@@ -22,10 +22,8 @@ class UpdateStudentCollaborationsService
         if (!$resume) {
             throw new ResumeNotFoundException($studentId);
         }
-
-        $collaborationsIds = json_decode($resume->collaborations_ids);
-        $collaborations = Collaboration::findMany($collaborationsIds);
-
+        
+        $collaborations = $resume->collaborations->collect();
         foreach ($collaborations as $i => $collaboration) {
             if (isset($updatedCollaborations->collaborations[$i])) {
                 $collaboration->collaboration_quantity = $updatedCollaborations->collaborations[$i];

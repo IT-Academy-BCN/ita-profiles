@@ -19,8 +19,8 @@ class LanguageSeeder extends Seeder
             foreach ($levels as $level) {
                 DB::table('languages')->insert([
                     'id' => (string) Str::uuid(),
-                    'language_name' => $language,
-                    'language_level' => $level,
+                    'name' => $language,
+                    'level' => $level,
                 ]);
             }
         }
