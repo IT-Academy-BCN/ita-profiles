@@ -20,7 +20,7 @@ reboot: ## Perform a full restart: stop containers, remove all data, and bring u
 	if [ -d "./vendor" ]; then sudo rm -Rf ./vendor; fi
 	docker compose --verbose build --no-cache
 	docker compose up -d
-	docker network connect app-network mysql
+	docker network connect app-network mariadb
 	docker network connect app-network php
 	docker network connect app-network node
 	docker network connect app-network webserver
@@ -49,10 +49,6 @@ setup: ## Does the setup of basic project's features like composer install, migr
 	docker exec -it php chmod 777 -R storage
 	docker exec -it php php artisan migrate:fresh --seed
 	docker exec -it php php artisan l5-swagger:generate
-	docker exec -it php php artisan config:clear
-	docker exec -it php php artisan config:cache
-	docker exec -it php php artisan cache:clear
-	docker exec -it php php artisan key:generate
 	docker exec -it php php artisan passport:install --force --no-interaction
 
 render-setup:
@@ -60,6 +56,7 @@ render-setup:
 	composer install
 	composer clear-cache
 	composer dump-autoload
+	cp .env.docker .env
 	php artisan cache:clear
 	php artisan config:clear
 	php artisan optimize
@@ -68,11 +65,6 @@ render-setup:
 	php artisan config:cache
 	php artisan migrate:fresh --seed
 	php artisan l5-swagger:generate
-	cp .env.docker .env
-	php artisan config:clear
-	php artisan config:cache
-	php artisan cache:clear
-	php artisan key:generate
 	php artisan passport:install --force --no-interaction
 
 cache-clear: ## Clear the cache
@@ -106,18 +98,18 @@ kill-containers: ## Kill all running Docker containers
 	fi
 
 test-connectivity:
-	docker exec -it php bash -c "timeout 1 bash -c '</dev/tcp/mysql/3306' && echo 'php to mysql: OK' || echo 'php to mysql: Failed'"
+	docker exec -it php bash -c "timeout 1 bash -c '</dev/tcp/mariadb/3306' && echo 'php to mariadb: OK' || echo 'php to mariadb: Failed'"
 	docker exec -it php bash -c "timeout 1 bash -c '</dev/tcp/webserver/80' && echo 'php to webserver: OK' || echo 'php to webserver: Failed'"
 	docker exec -it php bash -c "timeout 1 bash -c '</dev/tcp/node/80' && echo 'php to node: OK' || echo 'php to node: Failed'"
 	docker exec -it webserver bash -c "timeout 1 bash -c '</dev/tcp/php/9000' && echo 'webserver to php: OK' || echo 'webserver to php: Failed'"
-	docker exec -it webserver bash -c "timeout 1 bash -c '</dev/tcp/mysql/3306' && echo 'webserver to mysql: OK' || echo 'webserver to mysql: Failed'"
+	docker exec -it webserver bash -c "timeout 1 bash -c '</dev/tcp/mariadb/3306' && echo 'webserver to mariadb: OK' || echo 'webserver to mariadb: Failed'"
 	docker exec -it webserver bash -c "timeout 1 bash -c '</dev/tcp/node/80' && echo 'webserver to node: OK' || echo 'webserver to node: Failed'"
-	docker exec -it mysql bash -c "timeout 1 bash -c '</dev/tcp/php/9000' && echo 'mysql to php: OK' || echo 'mysql to php: Failed'"
-	docker exec -it mysql bash -c "timeout 1 bash -c '</dev/tcp/webserver/80' && echo 'mysql to webserver: OK' || echo 'mysql to webserver: Failed'"
-	docker exec -it mysql bash -c "timeout 1 bash -c '</dev/tcp/node/80' && echo 'mysql to node: OK' || echo 'mysql to node: Failed'"
+	docker exec -it mariadb bash -c "timeout 1 bash -c '</dev/tcp/php/9000' && echo 'mariadb to php: OK' || echo 'mariadb to php: Failed'"
+	docker exec -it mariadb bash -c "timeout 1 bash -c '</dev/tcp/webserver/80' && echo 'mariadb to webserver: OK' || echo 'mariadb to webserver: Failed'"
+	docker exec -it mariadb bash -c "timeout 1 bash -c '</dev/tcp/node/80' && echo 'mariadb to node: OK' || echo 'mariadb to node: Failed'"
 	docker exec -it node bash -c "timeout 1 bash -c '</dev/tcp/php/9000' && echo 'node to php: OK' || echo 'node to php: Failed'"
 	docker exec -it node bash -c "timeout 1 bash -c '</dev/tcp/webserver/80' && echo 'node to webserver: OK' || echo 'node to webserver: Failed'"
-	docker exec -it node bash -c "timeout 1 bash -c '</dev/tcp/mysql/3306' && echo 'node to mysql: OK' || echo 'node to mysql: Failed'"
+	docker exec -it node bash -c "timeout 1 bash -c '</dev/tcp/mariadb/3306' && echo 'node to mariadb: OK' || echo 'node to mariadb: Failed'"
 
 xdebug-on: ## Enable xdebug
 	docker exec -it php bash -c "echo 'zend_extension=xdebug' > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
@@ -138,9 +130,3 @@ help: ## Show this help
 
 switch-branch: ## Switch the branch for docker compose newest versions
 	./bin/switch-branch-linux.sh
-
-switch-branch-old: ## Switch the branch for docker compose older versions
-	./bin/switch-branch-linux-old.sh
-
-
-
