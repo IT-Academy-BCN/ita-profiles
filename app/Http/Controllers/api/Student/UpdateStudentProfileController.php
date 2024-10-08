@@ -16,13 +16,14 @@ class UpdateStudentProfileController extends Controller
 
         $student->update($data);
 
-        $resume = $student->resume?->update($data) ?? collect();
+        $resume = $student->resume()->firstOrFail();
 
-        $student->tags()->sync($data['tags_ids'] ?? []);
+        $resume->update($data);
+
+        $student->tags()->sync($data['tags_ids']);
 
         return response()->json([
             'profile' => 'El perfil de l\'estudiant s\'actualitza correctament',
-            'resume' => $resume,
         ]);
 
     }

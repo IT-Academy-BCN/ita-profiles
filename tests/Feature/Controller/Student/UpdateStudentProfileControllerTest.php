@@ -64,7 +64,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function testCanReturnEmptyCollectionWhenResumeIsNotFound()
+    public function testCanReturn404WhenResumeIsNotFound()
     {
         $user = $this->createUser();
         $student = $this->createStudent($user);
@@ -78,12 +78,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         $url = route('student.updateProfile', ['student' => $student]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
-        $response->assertStatus(200);
-        $response->assertJsonFragment([
-            'profile' => 'El perfil de l\'estudiant s\'actualitza correctament',
-        ]);
-        $this->assertInstanceOf(\Illuminate\Support\Collection::class, collect($response->json('resume')));
-        $this->assertCount(0, collect($response->json('resume')));
+        $response->assertStatus(404);
     }
 
     /**
