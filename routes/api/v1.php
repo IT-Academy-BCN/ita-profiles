@@ -17,7 +17,6 @@ use App\Http\Controllers\api\Student\{
     SpecializationListController,
     UpdateStudentCollaborationsController,
     UpdateStudentProjectController,
-    UpdateStudentSkillsController,
     UpdateStudentProfileController,
     UpdateStudentImageController,
     AddStudentLanguageController
@@ -62,8 +61,6 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.updateProject');
-    Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
-    Route::put('skills', UpdateStudentSkillsController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.skills');
     Route::post('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
     Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
     Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
