@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'mariadb'),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        'mysql' => [
+        'mariadb' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -92,28 +92,28 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
-        
-        
+
+
         'redis' => [
-	 
+
 			'client' => env('REDIS_CLIENT', 'predis'),
-		 
+
 			'default' => [
 				'host' => env('REDIS_HOST', '127.0.0.1'),
 				'password' => env('REDIS_PASSWORD'),
 				'port' => env('REDIS_PORT', 6379),
 				'database' => env('REDIS_DB', 0),
 			],
-		 
+
 			'cache' => [
 				'host' => env('REDIS_HOST', '127.0.0.1'),
 				'password' => env('REDIS_PASSWORD'),
 				'port' => env('REDIS_PORT', 6379),
 				'database' => env('REDIS_CACHE_DB', 1),
 			],
-		 
+
 		],
-        
+
 
     ],
 
