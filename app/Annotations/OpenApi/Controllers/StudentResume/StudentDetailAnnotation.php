@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Annotations\OpenApi\Controllers\StudentResume;
 
 class StudentDetailAnnotation
@@ -44,6 +45,14 @@ class StudentDetailAnnotation
      *                     property="resume",
      *                     type="object",
      *                     @OA\Property(property="subtitle", type="string", example="Full Stack developer en PHP"),
+     *                     @OA\Property(
+     *                         property="modality",
+     *                         type="array",
+     *                         @OA\Items(
+     *                             type="string",
+     *                             example="Remote"
+     *                         )
+     *                     ),
      *                     @OA\Property(
      *                         property="social_media",
      *                         type="object",
