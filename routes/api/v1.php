@@ -55,9 +55,9 @@ Route::get('student/{student}/resume/bootcamp', StudentBootcampDetailController:
 Route::get('student/{student}/resume/projects', StudentProjectsDetailController::class)->name('student.projects');
 Route::post('student/{student}/resume/languages', AddStudentLanguageController::class)->name('student.addLanguage');
 Route::get('student/{student}/resume/additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
+Route::get('student/{student}/resume/collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
 
 Route::prefix('student/{studentId}/resume')->group(function () {
-    Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
