@@ -28,7 +28,7 @@ const ProjectsCard: React.FC = () => {
       </div>
       {isLoadingProjects && <LoadingSpiner />}
       {isErrorProjects && <LoadingSpiner textContent='Upss!!' type="loading-bars" textColor="red" />}
-      {projectsData && <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
+      {!isLoadingProjects && <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
         {projectsData.map((project) => (
           <div
             key={project.uuid}
@@ -37,7 +37,7 @@ const ProjectsCard: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex w-48 items-center gap-3">
                 <p className="text-md font-semibold ">
-                  {project.name}
+                  {project.project_name}
                 </p>
                 <a href={project.github_url} className="flex items-center">
                   <img src={Github} alt="github link" className="w-6" />
