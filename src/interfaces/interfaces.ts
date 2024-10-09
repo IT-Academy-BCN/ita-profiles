@@ -55,7 +55,7 @@ export type TModality = {
 
 export type TProject = {
   uuid: number
-  project_name: string
+  name: string
   company_name: string
   tags: ITag[]
   project_url: string
