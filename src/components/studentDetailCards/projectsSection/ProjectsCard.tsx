@@ -37,7 +37,7 @@ const ProjectsCard: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex w-48 items-center gap-3">
                 <p className="text-md font-semibold ">
-                  {project.project_name.slice(0, 15)}
+                  {project.name.slice(0, 15)}
                 </p>
                 <a href={project.github_url} className="flex items-center">
                   <img src={Github} alt="github link" className="w-6" />
