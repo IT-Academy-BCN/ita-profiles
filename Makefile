@@ -1,4 +1,4 @@
-.PHONY: up down full-restart start composer-install composer-update ssh run-tests swagger-generate logs kill-containers help status
+.PHONY: up down reboot serve composer-install composer-update setup render-setup cache-clear shell test test-method swagger-generate logs status kill-containers test-connectivity xdebug-on xdebug-off help switch-branch route-clear route-clear
 
 CONTAINER ?= php
 
@@ -119,7 +119,6 @@ xdebug-on: ## Enable xdebug
 	docker compose restart php
 	docker exec -it php php artisan key:generate
 
-
 xdebug-off: ## Disable xdebug
 	docker exec -it php rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 	docker compose restart php
@@ -128,5 +127,24 @@ xdebug-off: ## Disable xdebug
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-switch-branch: ## Switch the branch for docker compose newest versions
-	./bin/switch-branch-linux.sh
+switch-branch: ## Switch the branch
+	docker compose down
+	docker volume prune -f
+	docker network prune -f
+	@if [ -f "./package-lock.json" ]; then \
+    		if ! git diff --quiet HEAD -- ./package-lock.json; then \
+    			echo "Changes detected in package-lock.json. Removing node_modules..."; \
+    			sudo rm -rf ./node_modules; \
+    		fi; \
+    	fi
+	@if [ -f "./composer.lock" ]; then \
+    		if ! git diff --quiet HEAD -- ./composer.lock; then \
+    			echo "Changes detected in composer.lock. Removing vendor..."; \
+    			sudo rm -rf ./vendor; \
+    		fi; \
+    	fi
+	docker compose up -d
+
+route-clear: ## Clear the route cache
+	docker exec -it php php artisan route:clear
+	docker exec -it php php artisan route:cache
