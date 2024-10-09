@@ -13,7 +13,6 @@ if [ ! -f .env ]; then
     cp .env.docker .env
 fi
 
-
 php artisan optimize
 php artisan clear-compiled
 
