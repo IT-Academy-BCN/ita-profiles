@@ -1,36 +1,36 @@
 {
     "extends": [
-        "airbnb",
-        "airbnb-typescript",
-        "airbnb/hooks",
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "prettier"
+      "airbnb",
+      "airbnb-typescript",
+      "airbnb/hooks",
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
     ],
     "plugins": ["@typescript-eslint"],
     "parserOptions": {
-        "parser": "@typescript-eslint/parser",
-        "project": "./tsconfig.json"
+      "parser": "@typescript-eslint/parser",
+      "project": "./tsconfig.json"
     },
     "rules": {
-        "react/react-in-jsx-scope": 0,
-        "no-unused-vars": 2,
-        "@typescript-eslint/no-unused-vars": 2,
-        "import/prefer-default-export": 0,
-        "react/function-component-definition": 0,
-        "react/jsx-props-no-spreading": 0,
-        "react/require-default-props": 0,
-        "react/prop-types": 0
+      "no-param-reassign": "off",
+      "react/react-in-jsx-scope": 0,
+      "no-unused-vars": 2,
+      "@typescript-eslint/no-unused-vars": 2,
+      "import/prefer-default-export": 0,
+      "react/function-component-definition": 0,
+      "react/jsx-props-no-spreading": 0,
+      "react/require-default-props": 0,
+      "react/prop-types": 0
     },
     "ignorePatterns": [
-        "node_modules",
-        "dist",
-        "build",
-        "coverage",
-        "public",
-        "scripts",
-        "vite.config.ts",
-        "tailwind.config.js",
-        "postcss.config.js"
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      "public",
+      "scripts",
+      "vite.config.ts"
     ]
-}
+  }
+  

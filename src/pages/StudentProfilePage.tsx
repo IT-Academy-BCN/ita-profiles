@@ -1,5 +1,5 @@
-import StudentProfile from '../components/StudentProfile/StudentProfile'
+import StudentProfile from '../components/students/studentDetail/studentProfile/StudentProfile'
 
-const StudentProfilePage = () => <StudentProfile/>
+const StudentProfilePage = () => <StudentProfile />
 
 export default StudentProfilePage
