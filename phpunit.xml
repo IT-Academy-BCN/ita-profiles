@@ -16,6 +16,9 @@
         <include>
             <directory>app</directory>
         </include>
+        <exclude>
+            <directory>app/Annotations</directory>
+        </exclude>
     </source>
     <coverage>
         <report>
