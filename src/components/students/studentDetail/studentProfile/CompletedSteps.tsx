@@ -1,6 +1,6 @@
 import ProfileProgress from './ProfileProgress';
-import LikeIcon from '../../assets/img/like.png';
-import CheckedIcon from '../../assets/img/likeChecked.png'
+import LikeIcon from '../../../../assets/img/like.png';
+import CheckedIcon from '../../../../assets/img/likeChecked.png'
 
 const items = [
   { id: 1, text: 'Nombre, título, gitHub y Linkedin', checked: true },
