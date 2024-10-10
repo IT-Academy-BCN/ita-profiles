@@ -15,13 +15,13 @@ class LanguagesForResume
         for ($i = 0; $i < $count; $i++) {
             $language = $resume->languages()->create([
                 'language_id' => Str::uuid(),
-                'language_name' => 'Language ' . ($i + 1),
-                'language_level' => 'Bàsic',
+                'name' => 'Language ' . ($i + 1),
+                'level' => 'Bàsic',
             ]);
             $languages[] = [
                 'language_id' => $language->id,
-                'language_name' => $language->language_name,
-                'language_level' => $language->language_level,
+                'name' => $language->name,
+                'level' => $language->level,
             ];
         }
 

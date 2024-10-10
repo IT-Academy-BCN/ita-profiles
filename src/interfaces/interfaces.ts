@@ -64,8 +64,8 @@ export type TProject = {
 
 export type TLanguage = {
   language_id: string
-  language_name: string
-  language_level: string
+  name: string
+  level: string
 }
 
 export type TAbout = {

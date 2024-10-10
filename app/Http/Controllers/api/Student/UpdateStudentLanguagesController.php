@@ -23,14 +23,13 @@ class UpdateStudentLanguagesController extends Controller
     public function __invoke(string $studentId, UpdateStudentLanguagesRequest $request): JsonResponse
     {
         try {
-            
             $data = $request->validated();
-           
+
             $student = $this->updateStudentLanguagesService->findStudentById($studentId);
-            
+
             $resume = $this->updateStudentLanguagesService->findStudentResume($student);
 
-            if ($this->updateStudentLanguagesService->updateStudentLanguage($resume, $data['language_name'], $data['language_level'])) {
+            if ($this->updateStudentLanguagesService->updateStudentLanguage($resume, $data['name'], $data['level'])) {
                 return response()->json(['message' => 'Language updated successfully']);
             } else {
                 return response()->json(['message' => 'Language not found for this student'], 404);
