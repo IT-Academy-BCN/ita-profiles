@@ -8,19 +8,19 @@ class StudentProjectsDetailAnnotation
 {
   /**
    * @OA\Get(
-   *      path="/student/{studentId}/resume/projects",
+   *      path="/student/{student}/resume/projects",
    *      operationId="getStudentResumeProjects",
    *      tags={"Student -> Resume"},
    *      summary="Get a detailed list of projects for a student",
-   *      description="Returns a list of projects for a specific student.",
+   *      description="Retrieves a detailed list of projects for a specific student from it's resume.",
    *      @OA\Parameter(
-   *          name="studentId",
+   *          name="student",
    *          in="path",
    *          description="Student ID",
    *          required=true,
-   *          in="path",
    *          @OA\Schema(
-   *              type="string"
+   *              type="string",
+   *              format="uuid"
    *          )
    *      ),
    *      @OA\Response(
@@ -34,14 +34,14 @@ class StudentProjectsDetailAnnotation
    *                  @OA\Items(
    *                      type="object",
    *                      @OA\Property(
-   *                          property="uuid",
+   *                          property="id",
    *                          type="string",
    *                          format="uuid",
    *                          description="Unique identifier for the project",
    *                          example="9becbb14-0267-409b-9c77-9377ce67c9cf"
    *                      ),
    *                      @OA\Property(
-   *                          property="project_name",
+   *                          property="name",
    *                          type="string",
    *                          description="Name of the project",
    *                          example="ITA Profiles"
@@ -51,6 +51,12 @@ class StudentProjectsDetailAnnotation
    *                          type="string",
    *                          description="Name of the company associated with the project",
    *                          example="Barcelona Activa"
+   *                      ),
+   *                      @OA\Property(
+   *                          property="github_url",
+   *                          type="string",
+   *                          description="URL of github repository of the project",
+   *                          example="https://www.github.com/user/ita-profiles"
    *                      ),
    *                      @OA\Property(
    *                          property="project_url",
@@ -63,15 +69,20 @@ class StudentProjectsDetailAnnotation
    *                          type="array",
    *                          @OA\Items(
    *                              type="object",
-   *                              @OA\Property(property="id", type="integer", example=7),
-   *                              @OA\Property(property="name", type="string", example="Bootstrap")
+   *                              @OA\Property(
+   *                                  property="id",
+   *                                  type="integer",
+   *                                  description="Tag ID",
+   *                                  example=10
+   *                              ),
+   *                              @OA\Property(
+   *                                  property="name",
+   *                                  type="string",
+   *                                  description="Name of the tag",
+   *                                  example="Bootstrap"
+   *                              )
    *                          ),
    *                          description="List of tags associated with the project, each tag includes an id and a name"
-   *                      ),
-   *                      @OA\Property(
-   *                          property="project_repository",
-   *                          type="string",
-   *                          description="URL of the project repository"
    *                      )
    *                  )
    *              )
@@ -79,35 +90,28 @@ class StudentProjectsDetailAnnotation
    *      ),
    *      @OA\Response(
    *          response=404,
-   *          description="Student or Resume not found",
+   *          description="Student not found",
    *          @OA\JsonContent(
    *              @OA\Property(
    *                  property="message",
    *                  type="string",
-   *                  example="No s'ha trobat cap estudiant amb aquest ID {studentId}"
-   *              ),
-   *              @OA\Property(
-   *                  property="message2",
-   *                  type="string",
-   *                  example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+   *                  example="No query results for model [App\\Models\\Student] {studentId}"
    *              )
    *          )
-   *  ),
-   * @OA\Response(
-   *         response=500,
-   *         description="Server error",
-   *         @OA\JsonContent(
-   *             @OA\Property(
-   *             property="message",
-   *             type="string",
-   *             example="Hi ha hagut un error"
-   *             )
-   *         )
-   *     )
+   *      ),
+   *      @OA\Response(
+   *          response=500,
+   *          description="Server error",
+   *          @OA\JsonContent(
+   *              @OA\Property(
+   *                  property="message",
+   *                  type="string",
+   *                  example="Server Error"
+   *              )
+   *          )
+   *      )
    * )
    */
 
-  public function __invoke()
-  {
-  }
+  public function __invoke() {}
 }

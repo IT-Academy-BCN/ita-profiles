@@ -6,7 +6,7 @@ class StudentCollaborationAnnotation
 {
     /**
      * @OA\Get(
-     *     path="/student/{studentId}/resume/collaborations",
+     *     path="/student/{student}/resume/collaborations",
      *     operationId="getStudentResumeCollaborations",
      *     summary="Retrieve a list of collaborations",
      *     tags={"Student -> Resume"},
@@ -14,7 +14,7 @@ class StudentCollaborationAnnotation
      *
      *
      *     @OA\Parameter(
-     *         name="studentId",
+     *         name="student",
      *         description="Student ID",
      *         required=true,
      *         in="path",
@@ -70,12 +70,12 @@ class StudentCollaborationAnnotation
      *              @OA\Property(
      *                  property="message",
      *                  type="string",
-     *                  example="No s'ha trobat cap estudiant amb aquest ID {studentId}"
+     *                  example="No s'ha trobat cap estudiant amb aquest ID {student}"
      *              ),
      *              @OA\Property(
      *                  property="message2",
      *                  type="string",
-     *                  example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+     *                  example="No s'ha trobat cap currículum per a l'estudiant amb id: {student}"
      *              )
      *          )
      *     ),
@@ -90,7 +90,5 @@ class StudentCollaborationAnnotation
      *     )
      * )
      */
-    public function __invoke()
-    {
-    }
+    public function __invoke() {}
 }

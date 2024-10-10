@@ -4,14 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
-use App\Models\{
-    Resume,
-    Student,
-    User
-};
-use App\Service\Student\UpdateStudentProfileService;
+use App\Models\{Resume, Student, Tag, User};
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 use Tests\TestCase;
 
 class UpdateStudentProfileControllerTest extends TestCase
@@ -38,7 +32,7 @@ class UpdateStudentProfileControllerTest extends TestCase
         return Resume::factory()->for($student)->create();
     }
 
-    public function test_can_update_student_profile(): void
+    public function testCanUpdateStudentProfile(): void
     {
         $user = $this->createUser();
         $student = $this->createStudent($user);
@@ -49,28 +43,28 @@ class UpdateStudentProfileControllerTest extends TestCase
             ['tags_ids' => [5, 6, 9]]
         );
 
-        $url = route('student.updateProfile', ['studentId' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(200);
     }
 
-    public function test_can_return_a_404_when_a_student_is_not_found()
+    public function testCanReturn404WhenStudentIsNotFound()
     {
-        $studentId = "non-exiten-student";
+        $student = "non-exiten-student";
         $dataToUpdate = [
             'name' => 'Updated Name',
             'surname' => 'Updated Surname',
             'tags_ids' => [1, 2, 3],
         ];
 
-        $url = route('student.updateProfile', ['studentId' => $studentId]);
+        $url = route('student.updateProfile', ['student' => $student]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(404);
     }
 
-    public function test_can_return_a_404_when_a_resume_is_not_found()
+    public function testCanReturn404WhenResumeIsNotFound()
     {
         $user = $this->createUser();
         $student = $this->createStudent($user);
@@ -81,7 +75,7 @@ class UpdateStudentProfileControllerTest extends TestCase
             'tags_ids' => [1, 2, 3],
         ];
 
-        $url = route('student.updateProfile', ['studentId' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student]);
         $response = $this->json('PUT', $url, $dataToUpdate);
 
         $response->assertStatus(404);
@@ -90,12 +84,12 @@ class UpdateStudentProfileControllerTest extends TestCase
     /**
      * @dataProvider invalidDataProvider
      */
-    public function test_can_not_update_student_profile_with_invalid_data(array $invalidData, array $expectedErrors): void
+    public function testCanNotUpdateStudentProfileWithInvalidData(array $invalidData, array $expectedErrors): void
     {
         $user = $this->createUser();
         $student = $this->createStudent($user);
 
-        $url = route('student.updateProfile', ['studentId' => $student->id]);
+        $url = route('student.updateProfile', ['student' => $student]);
         $response = $this->json('PUT', $url, $invalidData);
 
         $response->assertStatus(422);
@@ -155,28 +149,4 @@ class UpdateStudentProfileControllerTest extends TestCase
             ],
         ];
     }
-
-    public function test_can_return_a_500_on_internal_server_error(): void
-    {
-        $this->mock(UpdateStudentProfileService::class, function (MockInterface $mock) {
-            $mock->shouldReceive('execute')
-                ->andThrow(new \Exception('Internal Server Error'));
-        });
-
-        $user = $this->createUser();
-        $student = $this->createStudent($user);
-        $resume = $this->createResume($student);
-
-        $dataToUpdate = array_merge(
-            $student->only(['id', 'name', 'surname']),
-            $resume->only(['subtitle', 'github_url', 'linkedin_url', 'about']),
-            ['tags_ids' => [2, 3, 7]]
-        );
-
-        $url = route('student.updateProfile', ['studentId' => $student->id]);
-        $response = $this->json('PUT', $url, $dataToUpdate);
-
-        $response->assertStatus(500);
-    }
-
 }

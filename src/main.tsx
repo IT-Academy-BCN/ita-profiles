@@ -7,7 +7,6 @@ import App from './App'
 import i18n from './locales/i18n'
 import { store } from './store/store'
 import { LoginProvider } from './context/LoginContext'
-
 import './styles/index.css'
 import './styles/normalize.css'
 

@@ -1,13 +1,28 @@
+@echo off
+
 docker compose down
 docker system prune --all -f
 docker volume prune -f
 docker network prune -f
-@REM if [ $$(docker network ls | grep app-network) ]; then sh ./bin/disconnect_and_remove_network.sh; fi
+
+docker network ls | findstr app-network > nul
+if %ERRORLEVEL% == 0 (
+    call ./disconnect_and_remove_network.bat
+)
+
 docker network create app-network
-@REM if [ -d "./node_modules" ]; then sudo rm -Rf ./node_modules; fi
-@REM if [ -d "./vendor" ]; then sudo rm -Rf ./vendor; fi
+
+if exist "..\node_modules" (
+    rmdir /S /Q "..\node_modules"
+)
+
+if exist "..\vendor" (
+    rmdir /S /Q "..\vendor"
+)
+
 docker compose up --build -d
-docker network connect app-network mysql
+
+docker network connect app-network mariadb
 docker network connect app-network php
 docker network connect app-network node
 docker network connect app-network webserver

@@ -33,7 +33,7 @@ class UpdateStudentLanguagesServiceTest extends TestCase
         $student = Student::factory()->has(Resume::factory())->create();
         $resume = $student->resume()->first();
         $language = Language::firstOrCreate(
-            ['language_name' => 'Anglès', 'language_level' => 'Bàsic'],
+            ['name' => 'Anglès', 'level' => 'Bàsic'],
             ['id' => (string) Str::uuid()]
         );
         $resume->languages()->syncWithoutDetaching($language->id);
@@ -77,7 +77,7 @@ class UpdateStudentLanguagesServiceTest extends TestCase
     public function test_find_language_by_name_and_level(): void
     {
         $newLanguage = Language::firstOrCreate(
-            ['language_name' => 'Anglès', 'language_level' => 'Intermedi'],
+            ['name' => 'Anglès', 'level' => 'Intermedi'],
             ['id' => (string) Str::uuid()]
         );
         $foundLanguage = $this->service->findLanguageByNameAndLevel('Anglès', 'Intermedi');
@@ -94,17 +94,17 @@ class UpdateStudentLanguagesServiceTest extends TestCase
     public function test_update_student_language(): void
     {
         $newLanguage = Language::firstOrCreate(
-            ['language_name' => 'Anglès', 'language_level' => 'Intermedi'],
+            ['name' => 'Anglès', 'level' => 'Intermedi'],
             ['id' => (string) Str::uuid()]
         );
 
         $result = $this->service->updateStudentLanguage($this->resume, 'Anglès', 'Intermedi');
         $this->assertTrue($result);
 
-        $updatedLanguage = $this->resume->languages()->where('language_name', 'Anglès')->first();
+        $updatedLanguage = $this->resume->languages()->where('name', 'Anglès')->first();
         $this->assertNotNull($updatedLanguage);
         $this->assertEquals($newLanguage->id, $updatedLanguage->id);
-        $this->assertEquals('Intermedi', $updatedLanguage->language_level);
+        $this->assertEquals('Intermedi', $updatedLanguage->level);
     }
 
     public function test_update_student_language_throws_exception_if_language_not_found(): void
