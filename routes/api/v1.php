@@ -55,6 +55,7 @@ Route::get('student/{student}/resume/projects', StudentProjectsDetailController:
 Route::post('student/{student}/resume/languages', AddStudentLanguageController::class)->name('student.addLanguage');
 Route::get('student/{student}/resume/additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
 Route::get('student/{student}/resume/collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
+Route::put('student/{student}/resume/collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
 
 Route::prefix('student/{studentId}/resume')->group(function () {
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
@@ -62,7 +63,6 @@ Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
     Route::put('projects/{projectId}', UpdateStudentProjectController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.updateProject');
     Route::post('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
-    Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
     Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });
 
