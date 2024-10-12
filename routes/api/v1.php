@@ -30,7 +30,7 @@ use App\Http\Controllers\api\Tag\{
     DevelopmentListController
 };
 
-use App\Http\Controllers\api\{
+use App\Http\Controllers\api\Auth\{
     RegisterController,
     AuthController
 };
