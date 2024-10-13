@@ -1,99 +1,126 @@
 <?php
 
-declare(strict_types=1);
+namespace Tests\Feature\Http\Controllers\api\Student;
 
-namespace Tests\Feature\Controller\Student;
-
-use App\Models\Resume;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
+use App\Models\Resume;
 use App\Models\Student;
+use App\Models\Collaboration;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UpdateStudentCollaborationsControllerTest extends TestCase
 {
     use DatabaseTransactions;
+    use WithFaker;
 
-    public function testUpdateCollaborationsForValidStudent(): void
+    private Student $student;
+    private Resume $resume;
+    private array $collaborations;
+
+    protected function setUp(): void
     {
-        $studentId = Resume::first()->student_id;
-        $payload = [
-            'collaborations' => [10, 20],
-        ];
+        parent::setUp();
 
-        $response = $this->json('PUT', route('student.updateCollaborations', ['studentId' => $studentId]), $payload);
+        $this->student = Student::has('resume')->first();
+        if (!$this->student) {
+            $this->student = Student::factory()->create();
+            $this->resume = Resume::factory()->create(['student_id' => $this->student->id]);
+        } else {
+            $this->resume = $this->student->resume;
+        }
 
-        $response->assertStatus(200)
-            ->assertJson(['message' => 'Collaborations updated successfully']);
+        $existingCollaborations = Collaboration::take(3)->get();
+        if ($existingCollaborations->count() < 3) {
+            $newCollaborations = Collaboration::factory()->count(3 - $existingCollaborations->count())->create();
+            $this->collaborations = $existingCollaborations->concat($newCollaborations)->pluck('id')->toArray();
+        } else {
+            $this->collaborations = $existingCollaborations->pluck('id')->toArray();
+        }
     }
 
-    public function testValidationFailsForInvalidDataItem1(): void
+    public function testCanUpdateStudentCollaborations(): void
     {
-        $studentId = Resume::first()->student_id;
-        $payload = [
-            'collaborations' => ['invalid', 20],
-        ];
+        $response = $this->putJson(
+            route('student.updateCollaborations', $this->student),
+            ['collaborations' => $this->collaborations]
+        );
 
-        $response = $this->json('PUT', route('student.updateCollaborations', ['studentId' => $studentId]), $payload);
+        $response->assertOk()
+            ->assertJson(['message' => 'Collaborations updated']);
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors(['collaborations.0'])
-            ->assertJsonFragment([
-                'collaborations.0' => ['Collaborations.0 ha de ser un nombre enter.']
-            ]);
+        $expectedIds = collect($this->collaborations)->sort()->values()->toArray();
+        $actualIds = $this->resume->fresh()->collaborations()->pluck('collaborations.id')->sort()->values()->toArray();
+
+        $this->assertEquals($expectedIds, $actualIds);
     }
 
-    public function testValidationFailsForInvalidDataItem2(): void
+    public function testCanRemoveAllCollaborations(): void
     {
-        $studentId = Resume::first()->student_id;
-        $payload = [
-            'collaborations' => [10, 'invalid'],
-        ];
+        $this->resume->collaborations()->sync($this->collaborations);
 
-        $response = $this->json('PUT', route('student.updateCollaborations', ['studentId' => $studentId]), $payload);
+        $this->assertNotEmpty($this->resume->fresh()->collaborations()->get());
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors(['collaborations.1'])
-            ->assertJsonFragment([
-                'collaborations.1' => ['Collaborations.1 ha de ser un nombre enter.']
-            ]);
+        $response = $this->putJson(
+            route('student.updateCollaborations', $this->student),
+            ['collaborations' => []]
+        );
+
+        $response->assertOk();
+        $this->assertEmpty($this->resume->fresh()->collaborations()->get());
     }
 
-    public function testPartialDataHandlingItem1(): void
+    public function testValidatesCollaborationsMustBeArray(): void
     {
-        $studentId = Resume::first()->student_id;
-        $payload = [
-            'collaborations' => [null, 20],
-        ];
+        $response = $this->putJson(
+            route('student.updateCollaborations', $this->student),
+            ['collaborations' => 'not-an-array']
+        );
 
-        $response = $this->json('PUT', route('student.updateCollaborations', ['studentId' => $studentId]), $payload);
-
-        $response->assertStatus(200)
-            ->assertJson(['message' => 'Collaborations updated successfully']);
-    }
-
-    public function testPartialDataHandlingItem2(): void
-    {
-        $studentId = Resume::first()->student_id;
-        $payload = [
-            'collaborations' => [10, null], // Un valor nulo
-        ];
-
-        $response = $this->json('PUT', route('student.updateCollaborations', ['studentId' => $studentId]), $payload);
-
-        $response->assertStatus(200)
-            ->assertJson(['message' => 'Collaborations updated successfully']);
-    }
-
-    public function testInvalidNumberOfCollaborations(): void
-    {
-        $studentId = Resume::first()->student_id;
-        $payload = [
-            'collaborations' => [10],
-        ];
-
-        $response = $this->json('PUT', route('student.updateCollaborations', ['studentId' => $studentId]), $payload);
-
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['collaborations']);
+    }
+
+    public function testValidatesCollaborationsAreRequired(): void
+    {
+        $response = $this->putJson(
+            route('student.updateCollaborations', $this->student),
+            []
+        );
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['collaborations']);
+    }
+
+    public function testAllowsNullValuesInCollaborationsArray(): void
+    {
+        $validCollaborations = collect($this->collaborations)->filter()->values()->toArray();
+        $collaborationsWithNull = array_merge($validCollaborations, [null]);
+
+        $response = $this->putJson(
+            route('student.updateCollaborations', $this->student),
+            ['collaborations' => $collaborationsWithNull]
+        );
+
+        $response->assertOk();
+
+        $actualIds = $this->resume->fresh()->collaborations()->pluck('collaborations.id')->sort()->values()->toArray();
+        $expectedIds = collect($validCollaborations)->sort()->values()->toArray();
+
+        $this->assertEquals($expectedIds, $actualIds);
+    }
+
+    public function testFailsWhenStudentHasNoResume(): void
+    {
+        $this->assertNotEmpty($this->collaborations, 'No hay colaboraciones disponibles para la prueba');
+
+        $studentWithoutResume = Student::factory()->create();
+
+        $response = $this->putJson(
+            route('student.updateCollaborations', $studentWithoutResume),
+            ['collaborations' => $this->collaborations]
+        );
+
+        $response->assertNotFound();
     }
 }
