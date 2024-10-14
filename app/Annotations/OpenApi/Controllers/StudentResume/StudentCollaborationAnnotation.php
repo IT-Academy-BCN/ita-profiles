@@ -41,7 +41,7 @@ class StudentCollaborationAnnotation
      *                         example="e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e"
      *                     ),
      *                     @OA\Property(
-     *                         property="collaboration_name",
+     *                         property="name",
      *                         type="string",
      *                         description="Name of the collaboration",
      *                         example="Project X"
