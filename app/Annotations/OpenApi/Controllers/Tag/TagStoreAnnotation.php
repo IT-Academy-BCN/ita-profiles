@@ -17,9 +17,9 @@ class TagStoreAnnotation
      *      description="Creates a new tag and saves it in the database.",
      *      @OA\RequestBody(
      *          required=true,
-     *          description="New Tag name.
+     *          description="New Tag.
 
-- Tag field is **required**, must be a **string**, **less than 75 characters** and **unique** on database",
+- Name field is **required**, must be a **string**, **less than 75 characters** and **unique** on database",
      *            @OA\JsonContent(
      *            type="object",
      *                 @OA\Property(
@@ -37,7 +37,7 @@ class TagStoreAnnotation
      *                  property="tag",
      *                  type="object",
      *                  @OA\Property(property="id", type="integer", example=1),
-     *                  @OA\Property(property="name", type="string", example="New Tag Name")
+     *                  @OA\Property(property="name", type="string", example="New Tag")
      *              )
      *          )
      *      ),

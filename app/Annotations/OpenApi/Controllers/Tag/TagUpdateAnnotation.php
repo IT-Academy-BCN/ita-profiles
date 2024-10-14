@@ -27,7 +27,7 @@ class TagUpdateAnnotation
      *         required=true,
      *         description="New Tag name.
 
-- Tag field is **required**, must be a **string**, **less than 75 characters** and **unique** on database",
+- Name field is **required**, must be a **string**, **less than 75 characters** and **unique** on database",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
@@ -66,10 +66,10 @@ class TagUpdateAnnotation
      *         description="Validation error.",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="message", type="string", example="El camp tag name és obligatori."),
+     *             @OA\Property(property="message", type="string", example="El camp name és obligatori."),
      *             @OA\Property(property="errors", type="object",
      *                 @OA\Property(property="name", type="array",
-     *                     @OA\Items(type="string", example="El camp tag name és obligatori.")
+     *                     @OA\Items(type="string", example="El camp name és obligatori.")
      *                 ),
      *             ),
      *         ),
