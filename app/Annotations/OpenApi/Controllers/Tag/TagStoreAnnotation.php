@@ -23,7 +23,7 @@ class TagStoreAnnotation
      *            @OA\JsonContent(
      *            type="object",
      *                 @OA\Property(
-     *                     property="tag_name",
+     *                     property="name",
      *                     type="string",
      *                     example="Laravel"),
      *            )
@@ -37,7 +37,7 @@ class TagStoreAnnotation
      *                  property="tag",
      *                  type="object",
      *                  @OA\Property(property="id", type="integer", example=1),
-     *                  @OA\Property(property="tag_name", type="string", example="New Tag Name")
+     *                  @OA\Property(property="name", type="string", example="New Tag Name")
      *              )
      *          )
      *      ),
@@ -53,7 +53,7 @@ class TagStoreAnnotation
      *               property="errors",
      *               type="object",
      *               @OA\Property(
-     *                   property="tag_name",
+     *                   property="name",
      *                   type="array",
      *                   @OA\Items(
      *                       type="string",

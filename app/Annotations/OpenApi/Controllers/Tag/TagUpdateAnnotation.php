@@ -31,7 +31,7 @@ class TagUpdateAnnotation
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
-     *               property="tag_name",
+     *               property="name",
      *               type="string",
      *               example="Updated Tag"),
      *         ),
@@ -44,7 +44,7 @@ class TagUpdateAnnotation
      *             type="object",
      *             @OA\Property(property="tag", type="object",
      *                 @OA\Property(property="id", type="integer", example=1),
-     *                 @OA\Property(property="tag_name", type="string", example="Laravel"),
+     *                 @OA\Property(property="name", type="string", example="Laravel"),
      *             ),
      *         ),
      *     ),
@@ -68,7 +68,7 @@ class TagUpdateAnnotation
      *             type="object",
      *             @OA\Property(property="message", type="string", example="El camp tag name és obligatori."),
      *             @OA\Property(property="errors", type="object",
-     *                 @OA\Property(property="tag_name", type="array",
+     *                 @OA\Property(property="name", type="array",
      *                     @OA\Items(type="string", example="El camp tag name és obligatori.")
      *                 ),
      *             ),

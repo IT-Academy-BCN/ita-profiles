@@ -20,7 +20,7 @@ class TagUpdateRequest extends FormRequest
         $tagId = $this->route('tagId');
         if (Tag::find($tagId)) {
             return [
-                'tag_name' => 'required|string|max:75|unique:tags,tag_name,' . $tagId,
+                'name' => 'required|string|max:75|unique:tags,name,' . $tagId,
             ];
         }
         return [];

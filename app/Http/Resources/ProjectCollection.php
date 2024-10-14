@@ -25,7 +25,6 @@ class ProjectCollection extends ResourceCollection
                     'tags' => $project->tags->map(function ($tag) {
                         return [
                             'id' => $tag->id,
-                            // Right now the correct name of the property is tag_name, but it should be renamed to name.
                             'name' => $tag->name,
                         ];
                     }),

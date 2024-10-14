@@ -29,7 +29,7 @@ class StudentListService
         if ($tags != null) {
             $query->whereHas('student.tags', function ($query) use ($tags) {
                 foreach ($tags as $tag) {
-                    $tagId = Tag::where('tag_name', $tag)->value('id');
+                    $tagId = Tag::where('name', $tag)->value('id');
                     if ($tagId) {
                         $query->where('tag_id', $tagId);
                     }
@@ -70,7 +70,7 @@ class StudentListService
             ->map(function ($tag) {
                 return [
                     'id' => $tag->id,
-                    'name' => $tag->tag_name,
+                    'name' => $tag->name,
                 ];
             })
             ->toArray();
