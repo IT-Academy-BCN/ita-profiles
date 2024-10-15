@@ -2,54 +2,29 @@
 
 namespace App\Http\Controllers\api\Student;
 
-use App\Exceptions\ResumeNotFoundException;
-use App\Exceptions\StudentNotFoundException;
-use Illuminate\Http\{
-    JsonResponse,
-};
-use Illuminate\Support\Facades\{
-    DB,
-    Log
-};
+use App\Models\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Service\Student\UpdateStudentProfileService;
+use Illuminate\Http\JsonResponse;
 
 class UpdateStudentProfileController extends Controller
 {
-    private UpdateStudentProfileService $updateStudentProfileService;
 
-    public function __construct(UpdateStudentProfileService $updateStudentProfileService)
+    public function __invoke(UpdateStudentRequest $request, Student $student): JsonResponse
     {
-        $this->updateStudentProfileService = $updateStudentProfileService;
-    }
+        $data = $request->validated();
 
-    public function __invoke(UpdateStudentRequest $request, string $studentId): JsonResponse
-    {
-        $dataStudentProfileUpdate = $request->validated();
+        $student->update($data);
 
-        DB::beginTransaction();
-        try {
-            $this->updateStudentProfileService->execute($studentId, $dataStudentProfileUpdate);
-            DB::commit();
+        $resume = $student->resume()->firstOrFail();
 
-            return response()->json([
-                'profile' => 'El perfil de l\'estudiant s\'actualitza correctament'
-            ], 200);
-        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
-            DB::rollBack();
-            Log::error('Exception:', [
-                'exception' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json($e->getMessage(), $e->getCode());
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Exception:', [
-                'exception' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json('El perfil de l\'estudiant no s\'ha pogut actualitzar, si us plau proveu-ho de nou', 500);
-        }
+        $resume->update($data);
+
+        $student->tags()->sync($data['tags_ids']);
+
+        return response()->json([
+            'profile' => 'El perfil de l\'estudiant s\'actualitza correctament',
+        ]);
+
     }
 }

@@ -30,12 +30,12 @@ class UpdateStudentLanguagesAnnotation
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
-     *                 property="language_name",
+     *                 property="name",
      *                 type="string",
      *                 example="Català"
      *             ),
      *             @OA\Property(
-     *                 property="language_level",
+     *                 property="level",
      *                 type="string",
      *                 enum={"Bàsic", "Intermedi", "Avançat", "Natiu"},
      *                 example="Intermedi"

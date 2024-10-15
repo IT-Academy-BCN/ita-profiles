@@ -18,21 +18,21 @@ class TagStoreServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->tagStoreService = new TagStoreService();
     }
 
     public function testTagStoreServiceSuccesfullyCreatesANewTag(): void
     {
         $tagData = [
-            'tag_name' => 'Test Tag'
+            'name' => 'Test Tag'
         ];
 
         $tagResource = $this->tagStoreService->execute($tagData);
 
         $this->assertInstanceOf(Tag::class, $tagResource->resource);
 
-        $this->assertEquals($tagData['tag_name'], $tagResource->tag_name);
+        $this->assertEquals($tagData['name'], $tagResource->name);
     }
 
     public function testTagStoreServiceCanBeInstantiated(): void

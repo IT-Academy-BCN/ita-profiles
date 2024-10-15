@@ -1,46 +1,39 @@
-import { useContext, useEffect } from "react";
-import { TSmallScreenContext } from "../interfaces/interfaces";
-import { useAppDispatch } from "./ReduxHooks";
-import { SmallScreenContext } from "../context/SmallScreenContext";
-import { useStudentIdContext } from "../context/StudentIdContext";
-import getStudentBootcampThunk from "../store/reducers/getStudentBootcamp/studentBootcampThunk";
-import getStudentDetailThunk from "../store/reducers/getStudentDetail/studentDetailThunk";
-import getStudentProjectsThunk from "../store/reducers/getStudentProjects/studentProjectsThunk";
-import getStudentCollaborationThunk from "../store/reducers/getStudentCollaborations/studentCollaborationsThunk";
-import getStudentLanguagesThunk from "../store/reducers/getStudentLanguages/studentLanguagesThunk";
-import getStudentAdditionalTrainingThunk from "../store/reducers/getAdditionalTraining/studentAdditionalTrainingThunk";
-import getStudentModalityThunk from "../store/reducers/getStudentModality/studentModalityThunk";
+import { useContext, useEffect, useState } from 'react'
+import { TSmallScreenContext } from '../interfaces/interfaces'
+import { useAppDispatch } from './ReduxHooks'
+import { SmallScreenContext } from '../context/SmallScreenContext'
+import { useStudentIdContext } from '../context/StudentIdContext'
+import * as thunks from '../store/thunks/getDetailResourceStudentWithIdThunk'
 
 const useStudentDetailHook = (role?: string | null) => {
     const { isMobile }: TSmallScreenContext = useContext(SmallScreenContext)
     const { studentUUID } = useStudentIdContext()
-    const studentID = localStorage.getItem("studentID")
-    const dispatch = useAppDispatch();
+    const studentID = localStorage.getItem('studentID')
+    const dispatch = useAppDispatch()
+
+    const [studentDetails] = useState([
+        thunks.detailThunk,
+        thunks.projectsThunk,
+        thunks.collaborationThunk,
+        thunks.bootcampThunk,
+        thunks.additionalTrainingThunk,
+        thunks.modalityThunk,
+        thunks.languagesThunk,
+    ])
 
     useEffect(() => {
-        if (typeof role === "string" && role === "user") {
-            dispatch(getStudentDetailThunk(studentID))
-            dispatch(getStudentProjectsThunk(studentID))
-            dispatch(getStudentCollaborationThunk(studentID))
-            dispatch(getStudentBootcampThunk(studentID))
-            dispatch(getStudentLanguagesThunk(studentID))
-            dispatch(getStudentAdditionalTrainingThunk(studentID))
-            dispatch(getStudentModalityThunk(studentID))
+        if (typeof role === 'string' && role === 'user') {
+            studentDetails.forEach((student) => {
+                dispatch(student(studentID))
+            })
         } else if (!role && studentUUID) {
-            dispatch(getStudentDetailThunk(studentUUID))
-            dispatch(getStudentProjectsThunk(studentUUID))
-            dispatch(getStudentCollaborationThunk(studentUUID))
-            dispatch(getStudentBootcampThunk(studentUUID))
-            dispatch(getStudentLanguagesThunk(studentUUID))
-            dispatch(getStudentAdditionalTrainingThunk(studentUUID))
-            dispatch(getStudentModalityThunk(studentUUID))
+            studentDetails.forEach((student) => {
+                dispatch(student(studentUUID))
+            })
         }
-
-    }, [dispatch, role, studentID, studentUUID])
+    }, [dispatch, role, studentDetails, studentID, studentUUID])
 
     return { isMobile }
 }
 
-export {
-    useStudentDetailHook,
-}
+export { useStudentDetailHook }

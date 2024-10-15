@@ -15,7 +15,7 @@ class TagTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->tag = new Tag(['id' => 1, 'tag_name' => 'tag_name']);
+        $this->tag = new Tag(['id' => 1, 'name' => 'name']);
     }
 
     public function testCanInstantiate(): void
@@ -29,6 +29,6 @@ class TagTest extends TestCase
 
         $this->assertIsArray($result);
         $this->assertArrayHasKey('id', $result);
-        $this->assertArrayHasKey('tag_name', $result);
+        $this->assertArrayHasKey('name', $result);
     }
 }

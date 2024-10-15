@@ -9,7 +9,7 @@ CONTAINERS=$(docker network inspect -f '{{range .Containers}}{{.Name}} {{end}}' 
 # Disconnect each container from the network
 for CONTAINER in $CONTAINERS
 do
-  docker network disconnect -f $NETWORK_NAME $CONTAINER
+  docker network disconnect -f $NETWORK_NAME "$CONTAINER"
 done
 
 # Remove the network

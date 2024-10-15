@@ -42,7 +42,7 @@ class ResumeLanguageSeeder extends Seeder
                     $selectedLanguageModel = Language::find($selectedLanguage);
                     $additionalLanguageModel = Language::find($additionalLanguage);
                 } while ($additionalLanguage === $selectedLanguage ||
-                        $additionalLanguageModel->language_name === $selectedLanguageModel->language_name);
+                        $additionalLanguageModel->name === $selectedLanguageModel->name);
                 $this->attachLanguage($resume, $additionalLanguage);
             }
         }

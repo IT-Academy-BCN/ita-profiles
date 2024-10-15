@@ -1,16 +1,21 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
-use Tests\Fixtures\Students;
-use Tests\Fixtures\Resumes;
-use Tests\Fixtures\LanguagesForResume;
+use Tests\Fixtures\{
+    Students,
+    Resumes,
+    LanguagesForResume,
+};
+use App\Models\{
+    Resume,
+    Student,
+};
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Http\Controllers\api\Student\StudentLanguagesDetailController;
-use App\Service\Student\StudentLanguageDetailService;
+use Illuminate\Support\Collection;
 
 class StudentLanguageDetailControllerTest extends TestCase
 {
@@ -29,42 +34,72 @@ class StudentLanguageDetailControllerTest extends TestCase
         LanguagesForResume::createLanguagesForResume($resume, 2);
     }
 
-    public function testStudentLanguageDetailControllerReturns_200StatusForValidStudentUuidWithLanguages(): void
+    public function testCanInstantiateAStudent(): void
     {
-        $response = $this->getJson(route('student.languages', ['studentId' =>  $this->student->id]));
+        $this->assertInstanceOf(Student::class, $this->student);
+    }
+
+    public function testCanGetAResumeOfAStudent(): void
+    {
+        $this->assertInstanceOf(Resume::class, $this->student->resume);
+    }
+
+    public function testCanGetLanguagesOfAStudent(): void
+    {
+        $languages = $this->student->resume?->languages ?? collect();
+
+        $this->assertInstanceOf(Collection::class, $languages);
+    }
+
+    public function testStudentLanguageDetailControllerCanBeInstantiated()
+    {
+        $this->assertInstanceOf(StudentLanguagesDetailController::class, new StudentLanguagesDetailController());
+    }
+
+    public function testReturns200WithLanguagesUuid(): void
+    {
+        $response = $this->get( uri: route(name: 'student.languages', parameters: $this->student));
 
         $response->assertStatus(200);
-
-        $response->assertJson([]);
+        $response->assertJsonStructure(structure: [
+            'languages' => [
+                '*' =>[
+                        'id',
+                        'name',
+                        'level'
+                    ]
+            ]
+        ]);
     }
 
-    public function testStudentLanguageDetailControllerReturns_404StatusAndStudentNotFoundExceptionMessageForInvalidStudentUuid(): void
+    public function testReturns404WithInvalidStudentUuid(): void
     {
-        $response = $this->getJson(route('student.languages', ['studentId' =>  'nonExistentStudentId']));
+        $invalidUuid = 'invalidUuid';
 
+        $response = $this->get(uri: route(name: 'student.languages', parameters: $invalidUuid));
+
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $invalidUuid]);
         $response->assertStatus(404);
-
-        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonExistentStudentId']);
     }
 
-    public function testStudentLanguageDetailControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume(): void
+    public function testReturnsAnEmptyArrayWhenThereIsNotResume(): void
     {
-        $this->student->resume->delete();
+        $resume = $this->student->resume;
+        $resume->delete();
 
-        $response = $this->getJson(route('student.languages', ['studentId' =>  $this->student->id]));
+        $response = $this->get(uri: route(name: 'student.languages', parameters: $this->student));
 
-        $response->assertStatus(404);
-
-        $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
+        $response->assertStatus(200);
+        $response->assertJson(['languages' => []]);
     }
-
-    public function testStudentLanguageDetailControllerCanBeInstantiated(): void
+    public function testReturnsAnEmptyArrayWhenThereAreNotLanguagesForStudent(): void
     {
-        $languageService = $this->createMock(StudentLanguageDetailService::class);
+        $resume = $this->student->resume;
+        $resume->languages()->detach();
 
-        $controller = new StudentLanguagesDetailController($languageService);
+        $response = $this->get(uri: route(name: 'student.languages', parameters: $this->student));
 
-        $this->assertInstanceOf(StudentLanguagesDetailController::class, $controller);
+        $response->assertStatus(200);
+        $response->assertJson(['languages' => []]);
     }
-
 }

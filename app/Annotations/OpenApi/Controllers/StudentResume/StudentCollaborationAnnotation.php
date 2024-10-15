@@ -6,7 +6,7 @@ class StudentCollaborationAnnotation
 {
     /**
      * @OA\Get(
-     *     path="/student/{studentId}/resume/collaborations",
+     *     path="/student/{student}/resume/collaborations",
      *     operationId="getStudentResumeCollaborations",
      *     summary="Retrieve a list of collaborations",
      *     tags={"Student -> Resume"},
@@ -14,7 +14,7 @@ class StudentCollaborationAnnotation
      *
      *
      *     @OA\Parameter(
-     *         name="studentId",
+     *         name="student",
      *         description="Student ID",
      *         required=true,
      *         in="path",
@@ -41,19 +41,19 @@ class StudentCollaborationAnnotation
      *                         example="e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e"
      *                     ),
      *                     @OA\Property(
-     *                         property="collaboration_name",
+     *                         property="name",
      *                         type="string",
      *                         description="Name of the collaboration",
      *                         example="Project X"
      *                     ),
      *                     @OA\Property(
-     *                         property="collaboration_description",
+     *                         property="description",
      *                         type="string",
      *                         description="Description of the collaboration",
      *                         example="A collaborative project on topic Y"
      *                     ),
      *                     @OA\Property(
-     *                         property="collaboration_quantity",
+     *                         property="quantity",
      *                         type="integer",
      *                         description="Quantity of the collaboration",
      *                         example=3
@@ -70,12 +70,12 @@ class StudentCollaborationAnnotation
      *              @OA\Property(
      *                  property="message",
      *                  type="string",
-     *                  example="No s'ha trobat cap estudiant amb aquest ID {studentId}"
+     *                  example="No s'ha trobat cap estudiant amb aquest ID {student}"
      *              ),
      *              @OA\Property(
      *                  property="message2",
      *                  type="string",
-     *                  example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+     *                  example="No s'ha trobat cap currículum per a l'estudiant amb id: {student}"
      *              )
      *          )
      *     ),
@@ -90,7 +90,5 @@ class StudentCollaborationAnnotation
      *     )
      * )
      */
-    public function __invoke()
-    {
-    }
+    public function __invoke() {}
 }
