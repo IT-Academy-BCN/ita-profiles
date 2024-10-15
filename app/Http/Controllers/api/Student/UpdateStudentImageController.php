@@ -1,63 +1,35 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Student;
 
-use Illuminate\Http\{
-    JsonResponse,
-    Request
-};
-use Illuminate\Support\Facades\{
-    Log
-};
-
+use App\Models\Student;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Exceptions\StudentNotFoundException;
-use App\Service\Student\UpdateStudentImageService;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateImageStudentRequest;
-
 
 class UpdateStudentImageController extends Controller
 {
-    private UpdateStudentImageService $updateStudentImageService;
+    private string $photo_infix = '.profile_photo.';
+    private string $photos_path = 'public/photos/';
 
-    public function __construct(UpdateStudentImageService $updateStudentImageService)
+    public function __invoke(UpdateImageStudentRequest $request, Student $student): JsonResponse
     {
-        $this->updateStudentImageService = $updateStudentImageService;
+        $file = $request->file('photo');
+
+        $filename = time() . '.' . $student->id . $this->photo_infix . $file->hashName();
+
+        if ($student->photo) {
+            Storage::delete($this->photos_path . $student->photo);
+        }
+
+        $file->storeAs($this->photos_path, $filename);
+
+        $student->photo = $filename;
+        $student->save();
+
+        return response()->json(['message' => 'La imatge s\'ha actualitzat']);
     }
-
-    public function __invoke(UpdateImageStudentRequest $request, string $studentID): JsonResponse
-	{
-
-		try {
-
-			$file = $request->file('photo');
-			$filename = $this->updateStudentImageService->createImageNameByStudentIDAndFileHash($studentID, $file->hashName());
-			$this->updateStudentImageService->storePhotoInStorageByFileName($file, $filename);
-			$this->updateStudentImageService->updateStudentImagePathInDatabaseByStudentID($studentID, $filename);
-
-
-			return response()->json([
-				'profile' => "La foto del perfil de l'estudiant s'actualitzat correctament"
-			], 200);
-
-
-		} catch (StudentNotFoundException $e) {
-
-			Log::error('Exception:', [
-				'exception' => $e->getMessage(),
-				'trace' => $e->getTraceAsString(),
-			]);
-			return response()->json($e->getMessage(), 404);
-
-		} catch (\Exception $e) {
-
-			Log::error('Exception:', [
-				'exception' => $e->getMessage(),
-				'trace' => $e->getTraceAsString(),
-			]);
-			return response()->json('La foto del perfil de l\'estudiant no s\'ha pogut actualitzar, per favor intenteu-ho de nou', 500);
-
-		}
-	}
 }
