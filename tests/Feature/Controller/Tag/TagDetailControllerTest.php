@@ -17,7 +17,7 @@ class TagDetailControllerTest extends TestCase
     public function testInvokeReturnsExpectedData(): void
     {
         $tag = Tag::factory()->create([
-            'tag_name' => 'Test Tag',
+            'name' => 'Test Tag',
         ]);
 
         $response = $this->getJson(route('tag.detail', ['tagId' => $tag->id]));
@@ -26,7 +26,7 @@ class TagDetailControllerTest extends TestCase
         $response->assertJson([
             'data' => [
                 'id' => $tag->id,
-                'tag_name' => $tag->tag_name,
+                'name' => $tag->name,
                 'created_at' => $tag->created_at->toISOString(),
                 'updated_at' => $tag->updated_at->toISOString(),
             ],
@@ -48,7 +48,7 @@ class TagDetailControllerTest extends TestCase
     public function testTagDetailControllerCanBeInstantiated()
     {
         $studentDetailService = $this->createMock(TagDetailService::class);
-        
+
         $controller = new TagDetailController($studentDetailService);
 
         $this->assertInstanceOf(TagDetailController::class, $controller);

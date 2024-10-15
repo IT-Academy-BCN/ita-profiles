@@ -20,7 +20,7 @@ class TagUpdateControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->tag = Tag::first() ?? Tag::factory()->create(['tag_name' => 'Initial Tag Name']);
+        $this->tag = Tag::first() ?? Tag::factory()->create(['name' => 'Initial Tag Name']);
     }
 
     public function testUpdateTagSuccessfully()
@@ -28,45 +28,45 @@ class TagUpdateControllerTest extends TestCase
         $updatedTagName = 'Updated Tag Name';
 
         $response = $this->putJson(route('tag.update', ['tagId' => $this->tag->id]), [
-            'tag_name' => $updatedTagName,
+            'name' => $updatedTagName,
         ]);
         $response->assertStatus(200);
 
         $response->assertJson([
             'tag' => [
                 'id' => $this->tag->id,
-                'tag_name' => $updatedTagName,
+                'name' => $updatedTagName,
             ],
         ]);
         $this->tag->refresh();
 
         $this->assertDatabaseHas('tags', [
             'id' => $this->tag->id,
-            'tag_name' => $updatedTagName,
+            'name' => $updatedTagName,
         ]);
-        $this->assertEquals($updatedTagName, $this->tag->tag_name);
+        $this->assertEquals($updatedTagName, $this->tag->name);
     }
 
     public function testAllowsToUpdateATagByUsingItsSameName(): void
     {
-        $updatedTagName = $this->tag->tag_name;
+        $updatedTagName = $this->tag->name;
 
         $response = $this->putJson(route('tag.update', ['tagId' => $this->tag->id]), [
-            'tag_name' => $updatedTagName,
+            'name' => $updatedTagName,
         ]);
         $response->assertStatus(200);
 
         $response->assertJson([
             'tag' => [
                 'id' => $this->tag->id,
-                'tag_name' => $updatedTagName,
+                'name' => $updatedTagName,
             ],
         ]);
         $this->assertDatabaseHas('tags', [
             'id' => $this->tag->id,
-            'tag_name' => $updatedTagName,
+            'name' => $updatedTagName,
         ]);
-        $this->assertEquals($updatedTagName, $this->tag->tag_name);
+        $this->assertEquals($updatedTagName, $this->tag->name);
     }
 
     public function testUpdateTagFailsForNonExistentTag(): void
@@ -74,7 +74,7 @@ class TagUpdateControllerTest extends TestCase
         $nonExistentTagId = 0;
 
         $response = $this->putJson(route('tag.update', ['tagId' => $nonExistentTagId]), [
-            'tag_name' => 'New Name',
+            'name' => 'New Name',
         ]);
 
         $response->assertStatus(404);
@@ -86,76 +86,76 @@ class TagUpdateControllerTest extends TestCase
     public function testReturnsUnprocessableContentWhenMissingTagName(): void
     {
         $response = $this->putJson(route('tag.update', ['tagId' => $this->tag->id]), [
-            'tag_name' => '',
+            'name' => '',
         ]);
 
         $response->assertStatus(422);
         $response->assertJson([
             'message' => self::VALIDATION_ERROR_MESSAGE,
             'errors' => [
-                'tag_name' => [
-                    'El camp tag name és obligatori.',
+                'name' => [
+                    'El camp nom és obligatori.',
                 ],
             ],
         ]);
-        $response->assertJsonValidationErrors(['tag_name']);
+        $response->assertJsonValidationErrors(['name']);
     }
 
     public function testUpdateTagFailsWhenTagNameIsInteger(): void
     {
         $response = $this->putJson(route('tag.update', ['tagId' => $this->tag->id]), [
-            'tag_name' => 12345,
+            'name' => 12345,
         ]);
         $response->assertStatus(422);
         $response->assertJsonStructure([
             'message',
             'errors' => [
-                'tag_name',
+                'name',
             ],
         ]);
 
         $response->assertJsonFragment([
-            'tag_name' => ['El camp tag name ha de ser una cadena.'],
+            'name' => ['El camp nom ha de ser una cadena.'],
         ]);
-        $response->assertJsonValidationErrors(['tag_name']);
+        $response->assertJsonValidationErrors(['name']);
     }
 
     public function testReturnsUnprocessableContentWhenUsingATooLongTagName(): void
     {
         $response = $this->putJson(route('tag.update', ['tagId' => $this->tag->id]), [
-            'tag_name' => str_repeat('a', 76),
+            'name' => str_repeat('a', 76),
         ]);
 
         $response->assertStatus(422);
         $response->assertJson([
             'message' => self::VALIDATION_ERROR_MESSAGE,
             'errors' => [
-                'tag_name' => [
-                    'Tag name no pot ser més gran que 75 caràcters.',
+                'name' => [
+                    'Nom no pot ser més gran que 75 caràcters.',
                 ],
             ],
         ]);
-        $response->assertJsonValidationErrors(['tag_name']);
+        $response->assertJsonValidationErrors(['name']);
     }
 
     public function testReturnsUnprocessableContentWithDuplicateName(): void
     {
-        $otherTag = Tag::find($this->tag->id + 1) ?? Tag::factory()->create(['tag_name' => 'Other Tag Name']);
+        $otherTag = Tag::find($this->tag->id + 1) ?? Tag::factory()->create(['name' => 'Other Tag Name']);
 
         $response = $this->putJson(route('tag.update', ['tagId' => $otherTag->id]), [
-            'tag_name' => $this->tag->tag_name,
+            'name' => $this->tag->name,
         ]);
 
         $response->assertStatus(422);
         $response->assertJson([
             'message' => self::VALIDATION_ERROR_MESSAGE,
             'errors' => [
-                'tag_name' => [
-                    'Tag name ja està registrat i no es pot repetir.',
+                'name' => [
+                    'Nom ja està registrat i no es pot repetir.',
                 ],
             ],
         ]);
-        $response->assertJsonValidationErrors(['tag_name']);
+        $response->assertJsonValidationErrors(['name']);
     }
 
     public function testTagUpdateControllerCanBeInstantiated(): void

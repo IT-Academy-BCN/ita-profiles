@@ -93,8 +93,8 @@ class StudentListControllerTest extends TestCase
 
     public function testGetResumesWithTags()
     {
-        $tag1 = Tag::create(['tag_name' => 'tag1']);
-        $tag2 = Tag::create(['tag_name' => 'tag2']);
+        $tag1 = Tag::create(['name' => 'tag1']);
+        $tag2 = Tag::create(['name' => 'tag2']);
 
         $student = Student::factory()->create();
 

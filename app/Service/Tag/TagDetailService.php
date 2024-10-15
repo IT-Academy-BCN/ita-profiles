@@ -20,7 +20,7 @@ class TagDetailService
         $tag = $this->getTag($tagId);
         return [
             'id' => $tag->id,
-            'tag_name' => $tag->tag_name,
+            'name' => $tag->name,
             'created_at' => $tag->created_at,
             'updated_at' => $tag->updated_at,
         ];

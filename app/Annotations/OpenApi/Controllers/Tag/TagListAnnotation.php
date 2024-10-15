@@ -27,7 +27,7 @@ class TagListAnnotation
    *                 @OA\Items(
    *                     type="object",
    *                     @OA\Property(property="id", type="integer", example=1),
-   *                     @OA\Property(property="tag_name", type="string", example="Laravel"),
+   *                     @OA\Property(property="name", type="string", example="Laravel"),
    *                 )
    *             )
    *         )
