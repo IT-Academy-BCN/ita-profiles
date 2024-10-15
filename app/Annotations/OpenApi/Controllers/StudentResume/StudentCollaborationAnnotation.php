@@ -47,13 +47,13 @@ class StudentCollaborationAnnotation
      *                         example="Project X"
      *                     ),
      *                     @OA\Property(
-     *                         property="collaboration_description",
+     *                         property="description",
      *                         type="string",
      *                         description="Description of the collaboration",
      *                         example="A collaborative project on topic Y"
      *                     ),
      *                     @OA\Property(
-     *                         property="collaboration_quantity",
+     *                         property="quantity",
      *                         type="integer",
      *                         description="Quantity of the collaboration",
      *                         example=3
