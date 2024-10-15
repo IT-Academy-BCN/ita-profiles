@@ -72,9 +72,9 @@ const StudentDataCard: React.FC = () => {
                                     {showFullDescription
                                         ? aboutData && aboutData.resume.about
                                         : `${aboutData.resume.about
-                                              .split(' ')
-                                              .slice(0, 15)
-                                              .join(' ')}...`}
+                                            .split(' ')
+                                            .slice(0, 15)
+                                            .join(' ')}...`}
                                     {!showFullDescription && (
                                         <button
                                             type="button"

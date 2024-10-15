@@ -24,11 +24,11 @@ const LanguagesCard: React.FC = () => {
                     <div className="flex flex-col gap-1">
                         {languagesData.map((language) => (
                             <ul
-                                key={language.language_id}
+                                key={language.id}
                                 className="flex flex-col"
                             >
                                 <li className="text-sm font-semibold text-black-2">
-                                    {language.language_name}
+                                    {language.name}
                                 </li>
                             </ul>
                         ))}

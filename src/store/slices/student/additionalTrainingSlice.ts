@@ -20,7 +20,7 @@ const additionalTrainingSlice = createSlice({
     builder.addCase(additionalTrainingThunk.fulfilled, (state, action) => {
       state.isLoadingAdditionalTraining = false;
       state.isErrorAdditionalTraining = false;
-      state.additionalTraining = action.payload.additional_trainings
+      state.additionalTraining = action.payload.additionalTrainings
     })
 
     builder.addCase(additionalTrainingThunk.rejected, (state) => {

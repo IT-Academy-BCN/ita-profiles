@@ -37,7 +37,7 @@ const CollaborationCard: React.FC = () => {
                                     </p>
                                 ) : (
                                     <p className="text-2xl text-white">
-                                        {resourcesCard.collaboration_quantity}
+                                        {resourcesCard.quantity}
                                     </p>
                                 )}
                                 <p className="text-md text-white">
@@ -65,7 +65,7 @@ const CollaborationCard: React.FC = () => {
                                     </p>
                                 ) : (
                                     <p className="text-2xl text-white">
-                                        {challengesCard.collaboration_quantity}
+                                        {challengesCard.quantity}
                                     </p>
                                 )}
                                 <p className="text-md text-white">
