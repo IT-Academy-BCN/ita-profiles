@@ -47,7 +47,7 @@ describe('additionalTrainingSlice', () => {
             additionalTrainingSlice(undefined, {
                 type: 'additionalTrainingThunk/fulfilled',
                 payload: {
-                    additional_trainings: [
+                    additionalTrainings: [
                         {
                             uuid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                             course_name: 'string',
