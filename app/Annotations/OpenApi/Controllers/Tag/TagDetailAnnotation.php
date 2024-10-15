@@ -7,7 +7,7 @@ namespace App\Annotations\OpenApi\Controllers\Tag;
 use OpenApi\Annotations as OA;
 
 class TagDetailAnnotation
-{ 
+{
     /**
     * @OA\Get(
     *      path="/tags/{tagId}",
@@ -38,7 +38,7 @@ class TagDetailAnnotation
     *           property="data",
     *           type="object",
     *                 @OA\Property(property="id", type="integer", example=1),
-    *                 @OA\Property(property="tag_name", type="string", example="Laravel"),
+    *                 @OA\Property(property="name", type="string", example="Laravel"),
     *                 @OA\Property(property="created_at", type="string", format="date-time", example="2024-01-25T12:34:56Z"),
     *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2024-01-25T12:34:56Z"),
     *             )

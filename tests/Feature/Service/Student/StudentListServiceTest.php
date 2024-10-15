@@ -16,7 +16,7 @@ class StudentListServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $studentListService;
+    protected StudentListService $studentListService;
 
     protected function setUp(): void
     {
@@ -27,7 +27,7 @@ class StudentListServiceTest extends TestCase
 
     public function testExecuteReturnsExpectedData(): void
     {
-        $tag = Tag::factory()->create(attributes: ['tag_name' => 'tag1']);
+        $tag = Tag::factory()->create(attributes: ['name' => 'tag1']);
 
         $student = Student::factory()->create();
         $student->tags()->attach($tag->id);
@@ -45,7 +45,7 @@ class StudentListServiceTest extends TestCase
         $this->assertEquals($resume->subtitle, $data[0]['subtitle']);
         $this->assertCount(1, $data[0]['tags']);
         $this->assertEquals($tag->id, $data[0]['tags'][0]['id']);
-        $this->assertEquals($tag->tag_name, $data[0]['tags'][0]['name']);
+        $this->assertEquals($tag->name, $data[0]['tags'][0]['name']);
     }
 
     public function testExecuteThrowsModelNotFoundExceptionWhenNoResumes(): void

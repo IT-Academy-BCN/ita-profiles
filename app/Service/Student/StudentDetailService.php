@@ -67,7 +67,7 @@ class StudentDetailService
         return $student->tags->map(function ($tag) {
             return [
                 'id' => $tag->id,
-                'name' => $tag->tag_name
+                'name' => $tag->name
             ];
         })->toArray();
     }

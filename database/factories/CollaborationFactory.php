@@ -22,9 +22,9 @@ class CollaborationFactory extends Factory
     public function definition()
     {
         return [
-            'collaboration_name' => $this->faker->sentence($this->faker->numberBetween(1, 5)),
-            'collaboration_description' => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
-            'collaboration_quantity' => $this->faker->numberBetween(1, 10),
+            'name' => $this->faker->sentence($this->faker->numberBetween(1, 5)),
+            'description' => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true),
+            'quantity' => $this->faker->numberBetween(1, 10),
         ];
     }
 }
