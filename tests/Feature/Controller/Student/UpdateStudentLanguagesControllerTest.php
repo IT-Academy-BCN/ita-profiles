@@ -48,7 +48,7 @@ class UpdateStudentLanguagesControllerTest extends TestCase
             ->with($this->resume, 'Anglès', 'Natiu')
             ->andReturn(true);
 
-        $response = $this->putJson(route('student.languages.update', ['studentId' => $this->student->id]), [
+        $response = $this->putJson(route('student.languages.update', ['student' => $this->student->id]), [
             'name' => 'Anglès',
             'level' => 'Natiu'
         ]);
@@ -74,7 +74,7 @@ class UpdateStudentLanguagesControllerTest extends TestCase
             ->with($this->resume, 'Francès', 'Bàsic')
             ->andReturn(false);
 
-        $response = $this->putJson(route('student.languages.update', ['studentId' => $this->student->id]), [
+        $response = $this->putJson(route('student.languages.update', ['student' => $this->student->id]), [
             'name' => 'Francès',
             'level' => 'Bàsic'
         ]);
@@ -90,7 +90,7 @@ class UpdateStudentLanguagesControllerTest extends TestCase
             ->with('non-existent-id')
             ->andThrow(new ModelNotFoundException());
 
-        $response = $this->putJson(route('student.languages.update', ['studentId' => 'non-existent-id']), [
+        $response = $this->putJson(route('student.languages.update', ['student' => 'non-existent-id']), [
             'name' => 'Català',
             'level' => 'Avançat'
         ]);
@@ -106,7 +106,7 @@ class UpdateStudentLanguagesControllerTest extends TestCase
             ->with($this->student->id)
             ->andThrow(new \Exception('Some unexpected error'));
 
-        $response = $this->putJson(route('student.languages.update', ['studentId' => $this->student->id]), [
+        $response = $this->putJson(route('student.languages.update', ['student' => $this->student->id]), [
             'name' => 'Català',
             'level' => 'Intermedi'
         ]);
