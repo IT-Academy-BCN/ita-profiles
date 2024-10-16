@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateImageStudentRequest extends FormRequest
 {
@@ -27,15 +25,5 @@ class UpdateImageStudentRequest extends FormRequest
             'photo' => 'required|image|mimes:jpg,jpeg,png,bmp,svg,webp|max:2048'
         ];
 
-    }
-
-    /**
-     * If validator fails returns the exception in json form
-     *
-     * @return array
-     */
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
     }
 }
