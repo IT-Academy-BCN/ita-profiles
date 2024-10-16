@@ -28,10 +28,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $guarded = ['id'];
-    protected $fillable = [
-        'username', 'dni', 'email', 'password',
-    ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -52,22 +48,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // RIGHT NOW THERE ARE NO ADMINS OR RECRUITERS
-    // public function admin()
-    // {
-    //     return $this->hasOne(Admin::class);
-    // }
-
-    // public function recruiter()
-    // {
-    //     return $this->hasOne(Recruiter::class);
-    // }
-
     public function student():HasOne
     {
         return $this->hasOne(Student::class);
     }
-    
+
     public function resume():HasOne
     {
         return $this->hasOne(Resume::class);
