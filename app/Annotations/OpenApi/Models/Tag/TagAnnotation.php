@@ -23,7 +23,7 @@ namespace App\Annotations\OpenApi\Models\Tag;
  * @var int
  *
  * @OA\Property(
- *     property="tag_name",
+ *     property="name",
  *     description="Tag Name",
  *     type="string",
  *     format="int64"

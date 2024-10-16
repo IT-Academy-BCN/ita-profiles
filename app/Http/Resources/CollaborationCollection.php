@@ -20,9 +20,9 @@ class CollaborationCollection extends ResourceCollection
             'collaborations' => $this->collection->map(function ($collaboration) {
                 return [
                     'uuid' => $collaboration->id,
-                    'collaboration_name' => $collaboration->collaboration_name,
-                    'collaboration_description' => $collaboration->collaboration_description,
-                    'collaboration_quantity' => $collaboration->collaboration_quantity,
+                    'name' => $collaboration->name,
+                    'description' => $collaboration->description,
+                    'quantity' => $collaboration->quantity,
                 ];
             })->toArray()
         ];

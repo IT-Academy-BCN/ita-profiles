@@ -17,7 +17,7 @@ class TagStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tag_name' => 'required|string|max:75|unique:tags',
+            'name' => 'required|string|max:75|unique:tags',
         ];
     }
     protected function failedValidation(Validator $validator): void

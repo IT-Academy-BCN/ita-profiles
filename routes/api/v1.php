@@ -52,6 +52,7 @@ Route::get('student/{student}/resume/detail', StudentDetailController::class)->n
 Route::put('student/{student}/resume/profile', UpdateStudentProfileController::class)->name('student.updateProfile');
 Route::get('student/{student}/resume/bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
 Route::get('student/{student}/resume/projects', StudentProjectsDetailController::class)->name('student.projects');
+Route::put('student/{student}/resume/projects/{project}', UpdateStudentProjectController::class)->middleware('auth:api')->name('student.updateProject');
 Route::post('student/{student}/resume/languages', AddStudentLanguageController::class)->name('student.addLanguage');
 Route::get('student/{student}/resume/additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
 Route::get('student/{student}/resume/collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');

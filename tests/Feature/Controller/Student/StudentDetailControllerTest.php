@@ -60,7 +60,7 @@ class StudentDetailControllerTest extends TestCase
             'tags' => $this->student->tags->map(function ($tag) {
                 return [
                     'id' => $tag->id,
-                    'tag_name' => $tag->tag_name,
+                    'name' => $tag->name,
                 ];
             })->toArray(),
             'resume' => [

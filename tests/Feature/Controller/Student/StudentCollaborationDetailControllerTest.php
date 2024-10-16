@@ -29,9 +29,9 @@ class StudentCollaborationDetailControllerTest extends TestCase
         ]);
 
         $this->collaboration = Collaboration::factory()->create([
-            'collaboration_name' => 'Test Collaboration',
-            'collaboration_description' => 'Test Description',
-            'collaboration_quantity' => 1
+            'name' => 'Test Collaboration',
+            'description' => 'Test Description',
+            'quantity' => 1
         ]);
 
         $this->resume->collaborations()->attach($this->collaboration->id);
@@ -46,9 +46,9 @@ class StudentCollaborationDetailControllerTest extends TestCase
             'collaborations' => [
                 '*' => [
                     'uuid',
-                    'collaboration_name',
-                    'collaboration_description',
-                    'collaboration_quantity'
+                    'name',
+                    'description',
+                    'quantity'
                 ]
             ]
         ]);

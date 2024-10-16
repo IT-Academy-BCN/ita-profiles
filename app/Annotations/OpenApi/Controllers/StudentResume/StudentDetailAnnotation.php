@@ -37,7 +37,7 @@ class StudentDetailAnnotation
      *                     @OA\Items(
      *                         type="object",
      *                         @OA\Property(property="id", type="integer", example=4),
-     *                         @OA\Property(property="tag_name", type="string", example="HTML&CSS")
+     *                         @OA\Property(property="name", type="string", example="HTML&CSS")
      *                     )
      *                 ),
      *                 @OA\Property(

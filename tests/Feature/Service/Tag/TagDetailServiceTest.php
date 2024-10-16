@@ -26,14 +26,14 @@ class TagDetailServiceTest extends TestCase
     public function testExecuteReturnsExpectedData(): void
     {
         $tag = Tag::factory()->create([
-            'tag_name' => 'Test Tag',
+            'name' => 'Test Tag',
         ]);
 
         $data = $this->tagDetailService->execute($tag->id);
 
         $this->assertEquals([
             'id' => $tag->id,
-            'tag_name' => $tag->tag_name,
+            'name' => $tag->name,
             'created_at' => $tag->created_at,
             'updated_at' => $tag->updated_at,
         ], $data);
