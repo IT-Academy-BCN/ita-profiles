@@ -28,7 +28,7 @@ class CollaborationAnnotation {
 
     /**
      * @OA\Property(
-     *     property="collaboration_name",
+     *     property="name",
      *     description="Collaboration Name",
      *     type="string"
      * )

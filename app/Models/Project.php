@@ -8,6 +8,7 @@ use App\Events\ProjectRetrieved;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Project extends Model
 {
@@ -17,9 +18,17 @@ class Project extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
 
-    public function company()
+
+    public function tags(): BelongsToMany
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsToMany(related: Tag::class);
+    }
+
+    public function resumes(): BelongsToMany
+    {
+        // As a guide, we implement Laravel naming conventions for relationships.
+        // See: https://laravel.com/docs/10.x/eloquent-relationships#many-to-many
+        return $this->belongsToMany(Resume::class);
     }
 
     // We define a $dispatchEvents to listen to model events

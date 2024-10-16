@@ -4,31 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Student;
 
-use App\Exceptions\ResumeNotFoundException;
-use App\Exceptions\StudentNotFoundException;
 use App\Http\Controllers\Controller;
-use App\Service\Student\StudentCollaborationDetailService;
+use App\Http\Resources\CollaborationCollection;
+use App\Models\Student;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
-use Exception;
 
 class StudentCollaborationDetailController extends Controller
 {
-    private StudentCollaborationDetailService $studentCollaborationDetailService;
+    public function __invoke(Student $student): JsonResponse
+    {
+        $resume = $student->resume ?? throw new ModelNotFoundException();
+        $collaborations = $resume?->collaborations ?? collect();
 
-    public function __construct(StudentCollaborationDetailService $studentCollaborationDetailService)
-    {
-        $this->studentCollaborationDetailService = $studentCollaborationDetailService;
-    }
-    
-    public function __invoke(string $studentId): JsonResponse
-    {
-        try {
-            $service = $this->studentCollaborationDetailService->execute($studentId);
-            return response()->json(['collaborations' => $service]);
-        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode());
-        } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
-        }
+        return response()->json(new CollaborationCollection($collaborations));
     }
 }

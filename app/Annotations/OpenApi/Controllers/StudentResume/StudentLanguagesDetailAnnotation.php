@@ -10,7 +10,7 @@ class StudentLanguagesDetailAnnotation
 {
     /**
      * @OA\Get(
-     *      path="/student/{studentId}/resume/languages",
+     *      path="/student/{student}/resume/languages",
      *      operationId="getStudentResumeLanguages",
      *      tags={"Student -> Resume"},
      *      summary="Gets the languages spoken by a student",
@@ -19,7 +19,7 @@ class StudentLanguagesDetailAnnotation
 It returns a list of languages along with any other relevant information, such as the proficiency level in each language.",
      *
      *      @OA\Parameter(
-     *          name="studentId",
+     *          name="student",
      *          description="Student ID",
      *          required=true,
      *          in="path",
@@ -39,19 +39,19 @@ It returns a list of languages along with any other relevant information, such a
      *                  @OA\Items(
      *                      type="object",
      *                      @OA\Property(
-     *                          property="language_id",
+     *                          property="id",
      *                          type="string",
      *                          description="Language UUID",
      *                          example="e6b4432b-d2f8-4e06-b727-6ecaf40e6e0e"
      *                      ),
      *                      @OA\Property(
-     *                          property="language_name",
+     *                          property="name",
      *                          type="string",
      *                          description="Language name",
      *                          example="Anglès"
      *                      ),
      *                      @OA\Property(
-     *                          property="language_level",
+     *                          property="level",
      *                          type="string",
      *                          description="The student's proficiency level in the language",
      *                          example="Bàsic"
@@ -65,8 +65,7 @@ It returns a list of languages along with any other relevant information, such a
         *     description="Student or Resume not found",
         *     @OA\JsonContent(
         *         type="object",
-        *         @OA\Property(property="message", type="string", example="No s'ha trobat cap estudiant amb aquest ID {studentId}"),
-        *         @OA\Property(property="message2", type="string", example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}")
+        *         @OA\Property(property="message", type="string", example="No query results for model [App\Models\Student] {studentId}"),
         *     )
      *     ),
      *     @OA\Response(

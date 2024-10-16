@@ -30,7 +30,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-        'tag_name' => $this->faker->unique()->randomElement($this->tagNames),
+        'name' => $this->faker->unique()->randomElement($this->tagNames),
     ];
     }
 

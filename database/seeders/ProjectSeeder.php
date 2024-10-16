@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Project;
+use App\Models\Resume;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder
 {
@@ -12,6 +16,11 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        Project::factory(2)->create();
+        $resumes = Resume::all();
+
+        foreach ($resumes as $resume) {
+            $projects = Project::factory(2)->create();
+            $resume->projects()->attach($projects->pluck('id'));
+        }
     }
 }

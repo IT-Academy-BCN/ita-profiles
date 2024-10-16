@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Language extends Model
 {
@@ -16,7 +17,7 @@ class Language extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
 
-    public function resumes()
+    public function resumes(): BelongsToMany
     {
         return $this->belongsToMany(Resume::class);
     }

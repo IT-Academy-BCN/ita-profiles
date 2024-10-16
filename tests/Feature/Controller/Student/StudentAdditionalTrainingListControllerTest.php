@@ -8,62 +8,89 @@ use Tests\TestCase;
 use App\Models\Student;
 use App\Models\Resume;
 use App\Models\AdditionalTraining;
-use Tests\Fixtures\Students;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\api\Student\StudentAdditionalTrainingListController;
-use App\Service\Student\StudentAdditionalTrainingListService;
 
 class StudentAdditionalTrainingListControllerTest extends TestCase
 {
-    public function testStudentAdditionalTrainingListControllerReturnsAdditionalTrainingDetailsForValidStudentUuid()
+    
+    use DatabaseTransactions;
+    protected $student;
+    protected $additionalTrainings;
+
+    protected function setUp(): void
     {
-        $student = Student::factory()->create();
+        parent::setUp();
 
-        $resume = Resume::factory()->create(['student_id' => $student->id]); 
+        $this->student = Student::factory()->create();
 
-        $additionalTraining1 = AdditionalTraining::factory()->create();
+        $this->additionalTrainings = AdditionalTraining::factory()->count(2)->create();
 
-        $additionalTraining2 = AdditionalTraining::factory()->create();
-
-        $resume->additional_trainings_ids = json_encode([$additionalTraining1->id, $additionalTraining2->id]);
-
-        $resume->save();
-
-        $response = $this->getJson(route('student.additionaltraining', ['studentId' => $student->id]));
+        $this->student->resume()->create([
+            'additional_training_ids' => json_encode($this->additionalTrainings->pluck('id')->toArray())
+        ]);
+    }
+    
+    public function testCanFindAdditionalTrainingDetails()
+    {        
+        $response = $this->get(route('student.additionaltraining', ['student' => $this->student]));      
 
         $response->assertStatus(200);
 
-        $response->assertJsonStructure(['additional_trainings']);
+        $response->assertJsonStructure([            
+                'additionalTrainings' => [
+                   '*' => [               
+                    'id',
+                    'course_name',
+                    'study_center',
+                    'course_beginning_year',
+                    'course_ending_year',
+                    'duration_hrs'
+                   ]
+                ]
+            ]
+        );
     }
 
-    public function testStudentAdditionalTrainingListControllerReturns_404ForInvalidStudentUuid()
+    public function testCanReturn404WhenStudentIsNotFound()
     {
-        $response = $this->getJson(route('student.additionaltraining', ['studentId' => 'nonexistent_uuid']));
+        $invalidUuid = 'invalid_uuid';
+
+        $response = $this->get(route('student.additionaltraining', ['student' => $invalidUuid]));       
 
         $response->assertStatus(404);
 
-        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: nonexistent_uuid']);
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $invalidUuid]);
     }
 
-    public function testStudentAdditionalTrainingListControllerReturns_404ForValidStudentUuidWithoutResume()
+    public function testCanReturnEmptyAdditionalTrainingsWhenNoResume()
     {
-        $student = Students::aStudent();
+        Resume::where('student_id', $this->student->id)->delete();
+                
+        $response = $this->getJson(route('student.additionaltraining', ['student' => $this->student]));
 
-        $studentId = $student->id;
-        
-        $response = $this->getJson(route('student.additionaltraining', ['studentId' => $studentId]));
-
-        $response->assertStatus(404);
-
-        $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $studentId]);
+        $response->assertStatus(200);
+       
+        $response->assertJson([]);
     }
 
-    public function testStudentAdditionalTrainingListControllerCanBeInstantiated(): void
+    public function testCanReturnEmptyAdditionalTrainingsWhenNoAdditionalTrainings()
     {
-        $additionalTrainingListService = $this->createMock(StudentAdditionalTrainingListService::class);
-        
-        $controller = new StudentAdditionalTrainingListController($additionalTrainingListService);
+       $resume = $this->student->resume;
 
-        $this->assertInstanceOf(StudentAdditionalTrainingListController::class, $controller);
+       $resume->additionalTrainings()->detach();
+                
+        $response = $this->getJson(route('student.additionaltraining', ['student' => $this->student]));
+
+        $response->assertStatus(200);
+      
+        $response->assertJson([]);
+    }
+
+    public function testCanBeInstantiated(): void
+    {
+        $studentAdditionalTrainingListController = new StudentAdditionalTrainingListController();
+        $this->assertInstanceOf(StudentAdditionalTrainingListController::class, $studentAdditionalTrainingListController);
     }
 
 }

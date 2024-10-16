@@ -1,14 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Tests\Feature\Controller\Student;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use App\Http\Controllers\api\Student\StudentDetailController;
-use App\Service\Student\StudentDetailService;
 use App\Models\Student;
+use App\Models\Tag;
 
 class StudentDetailControllerTest extends TestCase
 {
@@ -21,72 +18,59 @@ class StudentDetailControllerTest extends TestCase
     {
         parent::setUp();
 
+        $tags = Tag::all()->take(3);
         $this->student = Student::factory()->create();
-
+        $this->student->tags()->attach($tags->pluck('id'));
         $this->resume = $this->student->resume()->create();
     }
-    
+
     public function testStudentDetailsAreFound(): void
     {
-        $studentDetailService = $this->createMock(StudentDetailService::class);
-
-        $student = $this->student;
-    
-        $studentId = $student->id;
-        
-        $studentDetail = $this->resume;
-
-        $studentDetailService->expects($this->once())
-                              ->method('execute')
-                              ->with($studentId)
-                              ->willReturn($studentDetail->toArray());
-
-        $this->app->instance(StudentDetailService::class, $studentDetailService);
-
-        $response = $this->get(route('student.details', ['studentId' => $studentId]));
+        $response = $this->get(route('student.details', ['student' => $this->student]));
 
         $response->assertStatus(200);
 
-        $response->assertJsonStructure();
+        $response->assertJson([
+            'id' => $this->student->id,
+        ]);
     }
 
     public function testStudentDetailsIsNotFound(): void
     {
-        $studentDetailService = $this->createMock(StudentDetailService::class);
+        $nonExistentStudentId = 12345;
 
-        $studentId = 12345;
-
-        $studentDetailService->expects($this->once())
-                              ->method('execute')
-                              ->with($studentId)
-                              ->willThrowException(new \App\Exceptions\StudentNotFoundException((string)$studentId));
-
-        $this->app->instance(StudentDetailService::class, $studentDetailService);
-
-        $response = $this->get(route('student.details', ['studentId' => $studentId]));
+        $response = $this->get(route('student.details', ['student' => $nonExistentStudentId]));
 
         $response->assertStatus(404);
-        
-        $response->assertJson(['message' => 'No s\'ha trobat cap estudiant amb aquest ID: 12345']);
+
+        $response->assertJson(['message' => 'No query results for model [App\\Models\\Student] ' . $nonExistentStudentId]);
     }
 
-    public function testStudentDetailControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume(): void
+    public function testStudentDetailsJsonFormat(): void
     {
-        $this->student->resume->delete();
+        $response = $this->get(route('student.details', ['student' => $this->student]));
 
-        $response = $this->get(route('student.details', ['studentId' => $this->student]));
+        $response->assertStatus(200);
 
-        $response->assertStatus(404);
-        
-        $response->assertJson(['message' => 'No s\'ha trobat cap currículum per a l\'estudiant amb id: ' . $this->student->id]);
-    }
-
-    public function testStudentDetailControllerCanBeInstantiated():void
-    {
-        $studentDetailService = $this->createMock(StudentDetailService::class);
-        
-        $controller = new StudentDetailController($studentDetailService);
-
-        $this->assertInstanceOf(StudentDetailController::class, $controller);
+        $response->assertJson([
+            'id' => $this->student->id,
+            'fullname' => ucfirst($this->student->name) . ' ' . ucfirst($this->student->surname),
+            'photo' => $this->student->photo,
+            'status' => $this->student->status->value,
+            'tags' => $this->student->tags->map(function ($tag) {
+                return [
+                    'id' => $tag->id,
+                    'name' => $tag->name,
+                ];
+            })->toArray(),
+            'resume' => [
+                'subtitle' => $this->resume->subtitle,
+                'social_media' => [
+                    'github' => $this->resume->github_url,
+                    'linkedin' => $this->resume->linkedin_url,
+                ],
+                'about' => $this->resume->about,
+            ]
+        ]);
     }
 }

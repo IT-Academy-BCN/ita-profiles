@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { IStudentList } from '../interfaces/interfaces';
 
 // eslint-disable-next-line consistent-return
-export const FetchStudentsListHome = async (selectedRoles:Array<string>= []) => {
+export const FetchStudentsList = async (selectedRoles: Array<string> = []) => {
 
   try {
     let queryParams = '';
@@ -14,7 +14,7 @@ export const FetchStudentsListHome = async (selectedRoles:Array<string>= []) => 
     }
 
     // Construir la URL completa con la cadena de consulta
-    const url = `//localhost:8000/api/v1/student/list/for-home${queryParams ? `?${queryParams}` : ''}`;
+    const url = `//localhost:8000/api/v1/student/resume/list${queryParams ? `?${queryParams}` : ''}`;
 
     const response = await axios.get<IStudentList[]>(url);
     return response.data;
@@ -23,4 +23,4 @@ export const FetchStudentsListHome = async (selectedRoles:Array<string>= []) => 
     // eslint-disable-next-line no-console
     throw new DOMException(e.message, 'ConnectionFailed');
   }
-  };
+};

@@ -1,15 +1,26 @@
 import { ReactNode } from 'react'
 
 export interface ILoginForm {
-  // this must be changed to 'dni' instead of 'email' but for json-server we need it to be 'email'
-  email: string
+  dni: string
   password: string
+}
+
+export interface User {
+  id: string;
+  authToken?: string;
 }
 
 // This could be used globally if we're passing just the children props.
 // Good for providers
 export type TchildrenProps = {
   children: ReactNode
+}
+
+// === UserResponseData ===
+export type UserResponseData = {
+  userID: string;
+  token: string;
+  studentID: string
 }
 
 // === SmallScreenContext ===
@@ -34,7 +45,7 @@ export interface ITag {
 
 export type TBootcamp = {
   bootcamp_id: string
-  bootcamp_name: string
+  name: string
   bootcamp_end_date: string
 }
 
@@ -44,7 +55,7 @@ export type TModality = {
 
 export type TProject = {
   uuid: number
-  project_name: string
+  name: string
   company_name: string
   tags: ITag[]
   project_url: string
@@ -52,30 +63,32 @@ export type TProject = {
 }
 
 export type TLanguage = {
-  language_id: string
-  language_name: string
-  language_level: string
+  id: string
+  name: string
+  level: string
 }
 
 export type TAbout = {
   id: number
   fullname: string
-  subtitle: string
-  social_media: {
-    github: {
-      url: string
+  resume: {
+    subtitle: string
+    social_media: {
+      github: {
+        url: string
+      }
+      linkedin: {
+        url: string
+      }
     }
-    linkedin: {
-      url: string
-    }
+    about: string
   }
-  about: string
   photo: string
   tags: ITag[]
 }
 
 export type TAdditionalTraining = {
-  uuid: string
+  id: string
   course_name: string
   study_center: string
   course_beginning_year: number
@@ -85,7 +98,7 @@ export type TAdditionalTraining = {
 
 export type TCollaboration = {
   uuid: string
-  collaboration_name: string
+  name: string
   collaboration_description: string
-  collaboration_quantity: number
+  quantity: number
 }

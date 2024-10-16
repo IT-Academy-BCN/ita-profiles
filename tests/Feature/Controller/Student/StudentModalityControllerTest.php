@@ -18,10 +18,10 @@ class StudentModalityControllerTest extends TestCase
     public function testStudentModalityControllerReturns_200StatusForValidStudentUuidWithModality():void
     {
         $student = Students::aStudent();
-        
+
         $studentId = $student->id;
 
-        Resumes::createResumeWithModality($studentId, 'frontend', ['tag1', 'tag2'], 'Presencial');
+        Resumes::createResumeWithModality($studentId, 'frontend', [1, 3], 'Presencial');
 
         $response = $this->getJson(route('student.modality', ['studentId' => $studentId]));
 
@@ -33,7 +33,7 @@ class StudentModalityControllerTest extends TestCase
     public function testStudentModalityControllerReturns_404StatusAndResumeNotFoundExceptionMessageForValidStudentUuidWithoutResume():void
     {
         $student = Students::aStudent();
-        
+
         $studentId = $student->id;
 
         $response = $this->getJson(route('student.modality', ['studentId' => $studentId]));
@@ -53,7 +53,7 @@ class StudentModalityControllerTest extends TestCase
     public function testStudentModalityControllerCanBeInstantiated():void
     {
         $studentModalityService = $this->createMock(StudentModalityService::class);
-        
+
         $controller = new StudentModalityController($studentModalityService);
 
         $this->assertInstanceOf(StudentModalityController::class, $controller);

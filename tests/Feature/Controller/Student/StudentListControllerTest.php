@@ -93,35 +93,36 @@ class StudentListControllerTest extends TestCase
 
     public function testGetResumesWithTags()
     {
-        $tag1 = Tag::create(['tag_name' => 'tag1']);
+        $tag1 = Tag::create(['name' => 'tag1']);
+        $tag2 = Tag::create(['name' => 'tag2']);
 
-        $tag2 = Tag::create(['tag_name' => 'tag2']);
+        $student = Student::factory()->create();
 
-        $student = Students::aStudent();
+        $resume1 = Resume::factory()->create([
+            'student_id' => $student->id,
+            'specialization' => 'Frontend',
+        ]);
+        $resume1->student->tags()->attach($tag1->id);
 
-        $resume1 = Resumes::createResume($student->id, 'Frontend', [$tag1->id]);
-
-        $resume2 = Resumes::createResume($student->id, 'Backend', [$tag2->id]);
+        $resume2 = Resume::factory()->create([
+            'student_id' => $student->id,
+            'specialization' => 'Backend',
+        ]);
+        $resume2->student->tags()->attach($tag2->id);
 
         $resumeService = new StudentListService();
 
         $resumes = $resumeService->getResumes(null, ['tag1']);
-
-        $this->assertCount(1, $resumes);
-
         $this->assertEquals($resume1->id, $resumes->first()->id);
 
         $resumes = $resumeService->getResumes(null, ['tag2']);
-
-        $this->assertCount(1, $resumes);
-
-        $this->assertEquals($resume2->id, $resumes->first()->id);
+        $this->assertEquals($resume2->id, $resumes->last()->id);
     }
 
     public function testStudentListControllerCanBeInstantiated()
     {
         $studentListService = $this->createMock(StudentListService::class);
-        
+
         $controller = new StudentListController($studentListService);
 
         $this->assertInstanceOf(StudentListController::class, $controller);

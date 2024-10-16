@@ -6,30 +6,36 @@ namespace App\Service\Student;
 
 use App\Models\Project;
 use App\Models\Student;
-use App\Models\Company;
+use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
-use App\Exceptions\StudentNotFoundException;
-use App\Exceptions\ProjectNotFoundException;
-use App\Exceptions\UnauthorizedException;
-
+use Exception;
 
 class UpdateStudentProjectService
 {
     public function execute(string $studentId, string $projectId, array $data): void
     {
         DB::transaction(function () use ($studentId, $projectId, $data) {
-            $this->getStudent($studentId);
+            $student = $this->getStudent($studentId);
             $project = $this->getProject($projectId);
 
-            $this->updateProject($project, $data);
+            // Verificar que el proyecto pertenece al estudiante
+            if (!$this->isProjectOwnedByStudent($student, $project)) {
+                throw new Exception("No tienes permiso para actualizar este proyecto.", 403);
+            }
+
+            $this->updateProject($project, $student, $data);
         });
     }
 
-    private function getStudent(string $studentId): void
-    {          
-        if (!Student::find($studentId)) {
-            throw new StudentNotFoundException($studentId);
-        }       
+    private function getStudent(string $studentId): Student
+    {
+        $student = Student::find($studentId);
+
+        if (!$student) {
+            throw new Exception("Student not found", 404);
+        }
+
+        return $student;
     }
 
     private function getProject(string $projectId): Project
@@ -37,25 +43,30 @@ class UpdateStudentProjectService
         $project = Project::find($projectId);
 
         if (!$project) {
-            throw new ProjectNotFoundException($projectId);
+            throw new Exception("Project not found", 404);
         }
 
         return $project;
     }
-   
-    private function updateProject(Project $project, array $data): void
+
+    private function isProjectOwnedByStudent(Student $student, Project $project): bool
     {
-        $project->name = $data['name'] ?? $project->name;
-        $project->tags = json_encode($data['tags'] ?? json_decode($project->tags));
+        return $student->resume->projects->contains($project);
+    }
+
+    private function updateProject(Project $project, Student $student, array $data): void
+    {
+        $project->name = $data['project_name'] ?? $project->name;
         $project->github_url = $data['github_url'] ?? $project->github_url;
         $project->project_url = $data['project_url'] ?? $project->project_url;
-    
-        if (isset($data['company_name'])) {
-            $company = Company::find($project->company_id);
-            $company->name = $data['company_name'];
-            $company->save();
-            }   
+        $project->company_name = $data['company_name'] ?? $project->company_name;
 
-        $project->save();
+        if (isset($data['tags'])) {
+            $tagsArray = $data['tags'];
+            $tagIds = Tag::whereIn('id', $tagsArray)->pluck('id')->toArray();
+            $student->tags()->sync($tagIds);
+        }
+
+        $project->update();
     }
 }
