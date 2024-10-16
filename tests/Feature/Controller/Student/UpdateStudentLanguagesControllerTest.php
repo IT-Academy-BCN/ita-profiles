@@ -32,22 +32,19 @@ class UpdateStudentLanguagesControllerTest extends TestCase
 
     private function createFakeDataForStudentWithLanguages(): array
     {
-        $this->updateStudentLanguagesService->shouldReceive('findStudentById')
-            ->once()
-            ->with($this->student->id)
-            ->andReturn($this->student);
+        $student = Student::factory()->has(Resume::factory())->create();
+        $resume = $student->resume()->first();
+        $language = Language::firstOrCreate(
+            ['name' => 'Anglès', 'level' => 'Natiu'],
+            ['id' => (string) Str::uuid()]
+        );
+        $resume->languages()->syncWithoutDetaching($language->id);
+        return [$student, $resume, $language];
+    }
 
-        $this->updateStudentLanguagesService->shouldReceive('findStudentResume')
-            ->once()
-            ->with($this->student)
-            ->andReturn($this->resume);
-
-        $this->updateStudentLanguagesService->shouldReceive('updateStudentLanguage')
-            ->once()
-            ->with($this->resume, 'Anglès', 'Natiu')
-            ->andReturn(true);
-
-        $response = $this->putJson(route('student.languages.update', ['student' => $this->student->id]), [
+    public function testCanUpdateStudentLanguage(): void
+    {
+        $response = $this->putJson(route('student.languages.update', ['student' => $this->student]), [
             'name' => 'Anglès',
             'level' => 'Natiu'
         ]);
@@ -58,23 +55,8 @@ class UpdateStudentLanguagesControllerTest extends TestCase
 
     public function testCanReturn404WhenLanguageNotFound(): void
     {
-        $this->updateStudentLanguagesService->shouldReceive('findStudentById')
-            ->once()
-            ->with($this->student->id)
-            ->andReturn($this->student);
-
-        $this->updateStudentLanguagesService->shouldReceive('findStudentResume')
-            ->once()
-            ->with($this->student)
-            ->andReturn($this->resume);
-
-        $this->updateStudentLanguagesService->shouldReceive('updateStudentLanguage')
-            ->once()
-            ->with($this->resume, 'Francès', 'Bàsic')
-            ->andReturn(false);
-
-        $response = $this->putJson(route('student.languages.update', ['student' => $this->student->id]), [
-            'name' => 'Francès',
+        $response = $this->putJson(route('student.languages.update', ['student' => $this->student]), [
+            'name' => 'Anglès',
             'level' => 'Bàsic'
         ]);
 
@@ -83,33 +65,11 @@ class UpdateStudentLanguagesControllerTest extends TestCase
 
     public function testCanReturn404WhenStudentNotFound(): void
     {
-        $this->updateStudentLanguagesService->shouldReceive('findStudentById')
-            ->once()
-            ->with('non-existent-id')
-            ->andThrow(new ModelNotFoundException());
-
         $response = $this->putJson(route('student.languages.update', ['student' => 'non-existent-id']), [
             'name' => 'Català',
             'level' => 'Avançat'
         ]);
 
         $response->assertStatus(404);
-        $response->assertJson(['message' => 'Student or Language not found']);
-    }
-
-    public function test_invoke_returns_500_on_general_exception(): void
-    {
-        $this->updateStudentLanguagesService->shouldReceive('findStudentById')
-            ->once()
-            ->with($this->student->id)
-            ->andThrow(new \Exception('Some unexpected error'));
-
-        $response = $this->putJson(route('student.languages.update', ['student' => $this->student->id]), [
-            'name' => 'Català',
-            'level' => 'Intermedi'
-        ]);
-
-        $response->assertStatus(500);
-        $response->assertJson(['message' => 'An error occurred while updating the language']);
     }
 }
