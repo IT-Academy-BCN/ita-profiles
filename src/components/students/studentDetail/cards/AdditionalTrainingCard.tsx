@@ -7,9 +7,7 @@ const AdditionalTrainingCard = () => {
         additionalTraining,
         isLoadingAdditionalTraining,
         isErrorAdditionalTraining,
-    } = useAppSelector(
-        (state) => state.ShowStudentReducer.studentAdditionalTraining,
-    )
+    } = useAppSelector((state) => state.ShowStudentReducer.studentAdditionalTraining)
 
     return (
         <div data-testid="AdditionalTrainingCard">

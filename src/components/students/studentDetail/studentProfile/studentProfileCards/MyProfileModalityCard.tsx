@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from 'uuid'
-import remoto from '../../../../assets/svg/remoto.svg'
-import { useAppSelector } from '../../../../hooks/ReduxHooks'
-import LoadingSpiner from '../../../atoms/LoadingSpiner'
+import remoto from '../../../../../assets/svg/remoto.svg'
+import { Pencil } from '../../../../../assets/svg'
+import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 
-const ModalityCard: React.FC = () => {
+const MyProfileModalityCard: React.FC = () => {
     const {
         modality: modalityData,
         isLoadingModality,
@@ -12,7 +13,15 @@ const ModalityCard: React.FC = () => {
 
     return (
         <div className="flex flex-col gap-3" data-testid="ModalityCard">
-            <h3 className="font-bold text-lg">Modalidad</h3>
+            <div className='flex'>
+                <h3 className="font-bold text-lg">Modalidad</h3>
+                <button 
+                    type='button'
+                    className='ml-auto'
+                    >
+                        <img src={Pencil} alt="edit modality information" />
+                </button>
+            </div>
             {isLoadingModality && <LoadingSpiner />}
             {isErrorModality && (
                 <LoadingSpiner
@@ -37,4 +46,4 @@ const ModalityCard: React.FC = () => {
     )
 }
 
-export default ModalityCard
+export default MyProfileModalityCard

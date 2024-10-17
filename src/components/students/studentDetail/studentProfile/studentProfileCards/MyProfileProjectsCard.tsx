@@ -1,10 +1,10 @@
-import { Github, Dots, ArrowLeft, ArrowRight } from '../../../../assets/svg'
-import { ArrowRightProjects } from '../../../../assets/img'
-import { useAppSelector } from '../../../../hooks/ReduxHooks'
-import LoadingSpiner from '../../../atoms/LoadingSpiner'
-import { Carousel } from '../../../atoms/Carousel'
+import { Github, Pencil, ArrowLeft, ArrowRight } from '../../../../../assets/svg'
+import { ArrowRightProjects } from '../../../../../assets/img'
+import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import LoadingSpiner from '../../../../atoms/LoadingSpiner'
+import { Carousel } from '../../../../atoms/Carousel'
 
-const ProjectsCard: React.FC = () => {
+const MyProfileProjectsCard: React.FC = () => {
     const { studentProjects } = useAppSelector((state) => state.ShowStudentReducer)
     const { projectsData, isLoadingProjects, isErrorProjects } = studentProjects
 
@@ -17,6 +17,14 @@ const ProjectsCard: React.FC = () => {
         >
             <div className="flex justify-between">
                 <h3 className="text-lg font-bold">Proyectos</h3>
+                {projectsData && (
+                    <button 
+                        className='flex items-center text-xs font-semibold rounded-md border border-gray-3 px-2 py-0 mr-auto ml-4'
+                        type='button'
+                        >                        
+                        Nuevo proyecto                       
+                    </button>
+                )}
                 <div className="h-3 self-end">
                     <button type="button" onClick={scrollLeft}>
                         <img src={ArrowLeft} alt="arrow left" className="w-5" />
@@ -65,7 +73,7 @@ const ProjectsCard: React.FC = () => {
                                     type="button"
                                     className="-mt-1 flex w-6 self-start"
                                 >
-                                    <img src={Dots} alt="3 dots" />
+                                    <img src={Pencil} alt="edit project information" />
                                 </button>
                             </div>
                             <p className="text-sm text-gray-3">
@@ -102,4 +110,4 @@ const ProjectsCard: React.FC = () => {
     )
 }
 
-export default ProjectsCard
+export default MyProfileProjectsCard
