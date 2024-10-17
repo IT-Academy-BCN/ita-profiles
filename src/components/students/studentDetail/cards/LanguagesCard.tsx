@@ -25,7 +25,7 @@ const LanguagesCard: React.FC = () => {
                                 className="flex flex-col"
                             >
                                 <li className="text-sm font-semibold text-black-2">
-                                    {language.name}
+                                    {language.name} - {language.level}
                                 </li>
                             </ul>
                         ))}
