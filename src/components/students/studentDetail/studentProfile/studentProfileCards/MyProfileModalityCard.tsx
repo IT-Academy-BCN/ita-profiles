@@ -15,8 +15,11 @@ const MyProfileModalityCard: React.FC = () => {
         <div className="flex flex-col gap-3" data-testid="ModalityCard">
             <div className='flex'>
                 <h3 className="font-bold text-lg">Modalidad</h3>
-                <button className='ml-auto'>
-                    <img src={Pencil} alt="edit modality information" />
+                <button 
+                    type='button'
+                    className='ml-auto'
+                    >
+                        <img src={Pencil} alt="edit modality information" />
                 </button>
             </div>
             {isLoadingModality && <LoadingSpiner />}

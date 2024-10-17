@@ -29,7 +29,7 @@ const StudentProfileContent: React.FC = () => {
                     <h3 className="hidden text-2xl font-bold md:block">
                         Mi Perfil
                     </h3>
-                    {<MyProfileStudentDetailCard />}
+                    <MyProfileStudentDetailCard />
                     <span className="h-0.5 w-full bg-gray-4-base" />
                     <MyProfileProjectsCard />
                     <MyProfileProjectsCard />
