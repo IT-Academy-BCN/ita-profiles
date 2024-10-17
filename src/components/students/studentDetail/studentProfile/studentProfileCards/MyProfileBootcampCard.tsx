@@ -12,11 +12,8 @@ const MyProfileBootcampCard: React.FC = () => {
         <div className="flex flex-col gap-4" data-testid="BootcampCard">
             <div className='flex'>
                 <h3 className="text-lg font-bold">Datos del bootcamp</h3>
-                <button 
-                    type='button'
-                    className='ml-auto'
-                    >
-                        <img src={Pencil} alt="edit training information" />
+                <button className='ml-auto'>
+                    <img src={Pencil} alt="edit training information" />
                 </button>
             </div>
             {isLoadingBootcamp && <LoadingSpiner />}

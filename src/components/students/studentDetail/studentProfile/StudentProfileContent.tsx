@@ -3,7 +3,13 @@ import MyProfileStudentDetailCard from './studentProfileCards/MyProfileStudentDe
 import MyProfileProjectsCard from './studentProfileCards/MyProfileProjectsCard'
 import MyProfileCollaborationCard from './studentProfileCards/MyProfileCollaborationCard'
 import MyProfileBootcampCard from './studentProfileCards/MyProfileBootcampCard'
+import MyProfileStudentDetailCard from './studentProfileCards/MyProfileStudentDetailCard'
+import MyProfileProjectsCard from './studentProfileCards/MyProfileProjectsCard'
+import MyProfileCollaborationCard from './studentProfileCards/MyProfileCollaborationCard'
+import MyProfileBootcampCard from './studentProfileCards/MyProfileBootcampCard'
 import AdditionalTrainingCard from '../cards/AdditionalTrainingCard'
+import MyProfileLanguagesCard from './studentProfileCards/MyProfileLanguagesCard'
+import MyProfileModalityCard from './studentProfileCards/MyProfileModalityCard'
 import MyProfileLanguagesCard from './studentProfileCards/MyProfileLanguagesCard'
 import MyProfileModalityCard from './studentProfileCards/MyProfileModalityCard'
 import { useStudentDetailHook } from '../../../../hooks/useStudentDetailHook'
@@ -23,17 +29,22 @@ const StudentProfileContent: React.FC = () => {
                     <h3 className="hidden text-2xl font-bold md:block">
                         Mi Perfil
                     </h3>
-                    <MyProfileStudentDetailCard />
+                    {<MyProfileStudentDetailCard />}
                     <span className="h-0.5 w-full bg-gray-4-base" />
+                    <MyProfileProjectsCard />
                     <MyProfileProjectsCard />
                     <span className="h-0.5 w-full bg-gray-4-base" />
                     <MyProfileCollaborationCard />
+                    <MyProfileCollaborationCard />
                     <span className="h-0.5 w-full bg-gray-4-base" />
+                    <MyProfileBootcampCard />
                     <MyProfileBootcampCard />
                     <AdditionalTrainingCard />
                     <span className="h-0.5 w-full bg-gray-4-base" />
                     <MyProfileLanguagesCard />
+                    <MyProfileLanguagesCard />
                     <span className="h-0.5 w-full bg-gray-4-base" />
+                    <MyProfileModalityCard />
                     <MyProfileModalityCard />
                 </div>
             </div>
