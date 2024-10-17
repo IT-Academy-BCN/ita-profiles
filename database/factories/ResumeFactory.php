@@ -43,7 +43,7 @@ class ResumeFactory extends Factory
 
         return [
             'student_id' => Student::factory()->create([
-                'user_id' => $userId, // This will be null after the first two students
+                'id' => $userId, // This will be null after the first two students
             ])->id,
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
             'linkedin_url' => 'https://linkedin.com/' . $this->faker->userName,

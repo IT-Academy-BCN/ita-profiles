@@ -31,7 +31,7 @@ class HandleProjectRetrieved
         try {
             // We don't want to process the project if updated_at is less than 1 hour ago
             $resume = $this->resumeService->getResumeByProjectId($project->id);
-            $minutesBetweenUpdates = 60;
+            $minutesBetweenUpdates = 0;
             if ($resume->updated_at->diffInMinutes(now()) < $minutesBetweenUpdates) {
                 Log::info("Resume ID: {$resume->id} skipped because it was updated less than {$minutesBetweenUpdates} minutes ago.");
                 return;

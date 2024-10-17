@@ -12,7 +12,8 @@ class ResumeService
     public function getResumeByProjectId(string $projectId): Resume
     {
         try {
-            $resume = Resume::whereJsonContains('project_ids', $projectId)->first();
+            $resume = Resume::whereRelation('projects', 'projects.id', '=', $projectId)->first();
+
             if (is_null($resume)) {
                 throw new ModelNotFoundException('Resume not found.');
             }

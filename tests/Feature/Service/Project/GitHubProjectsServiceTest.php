@@ -33,7 +33,7 @@ class GitHubProjectsServiceTest extends TestCase
     {
         $resume = Resume::factory()->create([
             'github_url' => 'https://github.com/user1',
-            'project_ids' => json_encode([$this->project->id]),
+            //'project_ids' => json_encode([$this->project->id]),
         ]);
 
         $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($this->project);

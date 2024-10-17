@@ -8,7 +8,7 @@ class UpdateStudentProjectAnnotation
 {
     /**
      * @OA\Put(
-     *      path="/student/{student}/resume/projects/{projectId}",
+     *      path="/student/{student}/resume/projects/{project}",
      *      operationId="updateStudentProject",
      *      tags={"Student -> Resume"},
      *      summary="Update a project for a student",
@@ -33,7 +33,7 @@ class UpdateStudentProjectAnnotation
      *          required=true,
      *          @OA\Schema(
      *              type="string",
-     *              format="uuid"            
+     *              format="uuid"
      *          )
      *      ),
      *      @OA\RequestBody(
