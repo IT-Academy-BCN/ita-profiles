@@ -4,11 +4,8 @@ import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
 
 const BootcampCard: React.FC = () => {
-    const { studentBootcamps } = useAppSelector(
-        (state) => state.ShowStudentReducer,
-    )
-    const { bootcampData, isErrorBootcamp, isLoadingBootcamp } =
-        studentBootcamps
+    const { studentBootcamps } = useAppSelector((state) => state.ShowStudentReducer)
+    const { bootcampData, isErrorBootcamp, isLoadingBootcamp } = studentBootcamps
 
     return (
         <div className="flex flex-col gap-4" data-testid="BootcampCard">
