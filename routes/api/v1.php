@@ -72,18 +72,3 @@ Route::prefix('tags')->group(function () {
     Route::get('/{tagId}', TagDetailController::class)->name('tag.detail');
     Route::put('/{tagId}', TagUpdateController::class)->name('tag.update');
 });
-
-// ! OLD ROUTES BLOCK
-Route::get('/student/list/for-home', StudentListController::class)->name('profiles.home');
-Route::get('/student/{id}/detail/for-home', StudentDetailController::class)->name('student.detail');
-Route::get('/students/{student}/projects', StudentProjectsDetailController::class)->name('projects.list');
-Route::get('/students/{student}/collaborations', StudentCollaborationDetailController::class)->name('collaborations.list');
-Route::get('/students/{id}/bootcamp', StudentBootcampDetailController::class)->name('bootcamp.list');
-Route::get('/students/{student}/additionaltraining', StudentAdditionalTrainingListController::class)->name('additionaltraining.list');
-Route::get('/students/{id}/languages', StudentLanguagesDetailController::class)->name('languages.list');
-Route::get('/modality/{studentId}', StudentModalityController::class)->name('modality');
-// Fake endpoint development
-Route::get('/development/list', DevelopmentListController::class)->name('development.list');
-// Specialization List Endpoint
-Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
-// ! OLD ROUTES BLOCK
