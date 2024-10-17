@@ -5,7 +5,7 @@ import { ITag } from '../../../../interfaces/interfaces'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
 
-const StudentDataCard: React.FC = () => {
+const StudentDetailCard: React.FC = () => {
     const [showFullDescription, setShowFullDescription] = useState(false)
 
     const toggleDescription = () => {
@@ -38,20 +38,17 @@ const StudentDataCard: React.FC = () => {
                                 </div>
                                 <div className="flex gap-4">
                                     <a
-                                        href={
-                                            aboutData.resume.social_media.github
-                                                .url
-                                        }
+                                        href={aboutData.resume.social_media.github.url}
                                         className="flex gap-1"
                                     >
-                                        <img src={Github} alt="github icon" />
+                                        <img 
+                                            src={Github} 
+                                            alt="github icon" 
+                                        />
                                         Github
                                     </a>
                                     <a
-                                        href={
-                                            aboutData.resume.social_media
-                                                .linkedin.url
-                                        }
+                                        href={aboutData.resume.social_media.linkedin.url}
                                         className="flex gap-1"
                                     >
                                         <img
@@ -116,4 +113,4 @@ const StudentDataCard: React.FC = () => {
     )
 }
 
-export default StudentDataCard
+export default StudentDetailCard

@@ -8,9 +8,7 @@ const ModalityCard: React.FC = () => {
         modality: modalityData,
         isLoadingModality,
         isErrorModality,
-    } = useAppSelector(
-        (state) => state.ShowStudentReducer.studentAdditionalModality,
-    )
+    } = useAppSelector((state) => state.ShowStudentReducer.studentAdditionalModality)
 
     return (
         <div className="flex flex-col gap-3" data-testid="ModalityCard">
