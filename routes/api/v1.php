@@ -19,7 +19,8 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentProjectController,
     UpdateStudentProfileController,
     UpdateStudentImageController,
-    AddStudentLanguageController
+    AddStudentLanguageController,
+    AddStudentImageController
 };
 
 use App\Http\Controllers\api\Tag\{
@@ -58,6 +59,9 @@ Route::get('student/{student}/resume/additionaltraining', StudentAdditionalTrain
 Route::get('student/{student}/resume/collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
 Route::put('student/{student}/resume/collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
 Route::put('student/{student}/resume/photo', UpdateStudentImageController::class)->name('student.updatePhoto');
+//Route to add new student photo
+Route::post('student/{student}/resume/photo', AddStudentImageController::class)->name('student.addPhoto');
+
 
 Route::prefix('student/{studentId}/resume')->group(function () {
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
