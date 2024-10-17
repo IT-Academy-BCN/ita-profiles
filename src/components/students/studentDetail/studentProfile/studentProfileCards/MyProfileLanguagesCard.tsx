@@ -10,8 +10,11 @@ const MyProfileLanguagesCard: React.FC = () => {
         <div data-testid="LanguagesCard">
             <div className='flex mb-4'>
                 <h3 className="text-lg font-bold">Idiomas</h3>
-                <button className='ml-auto'>
-                    <img src={Pencil} alt="edit languages information" />
+                <button 
+                    type='button'
+                    className='ml-auto'
+                    >
+                        <img src={Pencil} alt="edit languages information" />
                 </button>
             </div>            
             {isLoadingLanguages && <LoadingSpiner />}

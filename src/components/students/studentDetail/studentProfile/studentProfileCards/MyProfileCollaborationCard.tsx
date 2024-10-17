@@ -13,8 +13,11 @@ const MyProfileCollaborationCard: React.FC = () => {
         <div className="flex flex-col gap-4" data-testid="CollaborationCard">
             <div className='flex'>
                 <h3 className="text-lg font-bold text-black-3">Colaboración</h3>
-                <button className='ml-auto'>
-                    <img src={Pencil} alt="edit collaboration information" />
+                <button
+                    type='button' 
+                    className='ml-auto'
+                    >
+                        <img src={Pencil} alt="edit collaboration information" />
                 </button>
             </div>            
             <div className="flex flex-col gap-4 md:flex-row">
