@@ -6,9 +6,6 @@ namespace Database\Factories;
 
 use App\Models\Student;
 use App\Models\AdditionalTraining;
-use App\Models\Collaboration;
-use App\Models\Project;
-use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Cache;
 
@@ -27,8 +24,8 @@ class ResumeFactory extends Factory
         $developmentOptions = ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'];
         $development = $this->faker->randomElement($developmentOptions);
 
+        // I THINK THIS CAN ALSO BE REMOVED, is not used.
         $additionalTrainingsIds = AdditionalTraining::factory()->count(2)->create()->pluck('id')->toArray();
-        $collaborationsIds = Collaboration::factory()->count(2)->create()->pluck('id')->toArray();
 
         // TEMPORARY: This is used to create add the two users to the first two students.
         static $studentIndex = 0; // Keep track of the number of students created
@@ -37,13 +34,11 @@ class ResumeFactory extends Factory
         $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
         $studentIndex++; // Increment the index for each student created
 
-
-
         $gitHubUsername = ['nachoa88', 'StephaneCarteaux'];
 
         return [
             'student_id' => Student::factory()->create([
-                'id' => $userId, // This will be null after the first two students
+                'user_id' => $userId, // This will be null after the first two students
             ])->id,
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
             'linkedin_url' => 'https://linkedin.com/' . $this->faker->userName,

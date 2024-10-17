@@ -6,7 +6,6 @@ use App\Events\ProjectRetrieved;
 use App\Service\Project\GitHubProjectsService;
 use App\Service\Project\ProcessedProjectsService;
 use App\Service\Resume\ResumeService;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
