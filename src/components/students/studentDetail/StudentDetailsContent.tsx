@@ -4,7 +4,7 @@ import ProjectsCard from './cards/ProjectsCard'
 import CollaborationCard from './cards/CollaborationCard'
 import BootcampCard from './cards/BootcampCard'
 import ModalityCard from './cards/ModalityCard'
-import StudentDataCard from './cards/StudentDetailCard'
+import StudentDetailCard from './cards/StudentDetailCard'
 import LanguagesCard from './cards/LanguagesCard'
 import AdditionalTrainingCard from './cards/AdditionalTrainingCard'
 import { useStudentDetailHook } from '../../../hooks/useStudentDetailHook'
@@ -39,7 +39,7 @@ const StudentDetailsContent: React.FC<TStudentDetailsContent> = ({
 
             <div className={`overflow-auto ${isMobile ? 'pr-4' : 'pr-12'}`}>
                 <div className="flex flex-col gap-9">
-                    <StudentDataCard />
+                    <StudentDetailCard />
                     <ProjectsCard />
                     <CollaborationCard />
                     <BootcampCard />
