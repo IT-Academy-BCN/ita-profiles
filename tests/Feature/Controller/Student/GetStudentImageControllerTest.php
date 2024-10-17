@@ -9,32 +9,40 @@ use App\Models\{
 };
 use App\Service\Student\GetStudentImageService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class GetStudentImageControllerTest extends TestCase
 {
     use DatabaseTransactions;
+    private const PHOTOS_PATH = 'public/photos/';
+    protected User $user;
+    protected Student $student;
 
     protected function setUp(): void
     {
         parent::setUp();
-    }
 
-    private function createUser()
-    {
-        return User::factory()->create([
+        $this->user = User::factory()->create([
             'dni'=>'27827083G', 'password'=>'Password%123'
         ]);
+
+        $this->student =Student::factory()->for($this->user)->create();
+
     }
 
-    private function createStudent(User $user):Student
+    public function testCanInstantiateAnUser(): void
     {
-        return Student::factory()->for($user)->create();
+        $this->assertInstanceOf(User::class, $this->user);
     }
 
-    private function getUserToken(User $user):string
-    {   //hay que pasar lo datos manualmente porque el password es encriptado
+    public function testCanInstantiateAStudent(): void
+    {
+        $this->assertInstanceOf(Student::class, $this->student);
+    }
+
+    private function getUserToken():string
+    {
         $singInUserData = ['dni'=>'27827083G', 'password'=>'Password%123'];
         $url = route('signin');
         $response = $this->json('POST', $url, $singInUserData);
@@ -42,56 +50,46 @@ class GetStudentImageControllerTest extends TestCase
         return $token;
     }
 
-    public function test_get_student_image():void
+    public function testCanGetStudentImage():void
     {
-        $user = $this->createUser();
-        $student = $this->createStudent($user);
-        $token = $this->getUserToken($user);
-        $studentId = $student->id;
+        $student = $this->student;
+        $token = $this->getUserToken();
 
-        $url = route('student.photo.get', $studentId);
+        $url = route('student.photo.get', $student->id);
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token
         ])->get($url);
 
         $response->assertStatus(200);
-    }
+        $response->assertJson(['photo' => Storage::url(self::PHOTOS_PATH . $student->photo)]);}
 
-    public function test_get_student_image_not_found():void
+    public function testCanGetAnEmptyArrayWhenTheStudentHasNoPhoto():void
     {
-        $user = $this->createUser();
-        $student = $this->createStudent($user);
+        $student = $this->student;
         $student->photo = null;
         $student->save();
-        $token = $this->getUserToken($user);
-        $studentId = $student->id;
+        $token = $this->getUserToken();
 
-        $url = route('student.photo.get', $studentId);
+        $url = route('student.photo.get', $student->id);
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token
         ])->get($url);
 
         $response->assertStatus(200);
-        $response->assertJson([]);
+        $response->assertJson(['photo' => '']);
     }
 
-    public function test_can_return_a_500_on_internal_server_error(): void
+    public function testCanReturns_404WithInvalidStudentUuid(): void
     {
-        $this->mock(GetStudentImageService::class, function (MockInterface $mock) {
-            $mock->shouldReceive('execute')
-                ->andThrow(new \Exception('Internal Server Error'));
-        });
-        $user = $this->createUser();
-        $student = $this->createStudent($user);
-        $token = $this->getUserToken($user);
-        $studentId = $student->id;
+        $invalidUuid = 'invalidUuid';
+        $token = $this->getUserToken();
 
-        $url = route('student.photo.get', $studentId);
+        $url = route('student.photo.get', $invalidUuid);
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token
         ])->get($url);
 
-        $response->assertStatus(500);
+        $response->assertStatus(404);
     }
 
 }
