@@ -8,14 +8,14 @@ class UpdateStudentLanguagesAnnotation
 {
     /**
      * @OA\Put (
-     *     path="/student/{studentId}/resume/languages",
+     *     path="/student/{student}/resume/languages",
      *     operationId="updateLanguagesByStudentId",
      *     tags={"Student -> Resume"},
      *     summary="Actualitzar els idiomes de l'estudiant",
      *     description="Actualitzar els idiomes d'un estudiant donat el seu ID",
      *
      *     @OA\Parameter(
-     *         name="studentId",
+     *         name="student",
      *         in="path",
      *         description="ID de l'estudiant",
      *         required=true,
