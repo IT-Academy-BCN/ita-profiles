@@ -7,7 +7,7 @@ const LanguagesCard: React.FC = () => {
 
     return (
         <div data-testid="LanguagesCard">
-            <h3 className="text-lg font-bold">Idiomas</h3>
+            <h3 className="text-lg font-bold mb-4">Idiomas</h3>
             {isLoadingLanguages && <LoadingSpiner />}
             {isErrorLanguages && (
                 <LoadingSpiner
