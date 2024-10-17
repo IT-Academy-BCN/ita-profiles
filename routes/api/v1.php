@@ -57,7 +57,7 @@ Route::post('student/{student}/resume/languages', AddStudentLanguageController::
 Route::get('student/{student}/resume/additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
 Route::get('student/{student}/resume/collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
 Route::put('student/{student}/resume/collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
-Route::get('student/{student}/resume/photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
+Route::get('student/{student}/resume/photo', GetStudentImageController::class)->name('student.photo.get');
 Route::put('student/{student}/resume/photo', UpdateStudentImageController::class)->name('student.updatePhoto');
 
 Route::prefix('student/{studentId}/resume')->group(function () {
