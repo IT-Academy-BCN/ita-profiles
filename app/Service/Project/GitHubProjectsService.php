@@ -102,6 +102,8 @@ class GitHubProjectsService
 
     public function saveRepositoriesAsProjects(array $repos): array
     {
+        Project::$preventEventProjectRetrieved = true;
+
         try {
             $projects = [];
             // Cache tags to avoid repeated database queries
@@ -111,23 +113,22 @@ class GitHubProjectsService
                 $languages = $this->fetchRepoLanguages($repo['languages_url']);
                 $languageNames = array_keys($languages);
                 $tagIds = $allTags->whereIn('name', $languageNames)->pluck('id')->toArray();
-                // Desactivar temporalmente los eventos para evitar disparar el evento retrieved
-                Project::withoutEvents(function () use ($repo, &$project, $tagIds) {
-                    $project = Project::updateOrCreate(
-                        // Criterio de búsqueda: el ID del repo de Github. Si el ID existe, actualiza y si no crea un nuevo Project.
-                        // Pero para que esto funcione tuve que crear la columna en la tabla Project.
-                        ['github_repository_id' => $repo['id']],
-                        [
-                            'user' => $repo['owner']['login'],
-                            'name' => $repo['name'],
-                            'github_url' => $repo['html_url'],
-                            'github_repository_id' => $repo['id'],
-                        ]
-                    );
-                    $project->tags()->sync($tagIds);
-                });
+
+                $project = Project::updateOrCreate(
+                    ['github_repository_id' => $repo['id']],
+                    [
+                        'user' => $repo['owner']['login'],
+                        'name' => $repo['name'],
+                        'github_url' => $repo['html_url'],
+                        'github_repository_id' => $repo['id'],
+                    ]
+                );
+
+                $project->tags()->sync($tagIds);
 
                 $projects[] = $project;
+
+                Project::$preventEventProjectRetrieved = false;
             }
 
             return $projects;

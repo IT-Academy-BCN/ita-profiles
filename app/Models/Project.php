@@ -15,6 +15,8 @@ class Project extends Model
     use HasFactory;
     use HasUuids;
 
+    public static bool $preventEventProjectRetrieved = false;
+
     protected $guarded = ['id'];
     public $timestamps = false;
 
@@ -35,4 +37,15 @@ class Project extends Model
     protected $dispatchesEvents = [
         'retrieved' => ProjectRetrieved::class,
     ];
+
+    public static function booted(): void
+    {
+        static::retrieved(function ($project) {
+            if (self::$preventEventProjectRetrieved) {
+                return;
+            }
+
+            event(new ProjectRetrieved($project));
+        });
+    }
 }

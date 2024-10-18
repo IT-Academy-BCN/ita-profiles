@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Resume;
 
+use App\Models\Project;
 use App\Models\Resume;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -42,19 +43,21 @@ class ResumeService
 
     public function saveProjectsInResume(array $projects, string $gitHubUsername): void
     {
-        // COMMENTED BECAUSE NEEDS REFACTOR, IT'S NOT WORKING AND BREAKING SEED PROCESS.
-        // try {
-        //     $resume = $this->getResumeByGitHubUsername($gitHubUsername);
-        //     // Get the current project_ids array
-        //     $projectIds = json_decode($resume->project_ids, true) ?? [];
-        //     foreach ($projects as $project) {
-        //         $projectIds[] = $project['id'];
-        //     }
-        //     // Update the project_ids array in the Resume
-        //     $resume->project_ids = json_encode(array_unique($projectIds));
-        //     $resume->save();
-        // } catch (\Exception $e) {
-        //     throw new \Exception("Error saving projects in Resume: " . $e->getMessage());
-        // }
+        try {
+            Project::$preventEventProjectRetrieved = true;
+
+            $resume = $this->getResumeByGitHubUsername($gitHubUsername);
+            // Get the current project_ids array
+            $projectIds = $resume->projects->pluck('id')->toArray();
+            foreach ($projects as $project) {
+                $projectIds[] = $project['id'];
+            }
+            // Update the project_ids array in the Resume
+            $resume->projects->sync(array_unique($projectIds));
+        } catch (\Exception $e) {
+            throw new \Exception("Error saving projects in Resume: " . $e->getMessage());
+        } finally {
+            Project::$preventEventProjectRetrieved = false;
+        }
     }
 }
