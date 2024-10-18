@@ -35,8 +35,8 @@ class ResumeFactory extends Factory
         $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
         // Create two GitHub usernames
         $gitHubUsernames = ['nachoa88', 'StephaneCarteaux'];
-        // Assign a GitHub username to the first two students, then default to a random one
-        $gitHubUsername = ($studentIndex < count($gitHubUsernames)) ? $gitHubUsernames[$studentIndex] : $this->faker->userName;
+        // Assign a GitHub username to the first two students, then default to a random unique one
+        $gitHubUsername = ($studentIndex < count($gitHubUsernames)) ? $gitHubUsernames[$studentIndex] : $this->faker->unique()->userName;
         $studentIndex++; // Increment the index for each student created, in order to repeat the process
 
         return [
