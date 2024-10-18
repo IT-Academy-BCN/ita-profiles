@@ -29,12 +29,15 @@ class ResumeFactory extends Factory
 
         // TEMPORARY: This is used to create add the two users to the first two students.
         static $studentIndex = 0; // Keep track of the number of students created
+        // Get the user IDs from the cache (SigninTestSeeder)
         $userIds = Cache::get('test_user_ids', []);
-        // Assign a user ID to the first students, then default to null
+        // Assign a user ID to the first teo students, then default to null
         $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
-        $studentIndex++; // Increment the index for each student created
-
-        $gitHubUsername = ['nachoa88', 'StephaneCarteaux'];
+        // Create two GitHub usernames
+        $gitHubUsernames = ['nachoa88', 'StephaneCarteaux'];
+        // Assign a GitHub username to the first two students, then default to a random one
+        $gitHubUsername = ($studentIndex < count($gitHubUsernames)) ? $gitHubUsernames[$studentIndex] : $this->faker->userName;
+        $studentIndex++; // Increment the index for each student created, in order to repeat the process
 
         return [
             'student_id' => Student::factory()->create([
@@ -42,7 +45,7 @@ class ResumeFactory extends Factory
             ])->id,
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
             'linkedin_url' => 'https://linkedin.com/' . $this->faker->userName,
-            'github_url' => 'https://github.com/' . $this->faker->randomElement($gitHubUsername),
+            'github_url' => 'https://github.com/' . $gitHubUsername,
             'specialization' => $this->faker->randomElement(
                 ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
             ),

@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Events\ProjectRetrieved;
 use App\Service\Project\GitHubProjectsService;
-use App\Service\Project\ProcessedProjectsService;
 use App\Service\Resume\ResumeService;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 class HandleProjectRetrieved
 {
     private GitHubProjectsService $gitHubProjectsService;
-    private ProcessedProjectsService $processedProjectsService;
     private ResumeService $resumeService;
 
     // Create the event listener.
