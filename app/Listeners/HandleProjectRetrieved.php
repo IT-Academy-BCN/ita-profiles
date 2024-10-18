@@ -24,7 +24,9 @@ class HandleProjectRetrieved
     public function handle(ProjectRetrieved $event): void
     {
         $project = $event->project;
+        Log::info("ProjectRetrieved()");
 
+        // We don't want to process the project if it was updated less than 1 hour ago
         try {
             // We don't want to process the project if updated_at is less than 1 hour ago
             $resume = $this->resumeService->getResumeByProjectId($project->id);

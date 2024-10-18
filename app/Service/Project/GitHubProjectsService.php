@@ -35,7 +35,7 @@ class GitHubProjectsService
     public function getGitHubUsername(Project $project): string
     {
         try {
-            $resume = Resume::whereRelation('projects', 'projects.id', '=', $project->id)->first();
+            $resume = $this->resumeService->getResumeByProjectId($project->id);
 
             // For now I'll use if statement and Exception... if it's needed can be converted to try catch
             if (is_null($resume->github_url)) {
@@ -107,33 +107,30 @@ class GitHubProjectsService
             // Cache tags to avoid repeated database queries
             $allTags = Tag::all();
 
-            // Desactivar todos los eventos relacionados con el modelo Project
-            Project::withoutEvents(function () use ($repos, $allTags, &$projects) {
-                foreach ($repos as $repo) {
-                    $languages = $this->fetchRepoLanguages($repo['languages_url']);
-                    $languageNames = array_keys($languages);
-                    $tagIds = $allTags->whereIn('name', $languageNames)->pluck('id')->toArray();
-
-                    // Update or create Project without triggering events
+            foreach ($repos as $repo) {
+                $languages = $this->fetchRepoLanguages($repo['languages_url']);
+                $languageNames = array_keys($languages);
+                $tagIds = $allTags->whereIn('tag_name', $languageNames)->pluck('id')->toArray();
+                // Desactivar temporalmente los eventos para evitar disparar el evento retrieved
+                Project::withoutEvents(function () use ($repo, &$project, $tagIds) {
                     $project = Project::updateOrCreate(
+                    // Criterio de búsqueda: el ID del repo de Github. Si el ID existe, actualiza y si no crea un nuevo Project.
                         ['github_repository_id' => $repo['id']],
                         [
                             'user' => $repo['owner']['login'],
                             'name' => $repo['name'],
                             'github_url' => $repo['html_url'],
+                            'tags' => json_encode($tagIds),
                             'github_repository_id' => $repo['id'],
                         ]
                     );
+                });
 
-                    // Sincronizar las etiquetas con el proyecto
-                    $project->tags()->sync($tagIds);
-
-                    // Añadir el proyecto a la lista
-                    $projects[] = $project;
-                }
-            });
+                $projects[] = $project;
+            }
 
             return $projects;
+
         } catch (\Exception $e) {
             throw new \Exception("Error saving repositories as projects: " . $e->getMessage());
         }
