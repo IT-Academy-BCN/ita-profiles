@@ -44,20 +44,22 @@ class ResumeService
     public function saveProjectsInResume(array $projects, string $gitHubUsername): void
     {
         try {
-            Project::$preventEventProjectRetrieved = true;
+            // Desactiva los eventos para el modelo Project mientras se ejecuta este bloque
+            Project::withoutEvents(function () use ($projects, $gitHubUsername) {
+                $resume = $this->getResumeByGitHubUsername($gitHubUsername);
 
-            $resume = $this->getResumeByGitHubUsername($gitHubUsername);
-            // Get the current project_ids array
-            $projectIds = $resume->projects->pluck('id')->toArray();
-            foreach ($projects as $project) {
-                $projectIds[] = $project['id'];
-            }
-            // Update the project_ids array in the Resume
-            $resume->projects->sync(array_unique($projectIds));
+                // Obtener el array actual de project_ids
+                $projectIds = $resume->projects->pluck('id')->toArray();
+
+                foreach ($projects as $project) {
+                    $projectIds[] = $project['id'];
+                }
+
+                // Actualiza el array de project_ids en el Resume
+                $resume->projects()->sync(array_unique($projectIds));
+            });
         } catch (\Exception $e) {
             throw new \Exception("Error saving projects in Resume: " . $e->getMessage());
-        } finally {
-            Project::$preventEventProjectRetrieved = false;
         }
     }
 }

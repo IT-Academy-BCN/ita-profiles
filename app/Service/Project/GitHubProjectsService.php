@@ -102,38 +102,41 @@ class GitHubProjectsService
 
     public function saveRepositoriesAsProjects(array $repos): array
     {
-        Project::$preventEventProjectRetrieved = true;
-
         try {
             $projects = [];
             // Cache tags to avoid repeated database queries
             $allTags = Tag::all();
 
-            foreach ($repos as $repo) {
-                $languages = $this->fetchRepoLanguages($repo['languages_url']);
-                $languageNames = array_keys($languages);
-                $tagIds = $allTags->whereIn('name', $languageNames)->pluck('id')->toArray();
+            // Desactivar todos los eventos relacionados con el modelo Project
+            Project::withoutEvents(function () use ($repos, $allTags, &$projects) {
+                foreach ($repos as $repo) {
+                    $languages = $this->fetchRepoLanguages($repo['languages_url']);
+                    $languageNames = array_keys($languages);
+                    $tagIds = $allTags->whereIn('name', $languageNames)->pluck('id')->toArray();
 
-                $project = Project::updateOrCreate(
-                    ['github_repository_id' => $repo['id']],
-                    [
-                        'user' => $repo['owner']['login'],
-                        'name' => $repo['name'],
-                        'github_url' => $repo['html_url'],
-                        'github_repository_id' => $repo['id'],
-                    ]
-                );
+                    // Update or create Project without triggering events
+                    $project = Project::updateOrCreate(
+                        ['github_repository_id' => $repo['id']],
+                        [
+                            'user' => $repo['owner']['login'],
+                            'name' => $repo['name'],
+                            'github_url' => $repo['html_url'],
+                            'github_repository_id' => $repo['id'],
+                        ]
+                    );
 
-                $project->tags()->sync($tagIds);
+                    // Sincronizar las etiquetas con el proyecto
+                    $project->tags()->sync($tagIds);
 
-                $projects[] = $project;
-
-                Project::$preventEventProjectRetrieved = false;
-            }
+                    // Añadir el proyecto a la lista
+                    $projects[] = $project;
+                }
+            });
 
             return $projects;
         } catch (\Exception $e) {
             throw new \Exception("Error saving repositories as projects: " . $e->getMessage());
         }
     }
+
 }
