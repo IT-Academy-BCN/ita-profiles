@@ -6,40 +6,31 @@ namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateStudentLanguagesRequest;
+use App\Models\Language;
+use App\Models\Student;
 use App\Service\Student\UpdateStudentLanguagesService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
 
 class UpdateStudentLanguagesController extends Controller
 {
-    private UpdateStudentLanguagesService $updateStudentLanguagesService;
-
-    public function __construct(UpdateStudentLanguagesService $updateStudentLanguagesService)
+    public function __invoke(Student $student, UpdateStudentLanguagesRequest $request): JsonResponse
     {
-        $this->updateStudentLanguagesService = $updateStudentLanguagesService;
-    }
+        $data = $request->validated();
+        $resume = $student->resume()->firstOrFail();
 
-    public function __invoke(string $studentId, UpdateStudentLanguagesRequest $request): JsonResponse
-    {
-        try {
-            $data = $request->validated();
+        $newLanguage = Language::query()
+            ->where('name', $data['name'])
+            ->where('level', $data['level'])
+            ->firstOrFail();
 
-            $student = $this->updateStudentLanguagesService->findStudentById($studentId);
+        $languagesToUpdate = $resume->languages()->get();
 
-            $resume = $this->updateStudentLanguagesService->findStudentResume($student);
-
-            if ($this->updateStudentLanguagesService->updateStudentLanguage($resume, $data['name'], $data['level'])) {
-                return response()->json(['message' => 'Language updated successfully']);
-            } else {
-                return response()->json(['message' => 'Language not found for this student'], 404);
+        foreach ($languagesToUpdate as $languageToUpdate) {
+            if ($languageToUpdate->name === $data['name']) {
+                $resume->languages()->updateExistingPivot($languageToUpdate->id, ['language_id' => $newLanguage->id]);
             }
-        } catch (ModelNotFoundException $e) {
-            Log::error('Model not found', ['error' => $e->getMessage(), 'studentId' => $studentId, 'data' => $request->all()]);
-            return response()->json(['message' => 'Student or Language not found'], 404);
-        } catch (\Exception $e) {
-            Log::error('Error updating student language', ['error' => $e->getMessage(), 'studentId' => $studentId, 'data' => $request->all()]);
-            return response()->json(['message' => 'An error occurred while updating the language'], 500);
         }
+
+        return response()->json(['message' => 'Language updated successfully']);
     }
 }
