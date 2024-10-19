@@ -57,6 +57,10 @@ class ResumeService
 
                 // Actualiza el array de project_ids en el Resume
                 $resume->projects()->sync(array_unique($projectIds));
+
+                foreach ($projectIds as $projectId) {
+                    $resume->projects()->updateExistingPivot($projectId, ['updated_at' => now()]);
+                }
             });
         } catch (\Exception $e) {
             throw new \Exception("Error saving projects in Resume: " . $e->getMessage());

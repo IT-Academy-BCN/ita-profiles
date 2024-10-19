@@ -24,15 +24,15 @@ class HandleProjectRetrieved
     public function handle(ProjectRetrieved $event): void
     {
         $project = $event->project;
-        Log::info("ProjectRetrieved()");
+        $resume = $project->resumes()->first();
+        Log::info("ProjectRetrieved: {$project->id}");
 
         // We don't want to process the project if it was updated less than 1 hour ago
         try {
-            // We don't want to process the project if updated_at is less than 1 hour ago
-            $resume = $this->resumeService->getResumeByProjectId($project->id);
-            $minutesBetweenUpdates = 0;
-            if ($resume->updated_at->diffInMinutes(now()) < $minutesBetweenUpdates) {
-                Log::info("Resume ID: {$resume->id} skipped because it was updated less than {$minutesBetweenUpdates} minutes ago.");
+
+            $minutesBetweenUpdates = 60;
+            if ($resume->pivot->updated_at->diffInMinutes(now()) < $minutesBetweenUpdates) {
+                Log::info("Project ID: {$project->id} skipped because it was updated less than {$minutesBetweenUpdates} minutes ago.");
                 return;
             }
         } catch (Exception $e) {

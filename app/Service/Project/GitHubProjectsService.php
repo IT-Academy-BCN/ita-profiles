@@ -35,7 +35,8 @@ class GitHubProjectsService
     public function getGitHubUsername(Project $project): string
     {
         try {
-            $resume = $this->resumeService->getResumeByProjectId($project->id);
+            //$resume = $this->resumeService->getResumeByProjectId($project->id);
+            $resume = $project->resumes()->first();
 
             // For now I'll use if statement and Exception... if it's needed can be converted to try catch
             if (is_null($resume->github_url)) {
