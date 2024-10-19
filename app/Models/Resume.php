@@ -42,7 +42,9 @@ class Resume extends Model
 
     public function projects(): BelongsToMany
     {
-        return $this->belongsToMany(Project::class);
+        return $this->belongsToMany(Project::class)
+            ->withPivot('created_at', 'updated_at')
+            ->withTimestamps();
     }
 
     public function additionalTrainings(): BelongsToMany
