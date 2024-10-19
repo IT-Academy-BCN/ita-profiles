@@ -10,13 +10,13 @@ class ModalityAnnotation
 {
     /**
      * @OA\Get(
-     *     path="/student/{studentId}/resume/modality/",
+     *     path="/student/{student}/resume/modality/",
      *     operationId="getStudentResumeModality",
      *     summary="Get the modality of a specific resume",
      *     description="Returns the modality of a specific student's resume  ",
      *     tags={"Student -> Resume"},
      *     @OA\Parameter(
-     *         name="studentId",
+     *         name="student",
      *         in="path",
      *         description="Student ID",
      *         required=true,
@@ -43,7 +43,7 @@ class ModalityAnnotation
      *     description="Student or Resume not found",
      *     @OA\JsonContent(
      *         type="object",
-     *         @OA\Property(property="message", type="string", example="No s'ha trobat cap estudiant amb aquest ID {studentId}"),
+     *         @OA\Property(property="message", type="string", example="No s'ha trobat cap estudiant amb aquest ID {student}"),
      *         @OA\Property(property="message2", type="string", example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}")
      *     )
      *     ),
