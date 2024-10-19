@@ -30,10 +30,14 @@ class ResumeServiceTest extends TestCase
         $this->project = Project::factory()->create();
         $this->project2 = Project::factory()->create();
         $this->project3 = Project::factory()->create();
+
+        // Crea el resume
         $this->resume = Resume::factory()->create([
             'github_url' => 'https://github.com/user1',
-            'project_ids' => json_encode([$this->project->id]),
         ]);
+
+        // Asocia los proyectos a este resume utilizando la relación many-to-many
+        $this->resume->projects()->attach([$this->project->id]);
     }
 
     public function testItGetsResumeByProjectId()
@@ -77,8 +81,9 @@ class ResumeServiceTest extends TestCase
         // Fetch the updated resume
         $updatedResume = Resume::find($this->resume->id);
 
+        $projectIds = $updatedResume->projects->pluck('id')->toArray();
+
         // Check if the projects were added
-        $projectIds = json_decode($updatedResume->project_ids, true);
         $this->assertContains($this->project->id, $projectIds);
         $this->assertContains($this->project2->id, $projectIds);
         $this->assertContains($this->project3->id, $projectIds);
