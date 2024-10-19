@@ -10,21 +10,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ResumeService
 {
-    public function getResumeByProjectId(string $projectId): Resume
-    {
-        try {
-            $resume = Resume::whereRelation('projects', 'projects.id', '=', $projectId)->first();
-
-            if (is_null($resume)) {
-                throw new ModelNotFoundException('Resume not found.');
-            }
-            return $resume;
-        } catch (ModelNotFoundException $e) {
-            throw $e; // Re-throw the specific exception
-        } catch (\Exception $e) {
-            throw new \Exception("Error retrieving resume by project ID: " . $e->getMessage());
-        }
-    }
 
     public function getResumeByGitHubUsername(string $gitHubUsername): Resume
     {
@@ -41,7 +26,7 @@ class ResumeService
         }
     }
 
-    public function saveProjectsInResume(array $projects, string $gitHubUsername): void
+    public function saveProjects(array $projects, string $gitHubUsername): void
     {
         try {
             // Desactiva los eventos para el modelo Project mientras se ejecuta este bloque

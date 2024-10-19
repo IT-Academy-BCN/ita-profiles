@@ -40,21 +40,6 @@ class ResumeServiceTest extends TestCase
         $this->resume->projects()->attach([$this->project->id]);
     }
 
-    public function testItGetsResumeByProjectId()
-    {
-        $foundResume = $this->resumeService->getResumeByProjectId($this->project->id);
-
-        $this->assertEquals($this->resume->id, $foundResume->id);
-    }
-
-    public function testItThrowsExceptionWhenNoResumeIsFoundByProjectId()
-    {
-        $this->expectException(ModelNotFoundException::class);
-        $this->expectExceptionMessage('Resume not found.');
-
-        $this->resumeService->getResumeByProjectId('non-existing-id');
-    }
-
     public function testItGetsResumeByGitHubUsername()
     {
         $foundResume = $this->resumeService->getResumeByGitHubUsername('user1');
@@ -76,7 +61,7 @@ class ResumeServiceTest extends TestCase
         $projectsToAdd = [$this->project2, $this->project3];
 
         // Call the method to save projects in resume
-        $this->resumeService->saveProjectsInResume($projectsToAdd, 'user1');
+        $this->resumeService->saveProjects($projectsToAdd, 'user1');
 
         // Fetch the updated resume
         $updatedResume = Resume::find($this->resume->id);
@@ -97,6 +82,6 @@ class ResumeServiceTest extends TestCase
         $projectsToAdd = [$this->project2, $this->project3];
 
         // Call the method with a non-existing GitHub username
-        $this->resumeService->saveProjectsInResume($projectsToAdd, 'user2');
+        $this->resumeService->saveProjects($projectsToAdd, 'user2');
     }
 }

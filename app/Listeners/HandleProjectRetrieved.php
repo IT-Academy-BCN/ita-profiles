@@ -51,7 +51,7 @@ class HandleProjectRetrieved
             Log::info("GitHub Repos fetched for: " . $gitHubUsername);
             $projects = $this->gitHubProjectsService->saveRepositoriesAsProjects($repos);
             Log::info("Projects saved for: " . $gitHubUsername);
-            $this->resumeService->saveProjectsInResume($projects, $gitHubUsername);
+            $this->resumeService->saveProjects($projects, $gitHubUsername);
             Log::info("Projects saved in Resume for: " . $gitHubUsername);
         } catch (Exception $e) {
             Log::error("Error executing Logic: " . $e->getMessage());
