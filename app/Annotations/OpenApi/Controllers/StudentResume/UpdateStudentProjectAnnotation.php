@@ -41,7 +41,7 @@ class UpdateStudentProjectAnnotation
      *          @OA\JsonContent(
      *              type="object",
      *              @OA\Property(
-     *                  property="project_name",
+     *                  property="name",
      *                  type="string",
      *                  description="Name of the project",
      *                  example="Updated Project Name"

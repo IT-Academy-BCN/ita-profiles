@@ -14,7 +14,7 @@ class UpdateStudentProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_name' => 'string|nullable',
+            'name' => 'string|nullable',
             'company_name' => 'string|nullable',
             'tags' => 'array|nullable',
             'tags.*' => 'integer|exists:tags,id',
