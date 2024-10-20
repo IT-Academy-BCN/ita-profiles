@@ -1,23 +1,32 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { ITag } from '../../../../../interfaces/interfaces'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
+import { EditStudentProfile } from '../EditStudentProfile'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [showFullDescription, setShowFullDescription] = useState(false)
-
+    const [openEditProfile, setOpenEditProfile] = useState(false)
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription)
     }
     const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
     )
+    const handleEditProfile = () => {
+        setOpenEditProfile(!openEditProfile)
+        console.log('abrir modal editar perfil')
+    }
     return (
         <div data-testid="StudentDataCard">
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
+            {openEditProfile &&
+                createPortal(<EditStudentProfile handleEditProfile={handleEditProfile} />, document.body)}
+
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">
                     <div className="flex gap-3">
@@ -29,38 +38,41 @@ const MyProfileStudentDetailCard: React.FC = () => {
                         <div className="flex w-full">
                             <div className="flex flex-col gap-2 w-full">
                                 <div className="flex flex-col">
-                                    <div className='flex'>
+                                    <div className="flex">
                                         <h2 className="text-xl font-bold">
                                             {aboutData.fullname}
                                         </h2>
-                                        <button 
-                                            className='ml-auto'
-                                            type='button'
-                                            >
-                                                <img 
-                                                    src={Pencil} 
-                                                    alt="edit profile information" 
-                                                />
+                                        <button
+                                            className="ml-auto"
+                                            type="button"
+                                            onClick={handleEditProfile}
+                                        >
+                                            <img
+                                                src={Pencil}
+                                                alt="edit profile information"
+                                            />
                                         </button>
                                     </div>
-                                    
+
                                     <p className="text-gray-2">
                                         {aboutData.resume.subtitle}
                                     </p>
                                 </div>
                                 <div className="flex gap-4">
                                     <a
-                                        href={aboutData.resume.social_media.github.url}
+                                        href={
+                                            aboutData.resume.social_media.github
+                                        }
                                         className="flex gap-1"
                                     >
-                                        <img 
-                                            src={Github} 
-                                            alt="github icon" 
-                                        />
+                                        <img src={Github} alt="github icon" />
                                         Github
                                     </a>
                                     <a
-                                        href={aboutData.resume.social_media.linkedin.url}
+                                        href={
+                                            aboutData.resume.social_media
+                                                .linkedin
+                                        }
                                         className="flex gap-1"
                                     >
                                         <img
@@ -71,7 +83,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                     </a>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                     <div className="flex flex-col gap-6">
                         <div className="flex flex-col gap-2">
@@ -108,7 +120,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                             </div>
                         </div>
                         <span className="h-0.5 w-full bg-gray-4-base" />
-                        <div className='flex'>
+                        <div className="flex">
                             <ul className="flex flex-wrap gap-2">
                                 {aboutData &&
                                     aboutData.tags.map((tag: ITag) => (
@@ -120,14 +132,8 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                         </li>
                                     ))}
                             </ul>
-                            <button 
-                                className='ml-auto'
-                                type='button'
-                                >
-                                    <img 
-                                        src={Pencil} 
-                                        alt="edit tags" 
-                                    />
+                            <button className="ml-auto" type="button">
+                                <img src={Pencil} alt="edit tags" />
                             </button>
                         </div>
                     </div>

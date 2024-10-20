@@ -7,13 +7,9 @@ const aboutData: TAbout = {
     resume: {
         subtitle: '',
         social_media: {
-            github: {
-                url: ''
-            },
-            linkedin: {
-                url: ''
-            }
-        },
+            github: '',          
+            linkedin:''
+            },       
         about: '',
     },
     photo: '',
@@ -25,7 +21,8 @@ const studentDetail = createSlice({
     initialState: {
         isLoadingAboutData: false,
         isErrorAboutData: false,
-        aboutData
+        aboutData,
+        toggleProfileImage:false,
     },
     reducers: {}
 })

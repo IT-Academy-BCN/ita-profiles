@@ -1,104 +1,100 @@
 import { ReactNode } from 'react'
 
 export interface ILoginForm {
-  dni: string
-  password: string
+    dni: string
+    password: string
 }
 
 export interface User {
-  id: string;
-  authToken?: string;
+    id: string
+    authToken?: string
 }
 
 // This could be used globally if we're passing just the children props.
 // Good for providers
 export type TchildrenProps = {
-  children: ReactNode
+    children: ReactNode
 }
 
 // === UserResponseData ===
 export type UserResponseData = {
-  userID: string;
-  token: string;
-  studentID: string
+    userID: string
+    token: string
+    studentID: string
 }
 
 // === SmallScreenContext ===
 export type TSmallScreenContext = {
-  isMobile: boolean
-  setIsMobile: React.Dispatch<React.SetStateAction<boolean>>
+    isMobile: boolean
+    setIsMobile: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 // === studentList ===
 export interface IStudentList {
-  id: string
-  fullname: string
-  subtitle: string
-  photo: string
-  tags: ITag[]
+    id: string
+    fullname: string
+    subtitle: string
+    photo: string
+    tags: ITag[]
 }
 
 export interface ITag {
-  id: number
-  name: string
+    id: number
+    name: string
 }
 
 export type TBootcamp = {
-  bootcamp_id: string
-  name: string
-  bootcamp_end_date: string
+    bootcamp_id: string
+    name: string
+    bootcamp_end_date: string
 }
 
 export type TModality = {
-  modality: string[]
+    modality: string[]
 }
 
 export type TProject = {
-  uuid: number
-  name: string
-  company_name: string
-  tags: ITag[]
-  project_url: string
-  github_url: string
+    uuid: number
+    name: string
+    company_name: string
+    tags: ITag[]
+    project_url: string
+    github_url: string
 }
 
 export type TLanguage = {
-  id: string
-  name: string
-  level: string
+    id: string
+    name: string
+    level: string
 }
 
 export type TAbout = {
-  id: number
-  fullname: string
-  resume: {
-    subtitle: string
-    social_media: {
-      github: {
-        url: string
-      }
-      linkedin: {
-        url: string
-      }
+    id: number
+    fullname: string
+    resume: {
+        subtitle: string
+        social_media: {
+            github: string
+            linkedin: string
+        }
+        about: string
     }
-    about: string
-  }
-  photo: string
-  tags: ITag[]
+    photo: string
+    tags: ITag[]
 }
 
 export type TAdditionalTraining = {
-  id: string
-  course_name: string
-  study_center: string
-  course_beginning_year: number
-  course_ending_year: number
-  duration_hrs: number
+    id: string
+    course_name: string
+    study_center: string
+    course_beginning_year: number
+    course_ending_year: number
+    duration_hrs: number
 }
 
 export type TCollaboration = {
-  uuid: string
-  name: string
-  collaboration_description: string
-  quantity: number
+    uuid: string
+    name: string
+    collaboration_description: string
+    quantity: number
 }
