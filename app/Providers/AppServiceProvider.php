@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Service\Project\ProcessedProjectsService;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\URL;
@@ -28,9 +27,6 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton('cache', function ($app) {
             return new CacheManager($app);
-        });
-        $this->app->singleton(ProcessedProjectsService::class, function ($app) {
-            return new ProcessedProjectsService();
         });
     }
 
