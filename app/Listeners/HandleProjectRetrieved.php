@@ -25,7 +25,7 @@ class HandleProjectRetrieved
         Log::info("ProjectRetrieved: {$project->id}");
         $resume = $project->resumes()->first();
 
-        $minutesBetweenUpdates = 60;
+        $minutesBetweenUpdates = 0;
 
         try {
             if ($resume->pivot->updated_at->diffInMinutes(now()) < $minutesBetweenUpdates) {

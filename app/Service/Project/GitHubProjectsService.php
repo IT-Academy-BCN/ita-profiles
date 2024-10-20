@@ -103,7 +103,7 @@ class GitHubProjectsService
             foreach ($repos as $repo) {
                 $languages = $this->fetchRepoLanguages($repo['languages_url']);
                 $languageNames = array_keys($languages);
-                $tagIds = $allTags->whereIn('tag_name', $languageNames)->pluck('id')->toArray();
+                $tagIds = $allTags->whereIn('name', $languageNames)->pluck('id')->toArray();
                 // Desactivar temporalmente los eventos para evitar disparar el evento retrieved
                 Project::withoutEvents(function () use ($repo, &$project, $tagIds) {
                     $project = Project::updateOrCreate(
@@ -113,10 +113,10 @@ class GitHubProjectsService
                             'user' => $repo['owner']['login'],
                             'name' => $repo['name'],
                             'github_url' => $repo['html_url'],
-                            'tags' => json_encode($tagIds),
                             'github_repository_id' => $repo['id'],
                         ]
                     );
+                    $project->tags()->sync($tagIds);
                 });
 
                 $projects[] = $project;
