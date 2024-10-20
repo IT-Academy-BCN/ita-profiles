@@ -8,27 +8,25 @@ use App\Models\Project;
 use App\Models\Resume;
 use Tests\TestCase;
 use App\Service\Project\GitHubProjectsService;
-use App\Service\Resume\ResumeService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Exception;
 
 class GitHubProjectsServiceTest extends TestCase
 {
     use DatabaseTransactions;
-    private $gitHubProjectsService;
-    private $resumeService;
-    private $project;
+    private GitHubProjectsService $gitHubProjectsService;
+    private Project $project;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->resumeService = new ResumeService();
-        $this->gitHubProjectsService = new GitHubProjectsService($this->resumeService);
-
-        // Create the project once and reuse it in all tests
+        $this->gitHubProjectsService = new GitHubProjectsService();
         $this->project = Project::factory()->create();
     }
 
-    // TESTS FOR FUNCTION: getGitHubUsername
+    /**
+     * @throws Exception
+     */
     public function testItReturnsGitHubUsername()
     {
         $resume = Resume::factory()->create([
@@ -45,7 +43,7 @@ class GitHubProjectsServiceTest extends TestCase
 
     public function testItThrowsExceptionForInvalidGitHubUrl()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage("Invalid GitHub URL: https://notgithub.com/user2");
 
         $resume = Resume::factory()->create([
@@ -59,7 +57,7 @@ class GitHubProjectsServiceTest extends TestCase
 
     public function testItThrowsExceptionForNullGitHubUrl()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage("GutHub url not found");
 
         $resume = Resume::factory()->create([
@@ -71,6 +69,9 @@ class GitHubProjectsServiceTest extends TestCase
         $this->gitHubProjectsService->getGitHubUsername($this->project);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testItReturnsGitHubUsernameWithTrailingSlash()
     {
         $resume = Resume::factory()->create([
@@ -85,21 +86,18 @@ class GitHubProjectsServiceTest extends TestCase
         $this->assertIsString($gitHubUsername);
     }
 
-    // TESTS FOR FUNCTION: fetchGitHubRepos
     public function testFetchGitHubReposSuccess()
     {
         // Dummy assertion to make the test pass temporarily
         $this->assertTrue(true);
     }
 
-    // TESTS FOR FUNCTION: fetchRepoLanguages
     public function testFetchRepoLanguagesSuccess()
     {
         // Dummy assertion to make the test pass temporarily
         $this->assertTrue(true);
     }
 
-    // TESTS FOR FUNCTION: saveRepositoriesAsProjects
     public function testSaveRepositoriesAsProjectsSuccess()
     {
         // Dummy assertion to make the test pass temporarily

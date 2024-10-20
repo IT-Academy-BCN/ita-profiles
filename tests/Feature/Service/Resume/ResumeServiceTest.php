@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Service\Resume;
 
+use App\Exceptions\ResumeServiceException;
 use App\Models\Project;
 use App\Models\Resume;
+use Exception;
 use Tests\TestCase;
 use App\Service\Resume\ResumeService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -40,28 +42,13 @@ class ResumeServiceTest extends TestCase
         $this->resume->projects()->attach([$this->project->id]);
     }
 
-    public function testItGetsResumeByGitHubUsername()
-    {
-        $foundResume = $this->resumeService->getResumeByGitHubUsername('user1');
-
-        $this->assertEquals($this->resume->id, $foundResume->id);
-    }
-
-    public function testItThrowsExceptionWhenResumeIsNull()
-    {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("Resume not found for GitHub username: user2");
-
-        $this->resumeService->getResumeByGitHubUsername('user2');
-    }
-
     public function testSaveProjectsInResumeSuccessfully()
     {
         // Define new projects to be added
         $projectsToAdd = [$this->project2, $this->project3];
 
         // Call the method to save projects in resume
-        $this->resumeService->saveProjects($projectsToAdd, 'user1');
+        $this->resumeService->saveProjects($projectsToAdd, $this->resume);
 
         // Fetch the updated resume
         $updatedResume = Resume::find($this->resume->id);
@@ -72,16 +59,5 @@ class ResumeServiceTest extends TestCase
         $this->assertContains($this->project->id, $projectIds);
         $this->assertContains($this->project2->id, $projectIds);
         $this->assertContains($this->project3->id, $projectIds);
-    }
-
-    public function testSaveProjectsInResumeThrowsExceptionWhenResumeNotFound()
-    {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("Error saving projects in Resume: Error retrieving resume by GitHub username: Resume not found for GitHub username: user2");
-        // Define new projects to be added
-        $projectsToAdd = [$this->project2, $this->project3];
-
-        // Call the method with a non-existing GitHub username
-        $this->resumeService->saveProjects($projectsToAdd, 'user2');
     }
 }

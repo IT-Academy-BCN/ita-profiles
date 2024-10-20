@@ -13,20 +13,13 @@ use Illuminate\Support\Facades\Log;
 
 class GitHubProjectsService
 {
-    private $resumeService;
     protected $githubToken;
     private $client;
 
-    public function __construct(ResumeService $resumeService, Client $client = null)
+    public function __construct(Client $client = null)
     {
-        $this->resumeService = $resumeService;
         $this->githubToken = config('github.token');
         $this->client = $client ?? new Client;
-
-        /*if (is_null($this->githubToken)) {
-            Log::error("GitHub token not found");
-            throw new \Exception("GitHub token not found");
-        }*/
     }
 
     // We have two possibilities here:
@@ -35,7 +28,6 @@ class GitHubProjectsService
     public function getGitHubUsername(Project $project): string
     {
         try {
-            //$resume = $this->resumeService->getResumeByProjectId($project->id);
             $resume = $project->resumes()->first();
 
             // For now I'll use if statement and Exception... if it's needed can be converted to try catch
