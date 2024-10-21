@@ -96,7 +96,6 @@ Route::get('student/{student}/resume/additionaltraining', StudentAdditionalTrain
 Route::get('student/{student}/resume/collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
 Route::put('student/{student}/resume/collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
 Route::put('student/{student}/resume/photo', UpdateStudentImageController::class)->name('student.updatePhoto');
-//Route to add new student photo
 Route::post('student/{student}/resume/photo', AddStudentImageController::class)->name('student.addPhoto');
 
 >>>>>>> 6ac780a0 (Add Route student.addPhoto(POST), tests passed)
