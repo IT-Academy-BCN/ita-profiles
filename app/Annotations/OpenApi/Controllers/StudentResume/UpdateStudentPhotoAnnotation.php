@@ -2,19 +2,19 @@
 declare(strict_types=1);
 namespace App\Annotations\OpenApi\Controllers\StudentResume;
 
+use OpenApi\Annotations as OA;
+
 class UpdateStudentPhotoAnnotation
 {
     /**
-     * @OA\Post (
-     *     path="/student/{studentId}/resume/photo",
+     * @OA\Post(
+     *     path="/student/{student}/resume/photo",
      *     operationId="updatePhotoStudent",
      *     tags={"Student -> Resume"},
-     *     summary="Update Student Photo.",
+     *     summary="Update Student Photo",
      *     description="Update the photo/image of a given student by student ID",
-     * 
-     *      
      *     @OA\Parameter(
-     *         name="studentId",
+     *         name="student",
      *         in="path",
      *         description="Student ID",
      *         required=true,
@@ -23,46 +23,33 @@ class UpdateStudentPhotoAnnotation
      *             format="uuid"
      *         )
      *     ),
-     * 
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
-     *                 allOf={
-     *                     @OA\Schema(ref="#components/schemas/item"),
-     *                     @OA\Schema(
-     *                         @OA\Property(
-     *                             description="Item image",
-     *                             property="photo",
-     *                             type="string", format="binary"
-     *                         )
-     *                     )
-     *                 }
+     *                 @OA\Property(
+     *                     property="photo",
+     *                     type="string",
+     *                     format="binary",
+     *                     description="Student photo"
+     *                 )
      *             )
      *         )
      *     ),
-     * 
-     * 
      *     @OA\Response(
      *         response=200,
-     *         description="Success. Updates the photo.",
-     * 
+     *         description="Success. Photo updated.",
      *         @OA\JsonContent(
-     *             type="array",
-     *             
-     *             @OA\Items(
-     *                  type="object",
-     * 
-     *                  @OA\Property(
-     *                      property="photo",
-     *                      type="string", format="binary"
-     *                  )
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Photo updated successfully"
      *             )
      *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="No hem trobat cap estudiant amb aquest ID"
+     *         description="Student not found"
      *     ),
      *     @OA\Response(
      *         response=422,
@@ -70,9 +57,8 @@ class UpdateStudentPhotoAnnotation
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Error inesperat"
+     *         description="Unexpected error"
      *     )
-     * 
      * )
      */
     public function __invoke() {}
