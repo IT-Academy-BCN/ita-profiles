@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ResumeService
 {
-    public function saveProjects(array $projects, Resume $resume): void
+    public function saveProjectsInResume(array $projects, Resume $resume): void
     {
         try {
             // Desactiva los eventos para el modelo Project mientras se ejecuta este bloque

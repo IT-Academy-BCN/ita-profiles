@@ -48,7 +48,7 @@ class ResumeServiceTest extends TestCase
         $projectsToAdd = [$this->project2, $this->project3];
 
         // Call the method to save projects in resume
-        $this->resumeService->saveProjects($projectsToAdd, $this->resume);
+        $this->resumeService->saveProjectsInResume($projectsToAdd, $this->resume);
 
         // Fetch the updated resume
         $updatedResume = Resume::find($this->resume->id);
