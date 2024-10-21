@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import axios from 'axios'
-import { useAppSelector } from '../../../../hooks/ReduxHooks'
-import { Close } from '../../../../assets/svg'
-import { setToggleProfileImage } from '../../../../store/slices/student/detailSlice'
-import { Stud1 as defaultPhoto } from '../../../../assets/img'
+import { useAppSelector } from '../../../../../../hooks/ReduxHooks'
+import { Close } from '../../../../../../assets/svg'
+import { setToggleProfileImage } from '../../../../../../store/slices/student/detailSlice'
+import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
 
 interface EditStudentProfileProps {
     handleEditProfile: () => void
@@ -19,11 +19,14 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     const dispatch = useDispatch()
 
     const [formData, setFormData] = useState({
-        fullName: aboutData.fullname,
-        titular: aboutData.resume.subtitle,
-        github: aboutData.resume.social_media.github,
-        linkedin: aboutData.resume.social_media.linkedin,
-        descripción: aboutData.resume.about,
+        // TODO : [BE] Arreglar el student name y surname en back asì podemos acceder aqui al dato
+        name: aboutData.fullname,
+        surname: '',
+        subtitle: aboutData.resume.subtitle,
+        github_url: aboutData.resume.social_media.github,
+        linkedin_url: aboutData.resume.social_media.linkedin,
+        about: aboutData.resume.about,
+        tags_ids: aboutData.tags.map((item) => item.id),
     })
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -34,33 +37,11 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     const updateProfile = async () => {
         const studentId = aboutData.id
         const url = `http://localhost:8000/api/v1/student/${studentId}/resume/profile`
-    //    const newData= {
-    //        ...aboutData,
-    //        fullname: formData.fullName,
-    //        resume: {
-    //            subtitle: formData.titular,
-    //            social_media: {
-    //                github: formData.github,
-    //                linkedin: formData.linkedin,
-    //            },
-    //            about: formData.descripción,
-    //        },
-    //    }
-        const newData = {
-            name: 'tomi', // nombre  y apellido es un solo campo en el figma
-            surname: formData.fullName, // en el estado llega en un solo campo tambien
-            subtitle: formData.titular,
-            github_url: formData.github,
-            linkedin_url: formData.linkedin,
-            about: formData.descripción,
-            tags_ids: [1, 2, 3], // lo tengo en otro formato en el estado
-        }
 
-        console.log('new Data : ', newData)
-        console.log('about Data del estado: ', aboutData)
+        console.log('formData : ', formData)
 
         try {
-            const response = await axios.put(url, newData)
+            const response = await axios.put(url, formData)
             console.log('Perfil actualizado con éxito:', response.data)
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
@@ -68,8 +49,12 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                     'Error al actualizar el perfil:',
                     error.response?.data,
                 )
+                throw new Error(
+                    error.response?.data || 'error al actualizar el perfil',
+                )
             } else {
                 console.error('Error desconocido:', error)
+                throw new Error('Error desconocido')
             }
         }
     }
@@ -77,6 +62,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault()
         updateProfile()
+        handleEditProfile()
     }
 
     const handleProfileImage = () => {
@@ -84,7 +70,12 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     }
 
     return (
-        <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-50">
+        <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-10">
+            {/* {toggleProfileImage && (
+                <ModalPortals>
+                    <TU COMPONENTE />
+                </ModalPortals>
+            )} */}
             <div className="w-[396px] h-[816px] mx-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pt-4 pr-4">
                 <div className="flex justify-between">
                     <div />
@@ -128,84 +119,100 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                 <div className="flex flex-col">
                                     <label
                                         className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
-                                        htmlFor="fullName"
+                                        htmlFor="name"
                                     >
-                                        Nombre y apellidos
+                                        Nombre
                                     </label>
                                     <input
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-[305px] h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
-                                        id="fullName"
+                                        id="name"
                                         type="text"
-                                        name="fullName"
+                                        name="name"
                                         onChange={handleChange}
-                                        value={formData.fullName}
+                                        value={formData.name}
                                     />
                                 </div>
                                 <div className="flex flex-col">
                                     <label
-                                        htmlFor="titular"
+                                        className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
+                                        htmlFor="surname"
+                                    >
+                                        Apellidos
+                                    </label>
+                                    <input
+                                        className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-[305px] h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
+                                        id="surname"
+                                        type="text"
+                                        name="surname"
+                                        onChange={handleChange}
+                                        value={formData.surname}
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <label
+                                        htmlFor="subtitle"
                                         className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
                                     >
                                         Titular
                                     </label>
                                     <input
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-[305px] h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
-                                        id="titular"
+                                        id="subtitle"
                                         type="text"
-                                        name="titular"
-                                        value={formData.titular}
+                                        name="subtitle"
+                                        value={formData.subtitle}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 <div className="border-b border-[rgba(217,217,217,1)] w-[305px] mt-[5px] mb-[10px] " />
                                 <div className="flex flex-col">
                                     <label
-                                        htmlFor="github"
+                                        htmlFor="github_url"
                                         className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
                                     >
                                         Link de perfil de Github
                                     </label>
                                     <input
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-[305px] h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px]"
-                                        id="github"
+                                        id="github_url"
                                         type="text"
-                                        name="github"
-                                        value={formData.github}
+                                        name="github_url"
+                                        value={formData.github_url}
                                         onChange={handleChange}
                                     />
                                 </div>
 
                                 <div className="flex flex-col">
                                     <label
-                                        htmlFor="linkedin"
+                                        htmlFor="linkedin_url"
                                         className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
                                     >
                                         Link perfil de Linkedin
                                     </label>
                                     <input
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-[305px] h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
-                                        id="linkedin"
+                                        id="linkedin_url"
                                         type="text"
-                                        name="linkedin"
+                                        name="linkedin_url"
                                         onChange={handleChange}
-                                        value={formData.linkedin}
+                                        value={formData.linkedin_url}
                                     />
                                 </div>
                                 <div className="border-b border-[rgba(217,217,217,1)] w-[305px] mt-[5px] mb-[10px] " />
                                 <div className="flex flex-col">
                                     <label
-                                        htmlFor="description"
+                                        htmlFor="about"
                                         className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
                                     >
                                         Descripción
                                     </label>
                                     <input
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-[305px] h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
-                                        id="description"
+                                        id="about"
                                         type="text"
-                                        name="descripción"
+                                        name="about"
                                         onChange={handleChange}
-                                        value={formData.descripción}
+                                        value={formData.about}
                                     />
                                 </div>
                             </div>

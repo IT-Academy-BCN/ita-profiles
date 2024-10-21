@@ -1,31 +1,37 @@
 import { useState } from 'react'
-import { createPortal } from 'react-dom'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { ITag } from '../../../../../interfaces/interfaces'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
-import { EditStudentProfile } from '../EditStudentProfile'
+import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
+import { ModalPortals } from '../../../../ModalPortals'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [showFullDescription, setShowFullDescription] = useState(false)
+
     const [openEditProfile, setOpenEditProfile] = useState(false)
+
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription)
     }
     const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
     )
+
     const handleEditProfile = () => {
         setOpenEditProfile(!openEditProfile)
-        console.log('abrir modal editar perfil')
     }
+
     return (
         <div data-testid="StudentDataCard">
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
-            {openEditProfile &&
-                createPortal(<EditStudentProfile handleEditProfile={handleEditProfile} />, document.body)}
+            {openEditProfile && (
+                <ModalPortals>
+                    <EditStudentProfile handleEditProfile={handleEditProfile} />
+                </ModalPortals>
+            )}
 
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">

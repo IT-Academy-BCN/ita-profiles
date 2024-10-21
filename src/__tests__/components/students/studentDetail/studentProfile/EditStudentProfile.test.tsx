@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { expect } from 'vitest'
-import { EditStudentProfile } from '../../../../../components/students/studentDetail/studentProfile/EditStudentProfile'
+import { EditStudentProfile } from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/editStudentProfile/EditStudentProfile'
 import { store } from '../../../../../store/store'
 
 const mockHandleEditProfile = vi.fn()
@@ -13,6 +13,9 @@ const renderComponent = () => {
         </Provider>,
     )
 }
+beforeEach(() => {
+    vi.clearAllMocks() // Limpiar mocks antes de cada prueba
+})
 
 describe('EditStudentProfile Component', () => {
     test('should render the "Editar datos" text', () => {
@@ -47,8 +50,14 @@ describe('EditStudentProfile Component', () => {
 
     test('should have an input labeled as Nombre y apellidos', () => {
         renderComponent()
-        const inputFullName = screen.getByLabelText('Nombre y apellidos')
-        expect(inputFullName).toBeInTheDocument()
+        const inputName = screen.getByLabelText('Nombre')
+        expect(inputName).toBeInTheDocument()
+    })
+
+    test('should have an input labeled as Apellidos', () => {
+        renderComponent()
+        const inputSurname = screen.getByLabelText('Apellidos')
+        expect(inputSurname).toBeInTheDocument()
     })
 
     test('should have an input labeled as Titular', () => {
@@ -96,25 +105,31 @@ describe('EditStudentProfile Component', () => {
         fireEvent.click(XButton)
         expect(modal).not.toBeInTheDocument()
     })
+
+    test('should close the modal when aceptar button is clicked', () => {
+        renderComponent()
+        const modal = screen.queryByRole('dialog')
+        const aceptarButton = screen.getByText('Aceptar')
+        fireEvent.click(aceptarButton)
+        expect(modal).not.toBeInTheDocument()
+    })
+
+    test('should call handleSubmit and update formData on submit', async () => {
+        renderComponent()
+        const aceptarButton = screen.getByText('Aceptar')
+        fireEvent.click(aceptarButton)
+        await waitFor(() => {
+            expect(mockHandleEditProfile).toHaveBeenCalled()
+        })
+    })
+
+    test('should update formData when input values change', () => {
+        renderComponent()
+        const inputName = screen.getByLabelText('Nombre')
+        const inputSurname = screen.getByLabelText('Apellidos')
+        fireEvent.change(inputName, { target: { value: 'Juan' } })
+        fireEvent.change(inputSurname, { target: { value: 'Pérez' } })
+        expect(screen.getByDisplayValue('Juan')).toBeInTheDocument()
+        expect(screen.getByDisplayValue('Pérez')).toBeInTheDocument()
+    })
 })
-
-// test('should call handleSubmit on form submission', () => {
-//     const consoleSpy = vi.spyOn(console, 'log')
-//     renderComponent()
-//     const inputFullName = screen.getByLabelText('Nombre y apellidos')
-//     fireEvent.change(inputFullName, { target: { value: 'Juan Pérez' } })
-
-//     const form = screen.getByRole('form')
-//     fireEvent.submit(form)
-
-//     expect(consoleSpy).toHaveBeenCalledWith({
-//         fullName: 'Juan Pérez',
-//         titular: '',
-//         github: '',
-//         linkedin: '',
-//         description: '',
-//     })
-
-//     consoleSpy.mockRestore()
-// })
-
