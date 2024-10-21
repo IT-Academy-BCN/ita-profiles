@@ -20,6 +20,7 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function resume(): HasOne
     {
         return $this->hasOne(Resume::class);
@@ -28,5 +29,10 @@ class Student extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(related: Tag::class);
+    }
+
+    public function jobOffers(): BelongsToMany
+    {
+        return $this->belongsToMany(related: JobOffer::class);
     }
 }
