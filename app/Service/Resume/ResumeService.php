@@ -27,11 +27,8 @@ class ResumeService
                 }
 
                 // Actualiza el array de project_ids en el Resume
-                $resume->projects()->sync(array_unique($projectIds));
+                $resume->projects()->sync(array_fill_keys(array_unique($projectIds), ['updated_at' => now()]));
 
-                foreach ($projectIds as $projectId) {
-                    $resume->projects()->updateExistingPivot($projectId, ['updated_at' => now()]);
-                }
             });
         } catch (Exception $e) {
             throw new ResumeServiceException($e->getMessage());
