@@ -2,15 +2,15 @@
 declare(strict_types=1);
 namespace App\Annotations\OpenApi\Controllers\StudentResume;
 
-class UpdateStudentPhotoAnnotation
+class CreateStudentPhotoAnnotation
 {
     /**
-     * @OA\Put (
+     * @OA\Post (
      *     path="/student/{studentId}/resume/photo",
-     *     operationId="updatePhotoStudent",
+     *     operationId="createPhotoStudent",
      *     tags={"Student -> Resume"},
-     *     summary="Update Student Photo.",
-     *     description="Update the photo/image of a given student by student ID",
+     *     summary="Create Student Photo.",
+     *     description="Create the photo/image of a given student by student ID",
      * 
      *      
      *     @OA\Parameter(
@@ -45,7 +45,7 @@ class UpdateStudentPhotoAnnotation
      * 
      *     @OA\Response(
      *         response=200,
-     *         description="Success. Updates the photo.",
+     *         description="Success. Creates the photo.",
      * 
      *         @OA\JsonContent(
      *             type="array",

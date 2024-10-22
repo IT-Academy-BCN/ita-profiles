@@ -21,7 +21,7 @@ class UpdateStudentImageController extends Controller
 
         $filename = time() . '.' . $student->id . $this->photo_infix . $file->hashName();
 
-        if ($student->photo) {
+        if ($student->photo && Storage::exists($this->photos_path . $student->photo)) {
             Storage::delete($this->photos_path . $student->photo);
         }
 
@@ -30,6 +30,6 @@ class UpdateStudentImageController extends Controller
         $student->photo = $filename;
         $student->save();
 
-        return response()->json(['message' => 'La imatge s\'ha actualitzat']);
+        return response()->json(['message' => 'La imatge s\'ha actualitzat o s\'ha dessat']);
     }
 }
