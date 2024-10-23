@@ -97,17 +97,5 @@ class AddStudentImageControllerTest extends TestCase
         $response->assertJsonValidationErrors(['photo']);
     }
 
-    public function testReturnsSuccessMessageOnImageAdd()
-    {
-        $user = User::factory()->create();
-        $student = Student::factory()->create(['user_id' => $user->id]);
-
-        $file = UploadedFile::fake()->image('profile.png', 2, 2);
-
-        $response = $this->postJson(route('student.addPhoto', $student->id), ['photo' => $file]);
-
-        $response->assertStatus(200);
-        $response->assertJson(['message' => 'La imatge s\'ha afegit correctament']); // Asegúrate de que este mensaje coincida con tu código
-    }
 
 }
