@@ -1,5 +1,4 @@
 import { FC } from "react"
-
 import useUploadProfilePicture from "../../../../../../hooks/useUploadProfilePhoto";
 import { ModalPortals } from "../../../../../ModalPortals";
 import { Close } from "../../../../../../assets/svg";
@@ -40,7 +39,6 @@ const UploadProfilePhoto: FC = () => {
                             {photoSentSuccessfully && newProfilePicture && <img className='object-cover w-full h-[291px]' src={newProfilePicture} alt="Send succes" />}
                             {!sendingPhoto && <img className='object-cover w-full h-[291px]' src={errorSendingPhoto ? '' : newProfilePicture} alt={`${errorSendingPhoto ? 'errorphoto' : 'userphoto'}`} />}
                             {!sendingPhoto && !newProfilePicture && <img className='object-cover w-full h-[291px]' src={aboutData.photo} alt="User pictures" />}
-                            {/* {!sendingPhoto && !photoSentSuccessfully && !newProfilePicture && <img className='object-cover w-full h-[291px]' src={aboutData.photo} alt="User pictures" />} */}
                         </figure>
                         <label htmlFor="photo" className="hidden" >
                             Subir foto
