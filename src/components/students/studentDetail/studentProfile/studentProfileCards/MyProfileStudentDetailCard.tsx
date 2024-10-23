@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { ITag } from '../../../../../interfaces/interfaces'
-import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
 import { ModalPortals } from '../../../../ModalPortals'
+import { setToggleProfileImage } from '../../../../../store/slices/student/detailSlice'
 
 const MyProfileStudentDetailCard: React.FC = () => {
+
+
     const [showFullDescription, setShowFullDescription] = useState(false)
 
     const [openEditProfile, setOpenEditProfile] = useState(false)
@@ -18,9 +21,11 @@ const MyProfileStudentDetailCard: React.FC = () => {
     const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
     )
+    const dispacth = useAppDispatch();
 
     const handleEditProfile = () => {
         setOpenEditProfile(!openEditProfile)
+        dispacth(setToggleProfileImage(false))
     }
 
     return (
