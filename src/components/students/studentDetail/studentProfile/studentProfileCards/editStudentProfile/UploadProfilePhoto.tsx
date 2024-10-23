@@ -1,5 +1,5 @@
 import { FC } from "react"
-import useUploadProfilePicture from "../../../../../../hooks/useUploadProfilePhoto";
+import useUploadProfilePhotoHook from "../../../../../../hooks/useUploadProfilePhotoHook";
 import { ModalPortals } from "../../../../../ModalPortals";
 import { Close } from "../../../../../../assets/svg";
 
@@ -21,7 +21,7 @@ const UploadProfilePhoto: FC = () => {
         handleKeyDown,
         sendNewProfilePicture,
         handlerPictureClick
-    } = useUploadProfilePicture();
+    } = useUploadProfilePhotoHook();
 
     return <ModalPortals>
         {toggleProfileImage && (

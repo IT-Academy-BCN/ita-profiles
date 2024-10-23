@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "./ReduxHooks";
 import { updateProfilePhotoThunk } from "../store/thunks/updateProfilePhotoThunk";
 import { resetSendingPhoto, setToggleProfileImage } from "../store/slices/student/detailSlice";
 
-const useUploadProfilePicture = () => {
+const useUploadProfilePhotoHook = () => {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
   const { aboutData, toggleProfileImage } = useAppSelector(state => state.ShowStudentReducer.studentDetails)
@@ -72,4 +72,4 @@ const useUploadProfilePicture = () => {
     sendNewProfilePicture
   }
 }
-export default useUploadProfilePicture
+export default useUploadProfilePhotoHook
