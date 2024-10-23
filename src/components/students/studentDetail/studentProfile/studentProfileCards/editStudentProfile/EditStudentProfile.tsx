@@ -5,7 +5,7 @@ import { useAppSelector } from '../../../../../../hooks/ReduxHooks'
 import { Close } from '../../../../../../assets/svg'
 import { setToggleProfileImage } from '../../../../../../store/slices/student/detailSlice'
 import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
-import UploadProfilePicture from './UploadProfilePicture'
+import UploadProfilePhoto from './UploadProfilePhoto'
 
 interface EditStudentProfileProps {
     handleEditProfile: () => void
@@ -106,7 +106,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                         >
                             Subir nueva imagen
                         </button>
-                        <UploadProfilePicture />
+                        <UploadProfilePhoto />
                     </div>
 
                     <form aria-label="form" onSubmit={handleSubmit}>

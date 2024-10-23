@@ -4,7 +4,7 @@ import useUploadProfilePicture from "../../../../../../hooks/useUploadProfilePho
 import { ModalPortals } from "../../../../../ModalPortals";
 import { Close } from "../../../../../../assets/svg";
 
-const UploadProfilePicture: FC = () => {
+const UploadProfilePhoto: FC = () => {
 
     const {
         aboutData,
@@ -59,4 +59,4 @@ const UploadProfilePicture: FC = () => {
     </ModalPortals>
 }
 
-export default UploadProfilePicture
+export default UploadProfilePhoto

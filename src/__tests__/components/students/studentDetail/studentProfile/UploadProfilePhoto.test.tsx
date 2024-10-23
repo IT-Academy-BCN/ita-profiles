@@ -2,21 +2,21 @@ import { describe, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store } from '../../../../../store/store';
-import UploadProfilePicture from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/editStudentProfile/UploadProfilePicture';
+import UploadProfilePhoto from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/editStudentProfile/UploadProfilePhoto';
 import { setToggleProfileImage } from '../../../../../store/slices/student/detailSlice';
 
 
-describe('UploadProfilePicture Component', () => {
+describe('UploadProfilePhoto Component', () => {
 
     it('should be defined', () => {
-        expect(UploadProfilePicture).toBeDefined();
+        expect(UploadProfilePhoto).toBeDefined();
     });
 
     it('At first, the modal should not be visible', () => {
         store.dispatch(setToggleProfileImage(false));
         render(
             <Provider store={store}>
-                <UploadProfilePicture />
+                <UploadProfilePhoto />
             </Provider>
         );
 
@@ -28,7 +28,7 @@ describe('UploadProfilePicture Component', () => {
 
         render(
             <Provider store={store}>
-                <UploadProfilePicture />
+                <UploadProfilePhoto />
             </Provider>
         );
 
@@ -43,7 +43,7 @@ describe('UploadProfilePicture Component', () => {
 
         render(
             <Provider store={store}>
-                <UploadProfilePicture />
+                <UploadProfilePhoto />
             </Provider>
         );
 
@@ -56,7 +56,7 @@ describe('UploadProfilePicture Component', () => {
 
     it('should handle file change correctly', () => {
         store.dispatch(setToggleProfileImage(true));
-        render(<Provider store={store}><UploadProfilePicture /></Provider>);
+        render(<Provider store={store}><UploadProfilePhoto /></Provider>);
 
         const file = new File(['(⌐□_□)'], 'profile.jpg', { type: 'image/jpeg' });
 
