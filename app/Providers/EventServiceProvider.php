@@ -19,10 +19,6 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        // We register an event and listener
-        ProjectRetrieved::class => [
-            HandleProjectRetrieved::class,
-        ],
     ];
 
     /**
