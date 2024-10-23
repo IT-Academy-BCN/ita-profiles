@@ -1,4 +1,4 @@
-import { describe, expect, vi } from 'vitest';
+import { describe, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store } from '../../../../../store/store';
