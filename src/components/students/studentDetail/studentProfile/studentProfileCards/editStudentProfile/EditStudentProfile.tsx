@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../../../../hooks/ReduxHooks'
 import { Close } from '../../../../../../assets/svg'
 import { setToggleProfileImage } from '../../../../../../store/slices/student/detailSlice'
 import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
+import UploadProfilePicture from './UploadProfilePicture'
 
 interface EditStudentProfileProps {
     handleEditProfile: () => void
@@ -71,11 +72,6 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
 
     return (
         <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-10">
-            {/* {toggleProfileImage && (
-                <ModalPortals>
-                    <TU COMPONENTE />
-                </ModalPortals>
-            )} */}
             <div className="w-[396px] h-[816px] mx-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pt-4 pr-4">
                 <div className="flex justify-between">
                     <div />
@@ -110,6 +106,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                         >
                             Subir nueva imagen
                         </button>
+                        <UploadProfilePicture />
                     </div>
 
                     <form aria-label="form" onSubmit={handleSubmit}>

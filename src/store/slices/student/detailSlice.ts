@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TAbout } from '../../../interfaces/interfaces'
 import { detailThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import { updateProfilePhotoThunk } from '../../thunks/updateProfilePhotoThunk'
 
 const aboutData: TAbout = {
     id: 0,
@@ -26,11 +27,23 @@ const detailSlice = createSlice({
         isErrorAboutData: false,
         aboutData,
         toggleProfileImage: false,
+        sendingPhoto: false,
+        errorSendingPhoto: false,
+        photoSentSuccessfully: false
     },
     reducers: {
         setToggleProfileImage: (state, action) => {
             state.toggleProfileImage = action.payload
+            state.sendingPhoto = false
+            state.errorSendingPhoto = false
+            state.photoSentSuccessfully = false
         },
+        resetSendingPhoto: (state) => {
+            state.sendingPhoto = false
+            state.errorSendingPhoto = false
+            state.photoSentSuccessfully = false
+        }
+
     },
     extraReducers: (builder) => {
         builder.addCase(detailThunk.pending, (state) => {
@@ -46,9 +59,26 @@ const detailSlice = createSlice({
             state.isLoadingAboutData = false
             state.isErrorAboutData = true
         })
+
+        builder.addCase(updateProfilePhotoThunk.pending, (state) => {
+            state.sendingPhoto = true
+            state.errorSendingPhoto = false
+            state.photoSentSuccessfully = false
+        })
+        builder.addCase(updateProfilePhotoThunk.fulfilled, (state, action) => {
+            state.aboutData.photo = action.payload
+            state.sendingPhoto = false
+            state.errorSendingPhoto = false
+            state.photoSentSuccessfully = true
+        })
+        builder.addCase(updateProfilePhotoThunk.rejected, (state) => {
+            state.sendingPhoto = false
+            state.errorSendingPhoto = true
+            state.photoSentSuccessfully = false
+        })
     },
 })
 
-export const { setToggleProfileImage } = detailSlice.actions
+export const { setToggleProfileImage, resetSendingPhoto } = detailSlice.actions
 
 export default detailSlice.reducer
