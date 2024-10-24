@@ -8,13 +8,11 @@ const aboutData: TAbout = {
     resume: {
         subtitle: '',
         social_media: {
-            github: {
-                url: '',
-            },
-            linkedin: {
-                url: '',
-            },
+            github: '',
+
+            linkedin: '',
         },
+
         about: '',
     },
     photo: '',
@@ -27,8 +25,13 @@ const detailSlice = createSlice({
         isLoadingAboutData: false,
         isErrorAboutData: false,
         aboutData,
+        toggleProfileImage: false,
     },
-    reducers: {},
+    reducers: {
+        setToggleProfileImage: (state, action) => {
+            state.toggleProfileImage = action.payload
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(detailThunk.pending, (state) => {
             state.isLoadingAboutData = true
@@ -45,5 +48,7 @@ const detailSlice = createSlice({
         })
     },
 })
+
+export const { setToggleProfileImage } = detailSlice.actions
 
 export default detailSlice.reducer
