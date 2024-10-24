@@ -34,4 +34,7 @@ php artisan cache:clear
 php artisan route:clear
 chmod 777 -R storage
 
+echo "Iniciando servicio cron..."
+service cron start
+
 php-fpm
