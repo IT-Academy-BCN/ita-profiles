@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux'
-import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useAppSelector } from '../../../../../../hooks/ReduxHooks'
 import { Close } from '../../../../../../assets/svg'
 import { setToggleProfileImage } from '../../../../../../store/slices/student/detailSlice'
 import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
 import { updateStudentProfile } from '../../../../../../api/student/updateStudentProfile'
+import { TStudentFormData } from '../../../../../../interfaces/interfaces'
 
 interface EditStudentProfileProps {
     handleEditProfile: () => void
@@ -17,26 +18,27 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         (state) => state.ShowStudentReducer.studentDetails,
     )
     const dispatch = useDispatch()
-    const [formData, setFormData] = useState({
-        // TODO : [BE] Arreglar el student name y surname en back asì podemos acceder aqui al dato
-        name: aboutData.fullname,
-        surname: '',
-        subtitle: aboutData.resume.subtitle,
-        github_url: aboutData.resume.social_media.github,
-        linkedin_url: aboutData.resume.social_media.linkedin,
-        about: aboutData.resume.about,
-        tags_ids: aboutData.tags.map((item) => item.id),
+    // TODO : [BE] Arreglar el student name y surname en back asì podemos acceder aqui al dato
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            name: aboutData.fullname,
+            surname: 'arreglar campo',
+            subtitle: aboutData.resume.subtitle,
+            github_url: aboutData.resume.social_media.github,
+            linkedin_url: aboutData.resume.social_media.linkedin,
+            about: aboutData.resume.about,
+            tags_ids: aboutData.tags.map((item) => item.id),
+        },
     })
-    const id: string = String(aboutData.id)
+    const url = `http://localhost:8000/api/v1/student/${aboutData.id}/resume/profile`
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target
-        setFormData((prev) => ({ ...prev, [name]: value }))
-    }
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault()
-        updateStudentProfile({ id, formData })
+    const handleButtonSubmit = (data: TStudentFormData): void => {
+        updateStudentProfile({ url, formData: data })
         handleEditProfile()
     }
 
@@ -46,11 +48,6 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
 
     return (
         <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-10">
-            {/* {toggleProfileImage && (
-                <ModalPortals>
-                    <TU COMPONENTE />
-                </ModalPortals>
-            )} */}
             <div className="w-[396px] h-[90%] m-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pb-4 pt-4 pr-4">
                 <div className="flex justify-between">
                     <div />
@@ -62,7 +59,6 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                         <img src={Close} alt="close icon" className="h-5" />
                     </button>
                 </div>
-
                 <div className="w-full h-full ">
                     <div className="flex flex-col h-[25%] justify-evenly">
                         <div className="flex">
@@ -94,7 +90,9 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                         <form
                             aria-label="form"
                             className="h-full"
-                            onSubmit={handleSubmit}
+                            onSubmit={handleSubmit((data) =>
+                                handleButtonSubmit(data),
+                            )}
                         >
                             <div className="flex flex-col w-full  h-[80%] overflow-y-auto pr-4">
                                 <div className="w-[304px] border-t border-[rgba(217,217,217,1)]" />
@@ -106,13 +104,26 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                         Nombre
                                     </label>
                                     <input
+                                        {...register('name', {
+                                            required:
+                                                'Error: This field is required',
+                                            minLength: {
+                                                value: 3,
+                                                message: 'min length is 3',
+                                            },
+                                        })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
                                         id="name"
                                         type="text"
                                         name="name"
-                                        onChange={handleChange}
-                                        value={formData.name}
                                     />
+                                    {errors.name ? (
+                                        <p className="text-center font-bold text-xs text-red-500 py-1">
+                                            {errors.name?.message}
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                                 <div className="flex flex-col">
                                     <label
@@ -122,13 +133,26 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                         Apellidos
                                     </label>
                                     <input
+                                        {...register('surname', {
+                                            required:
+                                                'Error: this field is required',
+                                            minLength: {
+                                                value: 3,
+                                                message: 'Min length is 3',
+                                            },
+                                        })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
                                         id="surname"
                                         type="text"
                                         name="surname"
-                                        onChange={handleChange}
-                                        value={formData.surname}
                                     />
+                                    {errors.surname ? (
+                                        <p className="text-center font-bold text-xs text-red-500 py-1">
+                                            {errors.surname.message}
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                                 <div className="flex flex-col">
                                     <label
@@ -138,13 +162,26 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                         Titular
                                     </label>
                                     <input
+                                        {...register('subtitle', {
+                                            required:
+                                                'Error: this field is required',
+                                            minLength: {
+                                                value: 3,
+                                                message: 'Min length is 3',
+                                            },
+                                        })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
                                         id="subtitle"
                                         type="text"
                                         name="subtitle"
-                                        value={formData.subtitle}
-                                        onChange={handleChange}
                                     />
+                                    {errors.subtitle ? (
+                                        <p className="text-center font-bold text-xs text-red-500 py-1">
+                                            {errors.subtitle.message}
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                                 <div className="border-b border-[rgba(217,217,217,1)] w-full mt-[5px] mb-[10px] " />
                                 <div className="flex flex-col">
@@ -155,13 +192,27 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                         Link de perfil de Github
                                     </label>
                                     <input
+                                        {...register('github_url', {
+                                            required:
+                                                'Error: this field is required',
+                                            pattern: {
+                                                value: /^(https?:\/\/)?(www\.)?github\.com\/.+$/,
+                                                message:
+                                                    'Invalid URL format. Please enter a valid github URL. ex. https://github.com/ora00 ',
+                                            },
+                                        })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px]"
                                         id="github_url"
                                         type="text"
                                         name="github_url"
-                                        value={formData.github_url}
-                                        onChange={handleChange}
                                     />
+                                    {errors.github_url ? (
+                                        <p className="text-center font-bold text-xs text-red-500 py-1">
+                                            {errors.github_url.message}
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
 
                                 <div className="flex flex-col">
@@ -172,13 +223,27 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                         Link perfil de Linkedin
                                     </label>
                                     <input
+                                        {...register('linkedin_url', {
+                                            required:
+                                                'Error: this field is required',
+                                            pattern: {
+                                                value: /^(https?:\/\/)?(www\.)?linkedin\.com\/.+$/,
+                                                message:
+                                                    'Invalid URL format. Please enter a valid LinkedIn URL. Ex. https://linkedin.com/ora00  ',
+                                            },
+                                        })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
                                         id="linkedin_url"
                                         type="text"
                                         name="linkedin_url"
-                                        onChange={handleChange}
-                                        value={formData.linkedin_url}
                                     />
+                                    {errors.linkedin_url ? (
+                                        <p className="text-center font-bold text-xs text-red-500 py-1">
+                                            {errors.linkedin_url.message}
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                                 <div className="border-b border-[rgba(217,217,217,1)] w-full mt-[5px] mb-[10px] " />
                                 <div className="flex flex-col">
@@ -189,13 +254,26 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                         Descripción
                                     </label>
                                     <input
+                                        {...register('about', {
+                                            required:
+                                                'Error: this field is required',
+                                            minLength: {
+                                                value: 3,
+                                                message: 'Min length is 3',
+                                            },
+                                        })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
                                         id="about"
                                         type="text"
                                         name="about"
-                                        onChange={handleChange}
-                                        value={formData.about}
                                     />
+                                    {errors.about ? (
+                                        <p className="text-center font-bold text-xs text-red-500 py-1">
+                                            {errors.about.message}
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                             </div>
                             <div className=" buttonGroup mx-auto w-[full] h-[20%] items-center flex justify-between gap-3">

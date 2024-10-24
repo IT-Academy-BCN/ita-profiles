@@ -1,27 +1,20 @@
 import axios from 'axios'
-import { TStudentFormData } from '../../interfaces/interfaces'
 
 export const updateStudentProfile = async ({
-    id,
+    url,
     formData,
 }: {
-    id: string
-    formData: TStudentFormData
+    url: string
+    formData: object
 }) => {
-    const studentId = id
-    const url = `http://localhost:8000/api/v1/student/${studentId}/resume/profile`
     try {
         const response = await axios.put(url, formData)
-        console.log('Perfil actualizado con éxito:', response.data)
+        console.log('Operación exitosa', response.data)
+        return response
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
-            console.error(
-                'Error al actualizar el perfil:',
-                error.response?.data,
-            )
-            throw new Error(
-                error.response?.data || 'error al actualizar el perfil',
-            )
+            console.error('Error en la operación:', error.response?.data)
+            throw new Error(error.response?.data || 'error ejecutar petición')
         } else {
             console.error('Error desconocido:', error)
             throw new Error('Error desconocido')

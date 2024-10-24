@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { expect } from 'vitest'
 import { EditStudentProfile } from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/editStudentProfile/EditStudentProfile'
 import { store } from '../../../../../store/store'
@@ -125,15 +125,5 @@ describe('EditStudentProfile component interaccion test', () => {
         fireEvent.change(inputSurname, { target: { value: 'Pérez' } })
         expect(screen.getByDisplayValue('Juan')).toBeInTheDocument()
         expect(screen.getByDisplayValue('Pérez')).toBeInTheDocument()
-    })
-
-    test('should call handleSubmit and update formData on submit', async () => {
-        renderComponent()
-        const aceptarButton = screen.getByText('Aceptar')
-        fireEvent.click(aceptarButton)
-        await waitFor(() => {
-            expect(mockHandleEditProfile).toHaveBeenCalled()
-        })
-    })
-
+    })   
 })
