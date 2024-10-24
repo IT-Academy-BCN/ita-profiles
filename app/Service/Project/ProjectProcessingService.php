@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\Project;
 
-use App\Service\Project\GitHubProjectsService;
+use App\Models\Resume;
 use App\Service\Resume\ResumeService;
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
+
 
 class ProjectProcessingService
 {
@@ -20,38 +22,29 @@ class ProjectProcessingService
         $this->resumeService = $resumeService;
     }
 
-    public function processProject($project): void
+    public function processProject(): void
     {
-        Log::info("ProjectRetrieved: {$project->id}");
-        $resume = $project->resumes()->first();
+        $timeBetweenUpdates = 60;
+        $resumes = Resume::whereNotNull('github_url')
+            ->whereNull('github_updated_at')
+            ->orWhere('github_updated_at', '<', now()->subMinutes($timeBetweenUpdates))
+            ->get();
 
-        $minutesBetweenUpdates = 0;
+        foreach ($resumes as $resume) {
 
-        try {
-            if ($resume->pivot->updated_at->diffInMinutes(now()) < $minutesBetweenUpdates) {
-                Log::info("Project ID: {$project->id} skipped because it was updated less than {$minutesBetweenUpdates} minutes ago.");
-                return;
+            try {
+                $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($resume);
+                $repos = $this->gitHubProjectsService->fetchGitHubRepos($gitHubUsername);
+                Log::info("GitHub Repos fetched for: " . $gitHubUsername);
+                $projects = $this->gitHubProjectsService->saveRepositoriesAsProjects($repos);
+                Log::info("Projects saved for: " . $gitHubUsername);
+                $this->resumeService->saveProjectsInResume($projects, $resume);
+                Log::info("Projects saved in Resume for: " . $gitHubUsername);
+            } catch (Exception $e) {
+                Log::error("Error processing GitHub projects: " . $e->getMessage());
+            } catch (GuzzleException $e) {
+                Log::error("Error processing GitHub projects: " . $e->getMessage());
             }
-        } catch (Exception $e) {
-            Log::error("Error retrieving Resume: º" . $e->getMessage());
-        }
-
-        try {
-            $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($project);
-        } catch (Exception $e) {
-            Log::error("Error retrieving GitHub username: " . $e->getMessage());
-            return;
-        }
-
-        try {
-            $repos = $this->gitHubProjectsService->fetchGitHubRepos($gitHubUsername);
-            Log::info("GitHub Repos fetched for: " . $gitHubUsername);
-            $projects = $this->gitHubProjectsService->saveRepositoriesAsProjects($repos);
-            Log::info("Projects saved for: " . $gitHubUsername);
-            $this->resumeService->saveProjectsInResume($projects, $resume);
-            Log::info("Projects saved in Resume for: " . $gitHubUsername);
-        } catch (Exception $e) {
-            Log::error("Error executing Logic: " . $e->getMessage());
         }
     }
 }

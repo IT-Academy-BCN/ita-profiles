@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Events\ProjectRetrieved;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,9 +29,4 @@ class Project extends Model
             ->withPivot('created_at', 'updated_at')
             ->withTimestamps();
     }
-
-    // We define a $dispatchEvents to listen to model events
-    protected $dispatchesEvents = [
-        'retrieved' => ProjectRetrieved::class,
-    ];
 }

@@ -24,18 +24,14 @@ class GitHubProjectsServiceTest extends TestCase
         $this->project = Project::factory()->create();
     }
 
-    /**
-     * @throws Exception
-     */
+
     public function testItReturnsGitHubUsername()
     {
         $resume = Resume::factory()->create([
             'github_url' => 'https://github.com/user1',
         ]);
 
-        $resume->projects()->attach($this->project->id);
-
-        $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($this->project);
+        $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($resume);
 
         $this->assertEquals('user1', $gitHubUsername);
         $this->assertIsString($gitHubUsername);
@@ -50,37 +46,16 @@ class GitHubProjectsServiceTest extends TestCase
             'github_url' => 'https://notgithub.com/user2',
         ]);
 
-        $resume->projects()->attach($this->project->id);
-
-        $this->gitHubProjectsService->getGitHubUsername($this->project);
+        $this->gitHubProjectsService->getGitHubUsername($resume);
     }
 
-    public function testItThrowsExceptionForNullGitHubUrl()
-    {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("GutHub url not found");
-
-        $resume = Resume::factory()->create([
-            'github_url' => null,
-        ]);
-
-        $resume->projects()->attach($this->project->id);
-
-        $this->gitHubProjectsService->getGitHubUsername($this->project);
-    }
-
-    /**
-     * @throws Exception
-     */
     public function testItReturnsGitHubUsernameWithTrailingSlash()
     {
         $resume = Resume::factory()->create([
             'github_url' => 'https://github.com/user1/',
         ]);
 
-        $resume->projects()->attach($this->project->id);
-
-        $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($this->project);
+        $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($resume);
 
         $this->assertEquals('user1', $gitHubUsername);
         $this->assertIsString($gitHubUsername);

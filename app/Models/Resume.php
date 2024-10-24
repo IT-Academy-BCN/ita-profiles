@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Models\Project;
-use App\Models\Student;
-use App\Models\Bootcamp;
-use App\Models\Language;
-use App\Models\Collaboration;
-use App\Models\AdditionalTraining;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
 class Resume extends Model
 {
     use HasFactory;
     use HasUuids;
 
+    /**
+     * @var Carbon|mixed
+     */
     protected $guarded = ['id'];
     protected $casts = [
         'modality' => 'array',
+        'github_updated_at' => 'datetime',
     ];
 
     public function student(): BelongsTo
