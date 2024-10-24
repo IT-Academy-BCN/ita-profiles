@@ -25,7 +25,7 @@ const UploadProfilePhoto: FC = () => {
 
     return <ModalPortals>
         {toggleProfileImage && (
-            <section className="fixed w-80 top-14 left-1/2 -translate-x-1/2 mt-4 xl:left-1/2 xl:translate-x-72 xl:mt-4 flex flex-col justify-center bg-white border border-gray-[#808080] rounded-[12px] z-10">
+            <section className="fixed w-80 top-14 left-1/2 -translate-x-1/2 xl:left-1/2 xl:translate-x-72  flex flex-col justify-center bg-white border border-gray-[#808080] rounded-[12px] z-10">
                 <header className='w-full flex justify-end p-2'>
                     <button type="button" onClick={() => dispatch(setToggleProfileImage(false))} title="Cerrar popup">
                         <img src={Close} alt="Cerrar modal" className="h-5" />
