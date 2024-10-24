@@ -46,6 +46,7 @@ Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 
 Route::get('student/resume/list', StudentListController::class)->name('students.list');
 
+<<<<<<< HEAD
 Route::get('student/{student}/resume/languages', StudentLanguagesDetailController::class)->name('student.languages');
 
 Route::get('student/{student}/resume/detail', StudentDetailController::class)->name('student.details');
@@ -59,6 +60,22 @@ Route::get('student/{student}/resume/collaborations', StudentCollaborationDetail
 Route::put('student/{student}/resume/collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
 Route::put('student/{student}/resume/languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
 
+=======
+Route::prefix('student/{student}/resume')->group(function () {
+    Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
+    Route::get('detail', StudentDetailController::class)->name('student.details');
+    Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
+    Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
+    Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
+    Route::put('projects/{project}', UpdateStudentProjectController::class)->middleware('auth:api')->name('student.updateProject');
+    Route::post('languages', AddStudentLanguageController::class)->name('student.addLanguage');
+    Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
+    Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
+    Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
+    Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
+    Route::put('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
+});
+>>>>>>> a02c2277 (Making cleaner code on api routes)
 Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
