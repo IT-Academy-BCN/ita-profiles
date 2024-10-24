@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Project;
 
+use App\Models\Resume;
 use App\Service\Resume\ResumeService;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -23,12 +24,20 @@ class ProjectProcessingService
     /**
      * @throws GuzzleException
      */
-    public function processProject(): void
+    public function processAllResumes(): void
     {
         $resumes = $this->resumeService->getResumes();
 
         foreach ($resumes as $resume) {
+            $this->processSingleResume($resume);
+        }
+    }
 
+    /**
+     * @throws GuzzleException
+     */
+    public function processSingleResume(Resume $resume): void
+    {
             try {
                 $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($resume);
 
@@ -44,6 +53,5 @@ class ProjectProcessingService
             } catch (Exception $e) {
                 Log::error("Error processing GitHub projects: " . $e->getMessage());
             }
-        }
     }
 }

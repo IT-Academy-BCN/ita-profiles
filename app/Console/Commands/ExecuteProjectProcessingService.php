@@ -24,7 +24,7 @@ class ExecuteProjectProcessingService extends Command
      */
     public function handle(): void
     {
-        $this->projectProcessingService->processProject();
+        $this->projectProcessingService->processAllResumes();
         $this->info('Project processing service executed at: ' . now());
     }
 }
