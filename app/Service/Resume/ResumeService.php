@@ -7,9 +7,21 @@ namespace App\Service\Resume;
 use App\Exceptions\ResumeServiceException;
 use App\Models\Resume;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 
 class ResumeService
 {
+    public function getResumes(): Collection
+    {
+        $timeBetweenUpdates = 60;
+        $resumes = Resume::whereNotNull('github_url')
+            ->whereNull('github_updated_at')
+            ->orWhere('github_updated_at', '<', now()->subMinutes($timeBetweenUpdates))
+            ->get();
+
+        return $resumes;
+    }
+
     /**
      * @throws ResumeServiceException
      */

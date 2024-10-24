@@ -22,6 +22,7 @@ class GitHubProjectsService
         $this->client = $client ?? new Client;
     }
 
+
     /**
      * @throws Exception
      */
@@ -47,10 +48,7 @@ class GitHubProjectsService
     public function fetchGitHubRepos(string $gitHubUsername): array
     {
         try {
-            $headers = [
-                'Accept' => 'application/vnd.github.v3+json',
-                'User-Agent' => 'LaravelApp',
-            ];
+            $headers = $this->prepareHeaders();
 
             if ($this->githubToken) {
                 $headers['Authorization'] = "Bearer $this->githubToken";
@@ -75,10 +73,7 @@ class GitHubProjectsService
     public function fetchRepoLanguages(string $languagesUrl): array
     {
         try {
-            $headers = [
-                'Accept' => 'application/vnd.github.v3+json',
-                'User-Agent' => 'LaravelApp',
-            ];
+            $headers = $this->prepareHeaders();
 
             if ($this->githubToken) {
                 $headers['Authorization'] = "Bearer $this->githubToken";
@@ -90,6 +85,7 @@ class GitHubProjectsService
             ]);
 
             return json_decode($response->getBody()->getContents(), true);
+
         } catch (Exception $e) {
             throw new Exception("Error fetching GitHub repository languages: " . $e->getMessage());
         }
@@ -128,6 +124,20 @@ class GitHubProjectsService
         } catch (Exception $e) {
             throw new Exception("Error saving repositories as projects: " . $e->getMessage());
         }
+    }
+
+    private function prepareHeaders(): array
+    {
+        $headers = [
+            'Accept' => 'application/vnd.github.v3+json',
+            'User-Agent' => 'LaravelApp',
+        ];
+
+        if ($this->githubToken) {
+            $headers['Authorization'] = "Bearer $this->githubToken";
+        }
+
+        return $headers;
     }
 
 }
