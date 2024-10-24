@@ -10,7 +10,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('project:execute-project-processing-service')
-            ->everyMinute()
+            ->dailyAt('3:00')
             ->appendOutputTo('./storage/logs/cron.log');
     }
 
