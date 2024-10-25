@@ -27,6 +27,7 @@ class Resume extends Model
         'modality' => 'array',
         'github_updated_at' => 'datetime',
     ];
+    protected $originalGitHubUrl;
 
     public function student(): BelongsTo
     {
@@ -57,5 +58,16 @@ class Resume extends Model
     public function collaborations(): BelongsToMany
     {
         return $this->belongsToMany(Collaboration::class, 'resume_collaboration', 'resume_id', 'collaboration_id');
+    }
+
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::updating(function ($resume) {
+            if ($resume->isDirty('github_url')) {
+                app()->instance('originalGitHubUrl', $resume->getOriginal('github_url'));
+            }
+        });
     }
 }

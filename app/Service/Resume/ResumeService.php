@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ResumeService
 {
+
     public function getResumes(): Collection
     {
         $timeBetweenUpdates = 60;
@@ -42,6 +43,19 @@ class ResumeService
 
         } catch (Exception $e) {
             throw new ResumeServiceException($e->getMessage());
+        }
+    }
+
+    public function deleteOldProjectsInResume($originalGitHubUrl, Resume $resume): void
+    {
+        echo $resume->originalGitHubUrl;
+        $projects = $resume->projects()
+            ->where('github_url', 'like', "$originalGitHubUrl/%")
+            ->get();
+
+        foreach ($projects as $project) {
+            $resume->projects()->detach($project);
+            $project->delete();
         }
     }
 }
