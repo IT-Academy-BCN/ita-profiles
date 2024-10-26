@@ -22,17 +22,13 @@ class GitHubProjectsService
         $this->client = $client ?? new Client;
     }
 
-    public function getGitHubUsername(Resume $resume): string
-    {
-        return $this->extractGitHubUsernameFromUrl($resume->github_url);
-    }
-
     /**
      * @throws Exception
      */
-    public function extractGithubUsernameFromUrl(string $github_url): string
+    public function getGitHubUsername(Resume $resume): string
     {
         try {
+            $github_url = $resume->github_url;
             $parsedUrl = parse_url($github_url);
             if ($parsedUrl['host'] !== 'github.com' || empty($parsedUrl['path'])) {
                 throw new Exception("Invalid GitHub URL: " . $github_url);
