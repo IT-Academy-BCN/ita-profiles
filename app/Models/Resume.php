@@ -27,7 +27,6 @@ class Resume extends Model
         'modality' => 'array',
         'github_updated_at' => 'datetime',
     ];
-    protected $originalGitHubUrl;
 
     public function student(): BelongsTo
     {

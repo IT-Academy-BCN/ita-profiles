@@ -15,12 +15,11 @@ class ResumeService
     public function getResumes(): Collection
     {
         $timeBetweenUpdates = 60;
-        $resumes = Resume::whereNotNull('github_url')
+
+        return Resume::whereNotNull('github_url')
             ->whereNull('github_updated_at')
             ->orWhere('github_updated_at', '<', now()->subMinutes($timeBetweenUpdates))
             ->get();
-
-        return $resumes;
     }
 
     /**
