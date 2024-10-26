@@ -75,14 +75,5 @@ class Handler extends ExceptionHandler
                 ], $status);
             }
         });
-
-        $this->renderable(function (ResumeServiceException|GitHubProjectsServiceException $e) {
-
-            Log::error('Error: ' . $e->getMessage(), [
-                'exception' => $e,
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return null;
-        });
     }
 }
