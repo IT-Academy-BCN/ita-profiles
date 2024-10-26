@@ -48,7 +48,6 @@ class ResumeService
 
     public function deleteOldProjectsInResume($originalGitHubUrl, Resume $resume): void
     {
-        echo $resume->originalGitHubUrl;
         $projects = $resume->projects()
             ->where('github_url', 'like', "$originalGitHubUrl/%")
             ->get();
