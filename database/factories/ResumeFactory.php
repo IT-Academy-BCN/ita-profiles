@@ -33,8 +33,8 @@ class ResumeFactory extends Factory
         $userIds = Cache::get('test_user_ids', []);
         // Assign a user ID to the first teo students, then default to null
         $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
-        // Create two GitHub usernames
-        $gitHubUsernames = ['nachoa88', 'StephaneCarteaux'];
+        // Create GitHub usernames
+        $gitHubUsernames = ['IT-Academy-BCN'];
         // Assign a GitHub username to the first two students, then default to a random unique one
         $gitHubUsername = ($studentIndex < count($gitHubUsernames)) ? $gitHubUsernames[$studentIndex] : $this->faker->unique()->userName;
         $studentIndex++; // Increment the index for each student created, in order to repeat the process
