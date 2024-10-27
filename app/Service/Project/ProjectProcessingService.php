@@ -42,16 +42,16 @@ class ProjectProcessingService
                 $gitHubUsername = $this->gitHubProjectsService->getGitHubUsername($resume);
 
                 $repos = $this->gitHubProjectsService->fetchGitHubRepos($gitHubUsername);
-                Log::info("GitHub Repos fetched for: " . $gitHubUsername);
+                Log::info("GitHub Repos fetched for: $gitHubUsername");
 
                 $projects = $this->gitHubProjectsService->saveRepositoriesAsProjects($repos);
-                Log::info("Projects saved for: " . $gitHubUsername);
+                Log::info("Projects saved for: $gitHubUsername");
 
                 $this->resumeService->saveProjectsInResume($projects, $resume);
-                Log::info("Projects saved in Resume for: " . $gitHubUsername);
+                Log::info("Projects saved in Resume for: $gitHubUsername\n");
 
             } catch (Exception $e) {
-                Log::error("Error processing GitHub projects: " . $e->getMessage());
+                Log::error("Error processing GitHub projects: " . "\n" . $e->getMessage());
             }
     }
 }

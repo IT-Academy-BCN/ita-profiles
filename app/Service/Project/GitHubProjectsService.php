@@ -10,6 +10,7 @@ use App\Models\Tag;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 
 class GitHubProjectsService
 {
@@ -61,8 +62,9 @@ class GitHubProjectsService
 
             return json_decode($response->getBody()->getContents(), true);
 
-        } catch (Exception) {
-            throw new Exception("Error fetching GitHub repositories for: " . $gitHubUsername);
+        } catch (RequestException $e) {
+            $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 'unknown';
+            throw new Exception("Error fetching GitHub repositories for: $gitHubUsername. Status code: {$statusCode}\n");
         }
     }
 
@@ -86,8 +88,9 @@ class GitHubProjectsService
 
             return json_decode($response->getBody()->getContents(), true);
 
-        } catch (Exception $e) {
-            throw new Exception("Error fetching GitHub repository languages: " . $e->getMessage());
+        } catch (RequestException $e) {
+            $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 'unknown';
+            throw new Exception("Error fetching GitHub repository languages for: $languagesUrl. Status code: {$statusCode}\n");
         }
     }
 
@@ -122,7 +125,7 @@ class GitHubProjectsService
             return $projects;
 
         } catch (Exception $e) {
-            throw new Exception("Error saving repositories as projects: " . $e->getMessage());
+            throw new Exception("Error saving repositories as projects: " . $e->getMessage() . "\n");
         }
     }
 
