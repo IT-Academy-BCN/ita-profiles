@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service\Resume;
 
-use App\Exceptions\ResumeServiceException;
 use App\Models\Resume;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -23,7 +22,7 @@ class ResumeService
     }
 
     /**
-     * @throws ResumeServiceException
+     * @throws Exception
      */
     public function saveProjectsInResume(array $projects, Resume $resume): void
     {
@@ -41,7 +40,7 @@ class ResumeService
             $resume->save();
 
         } catch (Exception $e) {
-            throw new ResumeServiceException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 

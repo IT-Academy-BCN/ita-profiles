@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Service\Resume;
 
-use App\Exceptions\ResumeServiceException;
 use App\Models\Project;
 use App\Models\Resume;
 use Exception;
