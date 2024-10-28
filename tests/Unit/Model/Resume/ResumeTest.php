@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class ResumeTest extends TestCase
 {
-
     use DatabaseTransactions;
     public function testCanSetsOriginalGithub_urlWhenUpdating()
     {
