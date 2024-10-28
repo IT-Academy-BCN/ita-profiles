@@ -1,15 +1,24 @@
 import React from 'react'
-import medal from '../../../../assets/img/medal-dynamic-color.png'
-import { useAppSelector } from '../../../../hooks/ReduxHooks'
-import LoadingSpiner from '../../../atoms/LoadingSpiner'
+import { Pencil } from '../../../../../assets/svg'
+import medal from '../../../../../assets/img/medal-dynamic-color.png'
+import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 
-const BootcampCard: React.FC = () => {
+const MyProfileBootcampCard: React.FC = () => {
     const { studentBootcamps } = useAppSelector((state) => state.ShowStudentReducer)
     const { bootcampData, isErrorBootcamp, isLoadingBootcamp } = studentBootcamps
 
     return (
         <div className="flex flex-col gap-4" data-testid="BootcampCard">
-            <h3 className="text-lg font-bold">Datos del bootcamp</h3>
+            <div className='flex'>
+                <h3 className="text-lg font-bold">Datos del bootcamp</h3>
+                <button 
+                    type='button'
+                    className='ml-auto'
+                    >
+                        <img src={Pencil} alt="edit training information" />
+                </button>
+            </div>
             {isLoadingBootcamp && <LoadingSpiner />}
             {isErrorBootcamp && (
                 <LoadingSpiner
@@ -52,4 +61,4 @@ const BootcampCard: React.FC = () => {
         </div>
     )
 }
-export default BootcampCard
+export default MyProfileBootcampCard

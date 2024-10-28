@@ -2,7 +2,7 @@ import { render } from '@testing-library/react'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { Provider } from 'react-redux'
-import StudentDataCard from '../../../../../components/students/studentDetail/cards/StudentDetailCard'
+import StudentDetailCard from '../../../../../components/students/studentDetail/cards/StudentDetailCard'
 import { store } from '../../../../../store/store'
 
 describe('StudentDataCard', () => {
@@ -46,7 +46,7 @@ describe('StudentDataCard', () => {
 
         render(
             <Provider store={store}>
-                <StudentDataCard />
+                <StudentDetailCard />
             </Provider>,
         )
     })
