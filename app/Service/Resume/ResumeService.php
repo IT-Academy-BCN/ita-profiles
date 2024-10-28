@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ResumeService
 {
-
     public function getResumes(): Collection
     {
         $timeBetweenUpdates = 60;
@@ -27,7 +26,6 @@ class ResumeService
     public function saveProjectsInResume(array $projects, Resume $resume): void
     {
         try {
-            // Obtener el array actual de project_ids
             $projectIds = $resume->projects->pluck('id')->toArray();
 
             foreach ($projects as $project) {
