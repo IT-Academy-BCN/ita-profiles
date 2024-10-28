@@ -13,6 +13,12 @@ if [ ! -f .env ]; then
     cp .env.docker .env
 fi
 
+# Verificar si GITHUB_TOKEN existe y tiene un valor en el archivo .env
+if ! grep -q '^GITHUB_TOKEN=[^ ]' .env; then
+    echo ""
+    printf "\033[33m[WARNING] - GITHUB_TOKEN is either missing or empty in the .env file. Some features may not work as expected.\033[0m\n"
+fi
+
 php artisan optimize
 php artisan clear-compiled
 
