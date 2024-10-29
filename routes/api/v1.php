@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\Student\{
+    AddStudentImageController,
     DeleteStudentResumeLanguageController,
     GetStudentImageController,
     StudentAdditionalTrainingListController,
@@ -52,6 +53,7 @@ Route::prefix('student/{student}/resume')->group(function () {
     Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::put('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
+    Route::post('photo', AddStudentImageController::class)->name('student.addPhoto');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
 });
 
