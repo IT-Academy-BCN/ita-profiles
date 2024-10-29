@@ -6,15 +6,12 @@ namespace Tests\Feature\Controller\Tag;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Service\Tag\TagStoreService;
 use App\Http\Controllers\api\Tag\TagStoreController;
 use App\Models\Tag;
 
 class TagStoreControllerTest extends TestCase
 {
     use DatabaseTransactions;
-
-    protected TagStoreService $tagStoreService;
 
     public function testStoreTag()
     {
@@ -116,10 +113,8 @@ class TagStoreControllerTest extends TestCase
     }
     public function testCanInstantiate(): void
     {
-        $tagStoreService = $this->createMock(TagStoreService::class);
-
-        $controller = new TagStoreController($tagStoreService);
-
+        $controller = new TagStoreController();
+    
         $this->assertInstanceOf(TagStoreController::class, $controller);
     }
 }
