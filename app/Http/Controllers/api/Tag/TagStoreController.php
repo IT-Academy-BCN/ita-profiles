@@ -21,11 +21,12 @@ class TagStoreController extends Controller
 
     public function __invoke(TagStoreRequest $request): JsonResponse
     {
-        try {
-            $service = $this->tagStoreService->execute($request->validated());
-            return response()->json(['tag' => $service], 201);
-        } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
-        }
+        $data = $request->validated();
+        $tagResource = $this->tagStoreService->execute($data);
+
+        return response()->json([
+            'message' => 'Tag successfully created.',
+            'tag' => $tagResource
+        ], 201);
     }
 }

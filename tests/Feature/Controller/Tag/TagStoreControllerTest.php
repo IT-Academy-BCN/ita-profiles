@@ -26,22 +26,24 @@ class TagStoreControllerTest extends TestCase
 
         $response->assertStatus(201);
 
-        /*$response->assertJsonStructure([
+        $response->assertJsonStructure([
+            'message',
             'tag' => [
                 'id',
                 'name',
             ],
-        ]);*/
+        ]);
 
-        /*$this->assertDatabaseHas('tags', [
+        $this->assertDatabaseHas('tags', [
             'name' => $tagName,
-        ]);*/
-        //$this->assertEquals($response->json('tag')['name'], $tagName);
+        ]);
+
+        $this->assertEquals($tagName, $response->json('tag')['name']);
     }
 
     public function testStoreFailsWhenTagNameIsMissing()
     {
-        $response = $this->postjson(route('tag.store'), []);
+        $response = $this->postJson(route('tag.store'), []);
 
         $response->assertStatus(422);
 
