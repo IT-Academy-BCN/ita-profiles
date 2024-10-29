@@ -4,31 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Student;
 
-use Exception;
 use App\Http\Controllers\Controller;
-use App\Service\Student\StudentModalityService;
-use App\Exceptions\StudentNotFoundException;
-use App\Exceptions\ResumeNotFoundException;
+use App\Models\Student;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 
 class StudentModalityController extends Controller
 {
-    private StudentModalityService $studentModalityService;
 
-    public function __construct(StudentModalityService $studentModalityService)
+    public function __invoke(Student $student): JsonResponse
     {
-        $this->studentModalityService = $studentModalityService;
-    }
+        $resume = $student->resume ?? throw new ModelNotFoundException();
+        $modality = $resume->modality;
 
-    public function __invoke(string $studentId): JsonResponse
-    {
-        try {
-            $service = $this->studentModalityService->execute($studentId);
-            return response()->json(['modality' => $service]);
-        } catch (StudentNotFoundException | ResumeNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode());
-        } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
-        }
+        return response()->json(['modality' => $modality]);
     }
 }
