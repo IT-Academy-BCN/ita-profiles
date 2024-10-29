@@ -82,6 +82,15 @@ export type TAbout = {
     photo: string
     tags: ITag[]
 }
+export type TStudentFormData = {
+    name: string
+    surname: string
+    subtitle: string
+    github_url: string
+    linkedin_url: string
+    about: string
+    tags_ids: number[]
+}
 
 export type TAdditionalTraining = {
     id: string

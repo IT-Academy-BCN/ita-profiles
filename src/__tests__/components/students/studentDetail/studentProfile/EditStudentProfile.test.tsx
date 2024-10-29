@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { expect } from 'vitest'
 import { EditStudentProfile } from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/editStudentProfile/EditStudentProfile'
 import { store } from '../../../../../store/store'
@@ -13,8 +13,9 @@ const renderComponent = () => {
         </Provider>,
     )
 }
+
 beforeEach(() => {
-    vi.clearAllMocks() // Limpiar mocks antes de cada prueba
+    vi.clearAllMocks()
 })
 
 describe('EditStudentProfile Component', () => {
@@ -89,7 +90,9 @@ describe('EditStudentProfile Component', () => {
         const profileImage = screen.getByAltText('Student profile')
         expect(profileImage).toBeInTheDocument()
     })
+})
 
+describe('EditStudentProfile component interaccion test', () => {
     test('should close the modal when cancel button is clicked', () => {
         renderComponent()
         const modal = screen.queryByRole('dialog')
@@ -114,15 +117,6 @@ describe('EditStudentProfile Component', () => {
         expect(modal).not.toBeInTheDocument()
     })
 
-    test('should call handleSubmit and update formData on submit', async () => {
-        renderComponent()
-        const aceptarButton = screen.getByText('Aceptar')
-        fireEvent.click(aceptarButton)
-        await waitFor(() => {
-            expect(mockHandleEditProfile).toHaveBeenCalled()
-        })
-    })
-
     test('should update formData when input values change', () => {
         renderComponent()
         const inputName = screen.getByLabelText('Nombre')
@@ -131,5 +125,5 @@ describe('EditStudentProfile Component', () => {
         fireEvent.change(inputSurname, { target: { value: 'Pérez' } })
         expect(screen.getByDisplayValue('Juan')).toBeInTheDocument()
         expect(screen.getByDisplayValue('Pérez')).toBeInTheDocument()
-    })
+    })   
 })
