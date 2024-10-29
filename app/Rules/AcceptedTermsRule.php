@@ -17,6 +17,6 @@ class AcceptedTermsRule extends Rule
 
     public function message(): string
     {
-        return 'You must accept the terms and conditions.';
+        return 'Has de acceptar els termes i condicions.';
     }
 }
