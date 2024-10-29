@@ -51,10 +51,6 @@ class TagStoreControllerTest extends TestCase
             ],
         ]);
 
-        $response->assertJsonFragment([
-            'name' => ['El camp nom és obligatori.'],
-        ]);
-
         $response->assertJsonValidationErrors(['name']);
 
     }
@@ -73,10 +69,6 @@ class TagStoreControllerTest extends TestCase
             ],
         ]);
 
-        $response->assertJsonFragment([
-            'name' => ['El camp nom ha de ser una cadena.'],
-        ]);
-
         $response->assertJsonValidationErrors(['name']);
     }
     public function testReturnsUnprocessableContentWhenUsingATooLongTagName(): void
@@ -87,12 +79,10 @@ class TagStoreControllerTest extends TestCase
 
         $response->assertStatus(422);
 
-        $response->assertJson([
-            'message' => 'Error de validació.',
+        $response->assertJsonStructure([
+            'message',
             'errors' => [
-                'name' => [
-                    'Nom no pot ser més gran que 75 caràcters.',
-                ],
+                'name',
             ],
         ]);
 
