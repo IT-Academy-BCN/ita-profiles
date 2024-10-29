@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\Student\{
+    AddStudentImageController,
     DeleteStudentResumeLanguageController,
     GetStudentImageController,
     StudentAdditionalTrainingListController,
@@ -18,12 +19,8 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentProjectController,
     UpdateStudentProfileController,
     UpdateStudentImageController,
-    AddStudentLanguageController,
-    AddStudentImageController
-    AddStudentLanguageController,
-    AddStudentImageController
+    AddStudentLanguageController
 };
-
 use App\Http\Controllers\api\Tag\{
     TagListController,
     TagStoreController,
@@ -31,24 +28,18 @@ use App\Http\Controllers\api\Tag\{
     TagUpdateController,
     DevelopmentListController
 };
-
 use App\Http\Controllers\api\Auth\{
     RegisterController,
     AuthController
 };
-
-use App\Http\Middleware\{
-    EnsureStudentOwner
-};
+use App\Http\Middleware\EnsureStudentOwner;
 
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
+Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
-Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
-
 Route::get('student/resume/list', StudentListController::class)->name('students.list');
 
-<<<<<<< HEAD
 Route::prefix('student/{student}/resume')->group(function () {
     Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
     Route::get('detail', StudentDetailController::class)->name('student.details');
@@ -63,42 +54,8 @@ Route::prefix('student/{student}/resume')->group(function () {
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::put('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
     Route::post('photo', AddStudentImageController::class)->name('student.addPhoto');
-});
-
-=======
-Route::get('student/{student}/resume/languages', StudentLanguagesDetailController::class)->name('student.languages');
-
-Route::get('student/{student}/resume/detail', StudentDetailController::class)->name('student.details');
-Route::put('student/{student}/resume/profile', UpdateStudentProfileController::class)->name('student.updateProfile');
-Route::get('student/{student}/resume/bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
-Route::get('student/{student}/resume/projects', StudentProjectsDetailController::class)->name('student.projects');
-Route::put('student/{student}/resume/projects/{project}', UpdateStudentProjectController::class)->middleware('auth:api')->name('student.updateProject');
-Route::post('student/{student}/resume/languages', AddStudentLanguageController::class)->name('student.addLanguage');
-Route::get('student/{student}/resume/additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
-Route::get('student/{student}/resume/collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
-Route::put('student/{student}/resume/collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
-Route::put('student/{student}/resume/photo', UpdateStudentImageController::class)->name('student.updatePhoto');
-
-Route::prefix('student/{studentId}/resume')->group(function () {
-    Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
 });
-=======
-Route::get('student/{student}/resume/languages', StudentLanguagesDetailController::class)->name('student.languages');
-
-Route::get('student/{student}/resume/detail', StudentDetailController::class)->name('student.details');
-Route::put('student/{student}/resume/profile', UpdateStudentProfileController::class)->name('student.updateProfile');
-Route::get('student/{student}/resume/bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
-Route::get('student/{student}/resume/projects', StudentProjectsDetailController::class)->name('student.projects');
-Route::put('student/{student}/resume/projects/{project}', UpdateStudentProjectController::class)->middleware('auth:api')->name('student.updateProject');
-Route::post('student/{student}/resume/languages', AddStudentLanguageController::class)->name('student.addLanguage');
-Route::get('student/{student}/resume/additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
-Route::get('student/{student}/resume/collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
-Route::put('student/{student}/resume/collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
-Route::put('student/{student}/resume/photo', UpdateStudentImageController::class)->name('student.updatePhoto');
-Route::post('student/{student}/resume/photo', AddStudentImageController::class)->name('student.addPhoto');
-
->>>>>>> 6ac780a0 (Add Route student.addPhoto(POST), tests passed)
 
 Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
