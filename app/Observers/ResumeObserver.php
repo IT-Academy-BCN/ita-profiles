@@ -21,15 +21,6 @@ class ResumeObserver implements ShouldHandleEventsAfterCommit
         $this->projectProcessingService = $projectProcessingService;
     }
 
-    /*
-    public function created(Resume $resume): void
-    {
-        if (!is_null($resume->github_url)) {
-            $this->projectProcessingService->processSingleResume($resume);
-        }
-    }
-    */
-
     public function updated(Resume $resume): void
     {
         try {
@@ -41,7 +32,5 @@ class ResumeObserver implements ShouldHandleEventsAfterCommit
         } catch (Exception $e) {
             Log::error("Error processing GitHub projects: " . "\n" . $e->getMessage());
         }
-
-
     }
 }

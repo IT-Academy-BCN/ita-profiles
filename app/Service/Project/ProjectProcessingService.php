@@ -20,7 +20,6 @@ class ProjectProcessingService
         $this->resumeService = $resumeService;
     }
 
-
     public function processAllResumes(): void
     {
         $resumes = $this->resumeService->getResumes();
