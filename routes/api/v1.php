@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\api\Student\{
     DeleteStudentResumeLanguageController,
     GetStudentImageController,
@@ -21,7 +20,6 @@ use App\Http\Controllers\api\Student\{
     UpdateStudentImageController,
     AddStudentLanguageController
 };
-
 use App\Http\Controllers\api\Tag\{
     TagListController,
     TagStoreController,
@@ -29,21 +27,16 @@ use App\Http\Controllers\api\Tag\{
     TagUpdateController,
     DevelopmentListController
 };
-
 use App\Http\Controllers\api\Auth\{
     RegisterController,
     AuthController
 };
-
-use App\Http\Middleware\{
-    EnsureStudentOwner
-};
+use App\Http\Middleware\EnsureStudentOwner;
 
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
+Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
-Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
-
 Route::get('student/resume/list', StudentListController::class)->name('students.list');
 
 Route::prefix('student/{student}/resume')->group(function () {
@@ -59,9 +52,10 @@ Route::prefix('student/{student}/resume')->group(function () {
     Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::put('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
-});
-Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('modality', StudentModalityController::class)->name('student.modality');
+});
+
+Route::prefix('student/{studentId}/resume')->group(function () {
     Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
     Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });
