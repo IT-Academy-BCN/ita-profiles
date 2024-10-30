@@ -8,19 +8,15 @@ use App\Models\Project;
 use App\Models\Resume;
 use App\Models\Tag;
 use Exception;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Http;
 
 class GitHubProjectsService
 {
     protected mixed $githubToken;
-    private Client $client;
 
-    public function __construct(Client $client = null)
+    public function __construct()
     {
         $this->githubToken = config('github.token');
-        $this->client = $client ?? new Client;
     }
 
     /**
@@ -43,59 +39,41 @@ class GitHubProjectsService
     }
 
     /**
-     * @throws GuzzleException
      * @throws Exception
      */
     public function fetchGitHubRepos(string $gitHubUsername): array
     {
-        try {
-            $headers = $this->prepareHeaders();
+        $headers = $this->prepareHeaders();
 
-            if ($this->githubToken) {
-                $headers['Authorization'] = "Bearer $this->githubToken";
-            }
+        $response = Http::withHeaders($headers)
+            ->get("https://api.github.com/users/$gitHubUsername/repos");
 
-            $response = $this->client->get("https://api.github.com/users/$gitHubUsername/repos", [
-                'headers' => $headers,
-                'synchronous' => true
-            ]);
-
-            return json_decode($response->getBody()->getContents(), true);
-
-        } catch (RequestException $e) {
-            $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 'unknown';
-            throw new Exception("Error fetching GitHub repositories for: $gitHubUsername. Status code: {$statusCode}\n");
+        if ($response->successful()) {
+            return $response->json();
+        } else {
+            $statusCode = $response->status();
+            throw new Exception("Error fetching GitHub repositories for: $gitHubUsername. Status code: $statusCode\n");
         }
     }
 
     /**
-     * @throws GuzzleException
      * @throws Exception
      */
     public function fetchRepoLanguages(string $languagesUrl): array
     {
-        try {
-            $headers = $this->prepareHeaders();
+        $headers = $this->prepareHeaders();
 
-            if ($this->githubToken) {
-                $headers['Authorization'] = "Bearer $this->githubToken";
-            }
+        $response = Http::withHeaders($headers)->get($languagesUrl);
 
-            $response = $this->client->get($languagesUrl, [
-                'headers' => $headers,
-                'synchronous' => true
-            ]);
-
-            return json_decode($response->getBody()->getContents(), true);
-
-        } catch (RequestException $e) {
-            $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 'unknown';
-            throw new Exception("Error fetching GitHub repository languages for: $languagesUrl. Status code: {$statusCode}\n");
+        if ($response->successful()) {
+            return $response->json();
+        } else {
+            $statusCode = $response->status();
+            throw new Exception("Error fetching GitHub repository languages for: $languagesUrl. Status code: $statusCode\n");
         }
     }
 
     /**
-     * @throws GuzzleException
      * @throws Exception
      */
     public function saveRepositoriesAsProjects(array $repos): array

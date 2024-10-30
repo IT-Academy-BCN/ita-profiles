@@ -38,19 +38,27 @@ class ResumeService
             $resume->save();
 
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception("Error saving projects in Resume: " .  $e->getMessage() . "\n");
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function deleteOldProjectsInResume($originalGitHubUrl, Resume $resume): void
     {
-        $projects = $resume->projects()
-            ->where('github_url', 'like', "$originalGitHubUrl/%")
-            ->get();
+        try {
+            $projects = $resume->projects()
+                ->where('github_url', 'like', "$originalGitHubUrl/%")
+                ->get();
 
-        foreach ($projects as $project) {
-            $resume->projects()->detach($project);
-            $project->delete();
+            foreach ($projects as $project) {
+                $resume->projects()->detach($project);
+                $project->delete();
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error deleting old projects in Resume: " . $e->getMessage() . "\n");
         }
+
     }
 }

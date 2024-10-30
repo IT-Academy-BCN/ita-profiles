@@ -8,6 +8,7 @@ use App\Models\Resume;
 use App\Service\Project\GitHubProjectsService;
 use App\Service\Project\ProjectProcessingService;
 use App\Service\Resume\ResumeService;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Log;
@@ -18,9 +19,10 @@ class ProjectProcessingServiceTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected $gitHubProjectsService;
-    protected $resumeService;
-    protected $projectProcessingService;
+    protected GitHubProjectsService $gitHubProjectsService;
+    protected ResumeService $resumeService;
+    protected ProjectProcessingService $projectProcessingService;
+
 
     protected function setUp(): void
     {
@@ -40,7 +42,7 @@ class ProjectProcessingServiceTest extends TestCase
         return Resume::factory()->create(['github_url' => 'https://github.com/' . $username]);
     }
 
-    protected function mockGitHubServices(Resume $resume, string $username, array $repos, array $projects)
+    protected function mockGitHubServices(Resume $resume, string $username, array $repos, array $projects): void
     {
         $this->gitHubProjectsService->shouldReceive('getGitHubUsername')
             ->with($resume)
@@ -105,7 +107,7 @@ class ProjectProcessingServiceTest extends TestCase
 
         $this->gitHubProjectsService->shouldReceive('fetchGitHubRepos')
             ->with($username)
-            ->andThrow(new \Exception("Error fetching GitHub repositories"));
+            ->andThrow(new Exception("Error fetching GitHub repositories"));
 
         Log::shouldReceive('error')
             ->once()

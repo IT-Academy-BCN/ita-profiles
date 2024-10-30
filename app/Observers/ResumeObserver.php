@@ -5,7 +5,9 @@ namespace App\Observers;
 use App\Models\Resume;
 use App\Service\Project\ProjectProcessingService;
 use App\Service\Resume\ResumeService;
+use Exception;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
+use Illuminate\Support\Facades\Log;
 
 class ResumeObserver implements ShouldHandleEventsAfterCommit
 {
@@ -30,10 +32,16 @@ class ResumeObserver implements ShouldHandleEventsAfterCommit
 
     public function updated(Resume $resume): void
     {
-        if($resume->wasChanged('github_url')) {
-            $originalGitHubUrl = app('originalGitHubUrl');
-            $this->resumeService->deleteOldProjectsInResume($originalGitHubUrl, $resume);
-            $this->projectProcessingService->processSingleResume($resume);
+        try {
+            if($resume->wasChanged('github_url')) {
+                $originalGitHubUrl = app('originalGitHubUrl');
+                $this->resumeService->deleteOldProjectsInResume($originalGitHubUrl, $resume);
+                $this->projectProcessingService->processSingleResume($resume);
+            }
+        } catch (Exception $e) {
+            Log::error("Error processing GitHub projects: " . "\n" . $e->getMessage());
         }
+
+
     }
 }

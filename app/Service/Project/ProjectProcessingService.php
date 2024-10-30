@@ -7,7 +7,6 @@ namespace App\Service\Project;
 use App\Models\Resume;
 use App\Service\Resume\ResumeService;
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 
 class ProjectProcessingService
@@ -21,9 +20,7 @@ class ProjectProcessingService
         $this->resumeService = $resumeService;
     }
 
-    /**
-     * @throws GuzzleException
-     */
+
     public function processAllResumes(): void
     {
         $resumes = $this->resumeService->getResumes();
@@ -33,9 +30,6 @@ class ProjectProcessingService
         }
     }
 
-    /**
-     * @throws GuzzleException
-     */
     public function processSingleResume(Resume $resume): void
     {
             try {

@@ -7,12 +7,8 @@ namespace Tests\Feature\Service\Project;
 use App\Models\Project;
 use App\Models\Resume;
 use App\Models\Tag;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Response;
-use Mockery;
-use GuzzleHttp\Psr7\Request;
-use Psr\Http\Message\ResponseInterface;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 use App\Service\Project\GitHubProjectsService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -27,27 +23,13 @@ class GitHubProjectsServiceTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->clientMock = Mockery::mock(Client::class);
-        $this->gitHubProjectsService = new GitHubProjectsService($this->clientMock);
+        $this->gitHubProjectsService = new GitHubProjectsService();
         $this->project = Project::factory()->create();
     }
 
-    private function mockClientException(string $url, int $statusCode = 404): void
-    {
-        $this->clientMock
-            ->shouldReceive('get')
-            ->once()
-            ->with($url, Mockery::any())
-            ->andThrow(new RequestException("Error Communicating with GitHub", new Request('GET', 'test'), new Response($statusCode)));
-    }
-
-    private function mockResponseWithBody(string $body): ResponseInterface
-    {
-        $responseMock = Mockery::mock(ResponseInterface::class);
-        $responseMock->shouldReceive('getBody->getContents')->andReturn($body);
-        return $responseMock;
-    }
-
+    /**
+     * @throws Exception
+     */
     public function testCanReturnGitHubUsername()
     {
         $resume = Resume::factory()->create(['github_url' => 'https://github.com/user1']);
@@ -67,6 +49,9 @@ class GitHubProjectsServiceTest extends TestCase
         $this->gitHubProjectsService->getGitHubUsername($resume);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testCanReturnGitHubUsernameWithTrailingSlash()
     {
         $resume = Resume::factory()->create(['github_url' => 'https://github.com/user1/']);
@@ -76,18 +61,18 @@ class GitHubProjectsServiceTest extends TestCase
         $this->assertIsString($gitHubUsername);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testCanFetchGitHubReposSuccessfully()
     {
-        $username = "username";
-        $expectedResponse = $this->mockGitHubReposResponse($username);
+        $gitHubUsername = "username";
+        $expectedResponse = $this->mockGitHubReposResponse($gitHubUsername);
+        Http::fake([
+            "https://api.github.com/users/$gitHubUsername/repos" => Http::response($expectedResponse),
+        ]);
 
-        $this->clientMock
-            ->shouldReceive('get')
-            ->once()
-            ->with("https://api.github.com/users/$username/repos", Mockery::any())
-            ->andReturn(new Response(200, [], json_encode($expectedResponse)));
-
-        $repos = $this->gitHubProjectsService->fetchGitHubRepos($username);
+        $repos = $this->gitHubProjectsService->fetchGitHubRepos($gitHubUsername);
 
         $this->assertIsArray($repos);
         $this->assertCount(2, $repos);
@@ -98,7 +83,9 @@ class GitHubProjectsServiceTest extends TestCase
     {
         $username = "username";
 
-        $this->mockClientException("https://api.github.com/users/$username/repos");
+        Http::fake([
+            "https://api.github.com/users/$username/repos" => Http::response(null, 404)
+        ]);
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Error fetching GitHub repositories for: $username. Status code: 404");
@@ -106,6 +93,9 @@ class GitHubProjectsServiceTest extends TestCase
         $this->gitHubProjectsService->fetchGitHubRepos($username);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testCanFetchRepoLanguagesSuccessfully()
     {
         $languagesUrl = "https://api.github.com/repos/username/repo/languages";
@@ -114,11 +104,9 @@ class GitHubProjectsServiceTest extends TestCase
             'JavaScript' => 3000,
         ];
 
-        $this->clientMock
-            ->shouldReceive('get')
-            ->once()
-            ->with($languagesUrl, Mockery::any())
-            ->andReturn(new Response(200, [], json_encode($expectedLanguages)));
+        Http::fake([
+            $languagesUrl => Http::response($expectedLanguages)
+        ]);
 
         $languages = $this->gitHubProjectsService->fetchRepoLanguages($languagesUrl);
 
@@ -130,7 +118,9 @@ class GitHubProjectsServiceTest extends TestCase
     {
         $languagesUrl = "https://api.github.com/repos/username/repo/languages";
 
-        $this->mockClientException($languagesUrl, 404);
+        Http::fake([
+            $languagesUrl => Http::response(null, 404)
+        ]);
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Error fetching GitHub repository languages for: $languagesUrl. Status code: 404");
@@ -138,16 +128,20 @@ class GitHubProjectsServiceTest extends TestCase
         $this->gitHubProjectsService->fetchRepoLanguages($languagesUrl);
     }
 
+    /**
+     * @throws Exception
+     */
     public function testCanSaveRepositoriesAsProjectsSuccessfully()
     {
         $repos = $this->mockGitHubReposResponse("username");
         $tags = Tag::limit(2)->pluck('name')->toArray();
         $languages = array_fill_keys($tags, 5000);
 
-        $this->clientMock
-            ->shouldReceive('get')
-            ->twice()
-            ->andReturnUsing(fn() => $this->mockResponseWithBody(json_encode($languages)));
+
+        Http::fake([
+            'https://api.github.com/repos/username/repo1/languages' => Http::response($languages),
+            'https://api.github.com/repos/username/repo2/languages' => Http::response($languages),
+        ]);
 
         $projects = $this->gitHubProjectsService->saveRepositoriesAsProjects($repos);
 
@@ -167,29 +161,32 @@ class GitHubProjectsServiceTest extends TestCase
     public function testSaveRepositoriesAsProjectsThrowsException()
     {
         $repos = [$this->mockGitHubReposResponse("username")[0]];
-        $this->mockClientException($repos[0]['languages_url']);
+
+        Http::fake([
+            $repos[0]['languages_url'] => Http::response(null, 404),
+        ]);
 
         $this->expectException(Exception::class);
         $this->gitHubProjectsService->saveRepositoriesAsProjects($repos);
     }
 
-    private function mockGitHubReposResponse(string $username): array
+    private function mockGitHubReposResponse(string $gitHubUsername): array
     {
         return [
             [
                 'id' => 1,
                 'name' => 'repo1',
-                'languages_url' => "https://api.github.com/repos/$username/repo1/languages",
-                'owner' => ['login' => $username],
-                'html_url' => "https://github.com/$username/repo1",
+                'languages_url' => "https://api.github.com/repos/$gitHubUsername/repo1/languages",
+                'owner' => ['login' => $gitHubUsername],
+                'html_url' => "https://github.com/$gitHubUsername/repo1",
             ],
             [
                 'id' => 2,
                 'name' => 'repo2',
-                'languages_url' => "https://api.github.com/repos/$username/repo2/languages",
-                'owner' => ['login' => $username],
-                'html_url' => "https://github.com/$username/repo2",
-            ]
+                'languages_url' => "https://api.github.com/repos/$gitHubUsername/repo2/languages",
+                'owner' => ['login' => $gitHubUsername],
+                'html_url' => "https://github.com/$gitHubUsername/repo2",
+            ],
         ];
     }
 }
