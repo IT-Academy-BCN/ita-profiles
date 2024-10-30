@@ -10,11 +10,13 @@ import { TStudentFormData } from '../../../../../../interfaces/interfaces'
 import { updateDetailThunk } from '../../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
 
 interface EditStudentProfileProps {
-    handleEditProfile: () => void
+    handleModal: () => void
+    handleRefresh: (id: string) => void
 }
 
 export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
-    handleEditProfile,
+    handleModal,
+    handleRefresh,
 }) => {
     const { aboutData, toggleProfileImage } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
@@ -29,7 +31,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     } = useForm({
         defaultValues: {
             name: aboutData.fullname,
-            surname: 'arreglar campo',
+            surname: 'surname', // arreglar campos, name y surname
             subtitle: aboutData.resume.subtitle,
             github_url: aboutData.resume.social_media.github,
             linkedin_url: aboutData.resume.social_media.linkedin,
@@ -43,7 +45,8 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         dispatch(updateDetailThunk({ url, formData: data }))
             .unwrap()
             .then(() => {
-                handleEditProfile()
+                handleRefresh(aboutData.id.toString())
+                handleModal()
             })
             .catch((error) => {
                 console.error('Error al actualizar el perfil:', error)
@@ -56,19 +59,19 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
 
     return (
         <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-10">
-            <div className="w-[396px] h-[90%] m-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pb-4 pt-4 pr-4">
+            <div className="w-[396px] h-[90%] md:h-[75%] m-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pb-4 pt-4 pr-4">
                 <div className="flex justify-between">
                     <div />
                     <button
                         type="button"
-                        onClick={handleEditProfile}
+                        onClick={handleModal}
                         className="cursor-pointer"
                     >
                         <img src={Close} alt="close icon" className="h-5" />
                     </button>
                 </div>
                 <div className="w-full h-full ">
-                    <div className="flex flex-col h-[25%] justify-evenly">
+                    <div className="flex flex-col h-[20%] justify-evenly">
                         <div className="flex">
                             <h1 className="text-[26px] w-[162px] h-[34px] my-0 leading-[34px] font-bold text-[rgba(40,40,40,1)]">
                                 Editar datos
@@ -94,7 +97,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                             </button>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-between h-[75%] m-0 p-0">
+                    <div className="flex flex-col justify-between h-[80%] m-0 p-0">
                         <form
                             aria-label="form"
                             className="h-full"
@@ -284,9 +287,9 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     )}
                                 </div>
                             </div>
-                            <div className=" buttonGroup mx-auto w-[full] h-[20%] items-center flex justify-between gap-3">
+                            <div className=" buttonGroup mx-auto w-[full] h-[20%] items-center flex justify-between gap-3 mr-4">
                                 <button
-                                    onClick={handleEditProfile}
+                                    onClick={handleModal}
                                     className="w-1/2 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)]"
                                     type="button"
                                 >

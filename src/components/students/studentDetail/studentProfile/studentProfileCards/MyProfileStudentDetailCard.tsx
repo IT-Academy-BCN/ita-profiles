@@ -2,25 +2,31 @@ import { useState } from 'react'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { ITag } from '../../../../../interfaces/interfaces'
-import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
 import { ModalPortals } from '../../../../ModalPortals'
+import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [showFullDescription, setShowFullDescription] = useState(false)
-
     const [openEditProfile, setOpenEditProfile] = useState(false)
-
-    const toggleDescription = () => {
-        setShowFullDescription(!showFullDescription)
-    }
     const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
     )
 
-    const handleEditProfile = () => {
+    const dispatch = useAppDispatch()
+
+    const toggleDescription = () => {
+        setShowFullDescription(!showFullDescription)
+    }
+
+    const handleModalEditProfile = () => {
         setOpenEditProfile(!openEditProfile)
+    }
+
+    const refreshStudentData = (id: string) => {
+        dispatch(detailThunk(id))
     }
 
     return (
@@ -29,7 +35,10 @@ const MyProfileStudentDetailCard: React.FC = () => {
             {isErrorAboutData && <LoadingSpiner />}
             {openEditProfile && (
                 <ModalPortals>
-                    <EditStudentProfile handleEditProfile={handleEditProfile} />
+                    <EditStudentProfile
+                        handleModal={handleModalEditProfile}
+                        handleRefresh={refreshStudentData}
+                    />
                 </ModalPortals>
             )}
 
@@ -51,7 +60,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                         <button
                                             className="ml-auto"
                                             type="button"
-                                            onClick={handleEditProfile}
+                                            onClick={handleModalEditProfile}
                                         >
                                             <img
                                                 src={Pencil}
