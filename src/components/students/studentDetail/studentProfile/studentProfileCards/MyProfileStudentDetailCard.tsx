@@ -7,13 +7,19 @@ import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
 import { ModalPortals } from '../../../../ModalPortals'
 import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
+import { Error } from '../../../../feedbackMessages/Error'
+import { Success } from '../../../../feedbackMessages/Success'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [showFullDescription, setShowFullDescription] = useState(false)
     const [openEditProfile, setOpenEditProfile] = useState(false)
-    const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(
-        (state) => state.ShowStudentReducer.studentDetails,
-    )
+    const {
+        aboutData,
+        isLoadingAboutData,
+        isErrorAboutData,
+        updatedError,
+        updatedMessage,
+    } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
 
     const dispatch = useAppDispatch()
 
@@ -33,6 +39,8 @@ const MyProfileStudentDetailCard: React.FC = () => {
         <div data-testid="StudentDataCard">
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
+            {updatedError && <Error message={updatedError} />}
+            {updatedMessage && <Success message={updatedMessage} />}
             {openEditProfile && (
                 <ModalPortals>
                     <EditStudentProfile
