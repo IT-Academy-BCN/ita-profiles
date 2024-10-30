@@ -114,10 +114,10 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('name', {
                                             required:
-                                                'Error: This field is required',
+                                                'Error: Este campo es requerido !',
                                             minLength: {
                                                 value: 3,
-                                                message: 'min length is 3',
+                                                message: 'Mínimo 3 caracteres',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
@@ -143,10 +143,10 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('surname', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             minLength: {
                                                 value: 3,
-                                                message: 'Min length is 3',
+                                                message: 'Mínimo 3 caracteres',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
@@ -172,10 +172,10 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('subtitle', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             minLength: {
                                                 value: 3,
-                                                message: 'Min length is 3',
+                                                message: 'Mínimo 3 caracteres',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
@@ -202,11 +202,11 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('github_url', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             pattern: {
                                                 value: /^(https?:\/\/)?(www\.)?github\.com\/.+$/,
                                                 message:
-                                                    'Invalid URL format. Please enter a valid github URL. ex. https://github.com/ora00 ',
+                                                    'Formato de url inválido. Ej. https://github.com/ora00 ',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px]"
@@ -233,11 +233,11 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('linkedin_url', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             pattern: {
                                                 value: /^(https?:\/\/)?(www\.)?linkedin\.com\/.+$/,
                                                 message:
-                                                    'Invalid URL format. Please enter a valid LinkedIn URL. Ex. https://linkedin.com/ora00  ',
+                                                    'Formato de url inválido. Ej. https://linkedin.com/ora00  ',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
@@ -264,10 +264,10 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('about', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             minLength: {
                                                 value: 3,
-                                                message: 'Min length is 3',
+                                                message: 'Mínimo 3 caracteres',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
