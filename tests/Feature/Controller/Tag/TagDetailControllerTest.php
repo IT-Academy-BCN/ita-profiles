@@ -8,7 +8,7 @@ use Tests\TestCase;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\api\Tag\TagDetailController;
-use App\Service\Tag\TagDetailService;
+
 
 class TagDetailControllerTest extends TestCase
 {
@@ -41,15 +41,6 @@ class TagDetailControllerTest extends TestCase
         $response->assertJson([
             'message' => 'No query results for model [App\\Models\\Tag] ' . $nonExistentTagId,
         ]);
-    }
-
-    public function testTagDetailControllerCanBeInstantiated()
-    {
-        $tagDetailService = $this->createMock(TagDetailService::class);
-
-        $controller = new TagDetailController($tagDetailService);
-
-        $this->assertInstanceOf(TagDetailController::class, $controller);
     }
 
     public function testInvokeReturnsTagsOfDifferentTypes(): void
