@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TAbout } from '../../../interfaces/interfaces'
-import { detailThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import {
+    detailThunk,
+    updateDetailThunk,
+} from '../../thunks/getDetailResourceStudentWithIdThunk'
 
 const aboutData: TAbout = {
     id: 0,
@@ -12,7 +15,6 @@ const aboutData: TAbout = {
 
             linkedin: '',
         },
-
         about: '',
     },
     photo: '',
@@ -26,6 +28,9 @@ const detailSlice = createSlice({
         isErrorAboutData: false,
         aboutData,
         toggleProfileImage: false,
+        updatedMessage: '',
+        updatedError: '',
+        isUpdateLoading: false,
     },
     reducers: {
         setToggleProfileImage: (state, action) => {
@@ -45,6 +50,21 @@ const detailSlice = createSlice({
         builder.addCase(detailThunk.rejected, (state) => {
             state.isLoadingAboutData = false
             state.isErrorAboutData = true
+        })
+        builder.addCase(updateDetailThunk.pending, (state) => {
+            state.isUpdateLoading = true
+            state.updatedError = ''
+            state.updatedMessage = ''
+        })
+        builder.addCase(updateDetailThunk.fulfilled, (state, action) => {
+            state.updatedMessage = action.payload
+            state.updatedError = ''
+            state.isUpdateLoading = false
+        })
+        builder.addCase(updateDetailThunk.rejected, (state) => {
+            state.updatedMessage = ''
+            state.updatedError = 'Error al realizar la actualizacion'
+            state.isUpdateLoading = false
         })
     },
 })

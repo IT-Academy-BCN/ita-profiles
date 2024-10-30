@@ -1,11 +1,13 @@
-import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { useAppSelector } from '../../../../../../hooks/ReduxHooks'
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../../../hooks/ReduxHooks'
 import { Close } from '../../../../../../assets/svg'
 import { setToggleProfileImage } from '../../../../../../store/slices/student/detailSlice'
 import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
-import { updateStudentProfile } from '../../../../../../api/student/updateStudentProfile'
 import { TStudentFormData } from '../../../../../../interfaces/interfaces'
+import { updateDetailThunk } from '../../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
 
 interface EditStudentProfileProps {
     handleEditProfile: () => void
@@ -17,7 +19,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     const { aboutData, toggleProfileImage } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
     )
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     // TODO : [BE] Arreglar el student name y surname en back asì podemos acceder aqui al dato
 
     const {
@@ -38,8 +40,14 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     const url = `http://localhost:8000/api/v1/student/${aboutData.id}/resume/profile`
 
     const handleButtonSubmit = (data: TStudentFormData): void => {
-        updateStudentProfile({ url, formData: data })
-        handleEditProfile()
+        dispatch(updateDetailThunk({ url, formData: data }))
+            .unwrap()
+            .then(() => {
+                handleEditProfile()
+            })
+            .catch((error) => {
+                console.error('Error al actualizar el perfil:', error)
+            })
     }
 
     const handleProfileImage = () => {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const updateStudentProfile = async ({
+export const updateWithAxios = async ({
     url,
     formData,
 }: {
@@ -9,8 +9,8 @@ export const updateStudentProfile = async ({
 }) => {
     try {
         const response = await axios.put(url, formData)
-        console.log('Operación exitosa', response.data)
-        return response
+        console.log(response)
+        return response.data.profile
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
             console.error('Error en la operación:', error.response?.data)
