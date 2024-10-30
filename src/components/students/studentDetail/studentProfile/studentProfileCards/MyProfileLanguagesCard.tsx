@@ -1,13 +1,22 @@
-import { useAppSelector } from '../../../../hooks/ReduxHooks'
-import LoadingSpiner from '../../../atoms/LoadingSpiner'
+import { Pencil } from '../../../../../assets/svg'
+import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 
-const LanguagesCard: React.FC = () => {
+const MyProfileLanguagesCard: React.FC = () => {
     const { studentLanguages } = useAppSelector((state) => state.ShowStudentReducer)
     const { languagesData, isLoadingLanguages, isErrorLanguages } = studentLanguages
 
     return (
         <div data-testid="LanguagesCard">
-            <h3 className="text-lg font-bold mb-4">Idiomas</h3>
+            <div className='flex mb-4'>
+                <h3 className="text-lg font-bold">Idiomas</h3>
+                <button 
+                    type='button'
+                    className='ml-auto'
+                    >
+                        <img src={Pencil} alt="edit languages information" />
+                </button>
+            </div>            
             {isLoadingLanguages && <LoadingSpiner />}
             {isErrorLanguages && (
                 <LoadingSpiner
@@ -36,4 +45,4 @@ const LanguagesCard: React.FC = () => {
     )
 }
 
-export default LanguagesCard
+export default MyProfileLanguagesCard
