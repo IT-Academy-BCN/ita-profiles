@@ -20,16 +20,13 @@ class TagDetailControllerTest extends TestCase
             'name' => 'Test Tag',
         ]);
 
-        $response = $this->getJson(route('tag.detail', ['tagId' => $tag->id]));
+        $response = $this->getJson(route('tag.detail', ['tag' => $tag->id]));
 
         $response->assertStatus(200);
+        
         $response->assertJson([
-            'data' => [
-                'id' => $tag->id,
-                'name' => $tag->name,
-                'created_at' => $tag->created_at->toISOString(),
-                'updated_at' => $tag->updated_at->toISOString(),
-            ],
+            'id' => $tag->id,
+            'name' => $tag->name,
         ]);
     }
 
@@ -37,20 +34,40 @@ class TagDetailControllerTest extends TestCase
     {
         $nonExistentTagId = 9999;
 
-        $response = $this->getJson(route('tag.detail', ['tagId' => $nonExistentTagId]));
+        $response = $this->getJson(route('tag.detail', ['tag' => $nonExistentTagId]));
 
         $response->assertStatus(404);
+        
         $response->assertJson([
-            'message' => 'Tag not found with id '.$nonExistentTagId,
+            'message' => 'No query results for model [App\\Models\\Tag] ' . $nonExistentTagId,
         ]);
     }
 
     public function testTagDetailControllerCanBeInstantiated()
     {
-        $studentDetailService = $this->createMock(TagDetailService::class);
+        $tagDetailService = $this->createMock(TagDetailService::class);
 
-        $controller = new TagDetailController($studentDetailService);
+        $controller = new TagDetailController($tagDetailService);
 
         $this->assertInstanceOf(TagDetailController::class, $controller);
     }
+
+    public function testInvokeReturnsTagsOfDifferentTypes(): void
+{
+    $tag1 = Tag::factory()->create(['name' => 'Unique Tag PHP']);
+    $tag2 = Tag::factory()->create(['name' => 'Unique Tag Laravel']);
+
+    $tags = [$tag1, $tag2];
+
+    foreach ($tags as $tag) {
+        $response = $this->getJson(route('tag.detail', ['tag' => $tag->id]));
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'id' => $tag->id,
+            'name' => $tag->name,
+        ]);
+    }
+}
+
 }
