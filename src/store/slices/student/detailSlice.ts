@@ -56,8 +56,8 @@ const detailSlice = createSlice({
             state.updatedError = ''
             state.updatedMessage = ''
         })
-        builder.addCase(updateDetailThunk.fulfilled, (state, action) => {
-            state.updatedMessage = action.payload
+        builder.addCase(updateDetailThunk.fulfilled, (state) => {
+            state.updatedMessage = 'El usuario fue actualizado con éxito!'
             state.updatedError = ''
             state.isUpdateLoading = false
         })
