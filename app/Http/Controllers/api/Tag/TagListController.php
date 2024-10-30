@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\api\Tag;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Tag\TagResource;
 use App\Service\Tag\TagListService;
 use Illuminate\Http\JsonResponse;
-use Exception;
 
 class TagListController extends Controller
 {
@@ -20,11 +20,13 @@ class TagListController extends Controller
     
     public function __invoke(): JsonResponse
     {
-        try {
-            $service = $this->tagListService->execute();
-            return response()->json(['tags' => $service]);
-        } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
-        }
+
+        $tagsArray = $this->tagListService->execute();
+
+        $tagsResource = TagResource::collection(collect($tagsArray)->map(function ($tag) {
+            return (object) $tag; 
+        }));
+
+        return $tagsResource->response();
     }
 }
