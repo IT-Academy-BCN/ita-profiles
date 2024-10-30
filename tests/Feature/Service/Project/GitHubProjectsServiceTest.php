@@ -7,7 +7,6 @@ namespace Tests\Feature\Service\Project;
 use App\Models\Project;
 use App\Models\Resume;
 use App\Models\Tag;
-use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 use App\Service\Project\GitHubProjectsService;
