@@ -19,9 +19,6 @@ class ExecuteProjectProcessingService extends Command
         $this->projectProcessingService = $projectProcessingService;
     }
 
-    /**
-     * Execute the console command.
-     */
     public function handle(): void
     {
         $this->projectProcessingService->processAllResumes();

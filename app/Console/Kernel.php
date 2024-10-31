@@ -14,9 +14,6 @@ class Kernel extends ConsoleKernel
             ->appendOutputTo('./storage/logs/cron.log');
     }
 
-    /**
-     * Register the commands for the application.
-     */
     protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');
