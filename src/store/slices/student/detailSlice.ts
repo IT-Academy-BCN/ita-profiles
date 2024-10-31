@@ -20,18 +20,19 @@ const aboutData: TAbout = {
     photo: '',
     tags: [],
 }
+export const initialState = {
+    isLoadingAboutData: false,
+    isErrorAboutData: false,
+    aboutData,
+    toggleProfileImage: false,
+    updatedMessage: '',
+    updatedError: '',
+    isUpdateLoading: false,
+}
 
 const detailSlice = createSlice({
     name: 'detailSlice',
-    initialState: {
-        isLoadingAboutData: false,
-        isErrorAboutData: false,
-        aboutData,
-        toggleProfileImage: false,
-        updatedMessage: '',
-        updatedError: '',
-        isUpdateLoading: false,
-    },
+    initialState,
     reducers: {
         setToggleProfileImage: (state, action) => {
             state.toggleProfileImage = action.payload
@@ -63,7 +64,7 @@ const detailSlice = createSlice({
         })
         builder.addCase(updateDetailThunk.rejected, (state) => {
             state.updatedMessage = ''
-            state.updatedError = 'Error al realizar la actualizacion'
+            state.updatedError = 'Error al realizar la actualizacion del perfil'
             state.isUpdateLoading = false
         })
     },

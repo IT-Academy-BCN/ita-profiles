@@ -9,7 +9,10 @@ const mockHandleEditProfile = vi.fn()
 const renderComponent = () => {
     return render(
         <Provider store={store}>
-            <EditStudentProfile handleEditProfile={mockHandleEditProfile} />
+            <EditStudentProfile
+                handleModal={mockHandleEditProfile}
+                handleRefresh={mockHandleEditProfile}
+            />
         </Provider>,
     )
 }
@@ -125,5 +128,5 @@ describe('EditStudentProfile component interaccion test', () => {
         fireEvent.change(inputSurname, { target: { value: 'Pérez' } })
         expect(screen.getByDisplayValue('Juan')).toBeInTheDocument()
         expect(screen.getByDisplayValue('Pérez')).toBeInTheDocument()
-    })   
+    })
 })
