@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TAbout } from '../../../interfaces/interfaces'
-import { detailThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
 import { updateProfilePhotoThunk } from '../../thunks/updateProfilePhotoThunk'
+import {
+    detailThunk,
+    updateDetailThunk,
+} from '../../thunks/getDetailResourceStudentWithIdThunk'
 
 const aboutData: TAbout = {
     id: 0,
@@ -13,24 +16,27 @@ const aboutData: TAbout = {
 
             linkedin: '',
         },
-
         about: '',
     },
     photo: '',
     tags: [],
 }
+export const initialState = {
+    isLoadingAboutData: false,
+    isErrorAboutData: false,
+    aboutData,
+    toggleProfileImage: false,
+    updatedMessage: '',
+    updatedError: '',
+    isUpdateLoading: false,
+    sendingPhoto: false,
+    errorSendingPhoto: false,
+    photoSentSuccessfully: false
+}
 
 const detailSlice = createSlice({
     name: 'detailSlice',
-    initialState: {
-        isLoadingAboutData: false,
-        isErrorAboutData: false,
-        aboutData,
-        toggleProfileImage: false,
-        sendingPhoto: false,
-        errorSendingPhoto: false,
-        photoSentSuccessfully: false
-    },
+    initialState,
     reducers: {
         setToggleProfileImage: (state, action) => {
             state.toggleProfileImage = action.payload
@@ -59,22 +65,20 @@ const detailSlice = createSlice({
             state.isLoadingAboutData = false
             state.isErrorAboutData = true
         })
-
-        builder.addCase(updateProfilePhotoThunk.pending, (state) => {
-            state.sendingPhoto = true
-            state.errorSendingPhoto = false
-            state.photoSentSuccessfully = false
+        builder.addCase(updateDetailThunk.pending, (state) => {
+            state.isUpdateLoading = true
+            state.updatedError = ''
+            state.updatedMessage = ''
         })
-        builder.addCase(updateProfilePhotoThunk.fulfilled, (state, action) => {
-            state.aboutData.photo = action.payload
-            state.sendingPhoto = false
-            state.errorSendingPhoto = false
-            state.photoSentSuccessfully = true
+        builder.addCase(updateDetailThunk.fulfilled, (state) => {
+            state.updatedMessage = 'El usuario fue actualizado con éxito!'
+            state.updatedError = ''
+            state.isUpdateLoading = false
         })
-        builder.addCase(updateProfilePhotoThunk.rejected, (state) => {
-            state.sendingPhoto = false
-            state.errorSendingPhoto = true
-            state.photoSentSuccessfully = false
+        builder.addCase(updateDetailThunk.rejected, (state) => {
+            state.updatedMessage = ''
+            state.updatedError = 'Error al realizar la actualizacion del perfil'
+            state.isUpdateLoading = false
         })
     },
 })

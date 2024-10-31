@@ -1,24 +1,28 @@
-import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { useAppSelector } from '../../../../../../hooks/ReduxHooks'
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../../../hooks/ReduxHooks'
 import { Close } from '../../../../../../assets/svg'
 import { setToggleProfileImage } from '../../../../../../store/slices/student/detailSlice'
 import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
 import UploadProfilePhoto from './UploadProfilePhoto'
-import { updateStudentProfile } from '../../../../../../api/student/updateStudentProfile'
 import { TStudentFormData } from '../../../../../../interfaces/interfaces'
+import { updateDetailThunk } from '../../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
 
 interface EditStudentProfileProps {
-    handleEditProfile: () => void
+    handleModal: () => void
+    handleRefresh: (id: string) => void
 }
 
 export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
-    handleEditProfile,
+    handleModal,
+    handleRefresh,
 }) => {
     const { aboutData, toggleProfileImage } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
     )
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     // TODO : [BE] Arreglar el student name y surname en back asì podemos acceder aqui al dato
 
     const {
@@ -28,7 +32,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     } = useForm({
         defaultValues: {
             name: aboutData.fullname,
-            surname: 'arreglar campo',
+            surname: 'surname', // arreglar campos, name y surname
             subtitle: aboutData.resume.subtitle,
             github_url: aboutData.resume.social_media.github,
             linkedin_url: aboutData.resume.social_media.linkedin,
@@ -39,8 +43,15 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     const url = `http://localhost:8000/api/v1/student/${aboutData.id}/resume/profile`
 
     const handleButtonSubmit = (data: TStudentFormData): void => {
-        updateStudentProfile({ url, formData: data })
-        handleEditProfile()
+        dispatch(updateDetailThunk({ url, formData: data }))
+            .unwrap()
+            .then(() => {
+                handleRefresh(aboutData.id.toString())
+                handleModal()
+            })
+            .catch((error) => {
+                console.error('Error al actualizar el perfil:', error)
+            })
     }
 
     const handleProfileImage = () => {
@@ -49,19 +60,19 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
 
     return (
         <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-10">
-            <div className="w-[396px] h-[90%] m-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pb-4 pt-4 pr-4">
+            <div className="w-[396px] h-[90%] md:h-[75%] m-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pb-4 pt-4 pr-4">
                 <div className="flex justify-between">
                     <div />
                     <button
                         type="button"
-                        onClick={handleEditProfile}
+                        onClick={handleModal}
                         className="cursor-pointer"
                     >
                         <img src={Close} alt="close icon" className="h-5" />
                     </button>
                 </div>
                 <div className="w-full h-full ">
-                    <div className="flex flex-col h-[25%] justify-evenly">
+                    <div className="flex flex-col h-[20%] justify-evenly">
                         <div className="flex">
                             <h1 className="text-[26px] w-[162px] h-[34px] my-0 leading-[34px] font-bold text-[rgba(40,40,40,1)]">
                                 Editar datos
@@ -95,7 +106,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                         </button>
                         <UploadProfilePhoto />
                     </div>
-                    <div className="flex flex-col justify-between h-[75%] m-0 p-0">
+                    <div className="flex flex-col justify-between h-[80%] m-0 p-0">
                         <form
                             aria-label="form"
                             className="h-full"
@@ -115,10 +126,10 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('name', {
                                             required:
-                                                'Error: This field is required',
+                                                'Error: Este campo es requerido !',
                                             minLength: {
                                                 value: 3,
-                                                message: 'min length is 3',
+                                                message: 'Mínimo 3 caracteres',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
@@ -144,10 +155,10 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('surname', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             minLength: {
                                                 value: 3,
-                                                message: 'Min length is 3',
+                                                message: 'Mínimo 3 caracteres',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
@@ -173,10 +184,10 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('subtitle', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             minLength: {
                                                 value: 3,
-                                                message: 'Min length is 3',
+                                                message: 'Mínimo 3 caracteres',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
@@ -203,11 +214,11 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('github_url', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             pattern: {
                                                 value: /^(https?:\/\/)?(www\.)?github\.com\/.+$/,
                                                 message:
-                                                    'Invalid URL format. Please enter a valid github URL. ex. https://github.com/ora00 ',
+                                                    'Formato de url inválido. Ej. https://github.com/ora00 ',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px]"
@@ -234,11 +245,11 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('linkedin_url', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             pattern: {
                                                 value: /^(https?:\/\/)?(www\.)?linkedin\.com\/.+$/,
                                                 message:
-                                                    'Invalid URL format. Please enter a valid LinkedIn URL. Ex. https://linkedin.com/ora00  ',
+                                                    'Formato de url inválido. Ej. https://linkedin.com/ora00  ',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
@@ -265,10 +276,10 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     <input
                                         {...register('about', {
                                             required:
-                                                'Error: this field is required',
+                                                'Error: Este campo es requerido !',
                                             minLength: {
                                                 value: 3,
-                                                message: 'Min length is 3',
+                                                message: 'Mínimo 3 caracteres',
                                             },
                                         })}
                                         className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
@@ -285,9 +296,9 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     )}
                                 </div>
                             </div>
-                            <div className=" buttonGroup mx-auto w-[full] h-[20%] items-center flex justify-between gap-3">
+                            <div className=" buttonGroup mx-auto w-[full] h-[20%] items-center flex justify-between gap-3 mr-4">
                                 <button
-                                    onClick={handleEditProfile}
+                                    onClick={handleModal}
                                     className="w-1/2 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)]"
                                     type="button"
                                 >

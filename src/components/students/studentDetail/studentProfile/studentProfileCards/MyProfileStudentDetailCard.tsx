@@ -7,34 +7,51 @@ import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
 import { ModalPortals } from '../../../../ModalPortals'
 import { setToggleProfileImage } from '../../../../../store/slices/student/detailSlice'
+import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
+import { Error } from '../../../../feedbackMessages/Error'
+import { Success } from '../../../../feedbackMessages/Success'
 
 const MyProfileStudentDetailCard: React.FC = () => {
 
 
     const [showFullDescription, setShowFullDescription] = useState(false)
-
     const [openEditProfile, setOpenEditProfile] = useState(false)
+    const {
+        aboutData,
+        isLoadingAboutData,
+        isErrorAboutData,
+        updatedError,
+        updatedMessage,
+    } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
+
+    const dispatch = useAppDispatch()
 
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription)
     }
-    const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(
-        (state) => state.ShowStudentReducer.studentDetails,
-    )
     const dispacth = useAppDispatch();
 
-    const handleEditProfile = () => {
+    const handleModalEditProfile = () => {
         setOpenEditProfile(!openEditProfile)
         dispacth(setToggleProfileImage(false))
+    }
+
+    const refreshStudentData = (id: string) => {
+        dispatch(detailThunk(id))
     }
 
     return (
         <div data-testid="StudentDataCard">
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
+            {updatedError && <Error message={updatedError} />}
+            {updatedMessage && <Success message={updatedMessage} />}
             {openEditProfile && (
                 <ModalPortals>
-                    <EditStudentProfile handleEditProfile={handleEditProfile} />
+                    <EditStudentProfile
+                        handleModal={handleModalEditProfile}
+                        handleRefresh={refreshStudentData}
+                    />
                 </ModalPortals>
             )}
 
@@ -56,7 +73,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                         <button
                                             className="ml-auto"
                                             type="button"
-                                            onClick={handleEditProfile}
+                                            onClick={handleModalEditProfile}
                                         >
                                             <img
                                                 src={Pencil}
@@ -104,9 +121,9 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                     {showFullDescription
                                         ? aboutData && aboutData.resume.about
                                         : `${aboutData.resume.about
-                                              .split(' ')
-                                              .slice(0, 15)
-                                              .join(' ')}...`}
+                                            .split(' ')
+                                            .slice(0, 15)
+                                            .join(' ')}...`}
                                     {!showFullDescription && (
                                         <button
                                             type="button"
