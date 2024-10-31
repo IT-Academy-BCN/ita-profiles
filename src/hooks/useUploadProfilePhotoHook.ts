@@ -51,8 +51,8 @@ const useUploadProfilePhotoHook = () => {
       data: formData
     }))
 
-
   }
+
   return {
     fileRef,
     formRef,

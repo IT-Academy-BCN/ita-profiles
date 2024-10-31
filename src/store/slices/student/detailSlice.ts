@@ -65,6 +65,23 @@ const detailSlice = createSlice({
             state.isLoadingAboutData = false
             state.isErrorAboutData = true
         })
+
+        builder.addCase(updateProfilePhotoThunk.pending, (state) => {
+            state.sendingPhoto = true
+            state.errorSendingPhoto = false
+            state.photoSentSuccessfully = false
+        })
+        builder.addCase(updateProfilePhotoThunk.fulfilled, (state, action) => {
+            state.aboutData.photo = action.payload
+            state.sendingPhoto = false
+            state.errorSendingPhoto = false
+            state.photoSentSuccessfully = true
+        })
+        builder.addCase(updateProfilePhotoThunk.rejected, (state) => {
+            state.sendingPhoto = false
+            state.errorSendingPhoto = true
+            state.photoSentSuccessfully = false
+        });
         builder.addCase(updateDetailThunk.pending, (state) => {
             state.isUpdateLoading = true
             state.updatedError = ''

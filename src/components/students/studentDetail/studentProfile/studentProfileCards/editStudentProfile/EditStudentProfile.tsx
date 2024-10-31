@@ -97,13 +97,6 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                 Subir nueva imagen
                             </button>
                         </div>
-                        <button
-                            className="h-[30px] w-[180px] text-[rgba(30,30,30,1)] font-bold border border-[rgba(128,128,128,1)] rounded-lg text-sm "
-                            type="button"
-                            onClick={handleProfileImage}
-                        >
-                            Subir nueva imagen
-                        </button>
                         <UploadProfilePhoto />
                     </div>
                     <div className="flex flex-col justify-between h-[80%] m-0 p-0">
