@@ -1,6 +1,19 @@
 
 # ITA Profiles
 
+- [Introduction](#introduction)
+- [How to install the project](#how-to-install-the-project)
+- [Local Addresses](#local-addresses)
+- [Demo](#demo)
+- [Screenshots](#screenshots)
+- [Installation](#installation)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Documentation](#documentation)
+- [Links of interest](#links-of-interest)
+- [Used By](#used-by)
+- [Acknowledgements](#acknowledgements)
+- [FAQ](#faq)
+
 ## Introduction
 
 ITA Profiles is a project from IT Academy post-specialization course that allows students from our academy to gain experience in a team that is using SCRUM methodology, and several technologies often used by most tech companies. So, the main focus of the project is to help grow our students so they can learn to work in a team, question, think solutions and face the usual challenges.
@@ -112,6 +125,21 @@ Contributions are always welcome! Please follow these guidelines:
 
 1. Code Style: Maintain a consistent code style throughout the project. Use appropriate naming conventions, indentation, and follow any established coding standards.
 2. Code Reviews: Be open to feedback during code reviews to ensure code quality and maintainability.
+
+## Documentation
+
+Please follow the coding guidelines defined in the [documentation](./docs/coding-guidelines.md).
+
+## Links of interest:
+
+
+- [Swagger](https://itaperfils.eurecatacademy.org/api/documentation): Bakend Documentation
+
+- [Figma](https://www.figma.com/file/DynJHHUlOiqx3F5h9dtvAW/Projectes-IT-Academy?type=design&node-id=1-5&mode=design&t=0Tn11J0k1eOANlsI-0): we take our designs from here
+
+- [Netlify](https://ita-profiles.netlify.app/): we use this to simulate the production URL
+
+- [GitHub Project Table](https://github.com/orgs/IT-Academy-BCN/projects/18): here you'll find the team's issues
 
 ## Used By
 
