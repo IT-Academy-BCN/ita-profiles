@@ -80,7 +80,6 @@ class ResumeServiceTest extends TestCase
 
     public function testCanHandleExceptionInSaveProjectsInResume()
     {
-        // Crear un resume válido
         $resume = Resume::factory()->create(['github_url' => 'https://github.com/testuser']);
         $projects = [
             Project::factory()->create(['id' => 1, 'name' => 'Existing Project']),
@@ -88,11 +87,11 @@ class ResumeServiceTest extends TestCase
 
         /** @var Resume|MockInterface $resume */
         $resume = Mockery::mock($resume);
-        $resume->shouldReceive('projects->sync')
-            ->andThrow(new Exception("Error syncing projects"));
+        $resume->shouldReceive('projects->syncWithoutDetaching')
+            ->andThrow(new Exception("Error saving projects in Resume"));
 
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Error syncing projects");
+        $this->expectExceptionMessage("Error saving projects in Resume");
 
         $this->resumeService->saveProjectsInResume($projects, $resume);
     }

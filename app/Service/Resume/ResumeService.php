@@ -26,13 +26,9 @@ class ResumeService
     public function saveProjectsInResume(array $projects, Resume $resume): void
     {
         try {
-            $projectIds = $resume->projects->pluck('id')->toArray();
+            $projectIds = array_column($projects, 'id');
 
-            foreach ($projects as $project) {
-                $projectIds[] = $project['id'];
-            }
-
-            $resume->projects()->sync(array_unique($projectIds));
+            $resume->projects()->syncWithoutDetaching($projectIds);
 
             $resume->github_updated_at = now();
             $resume->save();
