@@ -51,9 +51,6 @@ class ResumeServiceTest extends TestCase
         $this->assertFalse($resumes->contains($resume3));
     }
 
-    /**
-     * @throws Exception
-     */
     public function testCanSaveProjectsInResume()
     {
         $resume = Resume::factory()->create(['github_url' => 'https://github.com/testuser']);
@@ -96,9 +93,6 @@ class ResumeServiceTest extends TestCase
         $this->resumeService->saveProjectsInResume($projects, $resume);
     }
 
-    /**
-     * @throws Exception
-     */
     public function testCanDeleteOldProjectsInResume()
     {
         $originalGitHubUrl = 'https://github.com/testuser';

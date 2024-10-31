@@ -24,18 +24,13 @@ class GitHubProjectsService
      */
     public function getGitHubUsername(Resume $resume): string
     {
-        try {
-            $github_url = $resume->github_url;
-            $parsedUrl = parse_url($github_url);
-            if ($parsedUrl['host'] !== 'github.com' || empty($parsedUrl['path'])) {
-                throw new Exception("Invalid GitHub URL: " . $github_url);
-            }
-
-            return trim($parsedUrl['path'], '/');
-
-        } catch (Exception $e) {
-            throw new Exception("Error processing GitHub username: " . $e->getMessage());
+        $github_url = $resume->github_url;
+        $parsedUrl = parse_url($github_url);
+        if ($parsedUrl['host'] !== 'github.com' || empty($parsedUrl['path'])) {
+            throw new Exception("Invalid GitHub URL: " . $github_url);
         }
+
+        return trim($parsedUrl['path'], '/');
     }
 
     /**
@@ -78,33 +73,28 @@ class GitHubProjectsService
      */
     public function saveRepositoriesAsProjects(array $repos): array
     {
-        try {
-            $projects = [];
-            $allTags = Tag::all();
+        $projects = [];
+        $allTags = Tag::pluck('id', 'name')->toArray();
 
-            foreach ($repos as $repo) {
-                $languages = $this->fetchRepoLanguages($repo['languages_url']);
-                $languageNames = array_keys($languages);
-                $tagIds = $allTags->whereIn('name', $languageNames)->pluck('id')->toArray();
-                $project = Project::updateOrCreate(
-                    ['github_repository_id' => $repo['id']],
-                    [
-                        'user' => $repo['owner']['login'],
-                        'name' => $repo['name'],
-                        'github_url' => $repo['html_url'],
-                        'github_repository_id' => $repo['id'],
-                    ]
-                );
-                $project->tags()->sync($tagIds);
+        foreach ($repos as $repo) {
+            $languages = $this->fetchRepoLanguages($repo['languages_url']);
+            $languageNames = array_keys($languages);
+            $tagIds = array_intersect_key($allTags, array_flip($languageNames));
 
-                $projects[] = $project;
-            }
+            $project = Project::updateOrCreate(
+                ['github_repository_id' => $repo['id']],
+                [
+                    'user' => $repo['owner']['login'],
+                    'name' => $repo['name'],
+                    'github_url' => $repo['html_url'],
+                ]
+            );
+            $project->tags()->sync($tagIds);
 
-            return $projects;
-
-        } catch (Exception $e) {
-            throw new Exception("Error saving repositories as projects: " . $e->getMessage() . "\n");
+            $projects[] = $project;
         }
+
+        return $projects;
     }
 
     private function prepareHeaders(): array
@@ -120,5 +110,4 @@ class GitHubProjectsService
 
         return $headers;
     }
-
 }
