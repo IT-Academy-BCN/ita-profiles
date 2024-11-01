@@ -1,7 +1,7 @@
 # Routing conventions
 [[Back to index]](./coding-guidelines.md)
 
-- [API Route convention guide](routing-convention.md#api-route-convention)
+- [API Route convention guide](#api-route-convention)
 - Model binding
 
 ## API Route Convention

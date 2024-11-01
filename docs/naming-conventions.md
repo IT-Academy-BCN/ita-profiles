@@ -1,9 +1,9 @@
 # Naming conventions
 [[Back to index]](./coding-guidelines.md)
 
-- [General naming conventions](naming-conventions.md#general-naming-conventions)
-- [Branch naming](naming-conventions.md#branch-naming)
-- [Commit message naming](naming-conventions.md#commit-message-naming)
+- [General naming conventions](#general-naming-conventions)
+- [Branch naming](#branch-naming)
+- [Commit message naming](#commit-message-naming)
 
 ## General naming conventions
 Follow naming conventions accepted by Laravel community:

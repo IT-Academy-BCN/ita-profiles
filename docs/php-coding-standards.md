@@ -1,8 +1,8 @@
 # PHP Coding standards
 [[Back to index]](./coding-guidelines.md)
 
-- [Syntax and style](php-coding-standards.md#syntax-and-style)
-- [Comment rules](php-coding-standards.md#comment-rules)
+- [Syntax and style](#syntax-and-style)
+- [Comment rules](#comment-rules)
 
 ## Syntax and style
 

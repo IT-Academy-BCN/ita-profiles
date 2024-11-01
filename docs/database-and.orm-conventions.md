@@ -1,8 +1,8 @@
 # Database and ORM conventions
 [[Back to index]](./coding-guidelines.md)
 
-- [Eloquent conventions](database-and.orm-conventions.md#eloquent-conventions)
-- [Eloquent relationships](database-and.orm-conventions.md#eloquent-relationships)
+- [Eloquent conventions](#eloquent-conventions)
+- [Eloquent relationships](#eloquent-relationships)
 - Model binding
 - Migrations and schema conventions
 - Factory conventions
