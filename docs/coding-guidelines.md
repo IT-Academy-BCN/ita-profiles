@@ -18,8 +18,8 @@
 
 
 - ### Database and ORM conventions
-    - [Eloquent conventions](database-and.orm-conventions.md#eloquent-conventions)
-    - [Eloquent relationships](database-and.orm-conventions.md#eloquent-relationships)
+    - [Eloquent conventions](database-and-orm-conventions.md#eloquent-conventions)
+    - [Eloquent relationships](database-and-orm-conventions.md#eloquent-relationships)
     - Model binding
     - Migrations and schema conventions
     - Factory conventions
