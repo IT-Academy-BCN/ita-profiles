@@ -1,13 +1,13 @@
 # Database and ORM conventions
 [[Back to index]](./coding-guidelines.md)
 
-- [Eloquent conventions](#eloquent-conventions)
+- [Eloquent conventions](#eloquent-model-conventions)
 - [Eloquent relationships](#eloquent-relationships)
 - Model binding
 - Migrations and schema conventions
 - Factory conventions
 
-## Eloquent Conventions
+## Eloquent Model Conventions
 
 ### Table Names
 
