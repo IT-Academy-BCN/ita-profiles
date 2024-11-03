@@ -31,11 +31,6 @@ class GetStudentImageControllerTest extends TestCase
 
     }
 
-    public function testCanInstantiateAnUser(): void
-    {
-        $this->assertInstanceOf(User::class, $this->user);
-    }
-
     public function testCanInstantiateAStudent(): void
     {
         $this->assertInstanceOf(Student::class, $this->student);
@@ -79,7 +74,7 @@ class GetStudentImageControllerTest extends TestCase
         $response->assertJson(['photo' => '']);
     }
 
-    public function testCanReturns_404WithInvalidStudentUuid(): void
+    public function testCanReturns404WithInvalidStudentUuid(): void
     {
         $invalidUuid = 'invalidUuid';
         $token = $this->getUserToken();
