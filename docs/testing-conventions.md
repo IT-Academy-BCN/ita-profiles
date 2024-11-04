@@ -9,7 +9,7 @@
 
 Tests are written in PHPUnit. The PHPUnit configuration is in `phpunit.xml`.
 
-Tests are written in `tests/Unit` and `tests/Feature`.
+Tests are located in `tests/Unit` and `tests/Feature`.
 
 Methods name should follow the conventions:
 - `testCanDoSomething()`
@@ -42,16 +42,18 @@ Each time a test is run, code coverage is saved to `./tests/coverage`.
 
 If you wish to ignore code coverage configuration, you can use the `--no-coverage` option when running the test command.
 
-The code coverage report can be found in `./tests/coverage/index.html`.
+The code coverage report can be found in `./tests/coverage/index.html`. As it's not located under public directory, you will need to open it with the integrated browser of your IDE (if you have one) or locally, using the absolute path:
 
-To open the report in your browser, run in the terminal:
+`file:///absolute/path/to/tests/coverage/index.html`
+
+For mor convienience, you can use the following commands in your terminal from the root directory of the project:
 
 _For macOS or Linux:_
-```shell
-open ../tests/coverage/index.html
+```
+open ./tests/coverage/index.html
 ```
 
 _For Windows:_
-```shell
-start ../tests/coverage/index.html
+```
+start ./tests/coverage/index.html
 ```

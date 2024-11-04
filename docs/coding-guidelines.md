@@ -1,6 +1,9 @@
 # Coding guidelines
 [[Back to readme]](../README.md)
 
+_This documentation is a work in progress. Contributions are not only welcome, but needed as well. If you contribute, try to follow the formating of the docs._
+
+
 - ### Naming conventions
   - [General naming conventions](naming-conventions.md#general-naming-conventions)
   - [Branch naming](naming-conventions.md#branch-naming)
