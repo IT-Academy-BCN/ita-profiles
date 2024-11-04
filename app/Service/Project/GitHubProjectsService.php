@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Http;
 
 class GitHubProjectsService
 {
-    protected string $githubToken;
+    protected ?string $githubToken;
 
     public function __construct()
     {
