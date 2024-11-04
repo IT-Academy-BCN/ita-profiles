@@ -46,7 +46,7 @@ The code coverage report can be found in `./tests/coverage/index.html`.
 
 To open the report in your browser, run in the terminal:
 
-_For macOs or Linux:_
+_For macOS or Linux:_
 ```shell
 open ../tests/coverage/index.html
 ```
