@@ -43,3 +43,5 @@
 - ### Security guidelines
 
 - ### Documentation Standards
+
+- ### Localization
