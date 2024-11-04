@@ -15,8 +15,6 @@ class Project extends Model
     use HasUuids;
 
     protected $guarded = ['id'];
-    public $timestamps = false;
-
 
     public function tags(): BelongsToMany
     {
@@ -27,6 +25,8 @@ class Project extends Model
     {
         // As a guide, we implement Laravel naming conventions for relationships.
         // See: https://laravel.com/docs/10.x/eloquent-relationships#many-to-many
-        return $this->belongsToMany(Resume::class);
+        return $this->belongsToMany(Resume::class)
+            ->withPivot('created_at', 'updated_at')
+            ->withTimestamps();
     }
 }

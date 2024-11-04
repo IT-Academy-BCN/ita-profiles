@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev libfreetype6-dev \
     libjpeg62-turbo-dev libpng-dev libonig-dev \
     libxml2-dev libpq-dev libicu-dev libxslt1-dev \
-    libmcrypt-dev libssl-dev git zip unzip && \
+    libmcrypt-dev libssl-dev git zip unzip cron && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
 RUN if ! pecl list | grep -q xdebug; then pecl install xdebug && docker-php-ext-enable xdebug; fi && \
@@ -23,6 +23,10 @@ RUN if ! pecl list | grep -q xdebug; then pecl install xdebug && docker-php-ext-
     echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY .env.docker /var/www/html/.env
+COPY crontab /etc/cron.d/laravel-cron
+RUN chmod 0644 /etc/cron.d/laravel-cron
+RUN crontab /etc/cron.d/laravel-cron
+RUN touch /var/log/cron.log
 
 EXPOSE 9000
 
