@@ -18,7 +18,7 @@
 
 
 - ### Database and ORM conventions
-    - [Eloquent conventions](database-and-orm-conventions.md#eloquent-conventions)
+    - [Eloquent conventions](database-and-orm-conventions.md#eloquent-model-conventions)
     - [Eloquent relationships](database-and-orm-conventions.md#eloquent-relationships)
     - Model binding
     - Migrations and schema conventions
@@ -29,6 +29,9 @@
 - ### Error handling
 
 - ### Testing conventions
+  - [General guideline](testing-conventions.md#general-guidelines)
+  - [Creating tests](testing-conventions.md#creating-tests)
+  - [Code coverage](testing-conventions.md#code-coverage)
 
 - ### Front-end conventions
 
