@@ -3,6 +3,7 @@ import {
     getStudentDetailWithId,
     resumes,
 } from '../../api/student/getStudentDetailWithId'
+import { updateEndpointWithAxiosPut } from '../../api/student/updateEndpointWithAxiosPut'
 
 const bootcampThunk = createAsyncThunk(
     'bootcampThunk',
@@ -39,6 +40,23 @@ const detailThunk = createAsyncThunk(
         }
     },
 )
+
+const updateDetailThunk = createAsyncThunk<
+    string,
+    { url: string; formData: object }
+>('updateDetailThunk', async ({ url, formData }) => {
+    try {
+        const response = await updateEndpointWithAxiosPut({
+            url,
+            formData,
+        })
+        return response
+    } catch (error) {
+        const MyError = error as ErrorEvent
+        throw new Error(MyError.message)
+    }
+})
+
 const languagesThunk = createAsyncThunk(
     'languagesThunk',
     async (studentID: string | null) => {
@@ -92,4 +110,5 @@ export {
     modalityThunk,
     projectsThunk,
     additionalTrainingThunk,
+    updateDetailThunk,
 }
