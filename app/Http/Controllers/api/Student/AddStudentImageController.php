@@ -16,7 +16,8 @@ class AddStudentImageController extends Controller
     private string $photos_path = 'public/photos/';
     
  
-    public function __invoke(UpdateImageStudentRequest $request, Student $student): JsonResponse{
+    public function __invoke(UpdateImageStudentRequest $request, Student $student): JsonResponse
+    {
         
         $file = $request->file('photo');
         $filename = time() . '.' . $student->id . $this->photo_infix . $file->hashName();
