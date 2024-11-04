@@ -55,17 +55,17 @@ class DeleteStudentResumeLanguageControllerAnnotation
      *                   @OA\Property(
      *                       property="message",
      *                       type="string",
-     *                       example="No s'ha trobat cap estudiant amb aquest ID: {studentId}"
+     *                       example="No query results for model [App\\Models\\Student] {studentId}"
      *                   ),
      *                   @OA\Property(
      *                       property="message2",
      *                       type="string",
-     *                       example="No s'ha trobat cap currículum per a l'estudiant amb id: {studentId}"
+     *                       example="No query results for model [App\\Models\\Resume] {resumenId}"
      *                   ),
      *                   @OA\Property(
      *                       property="message3",
      *                       type="string",
-     *                       example="No s'ha trobat l'idioma amb id: [languageId] per a l'estudiant amb id: {studentId}"
+     *                       example="No query results for model [App\\Models\\Language] {languageId}"
      *                   )
      *               )
      *        ),

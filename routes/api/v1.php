@@ -54,10 +54,7 @@ Route::prefix('student/{student}/resume')->group(function () {
     Route::put('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
     Route::get('photo', GetStudentImageController::class)->name('student.photo.get');
-});
-
-Route::prefix('student/{studentId}/resume')->group(function () {
-    Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
+    Route::delete('languages/{language}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });
 
 Route::prefix('tags')->group(function () {
