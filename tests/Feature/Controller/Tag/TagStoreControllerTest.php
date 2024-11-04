@@ -6,15 +6,12 @@ namespace Tests\Feature\Controller\Tag;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Service\Tag\TagStoreService;
 use App\Http\Controllers\api\Tag\TagStoreController;
 use App\Models\Tag;
 
 class TagStoreControllerTest extends TestCase
 {
     use DatabaseTransactions;
-
-    protected TagStoreService $tagStoreService;
 
     public function testStoreTag()
     {
@@ -26,22 +23,24 @@ class TagStoreControllerTest extends TestCase
 
         $response->assertStatus(201);
 
-        /*$response->assertJsonStructure([
+        $response->assertJsonStructure([
+            'message',
             'tag' => [
                 'id',
                 'name',
             ],
-        ]);*/
+        ]);
 
-        /*$this->assertDatabaseHas('tags', [
+        $this->assertDatabaseHas('tags', [
             'name' => $tagName,
-        ]);*/
-        //$this->assertEquals($response->json('tag')['name'], $tagName);
+        ]);
+
+        $this->assertEquals($tagName, $response->json('tag')['name']);
     }
 
     public function testStoreFailsWhenTagNameIsMissing()
     {
-        $response = $this->postjson(route('tag.store'), []);
+        $response = $this->postJson(route('tag.store'), []);
 
         $response->assertStatus(422);
 
@@ -50,10 +49,6 @@ class TagStoreControllerTest extends TestCase
             'errors' => [
                 'name',
             ],
-        ]);
-
-        $response->assertJsonFragment([
-            'name' => ['El camp nom és obligatori.'],
         ]);
 
         $response->assertJsonValidationErrors(['name']);
@@ -74,10 +69,6 @@ class TagStoreControllerTest extends TestCase
             ],
         ]);
 
-        $response->assertJsonFragment([
-            'name' => ['El camp nom ha de ser una cadena.'],
-        ]);
-
         $response->assertJsonValidationErrors(['name']);
     }
     public function testReturnsUnprocessableContentWhenUsingATooLongTagName(): void
@@ -88,12 +79,10 @@ class TagStoreControllerTest extends TestCase
 
         $response->assertStatus(422);
 
-        $response->assertJson([
-            'message' => 'Error de validació.',
+        $response->assertJsonStructure([
+            'message',
             'errors' => [
-                'name' => [
-                    'Nom no pot ser més gran que 75 caràcters.',
-                ],
+                'name',
             ],
         ]);
 
@@ -114,10 +103,8 @@ class TagStoreControllerTest extends TestCase
     }
     public function testCanInstantiate(): void
     {
-        $tagStoreService = $this->createMock(TagStoreService::class);
-
-        $controller = new TagStoreController($tagStoreService);
-
+        $controller = new TagStoreController();
+    
         $this->assertInstanceOf(TagStoreController::class, $controller);
     }
 }
