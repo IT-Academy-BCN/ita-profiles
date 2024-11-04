@@ -75,7 +75,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                         <h1 className="text-2xl my-0 mb-2 font-bold text-[rgba(40,40,40,1)]">
                             Editar datos
                         </h1>
-                        <div className="flex  justify-between pr-4 bg-green-200 mb-2">
+                        <div className="flex  justify-between pr-4 mb-2">
                             <div className="w-[86px] h-[77px] border border-[rgba(128,128,128,1)] rounded-2xl mb-2">
                                 <img
                                     className="w-full h-full object-cover rounded-2xl"
