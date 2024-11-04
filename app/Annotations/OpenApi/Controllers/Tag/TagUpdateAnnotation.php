@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace App\Annotations\OpenApi\Controllers\Tag;
 
-use OpenApi\Annotations as OA;
-
 class TagUpdateAnnotation
 {
     /**
      * @OA\Put(
-     *     path="/tags/{tagId}",
+     *     path="/tags/{tag}",
      *     operationId="updateTag",
      *     tags={"Tags"},
      *     summary="Update details of a specific tag.",
      *     description="Updates details of a specific tag based on the provided ID.",
      *     @OA\Parameter(
-     *         name="tagId",
+     *         name="tag",
      *         in="path",
      *         required=true,
      *         description="ID of the tag to be updated.",
@@ -39,7 +37,7 @@ class TagUpdateAnnotation
      *
      *     @OA\Response(
      *         response=200,
-     *         description="Tag updated successfully.",
+     *         description="Etiqueta actualitzada correctament.",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="tag", type="object",
@@ -57,7 +55,7 @@ class TagUpdateAnnotation
      *             @OA\Property(
      *               property="message",
      *               type="string",
-     *               example="No s'ha trobat cap etiqueta amb aquest ID: {tagId}"),
+     *               example="Etiqueta no trobada"),
      *         ),
      *     ),
      *

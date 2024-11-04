@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TAbout } from '../../../interfaces/interfaces'
-import { detailThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import {
+    detailThunk,
+    updateDetailThunk,
+} from '../../thunks/getDetailResourceStudentWithIdThunk'
 
 const aboutData: TAbout = {
     id: 0,
@@ -8,27 +11,33 @@ const aboutData: TAbout = {
     resume: {
         subtitle: '',
         social_media: {
-            github: {
-                url: '',
-            },
-            linkedin: {
-                url: '',
-            },
+            github: '',
+
+            linkedin: '',
         },
         about: '',
     },
     photo: '',
     tags: [],
 }
+export const initialState = {
+    isLoadingAboutData: false,
+    isErrorAboutData: false,
+    aboutData,
+    toggleProfileImage: false,
+    updatedMessage: '',
+    updatedError: '',
+    isUpdateLoading: false,
+}
 
 const detailSlice = createSlice({
     name: 'detailSlice',
-    initialState: {
-        isLoadingAboutData: false,
-        isErrorAboutData: false,
-        aboutData,
+    initialState,
+    reducers: {
+        setToggleProfileImage: (state, action) => {
+            state.toggleProfileImage = action.payload
+        },
     },
-    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(detailThunk.pending, (state) => {
             state.isLoadingAboutData = true
@@ -43,7 +52,24 @@ const detailSlice = createSlice({
             state.isLoadingAboutData = false
             state.isErrorAboutData = true
         })
+        builder.addCase(updateDetailThunk.pending, (state) => {
+            state.isUpdateLoading = true
+            state.updatedError = ''
+            state.updatedMessage = ''
+        })
+        builder.addCase(updateDetailThunk.fulfilled, (state) => {
+            state.updatedMessage = 'El usuario fue actualizado con éxito!'
+            state.updatedError = ''
+            state.isUpdateLoading = false
+        })
+        builder.addCase(updateDetailThunk.rejected, (state) => {
+            state.updatedMessage = ''
+            state.updatedError = 'Error al realizar la actualizacion del perfil'
+            state.isUpdateLoading = false
+        })
     },
 })
+
+export const { setToggleProfileImage } = detailSlice.actions
 
 export default detailSlice.reducer

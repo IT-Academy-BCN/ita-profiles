@@ -11,9 +11,11 @@ const StudentDetailCard: React.FC = () => {
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription)
     }
+
     const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
     )
+
     return (
         <div data-testid="StudentDataCard">
             {isLoadingAboutData && <LoadingSpiner />}
@@ -38,17 +40,19 @@ const StudentDetailCard: React.FC = () => {
                                 </div>
                                 <div className="flex gap-4">
                                     <a
-                                        href={aboutData.resume.social_media.github.url}
+                                        href={
+                                            aboutData.resume.social_media.github
+                                        }
                                         className="flex gap-1"
                                     >
-                                        <img 
-                                            src={Github} 
-                                            alt="github icon" 
-                                        />
+                                        <img src={Github} alt="github icon" />
                                         Github
                                     </a>
                                     <a
-                                        href={aboutData.resume.social_media.linkedin.url}
+                                        href={
+                                            aboutData.resume.social_media
+                                                .linkedin
+                                        }
                                         className="flex gap-1"
                                     >
                                         <img
@@ -69,9 +73,9 @@ const StudentDetailCard: React.FC = () => {
                                     {showFullDescription
                                         ? aboutData && aboutData.resume.about
                                         : `${aboutData.resume.about
-                                            .split(' ')
-                                            .slice(0, 15)
-                                            .join(' ')}...`}
+                                              .split(' ')
+                                              .slice(0, 15)
+                                              .join(' ')}...`}
                                     {!showFullDescription && (
                                         <button
                                             type="button"

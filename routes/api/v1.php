@@ -60,6 +60,7 @@ Route::prefix('student/{student}/resume')->group(function () {
 Route::prefix('tags')->group(function () {
     Route::get('/', TagListController::class)->name('tag.list');
     Route::post('/', TagStoreController::class)->name('tag.store');
-    Route::get('/{tagId}', TagDetailController::class)->name('tag.detail');
-    Route::put('/{tagId}', TagUpdateController::class)->name('tag.update');
+    Route::get('/{tag}', TagDetailController::class)->name('tag.detail');
+    Route::put('/{tag}', TagUpdateController::class)->name('tag.update');
+
 });
