@@ -15,9 +15,10 @@ class TagFactory extends Factory
      * @return array<string, mixed>
      */
 
+    // TODO: This should use the nomenclature of linguist library (https://github.com/github-linguist/linguist/blob/master/lib/linguist/languages.yml)
     protected $tagNames = [
-        "PHP", "Laravel", "Javascript",
-        "React","Vue","HTML&CSS",
+        "PHP", "Laravel", "Blade","JavaScript",
+        "React","Vue","HTML", "CSS",
         "MongoDB","SQL","Tailwind",
         "Bootstrap", "JQuery", "Angular",
         "Nodejs","Express", "Java",

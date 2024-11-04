@@ -26,8 +26,8 @@ class StudentFactory extends Factory
     {
         return [
                 'id' => fake()->uuid(),
-                'name' => fake()->regexify('[A-Za-z]{5,10}'),
-                'surname' => fake()->regexify('[A-Za-z]{5,10}'),
+                'name' => fake()->firstName(),
+                'surname' => fake()->lastName(),
                 'photo' =>   fake()->url(),
                 'status' => StudentStatus::ACTIVE,
             ];

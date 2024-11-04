@@ -28,7 +28,10 @@ class AddStudentLanguageControllerTest extends TestCase
 
         $this->student = Student::factory()->create();
 
-        $this->resume = Resume::factory()->create(['student_id' => $this->student->id]);
+        $this->resume = Resume::factory()->create([
+            'student_id' => $this->student->id,
+            'github_url' => 'https://github.com/user1',
+        ]);
 
         //Language has no factory because it has fixed values in the seeder
         $this->language = Language::first();
