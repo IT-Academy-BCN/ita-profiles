@@ -28,7 +28,8 @@ class StudentDetailAnnotation
      *                 property="data",
      *                 type="object",
      *                 @OA\Property(property="id", type="string", format="uuid", example="123e4567-e89b-12d3-a456-426614174000"),
-     *                 @OA\Property(property="fullname", type="string", example="Katrine Wyman Jacobson"),
+     *                 @OA\Property(property="name", type="string", example="Katrine"),
+     *                 @OA\Property(property="surname", type="string", example="Wyman Jacobson"),
      *                 @OA\Property(property="photo", type="string", nullable=true, example="https://example.com/photo.jpg"),
      *                 @OA\Property(property="status", type="string", enum={"Active", "Inactive", "In a Bootcamp", "In a Job"}, example="Active"),
      *                 @OA\Property(
