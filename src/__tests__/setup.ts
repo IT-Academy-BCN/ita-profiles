@@ -6,12 +6,13 @@ import axios from 'axios'
 
 expect.extend(matchers)
 export const configureMockAdapter = () => {
-  const mock = new MockAdapter(axios, { onNoMatch: 'throwException' })
-  beforeAll(() => {
-    mock.reset()
-  })
-  afterEach(() => {
-    cleanup()
-  })
-  return mock
+    const mock = new MockAdapter(axios, { onNoMatch: 'throwException' })
+    beforeAll(() => {
+        mock.reset()
+    })
+    afterEach(() => {
+        cleanup()
+        mock.reset()
+    })
+    return mock
 }

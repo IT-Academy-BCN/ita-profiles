@@ -85,9 +85,12 @@ class UpdateStudentProjectControllerTest extends TestCase
     {
         $anotherStudent = Student::factory()->create();
         $anotherProject = Project::factory()->create();
-        $anotherStudent->resume()->create([
-            'project_ids' => json_encode([$anotherProject->id])
+
+        $resume = Resume::factory()->create([
+            'student_id' => $anotherStudent->id,
+            'github_url' => 'https://github.com/user1',
         ]);
+        $resume->projects()->attach($anotherProject->id);
 
         $response = $this->json('PUT', route('student.updateProject', ['student' => $this->student->id, 'project' => $anotherProject->id]), [
             'project_url' => 'https://new-project-url.com'

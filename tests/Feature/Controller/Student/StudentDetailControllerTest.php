@@ -54,7 +54,8 @@ class StudentDetailControllerTest extends TestCase
 
         $response->assertJson([
             'id' => $this->student->id,
-            'fullname' => ucfirst($this->student->name) . ' ' . ucfirst($this->student->surname),
+            'name' => $this->student->name,
+            'surname' => $this->student->surname,
             'photo' => $this->student->photo,
             'status' => $this->student->status->value,
             'tags' => $this->student->tags->map(function ($tag) {

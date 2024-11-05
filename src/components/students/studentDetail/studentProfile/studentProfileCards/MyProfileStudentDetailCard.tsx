@@ -2,22 +2,55 @@ import { useState } from 'react'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { ITag } from '../../../../../interfaces/interfaces'
-import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
+import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
+import { ModalPortals } from '../../../../ModalPortals'
+import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
+import { Error } from '../../../../feedbackMessages/Error'
+import { Success } from '../../../../feedbackMessages/Success'
 
 const MyProfileStudentDetailCard: React.FC = () => {
-    const [showFullDescription, setShowFullDescription] = useState(false)
+    const [fullDescriptionVisibility, setFullDescriptionVisibility] =
+        useState(false)
+    const [openEditProfile, setOpenEditProfile] = useState(false)
+    const {
+        aboutData,
+        isLoadingAboutData,
+        isErrorAboutData,
+        updatedError,
+        updatedMessage,
+    } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
+
+    const dispatch = useAppDispatch()
 
     const toggleDescription = () => {
-        setShowFullDescription(!showFullDescription)
+        setFullDescriptionVisibility(!fullDescriptionVisibility)
     }
-    const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(
-        (state) => state.ShowStudentReducer.studentDetails,
-    )
+
+    const handleModalEditProfile = () => {
+        setOpenEditProfile(!openEditProfile)
+    }
+
+    const refreshStudentData = (id: string) => {
+        dispatch(detailThunk(id))
+    }
+
     return (
         <div data-testid="StudentDataCard">
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
+            {updatedError && <Error message={updatedError} />}
+            {updatedMessage && <Success message={updatedMessage} />}
+            {openEditProfile && (
+                <ModalPortals>
+                    <EditStudentProfile
+                        handleModal={handleModalEditProfile}
+                        handleRefresh={refreshStudentData}
+                    />
+                </ModalPortals>
+            )}
+
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">
                     <div className="flex gap-3">
@@ -29,38 +62,41 @@ const MyProfileStudentDetailCard: React.FC = () => {
                         <div className="flex w-full">
                             <div className="flex flex-col gap-2 w-full">
                                 <div className="flex flex-col">
-                                    <div className='flex'>
+                                    <div className="flex">
                                         <h2 className="text-xl font-bold">
                                             {aboutData.fullname}
                                         </h2>
-                                        <button 
-                                            className='ml-auto'
-                                            type='button'
-                                            >
-                                                <img 
-                                                    src={Pencil} 
-                                                    alt="edit profile information" 
-                                                />
+                                        <button
+                                            className="ml-auto"
+                                            type="button"
+                                            onClick={handleModalEditProfile}
+                                        >
+                                            <img
+                                                src={Pencil}
+                                                alt="edit profile information"
+                                            />
                                         </button>
                                     </div>
-                                    
+
                                     <p className="text-gray-2">
                                         {aboutData.resume.subtitle}
                                     </p>
                                 </div>
                                 <div className="flex gap-4">
                                     <a
-                                        href={aboutData.resume.social_media.github.url}
+                                        href={
+                                            aboutData.resume.social_media.github
+                                        }
                                         className="flex gap-1"
                                     >
-                                        <img 
-                                            src={Github} 
-                                            alt="github icon" 
-                                        />
+                                        <img src={Github} alt="github icon" />
                                         Github
                                     </a>
                                     <a
-                                        href={aboutData.resume.social_media.linkedin.url}
+                                        href={
+                                            aboutData.resume.social_media
+                                                .linkedin
+                                        }
                                         className="flex gap-1"
                                     >
                                         <img
@@ -71,20 +107,20 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                     </a>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                     <div className="flex flex-col gap-6">
                         <div className="flex flex-col gap-2">
                             <h3 className="text-lg font-bold">About</h3>
                             <div>
                                 <p className="text-sm">
-                                    {showFullDescription
+                                    {fullDescriptionVisibility
                                         ? aboutData && aboutData.resume.about
                                         : `${aboutData.resume.about
                                               .split(' ')
                                               .slice(0, 15)
                                               .join(' ')}...`}
-                                    {!showFullDescription && (
+                                    {!fullDescriptionVisibility && (
                                         <button
                                             type="button"
                                             onClick={toggleDescription}
@@ -94,7 +130,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                         </button>
                                     )}
                                 </p>
-                                {showFullDescription && (
+                                {fullDescriptionVisibility && (
                                     <p className="text-sm">
                                         <button
                                             type="button"
@@ -108,7 +144,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                             </div>
                         </div>
                         <span className="h-0.5 w-full bg-gray-4-base" />
-                        <div className='flex'>
+                        <div className="flex">
                             <ul className="flex flex-wrap gap-2">
                                 {aboutData &&
                                     aboutData.tags.map((tag: ITag) => (
@@ -120,14 +156,8 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                         </li>
                                     ))}
                             </ul>
-                            <button 
-                                className='ml-auto'
-                                type='button'
-                                >
-                                    <img 
-                                        src={Pencil} 
-                                        alt="edit tags" 
-                                    />
+                            <button className="ml-auto" type="button">
+                                <img src={Pencil} alt="edit tags" />
                             </button>
                         </div>
                     </div>

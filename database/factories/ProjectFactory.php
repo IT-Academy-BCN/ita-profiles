@@ -16,6 +16,7 @@ class ProjectFactory extends Factory
             'company_name' => $this->faker->company,
             'github_url' => $this->faker->parse('https://github.com/') . $this->faker->userName,
             'project_url' => $this->faker->url,
+            'github_repository_id' => null,
         ];
     }
 }

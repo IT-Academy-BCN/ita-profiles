@@ -1,4 +1,4 @@
-import { Github, Dots, ArrowLeft, ArrowRight } from '../../../../assets/svg'
+import { Github, ArrowLeft, ArrowRight } from '../../../../assets/svg'
 import { ArrowRightProjects } from '../../../../assets/img'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
@@ -61,12 +61,6 @@ const ProjectsCard: React.FC = () => {
                                         />
                                     </a>
                                 </div>
-                                <button
-                                    type="button"
-                                    className="-mt-1 flex w-6 self-start"
-                                >
-                                    <img src={Dots} alt="3 dots" />
-                                </button>
                             </div>
                             <p className="text-sm text-gray-3">
                                 {project.company_name}

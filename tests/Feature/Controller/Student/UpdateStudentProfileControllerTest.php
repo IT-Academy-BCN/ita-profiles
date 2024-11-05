@@ -29,7 +29,7 @@ class UpdateStudentProfileControllerTest extends TestCase
 
     private function createResume(Student $student):Resume
     {
-        return Resume::factory()->for($student)->create();
+        return Resume::factory()->for($student)->create(['github_url' => 'https://github.com/user1',]);
     }
 
     public function testCanUpdateStudentProfile(): void
