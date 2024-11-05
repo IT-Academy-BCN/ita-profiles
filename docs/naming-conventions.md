@@ -48,7 +48,6 @@ Follow naming conventions accepted by Laravel community:
 
 ### Conventional Commits 1.0.0
 
-
 - [Summary](#summary)
 - [Examples](#examples)
 - [Specification](#specification)

@@ -10,6 +10,8 @@ _This documentation is a work in progress. Contributions are not only welcome, b
   - [Commit message naming](naming-conventions.md#commit-message-naming)
 
 - ### Project structure and file organization
+  - [Backend structure](project-structure.md#backend-structure)
+  - [Frontend structure](project-structure.md#frontend-structure)
 
 - ### PHP coding standards
   - [Syntax and style](php-coding-standards.md#syntax-and-style)
@@ -19,7 +21,6 @@ _This documentation is a work in progress. Contributions are not only welcome, b
   - [API Route convention guide](routing-convention.md#api-route-convention)
   - Model binding
 
-
 - ### Database and ORM conventions
     - [Eloquent conventions](database-and-orm-conventions.md#eloquent-model-conventions)
     - [Eloquent relationships](database-and-orm-conventions.md#eloquent-relationships)
@@ -27,7 +28,7 @@ _This documentation is a work in progress. Contributions are not only welcome, b
     - Migrations and schema conventions
     - Factory conventions
 
-- ### Request validation and Form Requests
+- ### Validation
 
 - ### Error handling
 
