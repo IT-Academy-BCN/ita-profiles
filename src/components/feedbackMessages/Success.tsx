@@ -7,9 +7,7 @@ export const Success: React.FC<SuccessProps> = ({ message }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsVisible(false)
-        }, 3000) // 3 segundos
-
-        // Limpia el temporizador cuando el componente se desmonte
+        }, 3000) 
         return () => clearTimeout(timer)
     }, [])
 

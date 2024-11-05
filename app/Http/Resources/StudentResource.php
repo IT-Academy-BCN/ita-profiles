@@ -19,7 +19,8 @@ class StudentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'fullname' => Str::ucfirst($this->name) . " " . Str::ucfirst($this->surname),
+            'name' => $this->name,
+            'surname' => $this->surname,
             'photo' => $this->photo,
             'status' => $this->status,
             'tags' => TagResource::collection($this->tags),

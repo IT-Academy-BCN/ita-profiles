@@ -14,7 +14,8 @@ import { Success } from '../../../../feedbackMessages/Success'
 const MyProfileStudentDetailCard: React.FC = () => {
 
 
-    const [showFullDescription, setShowFullDescription] = useState(false)
+    const [fullDescriptionVisibility, setFullDescriptionVisibility] =
+        useState(false)
     const [openEditProfile, setOpenEditProfile] = useState(false)
     const {
         aboutData,
@@ -27,7 +28,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
     const dispatch = useAppDispatch()
 
     const toggleDescription = () => {
-        setShowFullDescription(!showFullDescription)
+        setFullDescriptionVisibility(!fullDescriptionVisibility)
     }
     const dispacth = useAppDispatch();
 
@@ -118,13 +119,13 @@ const MyProfileStudentDetailCard: React.FC = () => {
                             <h3 className="text-lg font-bold">About</h3>
                             <div>
                                 <p className="text-sm">
-                                    {showFullDescription
+                                    {fullDescriptionVisibility
                                         ? aboutData && aboutData.resume.about
                                         : `${aboutData.resume.about
                                             .split(' ')
                                             .slice(0, 15)
                                             .join(' ')}...`}
-                                    {!showFullDescription && (
+                                    {!fullDescriptionVisibility && (
                                         <button
                                             type="button"
                                             onClick={toggleDescription}
@@ -134,7 +135,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                         </button>
                                     )}
                                 </p>
-                                {showFullDescription && (
+                                {fullDescriptionVisibility && (
                                     <p className="text-sm">
                                         <button
                                             type="button"

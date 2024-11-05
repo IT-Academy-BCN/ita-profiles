@@ -47,6 +47,7 @@ After the containers are up, you can access various tools locally:
 - Local Laravel API: [http://localhost](http://localhost)
 - Local Swagger documentation: [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
 - Local PHPMyAdmin (MySQL): [http://localhost:9015](http://localhost:9015)
+- Code Coverage: file:///path/to/your/project/tests/coverage/index.html
 
 #### PHPMyAdmin Credentials
 
@@ -57,6 +58,10 @@ Host: mysql
 User: user
 Password: password
 ```
+
+#### GitHub Token
+
+Some functionnalities require a GitHub token. If you don't have one, you can generate one here: [https://github.com/settings/tokens](https://github.com/settings/tokens). You can then use it in the `.env` file.
 
 ## Demo
 

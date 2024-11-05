@@ -12,9 +12,7 @@ class Tag extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The students that belong to the tag.

@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
-import { updateWithAxios } from '../../api/student/updateWithAxios'
+import { updateEndpointWithAxiosPut } from '../../api/student/updateEndpointWithAxiosPut'
 import { configureMockAdapter } from '../setup'
 
 const mock = configureMockAdapter()
 
-describe('updateWithAxios', () => {
+describe('updateEndpointWithAxiosPut test', () => {
     const studentID = 'mocked-student-id'
     const apiUrl = `http://localhost:8000/api/v1/student/${studentID}/resume/profile`
     const formData = {
@@ -17,35 +17,33 @@ describe('updateWithAxios', () => {
         tags_ids: [25, 3],
     }
 
-    it('should return successful message', async () => {
+    it('should return successfull message when endpoint is updated', async () => {
         const mockResponse = {
-            profile: "El perfil de l'estudiant s'actualitza correctament",
+            profile: "El perfil de l'estudiant s'actualitzat correctament",
         }
         mock.onPut(apiUrl, formData).reply(200, mockResponse)
-        const result = await updateWithAxios({
+        const result = await updateEndpointWithAxiosPut({
             url: apiUrl,
             formData,
         })
         expect(result).toEqual(mockResponse)
     })
 
-    it('should throw an error on failed request', async () => {
-        const mockResponse = {
-            message: 'Error de actualización',
-        }
+    it('should throw an especific error when endpoint update request fails ', async () => {
+        const mockResponse = 'Error de actualización'
         mock.onPut(apiUrl, formData).reply(400, mockResponse)
         await expect(
-            updateWithAxios({
+            updateEndpointWithAxiosPut({
                 url: apiUrl,
-                formData: { name: 'John Doe' },
+                formData,
             }),
-        ).rejects.toThrow(Error)
+        ).rejects.toThrow('Error de actualización')
     })
 
-    it('should throw an unknown error if not an Axios error', async () => {
+    it('should throw an unknown error  when endpoint update request fails and it not an Axios error', async () => {
         mock.onPut(apiUrl, formData).networkError()
         await expect(
-            updateWithAxios({
+            updateEndpointWithAxiosPut({
                 url: apiUrl,
                 formData,
             }),

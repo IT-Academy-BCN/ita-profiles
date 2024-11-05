@@ -6,7 +6,7 @@ class GetStudentImageAnnotation
 {
     /**
      * @OA\Get (
-     *     path="/student/{studentId}/resume/photo",
+     *     path="/student/{student}/resume/photo",
      *     operationId="getStudentProfileImage",
      *     tags={"Student -> Resume"},
      *     summary="Get the Student Profile Photo.",
@@ -14,7 +14,7 @@ class GetStudentImageAnnotation
      *     security={{"bearerAuth":{}}},
      *
      *     @OA\Parameter(
-     *         name="studentId",
+     *         name="student",
      *         in="path",
      *         description="Student ID",
      *         required=true,

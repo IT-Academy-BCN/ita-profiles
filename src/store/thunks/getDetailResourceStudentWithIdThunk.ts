@@ -3,7 +3,7 @@ import {
     getStudentDetailWithId,
     resumes,
 } from '../../api/student/getStudentDetailWithId'
-import { updateWithAxios } from '../../api/student/updateWithAxios'
+import { updateEndpointWithAxiosPut } from '../../api/student/updateEndpointWithAxiosPut'
 
 const bootcampThunk = createAsyncThunk(
     'bootcampThunk',
@@ -46,7 +46,7 @@ const updateDetailThunk = createAsyncThunk<
     { url: string; formData: object }
 >('updateDetailThunk', async ({ url, formData }) => {
     try {
-        const response = await updateWithAxios({
+        const response = await updateEndpointWithAxiosPut({
             url,
             formData,
         })

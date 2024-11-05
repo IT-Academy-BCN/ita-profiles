@@ -3,110 +3,87 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
+use App\Http\Controllers\api\Student\DeleteStudentResumeLanguageController;
 use App\Models\{
     Language,
     Resume,
     Student,
     User
 };
-use App\Service\Student\DeleteStudentResumeLanguageService;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Mockery\MockInterface;
 
 class DeleteStudentResumeLanguageControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
+    protected string $languageId;
+    protected User $user;
+    protected Student $student;
+    protected Resume $resume;
+
     protected function setUp(): void
     {
         parent::setUp();
-    }
 
-    private function getARandomLanguageId(): string
-    {
+        $this->user = User::factory()->create();
+        $this->student = Student::factory()->for($this->user)->create();
+        $this->resume = Resume::factory()->for($this->student)->create();
         $languageIds = Language::pluck('id')->toArray();
-        return $languageIds[array_rand($languageIds)];
+        $this->languageId = $languageIds[array_rand($languageIds)];
+        $this->resume->languages()->attach($this->languageId);
     }
 
-    private function createStudentWithResumeAndLanguage(): array
+    public function testCanInstantiateDeleteStudentResumeLanguageController(): void
     {
-        $user = User::factory()->create();
-        $student = Student::factory()->for($user)->create();
-        $resume = Resume::factory()->for($student)->create();
-        $languageId = $this->getARandomLanguageId();
-        $resume->languages()->attach($languageId);
-
-        return [$student, $resume, $languageId];
+        $this->assertInstanceOf(expected: DeleteStudentResumeLanguageController::class, actual: new DeleteStudentResumeLanguageController());
     }
 
-    public function test_can_delete_a_student_resume_language(): void
+    public function testCanDeleteAStudentResumeLanguage(): void
     {
-        [$student, $resume, $languageId] = $this->createStudentWithResumeAndLanguage();
-
         $this->assertDatabaseHas('language_resume', [
-            'resume_id' => $resume->id,
-            'language_id' => $languageId
+            'resume_id' => $this->resume->id,
+            'language_id' => $this->languageId
         ]);
 
-        $url = route('student.language.delete', ['studentId' => $student->id, 'languageId' => $languageId]);
+        $url = route('student.language.delete', ['student' => $this->student->id, 'language' => $this->languageId]);
         $response = $this->json('DELETE', $url);
 
         $response->assertStatus(200);
         $this->assertDatabaseMissing('language_resume', [
-            'resume_id' => $resume->id,
-            'language_id' => $languageId
+            'resume_id' => $this->resume->id,
+            'language_id' => $this->languageId
         ]);
     }
 
-    public function test_can_return_a_404_when_a_student_is_not_found(): void
+    public function testCanReturnA404WhenAStudentIsNotFound(): void
     {
         $invalidStudentId = 'invalid-student-id';
-        $languageId = $this->getARandomLanguageId();
 
-        $url = route('student.language.delete', ['studentId' => $invalidStudentId, 'languageId' => $languageId]);
+        $url = route('student.language.delete', ['student' => $invalidStudentId, 'language' => $this->languageId]);
         $response = $this->json('DELETE', $url);
 
         $response->assertStatus(404);
     }
 
-    public function test_can_return_a_404_when_a_resume_is_not_found(): void
+    public function testCanReturnA404WhenAResumeIsNotFound(): void
     {
-        $user = User::factory()->create();
-        $student = Student::factory()->for($user)->create();
-        $languageId = $this->getARandomLanguageId();
+        $this->student->resume()->delete();
 
-        $url = route('student.language.delete', ['studentId' => $student->id, 'languageId' => $languageId]);
+        $url = route('student.language.delete', ['student' => $this->student->id, 'language' => $this->languageId]);
         $response = $this->json('DELETE', $url);
 
         $response->assertStatus(404);
     }
 
-    public function test_can_return_a_404_when_a_language_is_not_found_in_resume(): void
+    public function testCanReturnA404WhenALanguageIsNotFoundInResume(): void
     {
-        $user = User::factory()->create();
-        $student = Student::factory()->for($user)->create();
-        Resume::factory()->for($student)->create();
-        $languageId = $this->getARandomLanguageId();
+        $this->resume->languages()->detach($this->languageId);
 
-        $url = route('student.language.delete', ['studentId' => $student->id, 'languageId' => $languageId]);
+        $url = route('student.language.delete', ['student' => $this->student->id, 'language' => $this->languageId]);
         $response = $this->json('DELETE', $url);
 
         $response->assertStatus(404);
     }
 
-    public function test_can_return_a_500_on_internal_server_error(): void
-    {
-        $this->mock(DeleteStudentResumeLanguageService::class, function (MockInterface $mock) {
-            $mock->shouldReceive('execute')
-                ->andThrow(new \Exception('Internal Server Error'));
-        });
-
-        [$student, $languageId] = $this->createStudentWithResumeAndLanguage();
-
-        $url = route('student.language.delete', ['studentId' => $student->id, 'languageId' => $languageId]);
-        $response = $this->json('DELETE', $url);
-
-        $response->assertStatus(500);
-    }
 }

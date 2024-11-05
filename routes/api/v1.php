@@ -53,16 +53,14 @@ Route::prefix('student/{student}/resume')->group(function () {
     Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
     Route::put('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
     Route::get('modality', StudentModalityController::class)->name('student.modality');
-});
-
-Route::prefix('student/{studentId}/resume')->group(function () {
-    Route::get('photo', GetStudentImageController::class)->middleware('auth:api', EnsureStudentOwner::class)->name('student.photo.get');
-    Route::delete('languages/{languageId}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
+    Route::get('photo', GetStudentImageController::class)->name('student.photo.get');
+    Route::delete('languages/{language}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
 });
 
 Route::prefix('tags')->group(function () {
     Route::get('/', TagListController::class)->name('tag.list');
     Route::post('/', TagStoreController::class)->name('tag.store');
-    Route::get('/{tagId}', TagDetailController::class)->name('tag.detail');
-    Route::put('/{tagId}', TagUpdateController::class)->name('tag.update');
+    Route::get('/{tag}', TagDetailController::class)->name('tag.detail');
+    Route::put('/{tag}', TagUpdateController::class)->name('tag.update');
+
 });

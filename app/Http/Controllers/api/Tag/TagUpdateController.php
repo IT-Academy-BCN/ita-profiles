@@ -4,31 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Tag;
 
-use App\Exceptions\TagNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tag\TagUpdateRequest;
-use App\Service\Tag\TagUpdateService;
+use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
-use Exception;
 
 class TagUpdateController extends Controller
 {
-    private TagUpdateService $tagUpdateService;
-
-    public function __construct(TagUpdateService $tagUpdateService)
+    public function __invoke(TagUpdateRequest $request, Tag $tag): JsonResponse
     {
-        $this->tagUpdateService = $tagUpdateService;
-    }
+        $data = $request->validated();
 
-    public function __invoke(TagUpdateRequest $request, int $tagId): JsonResponse
-    {
-        try {
-            $service = $this->tagUpdateService->execute($request->validated(), $tagId);
-            return response()->json(['tag' => $service]);
-        } catch (TagNotFoundException $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode());
-        } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
-        }
+        $tag->update($data);
+
+        return response()->json([
+            'tag' => 'L\'etiqueta s\'ha actualitzat correctament.',
+        ]);
     }
 }
