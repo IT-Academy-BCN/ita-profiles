@@ -1,7 +1,7 @@
 # Coding guidelines
 [[Back to readme]](../README.md)
 
-_This documentation is a work in progress. Contributions are not only welcome, but needed as well. If you contribute, try to follow the formating of the docs._
+_This documentation is a work in progress. Contributions are not only welcome, but needed as well._
 
 
 - ### Naming conventions
