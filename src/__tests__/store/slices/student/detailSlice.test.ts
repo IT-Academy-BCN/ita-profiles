@@ -119,3 +119,48 @@ describe('Update student detail Thunk ', () => {
         })
     })
 })
+
+describe('Update student profile photo', () => {
+    it('should handle update pending', () => {
+        expect(
+            detailSlice(initialState, {
+                type: 'updateProfilePhotoThunk/pending',
+            }),
+        ).toEqual({
+            ...initialState,
+            isLoadingPhoto: true,
+        })
+    })
+
+    it('should handle update rejected', () => {
+        expect(
+            detailSlice(initialState, {
+                type: 'updateProfilePhotoThunk/rejected',
+                payload: [
+                    {
+                        "message": "Validation failed"
+                    }
+                ],
+            }),
+        ).toEqual({
+            ...initialState,
+            isErrorPhoto: true,
+        })
+    })
+
+    it('should handle update fullfilled', () => {
+        expect(
+            detailSlice(initialState, {
+                type: 'updateProfilePhotoThunk/fulfilled',
+                payload: [
+                    {
+                        "message": "Success. Adds the photo."
+                    }
+                ],
+            }),
+        ).toEqual({
+            ...initialState,
+            photoSuccessfully: true
+        })
+    })
+})

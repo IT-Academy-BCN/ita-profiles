@@ -3,12 +3,19 @@ import axios from 'axios'
 export const updateEndpointWithAxiosPut = async ({
     url,
     formData,
+    options = null
 }: {
     url: string
-    formData: object
+    formData: object,
+    options?: object | null
 }) => {
     try {
-        const response = await axios.put(url, formData)
+        let response = await axios.put(url, formData)
+        if (options) {
+            response = await axios.put(url, formData, options)
+        } else {
+            response = await axios.put(url, formData)
+        }
         return response.data
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {

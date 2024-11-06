@@ -7,7 +7,8 @@ type TResumes = {
     languages: string,
     additionaltraining: string,
     modality: string,
-    detail: string
+    detail: string,
+    photo: string,
 }
 export const resumes: TResumes = {
     bootcamp: "bootcamp",
@@ -16,7 +17,8 @@ export const resumes: TResumes = {
     languages: "languages",
     additionaltraining: "additionaltraining",
     modality: "modality",
-    detail: "detail"
+    detail: "detail",
+    photo: "photo",
 }
 
 
