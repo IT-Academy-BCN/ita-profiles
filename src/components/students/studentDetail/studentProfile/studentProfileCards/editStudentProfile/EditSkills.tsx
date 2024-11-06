@@ -5,7 +5,7 @@ import {
 } from '../../../../../../hooks/ReduxHooks'
 import { updateTags } from '../../../../../../store/slices/student/detailSlice'
 import axios from 'axios'
-import { Close } from '../../../../../../assets/svg'
+import { Close, Plus } from '../../../../../../assets/svg'
 import { TSkills, ITag } from '../../../../../../interfaces/interfaces'
 
 const fetchTags = async (
@@ -131,7 +131,7 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                             <div className="text-red-500">{customError}</div>
                         )}
                         <div className="flex flex-wrap gap-2 mt-12">
-                            <div className="flex rounded-md bg-gray-5-background h-9 flex-shrink-0">
+                            <div className="flex rounded-md bg-gray-5-background h-8 flex-shrink-0">
                                 <input
                                     type="text"
                                     value={newSkill}
@@ -139,14 +139,18 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                                     onChange={(e) =>
                                         setNewSkill(e.target.value)
                                     }
-                                    className="bg-gray-5-background rounded-md text-gray-800 p-2 outline-none w-24 placeholder:text-gray-500 focus:placeholder-transparent "
+                                    className="bg-gray-5-background rounded-md text-gray-800 py-1 px-2 text-sm outline-none w-24 placeholder:text-gray-500 focus:placeholder-transparent "
                                 />
                                 <button
-                                    className="bg-gray-5-background rounded-md text-gray-800 p-2 hover:bg-gray-400 outline-none"
+                                    className="bg-gray-5-background rounded-md text-gray-800 py-1 text-xl hover:bg-gray-400 outline-none self-center"
                                     onClick={handleAdd}
                                     disabled={!newSkill.trim()}
                                 >
-                                    +
+                                    <img
+                                        src={Plus}
+                                        alt="close icon"
+                                        className="h-3"
+                                    />
                                 </button>
                             </div>
                             {skills.map((skill, index) => (
@@ -154,7 +158,7 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                                     key={index}
                                     className="flex items-center justify-center rounded-md px-2 py-1 text-sm bg-gray-5-background"
                                 >
-                                    <span className="flex items-center text-gray-800 p-1">
+                                    <span className="flex items-center text-gray-800">
                                         {skill}
                                     </span>
                                     <button
