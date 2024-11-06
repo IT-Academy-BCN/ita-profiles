@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../../../hooks/ReduxHooks'
 import { updateTags } from '../../../../../../store/slices/student/detailSlice'
-import axios from 'axios'
-import { Close, Plus } from '../../../../../../assets/svg'
 import { TSkills, ITag } from '../../../../../../interfaces/interfaces'
+import { Close } from '../../../../../../assets/svg'
 
 const fetchTags = async (
     setTagList: React.Dispatch<React.SetStateAction<ITag[]>>,
@@ -114,12 +114,22 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
             <div
                 className="fixed inset-0 bg-black bg-opacity-50 z-50"
                 onClick={onClose}
-            />
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        onClose()
+                    }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label="Close overlay"
+            ></div>
             <div className="fixed flex inset-0 items-center justify-center z-50">
                 <div className="w-[400px] h-2/5 p-6 rounded-xl border border-gray-300 shadow-md bg-white relative ">
                     <button
                         onClick={onClose}
                         className="absolute w-1/8 h-1/7 top-4 right-4 text-gray-500 hover:text-gray-700 cursor-pointer"
+                        type="button"
                     >
                         <img src={Close} alt="close icon" className="h-5" />
                     </button>
@@ -145,6 +155,7 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                                     className="bg-gray-5-background rounded-md text-gray-800 py-1 text-xl hover:bg-gray-400 outline-none self-center"
                                     onClick={handleAdd}
                                     disabled={!newSkill.trim()}
+                                    type="button"
                                 >
                                     <img
                                         src={Plus}
@@ -153,31 +164,41 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                                     />
                                 </button>
                             </div>
-                            {skills.map((skill, index) => (
-                                <div
-                                    key={index}
-                                    className="flex items-center justify-center rounded-md px-2 py-1 text-sm bg-gray-5-background"
-                                >
-                                    <span className="flex items-center text-gray-800">
-                                        {skill}
-                                    </span>
-                                    <button
-                                        className="cursor-pointer px-2"
-                                        onClick={() => handleRemoveSkill(skill)}
+                            {skills.map((skill, index) => {
+                                const tag = tagList.find(
+                                    (t) => t.name === skill,
+                                )
+                                const key = tag ? tag.id : skill
+                                return (
+                                    <div
+                                        key={index}
+                                        className="flex items-center justify-center rounded-md px-2 py-1 text-sm bg-gray-5-background"
                                     >
-                                        <img
-                                            src={Close}
-                                            alt="close icon"
-                                            className="h-3"
-                                        />
-                                    </button>
-                                </div>
-                            ))}
+                                        <span className="flex items-center text-gray-800">
+                                            {skill}
+                                        </span>
+                                        <button
+                                            className="cursor-pointer px-2"
+                                            onClick={() =>
+                                                handleRemoveSkill(skill)
+                                            }
+                                            type="button"
+                                        >
+                                            <img
+                                                src={Close}
+                                                alt="close icon"
+                                                className="h-3"
+                                            />
+                                        </button>
+                                    </div>
+                                )
+                            })}
                         </div>
                         <div className="flex justify-center gap-4 px-6 absolute bottom-12 w-full left-0">
                             <button
                                 onClick={onClose}
                                 className="flex-1 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)] hover:bg-gray-100 text-[rgba(128, 128, 128, 1)];"
+                                type="button"
                             >
                                 Cancelar
                             </button>
@@ -189,6 +210,7 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                                         : 'bg-[#B91879] hover:bg-[#8b125b]'
                                 }`}
                                 disabled={loading}
+                                type="button"
                             >
                                 {loading ? 'Guardando...' : 'Aceptar'}
                             </button>
