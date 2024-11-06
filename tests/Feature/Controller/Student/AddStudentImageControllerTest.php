@@ -20,16 +20,11 @@ class AddStudentImageControllerTest extends TestCase
         parent::setUp();
         Storage::fake('public');
     }
-    private function createUserAndStudent(): array
+    
+    public function testItAddsStudentImageSuccessfully()
     {
         $user = User::factory()->create();
         $student = Student::factory()->create(['user_id' => $user->id]);
-        return [$user, $student];
-    }
-
-    public function testItAddsStudentImageSuccessfully()
-    {
-        [$user, $student] = $this->createUserAndStudent();
         $file = UploadedFile::fake()->image('profile.png', 2, 2);
         
         $response = $this->postJson(route('student.addPhoto', $student->id), ['photo' => $file]);
@@ -39,16 +34,17 @@ class AddStudentImageControllerTest extends TestCase
         $fileContents = file_get_contents($file->path());
         $this->assertEquals($fileContents, Storage::get($this->photos_path . $student->photo));
     }
-    public function testCanReturnErrorWhenNoImageIsUploaded()
+    public function testCanReturnUnprocessableEntityErrorWhenNoImageIsUploaded()
     {
-        [$user, $student] = $this->createUserAndStudent();
+        $user = User::factory()->create();
+        $student = Student::factory()->create(['user_id' => $user->id]);
         
         $response = $this->postJson(route('student.addPhoto', $student->id), []);
         
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['photo']);
     }
-    public function testCanReturnErrorWhenStudentIsNotFound()
+    public function testCanReturnNotFoundErrorWhenStudentIsMissing()
     {
         $invalidStudentId = Str::uuid();
         $file = UploadedFile::fake()->image('profile.png');
@@ -59,7 +55,8 @@ class AddStudentImageControllerTest extends TestCase
     }
     public function testCanReturnErrorIfImageIsTooLarge()
     {
-        [$user, $student] = $this->createUserAndStudent();
+        $user = User::factory()->create();
+        $student = Student::factory()->create(['user_id' => $user->id]);
         $file = UploadedFile::fake()->create('profile.png', 5000);
         $response = $this->postJson(route('student.addPhoto', $student->id), [
             'photo' => $file,
@@ -69,7 +66,8 @@ class AddStudentImageControllerTest extends TestCase
     }
     public function testCanReturnErrorIfFileTypeIsNotSupported()
     {
-        [$user, $student] = $this->createUserAndStudent();
+        $user = User::factory()->create();
+        $student = Student::factory()->create(['user_id' => $user->id]);
         $file = UploadedFile::fake()->create('document.pdf', 100);
         $response = $this->postJson(route('student.addPhoto', $student->id), [
             'photo' => $file,
