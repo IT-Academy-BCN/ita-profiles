@@ -10,7 +10,7 @@ export const updateEndpointWithAxiosPut = async ({
     options?: object | null
 }) => {
     try {
-        let response = await axios.put(url, formData)
+        let response;
         if (options) {
             response = await axios.put(url, formData, options)
         } else {
