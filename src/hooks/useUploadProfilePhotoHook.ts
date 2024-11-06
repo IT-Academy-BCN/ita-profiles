@@ -47,10 +47,10 @@ const useUploadProfilePhotoHook = () => {
       const formData = new FormData();
       formData.append('photo', file, file.name);
 
-      const validacion = imageFileSchema.safeParse(formData.get("photo"))
+      const validateField = imageFileSchema.safeParse(formData.get("photo"))
 
-      if (!validacion.success) {
-        setNotifications(validacion.error.errors)
+      if (!validateField.success) {
+        setNotifications(validateField.error.errors)
         return
       }
 
