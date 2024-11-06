@@ -50,7 +50,6 @@ const useUploadProfilePhotoHook = () => {
       const validacion = imageFileSchema.safeParse(formData.get("photo"))
 
       if (!validacion.success) {
-        console.log(validacion.error.errors)
         setNotifications(validacion.error.errors)
         return
       }
