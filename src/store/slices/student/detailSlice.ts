@@ -4,10 +4,12 @@ import {
     detailThunk,
     updateDetailThunk,
 } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import { toastError, toastLoading, toastSuccess } from '../../../utils/toastFeedbackMessages'
 
 const aboutData: TAbout = {
     id: 0,
-    fullname: '',
+    name: '',
+    surname: '',
     resume: {
         subtitle: '',
         social_media: {
@@ -56,16 +58,19 @@ const detailSlice = createSlice({
             state.isUpdateLoading = true
             state.updatedError = ''
             state.updatedMessage = ''
+            toastLoading("Enviando datos...")
         })
         builder.addCase(updateDetailThunk.fulfilled, (state) => {
             state.updatedMessage = 'El usuario fue actualizado con éxito!'
             state.updatedError = ''
             state.isUpdateLoading = false
+            toastSuccess(state.updatedMessage)
         })
         builder.addCase(updateDetailThunk.rejected, (state) => {
             state.updatedMessage = ''
             state.updatedError = 'Error al realizar la actualizacion del perfil'
             state.isUpdateLoading = false
+            toastError(state.updatedError)
         })
     },
 })
