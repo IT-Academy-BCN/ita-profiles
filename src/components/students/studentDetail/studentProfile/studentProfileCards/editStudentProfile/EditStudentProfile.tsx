@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form'
+import { useCallback, useEffect, useRef } from 'react'
 import { useAppSelector } from '../../../../../../hooks/ReduxHooks'
 import { Close } from '../../../../../../assets/svg'
 import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
-import { useEditStudentProfile } from '../../../../../../utils/useEditstudentProfile'
+import { useEditStudentProfile } from '../../../../../../hooks/useEditstudentProfile'
 import { Button } from '../../../../../atoms/Button'
 
 interface EditStudentProfileProps {
@@ -21,7 +22,8 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         useEditStudentProfile()
 
     const id = aboutData.id.toString()
-
+    const modalRef = useRef<HTMLDivElement>(null)
+    
     const {
         register,
         handleSubmit,
@@ -37,10 +39,32 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
             tags_ids: aboutData.tags.map((item) => item.id),
         },
     })
+    const handleClickOutside = useCallback(
+        (event: MouseEvent) => {
+            if (
+                modalRef.current &&
+                event.target instanceof Node &&
+                !modalRef.current.contains(event.target)
+            ) {
+                handleModal()
+            }
+        },
+        [handleModal],
+    )
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [handleModal, handleClickOutside])
 
     return (
         <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-10">
-            <div className="w-[400px] h-[90%] md:h-[80%] max-h-[800px] m-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pb-4 pt-4 pr-4">
+            <div
+                ref={modalRef}
+                className="w-[400px] h-[90%] md:h-[80%] max-h-[800px] m-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pb-4 pt-4 pr-4"
+            >
                 <div className="flex justify-between">
                     <div />
                     <button
