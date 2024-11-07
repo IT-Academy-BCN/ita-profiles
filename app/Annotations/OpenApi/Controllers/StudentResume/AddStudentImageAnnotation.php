@@ -1,22 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Annotations\OpenApi\Controllers\StudentResume;
 
-use OpenApi\Annotations as OA;
-
-class UpdateStudentPhotoAnnotation
+class AddStudentImageAnnotation
 {
     /**
-     * @OA\Post(
-     *     path="/student/{student}/resume/photo",
-     *     operationId="updatePhotoStudent",
+     * @OA\Post (
+     *     path="/student/{studentId}/resume/photo",
+     *     operationId="addPhotoStudent",
      *     tags={"Student -> Resume"},
-     *     summary="Update Student Photo",
-     *     description="Update the photo/image of a given student by student ID",
+     *     summary="Add Student Photo.",
+     *     description="Add a photo/image for a given student by student ID",
      * 
      *     @OA\Parameter(
-     *         name="student",
+     *         name="studentId",
      *         in="path",
      *         description="Student ID",
      *         required=true,
@@ -30,11 +29,12 @@ class UpdateStudentPhotoAnnotation
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
+     *                 required={"photo"}, 
      *                 @OA\Property(
      *                     property="photo",
+     *                     description="Item image",
      *                     type="string",
-     *                     format="binary",
-     *                     description="Student photo"
+     *                     format="binary"
      *                 )
      *             )
      *         )
@@ -42,18 +42,19 @@ class UpdateStudentPhotoAnnotation
      * 
      *     @OA\Response(
      *         response=200,
-     *         description="Success. Photo updated.",
+     *         description="Success. Adds the photo.",
      *         @OA\JsonContent(
+     *             type="object",
      *             @OA\Property(
      *                 property="message",
      *                 type="string",
-     *                 example="Photo updated successfully"
+     *                 example="La imatge s'ha afegit correctament" 
      *             )
      *         )
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="Student not found"
+     *         description="No hem trobat cap estudiant amb aquest ID"
      *     ),
      *     @OA\Response(
      *         response=422,
@@ -61,7 +62,7 @@ class UpdateStudentPhotoAnnotation
      *     ),
      *     @OA\Response(
      *         response=500,
-     *         description="Unexpected error"
+     *         description="Error inesperat"
      *     )
      * )
      */
