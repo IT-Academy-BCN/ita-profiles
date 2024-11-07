@@ -22,7 +22,6 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         (state) => state.ShowStudentReducer.studentDetails,
     )
     const dispatch = useAppDispatch()
-    // TODO : [BE] Arreglar el student name y surname en back asì podemos acceder aqui al dato
 
     const {
         register,
@@ -30,8 +29,8 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         formState: { errors },
     } = useForm({
         defaultValues: {
-            name: aboutData.fullname,
-            surname: 'surname', // arreglar campos, name y surname
+            name: aboutData.name,
+            surname: aboutData.surname,
             subtitle: aboutData.resume.subtitle,
             github_url: aboutData.resume.social_media.github,
             linkedin_url: aboutData.resume.social_media.linkedin,

@@ -32,7 +32,8 @@ export type TSmallScreenContext = {
 // === studentList ===
 export interface IStudentList {
     id: string
-    fullname: string
+    name: string
+    surname: string
     subtitle: string
     photo: string
     tags: ITag[]
@@ -70,7 +71,8 @@ export type TLanguage = {
 
 export type TAbout = {
     id: number
-    fullname: string
+    name: string
+    surname: string
     resume: {
         subtitle: string
         social_media: {
@@ -82,6 +84,7 @@ export type TAbout = {
     photo: string
     tags: ITag[]
 }
+
 export type TStudentFormData = {
     name: string
     surname: string

@@ -4,11 +4,12 @@ import { IStudentList } from '../../interfaces/interfaces'
 import { useStudentIdContext } from '../../context/StudentIdContext'
 
 const StudentCard: React.FC<IStudentList> = ({
-    fullname,
+    id,
+    name,
     photo,
     subtitle,
+    surname,
     tags,
-    id,
 }) => {
     const dispatch = useAppDispatch()
     const { setStudentUUID } = useStudentIdContext()
@@ -38,13 +39,13 @@ const StudentCard: React.FC<IStudentList> = ({
                 <div className="flex-none">
                     <img
                         src={photo}
-                        alt={`Foto de ${fullname}`}
+                        alt={`Foto de ${name} ${surname}`}
                         className="w-20 rounded-xl"
                     />
                 </div>
                 <div className="flex flex-col gap-2 pt-2">
                     <div className="text-xl font-bold leading-5 text-black-3">
-                        {fullname}
+                        {`${name} ${surname}`}
                     </div>
                     <div className="leading-5 text-gray-3">{subtitle}</div>
                 </div>
