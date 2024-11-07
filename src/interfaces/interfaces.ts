@@ -38,6 +38,8 @@ export interface IStudentList {
     tags: ITag[]
 }
 
+// === STUDENT PROFILE ===
+
 export interface ITag {
     id: number
     name: string
@@ -82,15 +84,6 @@ export type TAbout = {
     photo: string
     tags: ITag[]
 }
-export type TStudentFormData = {
-    name: string
-    surname: string
-    subtitle: string
-    github_url: string
-    linkedin_url: string
-    about: string
-    tags_ids: number[]
-}
 
 export type TAdditionalTraining = {
     id: string
@@ -106,4 +99,21 @@ export type TCollaboration = {
     name: string
     collaboration_description: string
     quantity: number
+}
+
+// === EDIT STUDENT PROFILE FORMS ===
+
+export type TStudentFormData = {
+    name: string
+    surname: string
+    subtitle: string
+    github_url: string
+    linkedin_url: string
+    about: string
+    tags_ids: number[]
+}
+
+export type TEditCollaborationsFormData = {
+    wikiCollaborations: number
+    completedChallenges: number
 }

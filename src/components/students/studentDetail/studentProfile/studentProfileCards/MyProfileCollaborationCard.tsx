@@ -1,13 +1,28 @@
+import { useState } from 'react'
 import target from '../../../../../assets/img/target.png'
 import folder from '../../../../../assets/img/folder.png'
 import { Pencil } from '../../../../../assets/svg'
-import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
+import { ModalPortals } from '../../../../ModalPortals'
+import { EditCollaborations } from './editStudentProfile/EditCollaborations'
+import { collaborationThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
 
 const MyProfileCollaborationCard: React.FC = () => {
     const { studentCollaborations } = useAppSelector((state) => state.ShowStudentReducer)
     const {collaborationsData, isLoadingCollaborations, isErrorCollaborations} = studentCollaborations
     const [resourcesCard, challengesCard] = collaborationsData
+    const [openEditCollaborations, setOpenEditCollaborations] = useState(false)
+
+    const handleEditCollaborationsModal = () => {
+        setOpenEditCollaborations(!openEditCollaborations)
+    }
+
+    const dispatch = useAppDispatch()
+
+    const refreshCollaborationsData = (id: string) => {
+        dispatch(collaborationThunk(id))
+    }
 
     return (
         <div className="flex flex-col gap-4" data-testid="CollaborationCard">
@@ -16,6 +31,7 @@ const MyProfileCollaborationCard: React.FC = () => {
                 <button
                     type='button' 
                     className='ml-auto'
+                    onClick={handleEditCollaborationsModal}
                     >
                         <img src={Pencil} alt="edit collaboration information" />
                 </button>
@@ -24,14 +40,22 @@ const MyProfileCollaborationCard: React.FC = () => {
                 {isLoadingCollaborations && <LoadingSpiner />}
                 {isErrorCollaborations && (
                     <LoadingSpiner
-                        textContent="Upss!!"
+                        textContent="Error"
                         type="loading-bars"
                         textColor="red"
                     />
                 )}
+                {openEditCollaborations && (
+                <ModalPortals>
+                    <EditCollaborations
+                        handleModal={handleEditCollaborationsModal}
+                        handleRefresh={refreshCollaborationsData}
+                    />
+                </ModalPortals>
+            )}
                 {!isLoadingCollaborations && (
                     <>
-                        {/* <ResourcesCard /> */}
+                        {/* RESOURCES CARD */}
                         <div className="flex w-2/3 md:w-1/2 items-start justify-between rounded-md bg-ita-wiki p-3 pl-7 pt-3">
                             <div className="flex flex-col">
                                 {resourcesCard === undefined ? (
@@ -59,7 +83,7 @@ const MyProfileCollaborationCard: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* <ChallengesCard /> */}
+                        {/* CHALLENGES CARD */}
                         <div className="flex w-2/3 md:w-1/2 items-start justify-between rounded-md bg-ita-challenges p-3 pl-7 pt-3">
                             <div className="flex flex-col ">
                                 {challengesCard === undefined ? (
