@@ -123,7 +123,7 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                 role="button"
                 tabIndex={0}
                 aria-label="Close overlay"
-            ></div>
+            />
             <div className="fixed flex inset-0 items-center justify-center z-50">
                 <div className="w-[400px] h-2/5 p-6 rounded-xl border border-gray-300 shadow-md bg-white relative ">
                     <button
@@ -152,26 +152,22 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                                     className="bg-gray-5-background rounded-md text-gray-800 py-1 px-2 text-sm outline-none w-24 placeholder:text-gray-500 focus:placeholder-transparent "
                                 />
                                 <button
-                                    className="bg-gray-5-background rounded-md text-gray-800 py-1 text-xl hover:bg-gray-400 outline-none self-center"
+                                    className="bg-gray-5-background rounded-md text-gray-800 px-1 text-xl hover:bg-gray-400 outline-none self-center"
                                     onClick={handleAdd}
                                     disabled={!newSkill.trim()}
                                     type="button"
                                 >
-                                    <img
-                                        src={Plus}
-                                        alt="close icon"
-                                        className="h-3"
-                                    />
+                                    +
                                 </button>
                             </div>
-                            {skills.map((skill, index) => {
+                            {skills.map((skill) => {
                                 const tag = tagList.find(
                                     (t) => t.name === skill,
                                 )
                                 const key = tag ? tag.id : skill
                                 return (
                                     <div
-                                        key={index}
+                                        key={key}
                                         className="flex items-center justify-center rounded-md px-2 py-1 text-sm bg-gray-5-background"
                                     >
                                         <span className="flex items-center text-gray-800">

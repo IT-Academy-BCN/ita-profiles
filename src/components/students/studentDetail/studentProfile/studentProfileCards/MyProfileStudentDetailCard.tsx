@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
-import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { ITag } from '../../../../../interfaces/interfaces'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
@@ -12,6 +10,8 @@ import { Success } from '../../../../feedbackMessages/Success'
 import EditSkills from './editStudentProfile/EditSkills'
 import { updateTags } from '../../../../../store/slices/student/detailSlice'
 import { createPortal } from 'react-dom'
+import { Stud1 as ProfilePicture } from '../../../../../assets/img'
+import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =
