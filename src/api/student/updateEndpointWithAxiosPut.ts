@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const updateEndpointWithAxiosPut = async ({
+export const callUpdateStudent = async ({
     url,
     formData,
     options = null
