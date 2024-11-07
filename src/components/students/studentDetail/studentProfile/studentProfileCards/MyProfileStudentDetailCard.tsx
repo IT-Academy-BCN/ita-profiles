@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { ITag } from '../../../../../interfaces/interfaces'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
@@ -9,7 +10,6 @@ import { Error } from '../../../../feedbackMessages/Error'
 import { Success } from '../../../../feedbackMessages/Success'
 import EditSkills from './editStudentProfile/EditSkills'
 import { updateTags } from '../../../../../store/slices/student/detailSlice'
-import { createPortal } from 'react-dom'
 import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 
