@@ -23,11 +23,11 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
 
     const id = aboutData.id.toString()
     const modalRef = useRef<HTMLDivElement>(null)
-    
+
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isDirty },
     } = useForm({
         defaultValues: {
             name: aboutData.name,
@@ -39,6 +39,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
             tags_ids: aboutData.tags.map((item) => item.id),
         },
     })
+    const isSubmitDisabled = !isDirty
     const handleClickOutside = useCallback(
         (event: MouseEvent) => {
             if (
@@ -292,7 +293,11 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                         </div>
                         <div className="flex w-full mt-4 mb-8 pr-4 gap-3 ">
                             <Button onClick={handleModal}>Cancelar</Button>
-                            <Button primary type="submit">
+                            <Button
+                                primary
+                                type="submit"
+                                disabled={isSubmitDisabled}
+                            >
                                 Enviar
                             </Button>
                         </div>

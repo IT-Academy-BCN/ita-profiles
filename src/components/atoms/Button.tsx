@@ -2,7 +2,8 @@ import { ButtonHTMLAttributes, FC } from 'react'
 import cls from 'classnames'
 
 const defaultButtonStyles =
-    'cursor-pointer flex-1 py-4 rounded-xl font-bold text-[rgba(128,128,128,1)] border border-[rgba(128,128,128,1)]'
+    'cursor-pointer flex-1 py-4 rounded-xl font-bold text-[rgba(128,128,128,1)] border border-[rgba(128,128,128,1)] transform transition-transform duration-200'
+
 const secondaryBg = 'bg-secondary text-white'
 const primaryBg = 'bg-primary text-white'
 // Add here outline and other default styles ...
@@ -17,13 +18,17 @@ export const Button: FC<TButton> = ({
     secondary = false,
     primary = false,
     className,
+    disabled = false,
     ...rest
 }) => (
     <button
         // eslint-disable-next-line react/button-has-type
         type={type}
+        disabled={disabled}
         className={cls(
             defaultButtonStyles,
+            !disabled && 'active:scale-110',
+            disabled && 'opacity-70',
             secondary && secondaryBg,
             primary && primaryBg,
             className,
