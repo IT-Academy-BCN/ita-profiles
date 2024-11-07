@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
-import { updateEndpointWithAxiosPut } from '../../api/student/updateEndpointWithAxiosPut'
 import { configureMockAdapter } from '../setup'
+import { callUpdateStudent } from '../../api/student/callUpdateStudent'
 
 const mock = configureMockAdapter()
 
-describe('updateEndpointWithAxiosPut test', () => {
+describe('callUpdateStudent test', () => {
     const studentID = 'mocked-student-id'
     const apiUrl = `http://localhost:8000/api/v1/student/${studentID}/resume/profile`
     const formData = {
@@ -22,7 +22,7 @@ describe('updateEndpointWithAxiosPut test', () => {
             profile: "El perfil de l'estudiant s'actualitzat correctament",
         }
         mock.onPut(apiUrl, formData).reply(200, mockResponse)
-        const result = await updateEndpointWithAxiosPut({
+        const result = await callUpdateStudent({
             url: apiUrl,
             formData,
         })
@@ -33,7 +33,7 @@ describe('updateEndpointWithAxiosPut test', () => {
         const mockResponse = 'Error de actualización'
         mock.onPut(apiUrl, formData).reply(400, mockResponse)
         await expect(
-            updateEndpointWithAxiosPut({
+            callUpdateStudent({
                 url: apiUrl,
                 formData,
             }),
@@ -43,7 +43,7 @@ describe('updateEndpointWithAxiosPut test', () => {
     it('should throw an unknown error  when endpoint update request fails and it not an Axios error', async () => {
         mock.onPut(apiUrl, formData).networkError()
         await expect(
-            updateEndpointWithAxiosPut({
+            callUpdateStudent({
                 url: apiUrl,
                 formData,
             }),

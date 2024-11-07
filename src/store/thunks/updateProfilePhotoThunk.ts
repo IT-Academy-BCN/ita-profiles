@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { updateEndpointWithAxiosPut } from '../../api/student/updateEndpointWithAxiosPut';
+import { callUpdateStudent } from '../../api/student/callUpdateStudent';
 import { resumes } from '../../api/student/getStudentDetailWithId';
 
 export const updateProfilePhotoThunk = createAsyncThunk(
@@ -16,7 +16,7 @@ export const updateProfilePhotoThunk = createAsyncThunk(
         body: payload.data
       }
     }
-    const data = await updateEndpointWithAxiosPut(query)
+    const data = await callUpdateStudent(query)
     return data
   }
 )
