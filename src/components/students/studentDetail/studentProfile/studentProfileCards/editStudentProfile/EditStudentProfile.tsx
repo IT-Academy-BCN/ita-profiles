@@ -1,13 +1,9 @@
 import { useForm } from 'react-hook-form'
-import {
-    useAppDispatch,
-    useAppSelector,
-} from '../../../../../../hooks/ReduxHooks'
+import { useRef } from 'react'
+import { useAppSelector } from '../../../../../../hooks/ReduxHooks'
 import { Close } from '../../../../../../assets/svg'
-import { setToggleProfileImage } from '../../../../../../store/slices/student/detailSlice'
 import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
-import { TStudentFormData } from '../../../../../../interfaces/interfaces'
-import { updateDetailThunk } from '../../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
+import { useEditStudentProfile } from '../../../../../../hooks/useEditstudentProfile'
 
 interface EditStudentProfileProps {
     handleModal: () => void
@@ -21,17 +17,23 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     const { aboutData, toggleProfileImage } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
     )
-    const dispatch = useAppDispatch()
-    // TODO : [BE] Arreglar el student name y surname en back asì podemos acceder aqui al dato
+    const {
+        submitForm,
+        toggleProfileImage: toggleImage,
+        useCloseWhenClickOutside,
+    } = useEditStudentProfile()
 
+    const id = aboutData.id.toString()
+    const modalRef = useRef<HTMLDivElement>(null)
+    useCloseWhenClickOutside(modalRef, handleModal)
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isDirty },
     } = useForm({
         defaultValues: {
             name: aboutData.name,
-            surname: 'surname', // arreglar campos, name y surname
+            surname: aboutData.surname,
             subtitle: aboutData.resume.subtitle,
             github_url: aboutData.resume.social_media.github,
             linkedin_url: aboutData.resume.social_media.linkedin,
@@ -39,27 +41,15 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
             tags_ids: aboutData.tags.map((item) => item.id),
         },
     })
-    const url = `http://localhost:8000/api/v1/student/${aboutData.id}/resume/profile`
-
-    const handleButtonSubmit = (data: TStudentFormData): void => {
-        dispatch(updateDetailThunk({ url, formData: data }))
-            .unwrap()
-            .then(() => {
-                handleRefresh(aboutData.id.toString())
-                handleModal()
-            })
-            .catch((error) => {
-                console.error('Error al actualizar el perfil:', error)
-            })
-    }
-
-    const handleProfileImage = () => {
-        dispatch(setToggleProfileImage(!toggleProfileImage))
-    }
+    const isSubmitDisabled = !isDirty
 
     return (
         <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-10">
-            <div className="w-[400px] h-[90%] md:h-[80%] max-h-[800px] m-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pb-4 pt-4 pr-4">
+            <div
+                role="dialog"
+                ref={modalRef}
+                className="w-[400px] h-[90%] md:h-[80%] max-h-[800px] m-0 flex flex-col border border-[rgba(128,128,128,1)] rounded-xl bg-white p-[37px] pb-4 pt-4 pr-4"
+            >
                 <div className="flex justify-between">
                     <div />
                     <button
@@ -90,7 +80,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                             <button
                                 className="h-[30px] w-[180px] self-center text-sm text-[rgba(30,30,30,1)] font-bold border border-[rgba(128,128,128,1)] rounded-lg  "
                                 type="button"
-                                onClick={handleProfileImage}
+                                onClick={() => toggleImage(!toggleProfileImage)}
                             >
                                 Subir nueva imagen
                             </button>
@@ -100,7 +90,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                         aria-label="form"
                         className="flex flex-col w-full h-[80%] pt-4"
                         onSubmit={handleSubmit((data) =>
-                            handleButtonSubmit(data),
+                            submitForm(data, id, handleRefresh, handleModal),
                         )}
                     >
                         <div className="flex flex-col flex-grow w-full overflow-y-auto pr-4">
@@ -294,6 +284,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                 Cancelar
                             </button>
                             <button
+                                disabled={isSubmitDisabled}
                                 type="submit"
                                 className="flex-1 h-[63px] rounded-xl bg-primary font-bold text-white border mr-4 border-[rgba(128,128,128,1)]"
                             >
