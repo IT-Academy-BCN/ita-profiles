@@ -6,9 +6,16 @@ import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
 import { ModalPortals } from '../../../../ModalPortals'
 import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
+<<<<<<< HEAD
+import UploadProfilePhoto from './editStudentProfile/UploadProfilePhoto'
+import EditSkills from './editStudentProfile/EditSkills'
 import {
     setEditProfileModalIsOpen,    
 } from '../../../../../store/slices/student/detailSlice'
+import { Stud1 as ProfilePicture } from '../../../../../assets/img'
+import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
+=======
+>>>>>>> 8ad62a49 (Fix: EditStudentProfile modal behavior and refactor)
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =
@@ -18,10 +25,16 @@ const MyProfileStudentDetailCard: React.FC = () => {
         aboutData,
         isLoadingAboutData,
         isErrorAboutData,
+<<<<<<< HEAD
         editProfileImageIsOpen,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
 
     const [showEditSkills, setShowEditSkills] = useState(false)
+=======
+        updatedError,
+        updatedMessage,
+    } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
+>>>>>>> 8ad62a49 (Fix: EditStudentProfile modal behavior and refactor)
 
     const dispatch = useAppDispatch()
 
@@ -61,6 +74,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
 
+<<<<<<< HEAD
             <ModalPortals>
                 <EditStudentProfile
                     handleModal={handleModalEditProfile}
@@ -68,6 +82,17 @@ const MyProfileStudentDetailCard: React.FC = () => {
                 />
                 {editProfileImageIsOpen && <UploadProfilePhoto />}
             </ModalPortals>
+=======
+            {openEditProfile && (
+                <ModalPortals>
+                    <EditStudentProfile
+                        handleModal={handleModalEditProfile}
+                        handleRefresh={refreshStudentData}
+                    />
+                    {toggleProfileImage && <UploadProfilePhoto />}
+                </ModalPortals>
+            )}
+>>>>>>> 8ad62a49 (Fix: EditStudentProfile modal behavior and refactor)
 
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">
@@ -83,11 +108,15 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                     <div className="flex">
                                         <h2 className="text-xl font-bold">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             {aboutData.name}&nbsp;
                                             {aboutData.surname}
 =======
                                             {aboutData.name}
 >>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
+=======
+                                            {`${aboutData.name} ${aboutData.surname}`}
+>>>>>>> 8ad62a49 (Fix: EditStudentProfile modal behavior and refactor)
                                         </h2>
                                         <button
                                             className="ml-auto"
