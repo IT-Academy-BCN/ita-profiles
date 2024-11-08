@@ -27,6 +27,7 @@ export const initialState = {
     isErrorAboutData: false,
     aboutData,
     toggleProfileImage: false,
+    editProfileModalIsOpen: false,
     updatedMessage: '',
     updatedError: '',
     isUpdateLoading: false,
@@ -42,21 +43,8 @@ const detailSlice = createSlice({
         setToggleProfileImage: (state, action) => {
             state.toggleProfileImage = action.payload
         },
-        resetSendingPhoto: (state) => {
-            state.isLoadingPhoto = false
-            state.isErrorPhoto = false
-            state.photoSuccessfully = false
-        },
-        setMessage: (state, action) => {
-            state.updatedMessage = action.payload
-        },
-        updateTags: (state, action) => {
-            if (action.payload) {
-                state.aboutData.tags = action.payload || []
-            } else {
-              console.error("Payload is undefined in updateTags");
-              state.aboutData.tags = [];
-            }
+        setEditProfileModalIsOpen: (state, action) => {
+            state.editProfileModalIsOpen = action.payload
         },
     },
     extraReducers: (builder) => {
@@ -107,7 +95,5 @@ const detailSlice = createSlice({
 })
 
 export const { setToggleProfileImage } = detailSlice.actions
-export const { updateTags } = detailSlice.actions;
-
 
 export default detailSlice.reducer
