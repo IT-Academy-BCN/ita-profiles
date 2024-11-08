@@ -6,14 +6,20 @@ import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
 import { ModalPortals } from '../../../../ModalPortals'
 import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
+import {
+    setEditProfileModalIsOpen,    
+} from '../../../../../store/slices/student/detailSlice'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =
         useState(false)
-    const [openEditProfile, setOpenEditProfile] = useState(false)
-    const { aboutData, isLoadingAboutData, isErrorAboutData } = useAppSelector(
-        (state) => state.ShowStudentReducer.studentDetails,
-    )
+
+    const {
+        aboutData,
+        isLoadingAboutData,
+        isErrorAboutData,
+        editProfileModalIsOpen,
+    } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
 
     const dispatch = useAppDispatch()
 
@@ -22,15 +28,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
     }
 
     const handleModalEditProfile = () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        dispatch(setEditProfileModalIsOpen())
-=======
         dispatch(setEditProfileModalIsOpen(!editProfileModalIsOpen))
->>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
-=======
-        dispatch(setEditProfileModalIsOpen())
->>>>>>> 0ffd2d6c (handle modal global states)
     }
 
     const refreshStudentData = (id: string) => {
@@ -61,10 +59,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
 
-            {openEditProfile && (
-=======
             {editProfileModalIsOpen && (
->>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
                 <ModalPortals>
                     <EditStudentProfile
                         handleModal={handleModalEditProfile}

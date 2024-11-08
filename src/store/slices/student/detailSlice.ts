@@ -31,10 +31,6 @@ export const initialState = {
     editProfileImageIsOpen: false,
 =======
     toggleProfileImage: false,
->>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
-=======
-    editProfileImageIsOpen: false,
->>>>>>> 0ffd2d6c (handle modal global states)
     editProfileModalIsOpen: false,
     updatedMessage: '',
     updatedError: '',
@@ -73,6 +69,12 @@ const detailSlice = createSlice({
                 state.aboutData.tags = []
             }
         },
+        setEditProfileModalIsOpen: (state, action) => {
+            state.editProfileModalIsOpen = action.payload
+        },
+        setEditProfileModalIsOpen: (state, action) => {
+            state.editProfileModalIsOpen = action.payload
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(detailThunk.pending, (state) => {
@@ -103,38 +105,10 @@ const detailSlice = createSlice({
             state.updatedError = 'Error al realizar la actualizacion del perfil'
             state.isUpdateLoading = false
         })
-        builder.addCase(updateProfilePhotoThunk.pending, (state) => {
-            state.isLoadingPhoto = true
-            state.isErrorPhoto = false
-            state.photoSuccessfully = false
-        })
-        builder.addCase(updateProfilePhotoThunk.fulfilled, (state) => {
-            state.isLoadingPhoto = false
-            state.isErrorPhoto = false
-            state.photoSuccessfully = true
-        })
-        builder.addCase(updateProfilePhotoThunk.rejected, (state) => {
-            state.isLoadingPhoto = false
-            state.isErrorPhoto = true
-            state.photoSuccessfully = false
-        })
     },
 })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0ffd2d6c (handle modal global states)
-export const {
-    setEditProfileImageIsOpen,
-    updateTags,
-    setEditProfileModalIsOpen,
-    resetSendingPhoto,
-    setMessage,
-} = detailSlice.actions
-<<<<<<< HEAD
-=======
-export const { setToggleProfileImage } = detailSlice.actions
-export const { updateTags } = detailSlice.actions
+export const { setToggleProfileImage, setEditProfileModalIsOpen } =
+    detailSlice.actions
 
 export default detailSlice.reducer
