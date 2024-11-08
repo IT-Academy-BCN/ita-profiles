@@ -7,6 +7,7 @@ import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
 import { ModalPortals } from '../../../../ModalPortals'
 import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import UploadProfilePhoto from './editStudentProfile/UploadProfilePhoto'
 import EditSkills from './editStudentProfile/EditSkills'
 import {
@@ -16,6 +17,11 @@ import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 =======
 >>>>>>> 8ad62a49 (Fix: EditStudentProfile modal behavior and refactor)
+=======
+import {
+    setEditProfileModalIsOpen,    
+} from '../../../../../store/slices/student/detailSlice'
+>>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =
@@ -26,6 +32,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
         isLoadingAboutData,
         isErrorAboutData,
 <<<<<<< HEAD
+<<<<<<< HEAD
         editProfileImageIsOpen,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
 
@@ -33,6 +40,9 @@ const MyProfileStudentDetailCard: React.FC = () => {
 =======
         updatedError,
         updatedMessage,
+=======
+        editProfileModalIsOpen,
+>>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
 >>>>>>> 8ad62a49 (Fix: EditStudentProfile modal behavior and refactor)
 
@@ -43,7 +53,11 @@ const MyProfileStudentDetailCard: React.FC = () => {
     }
 
     const handleModalEditProfile = () => {
+<<<<<<< HEAD
         dispatch(setEditProfileModalIsOpen())
+=======
+        dispatch(setEditProfileModalIsOpen(!editProfileModalIsOpen))
+>>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
     }
 
     const refreshStudentData = (id: string) => {
@@ -75,6 +89,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
             {isErrorAboutData && <LoadingSpiner />}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             <ModalPortals>
                 <EditStudentProfile
                     handleModal={handleModalEditProfile}
@@ -84,6 +99,9 @@ const MyProfileStudentDetailCard: React.FC = () => {
             </ModalPortals>
 =======
             {openEditProfile && (
+=======
+            {editProfileModalIsOpen && (
+>>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
                 <ModalPortals>
                     <EditStudentProfile
                         handleModal={handleModalEditProfile}

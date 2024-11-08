@@ -26,7 +26,11 @@ export const initialState = {
     isLoadingAboutData: false,
     isErrorAboutData: false,
     aboutData,
+<<<<<<< HEAD
     editProfileImageIsOpen: false,
+=======
+    toggleProfileImage: false,
+>>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
     editProfileModalIsOpen: false,
     updatedMessage: '',
     updatedError: '',
@@ -46,6 +50,7 @@ const detailSlice = createSlice({
         setEditProfileModalIsOpen: (state) => {
             state.editProfileModalIsOpen = !state.editProfileModalIsOpen
         },
+<<<<<<< HEAD
         resetSendingPhoto: (state) => {
             state.isLoadingPhoto = false
             state.isErrorPhoto = false
@@ -66,6 +71,10 @@ const detailSlice = createSlice({
               state.aboutData.tags = [];
 >>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
             }
+=======
+        setEditProfileModalIsOpen: (state, action) => {
+            state.editProfileModalIsOpen = action.payload
+>>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
         },
     },
     extraReducers: (builder) => {
@@ -125,8 +134,6 @@ export const {
 } = detailSlice.actions
 =======
 export const { setToggleProfileImage } = detailSlice.actions
-export const { updateTags } = detailSlice.actions;
-
 
 >>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
 export default detailSlice.reducer
