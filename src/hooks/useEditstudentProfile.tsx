@@ -1,19 +1,14 @@
-import { useAppDispatch, useAppSelector } from './ReduxHooks'
+import { useAppDispatch } from './ReduxHooks'
 import { updateDetailThunk } from '../store/thunks/getDetailResourceStudentWithIdThunk'
-import { setEditProfileImageIsOpen } from '../store/slices/student/detailSlice'
+import { setToggleProfileImage } from '../store/slices/student/detailSlice'
 import { TStudentFormData } from '../interfaces/interfaces'
 import { useCloseWhenClickOutside } from './ModalHooks/useCloseWhenClickOutside'
 
 export const useEditStudentProfile = () => {
     const dispatch = useAppDispatch()
-
-    const { aboutData, editProfileModalIsOpen } = useAppSelector(
-        (state) => state.ShowStudentReducer.studentDetails,
-    )
-    const id = aboutData.id.toString()
-
     const submitForm = async (
         data: TStudentFormData,
+        id: string,
         handleRefresh: (id: string) => void,
         handleModal: () => void,
     ) => {
@@ -28,25 +23,9 @@ export const useEditStudentProfile = () => {
         }
     }
 
-    const toggleProfileImage = () => {
-        dispatch(setEditProfileImageIsOpen())
-    }
-    const defaultValues = {
-        name: aboutData.name,
-        surname: aboutData.surname,
-        subtitle: aboutData.resume.subtitle,
-        github_url: aboutData.resume.social_media.github,
-        linkedin_url: aboutData.resume.social_media.linkedin,
-        about: aboutData.resume.about,
-        tags_ids: aboutData.tags.map((item) => item.id),
+    const toggleProfileImage = (currentToggleState: boolean) => {
+        dispatch(setToggleProfileImage(!currentToggleState))
     }
 
-    return {
-        submitForm,
-        toggleProfileImage,
-        useCloseWhenClickOutside,
-        defaultValues,
-        aboutData,
-        editProfileModalIsOpen,
-    }
+    return { submitForm, toggleProfileImage, useCloseWhenClickOutside }
 }

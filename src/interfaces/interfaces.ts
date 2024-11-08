@@ -89,8 +89,6 @@ export type TAbout = {
     id: number
     name: string
     surname: string
-    name: string
-    surname: string
     resume: {
         subtitle: string
         social_media: {
