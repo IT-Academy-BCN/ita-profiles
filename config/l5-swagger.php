@@ -2,6 +2,7 @@
 
 return [
     'default' => 'default',
+    'csrf_protection' => false,
     'documentations' => [
         'default' => [
             'api' => [
