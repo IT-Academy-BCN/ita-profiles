@@ -10,10 +10,6 @@ const aboutData: TAbout = {
     id: 0,
     name: '',
     surname: '',
-    name: '',
-    surname: '',
-    name: '',
-    surname: '',
     resume: {
         subtitle: '',
         social_media: {
