@@ -6,9 +6,6 @@ import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
 import { ModalPortals } from '../../../../ModalPortals'
 import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
-import {
-    setEditProfileModalIsOpen,    
-} from '../../../../../store/slices/student/detailSlice'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =
@@ -18,10 +15,9 @@ const MyProfileStudentDetailCard: React.FC = () => {
         aboutData,
         isLoadingAboutData,
         isErrorAboutData,
-        editProfileImageIsOpen,
+        updatedError,
+        updatedMessage,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
-
-    const [showEditSkills, setShowEditSkills] = useState(false)
 
     const dispatch = useAppDispatch()
 
@@ -61,13 +57,15 @@ const MyProfileStudentDetailCard: React.FC = () => {
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
 
-            <ModalPortals>
-                <EditStudentProfile
-                    handleModal={handleModalEditProfile}
-                    handleRefresh={refreshStudentData}
-                />
-                {editProfileImageIsOpen && <UploadProfilePhoto />}
-            </ModalPortals>
+            {openEditProfile && (
+                <ModalPortals>
+                    <EditStudentProfile
+                        handleModal={handleModalEditProfile}
+                        handleRefresh={refreshStudentData}
+                    />
+                    {toggleProfileImage && <UploadProfilePhoto />}
+                </ModalPortals>
+            )}
 
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">
@@ -82,7 +80,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                 <div className="flex flex-col">
                                     <div className="flex">
                                         <h2 className="text-xl font-bold">
-                                            {aboutData.name}
+                                            {`${aboutData.name} ${aboutData.surname}`}
                                         </h2>
                                         <button
                                             className="ml-auto"

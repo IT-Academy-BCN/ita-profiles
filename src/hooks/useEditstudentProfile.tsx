@@ -1,7 +1,7 @@
 import { useAppDispatch } from './ReduxHooks'
 import { updateDetailThunk } from '../store/thunks/getDetailResourceStudentWithIdThunk'
-import { setEditProfileImageIsOpen } from '../store/slices/student/detailSlice'
-import { TStudentFormData } from '../../types'
+import { setToggleProfileImage } from '../store/slices/student/detailSlice'
+import { TStudentFormData } from '../interfaces/interfaces'
 import { useCloseWhenClickOutside } from './ModalHooks/useCloseWhenClickOutside'
 
 export const useEditStudentProfile = () => {
