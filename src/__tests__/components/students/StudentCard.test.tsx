@@ -6,8 +6,9 @@ import { store } from '../../../store/store'
 
 const mockStudentCard: IStudentList = {
   id: 'abc123',
-  fullname: 'John',
-  subtitle: 'Doe',
+  name: 'John',
+  surname: 'Doe',
+  subtitle: '',
   photo: '/img/stud_2.png',
   tags: [
     { id: 1, name: 'react' },

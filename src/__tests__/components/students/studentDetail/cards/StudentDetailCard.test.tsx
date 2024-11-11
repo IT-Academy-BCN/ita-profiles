@@ -25,7 +25,8 @@ describe('StudentDataCard', () => {
     const aboutData = [
         {
             id: 1,
-            fullname: 'John Doe',
+            name: 'John',
+            surname: 'Doe',
             subtitle: 'Software Developer',
             social_media: {
                 github: { url: 'https://github.com/johndoe' },

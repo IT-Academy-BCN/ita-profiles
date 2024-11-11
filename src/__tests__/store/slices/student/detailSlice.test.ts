@@ -10,7 +10,8 @@ import {
 const responseGetDetail = {
     data: {
         id: '123e4567-e89b-12d3-a456-426614174000',
-        fullname: 'Katrine Wyman Jacobson',
+        name: 'Katrine ',
+        surname: 'Wyman Jacobson',
         photo: 'https://example.com/photo.jpg',
         status: 'Active',
         tags: [
