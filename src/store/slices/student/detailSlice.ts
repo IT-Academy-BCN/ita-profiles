@@ -7,7 +7,8 @@ import {
 
 const aboutData: TAbout = {
     id: 0,
-    fullname: '',
+    name: '',
+    surname: '',
     resume: {
         subtitle: '',
         social_media: {
