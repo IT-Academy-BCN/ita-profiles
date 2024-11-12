@@ -141,16 +141,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                 <div className="flex flex-col">
                                     <div className="flex">
                                         <h2 className="text-xl font-bold">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                            {aboutData.name}&nbsp;
-                                            {aboutData.surname}
-=======
                                             {aboutData.name}
->>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
-=======
-                                            {`${aboutData.name} ${aboutData.surname}`}
->>>>>>> 8ad62a49 (Fix: EditStudentProfile modal behavior and refactor)
                                         </h2>
                                         <button
                                             className="ml-auto"

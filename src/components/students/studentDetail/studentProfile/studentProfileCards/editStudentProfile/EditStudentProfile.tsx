@@ -54,6 +54,8 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         defaultValues: {
             name: aboutData.name,
             surname: aboutData.surname,
+            name: aboutData.name,
+            surname: 'surname', // arreglar campos, name y surname
             subtitle: aboutData.resume.subtitle,
             github_url: aboutData.resume.social_media.github,
             linkedin_url: aboutData.resume.social_media.linkedin,

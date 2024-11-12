@@ -32,15 +32,7 @@ const StudentDetailCard: React.FC = () => {
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-col">
                                     <h2 className="text-xl font-bold">
-<<<<<<< HEAD
                                         {aboutData.name}
-<<<<<<< HEAD
-                                        {aboutData.surname}
-=======
->>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
-=======
-                                        {`${aboutData.name} ${aboutData.surname}`}
->>>>>>> 68f37e69 (fix aboutData type and conditional rendering bug)
                                     </h2>
                                     <p className="text-gray-2">
                                         {aboutData.resume.subtitle}

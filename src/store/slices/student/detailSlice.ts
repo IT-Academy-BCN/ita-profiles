@@ -10,6 +10,8 @@ const aboutData: TAbout = {
     id: 0,
     name: '',
     surname: '',
+    name: '',
+    surname: '',
     resume: {
         subtitle: '',
         social_media: {
@@ -67,21 +69,11 @@ const detailSlice = createSlice({
         updateTags: (state, action) => {
             if (action.payload) {
                 state.aboutData.tags = action.payload || []
+                state.aboutData.tags = action.payload || []
             } else {
-<<<<<<< HEAD
                 console.error('Payload is undefined in updateTags')
                 state.aboutData.tags = []
-=======
-              console.error("Payload is undefined in updateTags");
-              state.aboutData.tags = [];
->>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
             }
-=======
-        setEditProfileModalIsOpen: (state, action) => {
-            state.editProfileModalIsOpen = action.payload
->>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
-=======
->>>>>>> 0ffd2d6c (handle modal global states)
         },
     },
     extraReducers: (builder) => {
@@ -145,8 +137,6 @@ export const {
 <<<<<<< HEAD
 =======
 export const { setToggleProfileImage } = detailSlice.actions
+export const { updateTags } = detailSlice.actions
 
->>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
-=======
->>>>>>> 0ffd2d6c (handle modal global states)
 export default detailSlice.reducer
