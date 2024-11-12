@@ -10,6 +10,8 @@ const aboutData: TAbout = {
     id: 0,
     name: '',
     surname: '',
+    name: '',
+    surname: '',
     resume: {
         subtitle: '',
         social_media: {
@@ -62,8 +64,8 @@ const detailSlice = createSlice({
                 state.aboutData.tags = action.payload || []
                 state.aboutData.tags = action.payload || []
             } else {
-                console.error('Payload is undefined in updateTags')
-                state.aboutData.tags = []
+              console.error("Payload is undefined in updateTags");
+              state.aboutData.tags = [];
             }
         },
         setEditProfileModalIsOpen: (state, action) => {
@@ -120,11 +122,8 @@ const detailSlice = createSlice({
     },
 })
 
-export const {
-    setEditProfileImageIsOpen,
-    updateTags,
-    setEditProfileModalIsOpen,
-    resetSendingPhoto,
-    setMessage,
-} = detailSlice.actions
+export const { setToggleProfileImage } = detailSlice.actions
+export const { updateTags } = detailSlice.actions;
+
+
 export default detailSlice.reducer

@@ -84,6 +84,8 @@ export type TAbout = {
     id: number
     name: string
     surname: string
+    name: string
+    surname: string
     resume: {
         subtitle: string
         social_media: {
@@ -124,8 +126,4 @@ export interface TSkills {
     initialSkills: string[]
     onClose: () => void
     onSave: (skills: string[]) => void
-}
-
-export type TDragAndDropLanguagesProps = {
-    dropLanguages: TLanguage[],
 }
