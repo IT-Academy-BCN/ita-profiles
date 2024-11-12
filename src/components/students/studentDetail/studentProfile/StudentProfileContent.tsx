@@ -33,7 +33,6 @@ const StudentProfileContent: React.FC = () => {
                     <AdditionalTrainingCard />
                     <span className="h-0.5 w-full bg-gray-4-base" />
                     <MyProfileLanguagesCard />
-                    <span className="h-0.5 w-full bg-gray-4-base" />
                     <MyProfileModalityCard />
                 </div>
             </div>
