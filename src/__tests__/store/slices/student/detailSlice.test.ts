@@ -138,7 +138,7 @@ describe('Update student profile photo', () => {
                 type: 'updateProfilePhotoThunk/rejected',
                 payload: [
                     {
-                        "message": "Validation failed"
+                        "message": "Validation Error"
                     }
                 ],
             }),
@@ -154,7 +154,7 @@ describe('Update student profile photo', () => {
                 type: 'updateProfilePhotoThunk/fulfilled',
                 payload: [
                     {
-                        "message": "Success. Adds the photo."
+                        "message": "Photo updated successfully"
                     }
                 ],
             }),

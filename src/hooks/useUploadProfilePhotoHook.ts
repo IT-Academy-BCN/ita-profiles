@@ -1,8 +1,9 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { z, ZodIssue } from 'zod';
 import { useAppDispatch, useAppSelector } from "./ReduxHooks";
-import { setToggleProfileImage } from "../store/slices/student/detailSlice";
+import { resetSendingPhoto, setToggleProfileImage } from "../store/slices/student/detailSlice";
 import { updateProfilePhotoThunk } from "../store/thunks/updateProfilePhotoThunk";
+import { detailThunk } from "../store/thunks/getDetailResourceStudentWithIdThunk";
 
 const MAX_MB = 500000
 
@@ -43,7 +44,6 @@ const useUploadProfilePhotoHook = () => {
   const handleAccept = () => {
     if (refInput.current && refInput.current.files) {
       const file: File = refInput.current.files[0];
-
       const formData = new FormData();
       formData.append('photo', file, file.name);
 
@@ -58,6 +58,10 @@ const useUploadProfilePhotoHook = () => {
         studentId: String(aboutData.id),
         data: formData
       }))
+
+
+
+
     }
   }
 
@@ -71,18 +75,25 @@ const useUploadProfilePhotoHook = () => {
   }
 
   useEffect(() => {
-    if (photoSuccessfully) {
-      if (refInput.current) {
-        setNotifications([{ code: "custom", message: "Imagen actualizada correctamente." }])
+
+    if (isLoadingPhoto) {
+      setNotifications([{ code: "custom", message: "Enviando imagen ..." }])
+    } else {
+      setNotifications([{ code: "custom", message: "Foto actualizada exitosamente" }])
+      if (photoSuccessfully) {
+        dispatch(resetSendingPhoto())
+        setChangeImage(aboutData.photo)
+        dispatch(detailThunk(String(aboutData.id)))
         setTimeout(() => {
-          dispatch(setToggleProfileImage(false))
+          dispatch(resetSendingPhoto());
+          dispatch(setToggleProfileImage(!toggleProfileImage));
         }, 3000)
       }
     }
     if (isErrorPhoto) {
-      setNotifications([{ code: "custom", message: "Ups!! Error al procesar la imagen." }])
+      setNotifications([{ code: "custom", message: "Validation Error" }])
     }
-  }, [dispatch, isErrorPhoto, photoSuccessfully])
+  }, [aboutData.id, aboutData.photo, dispatch, isErrorPhoto, isLoadingPhoto, photoSuccessfully, toggleProfileImage])
 
   return {
     aboutData,
@@ -98,7 +109,8 @@ const useUploadProfilePhotoHook = () => {
     dispatch,
     handleCancel,
     handleAccept,
-    onChangeImage
+    onChangeImage,
+    resetSendingPhoto
   }
 }
 export default useUploadProfilePhotoHook
