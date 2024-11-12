@@ -32,7 +32,11 @@ const StudentDetailCard: React.FC = () => {
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-col">
                                     <h2 className="text-xl font-bold">
-                                        {`${aboutData.name} ${aboutData.surname}`}
+                                        {aboutData.name}
+<<<<<<< HEAD
+                                        {aboutData.surname}
+=======
+>>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
                                     </h2>
                                     <p className="text-gray-2">
                                         {aboutData.resume.subtitle}

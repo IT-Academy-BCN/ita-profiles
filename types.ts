@@ -125,7 +125,10 @@ export type TSkills = {
     onClose: () => void
     onSave: (skills: string[]) => void
 }
+<<<<<<< HEAD:types.ts
 
 export type TDragAndDropLanguagesProps = {
     dropLanguages: TLanguage[],
 }
+=======
+>>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre):src/interfaces/interfaces.ts

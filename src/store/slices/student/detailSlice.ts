@@ -46,6 +46,27 @@ const detailSlice = createSlice({
         setEditProfileModalIsOpen: (state) => {
             state.editProfileModalIsOpen = !state.editProfileModalIsOpen
         },
+        resetSendingPhoto: (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = false
+            state.photoSuccessfully = false
+        },
+        setMessage: (state, action) => {
+            state.updatedMessage = action.payload
+        },
+        updateTags: (state, action) => {
+            if (action.payload) {
+                state.aboutData.tags = action.payload || []
+            } else {
+<<<<<<< HEAD
+                console.error('Payload is undefined in updateTags')
+                state.aboutData.tags = []
+=======
+              console.error("Payload is undefined in updateTags");
+              state.aboutData.tags = [];
+>>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(detailThunk.pending, (state) => {
@@ -94,6 +115,7 @@ const detailSlice = createSlice({
     },
 })
 
+<<<<<<< HEAD
 export const {
     setEditProfileImageIsOpen,
     updateTags,
@@ -101,4 +123,10 @@ export const {
     resetSendingPhoto,
     setMessage,
 } = detailSlice.actions
+=======
+export const { setToggleProfileImage } = detailSlice.actions
+export const { updateTags } = detailSlice.actions;
+
+
+>>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
 export default detailSlice.reducer

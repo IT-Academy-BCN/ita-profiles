@@ -33,15 +33,19 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         formState: { errors, isDirty },
         formState: { errors, isDirty },
     } = useForm({
+<<<<<<< HEAD
+        defaultValues,
+=======
         defaultValues: {
             name: aboutData.name,
-            surname: aboutData.surname,
+            surname: 'surname', // arreglar campos, name y surname
             subtitle: aboutData.resume.subtitle,
             github_url: aboutData.resume.social_media.github,
             linkedin_url: aboutData.resume.social_media.linkedin,
             about: aboutData.resume.about,
             tags_ids: aboutData.tags.map((item) => item.id),
         },
+>>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
     })
     const isSubmitDisabled = !isDirty
 

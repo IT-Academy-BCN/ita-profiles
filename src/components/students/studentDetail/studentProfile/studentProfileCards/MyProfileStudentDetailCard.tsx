@@ -82,7 +82,12 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                 <div className="flex flex-col">
                                     <div className="flex">
                                         <h2 className="text-xl font-bold">
-                                            {`${aboutData.name} ${aboutData.surname}`}
+<<<<<<< HEAD
+                                            {aboutData.name}&nbsp;
+                                            {aboutData.surname}
+=======
+                                            {aboutData.name}
+>>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
                                         </h2>
                                         <button
                                             className="ml-auto"
