@@ -1,6 +1,5 @@
 import target from '../../../../../assets/img/target.png'
 import folder from '../../../../../assets/img/folder.png'
-import { Pencil } from '../../../../../assets/svg'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 

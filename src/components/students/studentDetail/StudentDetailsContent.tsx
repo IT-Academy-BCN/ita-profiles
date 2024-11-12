@@ -33,7 +33,7 @@ const StudentDetailsContent: React.FC<TStudentDetailsContent> = ({
                 </button>
             </div>
 
-            <div className={`overflow-y-auto`}>
+            <div className='overflow-y-auto'>
                 <div className="flex flex-col gap-10">
                     <StudentDetailCard />
                     <ProjectsCard />
