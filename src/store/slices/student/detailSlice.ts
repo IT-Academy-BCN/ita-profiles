@@ -38,6 +38,14 @@ const detailSlice = createSlice({
         setToggleProfileImage: (state, action) => {
             state.toggleProfileImage = action.payload
         },
+        updateTags: (state, action) => {
+            if (action.payload) {
+              state.aboutData.tags = action.payload || [];
+            } else {
+              console.error("Payload is undefined in updateTags");
+              state.aboutData.tags = [];
+            }
+          },
     },
     extraReducers: (builder) => {
         builder.addCase(detailThunk.pending, (state) => {
@@ -72,5 +80,7 @@ const detailSlice = createSlice({
 })
 
 export const { setToggleProfileImage } = detailSlice.actions
+export const { updateTags } = detailSlice.actions;
+
 
 export default detailSlice.reducer

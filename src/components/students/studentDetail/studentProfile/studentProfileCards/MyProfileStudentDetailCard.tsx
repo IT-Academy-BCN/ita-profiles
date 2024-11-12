@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
-import { Stud1 as ProfilePicture } from '../../../../../assets/img'
+import { createPortal } from 'react-dom'
 import { ITag } from '../../../../../interfaces/interfaces'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
@@ -9,6 +8,10 @@ import { ModalPortals } from '../../../../ModalPortals'
 import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
 import { Error } from '../../../../feedbackMessages/Error'
 import { Success } from '../../../../feedbackMessages/Success'
+import EditSkills from './editStudentProfile/EditSkills'
+import { updateTags } from '../../../../../store/slices/student/detailSlice'
+import { Stud1 as ProfilePicture } from '../../../../../assets/img'
+import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =
@@ -21,6 +24,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
         updatedError,
         updatedMessage,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
+    const [showEditSkills, setShowEditSkills] = useState(false)
 
     const dispatch = useAppDispatch()
 
@@ -34,6 +38,25 @@ const MyProfileStudentDetailCard: React.FC = () => {
 
     const refreshStudentData = (id: string) => {
         dispatch(detailThunk(id))
+    }
+
+    const handleOpenEditSkills = () => {
+        setShowEditSkills(true)
+    }
+
+    const handleCloseEditSkills = () => {
+        setShowEditSkills(false)
+    }
+
+    const handleSaveSkills = (updatedSkills: string[]) => {
+        const updatedTags = updatedSkills.map((skill) => ({
+            id: Math.random(),
+            name: skill,
+        }))
+
+        dispatch(updateTags(updatedTags))
+
+        handleCloseEditSkills()
     }
 
     return (
@@ -156,11 +179,30 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                         </li>
                                     ))}
                             </ul>
-                            <button className="ml-auto" type="button">
+                            <button
+                                className="ml-auto"
+                                type="button"
+                                onClick={handleOpenEditSkills}
+                            >
                                 <img src={Pencil} alt="edit tags" />
                             </button>
                         </div>
                     </div>
+                    {!isLoadingAboutData &&
+                        aboutData &&
+                        showEditSkills &&
+                        createPortal(
+                            <EditSkills
+                                initialSkills={
+                                    aboutData?.tags?.map(
+                                        (tag: ITag) => tag.name,
+                                    ) || []
+                                }
+                                onClose={handleCloseEditSkills}
+                                onSave={handleSaveSkills}
+                            />,
+                            document.body,
+                        )}
                 </div>
             )}
         </div>

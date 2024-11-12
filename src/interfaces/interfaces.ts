@@ -108,3 +108,9 @@ export type TCollaboration = {
     collaboration_description: string
     quantity: number
 }
+
+export interface TSkills {
+    initialSkills: string[]
+    onClose: () => void
+    onSave: (skills: string[]) => void
+}
