@@ -127,7 +127,3 @@ export interface TSkills {
     onClose: () => void
     onSave: (skills: string[]) => void
 }
-
-export type TDragAndDropLanguagesProps = {
-    dropLanguages: TLanguage[],
-}
