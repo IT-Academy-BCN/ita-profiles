@@ -32,7 +32,7 @@ const StudentsList: React.FC = () => {
       className={`${isPanelOpen
         ? 'md:grid-cols-[minmax(300px,450px)]'
         : 'lg:grid-cols-[minmax(300px,450px)_minmax(300px,450px)]'
-        } grid gap-y-1 gap-x-6 pr-8 overflow-auto`}
+        } grid gap-y-1 gap-x-6 pr-8 overflow-y-auto`}
     >
       {students ? (
         students.map((student) => <StudentCard key={student.id} {...student} />)
