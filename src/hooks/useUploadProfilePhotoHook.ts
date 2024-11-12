@@ -78,21 +78,20 @@ const useUploadProfilePhotoHook = () => {
 
     if (isLoadingPhoto) {
       setNotifications([{ code: "custom", message: "Enviando imagen ..." }])
-    } else {
-      setNotifications([{ code: "custom", message: "Foto actualizada exitosamente" }])
-      if (photoSuccessfully) {
-        dispatch(resetSendingPhoto())
-        setChangeImage(aboutData.photo)
-        dispatch(detailThunk(String(aboutData.id)))
-        setTimeout(() => {
-          dispatch(resetSendingPhoto());
-          dispatch(setToggleProfileImage(!toggleProfileImage));
-        }, 3000)
-      }
     }
     if (isErrorPhoto) {
       setNotifications([{ code: "custom", message: "Validation Error" }])
     }
+    if (photoSuccessfully) {
+      setNotifications([{ code: "custom", message: "Foto actualizada exitosamente" }]);
+      dispatch(detailThunk(String(aboutData.id)))
+
+      setTimeout(() => {
+        dispatch(resetSendingPhoto());
+        dispatch(setToggleProfileImage(!toggleProfileImage));
+      }, 3000)
+    }
+
   }, [aboutData.id, aboutData.photo, dispatch, isErrorPhoto, isLoadingPhoto, photoSuccessfully, toggleProfileImage])
 
   return {
