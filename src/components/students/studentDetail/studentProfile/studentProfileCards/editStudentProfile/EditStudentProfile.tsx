@@ -30,7 +30,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         formState: { errors },
     } = useForm({
         defaultValues: {
-            name: aboutData.fullname,
+            name: aboutData.name,
             surname: 'surname', // arreglar campos, name y surname
             subtitle: aboutData.resume.subtitle,
             github_url: aboutData.resume.social_media.github,

@@ -90,7 +90,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                 <div className="flex flex-col">
                                     <div className="flex">
                                         <h2 className="text-xl font-bold">
-                                            {aboutData.fullname}
+                                            {aboutData.name}
                                         </h2>
                                         <button
                                             className="ml-auto"
