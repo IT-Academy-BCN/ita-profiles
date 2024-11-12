@@ -30,11 +30,33 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         handleSubmit,
         formState: { errors, isDirty },
     } = useForm({
-        defaultValues,
+        defaultValues: {
+            name: aboutData.name,
+            surname: 'surname', // arreglar campos, name y surname
+            subtitle: aboutData.resume.subtitle,
+            github_url: aboutData.resume.social_media.github,
+            linkedin_url: aboutData.resume.social_media.linkedin,
+            about: aboutData.resume.about,
+            tags_ids: aboutData.tags.map((item) => item.id),
+        },
     })
-    const isSubmitDisabled = !isDirty
+    const url = `http://localhost:8000/api/v1/student/${aboutData.id}/resume/profile`
 
-    if (!editProfileModalIsOpen) return null
+    const handleButtonSubmit = (data: TStudentFormData): void => {
+        dispatch(updateDetailThunk({ url, formData: data }))
+            .unwrap()
+            .then(() => {
+                handleRefresh(aboutData.id.toString())
+                handleModal()
+            })
+            .catch((error) => {
+                console.error('Error al actualizar el perfil:', error)
+            })
+    }
+
+    const handleProfileImage = () => {
+        dispatch(setToggleProfileImage(!toggleProfileImage))
+    }
 
     return (
         editProfileModalIsOpen && (
