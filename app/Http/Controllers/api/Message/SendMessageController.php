@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api\Message;
+namespace App\Http\Controllers\api\Message;
 
 use App\Models\Message;
 use App\Models\User;
