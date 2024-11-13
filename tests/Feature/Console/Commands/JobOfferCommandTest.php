@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\JobOffer;
+use App\Http\Controllers\Api\Job\JobOfferController;
 
 class JobOfferCommandTest extends TestCase
 {
@@ -16,5 +17,10 @@ class JobOfferCommandTest extends TestCase
     {
         // Check if the JobOffer model exists
         $this->assertTrue(class_exists(JobOffer::class));
+    }
+    public function test_job_offer_controller_exists(): void
+    {
+        // Check if the JobOfferController exists
+        $this->assertTrue(class_exists(JobOfferController::class));
     }
 }
