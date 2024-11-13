@@ -17,7 +17,15 @@ class JobOffer extends Model
     use HasFactory;
     use HasUuids;
 
-    protected $guarded = ['id'];
+    //protected $guarded = ['id']; Preguntar esta modificacion?
+    protected $fillable = [
+        'recruiter_id',
+        'title',
+        'description',
+        'location',
+        'skills',
+        'salary',
+    ];
 
     public function recruiter(): BelongsTo
     {
