@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Tag;
+use App\Models\User;
+use App\Models\Resume;
+use App\Models\JobOffer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
@@ -20,6 +24,7 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function resume(): HasOne
     {
         return $this->hasOne(Resume::class);
@@ -28,5 +33,10 @@ class Student extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(related: Tag::class);
+    }
+
+    public function jobOffers(): BelongsToMany
+    {
+        return $this->belongsToMany(related: JobOffer::class);
     }
 }

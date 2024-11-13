@@ -4,6 +4,7 @@ import {
     detailThunk,
     updateDetailThunk,
 } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import { updateProfilePhotoThunk } from '../../thunks/updateProfilePhotoThunk'
 
 const aboutData: TAbout = {
     id: 0,
@@ -30,6 +31,9 @@ export const initialState = {
     updatedMessage: '',
     updatedError: '',
     isUpdateLoading: false,
+    isLoadingPhoto: false,
+    isErrorPhoto: false,
+    photoSuccessfully: false,
 }
 
 const detailSlice = createSlice({
@@ -41,6 +45,22 @@ const detailSlice = createSlice({
         },
         setEditProfileModalIsOpen: (state, action) => {
             state.editProfileModalIsOpen = action.payload
+        },
+        resetSendingPhoto: (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = false
+            state.photoSuccessfully = false
+        },
+        setMessage: (state, action) => {
+            state.updatedMessage = action.payload
+        },
+        updateTags: (state, action) => {
+            if (action.payload) {
+                state.aboutData.tags = action.payload || []
+            } else {
+                console.error('Payload is undefined in updateTags')
+                state.aboutData.tags = []
+            }
         },
     },
     extraReducers: (builder) => {
@@ -72,10 +92,29 @@ const detailSlice = createSlice({
             state.updatedError = 'Error al realizar la actualizacion del perfil'
             state.isUpdateLoading = false
         })
+        builder.addCase(updateProfilePhotoThunk.pending, (state) => {
+            state.isLoadingPhoto = true
+            state.isErrorPhoto = false
+            state.photoSuccessfully = false
+        })
+        builder.addCase(updateProfilePhotoThunk.fulfilled, (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = false
+            state.photoSuccessfully = true
+        })
+        builder.addCase(updateProfilePhotoThunk.rejected, (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = true
+            state.photoSuccessfully = false
+        })
     },
 })
 
-export const { setToggleProfileImage, setEditProfileModalIsOpen } =
-    detailSlice.actions
-
+export const {
+    setToggleProfileImage,
+    updateTags,
+    setEditProfileModalIsOpen,
+    resetSendingPhoto,
+    setMessage,
+} = detailSlice.actions
 export default detailSlice.reducer
