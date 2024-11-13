@@ -66,3 +66,8 @@ Route::prefix('tags')->group(function () {
     Route::put('/{tag}', TagUpdateController::class)->name('tag.update');
 
 });
+
+//Message routes
+Route::prefix('messages')->group(function () {
+    Route::post('/{receiver}', [SendMessageController::class, 'send'])->name('message.send');
+})
