@@ -15,14 +15,13 @@ class JobOfferCommandTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_job_offer_model_exists(): void
+    public function testIfJobOfferModelExists(): void
     {
-        // Check if the JobOffer model exists
         $this->assertTrue(class_exists(JobOffer::class));
     }
-    public function test_job_offer_controller_exists(): void
+    public function testIfJobOfferControllerExists(): void
     {
-        // Check if the JobOfferController exists
         $this->assertTrue(class_exists(JobOfferController::class));
     }
+    
 }
