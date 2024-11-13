@@ -34,6 +34,10 @@ use App\Http\Controllers\api\Auth\{
 };
 use App\Http\Middleware\EnsureStudentOwner;
 
+use App\Http\Controllers\api\Message\{
+    SendMessageController,
+};
+
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
@@ -69,5 +73,5 @@ Route::prefix('tags')->group(function () {
 
 //Message routes
 Route::prefix('messages')->group(function () {
-    Route::post('/{receiver}', [SendMessageController::class, 'send'])->name('message.send');
-})
+    Route::post('/{receiver}', SendMessageController::class)->name('message.send');
+});

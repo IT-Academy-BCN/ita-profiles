@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\api\Mesagge;
+namespace App\Http\Controllers\api\Message;
 
 use app\Models\Message;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SendMessageRequest;
-use DragonCode\PrettyArray\Services\Formatters\Json;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
 
