@@ -12,21 +12,25 @@ use App\Models\User;
 
 class SendMessageController extends Controller
 {
-    public function __invoke(SendMessageRequest $request, User $receiver):JsonResponse
+    public function __invoke(SendMessageRequest $request, $receiver): JsonResponse
     {
         $data = $request->validated();
 
+        // Assuming the authenticated user is the sender
+        $sender = $request->user(); // Could be User, Admin, etc.
+
         $message = Message::create([
-            'sender_id' => $request->user()->id,
+            'sender_id' => $sender->id,
+            'sender_type' => get_class($sender),
             'receiver_id' => $receiver->id,
+            'receiver_type' => get_class($receiver),
             'subject' => $data['subject'],
             'body' => $data['body'],
         ]);
 
         return response()->json([
-            'data' => $message,
             'message' => 'Message sent successfully',
-        ], 200);
-
+            'data' => $message,
+        ]);
     }
 }

@@ -12,18 +12,22 @@ class Message extends Model
 
     protected $fillable = [
         'sender_id',
+        'sender_type',
         'receiver_id',
+        'receiver_type',
         'subject',
         'body'
     ];
 
+    // Polymorphic relationship for the sender
     public function sender()
     {
-        return $this->belongsTo(User::class, 'sender_id');
+        return $this->morphTo();
     }
 
+    // Polymorphic relationship for the receiver
     public function receiver()
     {
-        return $this->belongsTo(User::class, 'receiver_id');
+        return $this->morphTo();
     }
 }

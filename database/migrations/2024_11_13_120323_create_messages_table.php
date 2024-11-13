@@ -13,9 +13,17 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('sender_id');
+            $table->string('sender_type');
+            $table->unsignedBigInteger('receiver_id');
+            $table->string('receiver_type');
+            $table->string('subject');
+            $table->text('body');
             $table->timestamps();
+
+            // Indexes to improve polymorphic queries
+            $table->index(['sender_id', 'sender_type']);
+            $table->index(['receiver_id', 'receiver_type']);
         });
     }
 
