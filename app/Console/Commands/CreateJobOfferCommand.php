@@ -18,8 +18,9 @@ class CreateJobOfferCommand extends Command
                             {title : The title of the job offer}
                             {description : The description of the job offer}
                             {location : The location of the job offer}
+                            {salary : The salary offered for the job offer}
                             {skills? : The skills required for the job offer}
-                            {salary : The salary offered for the job offer}';
+                           ';
 
     /**
      * The console command description.
