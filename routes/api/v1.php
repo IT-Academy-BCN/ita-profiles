@@ -73,5 +73,6 @@ Route::prefix('tags')->group(function () {
 
 //Message routes
 Route::prefix('messages')->group(function () {
-    Route::post('/{type}/{id}', SendMessageController::class)->name('message.send');
+    Route::post('/{type}/{id}', [SendMessageController::class, '__invoke'])->name('message.send');
 });
+

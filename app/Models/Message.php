@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace App\Models;
 
@@ -12,22 +11,20 @@ class Message extends Model
 
     protected $fillable = [
         'sender_id',
-        'sender_type',
         'receiver_id',
-        'receiver_type',
         'subject',
         'body'
     ];
 
-    // Polymorphic relationship for the sender
+    // Define the sender relationship
     public function sender()
     {
-        return $this->morphTo();
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
-    // Polymorphic relationship for the receiver
+    // Define the receiver relationship
     public function receiver()
     {
-        return $this->morphTo();
+        return $this->belongsTo(User::class, 'receiver_id');
     }
 }

@@ -57,18 +57,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(Resume::class);
     }
-    
-    // Define polymorphic relationship as sender
+    // Messages that the user has sent
     public function sentMessages()
     {
-        return $this->morphMany(Message::class, 'sender');
+        return $this->hasMany(Message::class, 'sender_id');
     }
-
-    // Define polymorphic relationship as receiver
+    
+    // Messages that the user has received
     public function receivedMessages()
     {
-        return $this->morphMany(Message::class, 'receiver');
-    }
-
-
+        return $this->hasMany(Message::class, 'receiver_id');
+    }    
 }
