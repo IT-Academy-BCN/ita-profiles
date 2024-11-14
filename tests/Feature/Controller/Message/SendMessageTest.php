@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Tests\Feature\Controller\Message;
 
 use App\Models\User;
+use App\Models\Student;
+use App\Models\Recruiter;
 use App\Models\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,29 +16,26 @@ class SendMessageTest extends TestCase
 
     public function test_user_can_send_message_successfully()
     {
-        // Create sender and receiver users
         $sender = User::factory()->create();
-        $receiver = User::factory()->create();
+        $receiver = Student::factory()->create();
 
-        // Act as the sender
         $this->actingAs($sender);
 
-        // Send a POST request to send a message
-        $response = $this->postJson("/api/messages/{$receiver->id}", [
+        $response = $this->postJson('/api/messages', [
             'subject' => 'Hello there!',
             'body' => 'Just wanted to reach out to you.',
+            'receiver_id' => $receiver->id,
+            'receiver_type' => 'student',
         ]);
 
-        // Assert successful response
         $response->assertStatus(200);
-        $response->assertJson([
-            'message' => 'Message sent successfully',
-        ]);
+        $response->assertJson(['message' => 'Message sent successfully']);
 
-        // Verify that the message was stored in the database
         $this->assertDatabaseHas('messages', [
             'sender_id' => $sender->id,
+            'sender_type' => User::class,
             'receiver_id' => $receiver->id,
+            'receiver_type' => Student::class,
             'subject' => 'Hello there!',
             'body' => 'Just wanted to reach out to you.',
         ]);
@@ -44,52 +43,48 @@ class SendMessageTest extends TestCase
 
     public function test_message_requires_subject_and_body_fields()
     {
-        // Create sender and receiver users
         $sender = User::factory()->create();
-        $receiver = User::factory()->create();
+        $receiver = Recruiter::factory()->create();
 
-        // Act as the sender
         $this->actingAs($sender);
 
-        // Send an empty message payload to test validation
-        $response = $this->postJson("/api/messages/{$receiver->id}", []);
+        $response = $this->postJson('/api/messages', [
+            'receiver_id' => $receiver->id,
+            'receiver_type' => 'recruiter',
+        ]);
 
-        // Assert validation errors for missing fields
-        $response->assertStatus(422); // Unprocessable Entity
+        $response->assertStatus(422);
         $response->assertJsonValidationErrors(['subject', 'body']);
     }
 
-    public function test_invalid_receiver_id_returns_not_found_error()
+    public function test_invalid_receiver_type_returns_error()
     {
-        // Create a sender
         $sender = User::factory()->create();
 
-        // Act as the sender
         $this->actingAs($sender);
 
-        // Attempt to send a message to a non-existent user ID
-        $invalidReceiverId = 9999;
-        $response = $this->postJson("/api/messages/{$invalidReceiverId}", [
-            'subject' => 'Hello!',
-            'body' => 'Message content.',
+        $response = $this->postJson('/api/messages', [
+            'subject' => 'Invalid receiver type test',
+            'body' => 'Testing with an invalid type',
+            'receiver_id' => 'some-uuid',
+            'receiver_type' => 'invalidType',
         ]);
 
-        // Assert not found error response
-        $response->assertStatus(404); // Not Found
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['receiver_type']);
     }
 
     public function test_guest_cannot_send_message()
     {
-        // Create a receiver
         $receiver = User::factory()->create();
 
-        // Attempt to send a message as a guest
-        $response = $this->postJson("/api/messages/{$receiver->id}", [
-            'subject' => 'Guest attempt',
-            'body' => 'This should not go through.',
+        $response = $this->postJson('/api/messages', [
+            'subject' => 'Unauthorized attempt',
+            'body' => 'Trying to send a message as guest',
+            'receiver_id' => $receiver->id,
+            'receiver_type' => 'user',
         ]);
 
-        // Assert unauthorized error response
-        $response->assertStatus(401); // Unauthorized
+        $response->assertStatus(401);
     }
 }
