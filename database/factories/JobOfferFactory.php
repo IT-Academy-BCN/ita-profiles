@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Recruiter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,13 @@ class JobOfferFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create();
         return [
-            //
+            'recruiter_id' => Recruiter::inRandomOrder()->first()->id,
+            'title' => $faker->jobTitle(),
+            'description' => $faker->text(),
+            'location' => $faker->city(),
+            'salary' => $faker->numberBetween(1000, 3000)
         ];
     }
 }
