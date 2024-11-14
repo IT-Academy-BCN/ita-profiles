@@ -28,4 +28,13 @@ class Recruiter extends Model
     {
         return $this->hasMany(JobOffer::class);
     }
+    public function sentMessages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->morphMany(Message::class, 'receiver');
+    }
 }

@@ -39,4 +39,13 @@ class Student extends Model
     {
         return $this->belongsToMany(related: JobOffer::class);
     }
+    public function sentMessages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->morphMany(Message::class, 'receiver');
+    }
 }

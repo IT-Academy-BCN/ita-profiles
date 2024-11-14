@@ -57,5 +57,17 @@ class User extends Authenticatable
     {
         return $this->hasOne(Resume::class);
     }
+        // Messages sent by the user
+    public function sentMessages()
+    {
+        return $this->morphMany(Message::class, 'sender');
+    }
+
+    // Messages received by the user
+    public function receivedMessages()
+    {
+        return $this->morphMany(Message::class, 'receiver');
+    }
+
  
 }
