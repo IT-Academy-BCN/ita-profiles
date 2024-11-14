@@ -16,8 +16,13 @@ class CompanyFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create();
         return [
-            //
+            'name' => $faker->company(),
+            'email' => $faker->unique()->safeEmail(),
+            'CIF' => $faker->unique()->regexify('[1-9]{8}[A-Z]'),
+            'location' => $faker->address(),
+            'website' => $faker->url()
         ];
     }
 }
