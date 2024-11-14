@@ -1,9 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use Illuminate\Http\Request;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
+use App\Http\Requests\Job\CreateJobOfferRequest;
 use App\Http\Controllers\Api\Job\JobOfferController;
 
 class CreateJobOfferCommand extends Command
@@ -13,7 +17,7 @@ class CreateJobOfferCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'joboffer:create
+    protected $signature = 'job:offer:create
                             {recruiter_id : The ID of the recruiter}
                             {title : The title of the job offer}
                             {description : The description of the job offer}
@@ -28,7 +32,23 @@ class CreateJobOfferCommand extends Command
      * @var string
      */
     protected $description = 'Create a new job offer via the console';
+    /**
+     * The JobOfferController instance.
+     *
+     * @var \App\Http\Controllers\Api\Job\JobOfferController
+     */
+    protected $jobOfferController;
 
+    /**
+     * Create a new command instance.
+     *
+     * @param \App\Http\Controllers\Api\Job\JobOfferController $jobOfferController
+     */
+    public function __construct(JobOfferController $jobOfferController)
+    {
+        parent::__construct();
+        $this->jobOfferController = $jobOfferController;
+    }
     /**
      * Execute the console command.
      */
@@ -42,12 +62,13 @@ class CreateJobOfferCommand extends Command
             'skills' => $this->argument('skills') ?? null,
             'salary' => $this->argument('salary'),
         ];
-
-        // Invoke the controller and pass the data
-        $controller = new JobOfferController();
-        $response = $controller->createJobOffer((object) $data); 
-
-        // Show result message
+    
+        $request = new CreateJobOfferRequest(app());
+        $request->merge($data);
+        $request->validateResolved();
+    
+        $response = $this->jobOfferController->createJobOffer($request);
+    
         $jobOffer = $response->getData()->jobOffer;
         $this->info("Oferta de feina creada amb èxit: " . json_encode($jobOffer));
     }

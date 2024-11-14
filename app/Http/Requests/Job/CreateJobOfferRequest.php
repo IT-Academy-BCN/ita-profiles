@@ -4,34 +4,33 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Job;
 
+use Illuminate\Container\Container;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateJobOfferRequest extends FormRequest
 {
-    /**
-     * 
-     *
-     * @return bool
-     */
-    public function authorize(): bool
+    protected $container;
+
+    public function __construct(Container $container)
     {
-        return true;
+        parent::__construct();
+        $this->container = $container; 
     }
 
-    /**
-     * 
-     *
-     * @return array
-     */
-    public function rules(): array
+    public function authorize()
+    {
+        return true; 
+    }
+
+    public function rules()
     {
         return [
-            'recruiter_id' => 'required|uuid|exists:recruiters,id',
+            'recruiter_id' => 'required|exists:recruiters,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
-            'skills' => 'nullable|string|max:255',
-            'salary' => 'required|string|max:255',
+            'salary' => 'required|numeric',
+            'skills' => 'nullable|string',
         ];
     }
     public function messages()
