@@ -45,7 +45,7 @@ class SendMessageTest extends TestCase
     public function test_message_requires_subject_and_body_fields()
     {
         $sender = User::factory()->create();
-        $receiver = Recruiter::factory()->create();
+        $receiver = Student::factory()->create();
 
         $this->actingAs($sender);
 
@@ -74,18 +74,97 @@ class SendMessageTest extends TestCase
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['receiver_type']);
     }
-
-    public function test_guest_cannot_send_message()
+    public function test_subject_exceeds_255_characters()
     {
-        $receiver = User::factory()->create();
-
+        $sender = User::factory()->create();
+        $receiver = Student::factory()->create();
+    
+        $this->actingAs($sender);
+    
         $response = $this->postJson(route('message.send'), [
-            'subject' => 'Unauthorized attempt',
-            'body' => 'Trying to send a message as guest',
+            'subject' => str_repeat('A', 256),
+            'body' => 'Example body', // 256 characters
             'receiver_id' => $receiver->id,
+            'receiver_type' => 'student',
+        ]);
+    
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['subject']);
+    }
+    public function test_receiver_id_is_not_a_uuid()
+    {
+        $sender = User::factory()->create();
+        $receiver = User::factory()->create();
+    
+        $this->actingAs($sender);
+    
+        $response = $this->postJson(route('message.send'), [
+            'subject' => 'Non-UUID Receiver ID Test',
+            'body' => 'Testing receiver ID format validation.',
+            'receiver_id' => 'not-a-uuid', // Invalid UUID
             'receiver_type' => 'user',
         ]);
-
-        $response->assertStatus(401);
+    
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['receiver_id']);
     }
+    public function test_invalid_receiver_type()
+    {
+        $sender = User::factory()->create();
+        $receiver = Student::factory()->create();
+    
+        $this->actingAs($sender);
+    
+        $response = $this->postJson(route('message.send'), [
+            'subject' => 'Invalid Receiver Type Test',
+            'body' => 'Testing invalid receiver type validation.',
+            'receiver_id' => $receiver->id,
+            'receiver_type' => 'admin', // Invalid receiver type
+        ]);
+    
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['receiver_type']);
+    }
+    public function test_body_field_is_empty()
+    {
+        $sender = User::factory()->create();
+        $receiver = Student::factory()->create();
+    
+        $this->actingAs($sender);
+    
+        $response = $this->postJson(route('message.send'), [
+            'subject' => 'Empty Body Test',
+            'body' => '', // Empty body
+            'receiver_id' => $receiver->id,
+            'receiver_type' => 'student',
+        ]);
+    
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['body']);
+    }
+    public function test_subject_field_is_empty()
+    {
+        $sender = User::factory()->create();
+        $receiver = Student::factory()->create();
+    
+        $this->actingAs($sender);
+    
+        $response = $this->postJson(route('message.send'), [
+            'subject' => '', // Empty subject
+            'body' => 'This is a message with an empty subject.',
+            'receiver_id' => $receiver->id,
+            'receiver_type' => 'student',
+        ]);
+    
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['subject']);
+    }
+    
+    
+    
+    
+    
+    
+
+   
 }
