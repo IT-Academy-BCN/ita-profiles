@@ -75,4 +75,14 @@ class JobOfferCommandTest extends TestCase
             'skills' => 'PHP, Laravel, JavaScript'
         ]);
     }
+    public function testCreateJobOfferWithMissingRequiredFields(): void
+    {
+        $this->expectException(\Symfony\Component\Console\Exception\RuntimeException::class);
+
+        Artisan::call('job:offer:create', [
+            'recruiter_id' => $this->recruiter->id,
+            // Missing required fields
+            'description' => 'Looking for a Junior Developer.'
+        ]);
+    }
 }
