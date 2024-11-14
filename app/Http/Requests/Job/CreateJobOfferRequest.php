@@ -6,16 +6,21 @@ namespace App\Http\Requests\Job;
 
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Routing\Redirector;
+
 
 class CreateJobOfferRequest extends FormRequest
 {
     protected $container;
+    protected $redirector;
 
-    public function __construct(Container $container)
+    public function __construct(Container $container, Redirector $redirector)
     {
         parent::__construct();
-        $this->container = $container; 
+        $this->container = $container;
+        $this->redirector = $redirector;
     }
+
 
     public function authorize()
     {

@@ -6,7 +6,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Http\Request;
 use Illuminate\Console\Command;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\App;
+use Illuminate\Contracts\Container\Container;
 use App\Http\Requests\Job\CreateJobOfferRequest;
 use App\Http\Controllers\Api\Job\JobOfferController;
 
@@ -38,16 +40,34 @@ class CreateJobOfferCommand extends Command
      * @var \App\Http\Controllers\Api\Job\JobOfferController
      */
     protected $jobOfferController;
+/**
+     * The container instance.
+     *
+     * @var \Illuminate\Contracts\Container\Container
+     */
+    protected $container;
+
+    /**
+     * The redirector instance.
+     *
+     * @var \Illuminate\Routing\Redirector
+     */
+    protected $redirector;
 
     /**
      * Create a new command instance.
      *
      * @param \App\Http\Controllers\Api\Job\JobOfferController $jobOfferController
      */
-    public function __construct(JobOfferController $jobOfferController)
-    {
+    public function __construct(
+        JobOfferController $jobOfferController,
+        Container $container,
+        Redirector $redirector
+    ) {
         parent::__construct();
         $this->jobOfferController = $jobOfferController;
+        $this->container = $container;
+        $this->redirector = $redirector;
     }
     /**
      * Execute the console command.
@@ -60,10 +80,10 @@ class CreateJobOfferCommand extends Command
             'description' => $this->argument('description'),
             'location' => $this->argument('location'),
             'skills' => $this->argument('skills') ?? null,
-            'salary' => $this->argument('salary'),
+            'salary' =>(float) $this->argument('salary'),
         ];
     
-        $request = new CreateJobOfferRequest(app());
+        $request = new CreateJobOfferRequest($this->container, $this->redirector);
         $request->merge($data);
         $request->validateResolved();
     
