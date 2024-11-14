@@ -12,33 +12,24 @@ use Illuminate\Support\Facades\Auth;
 
 class SendMessageController extends Controller
 {
-    public function __invoke(SendMessageRequest $request, int $id): JsonResponse
+    public function __invoke(SendMessageRequest $request): JsonResponse
     {
-        // Find the receiver by ID
-        $receiver = User::find($id);
+        // Get the receiver from the request (already validated and resolved)
+        $receiver = $request->getReceiver();
 
-        if (!$receiver) {
-            // Return 404 if receiver not found
-            return response()->json(['error' => 'Receiver not found'], 404);
-        }
-
-        // Get the authenticated user as the sender
-        $sender = Auth::user();
-        if (!$sender) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        // Create the message
         $message = Message::create([
             'sender_id' => $sender->id,
+            'sender_type' =>get_class($sender),
             'receiver_id' => $receiver->id,
+            'receiver_type' => get_class($receiver),
             'subject' => $request->subject,
             'body' => $request->body,
         ]);
 
         return response()->json([
             'message' => 'Message sent successfully',
-            'data' => $message,
+            'date' => $message,
         ], 200);
+
     }
 }
