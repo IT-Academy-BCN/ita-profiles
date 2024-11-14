@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,7 @@ class RecruiterFactory extends Factory
         $faker = \Faker\Factory::create();
         return [
             'user_id' => User::inRandomOrder()->first()->id,
+            'company_id' => Company::inRandomOrder()->first()->id
         ];
     }
 }
