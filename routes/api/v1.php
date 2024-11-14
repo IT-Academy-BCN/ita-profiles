@@ -73,6 +73,6 @@ Route::prefix('tags')->group(function () {
 
 //Message routes
 Route::prefix('messages')->group(function () {
-    Route::post('/{id}', SendMessageController::class)->name('message.send');
+    Route::post('/', SendMessageController::class)->name('message.send');
 });
 

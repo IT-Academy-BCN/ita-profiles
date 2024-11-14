@@ -20,8 +20,8 @@ class SendMessageTest extends TestCase
         $receiver = Student::factory()->create();
 
         $this->actingAs($sender);
-
-        $response = $this->postJson('/api/messages', [
+        
+        $response = $this->postJson(route('message.send'), [
             'subject' => 'Hello there!',
             'body' => 'Just wanted to reach out to you.',
             'receiver_id' => $receiver->id,
@@ -29,6 +29,7 @@ class SendMessageTest extends TestCase
         ]);
 
         $response->assertStatus(200);
+
         $response->assertJson(['message' => 'Message sent successfully']);
 
         $this->assertDatabaseHas('messages', [
@@ -48,7 +49,7 @@ class SendMessageTest extends TestCase
 
         $this->actingAs($sender);
 
-        $response = $this->postJson('/api/messages', [
+        $response = $this->postJson(route('message.send'), [
             'receiver_id' => $receiver->id,
             'receiver_type' => 'recruiter',
         ]);
@@ -63,7 +64,7 @@ class SendMessageTest extends TestCase
 
         $this->actingAs($sender);
 
-        $response = $this->postJson('/api/messages', [
+        $response = $this->postJson(route('message.send'), [
             'subject' => 'Invalid receiver type test',
             'body' => 'Testing with an invalid type',
             'receiver_id' => 'some-uuid',
@@ -78,7 +79,7 @@ class SendMessageTest extends TestCase
     {
         $receiver = User::factory()->create();
 
-        $response = $this->postJson('/api/messages', [
+        $response = $this->postJson(route('message.send'), [
             'subject' => 'Unauthorized attempt',
             'body' => 'Trying to send a message as guest',
             'receiver_id' => $receiver->id,

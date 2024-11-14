@@ -14,6 +14,8 @@ class SendMessageController extends Controller
 {
     public function __invoke(SendMessageRequest $request): JsonResponse
     {
+        // Retrieve the authenticated user as the sender
+        $sender = Auth::user();
         // Get the receiver from the request (already validated and resolved)
         $receiver = $request->getReceiver();
 
