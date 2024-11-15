@@ -18,13 +18,11 @@ class Message extends Model
         'body'
     ];
 
-    // Define the polymorphic relationship for the sender
     public function sender()
     {
         return $this->morphTo();
     }
 
-    // Define the polymorphic relationship for the receiver
     public function receiver()
     {
         return $this->morphTo();

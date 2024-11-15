@@ -22,8 +22,8 @@ class SendMessageTest extends TestCase
         $this->actingAs($sender);
         
         $response = $this->postJson(route('message.send'), [
-            'subject' => 'Hello there!',
-            'body' => 'Just wanted to reach out to you.',
+            'subject' => 'Hello!',
+            'body' => 'This is a test message.',
             'receiver_id' => $receiver->id,
             'receiver_type' => 'student',
         ]);
@@ -37,11 +37,10 @@ class SendMessageTest extends TestCase
             'sender_type' => User::class,
             'receiver_id' => $receiver->id,
             'receiver_type' => Student::class,
-            'subject' => 'Hello there!',
-            'body' => 'Just wanted to reach out to you.',
+            'subject' => 'Hello!',
+            'body' => 'This is a test message.',
         ]);
     }
-
     public function test_message_requires_subject_and_body_fields()
     {
         $sender = User::factory()->create();
