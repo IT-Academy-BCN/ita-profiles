@@ -118,10 +118,11 @@ class SendMessageTest extends TestCase
             'subject' => 'Invalid Receiver Type Test',
             'body' => 'Testing invalid receiver type validation.',
             'receiver_id' => $receiver->id,
-            'receiver_type' => 'admin', // Invalid receiver type
+            'receiver_type' => 'admin',
         ]);
     
         $response->assertStatus(422);
+
         $response->assertJsonValidationErrors(['receiver_type']);
     }
     public function test_body_field_is_empty()
