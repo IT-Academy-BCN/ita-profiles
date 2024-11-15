@@ -10,26 +10,21 @@ export interface User {
     authToken?: string
 }
 
-// This could be used globally if we're passing just the children props.
-// Good for providers
 export type TchildrenProps = {
     children: ReactNode
 }
 
-// === UserResponseData ===
 export type UserResponseData = {
     userID: string
     token: string
     studentID: string
 }
 
-// === SmallScreenContext ===
 export type TSmallScreenContext = {
     isMobile: boolean
     setIsMobile: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-// === studentList ===
 export interface IStudentList {
     id: string
     fullname: string
@@ -70,7 +65,8 @@ export type TLanguage = {
 
 export type TAbout = {
     id: number
-    fullname: string
+    name: string
+    surname: string
     resume: {
         subtitle: string
         social_media: {

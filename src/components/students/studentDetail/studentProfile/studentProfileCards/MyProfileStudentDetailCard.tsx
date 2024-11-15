@@ -10,22 +10,26 @@ import { Error } from '../../../../feedbackMessages/Error'
 import { Success } from '../../../../feedbackMessages/Success'
 import UploadProfilePhoto from './editStudentProfile/UploadProfilePhoto'
 import EditSkills from './editStudentProfile/EditSkills'
-import { updateTags } from '../../../../../store/slices/student/detailSlice'
+import {
+    toggleEditProfileModalIsOpen,
+    updateTags,
+} from '../../../../../store/slices/student/detailSlice'
 import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =
         useState(false)
-    const [openEditProfile, setOpenEditProfile] = useState(false)
+
     const {
         aboutData,
         isLoadingAboutData,
         isErrorAboutData,
         updatedError,
         updatedMessage,
-        toggleProfileImage
+        toggleProfileImage,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
+
     const [showEditSkills, setShowEditSkills] = useState(false)
 
     const dispatch = useAppDispatch()
@@ -35,7 +39,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
     }
 
     const handleModalEditProfile = () => {
-        setOpenEditProfile(!openEditProfile)
+        dispatch(toggleEditProfileModalIsOpen())
     }
 
     const refreshStudentData = (id: string) => {
@@ -67,15 +71,13 @@ const MyProfileStudentDetailCard: React.FC = () => {
             {isErrorAboutData && <LoadingSpiner />}
             {updatedError && <Error message={updatedError} />}
             {updatedMessage && <Success message={updatedMessage} />}
-            {openEditProfile && (
-                <ModalPortals>
-                    <EditStudentProfile
-                        handleModal={handleModalEditProfile}
-                        handleRefresh={refreshStudentData}
-                    />
-                    {toggleProfileImage && <UploadProfilePhoto />}
-                </ModalPortals>
-            )}
+
+            <ModalPortals>
+                <EditStudentProfile
+                    handleRefresh={refreshStudentData}
+                />
+                {toggleProfileImage && <UploadProfilePhoto />}
+            </ModalPortals>
 
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">
@@ -90,11 +92,12 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                 <div className="flex flex-col">
                                     <div className="flex">
                                         <h2 className="text-xl font-bold">
-                                            {aboutData.fullname}
+                                            {`${aboutData.name} ${aboutData.surname}`}
                                         </h2>
                                         <button
                                             className="ml-auto"
                                             type="button"
+                                            aria-label="open edit profile modal"
                                             onClick={handleModalEditProfile}
                                         >
                                             <img
@@ -143,9 +146,9 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                     {fullDescriptionVisibility
                                         ? aboutData && aboutData.resume.about
                                         : `${aboutData.resume.about
-                                            .split(' ')
-                                            .slice(0, 15)
-                                            .join(' ')}...`}
+                                              .split(' ')
+                                              .slice(0, 15)
+                                              .join(' ')}...`}
                                     {!fullDescriptionVisibility && (
                                         <button
                                             type="button"
