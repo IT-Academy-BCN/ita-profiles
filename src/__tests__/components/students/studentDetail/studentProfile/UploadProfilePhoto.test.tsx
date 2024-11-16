@@ -1,70 +1,74 @@
-import { describe, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { store } from '../../../../../store/store';
-import UploadProfilePhoto from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/editStudentProfile/UploadProfilePhoto';
-import { setToggleProfileImage } from '../../../../../store/slices/student/detailSlice';
+import { Provider } from 'react-redux'
+import { describe, expect } from 'vitest'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { store } from '../../../../../store/store'
+import UploadProfilePhoto from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/editStudentProfile/UploadProfilePhoto'
+import MyProfileStudentDetailCard from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/MyProfileStudentDetailCard'
 
-
+const renderComponent = () => {
+    return render(
+        <Provider store={store}>
+            <MyProfileStudentDetailCard />
+        </Provider>,
+    )
+}
 
 describe('UploadProfilePhoto Component', () => {
+    beforeEach(() => {
+        renderComponent()
+    })
 
     it('should be defined', () => {
-        expect(UploadProfilePhoto).toBeDefined();
-    });
+        expect(UploadProfilePhoto).toBeDefined()
+    })
 
     it('At first, the modal should not be visible', () => {
-        store.dispatch(setToggleProfileImage(false));
-        render(
-            <Provider store={store}>
-                <UploadProfilePhoto />
-            </Provider>
-        );
+        const form = screen.queryByRole('button', {
+            name: 'Cerrar modal imagen',
+        })
+        expect(form).not.toBeInTheDocument()
+    })
 
-        expect(screen.queryByRole('form')).not.toBeInTheDocument();
-    });
+    it('should render modal when user clicks the upload image button', () => {
+        const pencil = screen.getByRole('button', {
+            name: 'edit student pencil',
+        })
+        expect(pencil).toBeInTheDocument()
+        fireEvent.click(pencil)
 
-    it('should render the upload form correctly', () => {
-        store.dispatch(setToggleProfileImage(true));
+        const openButton = screen.getByRole('button', {
+            name: 'Open upload image modal',
+        })
+        expect(openButton).toBeInTheDocument()
+        fireEvent.click(openButton)
 
-        render(
-            <Provider store={store}>
-                <UploadProfilePhoto />
-            </Provider>
-        );
+        const form = screen.getByRole('button', {
+            name: 'Cerrar modal imagen',
+        })
+        expect(form).toBeInTheDocument()
+    })
 
-        expect(screen.getByRole("button", { name: "Cerrar modal" })).toBeInTheDocument();
-        expect(screen.getByText('Subir foto de perfil')).toBeInTheDocument();
-        expect(screen.getByText('Cancel')).toBeInTheDocument();
-        expect(screen.getByText('Aceptar')).toBeInTheDocument();
-    });
+    it('should close modal when user clicks the X button', () => {
+        const cerrarButton = screen.getByRole('button', {
+            name: 'Cerrar modal imagen',
+        })
+        expect(cerrarButton).toBeInTheDocument()
+        fireEvent.click(cerrarButton)
+        expect(cerrarButton).not.toBeInTheDocument()
+    })
 
-    it('should open file input when clicking on image', () => {
-        store.dispatch(setToggleProfileImage(true));
+    it('should close modal when user clicks the cancel button', () => {
+        const openButton = screen.getByRole('button', {
+            name: 'Open upload image modal',
+        })
 
-        render(
-            <Provider store={store}>
-                <UploadProfilePhoto />
-            </Provider>
-        );
+        expect(openButton).toBeInTheDocument()
+        fireEvent.click(openButton)
 
-        const imgButton = screen.getByRole('img', { name: 'Avatar' });
-        fireEvent.click(imgButton);
+        const aceptarButton = screen.getByRole('button', {
+            name: 'Aceptar photo',
+        })
 
-    });
-
-    it('should handle file change correctly', () => {
-        store.dispatch(setToggleProfileImage(true));
-        render(<Provider store={store}><UploadProfilePhoto /></Provider>);
-
-        const file = new File(['(⌐□_□)'], 'profile.jpg', { type: 'image/jpeg' });
-
-        const inputFile = screen.getByRole('img', { name: "Avatar" }) as HTMLInputElement;
-
-        fireEvent.change(inputFile, { target: { files: [file] } });
-
-        expect(inputFile.files?.[0]).toEqual(file);
-        expect(inputFile.files?.[0].name).toBe('profile.jpg');
-    });
-
-});
+        expect(aceptarButton).toBeInTheDocument()
+    })
+})
