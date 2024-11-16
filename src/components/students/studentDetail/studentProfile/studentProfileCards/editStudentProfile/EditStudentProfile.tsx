@@ -64,6 +64,9 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     })
     const isSubmitDisabled = !isDirty
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 68f37e69 (fix aboutData type and conditional rendering bug)
 
     if (!editProfileModalIsOpen) return null
 
