@@ -26,11 +26,7 @@ export const initialState = {
     isLoadingAboutData: false,
     isErrorAboutData: false,
     aboutData,
-<<<<<<< HEAD
-<<<<<<< HEAD
     editProfileImageIsOpen: false,
-=======
-    toggleProfileImage: false,
     editProfileModalIsOpen: false,
     updatedMessage: '',
     updatedError: '',
@@ -46,10 +42,11 @@ const detailSlice = createSlice({
     reducers: {
         setEditProfileImageIsOpen: (state) => {
             state.editProfileImageIsOpen = !state.editProfileImageIsOpen
+        setEditProfileImageIsOpen: (state) => {
+            state.editProfileImageIsOpen = !state.editProfileImageIsOpen
         },
         setEditProfileModalIsOpen: (state) => {
             state.editProfileModalIsOpen = !state.editProfileModalIsOpen
-<<<<<<< HEAD
         },
 <<<<<<< HEAD
         resetSendingPhoto: (state) => {
@@ -105,10 +102,29 @@ const detailSlice = createSlice({
             state.updatedError = 'Error al realizar la actualizacion del perfil'
             state.isUpdateLoading = false
         })
+        builder.addCase(updateProfilePhotoThunk.pending, (state) => {
+            state.isLoadingPhoto = true
+            state.isErrorPhoto = false
+            state.photoSuccessfully = false
+        })
+        builder.addCase(updateProfilePhotoThunk.fulfilled, (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = false
+            state.photoSuccessfully = true
+        })
+        builder.addCase(updateProfilePhotoThunk.rejected, (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = true
+            state.photoSuccessfully = false
+        })
     },
 })
 
-export const { setToggleProfileImage, setEditProfileModalIsOpen } =
-    detailSlice.actions
-
+export const {
+    setEditProfileImageIsOpen,
+    updateTags,
+    setEditProfileModalIsOpen,
+    resetSendingPhoto,
+    setMessage,
+} = detailSlice.actions
 export default detailSlice.reducer
