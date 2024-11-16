@@ -18,6 +18,8 @@ const UploadProfilePhoto: FC = () => {
         editProfileImageIsOpen,
     } = useUploadProfilePhotoHook()
 
+    if (!editProfileImageIsOpen) return null
+
     return (
         editProfileImageIsOpen && (
             <section className="fixed flex items-center justify-center top-0 left-0 w-full h-full z-10 bg-[rgba(0,0,0,.7)]">

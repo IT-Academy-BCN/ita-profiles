@@ -33,6 +33,9 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
         defaultValues,
     })
     const isSubmitDisabled = !isDirty
+
+    if (!editProfileModalIsOpen) return null
+
     return (
         editProfileModalIsOpen && (
             <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-10">
