@@ -28,7 +28,7 @@ export const initialState = {
     isLoadingAboutData: false,
     isErrorAboutData: false,
     aboutData,
-    toggleProfileImage: false,
+    editProfileImageIsOpen: false,
     editProfileModalIsOpen: false,
     updatedMessage: '',
     updatedError: '',
@@ -49,15 +49,6 @@ const detailSlice = createSlice({
         },
         setEditProfileModalIsOpen: (state) => {
             state.editProfileModalIsOpen = !state.editProfileModalIsOpen
-        },
-        setEditProfileModalIsOpen: (state, action) => {
-            state.editProfileModalIsOpen = action.payload
-        },
-        setEditProfileModalIsOpen: (state, action) => {
-            state.editProfileModalIsOpen = action.payload
-        },
-        setEditProfileModalIsOpen: (state, action) => {
-            state.editProfileModalIsOpen = action.payload
         },
     },
     extraReducers: (builder) => {
@@ -107,6 +98,11 @@ const detailSlice = createSlice({
     },
 })
 
-export const { setToggleProfileImage } = detailSlice.actions
-
+export const {
+    setEditProfileImageIsOpen,
+    updateTags,
+    setEditProfileModalIsOpen,
+    resetSendingPhoto,
+    setMessage,
+} = detailSlice.actions
 export default detailSlice.reducer
