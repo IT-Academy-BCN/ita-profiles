@@ -33,10 +33,14 @@ const MyProfileStudentDetailCard: React.FC = () => {
         isErrorAboutData,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0ffd2d6c (handle modal global states)
         editProfileImageIsOpen,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
 
     const [showEditSkills, setShowEditSkills] = useState(false)
+<<<<<<< HEAD
 =======
         updatedError,
         updatedMessage,
@@ -45,6 +49,8 @@ const MyProfileStudentDetailCard: React.FC = () => {
 >>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
 >>>>>>> 8ad62a49 (Fix: EditStudentProfile modal behavior and refactor)
+=======
+>>>>>>> 0ffd2d6c (handle modal global states)
 
     const dispatch = useAppDispatch()
 
@@ -54,10 +60,14 @@ const MyProfileStudentDetailCard: React.FC = () => {
 
     const handleModalEditProfile = () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
         dispatch(setEditProfileModalIsOpen())
 =======
         dispatch(setEditProfileModalIsOpen(!editProfileModalIsOpen))
 >>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
+=======
+        dispatch(setEditProfileModalIsOpen())
+>>>>>>> 0ffd2d6c (handle modal global states)
     }
 
     const refreshStudentData = (id: string) => {
@@ -90,6 +100,9 @@ const MyProfileStudentDetailCard: React.FC = () => {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0ffd2d6c (handle modal global states)
             <ModalPortals>
                 <EditStudentProfile
                     handleModal={handleModalEditProfile}
@@ -97,6 +110,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                 />
                 {editProfileImageIsOpen && <UploadProfilePhoto />}
             </ModalPortals>
+<<<<<<< HEAD
 =======
             {openEditProfile && (
 =======
@@ -111,6 +125,8 @@ const MyProfileStudentDetailCard: React.FC = () => {
                 </ModalPortals>
             )}
 >>>>>>> 8ad62a49 (Fix: EditStudentProfile modal behavior and refactor)
+=======
+>>>>>>> 0ffd2d6c (handle modal global states)
 
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">

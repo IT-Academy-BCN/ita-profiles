@@ -27,10 +27,14 @@ export const initialState = {
     isErrorAboutData: false,
     aboutData,
 <<<<<<< HEAD
+<<<<<<< HEAD
     editProfileImageIsOpen: false,
 =======
     toggleProfileImage: false,
 >>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
+=======
+    editProfileImageIsOpen: false,
+>>>>>>> 0ffd2d6c (handle modal global states)
     editProfileModalIsOpen: false,
     updatedMessage: '',
     updatedError: '',
@@ -49,6 +53,7 @@ const detailSlice = createSlice({
         },
         setEditProfileModalIsOpen: (state) => {
             state.editProfileModalIsOpen = !state.editProfileModalIsOpen
+<<<<<<< HEAD
         },
 <<<<<<< HEAD
         resetSendingPhoto: (state) => {
@@ -75,6 +80,8 @@ const detailSlice = createSlice({
         setEditProfileModalIsOpen: (state, action) => {
             state.editProfileModalIsOpen = action.payload
 >>>>>>> 11f4eabe (state that manage the modal visibility has been moved to detail slice)
+=======
+>>>>>>> 0ffd2d6c (handle modal global states)
         },
     },
     extraReducers: (builder) => {
@@ -125,6 +132,9 @@ const detailSlice = createSlice({
 })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0ffd2d6c (handle modal global states)
 export const {
     setEditProfileImageIsOpen,
     updateTags,
@@ -132,8 +142,11 @@ export const {
     resetSendingPhoto,
     setMessage,
 } = detailSlice.actions
+<<<<<<< HEAD
 =======
 export const { setToggleProfileImage } = detailSlice.actions
 
 >>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre)
+=======
+>>>>>>> 0ffd2d6c (handle modal global states)
 export default detailSlice.reducer
