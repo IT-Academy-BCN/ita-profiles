@@ -24,5 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ResumeBootcampSeeder::class);
         $this->call(StudentTagSeeder::class);
         $this->call(ProjectTagSeeder::class);
+        $this->call(CompanySeeder::class);
+        $this->call(RecruiterSeeder::class);
+        $this->call(JobOfferSeeder::class);
     }
 }
