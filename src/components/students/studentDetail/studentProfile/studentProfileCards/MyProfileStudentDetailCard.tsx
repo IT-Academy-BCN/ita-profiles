@@ -18,8 +18,10 @@ const MyProfileStudentDetailCard: React.FC = () => {
         aboutData,
         isLoadingAboutData,
         isErrorAboutData,
-        editProfileModalIsOpen,
+        editProfileImageIsOpen,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
+
+    const [showEditSkills, setShowEditSkills] = useState(false)
 
     const dispatch = useAppDispatch()
 
@@ -28,7 +30,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
     }
 
     const handleModalEditProfile = () => {
-        dispatch(setEditProfileModalIsOpen(!editProfileModalIsOpen))
+        dispatch(setEditProfileModalIsOpen())
     }
 
     const refreshStudentData = (id: string) => {
@@ -59,14 +61,13 @@ const MyProfileStudentDetailCard: React.FC = () => {
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
 
-            {editProfileModalIsOpen && (
-                <ModalPortals>
-                    <EditStudentProfile
-                        handleModal={handleModalEditProfile}
-                        handleRefresh={refreshStudentData}
-                    />
-                </ModalPortals>
-            )}
+            <ModalPortals>
+                <EditStudentProfile
+                    handleModal={handleModalEditProfile}
+                    handleRefresh={refreshStudentData}
+                />
+                {editProfileImageIsOpen && <UploadProfilePhoto />}
+            </ModalPortals>
 
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">
@@ -91,6 +92,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                             <img
                                                 src={Pencil}
                                                 alt="edit profile information"
+                                                aria-label="edit student pencil"
                                                 aria-label="edit student pencil"
                                             />
                                         </button>

@@ -26,7 +26,7 @@ export const initialState = {
     isLoadingAboutData: false,
     isErrorAboutData: false,
     aboutData,
-    toggleProfileImage: false,
+    editProfileImageIsOpen: false,
     editProfileModalIsOpen: false,
     updatedMessage: '',
     updatedError: '',
@@ -40,11 +40,11 @@ const detailSlice = createSlice({
     name: 'detailSlice',
     initialState,
     reducers: {
-        setToggleProfileImage: (state, action) => {
-            state.toggleProfileImage = action.payload
+        setEditProfileImageIsOpen: (state) => {
+            state.editProfileImageIsOpen = !state.editProfileImageIsOpen
         },
-        setEditProfileModalIsOpen: (state, action) => {
-            state.editProfileModalIsOpen = action.payload
+        setEditProfileModalIsOpen: (state) => {
+            state.editProfileModalIsOpen = !state.editProfileModalIsOpen
         },
     },
     extraReducers: (builder) => {
@@ -76,10 +76,29 @@ const detailSlice = createSlice({
             state.updatedError = 'Error al realizar la actualizacion del perfil'
             state.isUpdateLoading = false
         })
+        builder.addCase(updateProfilePhotoThunk.pending, (state) => {
+            state.isLoadingPhoto = true
+            state.isErrorPhoto = false
+            state.photoSuccessfully = false
+        })
+        builder.addCase(updateProfilePhotoThunk.fulfilled, (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = false
+            state.photoSuccessfully = true
+        })
+        builder.addCase(updateProfilePhotoThunk.rejected, (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = true
+            state.photoSuccessfully = false
+        })
     },
 })
 
-export const { setToggleProfileImage, setEditProfileModalIsOpen } =
-    detailSlice.actions
-
+export const {
+    setEditProfileImageIsOpen,
+    updateTags,
+    setEditProfileModalIsOpen,
+    resetSendingPhoto,
+    setMessage,
+} = detailSlice.actions
 export default detailSlice.reducer
