@@ -32,7 +32,7 @@ const StudentDetailCard: React.FC = () => {
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-col">
                                     <h2 className="text-xl font-bold">
-                                        {aboutData.fullname}
+                                        {`${aboutData.name} ${aboutData.surname}`}
                                     </h2>
                                     <p className="text-gray-2">
                                         {aboutData.resume.subtitle}
