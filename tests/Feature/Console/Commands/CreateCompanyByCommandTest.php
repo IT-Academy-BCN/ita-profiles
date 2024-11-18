@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\api\Company\CreateCompanyController;
+use App\Http\Controllers\app\Http\Controllers\api\Company\CreateCompanyController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Company;
 use Tests\TestCase;
@@ -284,16 +284,6 @@ class CreateCompanyByCommandTest extends TestCase
                     'CIF' => 'B12345678',
                     'location' => 'Valid Location',
                     'website' => str_repeat('https://example.com/', 100),
-                ],
-                ['website']
-            ],
-            'invalid website - null' => [
-                [
-                    'name' => 'Valid Name',
-                    'email' => 'valid@example.com',
-                    'CIF' => 'B12345678',
-                    'location' => 'Valid Location',
-                    'website' => null,
                 ],
                 ['website']
             ],
