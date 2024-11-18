@@ -10,21 +10,19 @@ class Message extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sender_id',
-        'sender_type',
-        'receiver_id',
-        'receiver_type',
+        'sender',
+        'receiver',
+        'read',
         'subject',
         'body'
     ];
 
-    public function sender()
+    public function senderUser()
     {
-        return $this->morphTo();
+        return $this->belongsTo(User::class, 'sender');
     }
-
-    public function receiver()
+    public function receiverUser()
     {
-        return $this->morphTo();
+        return $this->belongsTo(User::class, 'receiver');
     }
 }
