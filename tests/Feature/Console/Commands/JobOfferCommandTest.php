@@ -12,36 +12,26 @@ use App\Models\JobOffer;
 use App\Models\Recruiter;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Http\Controllers\Api\Job\JobOfferController;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class JobOfferCommandTest extends TestCase
 {
-    protected User $user;
-    protected Company $company;
+    use DatabaseTransactions;
+    use WithFaker;
+
     protected Recruiter $recruiter;
 
     protected function setUp(): void
     {
         parent::setUp();
         
-        // Setup base test data
-        $this->user = User::factory()->create();
-        
-        $this->company = Company::create([
-            'name' => 'Test Company',
-            'location' => 'Test Location',
-            'email' => 'company' . uniqid() . '@example.com',
-            'CIF' => 'A' . uniqid(),
-            'website' => 'https://company.com',
-        ]);
+        $user = User::factory()->create();
+        $company = Company::factory()->create();
 
-        $this->recruiter = Recruiter::create([
-            'company_id' => $this->company->id,
-            'user_id' => $this->user->id,
-            'name' => 'Recruiter Name',
-            'email' => 'recruiter@example.com',
-            'role' => 'Recruiter',
+        $this->recruiter = Recruiter::factory()->create([
+            'user_id' => $user->id,
+            'company_id' => $company->id
         ]);
     }
     
@@ -55,24 +45,30 @@ class JobOfferCommandTest extends TestCase
     }
     public function testCreateJobOfferWithValidParameters()
     {
+        $title = $this->faker->jobTitle();
+        $description = $this->faker->text();
+        $location = $this->faker->city();
+        $skills = implode(', ', $this->faker->words(3));
+        $salary = $this->faker->numberBetween(20000, 100000);
+
         $exitCode = Artisan::call('job:offer:create', [
             'recruiter_id' => $this->recruiter->id,
-            'title' => 'Software Engineer',
-            'description' => 'Looking for a Software Engineer.',
-            'location' => 'Remote',
-            'skills' => 'PHP, Laravel, JavaScript',
-            'salary' => 25000
+            'title' => $title,
+            'description' => $description,
+            'location' => $location,
+            'skills' => $skills,
+            'salary' => $salary
         ]);
 
         $this->assertEquals(0, $exitCode);
 
         $this->assertDatabaseHas('job_offers', [
-            'title' => 'Software Engineer',
-            'salary' => 25000,
+            'title' => $title,
+            'salary' => $salary,
             'recruiter_id' => $this->recruiter->id,
-            'description' => 'Looking for a Software Engineer.',
-            'location' => 'Remote',
-            'skills' => 'PHP, Laravel, JavaScript'
+            'description' => $description,
+            'location' => $location,
+            'skills' => $skills
         ]);
     }
     public function testCreateJobOfferWithMissingRequiredFields(): void
@@ -84,5 +80,21 @@ class JobOfferCommandTest extends TestCase
             // Missing required fields
             'description' => 'Looking for a Junior Developer.'
         ]);
+    }
+    public function testCreateMultipleJobOffers(): void
+    {
+        $jobOffers =  JobOffer::factory()
+        ->count(5)
+        ->create([
+            'recruiter_id' => $this->recruiter->id
+        ]);
+        $this->assertEquals(5, JobOffer::count());
+        
+        foreach ($jobOffers as $jobOffer) {
+            $this->assertDatabaseHas('job_offers', [
+                'id' => $jobOffer->id,
+                'recruiter_id' => $this->recruiter->id
+            ]);
+        }
     }
 }
