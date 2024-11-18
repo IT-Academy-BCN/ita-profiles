@@ -1,11 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Console\Commands;
 
 use App\Http\Controllers\api\Company\CreateCompanyController;
+use App\Http\Requests\StoreCompanyRequest;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Container\Container;
 use Illuminate\Validation\ValidationException;
 
 class CreateCompany extends Command
@@ -30,36 +32,34 @@ class CreateCompany extends Command
     public function handle()
     {
         try {
-            $name = $this->ask('Dime el nombre de la compañia:');
-            $email = $this->ask('Dime el email:');
-            $CIF = $this->ask('Dime el CIF:');
-            $location = $this->ask('Dime la location:');
-            $website = $this->ask('Dime el sitio web:');
+            $name = $this->ask('Nombre de la compañia:');
+            $email = $this->ask('Email:');
+            $CIF = $this->ask('CIF:');
+            $location = $this->ask('Localizacion:');
+            $website = $this->ask('Pagina web:');
 
             $data = compact('name', 'email', 'CIF', 'location', 'website');
 
-            // Validar manualmente
-            $validator = Validator::make($data, [
-                'name' => ['required', 'string', 'min:3', 'max:255'],
-                'email' => ['required', 'email', 'max:255'],
-                'CIF' => ['required', 'string', 'size:9'],
-                'location' => ['required', 'string', 'min:3', 'max:255'],
-                'website' => ['required', 'url', 'max:255'],
-            ]);
+            $request = new StoreCompanyRequest();
 
-            $validator->validate(); // Lanza una excepción si hay errores
+            $request->setContainer(app(Container::class))->setRedirector(app('redirect'));
 
-            // Llamar al controlador si la validación pasa
+            $request->merge($data);
+
+            $request->validateResolved();
+
             $createCompanyController = new CreateCompanyController();
-            $response = $createCompanyController->createCompanyController((object) $data);
+
+            $response = $createCompanyController($request);
 
             $content = $response->getData(true);
 
             if (isset($content['message'])) {
                 $this->info($content['message']);
             }
+            return 0;
         } catch (ValidationException $e) {
-            // Mostrar errores de validación
+            
             foreach ($e->errors() as $field => $messages) {
                 foreach ($messages as $message) {
                     $this->error("Error en el campo {$field}: {$message}");
