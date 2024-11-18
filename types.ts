@@ -62,18 +62,6 @@ export type TAvailableLanguage = {
 }
 export type TLanguageLevel = "Bàsic" | "Intermedi" | "Avançat" | "Natiu";
 
-export type TUpdateStudentLanguageNotification = {
-    message: string | null,
-}
-export type TInitialStateLanguageSlice = {
-    isLoadingLanguages: boolean,
-    isErrorLanguages: boolean,
-    languagesData: TLanguage[],
-    isOpenEditAdditionalInformation: boolean,
-    isLoadingUpdateLanguages: boolean,
-    isErrorUpdateLanguages: boolean,
-    notification: TUpdateStudentLanguageNotification
-}
 export type TLanguage = {
     id: string
     name: string
@@ -120,15 +108,9 @@ export type TCollaboration = {
     collaboration_description: string
     quantity: number
 }
-export type TSkills = {
+
+export interface TSkills {
     initialSkills: string[]
     onClose: () => void
     onSave: (skills: string[]) => void
 }
-<<<<<<< HEAD:types.ts
-
-export type TDragAndDropLanguagesProps = {
-    dropLanguages: TLanguage[],
-}
-=======
->>>>>>> dd815235 (Fix: arreglando fullname de detalle estudiante ahora se ve el nombre):src/interfaces/interfaces.ts
