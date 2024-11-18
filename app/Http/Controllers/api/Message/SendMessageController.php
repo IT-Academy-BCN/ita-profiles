@@ -20,17 +20,16 @@ class SendMessageController extends Controller
         $receiver = $request->getReceiver();
 
         $message = Message::create([
-            'sender_id' => $sender->id,
-            'sender_type' =>get_class($sender),
-            'receiver_id' => $receiver->id,
-            'receiver_type' => get_class($receiver),
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'read' => false,
             'subject' => $request->subject,
             'body' => $request->body,
         ]);
 
         return response()->json([
             'message' => 'Message sent successfully',
-            'date' => $message,
+            'data' => $message,
         ], 200);
 
     }
