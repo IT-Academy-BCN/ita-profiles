@@ -10,8 +10,13 @@ const languagesSlice = createSlice({
         isLoadingLanguages: false,
         isErrorLanguages: false,
         languagesData,
+        isOpenEditAdditionalInformation: false
     },
-    reducers: {},
+    reducers: {
+        toggleEditAdditionalInformation: (state) => {
+            state.isOpenEditAdditionalInformation = !state.isOpenEditAdditionalInformation
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(languagesThunk.pending, (state) => {
             state.isLoadingLanguages = true
@@ -28,5 +33,5 @@ const languagesSlice = createSlice({
         })
     },
 })
-
+export const { toggleEditAdditionalInformation } = languagesSlice.actions
 export default languagesSlice.reducer
