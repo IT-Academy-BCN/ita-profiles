@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\api\Company\CreateCompanyController;
 use Illuminate\Console\Command;
+use App\Http\Requests\StoreCompanyRequest;
 
 class CreateCompany extends Command
 {
@@ -27,16 +28,19 @@ class CreateCompany extends Command
      */
     public function handle()
     {
-        $createCompanyController = new CreateCompanyController();
-        $name = $this->ask('Dime el nombre de la compañia:');
-        $email = $this->ask('Dime el email:');
-        $CIF = $this->ask('Dime el CIF:');
-        $location = $this->ask('Dime la location:');
-        $website = $this->ask('Dime el sitio web:');
+        $name = $this->ask('Nombre de la compañia:');
+        $email = $this->ask('Email:');
+        $CIF = $this->ask('CIF:');
+        $location = $this->ask('Localizacion:');
+        $website = $this->ask('Pagina web:');
 
         $data = compact('name', 'email', 'CIF', 'location', 'website');
 
-        $response = $createCompanyController->__invoke($data);
+        $request = new StoreCompanyRequest();
+        $request->replace($data);
+
+        $createCompanyController = new CreateCompanyController();
+        $response = $createCompanyController($request);
 
         $content = $response->getData(true);
 

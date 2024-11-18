@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\app\Http\Controllers\api\Company\CreateCompanyController;
+use App\Http\Controllers\api\Company\CreateCompanyController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\Company;
 use Tests\TestCase;
@@ -30,17 +30,17 @@ class CreateCompanyByCommandTest extends TestCase
        $this->artisan('create:company')
            ->expectsQuestion('Nombre de la compañia:', 'Test Company')
            ->expectsQuestion('Email:', 'test@test.es')
-           ->expectsQuestion('CIF:', 'B12345678')
+           ->expectsQuestion('CIF:', 'B1234567A')
            ->expectsQuestion('Localizacion:', 'Test Location')
-           ->expectsQuestion('Pagina web:', 'https://test.com')
+           ->expectsQuestion('Pagina web:', 'https://www.test.com')
            ->assertExitCode(0);
 
        $this->assertDatabaseHas('companies', [
            'name' => 'Test Company',
-           'email' => 'test@localhost',
-           'CIF' => 'B12345678',
+           'email' => 'test@test.es',
+           'CIF' => 'B1234567A',
            'location' => 'Test Location',
-           'website' => 'https://test.com/',
+           'website' => 'https://www.test.com',
        ]);
    }
 
@@ -50,11 +50,11 @@ class CreateCompanyByCommandTest extends TestCase
     public function testCanShowErrorMessageWithInvalidData(array $invalidData, array $expectedErrors): void
     {
         $this->artisan('create:company')
-            ->expectsQuestion('Dime el nombre de la compañia:', $invalidData['name'])
-            ->expectsQuestion('Dime el email:', $invalidData['email'])
-            ->expectsQuestion('Dime el CIF:', $invalidData['CIF'])
-            ->expectsQuestion('Dime la location:', $invalidData['location'])
-            ->expectsQuestion('Dime el sitio web:', $invalidData['website'])
+            ->expectsQuestion('Nombre de la compañia:', $invalidData['name'])
+            ->expectsQuestion('Email:', $invalidData['email'])
+            ->expectsQuestion('CIF:', $invalidData['CIF'])
+            ->expectsQuestion('Localizacion:', $invalidData['location'])
+            ->expectsQuestion('Pagina web:', $invalidData['website'])
             ->assertExitCode(1);
 
             foreach ($expectedErrors as $field) {
