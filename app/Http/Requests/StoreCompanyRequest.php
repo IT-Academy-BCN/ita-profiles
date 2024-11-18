@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -17,7 +19,13 @@ class StoreCompanyRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:companies,email',
-            'CIF' => 'required|string|(^[A-Z][0-9]{7}[A-Z0-9]$)|(^[0-9]{8}[A-Z]$)|(^[XYZ][0-9]{7}[A-Z]$)|max:10|unique:companies,CIF',
+            'CIF' => [
+                'required',
+                'string',
+                'regex:/^(^[A-Z][0-9]{7}[A-Z0-9]$)|(^[0-9]{8}[A-Z]$)|(^[XYZ][0-9]{7}[A-Z])$/',
+                'max:10',
+                'unique:companies,CIF',
+            ],
             'location' => 'required|string|min:3|max:255',
             'website' => 'nullable|url|max:255',
         ];
