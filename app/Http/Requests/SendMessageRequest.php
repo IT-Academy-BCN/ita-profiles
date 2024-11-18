@@ -29,7 +29,7 @@ class SendMessageRequest extends FormRequest
         return [
             'subject' => 'required|string|max:255',
             'body' => 'required|string',
-            'receiver' => 'required|exists:users,id',
+            'receiver_id' => 'required|exists:users,id',
         ];
     }
 
@@ -37,10 +37,10 @@ class SendMessageRequest extends FormRequest
     {
         // After validation, resolve the receiver model
         $validator->after(function ($validator) {
-            $this->receiver = User::find($this->receiver);
+            $this->receiver = User::find($this->receiver_id);
 
             if (!$this->receiver) {
-                $validator->errors()->add('receiver', 'Receiver not found');
+                $validator->errors()->add('receiver_id', 'Receiver not found');
             }
         });
     }
