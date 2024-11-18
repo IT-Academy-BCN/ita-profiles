@@ -61,6 +61,11 @@ export type TProject = {
     project_url: string
     github_url: string
 }
+export type TAvailableLanguage = {
+    name: string,
+    es_name: string
+}
+export type TLanguageLevel = "Bàsic" | "Intermedi" | "Avançat" | "Natiu";
 
 export type TLanguage = {
     id: string
@@ -107,9 +112,16 @@ export type TCollaboration = {
     collaboration_description: string
     quantity: number
 }
-
 export interface TSkills {
     initialSkills: string[]
     onClose: () => void
     onSave: (skills: string[]) => void
+}
+
+export type TDragAndDropLanguagesProps = {
+    dropLanguages: TLanguage[],
+}
+
+export type UpdateLanguageNotification = {
+    message: string;
 }
