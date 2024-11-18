@@ -1,15 +1,29 @@
-import { Github, Pencil, ArrowLeft, ArrowRight } from '../../../../../assets/svg'
+import {
+    Github,
+    Pencil,
+    ArrowLeft,
+    ArrowRight,
+} from '../../../../../assets/svg'
 import { ArrowRightProjects } from '../../../../../assets/img'
-import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { Carousel } from '../../../../atoms/Carousel'
+import { setEditProjectModalIsOpen } from '../../../../../store/slices/student/projectsSlice'
+import { EditStudentProjects } from '../editStudentProfile/EditStudentProjects'
+import { ModalPortals } from '../../../../ModalPortals'
 
 const MyProfileProjectsCard: React.FC = () => {
-    const { studentProjects } = useAppSelector((state) => state.ShowStudentReducer)
+    const { studentProjects } = useAppSelector(
+        (state) => state.ShowStudentReducer,
+    )
+    const dispatch = useAppDispatch()
     const { projectsData, isLoadingProjects, isErrorProjects } = studentProjects
 
     const { scrollLeft, scrollRight, carouselRef } = Carousel()
 
+    const handlePencilClick = () => {
+        dispatch(setEditProjectModalIsOpen())
+    }
     return (
         <div
             className="carousel-item flex flex-col gap-4"
@@ -18,11 +32,11 @@ const MyProfileProjectsCard: React.FC = () => {
             <div className="flex justify-between">
                 <h3 className="text-lg font-bold">Proyectos</h3>
                 {projectsData && (
-                    <button 
-                        className='flex items-center text-xs font-semibold rounded-md border border-gray-3 px-2 py-0 mr-auto ml-4'
-                        type='button'
-                        >                        
-                        Nuevo proyecto                       
+                    <button
+                        className="flex items-center text-xs font-semibold rounded-md border border-gray-3 px-2 py-0 mr-auto ml-4"
+                        type="button"
+                    >
+                        Nuevo proyecto
                     </button>
                 )}
                 <div className="h-3 self-end">
@@ -38,6 +52,11 @@ const MyProfileProjectsCard: React.FC = () => {
                     </button>
                 </div>
             </div>
+
+            <ModalPortals>
+                <EditStudentProjects />
+            </ModalPortals>
+
             {isLoadingProjects && <LoadingSpiner />}
             {isErrorProjects && (
                 <LoadingSpiner
@@ -70,10 +89,15 @@ const MyProfileProjectsCard: React.FC = () => {
                                     </a>
                                 </div>
                                 <button
+                                    aria-label="edit project pencil"
                                     type="button"
                                     className="-mt-1 flex w-6 self-start"
+                                    onClick={handlePencilClick}
                                 >
-                                    <img src={Pencil} alt="edit project information" />
+                                    <img
+                                        src={Pencil}
+                                        alt="edit project information"
+                                    />
                                 </button>
                             </div>
                             <p className="text-sm text-gray-3">

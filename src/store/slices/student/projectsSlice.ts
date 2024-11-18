@@ -10,8 +10,13 @@ const projectsSlice = createSlice({
         isLoadingProjects: false,
         isErrorProjects: false,
         projectsData,
+        editProjectModalIsOpen: false,
     },
-    reducers: {},
+    reducers: {
+        setEditProjectModalIsOpen: (state) => {
+            state.editProjectModalIsOpen = !state.editProjectModalIsOpen
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(projectsThunk.pending, (state) => {
             state.isLoadingProjects = true
@@ -28,5 +33,5 @@ const projectsSlice = createSlice({
         })
     },
 })
-
+export const { setEditProjectModalIsOpen } = projectsSlice.actions
 export default projectsSlice.reducer
