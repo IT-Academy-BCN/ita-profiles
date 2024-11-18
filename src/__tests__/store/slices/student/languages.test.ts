@@ -7,6 +7,7 @@ const initialState = {
     isLoadingLanguages: false,
     isErrorLanguages: false,
     languagesData,
+    isOpenEditAdditionalInformation: false
 }
 
 describe('StudentLanguagesTest reducer', () => {
@@ -28,6 +29,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingLanguages: false,
             isErrorLanguages: false,
             languagesData: [],
+            isOpenEditAdditionalInformation: false
         })
     })
 
@@ -41,6 +43,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingLanguages: true,
             isErrorLanguages: false,
             languagesData: [],
+            isOpenEditAdditionalInformation: false
         })
     })
 
@@ -64,6 +67,7 @@ describe('StudentLanguagesTest reducer', () => {
                 language_name: 'string',
                 language_level: 'string',
             },
+            isOpenEditAdditionalInformation: false
         })
     })
 
@@ -77,6 +81,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingLanguages: false,
             isErrorLanguages: true,
             languagesData: [],
+            isOpenEditAdditionalInformation: false
         })
     })
 })
