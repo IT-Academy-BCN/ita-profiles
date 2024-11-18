@@ -5,7 +5,8 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\api\Company\CreateCompanyController;
 use Illuminate\Console\Command;
-use App\Http\Requests\StoreCompanyRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class CreateCompany extends Command
 {
@@ -28,26 +29,44 @@ class CreateCompany extends Command
      */
     public function handle()
     {
-        $name = $this->ask('Nombre de la compañia:');
-        $email = $this->ask('Email:');
-        $CIF = $this->ask('CIF:');
-        $location = $this->ask('Localizacion:');
-        $website = $this->ask('Pagina web:');
+        try {
+            $name = $this->ask('Dime el nombre de la compañia:');
+            $email = $this->ask('Dime el email:');
+            $CIF = $this->ask('Dime el CIF:');
+            $location = $this->ask('Dime la location:');
+            $website = $this->ask('Dime el sitio web:');
 
-        $data = compact('name', 'email', 'CIF', 'location', 'website');
+            $data = compact('name', 'email', 'CIF', 'location', 'website');
 
-        $request = new StoreCompanyRequest();
-        $request->replace($data);
+            // Validar manualmente
+            $validator = Validator::make($data, [
+                'name' => ['required', 'string', 'min:3', 'max:255'],
+                'email' => ['required', 'email', 'max:255'],
+                'CIF' => ['required', 'string', 'size:9'],
+                'location' => ['required', 'string', 'min:3', 'max:255'],
+                'website' => ['required', 'url', 'max:255'],
+            ]);
 
-        $createCompanyController = new CreateCompanyController();
-        $response = $createCompanyController($request);
+            $validator->validate(); // Lanza una excepción si hay errores
 
-        $content = $response->getData(true);
+            // Llamar al controlador si la validación pasa
+            $createCompanyController = new CreateCompanyController();
+            $response = $createCompanyController->createCompanyController((object) $data);
 
-        if (isset($content['message']))
-        {
-            $this->info($content['message']);
+            $content = $response->getData(true);
+
+            if (isset($content['message'])) {
+                $this->info($content['message']);
+            }
+        } catch (ValidationException $e) {
+            // Mostrar errores de validación
+            foreach ($e->errors() as $field => $messages) {
+                foreach ($messages as $message) {
+                    $this->error("Error en el campo {$field}: {$message}");
+                }
+            }
+
+            return 1;
         }
-
     }
 }
