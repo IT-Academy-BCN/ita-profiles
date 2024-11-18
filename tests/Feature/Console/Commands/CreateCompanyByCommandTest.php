@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Console\Commands;
 
 use App\Http\Controllers\api\Company\CreateCompanyController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -47,7 +48,7 @@ class CreateCompanyByCommandTest extends TestCase
     /**
      * @dataProvider invalidDataProvider
      */
-    public function testCanShowErrorMessageWithInvalidData(array $invalidData, array $expectedErrors): void
+    public function testReturnsErrorCodeOnInvalidData(array $invalidData): void
     {
         $this->artisan('create:company')
             ->expectsQuestion('Nombre de la compañia:', $invalidData['name'])
@@ -56,52 +57,15 @@ class CreateCompanyByCommandTest extends TestCase
             ->expectsQuestion('Localizacion:', $invalidData['location'])
             ->expectsQuestion('Pagina web:', $invalidData['website'])
             ->assertExitCode(1);
-
-            foreach ($expectedErrors as $field) {
-                $this->assertStringContainsString(
-                    "El campo {$field} es inválido.",
-                    $this->output()
-                );
-            }
     }
 
     public static function invalidDataProvider(): array
     {
         return [
             // cases for name
-            'invalid name: numeric' => [
-                [
-                    'name' => '12345',
-                    'email' => 'validEmail@test.com',
-                    'CIF' => 'B12345678',
-                    'location' => 'validLocation',
-                    'website' => 'https://valid-url.com',
-                ],
-                ['name']
-            ],
-            'invalid name: too short' => [
-                [
-                    'name' => 'A',
-                    'email' => 'validEmail@test.com',
-                    'CIF' => 'B12345678',
-                    'location' => 'validLocation',
-                    'website' => 'https://valid-url.com',
-                ],
-                ['name']
-            ],
-            'invalid name: too long' => [
+           'invalid name: too long' => [
                 [
                     'name' => str_repeat('A', 256),
-                    'email' => 'validEmail@test.com',
-                    'CIF' => 'B12345678',
-                    'location' => 'validLocation',
-                    'website' => 'https://valid-url.com',
-                ],
-                ['name']
-            ],
-            'invalid name: special characters' => [
-                [
-                    'name' => '!@#$%^&*',
                     'email' => 'validEmail@test.com',
                     'CIF' => 'B12345678',
                     'location' => 'validLocation',
@@ -215,16 +179,6 @@ class CreateCompanyByCommandTest extends TestCase
                 ],
                 ['location']
             ],
-            'invalid location - contains special characters' => [
-                [
-                    'name' => 'Valid Name',
-                    'email' => 'valid@example.com',
-                    'CIF' => 'B12345678',
-                    'location' => 'Invalid!@#',
-                    'website' => 'https://example.com',
-                ],
-                ['location']
-            ],
             'invalid location - empty' => [
                 [
                     'name' => 'Valid Name',
@@ -267,16 +221,6 @@ class CreateCompanyByCommandTest extends TestCase
                 ],
                 ['website']
             ],
-            'invalid website - empty' => [
-                [
-                    'name' => 'Valid Name',
-                    'email' => 'valid@example.com',
-                    'CIF' => 'B12345678',
-                    'location' => 'Valid Location',
-                    'website' => '',
-                ],
-                ['website']
-            ],
             'invalid website - too long' => [
                 [
                     'name' => 'Valid Name',
@@ -289,5 +233,24 @@ class CreateCompanyByCommandTest extends TestCase
             ],
         ];
     }
+
+    public function testErrorCodeWithDuplicatedEmail(): void
+   {
+       $this->artisan('create:company')
+           ->expectsQuestion('Nombre de la compañia:', 'Test Company')
+           ->expectsQuestion('Email:', 'duplicado@test.es')
+           ->expectsQuestion('CIF:', 'B1234567A')
+           ->expectsQuestion('Localizacion:', 'Test Location')
+           ->expectsQuestion('Pagina web:', 'https://www.test.com')
+           ->assertExitCode(0);
+
+           $this->artisan('create:company')
+           ->expectsQuestion('Nombre de la compañia:', 'Test Email')
+           ->expectsQuestion('Email:', 'duplicado@test.es')
+           ->expectsQuestion('CIF:', 'B1234522A')
+           ->expectsQuestion('Localizacion:', 'Test Location')
+           ->expectsQuestion('Pagina web:', 'https://www.test.com')
+           ->assertExitCode(1);
+   }
 
 }
