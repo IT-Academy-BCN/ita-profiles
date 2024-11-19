@@ -3,9 +3,9 @@ import { useCallback, useState } from "react";
 import { TLanguage } from "../interfaces/interfaces";
 import { useUpdateLanguageHook } from "./useUpdateLanguageHook";
 
-export const useDragAndDropLanguagesHook = (langs: TLanguage[]) => {
+export const useDragAndDropLanguagesHook = (updateLanguagesDrop: TLanguage[]) => {
 
-  const { languages, reorderLanguages } = useUpdateLanguageHook(langs);
+  const { reorderLanguages } = useUpdateLanguageHook(updateLanguagesDrop);
   const [draggedItemIndex, setDraggedItemIndex] = useState<number | null>(null);
   // Función para manejar el inicio del drag
   const handleDragStart = useCallback((index: number) => {
@@ -21,7 +21,7 @@ export const useDragAndDropLanguagesHook = (langs: TLanguage[]) => {
   const handleDrop = useCallback((index: number) => {
     if (draggedItemIndex === null) return;
 
-    const updatedLanguages = [...languages];
+    const updatedLanguages = [...updateLanguagesDrop];
     const [draggedItem] = updatedLanguages.splice(draggedItemIndex, 1);
     updatedLanguages.splice(index, 0, draggedItem);
 
@@ -30,7 +30,7 @@ export const useDragAndDropLanguagesHook = (langs: TLanguage[]) => {
   }, []);
 
   const values = {
-    languages,
+    updateLanguagesDrop,
     draggedItemIndex,
     handleDragStart,
     handleDragOver,
