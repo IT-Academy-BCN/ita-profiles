@@ -3,6 +3,7 @@ import {
     getStudentDetailWithId,
     resumes,
 } from '../../api/student/getStudentDetailWithId'
+
 import { callUpdateStudent } from '../../api/student/callUpdateStudent'
 
 const bootcampThunk = createAsyncThunk(
@@ -15,6 +16,7 @@ const bootcampThunk = createAsyncThunk(
         return response
     },
 )
+
 const collaborationThunk = createAsyncThunk(
     'collaborationThunk',
     async (studentId: string | null) => {
@@ -25,6 +27,7 @@ const collaborationThunk = createAsyncThunk(
         return response
     },
 )
+
 const detailThunk = createAsyncThunk(
     'detailThunk',
     async (studentID: string | null) => {
@@ -67,6 +70,7 @@ const languagesThunk = createAsyncThunk(
         return response
     },
 )
+
 const modalityThunk = createAsyncThunk(
     'modalityThunk',
     async (studenSUID: string | null) => {
@@ -77,6 +81,7 @@ const modalityThunk = createAsyncThunk(
         return response
     },
 )
+
 const projectsThunk = createAsyncThunk(
     'projectsThunk',
     async (studenSUID: string | null) => {
@@ -87,6 +92,23 @@ const projectsThunk = createAsyncThunk(
         return response
     },
 )
+
+const updateProjectsThunk = createAsyncThunk<
+    string,
+    { url: string; formData: object }
+>('updateProjectsThunk', async ({ url, formData }) => {
+    try {
+        const response = await callUpdateStudent({
+            url,
+            formData,
+        })
+        return response
+    } catch (error) {
+        const MyError = error as ErrorEvent
+        throw new Error(MyError.message)
+    }
+})
+
 const additionalTrainingThunk = createAsyncThunk(
     'additionalTrainingThunk',
     async (studentID: string | null) => {
@@ -111,4 +133,5 @@ export {
     projectsThunk,
     additionalTrainingThunk,
     updateDetailThunk,
+    updateProjectsThunk,
 }

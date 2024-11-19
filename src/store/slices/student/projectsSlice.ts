@@ -1,20 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TProject } from '../../../interfaces/interfaces'
-import { projectsThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import {
+    projectsThunk,
+    updateProjectsThunk,
+} from '../../thunks/getDetailResourceStudentWithIdThunk'
 
 const projectsData: TProject[] = []
 
+export const initialState = {
+    isLoadingProjects: false,
+    isErrorProjects: false,
+    projectsData,
+    editProjectModalIsOpen: false,
+    selectedProjectID: '',
+}
+
 const projectsSlice = createSlice({
     name: 'projectsSlice',
-    initialState: {
-        isLoadingProjects: false,
-        isErrorProjects: false,
-        projectsData,
-        editProjectModalIsOpen: false,
-    },
+    initialState,
     reducers: {
         setEditProjectModalIsOpen: (state) => {
             state.editProjectModalIsOpen = !state.editProjectModalIsOpen
+        },
+        setSelectedProjectID: (state, action) => {
+            state.selectedProjectID = action.payload
         },
     },
     extraReducers: (builder) => {
@@ -31,7 +40,21 @@ const projectsSlice = createSlice({
             state.isLoadingProjects = false
             state.isErrorProjects = true
         })
+
+        builder.addCase(updateProjectsThunk.pending, () => {
+            console.log('pending')
+        })
+
+        builder.addCase(updateProjectsThunk.fulfilled, () => {
+            console.log('actualizado')
+        })
+        builder.addCase(updateProjectsThunk.rejected, () => {
+            console.log('rejected')
+        })
     },
 })
-export const { setEditProjectModalIsOpen } = projectsSlice.actions
+
+export const { setEditProjectModalIsOpen, setSelectedProjectID } =
+    projectsSlice.actions
+
 export default projectsSlice.reducer
