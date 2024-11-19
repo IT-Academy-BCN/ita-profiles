@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import languagesJson from "../locales/languages/languages.json"
-import { TAvailableLanguage, TLanguage } from '../../types';
+import { TAvailableLanguage, TLanguage } from '../interfaces/interfaces';
 
 export const useUpdateLanguageHook = (studentLanguages: TLanguage[]) => {
 
   const { countries } = languagesJson
   const [availableLanguages] = useState<TAvailableLanguage[]>(countries)
   const [updateLanguages, setUpdateLanguages] = useState<TLanguage[]>(structuredClone(studentLanguages));
+
 
   const addLanguage = (newLanguage: TLanguage) => {
     setUpdateLanguages((prevLanguages) => [...prevLanguages, newLanguage]);
@@ -45,6 +46,7 @@ export const useUpdateLanguageHook = (studentLanguages: TLanguage[]) => {
     addLanguage,
     deleteLanguage,
     editLanguage,
+    reorderLanguages
     reorderLanguages
   };
 }

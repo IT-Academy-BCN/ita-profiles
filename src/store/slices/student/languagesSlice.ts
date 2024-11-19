@@ -26,10 +26,10 @@ const languagesSlice = createSlice({
             state.languagesData = action.payload
         },
         resetUpdateLanguages: (state) => {
-            state.notification.message = null;
             state.isLoadingUpdateLanguages = false;
             state.isErrorUpdateLanguages = false;
-            state.isOpenEditAdditionalInformation = !state.isOpenEditAdditionalInformation
+            state.isOpenEditAdditionalInformation = false;
+            state.notification.message = '';
         }
     },
     extraReducers: (builder) => {
@@ -46,8 +46,9 @@ const languagesSlice = createSlice({
             state.isLoadingLanguages = false
             state.isErrorLanguages = true
         })
+
         builder.addCase(updateProfileLanguagesThunk.pending, (state) => {
-            state.isLoadingUpdateLanguages = false;
+            state.isLoadingUpdateLanguages = true;
             state.isErrorUpdateLanguages = false;
             state.notification = {
                 message: 'Loading ...',
@@ -62,8 +63,8 @@ const languagesSlice = createSlice({
             }
         })
         builder.addCase(updateProfileLanguagesThunk.rejected, (state) => {
-            state.isLoadingUpdateLanguages = false;
-            state.isErrorUpdateLanguages = false;
+            state.isLoadingUpdateLanguages = true;
+            state.isErrorUpdateLanguages = true;
             state.notification = {
                 message: "Estudiant o idioma no trobat",
             }

@@ -109,12 +109,8 @@ describe('StudentLanguagesTest reducer', () => {
             }
         })
     })
-
-
 })
 describe("updateProfileLanguagesThunk", () => {
-    // Update languages
-
     it('It is expected to return value ​​when the request is pending resolution.', () => {
         expect(
             studentLanguages(undefined, {
@@ -126,7 +122,7 @@ describe("updateProfileLanguagesThunk", () => {
             isErrorLanguages: false,
             languagesData: [],
             isOpenEditAdditionalInformation: false,
-            isLoadingUpdateLanguages: false,
+            isLoadingUpdateLanguages: true,
             isErrorUpdateLanguages: false,
             notification: {
                 message: 'Loading ...',
@@ -170,8 +166,8 @@ describe("updateProfileLanguagesThunk", () => {
             isErrorLanguages: false,
             languagesData: [],
             isOpenEditAdditionalInformation: false,
-            isLoadingUpdateLanguages: false,
-            isErrorUpdateLanguages: false,
+            isLoadingUpdateLanguages: true,
+            isErrorUpdateLanguages: true,
             notification: {
                 message: 'Estudiant o idioma no trobat',
             }
