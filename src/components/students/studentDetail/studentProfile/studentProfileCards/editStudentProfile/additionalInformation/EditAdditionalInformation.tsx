@@ -3,7 +3,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../../../../../../hooks/ReduxHooks"
 import { useUpdateLanguageHook } from "../../../../../../../hooks/useUpdateLanguageHook";
-import { setLanguagesData, toggleEditAdditionalInformation } from "../../../../../../../store/slices/student/languagesSlice";
+import { resetUpdateLanguages, setLanguagesData } from "../../../../../../../store/slices/student/languagesSlice";
 import { TLanguage } from "../../../../../../../interfaces/interfaces";
 import EditModality from "./EditModality"
 import DragAndDropLanguages from "./DragAndDropLanguages"
@@ -38,7 +38,7 @@ export const EditAdditionalInformation: FC = () => {
 
   const { refBtnModal, handleFocusOnMouseEnter, handleCloseModalKeyDown, handleCloseModal } = useEditAdditionalInformationHook()
 
-  const { updateLanguages, availableLanguages, deleteLanguage, editLanguage, sendNotification } = useUpdateLanguageHook(languagesData)
+  const { updateLanguages, availableLanguages, deleteLanguage, editLanguage } = useUpdateLanguageHook(languagesData)
 
     const { modality } = useAppSelector(
         (state) => state.ShowStudentReducer.studentAdditionalModality,
@@ -61,14 +61,14 @@ export const EditAdditionalInformation: FC = () => {
   const saveChanges = async () => {
     // const msg = await fetchChanges(updateLanguages)
     dispatchThunk(updateProfileLanguagesThunk(updateLanguages))
-    sendNotification(notification.message)
     dispacth(setLanguagesData(updateLanguages))
 
-        setTimeout(() => {
-            dispacth(resetUpdateLanguages())
+    setTimeout(() => {
+      dispacth(resetUpdateLanguages())
+      // dispacth(toggleEditAdditionalInformation())
+    }, 6000)
 
-        }, 6000)
-    }
+  }
 
     if (isOpenEditAdditionalInformation) {
         return (
