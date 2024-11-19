@@ -40,7 +40,7 @@ class CreateJobOfferCommand extends Command
      * @var \App\Http\Controllers\Api\Job\JobOfferController
      */
     protected $jobOfferController;
-/**
+    /**
      * The container instance.
      *
      * @var \Illuminate\Contracts\Container\Container
@@ -80,16 +80,17 @@ class CreateJobOfferCommand extends Command
             'description' => $this->argument('description'),
             'location' => $this->argument('location'),
             'skills' => $this->argument('skills') ?? null,
-            'salary' =>(float) $this->argument('salary'),
+            'salary' => (float) $this->argument('salary'),
         ];
-    
+
         $request = new CreateJobOfferRequest($this->container, $this->redirector);
         $request->merge($data);
         $request->validateResolved();
-    
+
         $response = $this->jobOfferController->createJobOffer($request);
-    
+
         $jobOffer = $response->getData()->jobOffer;
-        $this->info("Oferta de feina creada amb èxit: " . json_encode($jobOffer));
+        $this->info('🟢 Oferta de feina creada amb èxit:');
+        $this->line(json_encode(json_decode(json_encode($jobOffer), true), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 }
