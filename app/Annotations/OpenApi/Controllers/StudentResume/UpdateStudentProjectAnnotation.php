@@ -55,11 +55,11 @@ class UpdateStudentProjectAnnotation
      *              @OA\Property(
      *                 property="tags",
      *                 type="array",
-     *                 description="Array of tag IDs. Pass the complete array of tags to be associated with the project.",
-     *                 example={1, 2, 3},
+     *                 description="Array of tag names. Pass the complete array of tag names to be associated with the project.",
+     *                 example={"Web Development", "Laravel", "API"},
      *                 @OA\Items(
-     *                     type="integer",
-     *                     description="Tag ID"
+     *                     type="string",
+     *                     description="Tag name"
      *                 )
      *              ),
      *              @OA\Property(
