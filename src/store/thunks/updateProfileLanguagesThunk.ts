@@ -15,7 +15,7 @@ export const updateProfileLanguagesThunk = createAsyncThunk(
       "name": payload[0].name,
       "level": payload[0].level
     }
-    const axiosPost = await axios.post(`//localhost:8000/api/v1/student/${localStorage.getItem("studentID")}/resume/${resumes.languages}`, data, {
+    const axiosPost = await axios.put(`//localhost:8000/api/v1/student/${localStorage.getItem("studentID")}/resume/${resumes.languages}`, data, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Accept': 'application/json'
