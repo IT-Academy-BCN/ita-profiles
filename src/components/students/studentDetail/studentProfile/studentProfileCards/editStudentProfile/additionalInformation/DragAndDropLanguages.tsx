@@ -1,20 +1,26 @@
 import { FC } from 'react';
-import { TDragAndDropLanguagesProps, TLanguageLevel } from '../../../../../../../interfaces/interfaces';
-import { useUpdateLanguageHook } from '../../../../../../../hooks/useUpdateLanguageHook';
+import { TLanguage, TLanguageLevel } from '../../../../../../../interfaces/interfaces';
+// import { useUpdateLanguageHook } from '../../../../../../../hooks/useUpdateLanguageHook';
 import { useDragAndDropLanguagesHook } from '../../../../../../../hooks/useDragAndDropLanguagesHook';
 
+export type TDragAndDropLanguagesProps = {
+  dropLanguages: TLanguage[],
+  deleteLanguage: (id: string) => void,
+  editLanguage: (updatedLanguage: TLanguage) => void,
+}
 
-const DragAndDropLanguages: FC<TDragAndDropLanguagesProps> = ({ dropLanguages }) => {
+const DragAndDropLanguages: FC<TDragAndDropLanguagesProps> = ({ dropLanguages, deleteLanguage, editLanguage }) => {
 
   const levels: TLanguageLevel[] = ["Bàsic", "Intermedi", "Avançat", "Natiu"];
-  const { languages, deleteLanguage, editLanguage } = useUpdateLanguageHook(dropLanguages)
-  const { handleDragStart, handleDragOver, handleDrop } = useDragAndDropLanguagesHook(languages)
+
+  const { updateLanguagesDrop, handleDragStart, handleDragOver, handleDrop } = useDragAndDropLanguagesHook(dropLanguages)
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       <div>
         <div>
-          {languages.map((language, index) => (
+
+          {updateLanguagesDrop.map((language, index) => (
             <div
               key={language.id}
               draggable
@@ -24,24 +30,21 @@ const DragAndDropLanguages: FC<TDragAndDropLanguagesProps> = ({ dropLanguages })
               className='p-2 m-[5px 0] cursor-move border-2 border-gray-900'
             >
               <div key={language.id} className="p-1 flex flex-col gap-4">
-                <div className="p-1 flex flex-col gap-4">
-                  <div className="p-1 flex flex-col gap-4">
+                <div className="p-1 flex items-center">
+                  <div>
                     <div>{language.name}</div>
-                    <div>{language.level}</div>
-                    <button className="bg-red-400 py-2 px-4" type="button" onClick={() => deleteLanguage(language.id)}>Eliminar idioma</button>
                   </div>
-
+                  <button className="py-1 px-2 text-sm" type="button" onClick={() => deleteLanguage(language.id)}>Eliminar idioma</button>
                 </div>
-                <div className="p-1 flex justify-around">
-                  {levels.map((level, lindex) => (
-                    <label id={`level-${language.id}-${lindex}`} key={`level-${language.id}-${level}`}>
+                <div className="p-1">
+                  {levels.map((level) => (
+                    <label key={`level-${level}`}>
                       <strong>{level}</strong>
                       <input
                         type="radio"
-                        id={`level-${language.id}`}
-                        name={`level-${language.id}`}
+                        id={`level-${level}`}
+                        name={`level-${level}`}
                         defaultValue={level}
-
                         checked={language.level === level}
                         onChange={() => editLanguage({ ...language, level })}
                       />
@@ -52,8 +55,8 @@ const DragAndDropLanguages: FC<TDragAndDropLanguagesProps> = ({ dropLanguages })
             </div>
           ))}
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
 

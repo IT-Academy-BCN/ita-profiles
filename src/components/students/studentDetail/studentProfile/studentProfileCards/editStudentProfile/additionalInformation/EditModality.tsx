@@ -12,15 +12,15 @@ const EditModality: FC<EditModalityProps> = () => {
       <div className="p-1">
         <label htmlFor="Indiferente">
           Indiferente
-          <input type="radio" name="level" id="Indiferente" defaultValue="Indiferente" />
+          <input type="radio" name="level" id="IndiferenteModality" defaultValue="Indiferente" />
         </label>
         <label htmlFor="Remoto">
           Remoto
-          <input type="radio" name="level" id="Remoto" defaultValue="Remoto" />
+          <input type="radio" name="level" id="RemotoModality" defaultValue="Remoto" />
         </label>
         <label htmlFor="Presencial">
           Presencial
-          <input type="radio" name="level" id="Presencial" defaultValue="Presencial" />
+          <input type="radio" name="level" id="PresencialModality" defaultValue="Presencial" />
         </label>
       </div>
     </section>
