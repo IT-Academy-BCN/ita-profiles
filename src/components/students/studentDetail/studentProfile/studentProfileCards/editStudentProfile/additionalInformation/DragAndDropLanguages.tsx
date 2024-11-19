@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { TLanguage, TLanguageLevel } from '../../../../../../../interfaces/interfaces';
-// import { useUpdateLanguageHook } from '../../../../../../../hooks/useUpdateLanguageHook';
 import { useDragAndDropLanguagesHook } from '../../../../../../../hooks/useDragAndDropLanguagesHook';
 
 export type TDragAndDropLanguagesProps = {
