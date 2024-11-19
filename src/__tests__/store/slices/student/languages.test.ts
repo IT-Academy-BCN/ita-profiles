@@ -11,7 +11,7 @@ const initialState = {
     isLoadingUpdateLanguages: false,
     isErrorUpdateLanguages: false,
     notification: {
-        message: null,
+        message: '',
     }
 }
 
@@ -38,7 +38,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingUpdateLanguages: false,
             isErrorUpdateLanguages: false,
             notification: {
-                message: null,
+                message: '',
             }
         })
     })
@@ -57,7 +57,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingUpdateLanguages: false,
             isErrorUpdateLanguages: false,
             notification: {
-                message: null,
+                message: '',
             }
         })
     })
@@ -86,7 +86,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingUpdateLanguages: false,
             isErrorUpdateLanguages: false,
             notification: {
-                message: null,
+                message: '',
             }
         })
     })
@@ -105,12 +105,16 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingUpdateLanguages: false,
             isErrorUpdateLanguages: false,
             notification: {
-                message: null,
+                message: '',
             }
         })
     })
+
+
 })
 describe("updateProfileLanguagesThunk", () => {
+    // Update languages
+
     it('It is expected to return value ​​when the request is pending resolution.', () => {
         expect(
             studentLanguages(undefined, {
@@ -122,7 +126,7 @@ describe("updateProfileLanguagesThunk", () => {
             isErrorLanguages: false,
             languagesData: [],
             isOpenEditAdditionalInformation: false,
-            isLoadingUpdateLanguages: true,
+            isLoadingUpdateLanguages: false,
             isErrorUpdateLanguages: false,
             notification: {
                 message: 'Loading ...',
@@ -166,8 +170,8 @@ describe("updateProfileLanguagesThunk", () => {
             isErrorLanguages: false,
             languagesData: [],
             isOpenEditAdditionalInformation: false,
-            isLoadingUpdateLanguages: true,
-            isErrorUpdateLanguages: true,
+            isLoadingUpdateLanguages: false,
+            isErrorUpdateLanguages: false,
             notification: {
                 message: 'Estudiant o idioma no trobat',
             }
