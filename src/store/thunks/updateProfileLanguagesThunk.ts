@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { resumes } from '../../api/student/getStudentDetailWithId';
-import { TLanguage } from '../../../types';
+import { TLanguage } from '../../interfaces/interfaces';
 
 type DataFetch = {
   name: string,
