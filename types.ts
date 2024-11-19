@@ -117,7 +117,3 @@ export interface TSkills {
 export type TDragAndDropLanguagesProps = {
     dropLanguages: TLanguage[],
 }
-
-export type UpdateLanguageNotification = {
-    message: string;
-}

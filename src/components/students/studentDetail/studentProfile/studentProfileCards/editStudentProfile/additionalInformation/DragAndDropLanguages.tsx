@@ -1,9 +1,6 @@
-import { FC } from 'react'
-import {
-    TLanguage,
-    TLanguageLevel,
-} from '../../../../../../../interfaces/interfaces'
-import { useDragAndDropLanguagesHook } from '../../../../../../../hooks/useDragAndDropLanguagesHook'
+import { FC } from 'react';
+import { TLanguage, TLanguageLevel } from '../../../../../../../interfaces/interfaces';
+import { useDragAndDropLanguagesHook } from '../../../../../../../hooks/useDragAndDropLanguagesHook';
 
 export type TDragAndDropLanguagesProps = {
   dropLanguages: TLanguage[],
