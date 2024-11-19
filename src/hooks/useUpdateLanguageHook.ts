@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import languagesJson from "../locales/languages/languages.json"
-import { TAvailableLanguage, TLanguage } from '../../types';
+import { TAvailableLanguage, TLanguage } from '../interfaces/interfaces';
 
 export const useUpdateLanguageHook = (studentLanguages: TLanguage[]) => {
 

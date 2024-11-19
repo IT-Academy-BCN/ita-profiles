@@ -26,10 +26,10 @@ const languagesSlice = createSlice({
             state.languagesData = action.payload
         },
         resetUpdateLanguages: (state) => {
-            state.notification.message = null;
             state.isLoadingUpdateLanguages = false;
             state.isErrorUpdateLanguages = false;
-            state.isOpenEditAdditionalInformation = !state.isOpenEditAdditionalInformation
+            state.isOpenEditAdditionalInformation = false;
+            state.notification.message = '';
         }
     },
     extraReducers: (builder) => {

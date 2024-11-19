@@ -1,19 +1,14 @@
-import { FC, ChangeEvent, useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import { useAppDispatch, useAppSelector } from '../../../../../../../hooks/ReduxHooks'
-import { useUpdateLanguageHook } from '../../../../../../../hooks/useUpdateLanguageHook'
-import {
-    resetUpdateLanguages,
-    setLanguagesData
-} from '../../../../../../../store/slices/student/languagesSlice'
-import { TLanguage } from '../../../../../../../../types'
-import EditModality from './EditModality'
-import DragAndDropLanguages from './DragAndDropLanguages'
-import useEditAdditionalInformationHook from '../../../../../../../hooks/useEditAdditionalInformationHook'
-import { Close } from '../../../../../../../assets/svg'
-import { updateProfileLanguagesThunk } from '../../../../../../../store/thunks/updateProfileLanguagesThunk'
-import { callUpdateStudent } from '../../../../../../../api/student/callUpdateStudent'
-
+import { FC, ChangeEvent, useRef } from "react"
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../../../../../hooks/ReduxHooks"
+import { useUpdateLanguageHook } from "../../../../../../../hooks/useUpdateLanguageHook";
+import { resetUpdateLanguages, setLanguagesData } from "../../../../../../../store/slices/student/languagesSlice";
+import { TLanguage } from "../../../../../../../interfaces/interfaces";
+import EditModality from "./EditModality"
+import DragAndDropLanguages from "./DragAndDropLanguages"
+import useEditAdditionalInformationHook from "../../../../../../../hooks/useEditAdditionalInformationHook";
+import { updateProfileLanguagesThunk } from "../../../../../../../store/thunks/updateProfileLanguagesThunk";
 
 export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
 
@@ -48,13 +43,7 @@ export const EditAdditionalInformation: FC = () => {
 
   const { refBtnModal, handleFocusOnMouseEnter, handleCloseModalKeyDown, handleCloseModal } = useEditAdditionalInformationHook()
 
-    const {
-        updateLanguages,
-        availableLanguages,
-        deleteLanguage,
-        editLanguage,
-
-    } = useUpdateLanguageHook(languagesData)
+  const { updateLanguages, availableLanguages, deleteLanguage, editLanguage } = useUpdateLanguageHook(languagesData)
 
     const { modality } = useAppSelector(
         (state) => state.ShowStudentReducer.studentAdditionalModality,
@@ -78,16 +67,18 @@ export const EditAdditionalInformation: FC = () => {
         }
     }
 
-    const saveChanges = async () => {
+  const dispatchThunk = useAppDispatch();
+  const saveChanges = async () => {
+    // const msg = await fetchChanges(updateLanguages)
+    dispatchThunk(updateProfileLanguagesThunk(updateLanguages))
+    dispacth(setLanguagesData(updateLanguages))
 
-        dispatchThunk(updateProfileLanguagesThunk(updateLanguages))
-        dispacth(setLanguagesData(updateLanguages))
+    setTimeout(() => {
+      dispacth(resetUpdateLanguages())
+      // dispacth(toggleEditAdditionalInformation())
+    }, 6000)
 
-        setTimeout(() => {
-            dispacth(resetUpdateLanguages())
-
-        }, 6000)
-    }
+  }
 
     if (isOpenEditAdditionalInformation) {
         return (
