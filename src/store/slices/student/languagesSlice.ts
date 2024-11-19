@@ -47,12 +47,12 @@ const languagesSlice = createSlice({
                 message: 'Loading ...',
             }
         })
-        builder.addCase(updateProfileLanguagesThunk.fulfilled, (state, action) => {
+        builder.addCase(updateProfileLanguagesThunk.fulfilled, (state) => {
             state.isLoadingUpdateLanguages = false;
             state.isErrorUpdateLanguages = false;
             // Idioma actualitzat correctament
             state.notification = {
-                message: action.payload.message ?? 'Idioma actualitzat correctament'
+                message: 'Idioma actualitzat correctament',
             }
         })
         builder.addCase(updateProfileLanguagesThunk.rejected, (state) => {
