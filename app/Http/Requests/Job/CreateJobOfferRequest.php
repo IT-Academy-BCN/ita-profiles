@@ -34,7 +34,7 @@ class CreateJobOfferRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
-            'salary' => 'required|numeric',
+            'salary' => 'required|numeric|min:0',
             'skills' => 'nullable|string',
         ];
     }

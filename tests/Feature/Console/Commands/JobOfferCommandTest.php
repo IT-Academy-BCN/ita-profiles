@@ -25,7 +25,7 @@ class JobOfferCommandTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $user = User::factory()->create();
         $company = Company::factory()->create();
 
@@ -34,7 +34,7 @@ class JobOfferCommandTest extends TestCase
             'company_id' => $company->id
         ]);
     }
-    
+
     public function testIfJobOfferModelExists(): void
     {
         $this->assertTrue(class_exists(JobOffer::class));
@@ -77,24 +77,78 @@ class JobOfferCommandTest extends TestCase
 
         Artisan::call('job:offer:create', [
             'recruiter_id' => $this->recruiter->id,
-            // Missing required fields
             'description' => 'Looking for a Junior Developer.'
         ]);
     }
     public function testCreateMultipleJobOffers(): void
     {
         $jobOffers =  JobOffer::factory()
-        ->count(5)
-        ->create([
-            'recruiter_id' => $this->recruiter->id
-        ]);
+            ->count(5)
+            ->create([
+                'recruiter_id' => $this->recruiter->id
+            ]);
         $this->assertEquals(5, JobOffer::count());
-        
+
         foreach ($jobOffers as $jobOffer) {
             $this->assertDatabaseHas('job_offers', [
                 'id' => $jobOffer->id,
                 'recruiter_id' => $this->recruiter->id
             ]);
         }
+    }
+    public function testCreateJobOfferWithInvalidRecruiterId(): void
+    {
+        $this->expectException(\Symfony\Component\Console\Exception\RuntimeException::class);
+
+        Artisan::call('job:offer:create', [
+            'recruiter_id' => 0,
+            'title' => 'Software Engineer',
+            'description' => 'Looking for a Junior Developer.'
+        ]);
+    }
+    public function testCreateJobOfferWithInvalidSkills(): void
+    {
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
+
+        Artisan::call('job:offer:create', [
+            'recruiter_id' => $this->recruiter->id,
+            'title' => $this->faker->jobTitle(),
+            'description' => $this->faker->text(),
+            'location' => $this->faker->city(),
+            'skills' => ['PHP', 'Laravel', 'MySQL'],
+            'salary' => 50000
+        ]);
+    }
+    public function testCreateJobOfferCommandWithTooLongDescription(): void
+    {
+        $longDescription = str_repeat('a', 1000);
+
+        $exitCode = Artisan::call('job:offer:create', [
+            'recruiter_id' => $this->recruiter->id,
+            'title' => $this->faker->jobTitle(),
+            'description' => $longDescription,
+            'location' => $this->faker->city(),
+            'skills' => 'PHP, Laravel, MySQL',
+            'salary' => 50000
+        ]);
+
+        $this->assertEquals(0, $exitCode);
+        $this->assertDatabaseHas('job_offers', [
+            'description' => $longDescription,
+            'recruiter_id' => $this->recruiter->id
+        ]);
+    }
+    public function testJobOfferCreateCommandEnsuresSalaryIsPositive(): void
+    {
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
+
+        Artisan::call('job:offer:create', [
+            'recruiter_id' => $this->recruiter->id,
+            'title' => $this->faker->jobTitle(),
+            'description' => $this->faker->text(),
+            'location' => $this->faker->city(),
+            'skills' => 'PHP, Laravel, MySQL',
+            'salary' => -5000
+        ]);
     }
 }
