@@ -3,21 +3,21 @@ import { TInitialStateLanguageSlice } from '../../../../types'
 import { languagesThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
 import { updateProfileLanguagesThunk } from '../../thunks/updateProfileLanguagesThunk'
 
-const initialState: TInitialStateLanguageSlice = {
-    isLoadingLanguages: false,
-    isErrorLanguages: false,
-    languagesData: [],
-    isOpenEditAdditionalInformation: false,
-    isLoadingUpdateLanguages: false,
-    isErrorUpdateLanguages: false,
-    notification: {
-        message: null,
-    }
-}
+const languagesData: TLanguage[] = []
 
 const languagesSlice = createSlice({
     name: 'languagesSlice',
-    initialState,
+    initialState: {
+        isLoadingLanguages: false,
+        isErrorLanguages: false,
+        languagesData,
+        isOpenEditAdditionalInformation: false,
+        isLoadingUpdateLanguages: false,
+        isErrorUpdateLanguages: false,
+        notification: {
+            message: '',
+        }
+    },
     reducers: {
         toggleEditAdditionalInformation: (state) => {
             state.isOpenEditAdditionalInformation = !state.isOpenEditAdditionalInformation
@@ -46,9 +46,8 @@ const languagesSlice = createSlice({
             state.isLoadingLanguages = false
             state.isErrorLanguages = true
         })
-
         builder.addCase(updateProfileLanguagesThunk.pending, (state) => {
-            state.isLoadingUpdateLanguages = true;
+            state.isLoadingUpdateLanguages = false;
             state.isErrorUpdateLanguages = false;
             state.notification = {
                 message: 'Loading ...',
@@ -57,13 +56,14 @@ const languagesSlice = createSlice({
         builder.addCase(updateProfileLanguagesThunk.fulfilled, (state, action) => {
             state.isLoadingUpdateLanguages = false;
             state.isErrorUpdateLanguages = false;
+            // Idioma actualitzat correctament
             state.notification = {
                 message: action.payload.message ?? 'Idioma actualitzat correctament'
             }
         })
         builder.addCase(updateProfileLanguagesThunk.rejected, (state) => {
-            state.isLoadingUpdateLanguages = true;
-            state.isErrorUpdateLanguages = true;
+            state.isLoadingUpdateLanguages = false;
+            state.isErrorUpdateLanguages = false;
             state.notification = {
                 message: "Estudiant o idioma no trobat",
             }
