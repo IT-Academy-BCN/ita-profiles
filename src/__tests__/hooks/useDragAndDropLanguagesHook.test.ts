@@ -24,7 +24,7 @@ describe("UseDragAndDropLanguagesHook", () => {
 
     const { result } = renderHook(() => useDragAndDropLanguagesHook(mockLanguages))
 
-    expect(result.current.languages).toEqual([
+    expect(result.current.updateLanguagesDrop).toEqual([
       {
         id: "d108e5aa-e058-4245-8a9a-e056a1594dfa",
         name: "Francès",

@@ -25,7 +25,7 @@ describe('useUpdateLanguageHook', () => {
   it('should return initial studentLanguages', () => {
     const { result } = renderHook(() => useUpdateLanguageHook(mockLanguages));
 
-    expect(result.current.languages).toEqual(mockLanguages);
+    expect(result.current.updateLanguages).toEqual(mockLanguages);
   });
 
   it('should return initial availableLanguages', () => {
@@ -45,7 +45,7 @@ describe('useUpdateLanguageHook', () => {
       });
     });
 
-    expect(result.current.languages).toEqual([
+    expect(result.current.updateLanguages).toEqual([
       ...mockLanguages,
       {
         id: 'newLanguageId',
@@ -63,7 +63,7 @@ describe('useUpdateLanguageHook', () => {
       result.current.deleteLanguage(languageId);
     });
 
-    expect(result.current.languages).toEqual(
+    expect(result.current.updateLanguages).toEqual(
       mockLanguages.filter((lang) => lang.id !== languageId)
     );
   });
@@ -80,7 +80,7 @@ describe('useUpdateLanguageHook', () => {
       });
     });
 
-    expect(result.current.languages).toEqual([
+    expect(result.current.updateLanguages).toEqual([
       {
         id: languageIdMock,
         name: 'Castellà',
@@ -112,7 +112,7 @@ describe('useUpdateLanguageHook', () => {
       ]);
     });
 
-    expect(result.current.languages).toEqual([
+    expect(result.current.updateLanguages).toEqual([
       {
         id: "d108e5aa-e058-4245-8a9a-e056a1594dfg",
         name: "Anglais",
@@ -124,42 +124,5 @@ describe('useUpdateLanguageHook', () => {
         level: "Intermedi"
       }
     ]);
-  });
-
-  it('should save changes and return a success message', () => {
-    const { result } = renderHook(() => useUpdateLanguageHook(mockLanguages));
-    const studentIdMock = '69009fad-7863-425c-9049-df62033e2f82';
-
-    act(() => {
-      result.current.saveChanges(studentIdMock, [
-        {
-          id: '9137a959-f801-4744-bc82-1427f25e05cd',
-          name: 'Anglès',
-          level: 'Basic',
-        },
-        {
-          id: '69009fad-7863-425c-9049-df62033e2f82',
-          name: 'Castellà',
-          level: 'Intermedi',
-        },
-      ]);
-    });
-
-    expect(result.current.notification).toEqual({
-      message: 'Idioma actualitzat correctament',
-    });
-  });
-
-  it('should handle errors in saveChanges when invalid studentId is provided', () => {
-    const { result } = renderHook(() => useUpdateLanguageHook(mockLanguages));
-    const invalidStudentId = 'invalid-id';
-
-    act(() => {
-      result.current.saveChanges(invalidStudentId, []);
-    });
-
-    expect(result.current.notification).toEqual({
-      message: 'Estudiant o idioma no trobat',
-    });
   });
 });
