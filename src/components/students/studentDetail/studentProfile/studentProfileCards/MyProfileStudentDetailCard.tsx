@@ -6,24 +6,26 @@ import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
 import { ModalPortals } from '../../../../ModalPortals'
 import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
-import { Error } from '../../../../feedbackMessages/Error'
-import { Success } from '../../../../feedbackMessages/Success'
+import UploadProfilePhoto from './editStudentProfile/UploadProfilePhoto'
 import EditSkills from './editStudentProfile/EditSkills'
-import { updateTags } from '../../../../../store/slices/student/detailSlice'
+import {
+    updateTags,
+    setEditProfileModalIsOpen,
+} from '../../../../../store/slices/student/detailSlice'
 import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =
         useState(false)
-    const [openEditProfile, setOpenEditProfile] = useState(false)
+
     const {
         aboutData,
         isLoadingAboutData,
         isErrorAboutData,
-        updatedError,
-        updatedMessage,
+        editProfileImageIsOpen,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
+
     const [showEditSkills, setShowEditSkills] = useState(false)
 
     const dispatch = useAppDispatch()
@@ -33,7 +35,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
     }
 
     const handleModalEditProfile = () => {
-        setOpenEditProfile(!openEditProfile)
+        dispatch(setEditProfileModalIsOpen())
     }
 
     const refreshStudentData = (id: string) => {
@@ -63,16 +65,14 @@ const MyProfileStudentDetailCard: React.FC = () => {
         <div data-testid="StudentDataCard">
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
-            {updatedError && <Error message={updatedError} />}
-            {updatedMessage && <Success message={updatedMessage} />}
-            {openEditProfile && (
-                <ModalPortals>
-                    <EditStudentProfile
-                        handleModal={handleModalEditProfile}
-                        handleRefresh={refreshStudentData}
-                    />
-                </ModalPortals>
-            )}
+
+            <ModalPortals>
+                <EditStudentProfile
+                    handleModal={handleModalEditProfile}
+                    handleRefresh={refreshStudentData}
+                />
+                {editProfileImageIsOpen && <UploadProfilePhoto />}
+            </ModalPortals>
 
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">
@@ -87,7 +87,8 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                 <div className="flex flex-col">
                                     <div className="flex">
                                         <h2 className="text-xl font-bold">
-                                            {aboutData.name}
+                                            {aboutData.name}&nbsp;
+                                            {aboutData.surname}
                                         </h2>
                                         <button
                                             className="ml-auto"
@@ -97,6 +98,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                             <img
                                                 src={Pencil}
                                                 alt="edit profile information"
+                                                aria-label="edit student pencil"
                                             />
                                         </button>
                                     </div>

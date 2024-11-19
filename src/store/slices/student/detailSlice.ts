@@ -4,6 +4,7 @@ import {
     detailThunk,
     updateDetailThunk,
 } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import { updateProfilePhotoThunk } from '../../thunks/updateProfilePhotoThunk'
 
 const aboutData: TAbout = {
     id: 0,
@@ -25,18 +26,33 @@ export const initialState = {
     isLoadingAboutData: false,
     isErrorAboutData: false,
     aboutData,
-    toggleProfileImage: false,
+    editProfileImageIsOpen: false,
+    editProfileModalIsOpen: false,
     updatedMessage: '',
     updatedError: '',
     isUpdateLoading: false,
+    isLoadingPhoto: false,
+    isErrorPhoto: false,
+    photoSuccessfully: false,
 }
 
 const detailSlice = createSlice({
     name: 'detailSlice',
     initialState,
     reducers: {
-        setToggleProfileImage: (state, action) => {
-            state.toggleProfileImage = action.payload
+        setEditProfileImageIsOpen: (state) => {
+            state.editProfileImageIsOpen = !state.editProfileImageIsOpen
+        },
+        setEditProfileModalIsOpen: (state) => {
+            state.editProfileModalIsOpen = !state.editProfileModalIsOpen
+        },
+        resetSendingPhoto: (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = false
+            state.photoSuccessfully = false
+        },
+        setMessage: (state, action) => {
+            state.updatedMessage = action.payload
         },
         updateTags: (state, action) => {
             if (action.payload) {
@@ -76,10 +92,29 @@ const detailSlice = createSlice({
             state.updatedError = 'Error al realizar la actualizacion del perfil'
             state.isUpdateLoading = false
         })
+        builder.addCase(updateProfilePhotoThunk.pending, (state) => {
+            state.isLoadingPhoto = true
+            state.isErrorPhoto = false
+            state.photoSuccessfully = false
+        })
+        builder.addCase(updateProfilePhotoThunk.fulfilled, (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = false
+            state.photoSuccessfully = true
+        })
+        builder.addCase(updateProfilePhotoThunk.rejected, (state) => {
+            state.isLoadingPhoto = false
+            state.isErrorPhoto = true
+            state.photoSuccessfully = false
+        })
     },
 })
 
-export const { setToggleProfileImage } = detailSlice.actions
-export const { updateTags } = detailSlice.actions
-
+export const {
+    setEditProfileImageIsOpen,
+    updateTags,
+    setEditProfileModalIsOpen,
+    resetSendingPhoto,
+    setMessage,
+} = detailSlice.actions
 export default detailSlice.reducer
