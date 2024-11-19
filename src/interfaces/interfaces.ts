@@ -75,7 +75,8 @@ export type TLanguage = {
 
 export type TAbout = {
     id: number
-    fullname: string
+    name: string
+    surname: string
     resume: {
         subtitle: string
         social_media: {

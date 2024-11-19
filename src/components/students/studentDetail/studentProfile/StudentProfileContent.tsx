@@ -13,13 +13,10 @@ const StudentProfileContent: React.FC = () => {
 
     return (
         <div
-            className={`flex flex-col gap-6 items-center xl:items-end pt-12 ${
-                isMobile ? 'modal-box rounded-2xl pb-10 pl-6' : 'h-full w-full'
-            }
-        }`}
+            className={`flex flex-col gap-6 items-center xl:items-end pt-12 ${ isMobile ? 'modal-box rounded-2xl pb-10 pl-6' : 'h-full w-full' }`}
         >
-            <div className={`overflow-auto ${isMobile ? 'w-full' : 'w-3/4'}`}>
-                <div className="flex flex-col gap-9">
+            <div className={`overflow-y-auto ${isMobile ? 'w-full' : 'w-3/4'}`}>
+                <div className="flex flex-col gap-9 mb-12">
                     <h3 className="hidden text-2xl font-bold md:block">
                         Mi Perfil
                     </h3>
@@ -33,7 +30,6 @@ const StudentProfileContent: React.FC = () => {
                     <AdditionalTrainingCard />
                     <span className="h-0.5 w-full bg-gray-4-base" />
                     <MyProfileLanguagesCard />
-                    <span className="h-0.5 w-full bg-gray-4-base" />
                     <MyProfileModalityCard />
                 </div>
             </div>

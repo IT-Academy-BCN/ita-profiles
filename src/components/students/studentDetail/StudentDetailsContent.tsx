@@ -19,11 +19,7 @@ const StudentDetailsContent: React.FC<TStudentDetailsContent> = ({
     const { isMobile } = useStudentDetailHook()
 
     return (
-        <div
-            className={`flex flex-col gap-6 ${
-                isMobile ? 'modal-box rounded-2xl p-2 pb-10 pl-6' : 'h-full'
-            }`}
-        >
+        <div className={`flex flex-col gap-6 ${ isMobile ? 'modal-box rounded-2xl p-2 pb-10 pl-6' : 'h-full'}`}>
             <div className="flex items-center justify-end p-3 md:justify-between">
                 <h3 className="hidden text-2xl font-bold md:block">
                     Detalle Perfil
@@ -37,8 +33,8 @@ const StudentDetailsContent: React.FC<TStudentDetailsContent> = ({
                 </button>
             </div>
 
-            <div className={`overflow-auto ${isMobile ? 'pr-4' : 'pr-12'}`}>
-                <div className="flex flex-col gap-9">
+            <div className='overflow-y-auto'>
+                <div className="flex flex-col gap-10">
                     <StudentDetailCard />
                     <ProjectsCard />
                     <CollaborationCard />

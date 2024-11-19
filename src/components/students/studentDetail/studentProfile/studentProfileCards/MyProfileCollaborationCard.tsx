@@ -1,6 +1,5 @@
 import target from '../../../../../assets/img/target.png'
 import folder from '../../../../../assets/img/folder.png'
-import { Pencil } from '../../../../../assets/svg'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 
@@ -13,12 +12,6 @@ const MyProfileCollaborationCard: React.FC = () => {
         <div className="flex flex-col gap-4" data-testid="CollaborationCard">
             <div className='flex'>
                 <h3 className="text-lg font-bold text-black-3">Colaboración</h3>
-                <button
-                    type='button' 
-                    className='ml-auto'
-                    >
-                        <img src={Pencil} alt="edit collaboration information" />
-                </button>
             </div>            
             <div className="flex flex-col gap-4 md:flex-row">
                 {isLoadingCollaborations && <LoadingSpiner />}

@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { useDispatch } from 'react-redux'
 import remoto from '../../../../../assets/svg/remoto.svg'
-import { Pencil } from '../../../../../assets/svg'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { toggleEditAdditionalInformation } from '../../../../../store/slices/student/languagesSlice'
@@ -19,13 +18,6 @@ const MyProfileModalityCard: React.FC = () => {
         <div className="flex flex-col gap-3" data-testid="ModalityCard">
             <div className='flex'>
                 <h3 className="font-bold text-lg">Modalidad</h3>
-                <button
-                    type='button'
-                    className='ml-auto'
-                    onClick={() => dispatch(toggleEditAdditionalInformation())}
-                >
-                    <img src={Pencil} alt="edit modality information" />
-                </button>
             </div>
             {isLoadingModality && <LoadingSpiner />}
             {isErrorModality && (
