@@ -124,5 +124,5 @@ export type TDragAndDropLanguagesProps = {
 }
 
 export type UpdateLanguageNotification = {
-    message: string;
+    message: string | null;
 }

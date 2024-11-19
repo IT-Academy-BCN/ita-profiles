@@ -15,6 +15,9 @@ const languagesSlice = createSlice({
     reducers: {
         toggleEditAdditionalInformation: (state) => {
             state.isOpenEditAdditionalInformation = !state.isOpenEditAdditionalInformation
+        },
+        setLanguagesData: (state, action) => {
+            state.languagesData = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -33,5 +36,5 @@ const languagesSlice = createSlice({
         })
     },
 })
-export const { toggleEditAdditionalInformation } = languagesSlice.actions
+export const { toggleEditAdditionalInformation, setLanguagesData } = languagesSlice.actions
 export default languagesSlice.reducer
