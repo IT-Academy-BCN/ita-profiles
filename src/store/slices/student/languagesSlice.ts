@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TLanguage } from '../../../interfaces/interfaces'
 import { languagesThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import { updateProfileLanguagesThunk } from '../../thunks/updateProfileLanguagesThunk'
 
 const languagesData: TLanguage[] = []
 
@@ -10,7 +11,12 @@ const languagesSlice = createSlice({
         isLoadingLanguages: false,
         isErrorLanguages: false,
         languagesData,
-        isOpenEditAdditionalInformation: false
+        isOpenEditAdditionalInformation: false,
+        isLoadingUpdateLanguages: false,
+        isErrorUpdateLanguages: false,
+        notification: {
+            message: '',
+        }
     },
     reducers: {
         toggleEditAdditionalInformation: (state) => {
@@ -33,6 +39,28 @@ const languagesSlice = createSlice({
         builder.addCase(languagesThunk.rejected, (state) => {
             state.isLoadingLanguages = false
             state.isErrorLanguages = true
+        })
+        builder.addCase(updateProfileLanguagesThunk.pending, (state) => {
+            state.isLoadingUpdateLanguages = false;
+            state.isErrorUpdateLanguages = false;
+            state.notification = {
+                message: 'Loading ...',
+            }
+        })
+        builder.addCase(updateProfileLanguagesThunk.fulfilled, (state, action) => {
+            state.isLoadingUpdateLanguages = false;
+            state.isErrorUpdateLanguages = false;
+            // Idioma actualitzat correctament
+            state.notification = {
+                message: action.payload.message ?? 'Idioma actualitzat correctament'
+            }
+        })
+        builder.addCase(updateProfileLanguagesThunk.rejected, (state) => {
+            state.isLoadingUpdateLanguages = false;
+            state.isErrorUpdateLanguages = false;
+            state.notification = {
+                message: "Estudiant o idioma no trobat",
+            }
         })
     },
 })

@@ -7,7 +7,12 @@ const initialState = {
     isLoadingLanguages: false,
     isErrorLanguages: false,
     languagesData,
-    isOpenEditAdditionalInformation: false
+    isOpenEditAdditionalInformation: false,
+    isLoadingUpdateLanguages: false,
+    isErrorUpdateLanguages: false,
+    notification: {
+        message: '',
+    }
 }
 
 describe('StudentLanguagesTest reducer', () => {
@@ -29,7 +34,12 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingLanguages: false,
             isErrorLanguages: false,
             languagesData: [],
-            isOpenEditAdditionalInformation: false
+            isOpenEditAdditionalInformation: false,
+            isLoadingUpdateLanguages: false,
+            isErrorUpdateLanguages: false,
+            notification: {
+                message: '',
+            }
         })
     })
 
@@ -43,7 +53,12 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingLanguages: true,
             isErrorLanguages: false,
             languagesData: [],
-            isOpenEditAdditionalInformation: false
+            isOpenEditAdditionalInformation: false,
+            isLoadingUpdateLanguages: false,
+            isErrorUpdateLanguages: false,
+            notification: {
+                message: '',
+            }
         })
     })
 
@@ -67,7 +82,12 @@ describe('StudentLanguagesTest reducer', () => {
                 language_name: 'string',
                 language_level: 'string',
             },
-            isOpenEditAdditionalInformation: false
+            isOpenEditAdditionalInformation: false,
+            isLoadingUpdateLanguages: false,
+            isErrorUpdateLanguages: false,
+            notification: {
+                message: '',
+            }
         })
     })
 
@@ -81,7 +101,80 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingLanguages: false,
             isErrorLanguages: true,
             languagesData: [],
-            isOpenEditAdditionalInformation: false
+            isOpenEditAdditionalInformation: false,
+            isLoadingUpdateLanguages: false,
+            isErrorUpdateLanguages: false,
+            notification: {
+                message: '',
+            }
+        })
+    })
+
+
+})
+describe("updateProfileLanguagesThunk", () => {
+    // Update languages
+
+    it('It is expected to return value ​​when the request is pending resolution.', () => {
+        expect(
+            studentLanguages(undefined, {
+                type: 'updateProfileLanguagesThunk/pending',
+                payload: [],
+            }),
+        ).toEqual({
+            isLoadingLanguages: false,
+            isErrorLanguages: false,
+            languagesData: [],
+            isOpenEditAdditionalInformation: false,
+            isLoadingUpdateLanguages: false,
+            isErrorUpdateLanguages: false,
+            notification: {
+                message: 'Loading ...',
+            }
+        })
+    })
+
+    it('It is expected to return values when the request is fulfilled resolution', () => {
+        expect(
+            studentLanguages(undefined, {
+                type: 'updateProfileLanguagesThunk/fulfilled',
+                payload: {
+                    languages: {
+                        language_id: 'string',
+                        language_name: 'string',
+                        language_level: 'string',
+                    },
+                },
+            }),
+        ).toEqual({
+            isLoadingLanguages: false,
+            isErrorLanguages: false,
+            languagesData: [],
+            isOpenEditAdditionalInformation: false,
+            isLoadingUpdateLanguages: false,
+            isErrorUpdateLanguages: false,
+            notification: {
+                message: 'Idioma actualitzat correctament',
+            }
+        })
+    })
+
+    it('It is expected to return values when the request is rejected resolution', () => {
+        expect(
+            studentLanguages(undefined, {
+                type: 'updateProfileLanguagesThunk/rejected',
+                payload: [],
+            }),
+        ).toEqual({
+            isLoadingLanguages: false,
+            isErrorLanguages: false,
+            languagesData: [],
+            isOpenEditAdditionalInformation: false,
+            isLoadingUpdateLanguages: false,
+            isErrorUpdateLanguages: false,
+            notification: {
+                message: 'Estudiant o idioma no trobat',
+            }
         })
     })
 })

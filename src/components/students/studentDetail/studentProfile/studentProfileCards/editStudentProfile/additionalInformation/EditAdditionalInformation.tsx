@@ -1,13 +1,14 @@
 import { FC, ChangeEvent, useRef } from "react"
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../../../../../hooks/ReduxHooks"
+import { useAppDispatch, useAppSelector } from "../../../../../../../hooks/ReduxHooks"
 import { useUpdateLanguageHook } from "../../../../../../../hooks/useUpdateLanguageHook";
 import { setLanguagesData, toggleEditAdditionalInformation } from "../../../../../../../store/slices/student/languagesSlice";
 import { TLanguage } from "../../../../../../../interfaces/interfaces";
 import EditModality from "./EditModality"
 import DragAndDropLanguages from "./DragAndDropLanguages"
 import useEditAdditionalInformationHook from "../../../../../../../hooks/useEditAdditionalInformationHook";
+import { updateProfileLanguagesThunk } from "../../../../../../../store/thunks/updateProfileLanguagesThunk";
 
 export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
 
@@ -30,11 +31,11 @@ export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
 
 export const EditAdditionalInformation: FC = () => {
   const dispacth = useDispatch();
-  const { languagesData, isOpenEditAdditionalInformation } = useAppSelector(state => state.ShowStudentReducer.studentLanguages)
+  const { languagesData, isOpenEditAdditionalInformation, notification, isLoadingUpdateLanguages, isErrorUpdateLanguages } = useAppSelector(state => state.ShowStudentReducer.studentLanguages)
 
   const { refBtnModal, handleFocusOnMouseEnter, handleCloseModalKeyDown, handleCloseModal } = useEditAdditionalInformationHook()
 
-  const { updateLanguages, availableLanguages, notification, deleteLanguage, editLanguage, sendNotification } = useUpdateLanguageHook(languagesData)
+  const { updateLanguages, availableLanguages, deleteLanguage, editLanguage, sendNotification } = useUpdateLanguageHook(languagesData)
 
   // TODDO: Refactor
   const { modality } = useAppSelector(state => state.ShowStudentReducer.studentAdditionalModality)
@@ -54,11 +55,11 @@ export const EditAdditionalInformation: FC = () => {
     }
   }
 
-
+  const dispatchThunk = useAppDispatch();
   const saveChanges = async () => {
-    const msg = await fetchChanges(updateLanguages)
-
-    sendNotification(msg)
+    // const msg = await fetchChanges(updateLanguages)
+    dispatchThunk(updateProfileLanguagesThunk(updateLanguages))
+    sendNotification(notification.message)
     dispacth(setLanguagesData(updateLanguages))
 
     setTimeout(() => {
@@ -88,7 +89,9 @@ export const EditAdditionalInformation: FC = () => {
 
           <header className="flex justify-between items-center relative">
             <h2 className="py-0 px-4">Editar información adicional </h2>
-            <h3 className="py-0 px-4 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification !== null && notification.message}</h3>
+            {isErrorUpdateLanguages && <h3 className="py-0 px-4 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification !== null && notification.message}</h3>}
+            {isLoadingUpdateLanguages && <h3 className="py-0 px-4 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification !== null && notification.message}</h3>}
+            {notification !== null && <h3 className="py-0 px-4 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification.message}</h3>}
             <button className="text-red-500" onClick={handleCloseModal} type="button">X</button>
           </header>
 
