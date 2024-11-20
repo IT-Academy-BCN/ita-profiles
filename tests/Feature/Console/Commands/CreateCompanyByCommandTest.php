@@ -14,12 +14,7 @@ class CreateCompanyByCommandTest extends TestCase
 {
    use DatabaseTransactions;
 
-   public function testCompanyModelExists() : void
-   {
-       $this->assertTrue(class_exists(Company::class), "The Company model does not exist.");
-   }
-
-   public function testCanInstantiateController(): void
+   public function testCreateCompanyCommandCanInstantiateController(): void
    {
        $companyController = new CreateCompanyController();
 

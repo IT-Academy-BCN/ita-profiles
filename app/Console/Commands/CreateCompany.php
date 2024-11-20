@@ -12,6 +12,13 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class CreateCompany extends Command
 {
+    protected $description =('Create a new company in the database giving the required arguments step by step in terminal.'.PHP_EOL.'  Example:
+    name: It Academy
+    email: itacademy@test.es
+    CIF: A1234567Z
+    location: Barcelona
+    website: https://itacademy.barcelonactiva.cat/');
+    
     protected function configure()
     {
         $this->setName('create:company')
@@ -20,15 +27,7 @@ class CreateCompany extends Command
             ->addArgument('CIF', InputArgument::OPTIONAL, 'The unique CIF of the company')
             ->addArgument('location', InputArgument::OPTIONAL, 'The physical location of the company')
             ->addArgument('website', InputArgument::OPTIONAL, 'The company\'s website URL -OPTIONAL-');
-    }
-    
-    protected $description =('Create a new company in the database giving the required arguments step by step in terminal.'.PHP_EOL.'  Example:
-        name: It Academy
-        email: itacademy@test.es
-        CIF: A1234567Z
-        location: Barcelona
-        website: https://itacademy.barcelonactiva.cat/');
-             
+    }   
 
     /**
      * The CreateCompanyController instance.
@@ -54,7 +53,7 @@ class CreateCompany extends Command
     public function handle()
     {
         try {
-            $data = $this->getCompanyData();
+            $data = $this->askCompanyData();
             $request = $this->createRequest($data);
 
             $response = $this->createCompanyController->__invoke($request);
@@ -73,7 +72,7 @@ class CreateCompany extends Command
      *
      * @return array
      */
-    protected function getCompanyData(): array
+    protected function askCompanyData(): array
     {
         return [
             'name' => $this->ask('Nombre de la compañia:'),
