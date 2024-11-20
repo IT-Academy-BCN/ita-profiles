@@ -4,11 +4,10 @@ declare(strict_types=1);
 namespace Tests\Feature\Controller\Message;
 
 use App\Models\User;
-use App\Models\Student;
-use App\Models\Recruiter;
 use App\Models\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Laravel\Passport\Passport;
 
 class SendMessageTest extends TestCase
 {
@@ -19,7 +18,7 @@ class SendMessageTest extends TestCase
         $sender = User::factory()->create();
         $receiver = User::factory()->create();
 
-        $this->actingAs($sender);
+        Passport::actingAs($sender);
         
         $response = $this->postJson(route('message.send'), [
             'subject' => 'Hello!',
@@ -41,7 +40,7 @@ class SendMessageTest extends TestCase
         $sender = User::factory()->create();
         $receiver = User::factory()->create();
 
-        $this->actingAs($sender);
+        Passport::actingAs($sender);
 
         $response = $this->postJson(route('message.send'), [
             'receiver' => $receiver->id,
@@ -55,7 +54,7 @@ class SendMessageTest extends TestCase
         $sender = User::factory()->create();
         $receiver = User::factory()->create();
 
-        $this->actingAs($sender);
+        Passport::actingAs($sender);
 
         $response = $this->postJson(route('message.send'), [
             'subject' => str_repeat('A', 256),
@@ -70,7 +69,7 @@ class SendMessageTest extends TestCase
     {
         $sender = User::factory()->create();
 
-        $this->actingAs($sender);
+        Passport::actingAs($sender);
 
         $response = $this->postJson(route('message.send'), [
             'subject' => 'Invalid Receiver Test',
@@ -102,7 +101,7 @@ class SendMessageTest extends TestCase
         $sender = User::factory()->create();
         $receiver = User::factory()->create();
 
-        $this->actingAs($sender);
+        Passport::actingAs($sender);
 
         $response = $this->postJson(route('message.send'), [
             'subject' => '',
