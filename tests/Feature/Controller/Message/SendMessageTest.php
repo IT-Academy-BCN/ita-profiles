@@ -24,13 +24,12 @@ class SendMessageTest extends TestCase
         $response = $this->postJson(route('message.send'), [
             'subject' => 'Hello!',
             'body' => 'This is a test message.',
-            'receiver_id' => $receiver->id,
+            'receiver' => $receiver->id,
         ]);
 
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('messages', [
-            'sender' => $sender->id,
             'receiver' => $receiver->id,
             'subject' => 'Hello!',
             'body' => 'This is a test message.',
@@ -59,7 +58,7 @@ class SendMessageTest extends TestCase
         $this->actingAs($sender);
 
         $response = $this->postJson(route('message.send'), [
-            'subject' => str_repeat('A', 256), // 256 characters
+            'subject' => str_repeat('A', 256),
             'body' => 'This is a test message.',
             'receiver' => $receiver->id,
         ]);
@@ -76,11 +75,11 @@ class SendMessageTest extends TestCase
         $response = $this->postJson(route('message.send'), [
             'subject' => 'Invalid Receiver Test',
             'body' => 'Testing receiver validation.',
-            'receiver' => 'invalid-uuid', // Invalid UUID
+            'receiver' => 'invalid-uuid',
         ]);
 
         $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['receiver_id']);
+        $response->assertJsonValidationErrors(['receiver']);
     }
     public function test_body_field_is_empty()
     {
@@ -91,7 +90,7 @@ class SendMessageTest extends TestCase
 
         $response = $this->postJson(route('message.send'), [
             'subject' => 'Empty Body Test',
-            'body' => '', // Empty body
+            'body' => '',
             'receiver' => $receiver->id,
         ]);
 
@@ -106,7 +105,7 @@ class SendMessageTest extends TestCase
         $this->actingAs($sender);
 
         $response = $this->postJson(route('message.send'), [
-            'subject' => '', // Empty subject
+            'subject' => '',
             'body' => 'This is a message with an empty subject.',
             'receiver' => $receiver->id,
         ]);
