@@ -78,7 +78,13 @@ Some functionnalities require a GitHub token. If you don't have one, you can gen
 
 ## Demo
 
---
+### Developed Commands
+Below is a list of commands developed for the project, including their descriptions and command help.
+
+| Command Name        | Description                                         | Command Help                                      |
+|---------------------|-----------------------------------------------------|-------------------------------------------------|
+| `create:company`   | Creates a new company in the database.            | `create:company --help` |
+| 
 
 ## Screenshots
 
