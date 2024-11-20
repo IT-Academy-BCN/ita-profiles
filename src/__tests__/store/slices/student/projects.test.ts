@@ -1,5 +1,12 @@
 import studentProjects from '../../../../store/slices/student/projectsSlice'
 
+export const initialState = {
+    isLoadingProjects: false,
+    isErrorProjects: false,
+    projectsData: [],
+    editProjectModalIsOpen: false,
+    selectedProjectID: null,
+}
 describe('Student Projects Test (Redux)', () => {
     it('should be defined Student Projects Slice', () => {
         expect(studentProjects).toBeDefined()
@@ -12,9 +19,7 @@ describe('Student Projects Test (Redux)', () => {
                 payload: [],
             }),
         ).toEqual({
-            isLoadingProjects: false,
-            isErrorProjects: false,
-            projectsData: [],
+            ...initialState,
         })
     })
 
@@ -25,9 +30,8 @@ describe('Student Projects Test (Redux)', () => {
                 payload: [],
             }),
         ).toEqual({
-            isLoadingProjects: true,
-            isErrorProjects: false,
-            projectsData: [],
+            ...initialState,
+            isLoadingProjects: true
         })
     })
 
@@ -54,6 +58,7 @@ describe('Student Projects Test (Redux)', () => {
                 },
             }),
         ).toEqual({
+            ...initialState,
             isLoadingProjects: false,
             isErrorProjects: false,
             projectsData: [
@@ -71,6 +76,7 @@ describe('Student Projects Test (Redux)', () => {
                     project_repository: 'string',
                 },
             ],
+            selectedProjectID: null,
         })
     })
 
@@ -81,9 +87,10 @@ describe('Student Projects Test (Redux)', () => {
                 payload: [],
             }),
         ).toEqual({
+            ...initialState,
             isLoadingProjects: false,
             isErrorProjects: true,
-            projectsData: [],
+            selectedProjectID: null,
         })
     })
 })
