@@ -1,0 +1,2047 @@
+[33md78dc8dc[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m392-be-create-messages-table-for-user-communication[m[33m, [m[1;31morigin/392-be-create-messages-table-for-user-communication[m[33m)[m use DatabaseTransactions
+[33m3670ed29[m added SetUp method to my tests
+[33mcdff6836[m Created swagger documentation
+[33mc510e378[m Modified tests to allow proper Auth of Sender
+[33maee856e6[m Tests modifiec successfully
+[33m1c87340c[m Got rid of sende column, refactorized Controller
+[33maa5820ea[m Tests are working now, changed id of messages table to uuid
+[33m8b1273c2[m Modified the Request and Controller for SendMessage
+[33mebd70cd6[m Modified model
+[33mb5e48147[m Modified migration to eliminate polymorphic relationship
+[33m2126beb0[m deleted the Recruiter Factory file
+[33m78cbf7de[m Tests all work
+[33m279d07e4[m Deleted comments
+[33mf09f0e09[m Test are working
+[33mfe38a1ae[m Created a recruiter factory
+[33me7e79a12[m Migrated tables
+[33m92fd1ccd[m Added the relationship to User, Recruiter and Student models
+[33m324b99fe[m Created a polymorphic relationship between models
+[33mf1808e85[m Changed migrations to include polyphormism
+[33mfc41c024[m Got rid of polyphormic relationships
+[33md89f2731[m trying to send messages without polyphormic relationships
+[33m5b69fdaf[m Fixed the polyphormic relationship
+[33m566498bb[m Created polymorphic relationship with User, Recruiter and Student model
+[33m3cbb2e3d[m writing test for the message
+[33m01b0e9ed[m created file for tests
+[33md4c504c2[m Created the route inside the api file
+[33me6204259[m Created SendMessageController
+[33m358e15a5[m Created model for Message
+[33m636fec59[m Migration created for messages table
+[33m7cdb6d39[m[33m ([m[1;32mmain[m[33m)[m Merge pull request #397 from IT-Academy-BCN/396-fe-fix-remove-unnecessary-pencil-icons
+[33m4c13e3f3[m[33m ([m[1;31morigin/396-fe-fix-remove-unnecessary-pencil-icons[m[33m)[m fix: fixed lint issues
+[33mec21d589[m fix: changed language of loading message to spanish
+[33m6842677e[m fix: changed appearance of scroll bars
+[33m29765401[m feature: delete unnecessary ui elements
+[33m3a282885[m Merge pull request #367 from IT-Academy-BCN/feature/316-fe-add-the-profile-photo-modal-to-the-button-in-editar-datos-modal
+[33m139ea99e[m[33m ([m[1;31morigin/feature/316-fe-add-the-profile-photo-modal-to-the-button-in-editar-datos-modal[m[33m)[m Fix: When the image upload is complete and successful, the message status did not change, when you wanted to choose another image, it was not reset.
+[33mbe262509[m fix: detailSlice errors
+[33m86b00331[m Merge branch 'main' into feature/316-fe-add-the-profile-photo-modal-to-the-button-in-editar-datos-modal
+[33md938a7c2[m fix: Fixing the code, to adapt it, to the update of the endpoint /student/{student}/resume/photo, to update the photo
+[33m04055061[m[33m ([m[1;31morigin/347-raquels-onboarding[m[33m)[m Merge pull request #394 from IT-Academy-BCN/389-be-implement-the-recruiters-spike
+[33me9ec6a0a[m[33m ([m[1;31morigin/389-be-implement-the-recruiters-spike[m[33m)[m fixing CIF
+[33mf5c74ff1[m Merge pull request #368 from IT-Academy-BCN/edit-skills
+[33m867f4dec[m Merge branch 'main' into feature/316-fe-add-the-profile-photo-modal-to-the-button-in-editar-datos-modal
+[33mf17b4dc1[m Merge pull request #356 from IT-Academy-BCN/351-be-refactor-model-binding-taglist-endpoint
+[33m51e32225[m Merge pull request #369 from IT-Academy-BCN/feature/#365/X-CSRF-Token-Swagger
+[33mffe75b4c[m fix: Resolving conflicts over the name change to the axios call
+[33m19560f36[m fix: Renaming the call to axios
+[33m8a2056f1[m[33m ([m[1;31morigin/edit-skills[m[33m)[m eslint fix
+[33m175081a8[m layout and eslint fixes
+[33m47fd687f[m Merge pull request #355 from IT-Academy-BCN/feature/319-BE-Add-profile-picture-method
+[33md1d3b601[m[33m ([m[1;31morigin/feature/319-BE-Add-profile-picture-method[m[33m)[m Refactor test setup to create user and student once, not able to use: dataProvider()
+[33mc9a5aab7[m Merge pull request #366 from IT-Academy-BCN/359-be-document-coding-standards
+[33m5bf696c2[m[33m ([m[1;31morigin/feature/#365/X-CSRF-Token-Swagger[m[33m)[m SwaggerX-CSRF-Token Hidden
+[33m4046ef76[m fixes to pass tests
+[33m6e9c5364[m fix: Changing the initialized variable in Spanish
+[33m4d884182[m Refactor AddStudentImageController to delete old photo after saving new one
+[33m531ef1f5[m Modify tests names and use factories on each test
+[33mbc4009fe[m Fix: delete initial value
+[33me44b2e66[m layout fixes
+[33m08acaa68[m Fix: delete console.log
+[33mfd998670[m Create: implementing profile photo modal "Editar datos"
+[33m1aca7f79[m Feature: Edit skills
+[33m5b61418a[m[33m ([m[1;31morigin/359-be-document-coding-standards[m[33m)[m feature: update Index
+[33mb7611cb7[m[33m ([m[1;31morigin/351-be-refactor-model-binding-taglist-endpoint[m[33m)[m Update TagListController.php
+[33mdc292fb6[m feature: add Project structure section
+[33m27d3a228[m Refactor using tagcollection
+[33m2cb84384[m Merge remote-tracking branch 'origin/main' into 359-be-document-coding-standards
+[33m6072b44a[m[33m ([m[1;31morigin/Feature/316-fe-add-the-profile-photo-modal-to-the-button-in-editar-datos-modal[m[33m)[m Merge pull request #354 from IT-Academy-BCN/340-refactor-model-binding-student_language_delete-endpoint
+[33m34b5da5a[m feature: update Testing section
+[33m885bc785[m feature: create Localization section
+[33m70a9eb90[m Merge remote-tracking branch 'origin/359-be-document-coding-standards' into 359-be-document-coding-standards
+[33mdb9c539b[m feature: create testing section
+[33m496bb279[m feature: create testing section
+[33m32e0a13f[m feature: create testing section
+[33m327668fb[m Modify tests following colleagues recommendations: createUserAndStudent() method
+[33mdebdbe85[m Apply First Bracket conventions
+[33m0e019f01[m Merge pull request #346 from IT-Academy-BCN/315-fe-add-the-editar-datos-modal-to-the-profile-pencil-in-the-self-profile-edit
+[33me242b8bc[m[33m ([m[1;31morigin/315-fe-add-the-editar-datos-modal-to-the-profile-pencil-in-the-self-profile-edit[m[33m)[m Merge remote-tracking branch 'origin/main' into 315-fe-add-the-editar-datos-modal-to-the-profile-pencil-in-the-self-profile-edit
+[33m68532ac1[m Merge pull request #358 from IT-Academy-BCN/feature/#220-feature-update-the-projects-from-github
+[33m924bffca[m Merge pull request #364 from IT-Academy-BCN/360-fe-fix-delete-menu-button-on-projects-card
+[33m91dd696a[m fix: rename files, change tests
+[33mbdac6a79[m[33m ([m[1;31morigin/feature/#220-feature-update-the-projects-from-github[m[33m)[m fix: change $gitHubToken type from string to string|null
+[33mc8de3fe6[m Merge pull request #357 from IT-Academy-BCN/refactor/#349-BE-modelbinding-tagdetail-endpoint-try
+[33m2e229cb2[m[33m ([m[1;31morigin/refactor/#349-BE-modelbinding-tagdetail-endpoint-try[m[33m)[m Merge branch 'main' into refactor/#349-BE-modelbinding-tagdetail-endpoint-try
+[33m2b8a2003[m fix: change $gitHubToken type from mixed to string
+[33mac220f25[m fix: add missing strict_types
+[33m2702f9ba[m Merge pull request #353 from IT-Academy-BCN/352-be-refactor-model-binding-tagstore-endpoint
+[33mb489b0ef[m Merge remote-tracking branch 'origin/main' into 315-fe-add-the-editar-datos-modal-to-the-profile-pencil-in-the-self-profile-edit
+[33m429f8b0c[m Merge pull request #363 from IT-Academy-BCN/350-be-refactor-model-binding-tagupdate-endpoint
+[33mc12b7592[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 340-refactor-model-binding-student_language_delete-endpoint
+[33mbf20f26d[m Merge pull request #334 from IT-Academy-BCN/325-refactor-model_binding-in-get-student_photo-endpoint
+[33mcba5fbbc[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 340-refactor-model-binding-student_language_delete-endpoint
+[33m9dacac51[m[33m ([m[1;31morigin/325-refactor-model_binding-in-get-student_photo-endpoint[m[33m)[m refactor::recycle: delete testCanInstantiateAnUser in GetStudentImageControllerTest
+[33mf65d9a5d[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 325-refactor-model_binding-in-get-student_photo-endpoint
+[33m895c645d[m fix: bad link
+[33m04b55e3e[m fix: bad link
+[33m7b4eff24[m Merge pull request #362 from IT-Academy-BCN/361-be-refactor-modeling-the-studentresource-to-improve-frontend-compatibility
+[33m93002eff[m feature: Update documentation
+[33m0e1f28f2[m feature: Add documentation structure
+[33me3c7ea44[m make layout responsive
+[33ma5dab9f9[m[33m ([m[1;31morigin/360-fe-fix-delete-menu-button-on-projects-card[m[33m)[m fix: deleted unused menu type button
+[33m86d6511a[m[33m ([m[1;31morigin/350-be-refactor-model-binding-tagupdate-endpoint[m[33m)[m update annotations on swagger
+[33m7f0aed63[m add rule::unique to pass the test with out modify the name of tag
+[33m619c9ec6[m refactorized TagUpdateController to follow conventions
+[33mc737df61[m change protected fillable for only guarded "id"
+[33md997d108[m change route on V1 from tagId to tag on tag.update
+[33m543c1dcd[m delete TagUpdateService
+[33m38b78e7c[m testing only status code, no message
+[33m1bc02508[m[33m ([m[1;31morigin/361-be-refactor-modeling-the-studentresource-to-improve-frontend-compatibility[m[33m)[m refactor: making studentresource compatible with frontend
+[33m746ffd37[m Modify Annotation: TagDetailAnnotation.php
+[33m41c00fcb[m feature: ResumeObserverTest
+[33m199f7c4c[m testing in detail slice, delete clogs and fix bug
+[33mfd7e767c[m refactor: Remove comments
+[33mb08586bd[m refactor: exceptions
+[33ma92fba52[m refactor: saveProjectInResume()
+[33ma23b4a74[m refactor: Remove unused import
+[33m2b048705[m refactor: Remove comments and blank lines
+[33m0b9175ed[m Merge remote-tracking branch 'origin/feature/#220-feature-update-the-projects-from-github' into feature/#220-feature-update-the-projects-from-github
+[33mf50736b4[m refactor: restore DatabaseSeeder to original state
+[33mddbcc39a[m refactor: restore DatabaseSeeder to original state
+[33m36e1d5ea[m Merge remote-tracking branch 'origin/main' into feature/#220-feature-update-the-projects-from-github
+[33mc84bd82a[m Dele ted unnecessary files: TagDetailService.php and TagDetailServiceTest.php
+[33m42d1ac5f[m Modify file: TagDetailController using an instance of Tag and TagResource to format the response
+[33m28369fbe[m Modify  Route {tagId} -> {tag} in v1.php
+[33mb5097469[m Delete tagDetail Service Test
+[33m4d27e2ef[m Modify Tests of TagDetailControllerTest.php
+[33m2bd780dc[m feedback message errors are implemented
+[33m9082e676[m refresh profile after send form
+[33m478647ba[m Merge remote-tracking branch 'origin/main' into 315-fe-add-the-editar-datos-modal-to-the-profile-pencil-in-the-self-profile-edit
+[33mb4503283[m change form  validation feedback language
+[33m372dcfe7[m test  implemented and feedback messages changed to spanish
+[33me47b3f39[m Refactor: edit estudent, update with axios and implement redux
+[33m15316f56[m refactor: switch from Guzzle client to Laravel HTTP client
+[33m58f22fdb[m Refactor taglist
+[33mfcc81885[m Changes UpdateStudentPhotoAnnotation.php to make swagger work properly
+[33m59ee5b3b[m Add Route student.addPhoto(POST) and check tests: all passed
+[33md3d92562[m Created Annotation file: AddStudentImageAnnotation
+[33mb44165af[m Create AddStudentImageController
+[33md65e334f[m Test AddStudentImageController
+[33md0702f43[m[33m ([m[1;31morigin/352-be-refactor-model-binding-tagstore-endpoint[m[33m, [m[1;32m352-be-refactor-model-binding-tagstore-endpoint[m[33m)[m Deleted tests for error messages to make them language-agnostic
+[33mdf0918f8[m Deleted TagStoreService and TagStoreServiceTest files
+[33md731540b[m Deleted all references to TagStoreService
+[33m2dbc0b79[m refactor::recycle: change messages in 404 status due to handler
+[33m6d82136c[m refactor::recycle: delete service and its tests due to model binding
+[33mb9bde76a[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 340-refactor-model-binding-student_languagedelete-endpoint
+[33ma0d17940[m refactor::recycle: Refactor controller and route due to model binding
+[33m68891b7d[m Refactorized TagStoreController to follow conventions and updated Tests
+[33mee13f2ac[m Merge pull request #336 from IT-Academy-BCN/be-refactor-studentmodality-endpoint
+[33m85b39b5b[m[33m ([m[1;31morigin/be-refactor-studentmodality-endpoint[m[33m)[m eso
+[33mf6a8f000[m Merge branch 'main' into be-refactor-studentmodality-endpoint
+[33ma9434280[m refactor: implementing Laravel's model binding on student.modality
+[33mffd758d2[m Changed uppercase Attribute to lowercase attribute on Rules/DniNieRule.php
+[33m07bf09ca[m feature: add a coding standards file
+[33m5dd67f47[m Message changed on TermsRule to be consistent with the use of language
+[33m0ed369fc[m Making cleaner code on api routes
+[33mb9789b07[m refactor: update annotations
+[33mb7dd2d42[m refactor: delete used files
+[33m894118ad[m refactor: update tests
+[33m5e7f6fea[m refactor: extract logic from service to controller
+[33mc4dacfd5[m refactor: extract route from prefix
+[33m32d8e087[m fix: fixed lint issues
+[33m0ea48119[m feature: added pencil icons to all components in the "My Profile" view
+[33m62926a53[m fix: added margin to bottom of languages title
+[33m223e51ae[m fix: added language level because it was missing
+[33m7508a250[m refactor: made code more readable
+[33mfa154cef[m refactor: changed name to better match component name
+[33m8e92d3fb[m refactor: update entrypoint
+[33m507fa5f0[m refactor: update readme
+[33m248efd57[m refactor: .env.docker
+[33m71e81f1c[m refactor: minor update
+[33m2075cb06[m refactor: tests Project Model
+[33mbee08119[m refactor: tests for Resume service and Resume model
+[33m06e03a43[m refactor::recycle: Refactor DeleteStudentResumeLanguageControllerTest
+[33ma0144e84[m Merge pull request #343 from IT-Academy-BCN/feature/onboarding/Rossana
+[33m0a58ffcf[m refactor: update test to comply with github_url unicity
+[33m7adc6349[m refactor: test Project Services
+[33m14742524[m refactor: test Console
+[33mbbb5187e[m refactor: remove custom exceptions
+[33mcd8a4c6f[m refactor: cleaning logs
+[33mc03df9dd[m refactor: remove renderable callback from exception handler
+[33m3f02cde1[m refactor: use IT-Academy-BCN as github username
+[33m82a9d772[m refactor: clean code & annotate exceptions
+[33m75ea69c9[m Merge remote-tracking branch 'origin/feature/#220-feature-update-the-projects-from-github' into feature/#220-feature-update-the-projects-from-github
+[33m82bd503d[m refactor: minor refactor
+[33mbf1f5a64[m refactor: minor refactor
+[33m04af1765[m refactor: delete old projects when github_url changes
+[33mc5eeb7b7[m Merge remote-tracking branch 'origin/feature/#220-feature-update-the-projects-from-github' into feature/#220-feature-update-the-projects-from-github
+[33m598d2d21[m refactor: implement observer on Resume model
+[33m447926bf[m refactor: implement observer on Resume model
+[33m2a100ddd[m Merge remote-tracking branch 'origin' into 315-fe-add-the-editar-datos-modal-to-the-profile-pencil-in-the-self-profile-edit
+[33m3e5bda0c[m feature: validations were implemented with react-hook-form
+[33ma2f9e342[m refactor: extract the logic that process a single resume
+[33m29c46cb9[m refactor: set scheduler at 3:00 AM
+[33m44e4c813[m refactor: extract getResume from ProjectProcessingService
+[33me0ce313c[m extract updateStudentProfile function and make better layout and tests
+[33m19c8a1fb[m refactor: adapt code to cron job, clean up and restructure.
+[33m46cac981[m refactor: setup cron service
+[33m43b1ac5d[m refactor: add github_timestamp to resumes table
+[33mba1b0f8d[m feature: add a coding standards file
+[33ma89debd4[m Merge pull request #344 from IT-Academy-BCN/321-be-arturos-onboarding
+[33me76b0670[m Merge pull request #345 from IT-Academy-BCN/feature/onboarding-gabriel
+[33ma02c2277[m[33m ([m[1;31morigin/feature/onboarding-gabriel[m[33m)[m Making cleaner code on api routes
+[33m9ce4fdcd[m[33m ([m[1;31morigin/feature/-onboarding-artur[m[33m, [m[1;31morigin/321-be-arturos-onboarding[m[33m)[m Message changed on TermsRule to be consistent with the use of language
+[33m3a68d9be[m[33m ([m[1;31morigin/feature/onboarding/Rossana[m[33m, [m[1;32mfeature/onboarding/Rossana[m[33m)[m Changed uppercase Attribute to lowercase attribute on Rules/DniNieRule.php
+[33mfab0cf4e[m refactor: remove ProjectRetrieved event and listener
+[33m4483555b[m Merge pull request #332 from IT-Academy-BCN/328-be-refactor-studentlanguageupdate-endpoint
+[33m6548db80[m refactor: extract logic from HandleProjectRetrieved.php to ProjectProcessingService.php
+[33m8e36147c[m refactor: sync project and update timestamp in the same process
+[33m73fa7951[m fix EditStudentProfile and tests for match the Swagger doc and implement modalPortals component
+[33m9bc59cfe[m refactor: rename saveProjects() to saveProjectsInResume()
+[33m00951078[m implementing EditStudentProfile with TDD and manage modal reducer
+[33m21b43a26[m refactor: save tags in project
+[33me3f15cbc[m refactor: remove ProcessedProjectsService register
+[33m066dae12[m refactor: remove getResumeByGitHubUsername()
+[33mdb5fd06a[m refactor: setup exceptions
+[33m519a36ba[m refactor: implementing Laravel's model binding on student.modality
+[33ma159e226[m refactor: remove getResumeByProjectId() method
+[33m352e954a[m refactor: update timestamp when saving projects
+[33m5aebe68d[m refactor: add timestamp to projects and project_resume tables
+[33m1bef2f2a[m refactor: fix more test that did refactor for new table structure
+[33m4956f31f[m refactor: all tests passing
+[33m5eba81be[m refactor: update tests
+[33m1db0f4b2[m refactor: implementing Laravel's model binding on student.modality
+[33m89aafc9f[m refactor: update in UpdateStudentProjectRequest and UpdateStudentProjectAnnotation to reflect renaming of column in project table
+[33mc3b59828[m refactor: some fixes and seems ready for moving on
+[33m40acd2e1[m refactor: setup withoutEvents()
+[33m7947e35a[m refactor: update ResumeService logic
+[33me88a3fed[m fix: add unique to random UserName in ResumeFactory
+[33m36d6b546[m fix: ResumeFactory & refactor: migrations for resumes and projects, delete unnecessary service
+[33mf2446c9a[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 325-refactor-model_binding-in-get-student_photo-endpoint
+[33m0551d362[m Merge pull request #335 from IT-Academy-BCN/242-fe-feature-add-the-pencils-in-my-profile-view
+[33md0c58037[m fix: remove unnecessary files & solve user_id column in student table
+[33ma30e8696[m refactor: update code to restore branch in a working state
+[33m6045b820[m[33m ([m[1;31morigin/242-fe-feature-add-the-pencils-in-my-profile-view[m[33m)[m fix: fixed lint issues
+[33m31ba5f4f[m feature: added pencil icons to all components in the "My Profile" view
+[33mfcc413ed[m fix: added margin to bottom of languages title
+[33m1c099e1f[m fix: added language level because it was missing
+[33mb4480e46[m refactor: made code more readable
+[33ma9c71545[m refactor: changed name to better match component name
+[33m65cadbaa[m refactor(annotations): :recycle: refactor GetStudentImageAnnotation due to model binding
+[33m5d8b0b8c[m refactor(service): :recycle: delete GetStudentImageService and its tests due to model binding
+[33m12370718[m refactor(controller/route): :recycle: refactor route and controller for model binding
+[33m9a155d92[m refactor(test): :recycle: refactor GetStudentImageControllerTest for model binding
+[33m11790b40[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 325-refactor-model_binding-in-get-student_photo-endpoint
+[33ma8b3fbc3[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 325-refactor-model_binding-in-get-student_photo-endpoint
+[33ma6bcd908[m Merge pull request #333 from IT-Academy-BCN/269-be-delete-old-routes-as-fe-is-already-using-new-ones
+[33m252b5a92[m[33m ([m[1;31morigin/269-be-delete-old-routes-as-fe-is-already-using-new-ones[m[33m)[m feature: delete old FE routes
+[33m11eb313e[m Merge branch 'main' into feature/#220-feature-update-the-projects-from-github
+[33mcaddaef9[m[33m ([m[1;31morigin/328-be-refactor-studentlanguageupdate-endpoint[m[33m)[m Merge remote-tracking branch 'origin/main' into 328-be-refactor-studentlanguageupdate-endpoint
+[33m34a679e4[m refactor: update annotations
+[33m98c19edf[m refactor: delete used files
+[33mb1d511bc[m refactor: update tests
+[33m27209d9d[m refactor: extract logic from service to controller
+[33mcce6d2f5[m refactor(routes): :recycle: rename studentId parameter to student in endpoint
+[33m13c05633[m Merge pull request #329 from IT-Academy-BCN/327-be-refactor-studentupdatephoto
+[33mbb2d68d2[m[33m ([m[1;31morigin/327-be-refactor-studentupdatephoto[m[33m)[m miau
+[33m18859af4[m Merge branch 'main' into 327-be-refactor-studentupdatephoto
+[33mb18fec31[m Merge pull request #331 from IT-Academy-BCN/hotfix-remove-updateSkills-endpoint
+[33m512968e4[m refactor: extract route from prefix
+[33m50623416[m[33m ([m[1;31morigin/hotfix-remove-updateSkills-endpoint[m[33m)[m fix: remove duplicated endpoint
+[33md48533aa[m fix: remove updateSkills endpoint
+[33ma0f15911[m Merge pull request #296 from IT-Academy-BCN/feature/#282-be-refactor-studentprojectsupdate-endpoint
+[33m285b9465[m[33m ([m[1;31morigin/feature/#282-be-refactor-studentprojectsupdate-endpoint[m[33m)[m Merge branch 'main' into feature/#282-be-refactor-studentprojectsupdate-endpoint
+[33m9d7dca8f[m fix: strict type for ProjectPolicy + add test
+[33mcbd19d0e[m refactor(tests): simplify update student image tests
+[33m43613499[m Merge pull request #310 from IT-Academy-BCN/266-fe-rename-and-reorganise-files-and-folders-structure
+[33mbca8620c[m[33m ([m[1;31morigin/266-fe-rename-and-reorganise-files-and-folders-structure[m[33m)[m fix: fix additional_trainingSliceTest by additionalTrainingSlice
+[33m7588ec6e[m fix:Fixing various bugs
+[33m861b8c56[m[33m ([m[1;31morigin/268-befe-fix-wrong-column-names-in-tables[m[33m)[m fix: adjust some more annotations
+[33m2d088b7e[m Merge pull request #326 from IT-Academy-BCN/hotfix--StudentCollaboration-namespace
+[33m88a44010[m Merge branch '268-befe-fix-wrong-column-names-in-tables' into 266-fe-rename-and-reorganise-files-and-folders-structure
+[33m26be2880[m Merge branch '268-befe-fix-wrong-column-names-in-tables' into 266-fe-rename-and-reorganise-files-and-folders-structure
+[33m75d16bff[m fix: adjust some more annotations
+[33m932e0136[m fix: rename columns in collaborations table
+[33me66a434f[m fix: rename from tag_name to name in tags table
+[33md0791739[m[33m ([m[1;31morigin/hotfix--StudentCollaboration-namespace[m[33m)[m hotfix: fixing namespace
+[33mf0f109f5[m Merge pull request #314 from IT-Academy-BCN/313-be-fix-phpunit-coverage-config
+[33m70b6ccdb[m Merge pull request #312 from IT-Academy-BCN/311-be-refactor-studentupdatecollaborations
+[33m0b56aa4b[m Merge pull request #281 from IT-Academy-BCN/feature/#264-be-put-authcontroller-and-registercontroller-in-folders
+[33m7ee9c79c[m[33m ([m[1;31morigin/313-be-fix-phpunit-coverage-config[m[33m)[m fix: remove dedicated coverage report route from nginx config
+[33m0e25cf69[m[33m ([m[1;31morigin/311-be-refactor-studentupdatecollaborations[m[33m)[m refactor(studentCollaborations)
+[33m1e6b7ca7[m Merge branch 'main' into 266-fe-rename-and-reorganise-files-and-folders-structure
+[33m8ce989c0[m [FE] Refactor: deleted:    src/components/studentDetailCards/projectsSection/ProjectsCard.tsx
+[33mf12e4e54[m Merge pull request #309 from IT-Academy-BCN/266-4-FE-Refactor
+[33m84b88d35[m[33m ([m[1;31morigin/266-4-FE-Refactor[m[33m)[m Merge branch '266-fe-rename-and-reorganise-files-and-folders-structure' into 266-4-FE-Refactor
+[33m527181ea[m Merge pull request #308 from IT-Academy-BCN/307-be-feature-setup-code-coverage
+[33m2f0713e1[m[33m ([m[1;31morigin/307-be-feature-setup-code-coverage[m[33m)[m feature: remove annotations from coverage
+[33ma4e27c71[m [FE] FIX: Change the path of the CheckedIcon
+[33md967ff14[m feature: setup php-code-coverage
+[33m9a29e53c[m [FE] FIX: solving the projects component problem.
+[33m4bffb4ec[m Merge pull request #302 from IT-Academy-BCN/301-be-refactor-student-collaboration
+[33m58d53ff9[m [FE] FIX: Fixed the issue with the projects component. On line 40 the "name.slice()" method was used, which gave an error, so it was removed. Changes to be committed: 	modified:   src/components/studentDetailCards/projectsSection/ProjectsCard.tsx
+[33mab852cb3[m [FE] FIX: fixing the issue with the projects component. The data returned by the call to /student/{studentId}/resume/projects has changed, before it received "project_name", now it is "name". Changes to be committed: 	modified:   src/interfaces/interfaces.ts
+[33mf81adc33[m [FE] FIX: fixing the issue with the projects component. The data returned by the call to /student/{studentId}/resume/projects has changed, before it received "project_name", now it is "name". Changes to be committed: 	modified:   src/components/studentDetailCards/projectsSection/ProjectsCard.tsx
+[33m1884de51[m Merge pull request #306 from IT-Academy-BCN/298-be-fix-some-scripts
+[33mefef79ea[m[33m ([m[1;31morigin/301-be-refactor-student-collaboration[m[33m)[m fix declare strict types
+[33md6b4b045[m[33m ([m[1;31morigin/298-be-fix-some-scripts[m[33m)[m fix: update reboot.bat
+[33m08e749cc[m fix: restore reboot file
+[33me273e8ca[m Merge pull request #299 from IT-Academy-BCN/298-be-fix-some-scripts
+[33md8351dd4[m Merge pull request #304 from IT-Academy-BCN/feature/onboarding-O
+[33mfe1a63bd[m fix: one step further
+[33m51635bd8[m[33m ([m[1;31morigin/feature/onboarding-O[m[33m)[m Refactor: direct destructuring in useContext
+[33m5f33083a[m Merge pull request #293 from IT-Academy-BCN/292-studentskills
+[33m6c74365d[m[33m ([m[1;31morigin/292-studentskills[m[33m)[m remove unnecesary route
+[33me5eee325[m Merge branch 'main' into 292-studentskills
+[33m923efc90[m fix: some scripts
+[33m2eb36e2f[m refactor(api): model binding on student.collaborations
+[33md1fa670a[m 266[FE]Refactor: student components and tests
+[33m962bf4df[m Merge pull request #286 from IT-Academy-BCN/274-be-refactor-model_binding-student_languages-endpoint
+[33mf5d93f27[m[33m ([m[1;31morigin/274-be-refactor-model_binding-student_languages-endpoint[m[33m)[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 274-be-refactor-model_binding-student_languages-endpoint
+[33m2d03850b[m Merge pull request #284 from IT-Academy-BCN/feature/#271-be-refactor-studentupdateprofile-endpoint
+[33m22bf1f96[m Merge pull request #289 from IT-Academy-BCN/refactor/#287-be-refactor-student-add-language-endpoint
+[33m172c9764[m Merge pull request #297 from IT-Academy-BCN/feature/onboarding-
+[33m53f2b00b[m[33m ([m[1;31morigin/refactor/#287-be-refactor-student-add-language-endpoint[m[33m)[m Merge branch 'main' into refactor/#287-be-refactor-student-add-language-endpoint
+[33mac0041af[m Merge pull request #288 from IT-Academy-BCN/feature/#272-be-refactor-studentadditionaltraining-endpoint
+[33mbab1754a[m delete some comments
+[33mc108d099[m Merge branch 'main' into feature/#282-be-refactor-studentprojectsupdate-endpoint
+[33m434fd72a[m Merge pull request #291 from IT-Academy-BCN/feature/#245/Refactor_MakeCollaborationsPivotTableWithResumes
+[33m6592cf0c[m[33m ([m[1;31morigin/feature/#271-be-refactor-studentupdateprofile-endpoint[m[33m)[m refactor: controller return 404 for resume not found
+[33m1fb38d2c[m refactor: remove assert for messages
+[33md4389d7f[m Merge branch 'main' into feature/#271-be-refactor-studentupdateprofile-endpoint
+[33m15e9a4a0[m Merge pull request #294 from IT-Academy-BCN/266-3-FE-rename-and-reorganize-files-and-folders
+[33mbd9ea5e5[m Merge branch 'main' into refactor/#287-be-refactor-student-add-language-endpoint
+[33m48ce93e9[m refactor: remove comment
+[33m122a7745[m[33m ([m[1;31morigin/feature/#272-be-refactor-studentadditionaltraining-endpoint[m[33m)[m Merge branch 'main' into feature/#272-be-refactor-studentadditionaltraining-endpoint
+[33mee28cbe6[m chore: remove files for deprecated endpoint
+[33m32f7107f[m[33m ([m[1;31morigin/266-3-FE-rename-and-reorganize-files-and-folders[m[33m)[m [FE] Refactor: Delete inline eslint rule and add into eslintrc
+[33m268613dc[m [BE] Refactor: redux store folders and tests
+[33m39cf9e57[m Merge remote-tracking branch 'origin/main'
+[33m26c6a764[m wip
+[33m7e473549[m Merge pull request #279 from IT-Academy-BCN/273-be-refactor-studentbootcamp-endpoint
+[33m087133db[m wip
+[33mafbddfa9[m wip
+[33m8ad34732[m wip
+[33mc435a982[m fix: run on main every 5 mins
+[33m49fe7211[m[33m ([m[1;31morigin/feature/#245/Refactor_MakeCollaborationsPivotTableWithResumes[m[33m)[m Merge remote-tracking branch 'origin/main' into feature/#245/Refactor_MakeCollaborationsPivotTableWithResumes
+[33m90751e91[m fix: environment variables
+[33mb14df8d2[m Update AdditionalTrainingResource.php
+[33me93789f2[m Update AdditionalTrainingCollection.php
+[33me4e34565[m Update StudentAdditionalTrainingListAnnotation.php
+[33mfb89c023[m Update StudentAdditionalTrainingListAnnotation.php
+[33m7ac8903b[m Update StudentAdditionalTrainingListControllerTest.php
+[33mc8297f3c[m Merge remote-tracking branch 'origin/main' into feature/#245/Refactor_MakeCollaborationsPivotTableWithResumes
+[33mceaf25b1[m CleaningDone
+[33m708676ee[m PivotTableAddedWithoutErrors_SomeCleaningAndRefactorMissing
+[33m7a7aa2db[m Merge pull request #278 from IT-Academy-BCN/feature/-onboarding
+[33mb0636049[m Merge branch 'main' into refactor/#287-be-refactor-student-add-language-endpoint
+[33mc8f57d07[m [FE] Fix: Name change Changes to be committed: 	renamed:    src/api/index.ts -> src/api/getResourceWithAxios.ts 	modified:   src/api/student/getStudentDetailWithId.ts
+[33ma7b9d84b[m [FE] getDetailResourceStudentWithIdThunk.ts "Using const resumes" Changes to be committed: 	modified:   src/store/thunks/getDetailResourceStudentWithIdThunk.ts
+[33m7513d430[m [FE] Fix: renaming function Changes to be committed: 	renamed:    src/api/student/getResourceStudentWithId.ts -> src/api/student/getStudentDetailWithId.ts 	modified:   src/store/thunks/getDetailResourceStudentWithIdThunk.ts
+[33m131daf81[m fix: correct swagger annotations
+[33m736ce9c3[m feat: add ProjectPolicy to handle update authorization + minor fix: sync tag update data
+[33m9f8ffc54[m refactor: delete FormRequest failedValidation overwrite
+[33m5161086e[m refactor: apply model binding
+[33m24bb5b85[m fix: mysql failing in some mint distributions
+[33m6ea7c1cd[m refactor: apply model binding
+[33medc0985f[m feat: better tests & simple authorization function in controller
+[33m8ce3b128[m Refactor: update swagger
+[33mc40bfdb1[m typo and rename
+[33mb8d0b831[m Refactor: delete service and service test for additional training
+[33m8c92b322[m Refactor: fix controller and add tests
+[33m342212a7[m Feature: Add collection and resource for additional training
+[33m80a2b50b[m Refactor:  adapt controller and testing to model binding
+[33m55c3eebd[m Refactor student.additionaltraining route to use Model Binding
+[33m1ce69654[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 274-be-refactor-model_binding-student_languages-endpoint
+[33mb5be0e5d[m Merge remote-tracking branch 'origin/feature/#271-be-refactor-studentupdateprofile-endpoint' into feature/#271-be-refactor-studentupdateprofile-endpoint
+[33m41bcdaf3[m fix: remove a stray line in file
+[33mebd39c33[m refactor: updateStudentProjectController & Tests use model binding instead of id
+[33m65f2139f[m fix: remove a stray line in file
+[33m40441cc7[m Merge remote-tracking branch 'origin/feature/#271-be-refactor-studentupdateprofile-endpoint' into feature/#271-be-refactor-studentupdateprofile-endpoint
+[33mbaa6d520[m Merge branch 'main' into feature/#271-be-refactor-studentupdateprofile-endpoint
+[33md927779f[m Merge remote-tracking branch 'origin/feature/#271-be-refactor-studentupdateprofile-endpoint' into feature/#271-be-refactor-studentupdateprofile-endpoint
+[33md0c7f202[m refactor: remove redundant fillable from model and clean code
+[33mdf69def9[m refactor: update annotations
+[33m12482091[m refactor: remove service
+[33mb3846889[m fix: tests names
+[33m308cd67a[m refactor: clean code
+[33m11911374[m refactor: apply exception handler
+[33mb8db0e3b[m refactor: implement model binding to 'student.updateProfile' route
+[33m7c692eb0[m refactor: remove redundant fillable from model and clean code
+[33m5d1a8cf3[m refactor: update annotations
+[33m124cbf15[m refactor: remove service
+[33m1f258185[m WierdErrorICannotFind
+[33m07ea5dd6[m extract student.projects.update endpoint from prefix
+[33m100dc729[m fix: tests names
+[33m2573bb8e[m refactor: clean code
+[33m9692091d[m WierdError500ButNoErrorInLaravelLog
+[33md517beec[m fix(Source): :bug: LanguageResource was deleted and syntax annotation 'resource:' in controller
+[33m510a9dd3[m SeedingAndFactoryDoneErrorsToFixInTestMissing
+[33m2067aabc[m refactor(Annotations): :truck: Rename parameter from studentId to student and change output messages
+[33md84716c3[m refactor: :recycle: rename columns to name and level in languages Model
+[33me7e09276[m refactor: :recycle: Controller was refactored and service and its tests were deleted
+[33m2db1fbd7[m[33m ([m[1;31morigin/feature/#264-be-put-authcontroller-and-registercontroller-in-folders[m[33m)[m fix add bold to important information in SignIn annotation
+[33m0ad20f59[m feat: :sparkles: Language and Collection were created
+[33md571ea16[m refactor(Tests): :white_check_mark: ControllerTest and endpoint parameter name were refactored
+[33mf14e0816[m[33m ([m[1;31morigin/273-be-refactor-studentbootcamp-endpoint[m[33m)[m Merge branch 'main' into 273-be-refactor-studentbootcamp-endpoint
+[33m70a50f53[m Merge pull request #275 from IT-Academy-BCN/refactor/#265-organize-files
+[33m2dfc8515[m Delete useless consoleLog and eslint rules comment
+[33m93cd4a32[m Merge pull request #277 from IT-Academy-BCN/feature/#270-be-refactor-studentprojects-endpoint
+[33m4eff8be3[m[33m ([m[1;31morigin/feature/#270-be-refactor-studentprojects-endpoint[m[33m)[m fix: simpler tests names
+[33mdc9c4648[m [FE] Refactoring: api folder "src/api"
+[33m5653b4b4[m refactor: update Swagger annotations paths for RegiserUser and SignInUser & some minor changes
+[33m6d536b29[m[33m ([m[1;31morigin/refactor/#265-organize-files[m[33m)[m fix: use docker compose instead of docker-compose
+[33mbd9de62b[m refactor: apply exception handler
+[33mad81804d[m fix: use docker compose instead of docker-compose
+[33m5e29364c[m unnecessary resource
+[33m04f4d5d5[m final refactor
+[33m45c89c09[m refactor: move AuthController and RegisterController to /api/Auth folder
+[33m374f5272[m comment consoleLog in LoginPopup file
+[33mac54d0ee[m fix: remove version number definition in docker-compose.yml
+[33mae1e38d5[m fix: correct 'as' statement
+[33mbbf32789[m fix: correct wrong references
+[33mbc99d7e7[m eureka!
+[33mf391e423[m fix: update Swagger annotations and adjust response order for coherence
+[33me56866c0[m setup modelbinding
+[33mae1a7393[m delete empty line between imports
+[33m64eff712[m ignore postcss.config.js file on eslintrc
+[33m87dbb5df[m ignore tailwind.config.js on eslintrc
+[33m2638d128[m feat: add 'tags' to project details response with the corrected test.
+[33m032c52c1[m refactor: implement model binding to 'student.updateProfile' route
+[33me35aec8f[m Remove StudentProjectsDetailService & Tests corrected
+[33mabb13e51[m Feat adds ProjectCollection Resource for StudentProjectsDetailController
+[33m6969208e[m Fix Response for Controller & correct old Tests
+[33m86734357[m Refactor StudentProjectsDetailController & Tests to use Model Binding instead of StudentId
+[33m58d04b01[m refactor: organize files
+[33m01c29cd5[m Extract student.projects endpoint in order to use Model Binding
+[33m1025c5f3[m Merge pull request #259 from IT-Academy-BCN/feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m97f74349[m[33m ([m[1;31morigin/feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in[m[33m)[m fix: removed command --watch from package.json to avoid tests from being perpetually monitored on PR check
+[33md344cdc4[m Merge branch 'main' into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33mf2d09b34[m Fix: Lint
+[33mcd6f0d2c[m Merge branch 'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33mfe2aab92[m Revert "[FE] Fix pr_check"
+[33mf5c352b7[m Reapply "[FE] Fix pr_check"
+[33m739fe30a[m Revert "[FE] Fix pr_check"
+[33md2c42a1c[m Revert "[FE] Fix pr_check"
+[33ma281acfe[m [FE] Fix pr_check
+[33m2534e066[m Revert "[FE] Fix: Feature/#241 fe link the profile to the active user once logged in"
+[33m05a2ef61[m Merge pull request #258 from IT-Academy-BCN/244-refactor-tag_student-pivot-table
+[33ma6277802[m Merge branch 'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33mcf258c69[m [FE] Fix: Feature/#241 fe link the profile to the active user once logged in
+[33m430a12d7[m [FE] Modified: Modificando prueba studentLanguage
+[33m598d5182[m[33m ([m[1;31morigin/244-refactor-student_tag-project_tag-pivot-tables[m[33m)[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 244-refactor-tag_student-pivot-table
+[33me82977ef[m fix: fixed some lint errors
+[33mdcaec8f3[m [FE] Modified: Modificando prueba studentLanguage
+[33m3eb3a849[m [FE] Modified: Modifying tests and fixing some bugs
+[33m00b50b61[m Merge pull request #257 from IT-Academy-BCN/246-refactor-make-a-pivot-table-between-resumes-and-additional_trainings
+[33m47e709ac[m[33m ([m[1;31morigin/246-refactor-make-a-pivot-table-between-resumes-and-additional_trainings[m[33m)[m deleted comment
+[33m636dc402[m [Fe] Modified: Modifying the ModalityCard component, adding the LoadingSpiner component
+[33m50ff6941[m [FE] Modified: Modifying the ModalityCard component, adding the new implemented logic
+[33mc738bfbd[m [FE] Fixing: Fixing a bug, the request was not made to the corresponding endpoint
+[33m6da1f91d[m [FE] Modified: By modifying the student constant, we add the newly created portion student Modality
+[33m89810207[m Merge branch 'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m3238ef3e[m [FE] Modified: Modifying the test to import the data necessary for its operation
+[33m139fddc5[m Refactor: simplifying relationship of Resume in AdditionalTraining
+[33m4471d746[m [FE] Creating: Creating the asynchronous function getStudentModalityThunk to use it
+[33m451248eb[m [FE] Creating: Creating the studentModality slice for use
+[33m19a972eb[m [FE] Modified: It is expected to return values when the request is rejected resolution
+[33mb0ce6d3d[m [FE] Modified: It is expected to return values when the request is fulfilled resolution
+[33m21ece0c0[m fix: rename namespaces in tests folder
+[33m19ecbb0f[m [FE] Modified: It is expected to return values ​​when the request is pending resolution.
+[33m1c6d27fd[m [FE] Created: Create the modality constant and type it with TModality
+[33mc1dca4fd[m [FE] Modiffied: should be defined const modality type TModality
+[33mece4c731[m fix: All tests have been adapted to receive the tags_ids in the pivot table and fix their services and controllers
+[33mef861717[m [FE] Modified: should be return initialValues
+[33m88b0f4cd[m Merge branch 'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m6fccccbb[m [FE] Modified: should be defined getStudentModalityThunk
+[33mf08ce5b8[m [FE] Modified: should be defined slice
+[33m0f42d952[m Merge branch 'main' into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m1c295bac[m Refactor: simplifying relationship of AdditionalTraining in Resume model
+[33mf0116420[m [FE] Modified: Modifying the component to display correctly
+[33m767c50c4[m deleted comment
+[33ma3640749[m deleted comment
+[33mb144170b[m Fix: fixing fixture Resumes for correct testing
+[33m7d4db072[m [FE] Modified: AdditionalTrainingCard, AdditionalTrainingCard.test
+[33mc0cc990c[m [FE] Deleted: Delete console.log
+[33m0d1073cf[m [FE] Modified: Test defined (additionalTrainingSlice)
+[33m830e5c58[m Modified fixture Resumes
+[33md8c20fae[m Adjusted Seeders to modified Additional Training Model
+[33m2f35b78a[m Declared strict types in model
+[33m87ee3c16[m Fixed AdditionalTraining controller and service tests
+[33m9f4cf89e[m Fixed AdditionalTraining Service
+[33m3eb7bfea[m Modified Resume and AdditionalTraining models
+[33m752dd538[m Modified migrations: created pivot table and adjusted resumes table
+[33m414e8948[m [FE] Modified: Implement the three use cases, pending, fullfilled, reject
+[33mcdfc86fb[m [FE] Modified: should be return initial State
+[33ma65c995a[m [FE] Refactor: should be defined initial State
+[33mcf62215c[m [FE] Modified: should be defined initial State
+[33m352092a8[m [FE] Modified: Defining the reducer additionalTraining.
+[33mb9d3ce35[m [FE] Create: Creación de una prueba inicial de formación adicional del estudiante.
+[33mf3a038e4[m [FE] Create: Createing be  StudentModality initial test
+[33m4efc2517[m fix: UpdateStudentSkillsService and its form request were adapted to use the pivot table student_tag instead of the tags_ids column in resume
+[33medeaca0a[m [FE] Create: Creating the Student Collaborations Test
+[33me54550c6[m Delete: tags_ids in resumes table and refactor seeders
+[33m44994f58[m [FE] Modified: Adding more tests to the file (if defined and returning the default state) src/__tests__/store/reducers/getStudentLanguages/studentLanguages.test.ts
+[33m88ebeffb[m [FE] Modified: should be defined src/__tests__/store/reducers/getStudentLanguages/studentLanguages.test.ts
+[33mc9c85589[m [FE] Create: new file src/__tests__/store/reducers/getStudentLanguages/studentLanguages.test.ts On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m91d9fbca[m [FE] Refactor: Modifying the folder structure, so that they match
+[33m9caea385[m [FE] Refactor: StudentProjects.test.ts (Redux) , Creating the first test sets
+[33medcf0eea[m [FE] Create: Student Projects Test (Redux) On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	new file:   src/store/reducers/getStudentProjects/studentProjects.test.ts
+[33maeb51e67[m [FE]: Refactor: Modifying the BootcampCard.test
+[33m357bbd81[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 244-refactor-tag_student-pivot-table
+[33m21a17a6c[m Refactor: StudentTagSeeder and ProjectTagSeeder were refactored
+[33mcf9df422[m fix: failing test due to variable names
+[33m0fb478d0[m Refactor: rename pivot tables from tag_student to student_tag and from tag_project to project_tag
+[33m2efbec1b[m fix: studen literal corrected
+[33m4c1fe9d7[m fix: studen literal corrected
+[33m58ebaad6[m Merge pull request #256
+[33mcd0194b0[m Fix: fixed Login Context Provider test
+[33m637cc6e5[m Merge branch 'main' into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33mb0b80840[m Merge pull request #250 from IT-Academy-BCN/248-bespike-check-how-to-apply-a-model-binding-refactor
+[33mad312432[m fix/ fixed tests
+[33mdece942f[m Merge branch 'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m85892ad2[m fix/ corrected spelling
+[33m0e25d7c1[m Merge branch 'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33mf9fb751c[m Merge branch 'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m6183bf9c[m refactor/ changed var names to make code more uniform
+[33me662cfcc[m feature/ modified languages cards to dinamically show logged user info on profile
+[33meb18996b[m Changes were made that affected this test StudentDeatilCard.test.tsx, react-redux context value could not be found; make sure the component is wrapped in a <Provider> ,but the last test fails, bootcamp data correctly
+[33meb0a34f3[m[33m ([m[1;31morigin/refactor/#247/make-a-pivot-table-between-resumes-and-projects[m[33m)[m Restore call to ProjectSeeder to its position
+[33m9038da62[m Changes were made that affected this test CollaborationCard.test.tsx, could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+[33m7410c050[m Changes were made that affected this test ProjectsCard.test.tsx, could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+[33m9b704e76[m Changes were made that affected this test StudentDeatilsContent.test.tsx, could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+[33mc0e88653[m Add some missing Strict Mode. Rename resume_project pivot table to project_resume (see Laravel naming conventions). Rename ResumeProjectSeeder.php to ProjectSeeder.php Add some missing Return Types.
+[33m46375e46[m Changes were made that affected this test StudentDeatilCard.test.tsx, could not find react-redux context value; please ensure the component is wrapped in a <Provider>
+[33m8eeb9030[m Updating the UserNavbar component, changes were made that affected this component
+[33mabcbca42[m Updating the LoginPopup.test.tsx test, changes were made that affected this test
+[33m7e8f371d[m Updating the LoginContext.test.tsx , changes were made that affected this test
+[33mfe9188c3[m StudentListService and its tests were adapted given the creation of pivot tables
+[33m5d7776ac[m Provide return type declarations
+[33mcdcbddc9[m Editing the name displayed by the LoadingSpiner On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/components/atoms/LoadingSpiner.tsx
+[33mfa550c79[m Modifying the BootcampCard component, to adapt it to the new state created. On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/components/studentDetailCards/bootcampSection/BootcampCard.tsx
+[33m8e77f9a1[m Modifying the useStudentDetailHook hook, adding the getStudenBootcamp thunk function to be executed. On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/hooks/useStudentDetailHook.ts
+[33m257476ad[m Modifying in the redux store, adding the new created state getStudentBootcamps On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/store/store.ts
+[33m796f8c4a[m Creating state in redux studentBootcamp and getStudenBootcampThunk On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	new file:   src/store/reducers/getStudentBootcamp/getStudenBootcampThunk.ts 	new file:   src/store/reducers/getStudentBootcamp/studentBootcamp.ts
+[33m8bb7a9de[m By editing the state of the LoginContext, when the user logs out, we delete the studentSUID variable from localStorage. On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/context/LoginContext.tsx
+[33mca5ec205[m By editing the name of the variable that stores the studentSUID in localStorage On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/hooks/useStudentDetailHook.ts
+[33mf35cc3b9[m Modified CollaborationCard.tsx On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/components/studentDetailCards/collaborationSection/CollaborationCard.tsx
+[33m5d7917cd[m Modified CollaborationCard.tsx On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m2dc5cd96[m Modified CollaborationCard, studentCollaborations On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/components/studentDetailCards/collaborationSection/CollaborationCard.tsx 	modified:   src/store/reducers/getStudentCollaborations/studentCollaborations.ts
+[33m5ab65807[m Creating studentCollaborations in redux state On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/hooks/useStudentDetailHook.ts 	new file:   src/store/reducers/getStudentCollaborations/studentCollaborations.ts 	new file:   src/store/reducers/getStudentCollaborations/studentCollaborationsThunk.ts 	modified:   src/store/store.ts
+[33m456c5020[m Remove timestamp from pivot table
+[33m71c18275[m All tests passing
+[33m977c7c34[m refactor/ moved the Carousel function to a separate file in the Atoms folder
+[33mbe42b25c[m refactor/ changed "StudentProfileDetail"'s name to "StudentProfileContent"
+[33mffea6d15[m Merge branch 'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m862c926a[m Merge branch Version 1.1  'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33ma96d82e3[m Merge branch 'feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33mdd345bf4[m Editing the LoadinSpiner component On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/components/studentDetailCards/projectsSection/ProjectsCard.tsx 	modified:   src/components/studentDetailCards/studentDetailSection/StudentDetailCard.tsx
+[33m69ee131a[m Edit
+[33m696a961f[m Editing the LoadinSpiner component On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/components/atoms/LoadingSpiner.tsx 	modified:   src/components/studentDetailCards/projectsSection/ProjectsCard.tsx 	modified:   src/components/studentDetailCards/studentDetailSection/StudentDetailCard.tsx
+[33m09efb499[m Initial commit
+[33m7c69554a[m Using the redux study Projects state, in the Projects Card component On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/components/studentDetailCards/projectsSection/ProjectsCard.tsx 	modified:   src/hooks/useStudentDetailHook.ts 	modified:   src/store/reducers/getStudenProjects/studenProjects.ts
+[33mc382cef0[m Creating the student state of the projects, in redux-toolkit and combining in a single reducer, studenDetail and studenProjects in the student view. On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/components/StudentProfile/StudentProfileDetail.tsx 	modified:   src/components/studentDetail/StudentDetailsContent.tsx 	modified:   src/components/studentDetailCards/studentDetailSection/StudentDetailCard.tsx 	new file:   src/store/reducers/getStudenProjects/studenProjects.ts 	new file:   src/store/reducers/getStudenProjects/studenProjectsThunk.ts 	modified:   src/store/store.ts
+[33me34d7622[m Modificando el hook useStudentDetailHook On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m98da4265[m Creating the useStudentDetailHook On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	modified:   src/components/StudentProfile/StudentProfileDetail.tsx 	modified:   src/components/studentDetail/StudentDetailsContent.tsx 	new file:   src/hooks/useStudentDetailHook.ts
+[33m2249ae70[m Creating the LoadingSpiner component On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in Changes to be committed: 	new file:   src/components/atoms/LoadingSpiner.tsx 	modified:   src/components/studentDetailCards/studentDetailSection/StudentDetailCard.tsx
+[33m609343d0[m[33m ([m[1;31morigin/248-bespike-check-how-to-apply-a-model-binding-refactor[m[33m)[m typo
+[33mace4de59[m Version 1.0 On branch feature/#241-fe-link-the-profile-to-the-active-user-once-logged-in
+[33m4d4f788a[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 244-refactor-tag_student-pivot-table
+[33ma77a73f3[m tags column was deleted in UpdateStudentProjectServiceTest
+[33mc3766c33[m StudentProjectsDetailService was adapted given the creation of pivot tables
+[33m141b1475[m Seeders and factory were adapted given the creation of pivot table
+[33m3823363c[m tag column in Projects table was delete
+[33m064c2e91[m relationship between the Projects and Tags tables was established in a many-to-many manner.
+[33ma018b9b7[m created tag_project pivot tablet and drop tags column in projects table
+[33maadd5def[m Merge pull request #255 from IT-Academy-BCN/feature/#253-feature-add-the-studentid-in-the-login-return-response
+[33mc3b33103[m Corrected restructure_students_table migration with uuid for student_id in student_has_tags table instead of just dropping it.
+[33m253988a7[m Corrected drop recruiters & admins for rollback to work & removed unused imports
+[33mf9fa16db[m Modified Services & tests in order to look for company_name instead of a Company model id
+[33m825d991a[m Deleted Company model, factory & seeder, and adjusted Project model and factory
+[33m4ae3e816[m Modified migrations: removed companies table and altered company_id field in projects
+[33mc13b1c18[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 244-refactor-tag_student-pivot-table
+[33m38c7631b[m[33m ([m[1;31morigin/feature/#253-feature-add-the-studentid-in-the-login-return-response[m[33m)[m Added assertJsonStructure to SignInTest in order to check if StudentID was correctly returned in response.
+[33m0694a82d[m Added studentID details in UserDTO & removed Admin & Recruiter relations from User model
+[33m9a513ba2[m Merge pull request #254 from IT-Academy-BCN/hotfix-migrations-rollback
+[33m1f0523eb[m[33m ([m[1;31morigin/hotfix-migrations-rollback[m[33m)[m Corrected restructure_students_table migration with uuid for student_id in student_has_tags table instead of just dropping it.
+[33m7c852a69[m fixing migration
+[33m11ffba2f[m refactored StudentDetailService with pivot table tag_student
+[33mf19e2028[m clean resumeresource
+[33m5eb20f0b[m eliminando antiguo repo
+[33m31ce37f4[m tests arreglados
+[33mecdc3acd[m created TagStudentSeeder
+[33m84266f3e[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 244-refactor-tag_student-pivot-table
+[33ma89c23ff[m Merge branch 'main' into refactor/#247/make-a-pivot-table-between-resumes-and-projects
+[33m91a28b59[m Merge remote-tracking branch 'origin/main'
+[33mc06a3abc[m Merge pull request #252 from IT-Academy-BCN/hotfix-migrations-rollback
+[33mfb1c9077[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into 244-refactor-tag_student-pivot-table
+[33me22d4545[m Corrected drop recruiters & admins for rollback to work & removed unused imports
+[33m5295d12e[m cambios en el formateo de la info
+[33m0e6db1ef[m Merge remote-tracking branch 'origin/main'
+[33mad66a494[m añadiendo tags al factory de resume
+[33mbc737378[m updating tests
+[33m0476cbe1[m creando resumeresource y moldeando la información
+[33mac18a77b[m Merge pull request #249 from IT-Academy-BCN/feature/#243-be-refactor-remove-the-table-companies
+[33m37d75b0e[m renamed pivot table student_has_tags to tag_student and reset relations with student and tags
+[33m892063f5[m typo
+[33m1472f583[m demo projectbinding
+[33m0ee2c0fb[m[33m ([m[1;31morigin/feature/#243-be-refactor-remove-the-table-companies[m[33m)[m Modified Services & tests in order to look for company_name instead of a Company model id
+[33m24064e65[m Deleted Company model, factory & seeder, and adjusted Project model and factory
+[33mb5b7d073[m Modified migrations: removed companies table and altered company_id field in projects
+[33mc1d0bf0f[m Merge remote-tracking branch 'origin/main'
+[33m3a8a8558[m Merge pull request #240 from IT-Academy-BCN/hotfix-npm-run-watch
+[33m35936766[m[33m ([m[1;31morigin/hotfix-npm-run-watch[m[33m)[m comment the npm run watch line
+[33m9f7668bf[m Improved Exception handling for GitHubProjectsService
+[33m762f73ad[m Improved Exceptions for ResumeService and corrected Tests
+[33md92130bb[m Update GitHubProjectsService.php Add Todo to TagFactory.php
+[33m796e239d[m Rollback timestamp on Project table
+[33md588b9fd[m Implementing GitHub token
+[33mb68d6f7f[m Rollback timestamp to project model Use resume timestamp instead
+[33m7cf89d16[m Revert "Okay, Tests All Right Just With Docker-Compose up, Migrations & Seeder Always executed Right"
+[33m1ada9717[m Fix events and listeners location
+[33m86df5449[m Add timestamp to project model Add time frequency criteria to fetch GitHub repos
+[33maf108184[m Okay, Tests All Right Just With Docker-Compose up, Migrations & Seeder Always executed Right
+[33mb33c538a[m Merge remote-tracking branch 'origin/feature/#220-feature-update-the-projects-from-github' into feature/#220-feature-update-the-projects-from-github
+[33m309bc22a[m First approach to add Tag/Languages to created Projects from Repo
+[33mdb405c81[m Updated Project table in order to be able to have a null value in company_id. Null = Freelance
+[33mfbeac7b6[m Corrected ResumeServiceTest and added GitHubProjectsServiceTest
+[33m708b55eb[m Service refactor, created a GitHubProjectsService
+[33md1e29740[m Removed Artisan Command & Restored original Kernel.php
+[33m90ca2d92[m Merge remote-tracking branch 'origin/main'
+[33m52e56b48[m Use of withoutEvents in saveRepositoriesAsProjects method
+[33m1c082ff1[m[33m ([m[1;31morigin/234-fe-add-a-toast-with-console-errors[m[33m)[m Merge pull request #238 from IT-Academy-BCN/234-fe-add-a-toast-with-console-errors
+[33m2b1112aa[m Modifying process.env.NODE_ENV to process.env.NODE_ENV === 'development'. On branch 234-fe-add-a-toast-with-console-errors Your branch is up to date with 'origin/234-fe-add-a-toast-with-console-errors'.
+[33m453a6501[m Merge pull request #229 from IT-Academy-BCN/feature#228-link-labels
+[33m904b8683[m Adding process.env.NODE_ENV to only be displayed in development mode On branch 234-fe-add-a-toast-with-console-errors Your branch is up to date with 'origin/234-fe-add-a-toast-with-console-errors'.
+[33ma18eb5e0[m Merge remote-tracking branch 'origin/feature/#220-feature-update-the-projects-from-github' into feature/#220-feature-update-the-projects-from-github
+[33m240a5a6f[m Importing the ToastContainer component. Importing the styles. Adding ToastContainer to the App.tsx component Using toastConsoleErrorListener inside useEffect
+[33mc96dff7e[m Creating a utility to detect console.error and be able to display it on the screen On branch 234-fe-add-a-toast-with-console-errors Your branch is up to date with 'origin/234-fe-add-a-toast-with-console-errors'.
+[33m245211df[m install react-toastify install --save-dev @types/react-toastify On branch 234-fe-add-a-toast-with-console-errors Your branch is up to date with 'origin/234-fe-add-a-toast-with-console-errors'.
+[33m4a7fba54[m Merge pull request #237 from IT-Academy-BCN/feature/#218-Add-user-athentication-to-update-a-project-for-student-endpoint
+[33m1f904d2a[m[33m ([m[1;31morigin/feature/#218-Add-user-athentication-to-update-a-project-for-student-endpoint[m[33m)[m Merge branch 'main' into feature/#218-Add-user-athentication-to-update-a-project-for-student-endpoint
+[33m414a67b2[m Merge pull request #235 from IT-Academy-BCN/refactor/226-update-old-routes
+[33m77ece798[m Merge pull request #236 from IT-Academy-BCN/feature/#214-onboarding-cassio
+[33mfbea2143[m Merge pull request #230 from IT-Academy-BCN/feature/#219-retrieve-profile-student-image
+[33m5db437c3[m Update UpdateStudentProjectController.php
+[33me729117a[m Added logic to store Project in Resume project_ids array and cleaned some code.
+[33m72934fc6[m actualizing swagger annotation
+[33mba1da247[m refactor lleno de amor y urgencia
+[33mb57744c3[m fix/ fixed Student Details Content test
+[33m24d6602c[m testing almost done
+[33mcf5ec201[m fix/ fixed modality card test
+[33m843cb8ce[m fix/ fixed languages card test
+[33m5a1565b2[m modifying testing to accomodate new auth middleware
+[33m50b0dbad[m modifying service to return studentId
+[33ma5226dd3[m[33m ([m[1;31morigin/feature/#214-onboarding-cassio[m[33m)[m commenting code
+[33mb4c8fc84[m Merge branch 'feature/#218-Add-user-athentication-to-update-a-project-for-student-endpoint' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#218-Add-user-athentication-to-update-a-project-for-student-endpoint
+[33mf3bba2f5[m modyfing controller to include the authorization before the updateproject function
+[33m9fe71c3d[m adding middleware to route
+[33mcb145836[m[33m ([m[1;31morigin/feature/#219-retrieve-profile-student-image[m[33m)[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#219-retrieve-profile-student-image
+[33m1f823e22[m Merge pull request #210 from IT-Academy-BCN/feature/#179-save-profile-images-to-the-storage
+[33m73564c11[m[33m ([m[1;31morigin/feature/#179-save-profile-images-to-the-storage[m[33m)[m Test fixed to contain instead of equal
+[33m6ebd6974[m Fix: route file - The return
+[33m631c4c35[m Fix: route file
+[33md0f283e4[m merge with actual main
+[33m8920a5a5[m Merge pull request #233 from IT-Academy-BCN/feature/#231/DockerImprove
+[33m53bef1fd[m fix/ fixed some lint issues
+[33m294578d2[m[33m ([m[1;31morigin/feature/#231/DockerImprove[m[33m)[m Update entrypoint_node.sh
+[33m6a5bf722[m Update entrypoint.sh
+[33mf362ec4d[m Merge pull request #227 from IT-Academy-BCN/fix/#217-update-a-project-for-a-student-to-make-sure-all-updates-happens
+[33mbf9db320[m Update Dockerfile
+[33m41e6eae6[m fix/ fixed some tests
+[33m2dcd873f[m Updated Student List route
+[33mbc7fe583[m Make Scripts in bin and fixed error - in switch-branch-linux.sh
+[33m7c8d5396[m New Versions and old versions files
+[33m844760a2[m If .env file already exists do not modify it
+[33m9ca88461[m modyfing controller to include the authorization before the updateproject function
+[33m148fdfdd[m Merge branch 'feature/#231/DockerImprove' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#231/DockerImprove
+[33m337c0dd1[m Added route:clear
+[33maf00fca3[m Merge branch 'main' into refactor/226-update-old-routes
+[33mc9c05c50[m adding middleware to route
+[33m7eea64d3[m Update switch-branch-linux.sh
+[33m8ef04676[m Update switch-branch.bat
+[33m27d571e1[m Builds the react app always a change in the src folder is made
+[33mf6e3618a[m Node service always building the app and not exiting in order to be able to use the container for testing
+[33mef928787[m Some scripts for windonws and linux added. Missing Testing
+[33m9532f429[m Okay, Tests All Right Just With Docker-Compose up, Migrations & Seeder Always executed Right
+[33m7bb88c30[m Merge remote-tracking branch 'origin/feature/#220-feature-update-the-projects-from-github' into feature/#220-feature-update-the-projects-from-github
+[33m2aa1920d[m Update Listener to use service instead of session
+[33m74f61a89[m Modified command in order to recieve username as parameter and added the call in the HandleProjectRetrieved
+[33mcb4e45a3[m Update Listener
+[33mb41dcd2e[m Implement retrieved event on Project model. Implement middleware to track processed resumeIds. Implement listener dispatching only once for each resumeId
+[33mdc1d39df[m Merge remote-tracking branch 'origin/feature/#220-feature-update-the-projects-from-github' into feature/#220-feature-update-the-projects-from-github
+[33m51d91977[m Added row to Projects table in order to store the github repositoy ID
+[33me93d5517[m Merge remote-tracking branch 'origin/feature/#220-feature-update-the-projects-from-github' into feature/#220-feature-update-the-projects-from-github
+[33m204b75de[m Updated command in order to store Project created with repo data.
+[33mb2e7ecdc[m swagger documentaion was generated
+[33m35245dd8[m unit test was added in GetStudentImageControllerTest to get 500 status code when there is a server error
+[33m56e58ce2[m Cronjob setup, running and working ok.
+[33m18d1ba58[m Merge remote-tracking branch 'origin/feature/#220-feature-update-the-projects-from-github' into feature/#220-feature-update-the-projects-from-github
+[33mc4a1aca6[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#219-retrieve-profile-student-image
+[33mac74d59d[m Added Exception to detect wrong gitHub urls to Service
+[33m9c3c2b1d[m Added ResumeService & Test, solved issue with Test for GetGitHubUsernameService
+[33mf68a82cd[m Test for GetStudentImageController was created and the controller factorized
+[33m996242a0[m Merge pull request #224 from IT-Academy-BCN/feature/#221-giving-some-steroids-to-laravel's-handler
+[33m0e8ce2d0[m[33m ([m[1;31morigin/feature/#221-giving-some-steroids-to-laravel's-handler[m[33m)[m DBTransaction Middleware
+[33m3f315c38[m el test pasa
+[33m419ece64[m GetStudentImageService was refactored due to test
+[33md0ed60f3[m Merge remote-tracking branch 'origin/main'
+[33mac0b9a30[m detalles
+[33m3d47a087[m[33m ([m[1;31morigin/feature#228-link-labels[m[33m)[m Solución de la vinculación del label On branch feature#228-link-labels Your branch is up to date with 'origin/feature#228-link-labels'.
+[33m6c695e77[m Handler terminado
+[33mb50cb1af[m created test for GetStudentImageService
+[33m81eb1044[m[33m ([m[1;31morigin/fix/#217-update-a-project-for-a-student-to-make-sure-all-updates-happens[m[33m)[m Merge branch 'main' into fix/#217-update-a-project-for-a-student-to-make-sure-all-updates-happens
+[33m392bf91c[m correcting swagger annotation
+[33m0d355966[m modifying UpdateStudentProjectServiceTest to take into account the changes made
+[33md777605b[m update valid tags fixed
+[33mafc8e5f2[m 3 little fixes
+[33m4dae3985[m fix/ Changed getAdditionalTraining to FetchAdditionalTraining to match the rest of the file names
+[33mfcda4ded[m Updated Student Detail route
+[33m781ec58a[m Updated Languages route
+[33m44b8ae75[m Updated Projects route
+[33m0cf18193[m Updated Collaboration route
+[33m345d405e[m Updated Bootcamp route
+[33m265cc5fb[m EnsureStudentOwner Middleweare was added to endpoint route
+[33m7cf4970b[m Updated Additional Training route
+[33m1fb92909[m Updated Modality route
+[33m1450c82e[m style/ added padding to loading message on home page to remove unnecessary scroll bar
+[33m96a24715[m GetStudentImageController was developed and GetStudentImageService->execute() refactored
+[33md855e4b7[m Update GitHub Username
+[33m6d648384[m Merge pull request #208 from IT-Academy-BCN/feature/186-fe-make-the-login-process
+[33md5f36f31[m Some Wierd Fixes, comments, imports orders, etc - The return
+[33mc71b1284[m Some Wierd Fixes, comments, imports orders, etc
+[33m73fd5527[m Merge branch 'feature/186-fe-make-the-login-process' of https://github.com/IT-Academy-BCN/ita-profiles into feature/186-fe-make-the-login-process
+[33mc638e655[m Tests Fixed By Adding Providers in test-utils.tsx file
+[33m0b98a50b[m update project name fixed
+[33m65e77488[m undo/ removed last commit changes
+[33m004c9b8a[m fix/ made changes to MenuNavbarTest
+[33mad6f7ece[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33mc906b758[m Merge pull request #225 from IT-Academy-BCN/hotfix_error_AddStudentControllerRoute
+[33m1465b7f8[m fix/ fixed more lint issues
+[33maa98da64[m style/ added padding to custom error message
+[33m5f2c3892[m fix/ fixed lint issues
+[33m559b296f[m[33m ([m[1;31morigin/hotfix_error_AddStudentControllerRoute[m[33m)[m Fixed AddStudentLanguageController Import in Routes V1 Api
+[33mc9508dc1[m Merge remote-tracking branch 'origin/feature/#179-save-profile-images-to-the-storage' into feature/#219-retrieve-profile-student-image
+[33m1b9225b5[m Refactor GetGitHubUsernamesService and Command working now using the service
+[33m5df64dff[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#219-retrieve-profile-student-image
+[33m52811cd7[m GetStudentImageService was developed
+[33m6e6aedce[m Error message in spanish
+[33m67f9321c[m Corrected service file name, and some small fixes in Factories
+[33m417b7c58[m tests
+[33mc369135a[m Message auth done
+[33m092fee0e[m Create FetchGithubRepos.php
+[33me001353d[m Merge branch 'feature/186-fe-make-the-login-process' of https://github.com/IT-Academy-BCN/ita-profiles into feature/186-fe-make-the-login-process
+[33m90cecddf[m Some cleaning
+[33mb0dd8dc2[m Merge remote-tracking branch 'origin/Feature/#220-feature-update-the-projects-from-github' into Feature/#220-feature-update-the-projects-from-github
+[33m04430565[m Handler hecho
+[33m4d7f5303[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33m7d167852[m Minor change to StudentProjectsDetailService for better dependenvy injection
+[33m40f68a71[m Created GetGitHubUsernames service + first approach to test service
+[33m9fbefd7e[m Merge pull request #213 from IT-Academy-BCN/feature/#200-add-an-endpoint-to-update-a-language-from-a-student-resume
+[33m5e08c681[m[33m ([m[1;31morigin/feature/#200-add-an-endpoint-to-update-a-language-from-a-student-resume[m[33m)[m Merge branch 'main' into feature/#200-add-an-endpoint-to-update-a-language-from-a-student-resume
+[33ma7a5afd6[m correcting update name error
+[33m29ae015a[m correcting format name
+[33m331f15bb[m Merge pull request #212 from IT-Academy-BCN/feature/#199-add-an-endpoint-to-configure-languages-a-student-can-use
+[33m5cd62fa3[m[33m ([m[1;31morigin/feature/#199-add-an-endpoint-to-configure-languages-a-student-can-use[m[33m)[m Merge branch 'feature/#199-add-an-endpoint-to-configure-languages-a-student-can-use' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#199-add-an-endpoint-to-configure-languages-a-student-can-use
+[33m1f0db50c[m defining values for testing as constants
+[33m37761ea8[m adding missing strict_types
+[33m386fd8b3[m correcting format names
+[33maee2e1e2[m Some cleaning done
+[33md18a9e4c[m Tests Done With Mockery but missing clean work and refactor
+[33mc24a8a4c[m Added a few real github users to Resume table
+[33mc4b7e914[m LoginUserSchema Done and fixed in LoginPopup Component
+[33md0237c86[m The endpoint and the basic controller and service have been created.
+[33m57536d8b[m Error messages for user login formular
+[33m8c97a6a2[m Merge branch 'main' into feature/#200-add-an-endpoint-to-update-a-language-from-a-student-resume
+[33mec87ed01[m annotations para swagger
+[33m1ad6c301[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33m0e98efaa[m Test del Controller pasado
+[33m36bf433b[m Test candidato al LanguageControllerTest
+[33mfb3a77d1[m Test para el servicio concluido
+[33mb029694d[m Test para el Servicio concluido
+[33m1caf9e0c[m setup tests
+[33m567634d7[m Revert "limpiando todo"
+[33m61504e3c[m Merge branch 'feature/#200-add-an-endpoint-to-update-a-language-from-a-student-resume' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#200-add-an-endpoint-to-update-a-language-from-a-student-resume
+[33m4b672826[m Setup UpdateStudentLanguageController & UpdateStudentLanguagesServic
+[33m651e4712[m limpiando todo
+[33m4e92cfbb[m implementando logs
+[33m3b7893d6[m Gracias Nacho!
+[33m4ae3ef09[m First approach for UpdateStudentLanguagesService
+[33mbb87dd5e[m trycatcheado
+[33mdfb05de6[m versión definitiva
+[33mff8b126c[m Funcionando sin service
+[33m1ba72e73[m A ver
+[33m804ad399[m[33m ([m[1;31morigin/feature/#201-Remove_language_from_student_resume[m[33m)[m Merge pull request #211 from IT-Academy-BCN/feature/#197-middleware-authentication
+[33m4e5236e1[m merge
+[33m8e8bd2e9[m Fixed the mentioned issues
+[33m771d5635[m[33m ([m[1;31morigin/feature/#197-middleware-authentication[m[33m)[m Corrections proposed by Jordi done
+[33mc21f9058[m Merge branch 'main' into feature/#199-add-an-endpoint-to-configure-languages-a-student-can-use
+[33m83a927cc[m implementing swagger  documentation
+[33m1e3ae709[m changing code exception to 409 for language already exixts
+[33m2ccf132b[m Merge pull request #205 from IT-Academy-BCN/fix/#204-correcting-swagger-for-updateproject-endpoint
+[33m2579794f[m fix/ fixed remaining lint issues on loginContext
+[33m247a6a39[m fix/ added lint exception
+[33m9a17b2c4[m Merge pull request #209 from IT-Academy-BCN/feature/#198-add-an-endpoint-to-update-collaborations
+[33md433dd50[m[33m ([m[1;31morigin/feature/#198-add-an-endpoint-to-update-collaborations[m[33m)[m Merge branch 'main' into feature/#198-add-an-endpoint-to-update-collaborations
+[33m0f3a9042[m Remove rendering exceptions through Laravel handler. Add try catch block to controller instead. Fix an ident in Swagger annotations. Split tests into ControllerTest ans ServiceTest.
+[33mb1d081cb[m Merge remote-tracking branch 'origin/feature/#198-add-an-endpoint-to-update-collaborations' into feature/#198-add-an-endpoint-to-update-collaborations
+[33m3eb8bec0[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33m703d2c40[m InfoAnnotation corrected to respect markdown for links
+[33m1a82188f[m Remove rendering exceptions through Laravel handler. Add try catch block to controller instead. Fix an ident in Swagger annotations. Split tests into ControllerTest ans ServiceTest.
+[33mdeb56f30[m Merge branch 'feature/#197-middleware-authentication' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#197-middleware-authentication
+[33m1bc1b3f5[m Added Swagger annotations for Token Authentication
+[33mf2035c00[m investigando
+[33m3376fa8d[m ¡Atrapado!2
+[33md9dd192f[m He atrapado al asesino
+[33mec3c9333[m ¿Luz?
+[33m9ea34045[m bastante perdido en la oscuridad
+[33m7c8dc70b[m updateController
+[33m41af1e72[m Cambios
+[33m58a57e4a[m Merge branch 'main' into feature/#197-middleware-authentication
+[33m1057b5ed[m Minor corrections to tests, eliminated ->save() and redundant information
+[33ma54de6bb[m implementing testing for AddStudentLanguageService
+[33meb28d271[m candidato final
+[33m0e78cf29[m Controller y Request finalizados
+[33m5b69cfcb[m correcting some function names
+[33m9a78d892[m Removed unused imports and some minor corrections in tests
+[33m1a605417[m implementing testing for AddStudentLanguageController
+[33m3ffea2d2[m modifing exception handling to suit the tests
+[33me4068390[m Merge pull request #202 from IT-Academy-BCN/feature/#187update_student_profile
+[33m7cf5ace8[m[33m ([m[1;31morigin/feature/#187update_student_profile[m[33m)[m UpdateStudentProfileControllerTest was refactored
+[33mbda27079[m Translated Exceptions to Catalan & added Exception for CheckUserCredentials
+[33m49df16c0[m Merge branch 'main' into feature/#179-save-profile-images-to-the-storage
+[33m6464abba[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#187update_student_profile
+[33mff3716d9[m Merge pull request #207 from IT-Academy-BCN/feature/#201-Remove_language_from_student_resume
+[33m8b6c1170[m Merge branch 'main' into feature/#179-save-profile-images-to-the-storage
+[33mf9dc968d[m FK Disabled in test to test all exceptions
+[33m7fb959ad[m add http request to gitignore
+[33me6f5982c[m routes fix
+[33me80a9144[m UpdateStudentLanguageService created
+[33m3aacc34e[m Some little modifications
+[33m51b85c62[m LittleRefactor
+[33m864711c9[m Added tests for student image service
+[33meeb60c3b[m SomeRefactoringAndTestingImprovement
+[33m17897f5a[m First approach StudentServiceTest
+[33me0c260e4[m Update out of loop
+[33m91024978[m StudentService done and used in skills controller
+[33m3ee335ed[m DeleteStudentResumeLanguageServiceTest was refactored
+[33m5e0887ff[m Merge remote-tracking branch 'origin/feature/#198-add-an-endpoint-to-update-collaborations' into feature/#198-add-an-endpoint-to-update-collaborations
+[33me9a59932[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#201-Remove_language_from_student_resume
+[33m1061f450[m Added new tests
+[33mb0d49566[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#187update_student_profile
+[33m5630a282[m request and validation were refactored
+[33m134f5ae1[m Removed a modified file from pull request
+[33m2f3528d1[m Some Cleaning
+[33m9a467ce8[m setup rutas y controlador
+[33mb614b85f[m Test Mocking User Policy Trait Done and Working
+[33m56fbebfc[m Test Trait Mock Policy Almost Done
+[33m0727e60a[m Testing Policy and trait to mock policy still need to fix
+[33m06d6c57a[m Add an endpoint to update collaborations
+[33m18619330[m defining necessary variables
+[33m30e7f81e[m TestGetTokenByUserID Improved
+[33m4cc43cda[m Changed some text and fixed error where text repeated twice
+[33md9e98340[m Some minor corrections to UserService & UserServiceTest
+[33mb4a76a09[m Traits and traits tests almost done.. one error I cannot find missing
+[33m5a309051[m Traits done missing testing
+[33m14cb1dc6[m Test User Policy Done
+[33m7a9db6a5[m Policy mocked in tests
+[33mffa49330[m Added policy to give or not access to resource
+[33m7c12d6d8[m Merge pull request #206 from IT-Academy-BCN/feature/-onboarding
+[33me096e680[m fix/ commented unnecessary console logs
+[33ma2863f2e[m fix/ fixed type issue on buttons
+[33m1a0967d8[m fix/ refactored some lines to solve lint issues with imports, types and unnecessary code
+[33m8852fd73[m Controller Auth Refactored
+[33m7f26a80f[m correcting route and controller
+[33m376907ec[m Test User Services Fixed Now
+[33m3467cfef[m Test User Service Done
+[33m8607e183[m User service refactored with custom exceptions
+[33mc4c593c6[m Some lines in signin mockery test deleted
+[33m9f22a38c[m Signin Mockery test refactored
+[33m309cbab7[m Refactor SignInTest
+[33ma1e1a55f[m new personalized exceptions
+[33m62c1fc94[m adding service and request
+[33m0eb43638[m controller completed
+[33m7052f720[m Swagger documentation was created and successful message in controller was deleted
+[33mb124f735[m small fixes
+[33m225b259e[m Swagger Working, Missing Check
+[33mf0ee9a0c[m Swagger Done but need check and test
+[33mbcfc0716[m RefreshDatabase Out DatabaseTransactions In, test from 90 second to less than 1 second
+[33m3c39d992[m olala all working (just from this feature)
+[33m27c51811[m Solved Test But Name does not fit (what is checked). FIX Assertions in Test or Name Creation in Controller
+[33m94cbe20f[m some fixes, still test success failing
+[33mfe715bb0[m Solved Error Middleware Test
+[33m63c3080f[m a feature test was created for DeleteStudentResumeLanguageController
+[33m457daf90[m a feature test was created for DeleteStudentResumeLanguageService
+[33m9a20b3a1[m Working on Signin Mockery Tests
+[33m87284eb7[m Signin Test Fixed
+[33m8bfe14d2[m tests User Service Fixed, MISSING Code Cleaning
+[33mb7cb406a[m MockedTestSkills_NowAllWorking
+[33m456586d1[m An exception was created for StudentLanguageResumeNotFound
+[33md54edb56[m service was created for DeleteStudentResumeLanguageController
+[33m6fbb48b7[m route and controller were created
+[33m753e7dcf[m middleware and testing for assuring user ownership done (maybe not needed)
+[33m5e4f7218[m establishing route and controller
+[33mfc1a494d[m refactor/ fixed variable name
+[33mbd5cb50c[m fix: allows updating at least one field without giving a null value to the others fields
+[33m10bd0e8a[m test/ added testing to LoginPopup
+[33m20a901d5[m test/ added testing to LoginContext
+[33m392259c5[m Controller and Service created
+[33m2f5e0118[m El fuego purificador extingue el mal
+[33m3ee1af6f[m[33m ([m[1;31morigin/fix/#204-correcting-swagger-for-updateproject-endpoint[m[33m)[m finished
+[33ma460895e[m Corrected CheckUserCredentials test in order to fit changes in UserService function
+[33mbceb9e01[m Merged main into feature/#197-middleware-authentication to bring in the latest updates.
+[33m3db087f4[m Merge remote-tracking branch 'origin/main'
+[33mcc3a1415[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33m74e62a36[m Merge pull request #194 from IT-Academy-BCN/feature/#185-make-an-endpoint-so-I-can-edit-a-project
+[33m6e5bfe18[m Refactor signin into UserService
+[33m9868c180[m[33m ([m[1;31morigin/feature/#185-make-an-endpoint-so-I-can-edit-a-project[m[33m)[m Update UpdateStudentProjectController.php
+[33m4153f38a[m Merge branch 'main' into feature/#185-make-an-endpoint-so-I-can-edit-a-project
+[33m7b060f3e[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33m4c867fab[m feature/ added context to login
+[33m03f4ce2b[m Merge pull request #193 from IT-Academy-BCN/feature/#187update_student_profile
+[33m8757b641[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#187update_student_profile
+[33mb929f61d[m added tags_ids field to update with the endpoint and change: service, controller, factory, tests and swagger docs.
+[33m7fcea921[m Merge remote-tracking branch 'origin/main'
+[33m39ce52ba[m fix/ passed necessary prompts
+[33mca4e283b[m feature/ added contextual icons to user navbar
+[33m99e2bf15[m refactor/ changed text colour to better match figma's design
+[33m441eabd9[m refactor/ adjusted lines of code to make it more readable
+[33mff404a99[m deleted/ eliminated to obsolete files
+[33m51848552[m feature/ Made the user's profile page a protected route
+[33m31fec5a6[m Added settings icon
+[33m989908e1[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33me3143cb2[m Merge remote-tracking branch 'origin/main'
+[33mb08c426c[m Passport Config + Modified Signin in order to return Passport Token and Save it in Redis
+[33mecb31484[m Added Seed for Test Users created to be associated to Students
+[33m2a339a50[m Merge branch 'refs/heads/feature/stephane-onboarding'
+[33m3b646a14[m wip
+[33m11eaf37d[m Merge branch 'main' into feature/#185-make-an-endpoint-so-I-can-edit-a-project
+[33md25c338e[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33mb852d85d[m feature/ applied User interface to login context
+[33m5ef8eb06[m feature/ applied User interface to login popup
+[33mabb9ff87[m feature/ added User interface
+[33md700191d[m fixing errors in swagger generate
+[33m786f242f[m establhising annotation archive
+[33meb1c991e[m testing OK
+[33me6619f02[m deleting file with incorrect name
+[33mdb244ad6[m correcting name: deleting a final space
+[33mca5231a2[m creating an UnauthorizedStudentException for future use
+[33md840417c[m creating specifix request
+[33m20558726[m fixing unauthorized error (future auth middleware will be stablished for various routes)
+[33m8a8aea17[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/#187update_student_profile
+[33m59b7b344[m added dataProvider to test validations in UpdateStudentProfileControllerTest
+[33m5d82fb3f[m Merge pull request #190 from IT-Academy-BCN/feature/#188/AddSkillsEndpoint
+[33m6be5aa9f[m change intro in StudentUpdateProfileAnnotation and message in ResumeNotFoundException and StudentNotFoundException
+[33mccfa7e74[m[33m ([m[1;31morigin/feature/#188/AddSkillsEndpoint[m[33m)[m Delete app/Http/Controllers/api/LoginController.php
+[33m5e7fddd7[m Merge pull request #192 from IT-Academy-BCN/feature/stephane-onboarding
+[33m25390e99[m created StudentUpdateProfileAnnotation for swagger docs
+[33mb3875d11[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33mf18a7f00[m feature/ added Login variant to navbar
+[33m1817a659[m feature/ added context provider to Login
+[33m3772b7b3[m Refactored UpdateStudentProfileServiceTest and Exceptions for UpdateStudentProfileService
+[33m5f054ef4[m Created service for UpdateStudentProfile and modify StudentFactory to match with UpdateStudentRequest
+[33meb972039[m modified validations in UpdateStudentRequest
+[33m6771076b[m created endpoint and controller
+[33m5c3828ff[m created test for UpdateStudentProfileController and UpdateStudentProfileService
+[33m2d2bb53c[m Merge branch 'main' into feature/#185-make-an-endpoint-so-I-can-edit-a-project
+[33m5fe69592[m Merge remote-tracking branch 'origin' into feature/#185-make-an-endpoint-so-I-can-edit-a-project
+[33md01365b1[m Permissions2
+[33md920593e[m PermissionsChanged
+[33m00ba59ae[m GitRound5
+[33ma282c645[m GitRound4
+[33me87599fe[m GitWinsStill
+[33m4678b85d[m Git..AlwaysGit...
+[33mf25474e2[m IhateGit2
+[33m98def14a[m IhateGit
+[33m4dbffe9e[m LastTry
+[33mcb52d8bc[m PermissionsRestored
+[33mf0939241[m AddFileCheckBackend
+[33m3da4ccd3[m wip
+[33mad7eeaa0[m wip
+[33m13e811c9[m fix: cannot delete some files and directories
+[33m43e70878[m fix: cannot delete some files and directories
+[33m19ff4b3a[m fix: cannot delete some files and directories
+[33mb2f49d77[m fix: cannot delete some files and directories
+[33meba4538e[m fix: cannot delete some files and directories
+[33me4f2e0c7[m fix: cannot delete some files and directories
+[33mb497dd4a[m fix: cannot delete some files and directories
+[33mcb43e507[m fix: command not allowed in github action yml
+[33mfc880da2[m fix: env after cache
+[33m84734179[m fix: rename to keep coherence
+[33m9cc9f20c[m fix: duplied frontend check
+[33mc3d0bb78[m Some Cleaning
+[33m9b59d3f5[m Namespaces added in tests in order to comply psr-4 standard, thanks Begonya to point the problem
+[33m74d7ee2f[m Corrections: comments in Refactored userRegister
+[33mf964f9ea[m Refactored userRegister: controller, service and tests
+[33mef8bbf6e[m Deleted empty LoginController
+[33m58e3fb73[m Merge remote-tracking branch 'origin' into feature/stephane-onboarding
+[33m74c3f1b1[m Merge pull request #191 from IT-Academy-BCN/feature/nacho-onboarding
+[33mb570356d[m wip
+[33mefb39c00[m PRCorrectionsDoneAndTestingImproved
+[33mf41fd2b0[m wip
+[33m9aa44f17[m fix: cannot delete some files and directories
+[33m467e7b78[m fix: cannot delete some files and directories
+[33m2336685d[m fix: cannot delete some files and directories
+[33mf494e3ad[m fix: cannot delete some files and directories
+[33mdd799262[m fix: cannot delete some files and directories
+[33medf389e6[m fix: cannot delete some files and directories
+[33me5a626d6[m fix: cannot delete some files and directories
+[33mbdbbbd30[m fix: command not allowed in github action yml
+[33m207fa42e[m fix: env after cache
+[33m593b4183[m Merge branch 'refs/heads/main' into feature/nacho-onboarding
+[33m1df26661[m fix: rename to keep coherence
+[33m5701ded2[m fix: duplied frontend check
+[33mb560a0ef[m PermissionsRestored2
+[33m2b2a2394[m PermissionsRestored
+[33m24264fde[m implementing self authorization for all the student routes
+[33m69d43d7c[m matching controller renaming to route
+[33mdd9db84a[m changing names of controller & service for clarity: action first
+[33mbc37eb8e[m Merge pull request #189 from IT-Academy-BCN/hotfix/#137/SignIn
+[33m16021004[m Deleted empty LoginController
+[33m9196b994[m Merge branch 'main' into feature/186-fe-make-the-login-process
+[33mad006dc2[m feature/ Made 'IT Academy logo' to return to the home page on click
+[33mfd5af88b[m changing logic to avoid 500 Error
+[33m2c0541a6[m adding ProjectNotFoundException
+[33medb82cfd[m Merge pull request #178 from IT-Academy-BCN/feature/signup-endpoint#136
+[33m41d80885[m[33m ([m[1;31morigin/feature/#136-signup-endpoint[m[33m)[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/signup-endpoint#136
+[33mfa69d393[m Some more cleaning
+[33m508701ad[m Fix: using resume student_id field instead of student id field for testing because of failing test due to db incoherence
+[33me0b81389[m Some cleaning
+[33m6864ec7f[m Swagger description fixed
+[33m9b926850[m Done.. I think
+[33mc78ac56b[m Some Cleaning
+[33m355829d8[m migration deleted no needed
+[33m9bb430fc[m WhereInAdded for more than one tag
+[33mbb9b7826[m MissingTestingSwaggerValid
+[33mc601fff2[m ErrorFixedMissingTestingAndCleaning
+[33m976d4b85[m Feature/ Added content to StudentProfilePage and made it accessible with react router
+[33m84fe27f7[m feature/ Added thumbs up pictures to Assets folder
+[33m3003ea94[m feature/ created Profile page
+[33me958cc81[m feature/ Added react router to 'App.tsx'
+[33mc870a3c4[m Installed react router
+[33m39588f1c[m Add instruction to install and configure Xdebug
+[33mc58b5920[m AlmostDone_MissingCleaningAndSomeTesting
+[33mf1aca091[m WorkingOnTestingControllerAndImprovements
+[33m1ca0133c[m creating first version of route&controller&service for project update
+[33mb67ef894[m SwaggerFunctionalTestingMissing
+[33mcdd1a3f9[m ControllerAndServiceDoneTestMissingAndSwagger
+[33mffc2231a[m feature/ added console log to view login data after successful attempt
+[33mbcedfb68[m feature/ moved console log up
+[33m28989325[m feature/ updated login interface. Changed 'email' field to 'dni'
+[33m40d84e54[m feature/ updated posting route to current route
+[33m07aaa6bf[m[33m ([m[1;31morigin/hotfix/#137/SignIn[m[33m)[m Some Cleaning
+[33m19c103ca[m Namespaces added in tests in order to comply psr-4 standard, thanks Begonya to point the problem
+[33m564f2e6c[m fix/ fixed navigation between restricted access, register and login popup windows
+[33mc99f6bf4[m refactor/ removed unnecessary line
+[33ma8861caa[m modify text on buttons in 'Acceso restringido' screen to simplify navigation
+[33m269f9bd7[m modify login screen to match figma
+[33mee1a98f9[m Merge pull request #180 from IT-Academy-BCN/feature/#137/SignInWithExistingUser
+[33mfa860b6f[m[33m ([m[1;31morigin/feature/#137/SignInWithExistingUser[m[33m)[m ThanksToAlbertTheCodeHasImprovedALOTWithTypesScticted_ThankYouAgain:D
+[33m70b4d499[m MaidWork...SomeCodeCleaning
+[33m79c84623[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/signup-endpoint#136
+[33ma7a776fc[m fix: redis service not found during github PR validation
+[33m4432e1b5[m refactor: redis container name
+[33m44fd60cf[m Corrections: comments in Refactored userRegister
+[33ma1ca841a[m SwaggerAddedAndTested
+[33m7c4b194f[m SwaggerAdded
+[33m401e5ec1[m AllChangesDoneAndItSeemsToWork...NoErrorsAtLeast
+[33m98a8dc83[m rebootLinux
+[33m4a85fcbe[m envFile
+[33m7b8fe062[m Okay...ChangesMadeInMainNewBranchAndFilesCopiedOrModified_MissingComposerDepRedisAndMore
+[33mda70452e[m fix: vendor do not exists
+[33mb490341f[m fix: webserver can't find node_modules folder
+[33m8af89700[m fix: npm run dev error and composer install folder permissions
+[33m8490afb4[m fix: icons now appearing in the project
+[33mc363b5c0[m fix: npm rebooting continuosly
+[33m99954512[m Merge pull request #156 from IT-Academy-BCN/refactor/#148/refactor-services
+[33m88bdd302[m[33m ([m[1;31morigin/refactor/#148/refactor-services[m[33m)[m Deleted unused Student Annotations files 	deleted:    app/Annotations/OpenApi/Controllers/Student/StudentAnnotation.php
+[33m98b29987[m namespace fixed 	modified:   tests/Feature/Service/Student/StudentProjectsDetailServiceTest.php
+[33mb4ffbce0[m Strict types added 	modified:   app/Http/Controllers/api/Tag/DevelopmentListController.php 	modified:   app/Http/Requests/Tag/TagStoreRequest.php 	modified:   app/Http/Requests/Tag/TagUpdateRequest.php
+[33m3162c6cc[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into refactor/#148/refactor-services
+[33ma973de08[m Refactored userRegister: controller, service and tests
+[33m6ed0c224[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/signup-endpoint#136
+[33m7c2b26da[m Parameters boxes were deleted and added an explanation of the endpoint in AnnotationsRegisterUser
+[33m765b6379[m rename namespaces in UserRegisterService and RegisterController
+[33m99ec831e[m Merge pull request #176 from IT-Academy-BCN/fix/175-branch-tests
+[33m9b99df43[m Merge pull request #172 from IT-Academy-BCN/refactor/annotations
+[33mbfc9ea15[m fix: merge conflicts
+[33me4b4f49e[m Merge branch 'refs/heads/main' into refactor/annotations
+[33me8b95d0f[m fix: re-run tests
+[33m0384377d[m Merge branch 'refs/heads/main' into fix/175-branch-tests
+[33mc6101194[m fix: tests failing in PR
+[33m7ad0815e[m feature: add a command to test specific test file methods
+[33m63c679b8[m fix: not returning token in swagger
+[33m6d985b7a[m fix: app key not found during testing
+[33mc0d19c64[m fix: test not complying with psr-4 autoloading standard
+[33mdf3baab2[m fix: test not complying with psr-4 autoloading standard
+[33mc6e17d2a[m Apps.. forgot I modified the reboot.bat file for linux... Now there are two... the original reboot.bat for windows and the reboot-linux.bat for linux
+[33me4bb5b23[m api instead of Api giving errors in testing solved and some other stuff done
+[33m5c73225a[m fix: do the same as Makefile
+[33mf5b23d53[m fix: outdated README.md
+[33m9c5dbb59[m fix: failed to open .env file during setup
+[33ma9fb0160[m Revert "wip: trying to work without network"
+[33mb088ffe2[m wip: trying to work without network
+[33mf4315fff[m fix: not booting after docker compose up
+[33mb5ffc115[m fix: react not building
+[33m30a21ec0[m fix: mount reboot in dockerfile
+[33me89a3af9[m fix: failed reboot for windows users
+[33m20dafb38[m fix: failed deploy on render
+[33m5d189eec[m Merge remote-tracking branch 'origin/main'
+[33mca09b8f0[m fix: mixed content blockage
+[33mcf01eb25[m Add db:seed
+[33m1dea8749[m fix: docker react build process
+[33m9e0b0f0d[m fix: add build folder into git ignore
+[33mfdcd07a1[m fix: add build folder
+[33m0d47d4fb[m feature: add a reboot.bat
+[33m2e96a3a7[m feature: add a reboot.bat
+[33m095eabfd[m feature: add a reboot.bat
+[33mfdc73401[m feature: add a reboot.bat
+[33m63130f2c[m fix: render-setup
+[33mf191fccd[m feature: add a make.bat
+[33m1e2b49f5[m feature: repair docker
+[33m1752a37e[m feature: add a setup for Render
+[33m66ecd604[m fix: add composer install before everything
+[33m953d5fce[m fix: add composer install before everything
+[33m0c18a8f8[m feature: add make setup and rename some methods
+[33ma9c22285[m #148/testing/store-update-and-detail-tag-endpoints
+[33mb7d14d28[m #148/docs/store-and-update-tag-endpoints
+[33m0a1d7a69[m #148/refactor/update-tag-endpoint
+[33mfe85b049[m #148/refactor/store-tag-endpoint
+[33m9f928a7e[m fix: remove migrations
+[33mc1975abb[m fix: repair docker networks
+[33mf126a738[m feature: add start.sh
+[33ma3b2ed5b[m feature: add start.sh
+[33mb4cdc896[m fix: remove creation of structures
+[33mba3f1a74[m feature: add unified php+react docker
+[33m5eb71525[m refactor: extract array tranlation logic and simplify methods
+[33mc80f1839[m refactor: inline unnecessary method
+[33m7e4ea163[m refactor: change annotations names and folders
+[33mb80ba197[m #148/refactor/tag-update
+[33m8d3e2c34[m Changes made given feedback from coworkers. Missing to see transactions in UserRegisterService
+[33mdd836fa2[m Edited AdditionalTraining documentation according to the comments suggested by Rosa
+[33mb397e765[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33mdd76171b[m DevelopmentListController and DevelopmentListService moved to new folder 	renamed:    app/Http/Controllers/api/DevelopmentListController.php -> app/Http/Controllers/api/Tag/DevelopmentListController.php 	renamed:    app/Service/DevelopmentListService.php -> app/Service/Tag/DevelopmentListService.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/Controller/Tag/DevelopmentListControllerTest.php 	modified:   tests/Feature/Service/Tag/DevelopmentListServiceTest.php
+[33m1adf5075[m SpecializationListController and SpecializationListService moved to new folder 	renamed:    app/Http/Controllers/api/SpecializationListController.php -> app/Http/Controllers/api/Student/SpecializationListController.php 	renamed:    app/Service/SpecializationListService.php -> app/Service/Student/SpecializationListService.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/Controller/Student/SpecializationListControllerTest.php 	modified:   tests/Feature/Service/Student/SpecializationListServiceTest.php
+[33mffdef830[m Edited StudentLanguagesDetail documentation according to the comments suggested by Rosa
+[33m34ac9a36[m Edited StudentCollaborationDetail documentation according to the comments suggested by Rosa
+[33me92b4903[m Edited StudentBootcampDetail documentation according to the comments suggested by Rosa
+[33mbcdd7b18[m Edited StudentModality documentation according to the comments suggested by Rosa
+[33m808e806f[m Edited StudentProjectsDetail documentation according to the comments suggested by Rosa
+[33m10048a5a[m SpecializationList tests and DevelopmentList tests moved to their respective folders
+[33m6e902e48[m Tag Service tests moved to folder Tag
+[33m5c086f5d[m Student Service tests moved to folder Student
+[33ma27472ca[m Tag Controller tests moved to folder Test
+[33m518b2838[m Student controller tests moved to new folder Student
+[33m52db217b[m Merge remote-tracking branch 'origin/main'
+[33m74fc410e[m feature: compose the complete docker with frontend and backend
+[33m0d0d56a2[m Merge pull request #171 from IT-Academy-BCN/feature/signup-endpoint#136
+[33ma3db91a2[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/signup-endpoint#136
+[33mc780f9b3[m feature: raise PR in local
+[33m6e33d432[m feature: raise PR in local
+[33m2bf2ade1[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles into feature/signup-endpoint#136
+[33mfc96ac14[m feature: raise PR in local
+[33m8bffa8fb[m[33m ([m[1;31morigin/feature/make-pull-request-with-dedicated-febe-testing-environment[m[33m)[m fix: add line jump
+[33meb4ce074[m fix: add Backend and Frontend urls to README file
+[33m699f9e8d[m fix: make production become https in swagger
+[33m1c235f0c[m fix: repair configuration of Laravel
+[33m52d741df[m fix: repair containers
+[33ma068a3ae[m feature: repair container autoload
+[33m08ed1d13[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m4c07f951[m feature: expose port 80
+[33md616de3b[m Merge branch 'main' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m12af2349[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m3b8f7a9d[m Fixed StudentCollaborationDetailService import into StudentCollaborationDEtailController
+[33m6b1860f8[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33ma517b994[m Try to fix test
+[33m75b7403d[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33mf33f6354[m Tests controller files moved to controller folder
+[33m8ad40222[m swagger ch
+[33m8b697a30[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/signup-endpoint#136
+[33mcf4919b0[m controller tests files moved to controller folder
+[33mce2481b2[m StudentBootcampDetailServiceTest file moved to Service folder
+[33m677f4516[m StudentListControllerTest methods renamed
+[33m4435c4df[m fixed namespace error in TagDetailControllerTest renamed
+[33m1788130f[m StudentLanguagesDetailControllerTest renamed
+[33mb0b80799[m TagListService moved to new folder Tag 	modified:   app/Http/Controllers/api/Tag/TagListController.php 	renamed:    app/Service/TagListService.php -> app/Service/Tag/TagListService.php 	modified:   tests/Feature/Service/TagListServiceTest.php 	modified:   tests/Feature/TagListControllerTest.php
+[33me04fffe0[m TagDetailService moved to new folder Tag 	modified:   app/Http/Controllers/api/Tag/TagDetailController.php 	renamed:    app/Service/TagDetailService.php -> app/Service/Tag/TagDetailService.php 	modified:   tests/Feature/Service/TagDetailServiceTest.php 	modified:   tests/Feature/TagDetailControllerTest.php
+[33m31004fc7[m StudentListService moved to folder Student 	modified:   app/Http/Controllers/api/Student/StudentListController.php 	renamed:    app/Service/StudentListService.php -> app/Service/Student/StudentListService.php 	modified:   tests/Feature/Service/StudentListServiceTest.php 	modified:   tests/Feature/Student/StudentListControllerTest.php
+[33madc79fb1[m StudentDetailService moved to folder Student 	modified:   app/Http/Controllers/api/Student/StudentDetailController.php 	renamed:    app/Service/StudentDetailService.php -> app/Service/Student/StudentDetailService.php 	modified:   tests/Feature/Service/StudentDetailServiceTest.php 	modified:   tests/Feature/Student/StudentDetailControllerTest.php
+[33m5c7232e8[m StudentCollaborationDetailService moved to folder Student 	modified:   app/Http/Controllers/api/Student/StudentCollaborationDetailController.php 	renamed:    app/Service/StudentCollaborationDetailService.php -> app/Service/Student/StudentCollaborationDetailService.php 	modified:   tests/Feature/Service/StudentCollaborationDetailServiceTest.php 	modified:   tests/Feature/Student/StudentCollaborationDetailControllerTest.php
+[33mb65c5453[m StudentAdditionalTrainingListService moved to folder Student 	modified:   app/Http/Controllers/api/Student/StudentAdditionalTrainingListController.php 	renamed:    app/Service/StudentAdditionalTrainingListService.php -> app/Service/Student/StudentAdditionalTrainingListService.php 	modified:   tests/Feature/Service/StudentAdditionalTrainingListServiceTest.php 	modified:   tests/Feature/Student/StudentAdditionalTrainingListControllerTest.php
+[33m05517d17[m TagController moved to new folder Tag 	renamed:    app/Http/Controllers/api/TagController.php -> app/Http/Controllers/api/Tag/TagController.php 	modified:   routes/api/v1.php
+[33m4eb1de72[m TagListController moved to new folder Tag 	renamed:    app/Http/Controllers/api/TagListController.php -> app/Http/Controllers/api/Tag/TagListController.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/TagListControllerTest.php
+[33m75ff3e85[m TagDetailController moved to new folder Tag 	renamed:    app/Http/Controllers/api/TagDetailController.php -> app/Http/Controllers/api/Tag/TagDetailController.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/TagDetailControllerTest.php
+[33m5c029bb0[m StudentController moved to new folder Student 	renamed:    app/Http/Controllers/api/StudentController.php -> app/Http/Controllers/api/Student/StudentController.php
+[33m5a1a7943[m StudentProjectsDetailController moved to new folder Student 	renamed:    app/Http/Controllers/api/StudentProjectsDetailController.php -> app/Http/Controllers/api/Student/StudentProjectsDetailController.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/Student/StudentProjectsDetailControllerTest.php
+[33m1bebebf5[m StudentListController moved to new folder Student 	renamed:    app/Http/Controllers/api/StudentListController.php -> app/Http/Controllers/api/Student/StudentListController.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/Student/StudentListControllerTest.php
+[33m9a589cc7[m StudentLanguagesDetailController moved to new folder Student
+[33m8ecceb46[m StudentDetailController moved to new folder Student 	renamed:    app/Http/Controllers/api/StudentDetailController.php -> app/Http/Controllers/api/Student/StudentDetailController.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/Student/StudentDetailControllerTest.php
+[33m8a616abc[m StudentCollaborationDetailController moved to new folder Student 	renamed:    app/Http/Controllers/api/StudentCollaborationDetailController.php -> app/Http/Controllers/api/Student/StudentCollaborationDetailController.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/Student/StudentCollaborationDetailControllerTest.php
+[33mec3ed21d[m StudentBootcampDetailController moved to new folder Student 	renamed:    app/Http/Controllers/api/StudentBootcampDetailController.php -> app/Http/Controllers/api/Student/StudentBootcampDetailController.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/Student/StudentBootcampDetailControllerTest.php
+[33m28cb5156[m StudentModalityController moved to new folder Student 	renamed:    app/Http/Controllers/api/StudentModalityController, -> app/Http/Controllers/api/Student/StudentModalityController.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/Student/StudentModalityControllerTest.php
+[33m0ba49746[m StudentAdditionalTrainingListController moved and renamed 	renamed:    app/Http/Controllers/api/StudentAdditionalTrainingListController, -> app/Http/Controllers/api/Student/StudentAdditionalTrainingListController.php 	renamed:    app/Service/StudentAdditionalTrainingService.php -> app/Service/StudentAdditionalTrainingListService.php 	modified:   routes/api/v1.php 	modified:   tests/Feature/Service/StudentAdditionalTrainingListServiceTest.php 	modified:   tests/Feature/Student/StudentAdditionalTrainingListControllerTest.php
+[33m8003150c[m StudentCollaborationServiceTest.php renamed and adapted 	renamed:    tests/Feature/Service/StudentCollaborationServiceTest.php -> tests/Feature/Service/StudentCollaborationDetailServiceTest.php
+[33mc2503dd1[m StudentCollaborationDetailControllerTest.php adapted to changes 	modified:   tests/Feature/Student/StudentCollaborationDetailControllerTest.php
+[33me802a9d5[m StudentCollaborationController.php and StudentCollaborationService.php renamed 	renamed:    app/Http/Controllers/api/StudentCollaborationController.php -> app/Http/Controllers/api/StudentCollaborationDetailController.php 	renamed:    app/Service/StudentCollaborationService.php -> app/Service/StudentCollaborationDetailService.php 	modified:   routes/api/v1.php
+[33m86364994[m AdditionalTrainingListServiceTest.php renamed, adapted, and moved 	renamed:    tests/Feature/Student/AdditionalTrainingListServiceTest.php -> tests/Feature/Service/StudentAdditionalTrainingListServiceTest.php
+[33m81f01860[m StudentAdditionalTrainingListControllerTest adapted to changes 	modified:   tests/Feature/Student/StudentAdditionalTrainingListControllerTest.php
+[33m9c597504[m AdditionalTrainingService.php renamed 	modified:   app/Http/Controllers/api/StudentAdditionalTrainingListController.php 	renamed:    app/Service/AdditionalTrainingService.php -> app/Service/StudentAdditionalTrainingService.php
+[33m7acea155[m AdditionalTrainingListController.php renamed Routes updated 	renamed:    app/Http/Controllers/api/AdditionalTrainingListController.php -> app/Http/Controllers/api/StudentAdditionalTrainingListController.php 	modified:   routes/api/v1.php
+[33m3c7ff8aa[m ModalityController and ModalityService renamed 	renamed:    app/Http/Controllers/api/ModalityController.php -> app/Http/Controllers/api/StudentModalityController.php 	renamed:    app/Service/Student/ModalityService.php -> app/Service/Student/StudentModalityService.php 	modified:   routes/api/v1.php 	renamed:    tests/Feature/Service/ModalityServiceTest.php -> tests/Feature/Service/StudentModalityServiceTest.php 	modified:   tests/Feature/Student/StudentModalityControllerTest.php
+[33mbe43ec83[m StudentBootcampDetailControllerTest methods renamed
+[33md29e738e[m StudentModalityControllerTest methods renamed
+[33mbb4df865[m StudentAdditionalTrainingListControllerTest methods renamed
+[33m7f8ebcb0[m StudentCollaborationControllerTest renamed
+[33m162963aa[m ModalityTest renamed
+[33mdf0e015b[m AdditionalTrainingListControllerTest renamed
+[33mdea620cb[m LenguageService renamed and adaptation of related files 	modified:   app/Http/Controllers/api/StudentLanguagesDetailController.php 	renamed:    app/Service/Student/LanguageService.php -> app/Service/Student/StudentLanguageDetailService.php 	renamed:    tests/Feature/Service/LanguageServiceTest.php -> tests/Feature/Service/StudentLanguageDetailServiceTest.php 	modified:   tests/Feature/Student/StudentLanguagesDetailControllerTest.php
+[33m05c8ffd3[m Rename StudentCollaborationController
+[33me853de75[m Service declaration in StudentCollaborationController changed from protected to private.
+[33m7d857eed[m Strict types added to StudentCollaborationController.php
+[33mad9b69c1[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m92d3106f[m Deprecated Unit tests deleted
+[33mf8f5afa7[m TagDetail tests refactored
+[33m14662e11[m TagList tests refactored
+[33m936db119[m StudentModality tests refactored
+[33m6b7ab75e[m StudentLanguage tests refactored
+[33mfc1d483d[m AdditionalTrainingList tests refactored
+[33m5abd0271[m StudentBootcampDetail tests refactored
+[33mbbab3448[m Collaboration tests refactored
+[33m0dda4f39[m Stric type added to SpecializationListController.php
+[33mdfa31029[m StudentProjectsDetail tests refactored
+[33m49b40659[m StudentDetail tests refactored
+[33m11389b9c[m StudentList tests refactored
+[33m912d03f4[m SpecializationList tests refactored
+[33m7e7f9d99[m DevelopementList tests refactored
+[33mea12c4d2[m Strict types added to StudentDetailControllerTest.php
+[33m7c71977a[m Swagger update with AnnotationsTagDetail.php added
+[33m7e571b94[m Tests have been added to RegisterUserServiceTest to instantiate and create id's for User, Student and Resume
+[33m23f2936f[m Changed 'id' to 'uuid' for User in the users table and tables with user_id relationship
+[33mafb4ee39[m refractor: deleted modalityNotFoundExeption as is not being used.
+[33me3e4b09c[m added return data type for studentProjectDetail/service/controller/controllerUnitTest
+[33mcf244428[m Specified data type for the argument and return value in StudentProjectDetailService
+[33m1f2b0200[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33me7abe7ac[m Route for TagDetail adapted to the new controller
+[33m8c156be5[m Provisional route for TagDetailController removed
+[33m0cd17593[m Remove test for show method from TagControllerTest
+[33m38e22134[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m31c33a26[m fixed ModalityTest test to work with the new routes
+[33m117addb0[m fixed StudentDetailControllerTest test to work with the new routes
+[33mbfa8cfa5[m fix: repair frontend npm dev
+[33m22359f55[m fix: revert changes
+[33m039f21e7[m feature: update latest changes in frontend
+[33mf9182598[m Merge branch 'develop'  into refactor/#148/refactor-services
+[33m0fb5a2a3[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m410cfbe9[m registerMessage_ToRegisterMessage
+[33ma8d69326[m regesterMessageErrorNotFoundFixed_CapitalLetterAdded
+[33mc8c5911f[m fixed duplicated code in SpecializationListServiceTest
+[33m873447c7[m TagDetailControllerTest created and working correctly
+[33m8d7766ff[m TagDetailServiceTest created and working correctly
+[33m2efaa4a1[m fixed ModalityTest and returned to original name
+[33m73ea23ed[m fixed CollaborationControllerTest
+[33m61a835ad[m The RegisterController, RegisterRequest, and RegisterUserServiceTest have been refactored.
+[33mb9a1eab5[m New endpoint Tag Detail     TagDetailController.php created     TagDetailService.php created     New route added     Test TagDetailServiceUnitTest.php created     Test TagDetailControllerUnitTest.php created
+[33mdd08ae3d[m Merge pull request #158 from IT-Academy-BCN/update/#147_update_route_names
+[33m8a51ac6e[m ALittleBitOfCleaningAndTesting_MissingOneTestToDeleteOrImprove
+[33meb1c50fa[m ForWorkingStill
+[33m86e1e1d8[m feature: add CODEOWNERS
+[33m70d1a625[m fix: testing
+[33m0fed88a5[m feature: unify frontend files
+[33me8cf8cdd[m fix: repair makefile
+[33m2bfb290f[m SomeCleaning
+[33md00eb6f7[m Okay...createTokenNeedsEmail...IfNotItReturnsEmptyToken...YouLearnedSomethingEveryDay
+[33mc0960008[m SomeErrorsMissingGiveMeOneHour
+[33m35547dd1[m TryingToSolveTokenEmpty
+[33m5ecefab3[m SomeMissingErrorsInTestImproveService
+[33m80a1f5ff[m ControllerServiceAndTestingImproved
+[33mac5624f5[m[33m ([m[1;31morigin/update/#147_update_route_names[m[33m)[m Add old routes block I've added the old routesblock so the frontend won't break
+[33m2be5f94f[m Fixed CollaborationServiceTest
+[33m1290f2e1[m Rewritten service and controller tests for the specialization endpoint.
+[33m55038a31[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33md610ebbf[m FixedFactoryUserModel_addedDeletedFildPasswordMerge
+[33m99672fd0[m Merge branch 'update/#147_update_route_names' of https://github.com/IT-Academy-BCN/ita-profiles-backend into update/#147_update_route_names
+[33ma071eb06[m update AnnotationsTag description
+[33mac28b1ff[m UserServiceSQLTransactionAddedAndTestUserServiceImproved
+[33m6ba90364[m Updated tags
+[33mb93607c7[m Changed tags
+[33mf10c1bad[m Fixed class name
+[33mea3731f9[m Changed filter folders
+[33m1a5e9c9b[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/signup-endpoint#136
+[33mf06ec14a[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33mab0c07ed[m Student Detail Service refactored into smaller functions
+[33m6aebc9ca[m FixedFactoryUserModel_addedDeletedFildPassword
+[33m064ebf51[m refactoring student/project endpoint
+[33ma7e7e0cd[m fix: change lower by upper case in file name, remove an unnecessary test, add a backslash in route name
+[33md608ac07[m Refactor AdditionalTrainingList-Erase commented code in 2 files
+[33meb855034[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33mfc847fb6[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33meb8b4602[m Refactoring DevelopmentList Endpoint. All test files builded and working fine.
+[33m566d5316[m Refactoring DevelopmentList Endpoint. Controller adpated, Service file created, 'development' column added in Resumes table, function added in ResumeFactory
+[33m29c36ada[m New tests created for StudentList.
+[33m6f158442[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into update/#147_update_route_names
+[33m89fccdd6[m Merge pull request #159 from IT-Academy-BCN/feature/-onboarding
+[33m2d7220a6[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33me300c022[m Changed type in Swagger doc for 'terms' parameter from boolean to string. Now unauthorised.
+[33m358348d8[m Fixing service and controller test
+[33m87b53f85[m Swagger Docs, error 422 when accepting terms. Seeder deleted.
+[33mb17df77e[m Refactor: Updated controller to use UserRegisterService
+[33m1c835aff[m Merge branch 'feature/signup-endpoint#136' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/signup-endpoint#136
+[33m92d1fcff[m Swagger doc with some validation errors
+[33m16b1779a[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33mbdec439f[m New tests added to StudentDetail.
+[33m49cf24f9[m Merge branch 'feature/signup-endpoint#136' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/signup-endpoint#136
+[33m39c60f99[m The 'terms' parameter has been added in RegisterRequest validation and try catch in RegisterController
+[33m8ed25de2[m fix: remove unnecessary merge with develop in ci pipeline
+[33mae415aa4[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33me94e9cf2[m Swagger Doc, not working still
+[33mce3e0a8d[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/signup-endpoint#136
+[33m7c3c60c9[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into update/#147_update_route_names
+[33m5678e011[m fix: specify the git ignore to mysql data file
+[33m460a8e9a[m Refactoring Enpoint AdditionalTraining Files: controller, service and tests working well
+[33m8eebae42[m added suggested changes to refactor modality
+[33ma0b38f6f[m Removed user authentication from tagControllerTest tests
+[33m743e772c[m Update routes/annotations/tests - deleted routes that do not work or did not have a test - group Tags: deleted route->delete tag, the rest taken from the middleware
+[33m545fba24[m Refactoring update of the collaborations endpoint
+[33mbaa5954a[m The 'user_id' field has been added to the students table to be able to enter the value of the 'specialization' field in the resume table
+[33mf8ed4dc8[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33mae81d6f8[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m8af6bbf9[m #148/refactor/ edit Bootcamps service and controller
+[33m40229648[m #148/testing/ New tests and add use of fixtures - tests\Feature\Student\StudentBootcampDetailServiceTest.php     - Use of new methods from C:\Dev\GH\ita-profiles-backend\tests\Fixtures\Students.php     - Change test to check existence of bootcamps to two newones, one for one bootcamps and another for two
+[33m856e7b40[m - C:\Dev\GH\ita-profiles-backend\tests\Fixtures\Students.php     - delete duplicated "return" statement on aStudent() method     - Add four new methods         - aStudentWithResume()             - Just a resume is associated, any other model it is.         - aStudentWithOneBootcamp()             - With resume associated also         - aStudentWithTwoBootcamps()             - With resume associated also         - aStudentWithoutResume()             - No resume associated
+[33m2289951d[m Refactoring update of the languages endpoint
+[33m6c589d10[m Updated routes with ID before resume
+[33m3e8aac21[m fix: remove the develop checkout in CI pipeline
+[33md6173aaf[m Merge branch 'refs/heads/develop' into update/#147_update_route_names
+[33m9d04cc47[m feature: add run-tests in makefile
+[33ma71cc692[m feature: add a test runner in makefile
+[33mee0b2dc3[m composer lock update
+[33m0e17e339[m observacion en tabla student_has_tags
+[33m01e459b8[m Deleted unused routes with their tests and documentation
+[33m07078fed[m Test adapted to the minor changes in studentdetailContorller.php
+[33mef61cbc4[m Correction of the first method in the SpecializationListServiceTest
+[33mdc268307[m refactor modality endpoint
+[33mc129b9fc[m Refactoring of the endpoint GET/specialization/list
+[33ma65b4664[m Refactoring of the endpoint GET/students/{id}/collaborations
+[33m6ef59a97[m Refactoring of the endpoint GET/students/{id}/languages
+[33m5a78f5a2[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33maec10401[m Minor changes done
+[33m28f19270[m #148/refactor/Encapsulate-getStudentBootcampsById() - Leave the execute method only calling the specific method - Add "string" on specific method
+[33m941712dc[m User registration tests have been created for the controller and the service. Validation was put in RegisterController and UserService
+[33m554ddbc7[m Delete old routes
+[33m922275da[m Updated several tests v1 file-> Delete old routes and route name changed students.list to students.all to pass tests AdditionalTrainingListControllerTest Lines 30,41,60 ``` $response = $this->getJson(route('additionaltraining.list', ['student' => $student->id]));```to ```$response = $this->getJson(route('student.additionaltraining', ['studentId' => $student->id]));``` The same path and parameter changes for classes ModalityTest Line 44 StudentBootcampDetailControllerTest Lines 33,50,58 StudentLanguagesDetailControllerTest Lines 32,38,46,54 StudentListTest 21,47,60 StudentProjectsDetailControllerTest Lines33,54,70
+[33mdb9177c8[m Suggested changes made
+[33m290b3c50[m Minor changes in StudentDetailService.php
+[33mb32cbcf2[m Refactoring of the StudentDetailControllerTest Added unit tests Files renaming
+[33m00509938[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/signup-endpoint#136
+[33m84edb531[m Refactoring user table. Also added a User Seeder.
+[33m08f4b387[m Update swagger AnnotationsStudentDetail add format="uuid" Created Home FilterLists folder in Swagger and moved ```AnnotationsSpecializationList```& ``` AnnotationsDevelopmentList```files into it. Taken from the ‘student/resume’ group these two paths: ‘development/list & specialization/list’.
+[33m18ba32d3[m Updated AnnotationsModality&AnnotationsStudentLanguagesDetail
+[33m1cec578c[m Updated AnnotationsStudentDetail&AnnotationsAdditionalTraining
+[33md40df819[m Updated AnnotationsStudentCollaboration
+[33m3f944772[m Updated AnnotationsStudentProjectsDetail
+[33m01ea632e[m change name= id to StudentId modelsAnnotations\studentAnnotations change line 18 from integer to string
+[33m03d9ee6e[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m390d8135[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into update/#147_update_route_names
+[33ma300cabb[m Merge pull request #146 from IT-Academy-BCN/feature/AddTests_StudentProjectsDetailService
+[33m98c0b0ff[m updated route name student.detail in swagger updated StudentDetailControllerTest&CollaborationControllerTest
+[33m80929ddc[m Updated AnnotationsStudentList Swagger
+[33maaa94d80[m updated student/resume routes
+[33mf4cdf968[m Merge branch 'refactor/#148/refactor-services' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33maf7fd5fc[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m4df57e00[m Merge remote-tracking branch 'origin/develop' into develop
+[33m81199d35[m[33m ([m[1;31morigin/feature/colaboracion_real_endpoint#120[m[33m)[m fix: add missing parenthesis
+[33medde6c4b[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into refactor/#148/refactor-services
+[33m79f61855[m Merge pull request #143 from IT-Academy-BCN/feature/colaboracion_real_endpoint#120
+[33m9cba3eb2[m fix: remove coverage
+[33m9d236f42[m fix: add coveralls
+[33m937325e3[m fix: remove phpunit unnecessary test
+[33m3db96f66[m fix: run phpunit as composer exec
+[33mf4fa7038[m fix: install phpunit
+[33mf4701a05[m fix: check develop branch exists
+[33m54e5145c[m #148/refactor/changes on StudentBootcampDetail files - Controller:     - Just delete a line at the end - Service     - Change findOrFail for find()     - Delete catch to ModelNotFoundException and call straigth to StudentNotFoundException when $student wasnt find     - Separate the map function to a specific method
+[33me53bac4a[m Merge branch 'feature/colaboracion_real_endpoint#120' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/colaboracion_real_endpoint#120
+[33m44acbb57[m Same docs. Pushed again due to develop changes.
+[33md22aee7c[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/colaboracion_real_endpoint#120
+[33mc368d5ba[m Merge branch 'feature/colaboracion_real_endpoint#120' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/colaboracion_real_endpoint#120
+[33mca15badd[m Commit 1cd4e2 all again, same docs. Pushed again due to develop changes.
+[33m1a68efdf[m feature: add a condition to make code coverage necessary to be over 80% threshold
+[33m09076656[m fix: deployment methodology
+[33m1cd4e2ee[m  Improvements based on the feedback received during PR reviews.
+[33m65d45482[m feature: remove unnecessary test
+[33m88cf7130[m feature: make CI testing to initialize passport
+[33m2bce5be9[m feature: make docker to automatically initialize passport
+[33mec5e3b08[m[33m ([m[1;31morigin/feature/AddTests_StudentProjectsDetailService[m[33m)[m Delete comments
+[33mc1efdd23[m Added fields for validation errors in test_user_creation_with_invalid_data and increased requirements for password creation in RegisterRequest
+[33md7628a55[m Tests for user registration have been created
+[33mc40bbdb2[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/signup-endpoint#136
+[33m8102f3e4[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/AddTests_StudentProjectsDetailService
+[33m0b963b03[m A try catch has been inserted in RegisterController->register()
+[33m747f3c83[m Added ‘StudentProjectsDetailServiceTest’ test Created fixture 'Projects For Resume'
+[33m22761f71[m Merge pull request #128 from IT-Academy-BCN/feature/123-make-about-to-return-real-data
+[33maa02027f[m Added StudentProjectsDetailControllerUnitTest
+[33m3e862f36[m Renamed file StudentProjectsDetailServiceTest TO StudentProjectsDetailServiceUnitTest.
+[33mc76ee4c7[m File moved ```StudentProjectsDetailService```` FROM namespace App\Service\Resume; TO namespace App\Service\Student;
+[33m18276a57[m Changes meade according to Toni´s review     Improvements in the documentation and code optimization.
+[33mdaf250a5[m User registration functionality and validation of registration fields have been created
+[33mae3feadb[m Merge branch 'develop' into feature/colaboracion_real_endpoint#120
+[33mab94efa1[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/123-make-about-to-return-real-data
+[33ma8593b9e[m Minor error in StudentDetailController.php fixed.
+[33m5a4a6a9d[m Small changes in file StudentDetailController.php To adjust the resulting JSON"
+[33m96a59bf4[m File AnnotationsStudentDetail.php updated
+[33m5e9f3476[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/signup-endpoint#136
+[33m72b6c4ff[m user register
+[33mc1267251[m Merge pull request #130 from IT-Academy-BCN/feature/#124-make-student-bootcamps-endpoint
+[33m82fc2fef[m fix: add missing error messages in documentation
+[33mc85ba38f[m Merge develop into feature/#124-make-student-bootcamps-endpoint
+[33m7f913388[m refactor: remove ResumeBootcampNotFoundException as in this case '[]' will be returned
+[33m90a3a29f[m Test StudentDetailsServiceTest.php fixed
+[33m1e8b0251[m Merge pull request #144 from IT-Academy-BCN/feature/119-improve-projects-list-output
+[33me5c8bb5d[m[33m ([m[1;31morigin/feature/119-improve-projects-list-output[m[33m)[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/119-improve-projects-list-output
+[33m8aa72652[m fix: solve StudentBootcampDetailService imported in lowercase
+[33m0c779930[m Files changed according to comments
+[33m4883d01d[m fix: move StudentBootCampDetailServiceTest from Unit to Feature
+[33m817b6093[m Changes made starting from the review.     StudentDetailController.php modified to adjust response to the endpoint     StudentDetailsService.php modified to adjust response to the endpoint     Deleted the StudentDetailsNotFoundException.php to use the StudentNotFoundException.php instead.     modified:   tests/Feature/Service/StudentDetailsServiceTest.php 	modified:   tests/Feature/Student/StudentDetailControllerTest.php
+[33m78e10e25[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/123-make-about-to-return-real-data
+[33mb1ff09b3[m #124/Feature/Add new throw sentences
+[33ma09beb3b[m #124/Testing/New test to handle student without resume associated
+[33m5a9e6d83[m Merge 'develop' into feature/#124-make-student-bootcamps-endpoint
+[33m764d925b[m Register endpoint
+[33m750e8b0a[m Adding registration fiels to students and users model
+[33mc073694a[m Last migration. Add specialization field to students table.
+[33m5c10bfd2[m First migration. Add password_confirmation field to user table.
+[33ma5cc8871[m Merge pull request #141 from IT-Academy-BCN/feature/#122-make-idiomas-from-user-detail-view-to-return-a-real-output
+[33me06639be[m[33m ([m[1;31morigin/feature/#122-make-idiomas-from-user-detail-view-to-return-a-real-output[m[33m)[m Merge remote-tracking branch 'origin/develop' into feature/#122-make-idiomas-from-user-detail-view-to-return-a-real-output
+[33m58b77cc7[m Changes in Exception files and exceptions handling in the StudentLanguagesDetailController
+[33m88fa3302[m Updated tests Added Student ProjectsDetailServiceTest. Refactored and added asserts to check that it receives the correct errors.
+[33mab9d4cf9[m Updated createResumeWithEmptyProjects method. Now a new Resume object is created with default values.
+[33m170afa81[m Merge branch 'feature/123-make-about-to-return-real-data' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/123-make-about-to-return-real-data
+[33m91178494[m Messages translated into Catalan
+[33mca646e6b[m Swager its working
+[33m476a321c[m Updated 'formatProjectsDetail' method. The 'formatProjectsDetail()' method now directly returns an unnested array of projects within another 'projects' key, which avoids duplication of the 'projects' key.
+[33m0dd0e390[m Merge branch 'feature/123-make-about-to-return-real-data' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/123-make-about-to-return-real-data
+[33m11f3f28f[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#124-make-student-bootcamps-endpoint
+[33mfe96c257[m #124/Feature/StudentBootcampDetail - Controller    - Use of new exceptions - Service    - Add try catch to use the StudentNotFoundException    - Delete comments and fix indentation
+[33mcc427d31[m #124/Refactor/ Exceptions - Resume and StudentNotFoundException     - Change expected code to 404 - ResumeBootcampNotFoundException    - Handles the case that a student was not found
+[33m8e1d8eac[m Standardize endpoint naming and update related components update cotroller update service update tests
+[33me5466161[m #124/Testing/New testing and refactor old ones - StudentBootcampDetailControllerUnitTest - StudentBootcampDetailServiceTest - StudentBootcampDetailControllerTest     - Change uuid to a valid one     - Fix the response message to the expected
+[33m78f31811[m Refacator swagger
+[33m1855a067[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/123-make-about-to-return-real-data
+[33m429dfb54[m fix: clean cache when raising the php container
+[33mb7bc8b87[m Merge remote-tracking branch 'origin/develop' into develop
+[33m71fc83b5[m fix: url typo error
+[33m4729247d[m Update swagger fixed example error 500 that was not appearing in swaagger
+[33m12d80645[m Adapted the StudentLanguagesDetailControllerTest to use the LanguagesForResume Fixture
+[33ma63a6b45[m Modified the LanguageServiceTest to use the Fixture created for that purpose
+[33m652cc38e[m Update Swagger
+[33me481b169[m Seeders: removed unnecesary comments
+[33mfb1001d1[m StudentProjectsDetailService separated by methods
+[33m467b9966[m Changed checking of empty projects in StudentProjectsDetailService
+[33m415795ba[m Files returned to App\Models
+[33md5321962[m Resume folder deleted
+[33m6681ea9e[m custom exceptions added
+[33m9960175f[m Fixed code indentation error
+[33m029baff4[m Update app/Service/Student/LanguageService.php
+[33m66fc2c87[m Moved logic to service layer
+[33m9842d16a[m Unused variable deleted in LanguageServiceTest.php
+[33md11c0bde[m Company and Project moved to: App\Models\Resume
+[33m12edaedf[m Migrations: emoved unnecessary comments
+[33m2d7bb640[m Changes in Swagger documentation
+[33md0beb264[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#124-make-student-bootcamps-endpoint
+[33mb30687db[m Merge pull request #142 from IT-Academy-BCN/hotfix/126-modify-the-paths-categories-and-development
+[33m1392da79[m updated tag outputs
+[33mcbdf9424[m Updated method_invoke
+[33m75348185[m Refactor Added  . public $timestamps = false;  . declare(strict_types=1); Removed comments
+[33m1f5f1272[m Refactor Added 'declare(strict_types=1)'. Added 'use App\Models\Tag;' to import the Tag model and use it in the code. Removed the tag data array in the Project factory, as tags are now retrieved from the tags table. Removed unnecessary comments.
+[33m981ebdb2[m add declare(strict_types=1); & delete comments
+[33m44cbe40f[m Add declare(strict_types=1);
+[33m972b27e4[m Updated paths in swagger api/v1/development/list by /development/list api/v1/specialization/list by /specialization/list
+[33md55c796c[m Tests
+[33mbb5c6b94[m Documentation
+[33m0e3ff918[m Creation of controller, service, and necessary custom exceptions
+[33mc5543ca0[m Creation of migrations, models, and seeders
+[33md2ca17e9[m + CollaborationServiceTest
+[33mbcbc1a38[m + CollaborationControllerTest
+[33m40e70341[m Tests for Student Details     StudentDetailControllerTest.php fixed     StudentDetailsServiceTest.php created and woeks
+[33m85a97c8c[m #124/Refactor/Delete comments
+[33mc53c1aa6[m Merge branch 'develop'  into feature/#124-make-student-bootcamps-endpoint
+[33m886a1925[m #124/Refactor/Change seeders and test
+[33m4856e76f[m Merge pull request #140 from IT-Academy-BCN/139_update-swagger-endpoint-bootcamps
+[33m66ee4c31[m Update swagger path Add more fake bootcamps
+[33md16d8ca8[m StudentDetailService fixed
+[33m2cb40734[m fix: url typo error
+[33m76ac0ee0[m added student details service and exception
+[33m1fa64e0e[m Merge pull request #138 from IT-Academy-BCN/fix/strict_types-statement-in-add_modality_to_resumes-migration
+[33m49a220ba[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#124-make-student-bootcamps-endpoint
+[33m5714fe5b[m Fixed strict_types statement
+[33m4040157a[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/123-make-about-to-return-real-data
+[33m38b05ccc[m fix: repair .env deployment
+[33md09e70f3[m test change swagger
+[33m4ea61df4[m fix: repair .env deployment
+[33m3997e91b[m Change swagger's path
+[33m61d16484[m Merge remote-tracking branch 'origin/develop' into develop
+[33mf55a08ee[m fix: repair .env deployment
+[33m9c7aacc7[m Merge pull request #127 from IT-Academy-BCN/feature/118_return-a-real-output-to-modalidad
+[33m7cc382fc[m fix: repair .env deployment
+[33m6f946fed[m fix: repair .env deployment
+[33mbd5c86f8[m[33m ([m[1;31morigin/feature/118_return-a-real-output-to-modalidad[m[33m)[m Added new ResumeNotFoundEsception
+[33m5c4aedaa[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#124-make-student-bootcamps-endpoint
+[33mfaa3a9e6[m Merge pull request #129 from IT-Academy-BCN/fix/readme-typo
+[33m5977520c[m fix: replace laravel-docker with itaprofilesbackend-app
+[33m509803a9[m Applied several changes proposed in review
+[33mecff6c64[m StudentAboutService deleted
+[33m83e90512[m Refactored based on peer review feedback
+[33m0744cf69[m Updated swagger documentation
+[33mbc3baf74[m refactor according to comment $modality = $this->getModalityByStudentId($studentId); return $modality; *return $this->getModalityByStudentId($studentId);*
+[33m342f68f7[m Arrangements based on comments AnnotationsModality->updated examples ModalityNotFoundException&StudentNotFoundException->translated into catalan ModalityController->Add StudentNotFoundException Resume->changed $fillable to protected $guarded = ['id']; ModalityService->Add StudentNotFoundException&ModalityNotFoundException ResumeFactory-> 'modality'translated into catalan ModalityServiceTest->Add StudentNotFoundException ModalityTest->updated StudentProjectsDetailControllerTest->test_controller_returns_empty_array_with_no_projects_listed method updated to create a resume without 'projects'. Resumes->added method createResumeWithEmptyProjects Students->updated with'return $student->refresh()->id;'
+[33mad65dc3a[m Test problems fixed
+[33mfae2d981[m #124/Feature/Add 'declare(strict_types=1);' & delete block comments
+[33mb8d0506d[m #124/Test/Fix error/Change int by string when passing uuid
+[33m41242e95[m Rename swagger doc
+[33m14160155[m +Swagger doc
+[33ma9e8063b[m +swagger doc
+[33md07ee54e[m +Collaboration controller
+[33me679b22c[m +Routing
+[33mc3951b88[m +Collaborations Id seed
+[33m682bb0a5[m +Collaborations ids row in resumes table
+[33mfe2aa0aa[m +Collaboration Seeder
+[33me44f8b74[m +Collaboration Factory
+[33m63b8e56b[m  +Collaboration Model
+[33m6c172223[m +collaboration migration
+[33mea6752bd[m Conflictos arreglados
+[33m912582b6[m cambios Varios
+[33m8ebed41d[m test: refactor controller test to include factories and other improvements
+[33m8c2df8e3[m #124/testing/New StudentBootcampDetailServiceTest
+[33mc20fac59[m test: rename test and create tests with unexistent student or student without bootcamps
+[33m4124365b[m test: create test to return data for student bootcamp detail
+[33m2af0170f[m fix: typo in documentation
+[33m9dbcd306[m #124/Feature/Change ResumeBootcampSeeder - Asign 0, 1 or 2 bootcamps ramdomly to a random Student
+[33m33f70ca5[m #124/Fix error 500 - Service:    - Change FirstOrFail() per FindOrFail()    - Delete [] on end_date value    - Add block comment on execute() - Controller    - Fix missing importations    - Add ModelNotFoundException to manage StudentNotFound    - Default 500 on unknows errors    - Add block comment on execute()
+[33m973cdccf[m #124/Docs/Fix annotations - Improve explanation - Change array by object on example output - Set end_date example
+[33me69ac457[m Merge branch 'develop' into feature/123-make-about-to-return-real-data
+[33mda7d98e1[m tests created
+[33me9774b7c[m #124/Make end_table field on bootcamp_resume pivot table
+[33mb22b1f88[m Guardando cambios locales en StudentDetailController.php
+[33mc58162dd[m test para ver si pasan
+[33md7e1deef[m Primeros test StudentDetail
+[33m8a7809c1[m fix response errors
+[33m9125fb1f[m add ModalityNotFoundException
+[33mb50dcc7d[m added response for errors
+[33m914d035b[m route modified
+[33m35546471[m invoke added
+[33m3b0e9c7f[m Merge 'develop' of into feature/#124-make-student-bootcamps-endpoint
+[33m819b9e6c[m student detail controller real data
+[33m087c6859[m Changes in controller, service, and service test
+[33mffe97364[m get about service
+[33mb3d198f0[m Merge branch 'develop' into feature/118_return-a-real-output-to-modalidad
+[33m5e5d894d[m Merge branch 'feature/118_return-a-real-output-to-modalidad' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/118_return-a-real-output-to-modalidad
+[33m5ce22cb6[m ModalityController updated
+[33me9356e52[m ModalityService updated
+[33mc25c0041[m ModalityServiceTest test updated
+[33mcac67265[m Merge pull request #125 from IT-Academy-BCN:feature/otra-formacion-real-endpoint#121
+[33m2759032d[m[33m ([m[1;31morigin/feature/otra-formacion-real-endpoint#121[m[33m, [m[1;31morigin/120[m[33m)[m + Swagger schema annotations created
+[33m478f8b9d[m Add about field to ResumeFactory
+[33m0e70a3ee[m + additional training list controller test
+[33md11ed7fe[m + AdditonalTrainingListServiceTest created
+[33ma074e7ca[m #124/WIP/Add StudentBootcampDetailController - And a Service
+[33m130f8bd9[m #124/Add Bootcamp Model and more:
+[33ma18a7b11[m Update Resume model to include about field
+[33m6c0dd6a8[m Migration modification: Add about field to resumes table
+[33mf17d205e[m + typo fix on "beggining" to "beginning"
+[33m4c601e26[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#124-make-student-bootcamps-endpoint
+[33m3307d549[m + extract service from controller
+[33m138bb44e[m fix: repair README.md
+[33m5850ad87[m Updated swagger change string to array
+[33mfc5c0219[m Added ModalityController and ModalityService tests
+[33me980116a[m Added strict_types and moved logic to service layer
+[33m56566d19[m Controller test file update
+[33m7fcea227[m Migration modification Added the method after('specialization') to the instruction for creating the new 'modality' field so that it is created after the 'specialization' field
+[33mb81932eb[m swagger
+[33m52ddc9fe[m Indexed
+[33m10ce93d2[m Indexed
+[33m2ae8a1b9[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/118_return-a-real-output-to-modalidad
+[33m82ea0336[m Merge branch 'refs/heads/develop' into feature/otra-formacion-real-endpoint#121
+[33m6d0a4f33[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#124-make-student-bootcamps-endpoint
+[33m14ad3078[m[33m ([m[1;31morigin/126-modify-routes-returning-category-and-development-list[m[33m)[m feature: add the instructions in readme to finalise dockerized installation
+[33m332a5afa[m feature: add a makefile to automate docker commands
+[33mdd6e8b3e[m feature: add a makefile to automate docker commands
+[33ma72e43af[m feature: add a makefile to automate docker commands
+[33md8634956[m feature: fix docker
+[33m166cf8ae[m feature / basic tests for AdditionalTrainingController
+[33mddf3400d[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#124-make-student-bootcamps-endpoint
+[33mee32eda2[m feature: add the identifier in the students list
+[33m3707b41d[m feature: create migration for bootcamps_resumes
+[33m5356a9b1[m fix: uuid instead of id on bootcamps migration
+[33m0690b8ff[m feature: create migration for bootcammps
+[33m8af1d82a[m updated existing test and added way to create resume with modality
+[33mfbe95c0d[m Change Controller  name, add real data, update factory and update route
+[33m7a9e7c2a[m Add modality column & update Resume Model
+[33m6bf15539[m + minor fixes in Controller and Swagger annotations
+[33m9bd52786[m + Controlador / adpated route / swagger documentation
+[33mc361b381[m + AdditionalTraining Column in Resume Migration
+[33mbd0e782f[m + additional trainging / model / migration / factory / seeder
+[33m3a073874[m confirm description
+[33m400a6b31[m Merge pull request #109 from IT-Academy-BCN/feature/#98-Student-language-details-fake-endpoint
+[33mcaf4d2f7[m[33m ([m[1;31morigin/feature/#98-Student-language-details-fake-endpoint[m[33m)[m Merge branch 'develop' into feature/#98-Student-language-details-fake-endpoint
+[33m27c97359[m Merge pull request #117 from IT-Academy-BCN/testing/111-be-repair-tests-and-propose-new-tests
+[33m78dd2d15[m Merge pull request #113 from IT-Academy-BCN/Feature/New-student-detail-view-project-list-endpoint#110
+[33m6667606a[m Merge remote-tracking branch 'origin/develop' into develop
+[33m519e0a2c[m feature: add xdebug in docker app container
+[33m9de8560a[m Merge pull request #116 from IT-Academy-BCN/feature/#97add-additional-training-fake-endpoint
+[33m11216604[m Merge pull request #114 from IT-Academy-BCN/feature/106_development_filters
+[33m3030e386[m Merge branch 'feature/106_development_filters' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/106_development_filters
+[33m81a9220f[m Refactor: Modularization of creation of 'Students' & 'Resumes' in tests. Adds Tests\Fixtures\ folder with classes for creating Students and Resumes
+[33m63c5c828[m line to modify specialization deleted
+[33m9109f260[m update swagger doc
+[33m38ed81b0[m updated swagger doc
+[33mb204f844[m updated swagger doc
+[33mea41e135[m updated testGetResumesWithTags
+[33m8fbbfe3d[m Updated getResumes function to search by tag name and not by tag id
+[33ma9a95915[m Update swagger doc.
+[33m860bcb26[m change from private to public getResumes method
+[33mfa199baf[m add testGetResumesWithTags() method
+[33m5deaf226[m Added tags parameter for filter 'Desarrollo'
+[33m16d966ec[m Merge branch 'feature/#97add-additional-training-fake-endpoint' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#97add-additional-training-fake-endpoint
+[33m791ed63c[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#97add-additional-training-fake-endpoint
+[33m13ef70e6[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#97add-additional-training-fake-endpoint
+[33mfe0cf043[m fix: repair docker containers
+[33mc0d0b5c7[m feature: ignore docker folder content
+[33m97195b46[m feature: ignore docker folder content
+[33mfc730c27[m feature: ignore docker folder content
+[33m09966a49[m[33m ([m[1;31morigin/testing/111-be-repair-tests-and-propose-new-tests[m[33m)[m DevelopmentList test
+[33m7c90dda2[m created test for get specialization list
+[33m980c1dfa[m Update of existing tests
+[33m60854a24[m Fixed namespaces of test files
+[33m11bcfcda[m Refactor: Modularization of creation of 'Students' & 'Resumes' in tests. Adds Tests\Fixtures\ folder with classes for creating Students and Resumes
+[33mfb4d2b82[m + new test update
+[33m40da07c9[m + Test no projects listed for the specific student
+[33m003eb4b1[m + set up into test file
+[33mc3e2cd94[m + 200 response with ok uuid / test
+[33md03cc0d5[m + test file
+[33md60c8f96[m Merge branches 'Feature/New-student-detail-view-project-list-endpoint#110' and 'Feature/New-student-detail-view-project-list-endpoint#110' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/New-student-detail-view-project-list-endpoint#110
+[33m689d17d9[m line to modify specialization deleted
+[33m2d0790d6[m update swagger doc
+[33m216b7b0c[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into Feature/New-student-detail-view-project-list-endpoint#110
+[33mf6ba6c9c[m Merge branch 'feature/106_development_filters' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/106_development_filters
+[33mc3f9e238[m adding array to swagger
+[33m8a8f0660[m updated swagger doc
+[33m2addc040[m Merge pull request #115 from IT-Academy-BCN/feature/add-a-docker-container
+[33m9d8246a6[m updated swagger doc
+[33md1a4f4b5[m[33m ([m[1;31morigin/feature/new-student-detail-view-project-list-endpoint-alex[m[33m)[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into Feature/New-student-detail-view-project-list-endpoint#110
+[33m6aa5579d[m updated testGetResumesWithTags
+[33m97ee6bf8[m feature: add Dockerfile and update the readme
+[33m71c60178[m feature: add Dockerfile and update the readme
+[33m502e41d3[m feature: add Dockerfile and update the readme
+[33mfbc8cfe8[m Updated getResumes function to search by tag name and not by tag id
+[33m50532387[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#97add-fake-additional-training-end-point
+[33mbf8783f1[m Additional Training Controller and test
+[33m0feee3b5[m Update swagger doc.
+[33mfdc9c3ed[m change from private to public getResumes method
+[33mfbff8c55[m add testGetResumesWithTags() method
+[33m5ca337fc[m Merge pull request #107 from IT-Academy-BCN/feature/#99add-fake-resume-modality-endpoint
+[33me6f6b2f3[m[33m ([m[1;31morigin/feature/#99add-fake-resume-modality-endpoint[m[33m)[m conflicts solved
+[33m84f38bf0[m Docs/Fix-Typo
+[33m4d41666e[m Feature/Add-logic-to-retrieve-data-from-database-instead-of-json
+[33m6b2eb5ae[m Feature/New-Project-Model-with-its-factory,migration-and-seeder.
+[33mf0518c36[m New-company-model-with-its-migration,factory-and-seeder
+[33m5d795bd4[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#97add-fake-additional-training-end-point
+[33md76c05a7[m fix: replace by
+[33m902390bb[m fix: file padding
+[33m32ee14e7[m fix: file padding
+[33m864cffa2[m fix: file padding
+[33md1312631[m Added tags parameter for filter 'Desarrollo'
+[33m40a49223[m fix: reorder artisan commands and .env file building
+[33m05429078[m Merge #112 from IT-Academy-BCN/Fix#108/Change-host-swagger-conf-using-env-variables
+[33m106f2fff[m feature: add environment variables
+[33m8ee87640[m #106/Set-L5_SWAGGER_CONST_HOST-using-.env-file
+[33m36412a48[m #106/Docs/Delete-servers-no-longer-used
+[33m41e3bcd3[m deleted composer.lock  and composer install again to fix bug
+[33m6e0b9d65[m restored composer.lock
+[33mfdb5dae3[m composer updated
+[33mbbf151a1[m Merge branch 'feature/#98-Student-language-details-fake-endpoint' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#98-Student-language-details-fake-endpoint
+[33mbbc8c677[m swagger documentation
+[33m7e9a1ebe[m route controller and annotations student languages and levels
+[33m009ce083[m updated swagger: json response information
+[33m21f63baf[m swagger documentation
+[33m94b27297[m Merge branch 'feature/#99add-fake-resume-modality-endpoint' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#99add-fake-resume-modality-endpoint
+[33m2a42f73c[m route controller and annotations student languages and levels
+[33m43326162[m Course modality test
+[33m7d55540a[m + Swagger CourseModality documentation updated
+[33m3d3896ff[m + Swagger CourseModality documentation improved
+[33mac7a9346[m Updated Swagger information in files AnnotationsInfo.php and api-docs.json - app/Annotations/OpenApi/AnnotationsInfo.php 	- Added default local server if constant L5_SWAGGER_CONST_HOST exists in .env file, according to config/l5-swagger.php file 	- Modified local server to fit version api/v1 - storage/api-docs/api-docs.json 	- Updated file after regenerating Swagger documentation 	- This file is included in the .gitignorefile and should be ignored, but it is not being ignored
+[33m6381415d[m + Swagger CourseModality documentation
+[33m481b99ce[m CourseModalityController
+[33mc35e6910[m Merge pull request #101 from IT-Academy-BCN/feature/#81-fake-endpoint-that-can-list-colaboration-for-frontend-student-detail-view
+[33mccd175ad[m fix: update composer lock file
+[33m45a918be[m fix: remove api docs json from git
+[33mbd0c7120[m fix: remove api docs json from git
+[33m60e22354[m updated api docs json
+[33m0f626e3e[m conflict files
+[33mc49d5256[m correct swagger
+[33m6441c0a2[m resolve conflict annotations
+[33maf3eba4f[m StudentCollaboration: Show and Route
+[33m16046232[m + student id/uuid fix
+[33mcf612944[m fix: move key generation
+[33m8b6e4324[m fix: move key generation
+[33m70e1f3a1[m feature: update phpunit tests when a PR is created or updated
+[33mc411eb10[m + route fix
+[33mc1e708a8[m api doc conflicted file
+[33m8e5626ad[m cleaning code
+[33m48cd42a5[m Swagger:StudentCollaborationsAnnotations
+[33mb660323f[m StudentCollaboration: Show and Route
+[33m01c824bf[m studentCollaboration: input fake data in json
+[33m21c8399b[m feature: remove pint because it's blocking for sprint objectives
+[33mea3f5313[m Merge pull request #104 from IT-Academy-BCN/feature/category_filters#100
+[33m5b7bc603[m delete line  'specialization' => $resume->specialization,
+[33m3dc52048[m Merge branch 'feature/category_filters#100' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/category_filters#100
+[33m63fa03ae[m Update getResumes method
+[33m9f094aaf[m Update getResumes method
+[33mc7c3b822[m swagger
+[33m6168734d[m Delete Test
+[33m6ae9438b[m commit mod
+[33m8f514a9e[m Updated doc. to generate url with multiple parameters
+[33m03e27b88[m Merge pull request #105 from IT-Academy-BCN/fix/#96-error_500_student_get_endpoint
+[33mcd660dee[m #104/Documentation/Update-file-to-show-new-endpoint-feature
+[33m9b879587[m Updated path to test_student_list_controller and test_specialization_filter_returns_correct_students methods
+[33mdcecea64[m Updated __invoke method to handle multiple specializations
+[33med3e14cd[m Updated execute and getResumes methods to receive array to be able to filter on several fields at once
+[33md070c5d8[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#97add-fake-additional-training-end-point
+[33m9b805fb6[m Added basic unit test
+[33meb427aa7[m Added basic feature test
+[33m5de3ff85[m Refactor: Separated the logic into parts for better understanding of the code
+[33mfc9a7bdc[m Merge 'develop' into fix/#96-error_500_student_get_endpoint
+[33m66822b72[m #104/Testing/Add-tests-to-ensure-correct-filtered-students-are-retrieved
+[33mde7e2b08[m Updated endpoint GET/students Swagger documentation according to #60 issue requirements
+[33mbc45cd57[m Docs/Improve-description-text-and-example-output
+[33mec8421df[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/category_filters#100
+[33m053e0702[m Merge pull request #103 from IT-Academy-BCN/feature/#102add-fake-development-endpoint
+[33m8ee39c19[m docs/Change-AnnotationsStudent
+[33m95dc95d2[m docs/change-AnnotationsInfo
+[33m9e2341d2[m Merge branch 'feature/category_filters#100' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/category_filters#100
+[33mc3273a6b[m + Swagger CourseModality documentation updated
+[33m7ced52f8[m add tests
+[33md03e7bbf[m + Swagger CourseModality documentation improved
+[33mba63cd00[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/category_filters#100
+[33m451197e3[m add test
+[33mc08ee67b[m add test
+[33m118c163e[m Updated Swagger information in files AnnotationsInfo.php and api-docs.json - app/Annotations/OpenApi/AnnotationsInfo.php 	- Added default local server if constant L5_SWAGGER_CONST_HOST exists in .env file, according to config/l5-swagger.php file 	- Modified local server to fit version api/v1 - storage/api-docs/api-docs.json 	- Updated file after regenerating Swagger documentation 	- This file is included in the .gitignorefile and should be ignored, but it is not being ignored
+[33m074cc609[m + Swagger CourseModality documentation
+[33mc85701c3[m Adapted StudentResource to return the attributes and fields specified in issue #60
+[33m72fc9646[m Modified assigned Resource into the index method response
+[33md35fbc47[m Merge branch 'feature/category_filters#100' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/category_filters#100
+[33m84cdd22d[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/category_filters#100
+[33me5ace3e8[m[33m ([m[1;31morigin/feature/#102add-fake-development-endpoint[m[33m)[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/#120add-fake-development-endpoint
+[33mcdc26c27[m add fake development end point
+[33md850eb23[m Merge pull request #93 from IT-Academy-BCN/feature/#82-student-bootcamp-detail-endppoint
+[33m723e83a6[m[33m ([m[1;31morigin/feature/#82-student-bootcamp-detail-endppoint[m[33m)[m Merge branch 'develop' into feature/#82-student-bootcamp-detail-endppoint
+[33m025238c2[m Merge pull request #94 from IT-Academy-BCN/#78-student-projects-detail-endpoint
+[33m4e0e6b87[m wip
+[33m6410bb1f[m wip
+[33mfebe7832[m wip
+[33m75ab3eb3[m wip
+[33mcd53e1c7[m wip
+[33ma51140d9[m fix: remove tests that are deprecated
+[33me5eea090[m fix: add an APP_KEY key in .env file
+[33m525b6bf3[m fix: move key generation
+[33m6e12fb1e[m fix: move key generation
+[33mf98c9e8b[m h
+[33mebc088e0[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/category_filters#100
+[33m92aeb70e[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/category_filters#100
+[33m12dc22eb[m Updated Swagger information in files AnnotationsInfo.php and api-docs.json
+[33m0a63b8e5[m CourseModalityController
+[33m5e0651ce[m Merge branch 'develop' into feature/#82-student-bootcamp-detail-endppoint
+[33m5b7e019c[m wip
+[33m74aed59d[m wip
+[33m237dc896[m fix: add port to workflow
+[33m19cb27c6[m fix: remove the .env.example file
+[33mbc5fdea6[m fix: replace connection variables
+[33m586bcf75[m fix: put the application in testing mode
+[33mcf2c68bf[m fix: update pr action to migrate fresh the database
+[33mb917eedf[m feature: add a .env.example to hold environment data
+[33mb0fb1263[m feature: remove .env.example from environment files
+[33mf4d2ea57[m feature: update phpunit tests when a PR is created or updated
+[33m0c9fe2e2[m fix: run composer update
+[33m6a307a3e[m[33m ([m[1;31morigin/#78-student-projects-detail-endpoint[m[33m)[m Merge remote-tracking branch 'origin/develop' into #78-student-projects-detail-endpoint
+[33m0c6ef686[m fix: remove the .env.example file
+[33ma0d1bb7e[m fix: replace connection variables
+[33medfd4668[m fix: put the application in testing mode
+[33mca82c05c[m fix: update pr action to migrate fresh the database
+[33m974274f4[m feature: add a .env.example to hold environment data
+[33mbbb3a734[m feature: remove .env.example from environment files
+[33m676c4b00[m feature: update phpunit tests when a PR is created or updated
+[33m23207442[m fix: run composer update
+[33ma10e7d76[m + swagger doc fix
+[33m5d5af21c[m + array fields fix
+[33mecb17f19[m Add query to filter results by specialization
+[33m5c47aa94[m Add request to filter the response by specialization as a parameter
+[33ma7ef01ab[m feature: require passing phpunit tests on pull request
+[33m89119fe1[m + student id/uuid fix
+[33m1587a8b2[m + student id/uuid fix
+[33mf224f69f[m + route fix
+[33ma34b75f2[m Merge branch 'develop' into feature/#82-student-bootcamp-detail-endppoint
+[33m15a30513[m PHP Linting (Pint)
+[33me02c71f0[m + hotfix/swagger - localserver for testing
+[33mbe0de87d[m + swagger doc
+[33m32bfc8ff[m + bootcamp detail controller
+[33m13e47ce4[m + endpoint route
+[33m29b66566[m Merge pull request #91 from feature/adapt_student_model_following_profiles_home_endpoint
+[33m10aa6b61[m Update AnnotationsStudents to get the example equal to the real output
+[33m2f6e416e[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/adapt_student_model_following_profiles_home_endpoint
+[33m7b6143ba[m Update test to check available endpoints
+[33m62ae058b[m Change files following model modifications
+[33m1e10e225[m Updating Students model and its migration
+[33m2c0baefd[m[33m ([m[1;31morigin/feature/update-specialization-list-endpoint[m[33m)[m bugfix: reset the production git before updating
+[33mfacbfa59[m bugfix: Add fresh to in development deployment
+[33m3054f7f1[m bugfix: replace by minus a capital letter not recognized in linux
+[33mcd786f13[m Merge pull request #83 from IT-Academy-BCN/feature/update-specialization-list-endpoint
+[33m48961615[m Merge pull request #80 from IT-Academy-BCN:#78-student-projects-detail-endpoint
+[33m523b9760[m + hotfix in controller
+[33m09ae40a4[m Merge branch 'develop' into #78-student-projects-detail-endpoint
+[33m44c3569c[m + 'id' on controller
+[33ma7cd9b87[m PHP Linting (Pint)
+[33m23fc3500[m Merge pull request #84 from IT-Academy-BCN/feature/fake_profile_detail_endpoint
+[33m2f28c2ce[m refactor swagger
+[33ma645d361[m Moved tags out of about
+[33m8137b6b8[m routes 'students Home' changed position
+[33ma12fb255[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/fake_profile_detail_endpoint
+[33mb59bc877[m wip: when deploying in github actions, regenerate documentation, apply migrations and seeds
+[33mab005fa8[m Merge pull request #89 from IT-Academy-BCN/bugfix/documentation-server-urls
+[33ma7f5da69[m fix: server urls are set as local but in remote this isn't working. This change fixes it.
+[33me7769764[m Deleted title and icon fields
+[33ma06ff61f[m Merge branch 'feature/fake_profile_detail_endpoint' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/fake_profile_detail_endpoint
+[33m8060db22[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/fake_profile_detail_endpoint
+[33m1a2bc13d[m Merge pull request #73 from IT-Academy-BCN/feature/install_php-cs-fixer
+[33m53b5f0e5[m feature: make pint do the format changes once the PR is being merged
+[33m713aa05b[m PHP Linting (Pint)
+[33m8bad602f[m Swagger
+[33m29187ca5[m Add route for studentDetail
+[33mdad95f86[m Created studentDetail
+[33mb643440e[m add studentDetail.json
+[33maf2e54a1[m + swagger doc update
+[33mb1211b3c[m + controller update / retrieve enum from resume model
+[33m223a74d3[m + swagger doc + controller id fix
+[33m4ca035a7[m Merge pull request #77 from IT-Academy-BCN/feature/list-student-resume-#28-{BE}
+[33m7df5444b[m + projects detail controller
+[33m458d1dbf[m[33m ([m[1;31morigin/feature/list-student-resume-#28-{BE}[m[33m)[m PHP Linting (Pint)
+[33m95704293[m Add return type for studentlistService and refactor StudentFactory
+[33mc2f2ad17[m + project detail endpoint route
+[33m3765b2a1[m PHP Linting (Pint)
+[33m3f6cde46[m StudentListService test
+[33m7cf5bfa9[m Implemented and adjusted factories and seeders for the Resume, Student, Tag, and User models
+[33m09e6192b[m StudentListController and service implements
+[33m06004138[m Create migration and Resume model
+[33m3e60b023[m Merge pull request #74 from IT-Academy-BCN:feature/role-list-endpoint
+[33mf449b02d[m[33m ([m[1;31morigin/feature/role-list-endpoint[m[33m)[m Merge remote-tracking branch 'origin/develop' into feature/role-list-endpoint
+[33ma9e154c4[m + "None" string filtered from response
+[33m7233178e[m Merge pull request #72 from IT-Academy-BCN/bugfix/AnnotationsStudent__invoke
+[33m7fa26046[m Install php-cs-fixer
+[33m22decbfd[m PHP Linting (Pint)
+[33m6bc69540[m swagger
+[33mc9ae3d76[m Modified invoke documentation
+[33m221267f0[m Add line 7 to reference this scheme on others parts of the documentation
+[33m91128a8d[m Merge pull request #70 from IT-Academy-BCN/feature/fake-students-endpoint
+[33m19d58888[m PHP Linting (Pint)
+[33m28c6bced[m Merge branch 'feature/fake-students-endpoint' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/fake-students-endpoint
+[33m3d3bdb5f[m updated test_student_list_controller
+[33m17c2da37[m PHP Linting (Pint)
+[33maae7d018[m swagger
+[33m97b881d9[m rename 'student/home' to 'student/list/for-home'
+[33mc20f1e26[m Modified JSON to add 'id' to tags
+[33m35266b47[m Modified test_student_list_controller()
+[33mab8302b2[m renamed path
+[33m85ca7514[m changed route name
+[33m63da2897[m Merge branch 'feature/fake-students-endpoint' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/fake-students-endpoint
+[33m0ac8968d[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/fake-students-endpoint
+[33mff520f5b[m Merge pull request #69 from IT-Academy-BCN/feature/role-list-endpoint
+[33m6a0b6929[m PHP Linting (Pint)
+[33mc7e9cab9[m Add test
+[33mf582f7b8[m + updates as disscused on daily briefing
+[33m6108991c[m Swagger
+[33m347b68e1[m swagger
+[33m665251a9[m Modified route
+[33m7fcf657f[m Changed property names
+[33me30ae46a[m Created StudentListController
+[33m78a08e4b[m + routing name fix
+[33m7fcc0022[m + invoke method working fix
+[33m9e4ed9e5[m + invoke method fix
+[33m1c376cd9[m + folder fix
+[33mb8b4b636[m + swagger doc
+[33mc8fd2bdf[m + Controller fix
+[33m7f18f32d[m + Endpoint Routing
+[33mdafcabaa[m + RoleListController
+[33mfc3a157c[m + role_list json file
+[33md4670147[m Merge pull request #59 from IT-Academy-BCN/feature/add-continuous-integration
+[33m0fc9b70c[m Merge pull request #58 from IT-Academy-BCN/feature/add-continuous-integration
+[33m4a249956[m Merge pull request #57 from IT-Academy-BCN/feature/add-continuous-integration
+[33m82f8ee29[m Merge pull request #56 from IT-Academy-BCN/feature/add-continuous-integration
+[33mf541ce2d[m Merge pull request #55 from IT-Academy-BCN/feature/add-continuous-integration
+[33m8cc0f1e3[m Merge pull request #49 from IT-Academy-BCN/feature/fake-students-endpoint
+[33m67007cf5[m PHP Linting (Pint)
+[33mfe909bd5[m Pint Linting
+[33m349a0805[m Merge branch 'origin develop'
+[33m672de1df[m Merge pull request #51 from IT-Academy-BCN/hotfix/swagger-doc
+[33me6c19d63[m[33m ([m[1;31morigin/feature/add-continuous-integration[m[33m)[m feature: add continuous integration
+[33m1c34dc69[m feature: add continuous integration
+[33mf0dff4f5[m feature: add continuous integration
+[33mcba81d4a[m feature: add continuous integration
+[33m3837d78b[m Modify fake-students route  moving Json File to database/data
+[33mdb7a99c8[m PHP Linting (Pint)
+[33m616ce4de[m + swagger hotfix
+[33m6a2e3808[m feature: add continuous integration
+[33m26e2e8d7[m Merge pull request #43 from IT-Academy-BCN/feature/student-tag-CRUD-#28-{BE}
+[33m695ad7e2[m[33m ([m[1;31morigin/feature/student-tag-CRUD-#28-{BE}[m[33m)[m PHP Linting (Pint)
+[33mfcfbe578[m Merge pull request #50 from IT-Academy-BCN/refactor/add-files-format
+[33m45cc852e[m PHP Linting (Pint)
+[33m53089877[m + revised tag controller/tests
+[33mbb1825b1[m fix minor issues related to the previous comment commits
+[33m463bd1d2[m Apply suggestions from code review
+[33m127890ab[m refactor: replace with local variable
+[33mbfb55ddd[m refactor: remove unnecessary method and implement PhpUnit's setup method
+[33m1554bcb5[m + tag controller/swagger doc
+[33md11b0b52[m + tag model/swagger doc
+[33m5c32c8a5[m + tagcontroller tests
+[33m64fc734b[m + pint/linting
+[33m54595bd7[m + tagcontroller/destroy
+[33m88974278[m + tagcontroller/update
+[33mdc484cf3[m + tagcontroller/show
+[33m24d61b5c[m + tagcontroller/store
+[33m39c9222f[m + tag controller & tags index route/index/function
+[33m116ebe9c[m + tags migrations/factory/seeder & model with relationships
+[33me05af198[m refactor: add format with pint
+[33m71fe19e6[m PHP Linting (Pint)
+[33m22f9a532[m Add images
+[33m2b42b867[m Add fake route
+[33m004e2425[m Merge pull request #44 from IT-Academy-BCN/refactor/change-field-endDate-to-snakecase
+[33m21db88f9[m Refactor field name from endDate to end_date in multiple files
+[33m8defb0c7[m Merge pull request #36 from IT-Academy-BCN/feature/recruiter-crud
+[33m2bce8d00[m[33m ([m[1;31morigin/feature/recruiter-crud[m[33m)[m PHP Linting (Pint)
+[33m317047ee[m Merge branch 'feature/recruiter-crud' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/recruiter-crud
+[33m7128652b[m fix namespace recruiter controller
+[33m0e2c9b0b[m PHP Linting (Pint)
+[33m670bb9a2[m refactoring  tests and exeptions of the recruiter controller
+[33m9be87826[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/recruiter-crud
+[33mccc71c7d[m Merge pull request #39 from IT-Academy-BCN/feature/fixlogin
+[33m4576879f[m[33m ([m[1;31morigin/feature/fixlogin[m[33m)[m PHP Linting (Pint)
+[33mc3dd27b2[m complete variable
+[33mbb688947[m PHP Linting (Pint)
+[33m75ff46cb[m fix autocompleted error
+[33m3ef71516[m PHP Linting (Pint)
+[33maf97f6a3[m refactoring recruiter module
+[33mb6be1775[m PHP Linting (Pint)
+[33m1dee1648[m Merge branch 'feature/fixlogin' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/fixlogin
+[33m1b1656de[m Changing the names of logincontroller, to authcontroller
+[33m0adbf014[m PHP Linting (Pint)
+[33mbb63fedc[m name change dni RuleTest to DniNieRuleTest
+[33m2dc0ff59[m refactoring the login method, adding try catch block
+[33m495ed471[m Merge pull request #41 from IT-Academy-BCN/franenlanube/review_of_PR#39
+[33m025b98e5[m PHP Linting (Pint)
+[33m917cace0[m Merge branch 'franenlanube/review_of_PR#39' of https://github.com/IT-Academy-BCN/ita-profiles-backend into franenlanube/review_of_PR#39
+[33m7b0e15af[m PINT
+[33m849e8f9e[m PHP Linting (Pint)
+[33md38e549b[m Correct indentation to solve sonarcloud messages
+[33mee33253d[m Add use DatabaseTransactions | use route  names on api calls | deleted unused variables
+[33mdf066ce3[m Changing email to dni for login and refactoring login tests
+[33m13b1f8b8[m PHP Linting (Pint)
+[33m6d52c13a[m Merge branch 'feature/recruiter-crud' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/recruiter-crud
+[33ma9936323[m test recruiter and appl000y laravel pint
+[33m6014175e[m Solving conflict with updating another user, adding rules to recruiter request
+[33mab121a9f[m PHP Linting (Pint)
+[33mbf67ae8e[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/recruitrer-cr
+[33ma03cd694[m Merge pull request #34 from IT-Academy-BCN/feature/student_crud
+[33m531c0198[m[33m ([m[1;31morigin/feature/student_crud[m[33m)[m PHP Linting (Pint)
+[33ma89ec513[m apply lowcase to field in the students table
+[33mb2e1df0b[m Pull develop
+[33m21e7dccb[m Solving conflicts
+[33me98d1e48[m Merge pull request #33 from IT-Academy-BCN/feature/login
+[33m1a7ca0c2[m PHP Linting (Pint)
+[33me7db5aca[m Merge branch 'feature/login' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/login
+[33m9f236355[m fix inconsistencies
+[33mdd5fbd5a[m PHP Linting (Pint)
+[33mc47de5c9[m solving inconsistency in swagger annotations
+[33m1c3188d5[m PHP Linting (Pint)
+[33m93e09bdb[m Merge branch 'feature/login' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/login
+[33m5abb0848[m Merge pull request #32 from IT-Academy-BCN/feature/admins-and-users-cruds
+[33m70fdafc2[m PHP Linting (Pint)
+[33m430d357b[m[33m ([m[1;31morigin/feature/admins-and-users-cruds[m[33m)[m swagger
+[33mfadf1819[m - Recruiter's testing folder
+[33m6690b3d8[m - Pint's modifications
+[33m955a9ac1[m - Swagger CRUD recruiter Annotations
+[33mfdd63a95[m Modifying swagger's  annotations
+[33m6a226c67[m - RecruiterController routes
+[33m5bc610cd[m - Recruiter migration
+[33m0609df89[m - Introduction of the relationship with recruiter in User model
+[33mf123ac42[m - Recruiter model creations and relation with user
+[33medf61311[m - Recruiter resource creation
+[33m4bbc3e5e[m - Recruiter List resource creation
+[33mf15862c2[m - Update recruiter request creation
+[33md62f2bcd[m - Store  Recrutier Request creation
+[33m0b51e890[m - Swagger Annotations Recruiter Controller index and store methods
+[33mbaf54f7f[m - CRUD Recruiter Controller
+[33m8655468a[m PHP Linting (Pint)
+[33m14f4c64e[m Apply pint
+[33m373a52ca[m Adding More Asserts to AdminController Tests
+[33m5feacda2[m adding catalan translation in a file validation.php for a surname
+[33m1c7e516c[m PHP Linting (Pint)
+[33m3aac8bf1[m Merge branch 'feature/admins-and-users-cruds' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/admins-and-users-cruds
+[33mb2ccdbbc[m edit annotations swagger and apply laravel pint
+[33m1af8e68f[m PHP Linting (Pint)
+[33m0453f608[m regexp for name and surname request
+[33m1b56d865[m PHP Linting (Pint)
+[33m4f611baa[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/student_crud
+[33mf6e32d87[m Student Crud #16
+[33m6856de26[m PHP Linting (Pint)
+[33m2b58e2f5[m Create Swaggers annotations
+[33m65810eb5[m Create and apply LoginControllerTest
+[33mbbef044f[m Create login and logout methods
+[33m3476034f[m Add Validation to Transaction
+[33m7f492a6e[m refactoring store function admincontroller
+[33m2c29d195[m Changing Path Syntax in Swaager Annotations and Dnirule Translation
+[33mc70c5de3[m PHP Linting (Pint)
+[33m32ee3ddc[m Merge branch 'develop' of https://github.com/IT-Academy-BCN/ita-profiles-backend into feature/admins-and-users-cruds
+[33m8f0adef9[m add catala translate to invalid dni
+[33m33c69135[m Update pint.yml
+[33mb607957a[m add test bad name and surname
+[33m66b66f47[m Organize Swagger and Detele Issue Login annotations into folders
+[33m32b74053[m fix gramatical error
+[33m0618d53d[m pint
+[33m7b0669f7[m Create DniRule
+[33mb02e96b7[m Admin and login test
+[33mafd6a0ae[m create login and logout methods
+[33me24a55df[m creating admin crud
+[33md19a68b9[m Merge pull request #25 from IT-Academy-BCN/feature/student-crud
+[33m5e6731ae[m Solves merging conflicts
+[33mf62e1895[m Feat(Routes file & Student CRUD's first mehods)
+[33m912ea268[m Merge pull request #23 from IT-Academy-BCN/feature/multilanguage
+[33m839047f1[m Update pint.yml
+[33mf05291bc[m[33m ([m[1;31morigin/feature/multilanguage[m[33m)[m PHP Linting (Pint)
+[33m31657c5b[m Update pint.yml
+[33m40edeb4c[m Feat(Multilanguage) Implements Laravel Lang for multilanguage support and set locale language (ca)
+[33maccf4234[m Merge pull request #20 from IT-Academy-BCN/feature/admins-and-users-cruds
+[33mb49a808e[m Update pint.yml
+[33mea720639[m Update pint.yml
+[33ma4466a69[m Update pint.yml
+[33m3e19302a[m PHP Linting (Pint)
+[33mdd598513[m Update pint.yml
+[33m2e0df29a[m Update pint.yml
+[33m763cf9e4[m Update pint.yml
+[33m1b38b217[m Create pint.yml
+[33mf5d24b30[m Creating user migration
+[33m6bef9fe8[m Merge pull request #12 from IT-Academy-BCN/feature/swagger-doc
+[33ma6c7bcc4[m[33m ([m[1;31morigin/feature/swagger-doc[m[33m)[m Merge branch 'develop' into feature/swagger-doc
+[33macb88f10[m Merge pull request #10 from IT-Academy-BCN/feature#4-add-passport-support
+[33m5d7a7d6d[m[33m ([m[1;31morigin/feature#4-add-passport-support[m[33m)[m Resolving conflicts of the user model and composer.lock file
+[33m02a70cf0[m install swagger. needs to add L5_SWAGGER_CONST_HOST to .env file and then generate json file
+[33mb67b1001[m Merge pull request #9 from IT-Academy-BCN/feature/spatie
+[33m1eb90a60[m install laravel passport dependencies
+[33md88096f6[m[33m ([m[1;31morigin/feature/spatie[m[33m)[m Feat (Spatie) Implements Spatie for Roles and Permissions Management
+[33m60cb7411[m initial commit
+[33m07a6881c[m first comit
