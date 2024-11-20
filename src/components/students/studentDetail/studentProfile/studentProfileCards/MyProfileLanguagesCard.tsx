@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { Pencil } from '../../../../../assets/svg'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
-import { EditAdditionalInformation } from './editStudentProfile/additionalInformation/EditAdditionalInformation'
+import { EditAdditionalInformation } from './editStudentProfile/editAdditionalInformation/EditAdditionalInformation'
 import { toggleEditAdditionalInformation } from '../../../../../store/slices/student/languagesSlice'
 import { ModalPortals } from '../../../../ModalPortals'
 
