@@ -82,12 +82,14 @@ class JobOfferCommandTest extends TestCase
     }
     public function testCreateMultipleJobOffers(): void
     {
+        $initialCount = JobOffer::where('recruiter_id', $this->recruiter->id)->count();
+
         $jobOffers =  JobOffer::factory()
             ->count(5)
             ->create([
                 'recruiter_id' => $this->recruiter->id
             ]);
-        $this->assertEquals(5, JobOffer::count());
+        $this->assertEquals($initialCount + 5, JobOffer::where('recruiter_id', $this->recruiter->id)->count());
 
         foreach ($jobOffers as $jobOffer) {
             $this->assertDatabaseHas('job_offers', [
