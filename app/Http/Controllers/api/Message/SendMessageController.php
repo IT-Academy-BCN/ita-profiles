@@ -17,15 +17,7 @@ class SendMessageController extends Controller
 
         $sender = Auth::id();
 
-        $receiver = $request->getReceiver();
-
-        $message = Message::create([
-            'sender' => $sender,
-            'receiver' => $receiver->id,
-            'read' => false,
-            'subject' => $request->input('subject'),
-            'body' => $request->input('body'),
-        ]);
+        $message = Message::create($request->validated());
 
         return response()->json([
             'message' => 'Message sent successfully',

@@ -9,7 +9,6 @@ use App\Models\Recruiter;
 
 class SendMessageRequest extends FormRequest
 {
-    protected $receiver;
     
     /**
      * Determine if the user is authorized to make this request.
@@ -29,24 +28,8 @@ class SendMessageRequest extends FormRequest
         return [
             'subject' => 'required|string|max:255',
             'body' => 'required|string',
-            'receiver_id' => 'required|exists:users,id',
+            'receiver' => 'required|exists:users,id',
         ];
     }
 
-    public function withValidator($validator)
-    {
-        // After validation, resolve the receiver model
-        $validator->after(function ($validator) {
-            $this->receiver = User::find($this->receiver_id);
-
-            if (!$this->receiver) {
-                $validator->errors()->add('receiver_id', 'Receiver not found');
-            }
-        });
-    }
-
-    public function getReceiver()
-    {
-        return $this->receiver;
-    }
 }

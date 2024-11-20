@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -10,19 +11,17 @@ class Message extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sender',
         'receiver',
-        'read',
         'subject',
         'body'
     ];
 
-    public function senderUser()
+    protected $attributes = [
+        'read' => false,
+    ];
+
+    public function receiver()
     {
-        return $this->belongsTo(User::class, 'sender');
-    }
-    public function receiverUser()
-    {
-        return $this->belongsTo(User::class, 'receiver');
+        return $this->belongsTo(User::class, 'receiver', 'id');
     }
 }
