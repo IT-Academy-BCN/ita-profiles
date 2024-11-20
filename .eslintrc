@@ -24,7 +24,8 @@
         "react/prop-types": 0,
         "jsx-a11y/label-has-associated-control": "off",
         "no-console": "off",
-        "arrow-body-style": "off"
+        "arrow-body-style": "off",
+        "react-hooks/exhaustive-deps": "warn"
     },
     "ignorePatterns": [
         "node_modules",

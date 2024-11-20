@@ -53,8 +53,17 @@ export type TModality = {
     modality: string[]
 }
 
+export type TUpdateProject = {
+    id: string
+    name: string
+    company_name: string
+    tags: string[]
+    project_url: string
+    github_url: string
+}
+
 export type TProject = {
-    uuid: number
+    id: string
     name: string
     company_name: string
     tags: ITag[]

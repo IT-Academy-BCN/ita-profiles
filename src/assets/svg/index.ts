@@ -13,21 +13,23 @@ import Pencil from './pencil.svg'
 import Dots from './three-dots.svg'
 import UserIcon from './userIcon.svg'
 import Settings from './settings.svg'
+import Plus from './plus.svg'
 
 export {
-  ArrowDown,
-  ArrowRight,
-  ArrowLeft,
-  Bookmark,
-  BurgerMenu,
-  Close,
-  Email,
-  Github,
-  ItAcademyLogo,
-  Linkedin,
-  Lock,
-  Pencil,
-  Dots,
-  UserIcon,
-  Settings,
+    ArrowDown,
+    ArrowRight,
+    ArrowLeft,
+    Bookmark,
+    BurgerMenu,
+    Close,
+    Email,
+    Github,
+    ItAcademyLogo,
+    Linkedin,
+    Lock,
+    Pencil,
+    Dots,
+    UserIcon,
+    Settings,
+    Plus,
 }
