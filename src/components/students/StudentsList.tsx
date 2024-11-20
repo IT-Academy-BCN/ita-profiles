@@ -22,9 +22,7 @@ const StudentsList: React.FC = () => {
                 )
                 setStudents(studentsList)
             } catch (error) {
-                // This is where the console.error was used to log the error
-                // console.error('Error fetching students:', error);
-                // Disabled due to ESLint rules
+                //
             }
         }
         fetchStudents()
