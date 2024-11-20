@@ -1,16 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { TProject } from '../../../interfaces/interfaces'
+import { TInitialStateProjectsSlice } from '../../../interfaces/interfaces'
 import { projectsThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
 import { updateProjectsThunk } from '../../thunks/updateProjectsThunk'
 
-const projectsData: TProject[] = []
 
-export const initialState = {
+export const initialState: TInitialStateProjectsSlice = {
     isLoadingProjects: false,
     isErrorProjects: false,
-    projectsData,
-    editProjectModalIsOpen: false,
-    selectedProjectID: '',
+    projectsData: [],
+    editProjectModalIsOpen: true,
+    selectedProjectID: null,
 }
 
 const projectsSlice = createSlice({
