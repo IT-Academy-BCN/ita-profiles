@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('sender_id')->constrained('users')->onDelete('cascade');
             $table->foreignUuid('receiver_id')->constrained('users')->onDelete('cascade');
             $table->boolean('read')->default(false);
             $table->string('subject', 255);

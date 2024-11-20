@@ -32,6 +32,7 @@ use App\Http\Controllers\api\Auth\{
     RegisterController,
     AuthController
 };
+use App\Http\Controllers\api\Message\SendMessageController;
 use App\Http\Middleware\EnsureStudentOwner;
 
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
@@ -64,5 +65,9 @@ Route::prefix('tags')->group(function () {
     Route::post('/', TagStoreController::class)->name('tag.store');
     Route::get('/{tag}', TagDetailController::class)->name('tag.detail');
     Route::put('/{tag}', TagUpdateController::class)->name('tag.update');
+});
 
+
+Route::prefix('messages')->middleware('auth:api')->group(function () {
+    Route::post('/', SendMessageController::class)->name('message.send');
 });
