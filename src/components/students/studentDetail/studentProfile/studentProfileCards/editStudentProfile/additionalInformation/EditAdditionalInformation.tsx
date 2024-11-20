@@ -1,12 +1,10 @@
 import { FC, ChangeEvent, useRef } from 'react'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { useAppSelector } from '../../../../../../../hooks/ReduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../../../../../hooks/ReduxHooks'
 import { useUpdateLanguageHook } from '../../../../../../../hooks/useUpdateLanguageHook'
 import {
     resetUpdateLanguages,
-    setLanguagesData,
-    toggleEditAdditionalInformation,
+    setLanguagesData
 } from '../../../../../../../store/slices/student/languagesSlice'
 import { TLanguage } from '../../../../../../../interfaces/interfaces'
 import EditModality from './EditModality'
@@ -14,7 +12,8 @@ import DragAndDropLanguages from './DragAndDropLanguages'
 import useEditAdditionalInformationHook from '../../../../../../../hooks/useEditAdditionalInformationHook'
 import { Close } from '../../../../../../../assets/svg'
 import { updateProfileLanguagesThunk } from '../../../../../../../store/thunks/updateProfileLanguagesThunk'
-import { AsyncThunkAction, Dispatch } from '@reduxjs/toolkit'
+import { callUpdateStudent } from '../../../../../../../api/student/callUpdateStudent'
+
 
 export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
     type DataFetch = {
@@ -26,21 +25,21 @@ export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
         name: langs[0].name,
         level: langs[0].level,
     }
+    const peticion = {
+        url: `http://127.0.0.1:8000/api/v1/student/${localStorage.getItem(
+                'studentID',
+            )}/resume/languages`,
+        formData: data
+    }
 
-    const query = await axios.put(
-        `http://127.0.0.1:8000/api/v1/student/${localStorage.getItem(
-            'studentID',
-        )}/resume/languages`,
-        data,
-    )
-    const response = await query.data
-
-    return response.message
+    const query = await callUpdateStudent(peticion)
+    return query
 }
 
 export const EditAdditionalInformation: FC = () => {
     const dispacth = useDispatch()
-    const { languagesData, isOpenEditAdditionalInformation, isLoadingUpdateLanguages, isErrorUpdateLanguages } = useAppSelector(
+    const dispatchThunk = useAppDispatch()
+    const { languagesData, isOpenEditAdditionalInformation, notification, isErrorUpdateLanguages, isLoadingUpdateLanguages} = useAppSelector(
         (state) => state.ShowStudentReducer.studentLanguages,
     )
 
@@ -56,6 +55,7 @@ export const EditAdditionalInformation: FC = () => {
         availableLanguages,
         deleteLanguage,
         editLanguage,
+        
     } = useUpdateLanguageHook(languagesData)
 
     // TODDO: Refactor
@@ -84,12 +84,13 @@ export const EditAdditionalInformation: FC = () => {
     }
 
     const saveChanges = async () => {
-        const msg = await fetchChanges(updateLanguages)
+
         dispatchThunk(updateProfileLanguagesThunk(updateLanguages))
         dispacth(setLanguagesData(updateLanguages))
 
         setTimeout(() => {
             dispacth(resetUpdateLanguages())
+         
           }, 6000)
     }
 
@@ -121,13 +122,13 @@ export const EditAdditionalInformation: FC = () => {
                     
                     <div className='flex flex-col gap-8 pb-8'>
 
-                        <div className="flex justify-between items-center mx-8">
+                        <div className="flex justify-between items-center mx-8 relative">
                             <h1 className="text-2xl my-0 font-bold text-[rgba(40,40,40,1)]">
                                 Editar información adicional
                             </h1>
-                            {/* <h3 className="py-0 px-4 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">
-                                {notification !== null && notification.message}
-                            </h3>  */}                       
+                            {isErrorUpdateLanguages && <h3 className="py-0 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification !== null && notification.message}</h3>}
+                            {isLoadingUpdateLanguages && <h3 className="py-0 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification !== null && notification.message}</h3>}
+                            {notification.message !== null  && <h3 className="py-0 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification.message}</h3>}
                         </div>
                         
                         <div>
@@ -172,7 +173,7 @@ export const EditAdditionalInformation: FC = () => {
                                         ))}
                                     </form>
 
-                                    {/* <div className="absolute flex justify-around bottom-0 w-full z-12 bg-white p-4">
+                                    <div className="absolute flex justify-around bottom-0 w-full z-12 bg-white p-4">
                                         <label htmlFor="Basic">
                                             Bàsic
                                             <input
@@ -205,10 +206,12 @@ export const EditAdditionalInformation: FC = () => {
                                                 id="Natiu"
                                             />
                                         </label>
-                                    </div> */}
+                                    </div>
                                 </dialog>                                
                             </div>
-                            <div className='my-4 border-b-2 border-gray-300 border-dashed'></div>
+                            <div className='my-4 border-b-2 border-gray-300 border-dashed'>
+                                        <span className="hidden">border-dashed</span>
+                            </div>
                             <DragAndDropLanguages
                                 dropLanguages={updateLanguages}
                                 deleteLanguage={deleteLanguage}
@@ -243,7 +246,4 @@ export const EditAdditionalInformation: FC = () => {
     }
 
     return null
-}
-function dispatchThunk(arg0: AsyncThunkAction<any, TLanguage[], { state?: unknown; dispatch?: Dispatch; extra?: unknown; rejectValue?: unknown; serializedErrorType?: unknown; pendingMeta?: unknown; fulfilledMeta?: unknown; rejectedMeta?: unknown }>) {
-    throw new Error('Function not implemented.')
 }

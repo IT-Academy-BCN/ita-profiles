@@ -11,7 +11,7 @@ const initialState = {
     isLoadingUpdateLanguages: false,
     isErrorUpdateLanguages: false,
     notification: {
-        message: '',
+        message: null,
     }
 }
 
@@ -38,7 +38,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingUpdateLanguages: false,
             isErrorUpdateLanguages: false,
             notification: {
-                message: '',
+                message: null,
             }
         })
     })
@@ -57,7 +57,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingUpdateLanguages: false,
             isErrorUpdateLanguages: false,
             notification: {
-                message: '',
+                message: null,
             }
         })
     })
@@ -86,7 +86,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingUpdateLanguages: false,
             isErrorUpdateLanguages: false,
             notification: {
-                message: '',
+                message: null,
             }
         })
     })
@@ -105,7 +105,7 @@ describe('StudentLanguagesTest reducer', () => {
             isLoadingUpdateLanguages: false,
             isErrorUpdateLanguages: false,
             notification: {
-                message: '',
+                message: null,
             }
         })
     })
