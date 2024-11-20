@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('email', 255)->unique();
             $table->string('CIF', 255)->unique();
             $table->string('location', 255);
-            $table->string('website', 255);
+            $table->string('website', 255)->nullable();
             $table->timestamps();
         });
     }
