@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../../../../../../hooks/ReduxHooks'
 import { useUpdateLanguageHook } from '../../../../../../../hooks/useUpdateLanguageHook'
 import {
+    resetUpdateLanguages,
     setLanguagesData,
     toggleEditAdditionalInformation,
 } from '../../../../../../../store/slices/student/languagesSlice'
@@ -12,6 +13,8 @@ import EditModality from './EditModality'
 import DragAndDropLanguages from './DragAndDropLanguages'
 import useEditAdditionalInformationHook from '../../../../../../../hooks/useEditAdditionalInformationHook'
 import { Close } from '../../../../../../../assets/svg'
+import { updateProfileLanguagesThunk } from '../../../../../../../store/thunks/updateProfileLanguagesThunk'
+import { AsyncThunkAction, Dispatch } from '@reduxjs/toolkit'
 
 export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
     type DataFetch = {
@@ -37,7 +40,7 @@ export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
 
 export const EditAdditionalInformation: FC = () => {
     const dispacth = useDispatch()
-    const { languagesData, isOpenEditAdditionalInformation } = useAppSelector(
+    const { languagesData, isOpenEditAdditionalInformation, isLoadingUpdateLanguages, isErrorUpdateLanguages } = useAppSelector(
         (state) => state.ShowStudentReducer.studentLanguages,
     )
 
@@ -51,10 +54,8 @@ export const EditAdditionalInformation: FC = () => {
     const {
         updateLanguages,
         availableLanguages,
-        notification,
         deleteLanguage,
         editLanguage,
-        sendNotification,
     } = useUpdateLanguageHook(languagesData)
 
     // TODDO: Refactor
@@ -84,14 +85,12 @@ export const EditAdditionalInformation: FC = () => {
 
     const saveChanges = async () => {
         const msg = await fetchChanges(updateLanguages)
-
-        sendNotification(msg)
+        dispatchThunk(updateProfileLanguagesThunk(updateLanguages))
         dispacth(setLanguagesData(updateLanguages))
 
         setTimeout(() => {
-            sendNotification(null)
-            dispacth(toggleEditAdditionalInformation())
-        }, 6000)
+            dispacth(resetUpdateLanguages())
+          }, 6000)
     }
 
     if (isOpenEditAdditionalInformation) {
@@ -244,4 +243,7 @@ export const EditAdditionalInformation: FC = () => {
     }
 
     return null
+}
+function dispatchThunk(arg0: AsyncThunkAction<any, TLanguage[], { state?: unknown; dispatch?: Dispatch; extra?: unknown; rejectValue?: unknown; serializedErrorType?: unknown; pendingMeta?: unknown; fulfilledMeta?: unknown; rejectedMeta?: unknown }>) {
+    throw new Error('Function not implemented.')
 }

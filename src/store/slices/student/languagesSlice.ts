@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TLanguage } from '../../../interfaces/interfaces'
 import { languagesThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import { updateProfileLanguagesThunk } from '../../thunks/updateProfileLanguagesThunk'
 
 const languagesData: TLanguage[] = []
 
@@ -10,7 +11,12 @@ const languagesSlice = createSlice({
         isLoadingLanguages: false,
         isErrorLanguages: false,
         languagesData,
-        isOpenEditAdditionalInformation: false
+        isOpenEditAdditionalInformation: false,
+        isLoadingUpdateLanguages: false,
+        isErrorUpdateLanguages: false,
+        notification: {
+            message: '',
+        }
     },
     reducers: {
         toggleEditAdditionalInformation: (state) => {
@@ -18,6 +24,12 @@ const languagesSlice = createSlice({
         },
         setLanguagesData: (state, action) => {
             state.languagesData = action.payload
+        },
+        resetUpdateLanguages: (state) => {
+            state.isLoadingUpdateLanguages = false;
+            state.isErrorUpdateLanguages = false;
+            state.isOpenEditAdditionalInformation = false;
+            state.notification.message = '';
         }
     },
     extraReducers: (builder) => {
@@ -34,7 +46,30 @@ const languagesSlice = createSlice({
             state.isLoadingLanguages = false
             state.isErrorLanguages = true
         })
+
+        builder.addCase(updateProfileLanguagesThunk.pending, (state) => {
+            state.isLoadingUpdateLanguages = true;
+            state.isErrorUpdateLanguages = false;
+            state.notification = {
+                message: 'Loading ...',
+            }
+        })
+        builder.addCase(updateProfileLanguagesThunk.fulfilled, (state) => {
+            state.isLoadingUpdateLanguages = false;
+            state.isErrorUpdateLanguages = false;
+            // Idioma actualitzat correctament
+            state.notification = {
+                message: 'Idioma actualitzat correctament',
+            }
+        })
+        builder.addCase(updateProfileLanguagesThunk.rejected, (state) => {
+            state.isLoadingUpdateLanguages = true;
+            state.isErrorUpdateLanguages = true;
+            state.notification = {
+                message: "Estudiant o idioma no trobat",
+            }
+        })
     },
 })
-export const { toggleEditAdditionalInformation, setLanguagesData } = languagesSlice.actions
+export const { toggleEditAdditionalInformation, setLanguagesData, resetUpdateLanguages } = languagesSlice.actions
 export default languagesSlice.reducer

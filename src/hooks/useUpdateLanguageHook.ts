@@ -1,30 +1,18 @@
 import { useState } from 'react';
-
 import languagesJson from "../locales/languages/languages.json"
-import { TAvailableLanguage, TLanguage, UpdateLanguageNotification } from '../interfaces/interfaces';
-
+import { TAvailableLanguage, TLanguage } from '../interfaces/interfaces';
 
 export const useUpdateLanguageHook = (studentLanguages: TLanguage[]) => {
-
 
   const { countries } = languagesJson
   const [availableLanguages] = useState<TAvailableLanguage[]>(countries)
   const [updateLanguages, setUpdateLanguages] = useState<TLanguage[]>(structuredClone(studentLanguages));
-  const [notification, setNotification] = useState<UpdateLanguageNotification | null>(null);
 
-
-  const sendNotification = (msg: string | null) => {
-    setNotification({
-      message: msg
-    })
-  }
-  // Agrega un nuevo idioma a la lista
   const addLanguage = (newLanguage: TLanguage) => {
     setUpdateLanguages((prevLanguages) => [...prevLanguages, newLanguage]);
 
   };
 
-  // Elimina un idioma existente por ID
   const deleteLanguage = (languageId: string) => {
     setUpdateLanguages((prevLanguages) =>
       prevLanguages.filter((lang) => lang.id !== languageId)
@@ -32,7 +20,6 @@ export const useUpdateLanguageHook = (studentLanguages: TLanguage[]) => {
 
   };
 
-  // Edita un idioma existente por ID
   const editLanguage = (updatedLanguage: TLanguage) => {
     setUpdateLanguages((prevLanguages) =>
       prevLanguages.map((lang) => {
@@ -45,10 +32,8 @@ export const useUpdateLanguageHook = (studentLanguages: TLanguage[]) => {
       }
       )
     );
-
   };
 
-  // Reordena la lista de idiomas
   const reorderLanguages = (orderedLanguages: TLanguage[]) => {
     setUpdateLanguages(orderedLanguages);
 
@@ -56,12 +41,10 @@ export const useUpdateLanguageHook = (studentLanguages: TLanguage[]) => {
 
   return {
     updateLanguages,
-    notification,
     availableLanguages,
     addLanguage,
     deleteLanguage,
     editLanguage,
-    reorderLanguages,
-    sendNotification
+    reorderLanguages
   };
 }
