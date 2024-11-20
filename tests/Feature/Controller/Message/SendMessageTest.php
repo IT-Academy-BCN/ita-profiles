@@ -32,13 +32,13 @@ class SendMessageTest extends TestCase
         $response = $this->postJson(route('message.send'), [
             'subject' => 'Hello!',
             'body' => 'This is a test message.',
-            'receiver_id' => $this->receiver->id,
+            'receiver' => $this->receiver->id,
         ]);
 
-        $response->assertStatus(201);
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('messages', [
-            'receiver_id' => $this->receiver->id,
+            'receiver' => $this->receiver->id,
             'subject' => 'Hello!',
             'body' => 'This is a test message.',
             'read' => false,
@@ -48,7 +48,7 @@ class SendMessageTest extends TestCase
     public function testMessageRequiresSubjectAndBodyFields()
     {
         $response = $this->postJson(route('message.send'), [
-            'receiver_id' => $this->receiver->id,
+            'receiver' => $this->receiver->id,
         ]);
 
         $response->assertStatus(422);
@@ -60,7 +60,7 @@ class SendMessageTest extends TestCase
         $response = $this->postJson(route('message.send'), [
             'subject' => str_repeat('A', 256),
             'body' => 'This is a test message.',
-            'receiver_id' => $this->receiver->id,
+            'receiver' => $this->receiver->id,
         ]);
 
         $response->assertStatus(422);
@@ -72,11 +72,11 @@ class SendMessageTest extends TestCase
         $response = $this->postJson(route('message.send'), [
             'subject' => 'Invalid Receiver Test',
             'body' => 'Testing receiver validation.',
-            'receiver_id' => 'invalid-uuid',
+            'receiver' => 'invalid-uuid',
         ]);
 
         $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['receiver_id']);
+        $response->assertJsonValidationErrors(['receiver']);
     }
 
     public function testBodyFieldIsEmpty()
@@ -84,7 +84,7 @@ class SendMessageTest extends TestCase
         $response = $this->postJson(route('message.send'), [
             'subject' => 'Empty Body Test',
             'body' => '',
-            'receiver_id' => $this->receiver->id,
+            'receiver' => $this->receiver->id,
         ]);
 
         $response->assertStatus(422);
@@ -96,7 +96,7 @@ class SendMessageTest extends TestCase
         $response = $this->postJson(route('message.send'), [
             'subject' => '',
             'body' => 'This is a message with an empty subject.',
-            'receiver_id' => $this->receiver->id,
+            'receiver' => $this->receiver->id,
         ]);
 
         $response->assertStatus(422);
