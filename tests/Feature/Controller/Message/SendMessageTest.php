@@ -5,13 +5,14 @@ namespace Tests\Feature\Controller\Message;
 
 use App\Models\User;
 use App\Models\Message;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Laravel\Passport\Passport;
 
 class SendMessageTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     private $sender;
     private $receiver;
@@ -20,11 +21,9 @@ class SendMessageTest extends TestCase
     {
         parent::setUp();
 
-        // Create users for tests
         $this->sender = User::factory()->create();
         $this->receiver = User::factory()->create();
 
-        // Authenticate the sender
         Passport::actingAs($this->sender);
     }
 
