@@ -62,6 +62,18 @@ export type TAvailableLanguage = {
 }
 export type TLanguageLevel = "Bàsic" | "Intermedi" | "Avançat" | "Natiu";
 
+export type TUpdateStudentLanguageNotification = {
+    message: string | null,
+}
+export type TInitialStateLanguageSlice = {
+    isLoadingLanguages: boolean,
+    isErrorLanguages: boolean,
+    languagesData: TLanguage[],
+    isOpenEditAdditionalInformation: boolean,
+    isLoadingUpdateLanguages: boolean,
+    isErrorUpdateLanguages: boolean,
+    notification: TUpdateStudentLanguageNotification
+}
 export type TLanguage = {
     id: string
     name: string
