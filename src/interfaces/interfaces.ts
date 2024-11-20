@@ -54,7 +54,6 @@ export type TModality = {
 }
 
 export type TUpdateProject = {
-    id: string
     name: string
     company_name: string
     tags: string[]

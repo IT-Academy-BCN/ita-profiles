@@ -93,22 +93,6 @@ const projectsThunk = createAsyncThunk(
     },
 )
 
-const updateProjectsThunk = createAsyncThunk<
-    string,
-    { url: string; formData: object }
->('updateProjectsThunk', async ({ url, formData }) => {
-    try {
-        const response = await callUpdateStudent({
-            url,
-            formData,
-        })
-        return response
-    } catch (error) {
-        const MyError = error as ErrorEvent
-        throw new Error(MyError.message)
-    }
-})
-
 const additionalTrainingThunk = createAsyncThunk(
     'additionalTrainingThunk',
     async (studentID: string | null) => {
@@ -133,5 +117,4 @@ export {
     projectsThunk,
     additionalTrainingThunk,
     updateDetailThunk,
-    updateProjectsThunk,
 }

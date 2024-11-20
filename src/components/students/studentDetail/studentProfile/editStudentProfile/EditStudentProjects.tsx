@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import { Close, Plus } from '../../../../../assets/svg'
 import { setEditProjectModalIsOpen } from '../../../../../store/slices/student/projectsSlice'
 import { TUpdateProject } from '../../../../../interfaces/interfaces'
-import { updateDetailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
+import { updateProjectsThunk } from '../../../../../store/thunks/updateProjectsThunk'
 
 export const EditStudentProjects = () => {
     const { editProjectModalIsOpen, projectsData, selectedProjectID } =
@@ -12,6 +12,10 @@ export const EditStudentProjects = () => {
 
     const selectedProject = projectsData.find(
         (project) => project.id === selectedProjectID,
+    )
+
+    const studentId = useAppSelector(
+        (state) => state.ShowStudentReducer.studentDetails.aboutData.id,
     )
     const [newSkill, setNewSkill] = useState('')
 
@@ -22,7 +26,6 @@ export const EditStudentProjects = () => {
     }
 
     const defaultValues: TUpdateProject = {
-        id: selectedProject?.id || '',
         name: selectedProject?.name || '',
         company_name: selectedProject?.company_name || '',
         project_url: selectedProject?.project_url || '',
@@ -51,17 +54,22 @@ export const EditStudentProjects = () => {
             setNewSkill('')
         }
     }
+
     const handleRemoveTag = (tag: string) => {
         const currentTags = getValues('tags')
         const updatedTags = currentTags.filter((t) => t !== tag)
         setValue('tags', updatedTags, { shouldDirty: true })
     }
-
-    const url = `/student/{student}/resume/projects/${selectedProjectID}`
-
+    // const token: string = localStorage.getItem('token') || ''
+    // console.log(token)
+    const url = `http://localhost:8000/api/v1/student/${studentId}/resume/projects/${selectedProjectID}`
     const onSubmit = (data: TUpdateProject) => {
-        console.log(data)
-        dispatch(updateDetailThunk({ url, formData: data }))
+        try {
+            dispatch(updateProjectsThunk({ url, formData: data })).unwrap()
+            handleClose()
+        } catch (error) {
+            console.error('Error al actualizar el perfil:', error)
+        }
     }
 
     const isSubmitDisabled = !isDirty
@@ -71,7 +79,6 @@ export const EditStudentProjects = () => {
     useEffect(() => {
         if (selectedProject) {
             reset({
-                id: selectedProject.id,
                 name: selectedProject.name,
                 company_name: selectedProject.company_name,
                 project_url: selectedProject.project_url,

@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TProject } from '../../../interfaces/interfaces'
-import {
-    projectsThunk,
-    updateProjectsThunk,
-} from '../../thunks/getDetailResourceStudentWithIdThunk'
+import { projectsThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
+import { updateProjectsThunk } from '../../thunks/updateProjectsThunk'
 
 const projectsData: TProject[] = []
 
