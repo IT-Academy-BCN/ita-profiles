@@ -1,23 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { TInitialStateLanguageSlice } from '../../../../types'
+import { TInitialStateLanguageSlice } from '../../../interfaces/interfaces'
 import { languagesThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
 import { updateProfileLanguagesThunk } from '../../thunks/updateProfileLanguagesThunk'
 
-const languagesData: TLanguage[] = []
+const initialState: TInitialStateLanguageSlice = {
+    isLoadingLanguages: false,
+    isErrorLanguages: false,
+    languagesData: [],
+    isOpenEditAdditionalInformation: false,
+    isLoadingUpdateLanguages: false,
+    isErrorUpdateLanguages: false,
+    notification: {
+        message: null,
+    }
+}
 
 const languagesSlice = createSlice({
     name: 'languagesSlice',
-    initialState: {
-        isLoadingLanguages: false,
-        isErrorLanguages: false,
-        languagesData,
-        isOpenEditAdditionalInformation: false,
-        isLoadingUpdateLanguages: false,
-        isErrorUpdateLanguages: false,
-        notification: {
-            message: '',
-        }
-    },
+    initialState,
     reducers: {
         toggleEditAdditionalInformation: (state) => {
             state.isOpenEditAdditionalInformation = !state.isOpenEditAdditionalInformation
@@ -26,10 +26,10 @@ const languagesSlice = createSlice({
             state.languagesData = action.payload
         },
         resetUpdateLanguages: (state) => {
+            state.notification.message = null;
             state.isLoadingUpdateLanguages = false;
             state.isErrorUpdateLanguages = false;
-            state.isOpenEditAdditionalInformation = false;
-            state.notification.message = '';
+            state.isOpenEditAdditionalInformation = !state.isOpenEditAdditionalInformation
         }
     },
     extraReducers: (builder) => {
@@ -57,7 +57,6 @@ const languagesSlice = createSlice({
         builder.addCase(updateProfileLanguagesThunk.fulfilled, (state, action) => {
             state.isLoadingUpdateLanguages = false;
             state.isErrorUpdateLanguages = false;
-            // Idioma actualitzat correctament
             state.notification = {
                 message: action.payload.message ?? 'Idioma actualitzat correctament'
             }
