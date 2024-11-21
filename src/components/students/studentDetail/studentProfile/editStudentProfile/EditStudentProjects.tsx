@@ -1,92 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
+import { useRef } from 'react'
 import { Close, Plus } from '../../../../../assets/svg'
-import { setEditProjectModalIsOpen } from '../../../../../store/slices/student/projectsSlice'
-import { TUpdateProject } from '../../../../../interfaces/interfaces'
-import { updateProjectsThunk } from '../../../../../store/thunks/updateProjectsThunk'
+import { useEditStudentProjects } from '../../../../../hooks/useEditStudentProjects'
 
 export const EditStudentProjects = () => {
-    const { editProjectModalIsOpen, projectsData, selectedProjectID } =
-        useAppSelector((state) => state.ShowStudentReducer.studentProjects)
-
-    const selectedProject = projectsData.find(
-        (project) => project.id === selectedProjectID,
-    )
-
-    const studentId = useAppSelector(
-        (state) => state.ShowStudentReducer.studentDetails.aboutData.id,
-    )
-    const [newSkill, setNewSkill] = useState('')
-
-    const dispatch = useAppDispatch()
-
-    const handleClose = () => {
-        dispatch(setEditProjectModalIsOpen())
-    }
-
-    const defaultValues: TUpdateProject = {
-        name: selectedProject?.name || '',
-        company_name: selectedProject?.company_name || '',
-        project_url: selectedProject?.project_url || '',
-        github_url: selectedProject?.github_url || '',
-        tags: selectedProject?.tags.map((tag) => tag.name) || [],
-    }
-
+    const modalRef = useRef(null)
     const {
-        register,
-        handleSubmit,
-        getValues,
-        setValue,
-        watch,
-        reset,
-        formState: { errors, isDirty },
-    } = useForm({
-        defaultValues,
-    })
+        editProjectModalIsOpen,
+        handleClose,
+        form,
+        handleAddSkill,
+        onSubmit,
+        handleRemoveTag,
+        newSkill,
+        isSubmitDisabled,
+        tags,
+        newSkillError,
+        handleNewSkillChange,
+    } = useEditStudentProjects(modalRef)
 
-    const handleAddSkill = () => {
-        const currentTags = getValues('tags') || []
-        if (newSkill.trim() && !currentTags.includes(newSkill.trim())) {
-            setValue('tags', [...currentTags, newSkill.trim()], {
-                shouldDirty: true,
-            })
-            setNewSkill('')
-        }
-    }
-
-    const handleRemoveTag = (tag: string) => {
-        const currentTags = getValues('tags')
-        const updatedTags = currentTags.filter((t) => t !== tag)
-        setValue('tags', updatedTags, { shouldDirty: true })
-    }
-    // const token: string = localStorage.getItem('token') || ''
-    // console.log(token)
-    const url = `http://localhost:8000/api/v1/student/${studentId}/resume/projects/${selectedProjectID}`
-    const onSubmit = (data: TUpdateProject) => {
-        try {
-            dispatch(updateProjectsThunk({ url, formData: data })).unwrap()
-            handleClose()
-        } catch (error) {
-            console.error('Error al actualizar el perfil:', error)
-        }
-    }
-
-    const isSubmitDisabled = !isDirty
-
-    const tags = watch('tags', [])
-
-    useEffect(() => {
-        if (selectedProject) {
-            reset({
-                name: selectedProject.name,
-                company_name: selectedProject.company_name,
-                project_url: selectedProject.project_url,
-                github_url: selectedProject.github_url,
-                tags: selectedProject?.tags.map((tag) => tag.name),
-            })
-        }
-    }, [selectedProject, reset])
+    const { register, handleSubmit, formState } = form
+    const { errors } = formState
 
     return editProjectModalIsOpen ? (
         <div className="fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] z-10">
@@ -106,7 +39,7 @@ export const EditStudentProjects = () => {
                     <h1 className="text-2xl my-0 mb-2 font-bold text-[rgba(40,40,40,1)]">
                         Editar Proyecto
                     </h1>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form ref={modalRef} onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex flex-col">
                             <label
                                 className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
@@ -179,21 +112,23 @@ export const EditStudentProjects = () => {
                                         type="text"
                                         value={newSkill}
                                         placeholder="Nuevo skill"
-                                        onChange={(e) =>
-                                            setNewSkill(e.target.value)
-                                        }
+                                        onChange={handleNewSkillChange}
                                         className="bg-gray-5-background rounded-md text-gray-800 py-1 px-2 text-sm outline-none w-24 placeholder:text-gray-500 focus:placeholder-transparent"
                                     />
                                     <button
                                         className="bg-gray-5-background cursor-pointer rounded-md text-gray-800 px-1 text-xl hover:bg-gray-400 outline-none self-center"
                                         onClick={handleAddSkill}
-                                        disabled={!newSkill}
+                                        disabled={!newSkill || !!newSkillError}
                                         type="button"
                                     >
                                         <img src={Plus} alt="plus icon" />
                                     </button>
                                 </div>
-
+                                {newSkillError && (
+                                    <p className="text-center block w-full font-bold text-xs text-red-500 py-1">
+                                        {newSkillError}
+                                    </p>
+                                )}
                                 {tags?.map((tag) => (
                                     <div
                                         key={tag}
@@ -235,9 +170,10 @@ export const EditStudentProjects = () => {
                                 {...register('github_url', {
                                     required:
                                         'Error: Este campo es requerido !',
-                                    minLength: {
-                                        value: 3,
-                                        message: 'Mínimo 3 caracteres',
+                                    pattern: {
+                                        value: /^(https?:\/\/)?(www\.)?github\.com\/.+$/,
+                                        message:
+                                            'Formato de url inválido. Ej. https://github.com/ora00 ',
                                     },
                                 })}
                                 className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "
@@ -264,9 +200,10 @@ export const EditStudentProjects = () => {
                                 {...register('project_url', {
                                     required:
                                         'Error: Este campo es requerido !',
-                                    minLength: {
-                                        value: 3,
-                                        message: 'Mínimo 3 caracteres',
+                                    pattern: {
+                                        value: /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/[\w./?%&=-]*)?$/,
+                                        message:
+                                            'Formato de url inválido. Ej: https://barcelonaactiva.com',
                                     },
                                 })}
                                 className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)]  font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)]  mt-[5px] mb-[10px] "

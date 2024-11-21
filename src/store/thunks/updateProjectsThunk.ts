@@ -3,13 +3,10 @@ import { callUpdateStudent } from '../../api/student/callUpdateStudent'
 
 export const updateProjectsThunk = createAsyncThunk<
     string,
-    { url: string; formData: object }
->('updateProjectsThunk', async ({ url, formData }) => {
+    { url: string; formData: object; options: object }
+>('updateProjectsThunk', async (data) => {
     try {
-        const response = await callUpdateStudent({
-            url,
-            formData,
-        })
+        const response = await callUpdateStudent(data)
         return response
     } catch (error) {
         const MyError = error as ErrorEvent

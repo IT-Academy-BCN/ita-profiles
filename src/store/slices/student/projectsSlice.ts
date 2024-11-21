@@ -2,14 +2,21 @@ import { createSlice } from '@reduxjs/toolkit'
 import { TInitialStateProjectsSlice } from '../../../interfaces/interfaces'
 import { projectsThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
 import { updateProjectsThunk } from '../../thunks/updateProjectsThunk'
-
+import {
+    toastError,
+    toastLoading,
+    toastSuccess,
+} from '../../../utils/toastFeedbackMessages'
 
 export const initialState: TInitialStateProjectsSlice = {
     isLoadingProjects: false,
     isErrorProjects: false,
     projectsData: [],
-    editProjectModalIsOpen: true,
+    editProjectModalIsOpen: false,
     selectedProjectID: null,
+    isLoadingUpdateProjects: false,
+    isErrorUpdateProjects: false,
+    isSuccessUpdateProjects: false,
 }
 
 const projectsSlice = createSlice({
@@ -33,20 +40,27 @@ const projectsSlice = createSlice({
             state.isLoadingProjects = false
             state.isErrorProjects = false
         })
+
         builder.addCase(projectsThunk.rejected, (state) => {
             state.isLoadingProjects = false
             state.isErrorProjects = true
         })
 
-        builder.addCase(updateProjectsThunk.pending, () => {
-            console.log('pending')
+        builder.addCase(updateProjectsThunk.pending, (state) => {
+            state.isLoadingUpdateProjects = true
+            toastLoading('El proyecto se está actualizando...')
         })
 
-        builder.addCase(updateProjectsThunk.fulfilled, () => {
-            console.log('actualizado')
+        builder.addCase(updateProjectsThunk.fulfilled, (state) => {
+            state.isLoadingUpdateProjects = false
+            state.isSuccessUpdateProjects = true
+            toastSuccess(' El proyecto se ha actualizado correctamente')
         })
-        builder.addCase(updateProjectsThunk.rejected, () => {
-            console.log('rejected')
+
+        builder.addCase(updateProjectsThunk.rejected, (state) => {
+            state.isLoadingUpdateProjects = false
+            state.isErrorUpdateProjects = true
+            toastError('Error: El proyecto no se ha actualizado')
         })
     },
 })

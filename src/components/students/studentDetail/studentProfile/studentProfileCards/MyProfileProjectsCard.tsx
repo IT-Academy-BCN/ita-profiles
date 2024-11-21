@@ -96,7 +96,7 @@ const MyProfileProjectsCard: React.FC = () => {
                                     </div>
                                     <button
                                         type="button"
-                                        className="-mt-1 flex w-6 self-start"
+                                        className="-mt-1 flex w-6 self-start hover:scale-105"
                                         onClick={() =>
                                             handlePencilClick(project.id)
                                         }
