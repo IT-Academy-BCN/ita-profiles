@@ -13,6 +13,7 @@ class Message extends Model
     use HasUuids;
 
     protected $fillable = [
+        'sender_id',
         'receiver_id',
         'subject',
         'body',
