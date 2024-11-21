@@ -23,7 +23,7 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
     } = useEditStudentProfile()
 
     const modalRef = useRef<HTMLDivElement>(null)
-    useCloseWhenClickOutside(modalRef, handleModal)
+    useCloseWhenClickOutside(modalRef, handleModal, editProfileModalIsOpen)
 
     const {
         register,

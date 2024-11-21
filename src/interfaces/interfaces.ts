@@ -77,7 +77,7 @@ export type TLanguage = {
 }
 
 export type TAbout = {
-    id: number
+    id: string
     name: string
     surname: string
     resume: {
@@ -121,4 +121,15 @@ export interface TSkills {
     initialSkills: string[]
     onClose: () => void
     onSave: (skills: string[]) => void
+}
+
+export type TInitialStateProjectsSlice = {
+    isLoadingProjects: boolean
+    isErrorProjects: boolean
+    projectsData: TProject[]
+    editProjectModalIsOpen: boolean
+    selectedProjectID: null | string
+    isLoadingUpdateProjects: boolean
+    isErrorUpdateProjects: boolean
+    isSuccessUpdateProjects: boolean
 }
