@@ -95,12 +95,12 @@ const MyProfileProjectsCard: React.FC = () => {
                                         </a>
                                     </div>
                                     <button
+                                        aria-label="edit project pencil"
                                         type="button"
-                                        className="-mt-1 flex w-6 self-start hover:scale-105"
+                                        className="mt-1 flex w-6 self-start hover:scale-105"
                                         onClick={() =>
                                             handlePencilClick(project.id)
                                         }
-                                        aria-label="edit project pencil"
                                     >
                                         <img
                                             src={Pencil}

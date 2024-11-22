@@ -27,7 +27,7 @@ export const EditStudentProjects = () => {
                 <div className="flex justify-between">
                     <div />
                     <button
-                        aria-label="close X student modal"
+                        aria-label="close X project modal"
                         type="button"
                         onClick={handleClose}
                         className="cursor-pointer hover:scale-105"
@@ -37,9 +37,13 @@ export const EditStudentProjects = () => {
                 </div>
                 <div className="w-full h-full p-4 ">
                     <h1 className="text-2xl my-0 mb-2 font-bold text-[rgba(40,40,40,1)]">
-                        Editar Proyecto
+                        Editar proyecto
                     </h1>
-                    <form ref={modalRef} onSubmit={handleSubmit(onSubmit)}>
+                    <form
+                        ref={modalRef}
+                        onSubmit={handleSubmit(onSubmit)}
+                        aria-label="edit project modal"
+                    >
                         <div className="flex flex-col">
                             <label
                                 className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
@@ -221,7 +225,7 @@ export const EditStudentProjects = () => {
                         </div>
                         <div className="flex w-full my-4 gap-3">
                             <button
-                                aria-label="cancel student button"
+                                aria-label="cancel edit project button"
                                 onClick={handleClose}
                                 className="flex-1 h-[63px] hover:scale-105 rounded-xl font-bold border border-[rgba(128,128,128,1)]"
                                 type="button"
@@ -231,7 +235,7 @@ export const EditStudentProjects = () => {
                             <button
                                 disabled={isSubmitDisabled}
                                 type="submit"
-                                aria-label="submit form button"
+                                aria-label="submit edit project button"
                                 className="flex-1 h-[63px] hover:scale-105 disabled:opacity-75 disabled:scale-100 rounded-xl bg-primary font-bold text-white border border-[rgba(128,128,128,1)]"
                             >
                                 Aceptar

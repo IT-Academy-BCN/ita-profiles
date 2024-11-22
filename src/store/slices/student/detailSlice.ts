@@ -7,7 +7,7 @@ import {
 import { updateProfilePhotoThunk } from '../../thunks/updateProfilePhotoThunk'
 
 const aboutData: TAbout = {
-    id: 0,
+    id: "",
     name: '',
     surname: '',
     resume: {
@@ -22,6 +22,7 @@ const aboutData: TAbout = {
     photo: '',
     tags: [],
 }
+
 export const initialState = {
     isLoadingAboutData: false,
     isErrorAboutData: false,
