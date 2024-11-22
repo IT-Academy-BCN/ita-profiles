@@ -25,7 +25,7 @@
         "jsx-a11y/label-has-associated-control": "off",
         "no-console": "off",
         "arrow-body-style": "off",
-        "react-hooks/exhaustive-deps": "warn",
+        "react-hooks/exhaustive-deps": "off",
         "consistent-return": "warn"
     },
     "ignorePatterns": [
