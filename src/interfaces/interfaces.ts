@@ -44,7 +44,7 @@ export interface ITag {
 }
 
 export type TBootcamp = {
-    bootcamp_id: string
+    id: string
     name: string
     bootcamp_end_date: string
 }
@@ -54,7 +54,7 @@ export type TModality = {
 }
 
 export type TProject = {
-    uuid: number
+    id: number
     name: string
     company_name: string
     tags: ITag[]
