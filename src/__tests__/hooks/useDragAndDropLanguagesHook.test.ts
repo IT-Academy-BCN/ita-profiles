@@ -16,7 +16,7 @@ const mockLanguages = [
 
 describe("UseDragAndDropLanguagesHook", () => {
 
-  it("should render the App component", () => {
+  it("should render the UseDragAndDropLanguagesHook hook", () => {
     expect(useDragAndDropLanguagesHook).toBeDefined()
   });
 
@@ -61,10 +61,7 @@ describe("UseDragAndDropLanguagesHook", () => {
   })
 
   it("should not update draggedItemIndex without calling handleDragStart", () => {
-    // Renderizamos el hook con los lenguajes
     const { result } = renderHook(() => useDragAndDropLanguagesHook(mockLanguages));
-
-    // Verificamos que el índice inicial es null
     expect(result.current.draggedItemIndex).toBeNull();
   });
 

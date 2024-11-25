@@ -12,12 +12,10 @@ export const useDragAndDropLanguagesHook = (updateLanguagesDrop: TLanguage[]) =>
     setDraggedItemIndex(index);
   }, []);
 
-  // Función para manejar el drag over (necesario para permitir el drop)
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   }, []);
 
-  // Función para manejar el drop y reordenar la lista
   const handleDrop = useCallback((index: number) => {
     if (draggedItemIndex === null) return;
 
