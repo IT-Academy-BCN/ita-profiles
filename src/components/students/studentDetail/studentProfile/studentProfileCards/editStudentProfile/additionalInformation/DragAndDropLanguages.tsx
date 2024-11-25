@@ -3,7 +3,6 @@ import {
     TLanguage,
     TLanguageLevel,
 } from '../../../../../../../interfaces/interfaces'
-// import { useUpdateLanguageHook } from '../../../../../../../hooks/useUpdateLanguageHook';
 import { useDragAndDropLanguagesHook } from '../../../../../../../hooks/useDragAndDropLanguagesHook'
 
 export type TDragAndDropLanguagesProps = {
@@ -23,7 +22,7 @@ const DragAndDropLanguages: FC<TDragAndDropLanguagesProps> = ({
         useDragAndDropLanguagesHook(dropLanguages)
 
     return (
-        <div className='flex flex-col gap-4'>               
+        <div className='flex flex-col gap-4'>
             {updateLanguagesDrop.map((language, index) => (
                 <div
                     key={language.id}
@@ -37,10 +36,10 @@ const DragAndDropLanguages: FC<TDragAndDropLanguagesProps> = ({
                         key={language.id}
                         className="flex flex-col gap-4 mx-8">
 
-                        <div className="flex items-center">                            
+                        <div className="flex items-center">
                             <div className='font-semibold'>
                                 {language.name}
-                            </div>                            
+                            </div>
                             <button
                                 className="pl-2 text-primary font-medium"
                                 type="button"
@@ -51,7 +50,7 @@ const DragAndDropLanguages: FC<TDragAndDropLanguagesProps> = ({
                         </div>
                         <div className="flex gap-4">
                             {levels.map((level) => (
-                                <label key={`level-${level}`}>                                    
+                                <label key={`level-${level}`}>
                                     <input
                                         type="radio"
                                         id={`level-${level}`}

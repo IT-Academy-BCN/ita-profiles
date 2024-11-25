@@ -25,9 +25,8 @@ const useStudentDetailHook = (role?: string | null) => {
         const fetchData = async () => {
             try {
                 const id = role === 'user' ? studentID : studentUUID;
-                if (!id) return; // Asegúrate de tener un ID válido
+                if (!id) return;
 
-                // Ejecuta todos los thunks en paralelo
                 await Promise.all(
                     studentDetails.map((thunk) => dispatch(thunk(id)))
                 );
