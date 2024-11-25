@@ -8,7 +8,7 @@ use App\Models\Student;
 use App\Models\Recruiter;
 use Illuminate\Support\Facades\Auth;
 
-class SendMessageRequest extends FormRequest
+class StoreMessageRequest extends FormRequest
 {
 
     /**
@@ -27,9 +27,9 @@ class SendMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'receiver_id' => 'required|exists:users,id',
             'subject' => 'required|string|max:255',
             'body' => 'required|string',
-            'receiver' => 'required|exists:users,id',
         ];
     }
 
