@@ -79,7 +79,6 @@ Route::prefix('messages')->middleware('auth:api')->group(function () {
     Route::post('/', SendMessageController::class)->name('message.send');
 });
 
-// Message routes
 Route::prefix('messages')->middleware('auth:api')->group(function () {
     Route::post('/', SendMessageController::class)->name('message.send');
 });

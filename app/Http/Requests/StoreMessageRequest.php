@@ -33,15 +33,4 @@ class StoreMessageRequest extends FormRequest
         ];
     }
 
-    public function messages()
-{
-    return [
-        'receiver_id.required' => 'The receiver ID is required.',
-        'receiver_id.exists' => 'The specified receiver does not exist.',
-        'subject.required' => 'A subject is required.',
-        'body.required' => 'The message body cannot be empty.',
-    ];
-}
-
-
 }
