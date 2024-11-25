@@ -14,9 +14,14 @@ class SendMessageController extends Controller
     public function __invoke(SendMessageRequest $request): JsonResponse
     {
 
-        $sender = Auth::id();
+        $sender = Auth::user();
 
-        $message = Message::create($request->validated());
+        $message = Message::create([
+            'sender' => $sender->id,
+            'receiver' => $request->receiver,
+            'subject' => $request->subject,
+            'body' => $request->body,
+        ]);
 
         return response()->json([
             'message' => 'Message sent successfully',
