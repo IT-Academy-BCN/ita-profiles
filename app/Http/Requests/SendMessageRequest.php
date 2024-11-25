@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\Recruiter;
+use Illuminate\Support\Facades\Auth;
 
 class SendMessageRequest extends FormRequest
 {
