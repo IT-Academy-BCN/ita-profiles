@@ -27,7 +27,7 @@ class SendMessageAnnotation
      *                 property="receiver_id",
      *                 type="string",
      *                 format="uuid",
-     *                 example="9d88709c-03b7-451f-8653-4da45a748ae9",
+     *                 example="9d92ccb5-8876-4e15-bcf1-53782800b60e",
      *                 description="The UUID of the user receiving the message."
      *             ),
      *             @OA\Property(
