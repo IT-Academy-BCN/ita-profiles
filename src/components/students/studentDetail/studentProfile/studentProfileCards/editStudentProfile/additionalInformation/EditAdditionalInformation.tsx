@@ -28,8 +28,8 @@ export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
     }
     const peticion = {
         url: `http://127.0.0.1:8000/api/v1/student/${localStorage.getItem(
-                'studentID',
-            )}/resume/languages`,
+            'studentID',
+        )}/resume/languages`,
         formData: data
     }
 
@@ -42,7 +42,7 @@ export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
 export const EditAdditionalInformation: FC = () => {
     const dispacth = useDispatch()
     const dispatchThunk = useAppDispatch()
-    const { languagesData, isOpenEditAdditionalInformation, notification, isErrorUpdateLanguages, isLoadingUpdateLanguages} = useAppSelector(
+    const { languagesData, isOpenEditAdditionalInformation, notification, isErrorUpdateLanguages, isLoadingUpdateLanguages } = useAppSelector(
         (state) => state.ShowStudentReducer.studentLanguages,
     )
 
@@ -53,7 +53,7 @@ export const EditAdditionalInformation: FC = () => {
         availableLanguages,
         deleteLanguage,
         editLanguage,
-        
+
     } = useUpdateLanguageHook(languagesData)
 
     const { modality } = useAppSelector(
@@ -63,15 +63,20 @@ export const EditAdditionalInformation: FC = () => {
     const refInput = useRef<HTMLInputElement>(null)
     const refDialog = useRef<HTMLDialogElement>(null)
 
-  const onInputLanguage = (event: ChangeEvent<HTMLInputElement>) => {
-    // TODDO: Implemetar 
-    globalThis.alert(JSON.stringify({ language: event.target.value, lenguaje: event.target.id }, null, 4));
-  }
-  const handlerSelect = () => {
-    if (refDialog.current) {
-      console.log(refDialog.current.open = !refDialog.current.open)
+    const onInputLanguage = (event: ChangeEvent<HTMLInputElement>) => {
+        globalThis.alert(
+            JSON.stringify(
+                { language: event.target.value, lenguaje: event.target.id },
+                null,
+                4,
+            ),
+        )
     }
-  }
+    const handlerSelect = () => {
+        if (refDialog.current) {
+            console.log((refDialog.current.open = !refDialog.current.open))
+        }
+    }
 
     const saveChanges = async () => {
 
@@ -80,12 +85,13 @@ export const EditAdditionalInformation: FC = () => {
 
         setTimeout(() => {
             dispacth(resetUpdateLanguages())
-         
-          }, 6000)
+
+        }, 6000)
     }
 
     if (isOpenEditAdditionalInformation) {
         return (
+            <div className="fixed w-full h-full flex items-center justify-center top-0 left-0 bg-[rgba(0,0,0,.7)]">
             <div className="fixed w-full h-full flex items-center justify-center top-0 left-0 bg-[rgba(0,0,0,.7)]">
                 <button
                     aria-label="ref-modal"
@@ -102,12 +108,15 @@ export const EditAdditionalInformation: FC = () => {
                     <div className="flex justify-between mx-4 mt-4 mb-2">
                         <div />
                         <button
+                        <button
                             type="button"
                             onClick={handleCloseModal}
                         >
                             <img src={Close} alt="close icon" />
+                            <img src={Close} alt="close icon" />
                         </button>
                     </div>
+
 
 
                     <div className='flex flex-col gap-8 pb-8'>
@@ -119,8 +128,9 @@ export const EditAdditionalInformation: FC = () => {
                             </h1>
                             {isErrorUpdateLanguages && <h3 className="py-0 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification !== null && notification.message}</h3>}
                             {isLoadingUpdateLanguages && <h3 className="py-0 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification !== null && notification.message}</h3>}
-                            {notification.message !== null  && <h3 className="py-0 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification.message}</h3>}
+                            {notification.message !== null && <h3 className="py-0 text-red-500 text-sm absolute top-full left-0 w-full h-auto animate-pulse text-[.7em]">{notification.message}</h3>}
                         </div>
+
 
                         <div>
                             <div className="flex justify-between items-center mx-8 relative">
@@ -135,11 +145,11 @@ export const EditAdditionalInformation: FC = () => {
                                 >
                                     +
                                 </button>
-                                
+
                                 <dialog
                                     ref={refDialog}
                                     className="top-8 left-40 z-20 h-80 w-2/3 bg-stone-200 rounded-xl overflow-hidden">
-                                        
+
                                     <form className="flex flex-col h-full overflow-y-auto z-11 p-2">
                                         {availableLanguages.map((language, index) => (
                                             <label
@@ -198,10 +208,10 @@ export const EditAdditionalInformation: FC = () => {
                                             />
                                         </label>
                                     </div>
-                                </dialog>                                
+                                </dialog>
                             </div>
                             <div className='my-4 border-b-2 border-gray-300 border-dashed'>
-                                        <span className="hidden">border-dashed</span>
+                                <span className="hidden">border-dashed</span>
                             </div>
                             <DragAndDropLanguages
                                 dropLanguages={updateLanguages}
@@ -217,6 +227,8 @@ export const EditAdditionalInformation: FC = () => {
                         <div className="flex gap-4 justify-between mx-8">
                             <button
                                 type="button"
+                            <button
+                                type="button"
                                 className="flex-1 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)] text-[rgba(128,128,128,1)]"
                                 onClick={handleCloseModal}>
                                 Cancelar
@@ -228,6 +240,7 @@ export const EditAdditionalInformation: FC = () => {
                             >
                                 Aceptar
                             </button>
+                        </div>
                         </div>
                     </div>
 
