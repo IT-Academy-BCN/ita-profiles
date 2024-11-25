@@ -22,15 +22,20 @@ const useStudentDetailHook = (role?: string | null) => {
     ])
 
     useEffect(() => {
-        if (typeof role === 'string' && role === 'user') {
-            studentDetails.forEach((student) => {
-                dispatch(student(studentID))
-            })
-        } else if (!role && studentUUID) {
-            studentDetails.forEach((student) => {
-                dispatch(student(studentUUID))
-            })
-        }
+        const fetchData = async () => {
+            try {
+                const id = role === 'user' ? studentID : studentUUID;
+                if (!id) return;
+
+                await Promise.all(
+                    studentDetails.map((thunk) => dispatch(thunk(id)))
+                );
+            } catch (error) {
+                console.error('Error al obtener los detalles del estudiante:', error);
+            }
+        };
+
+        fetchData();
     }, [dispatch, role, studentDetails, studentID, studentUUID])
 
     return { isMobile }

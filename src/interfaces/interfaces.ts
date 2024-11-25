@@ -69,7 +69,24 @@ export type TProject = {
     project_url: string
     github_url: string
 }
+export type TAvailableLanguage = {
+    name: string
+    es_name: string
+}
+export type TLanguageLevel = 'Bàsic' | 'Intermedi' | 'Avançat' | 'Natiu'
 
+export type TUpdateStudentLanguageNotification = {
+    message: string | null
+}
+export type TInitialStateLanguageSlice = {
+    isLoadingLanguages: boolean
+    isErrorLanguages: boolean
+    languagesData: TLanguage[]
+    isOpenEditAdditionalInformation: boolean
+    isLoadingUpdateLanguages: boolean
+    isErrorUpdateLanguages: boolean
+    notification: TUpdateStudentLanguageNotification
+}
 export type TLanguage = {
     id: string
     name: string
@@ -116,7 +133,6 @@ export type TCollaboration = {
     collaboration_description: string
     quantity: number
 }
-
 export interface TSkills {
     initialSkills: string[]
     onClose: () => void
@@ -132,4 +148,8 @@ export type TInitialStateProjectsSlice = {
     isLoadingUpdateProjects: boolean
     isErrorUpdateProjects: boolean
     isSuccessUpdateProjects: boolean
+}
+
+export type TDragAndDropLanguagesProps = {
+    dropLanguages: TLanguage[]
 }
