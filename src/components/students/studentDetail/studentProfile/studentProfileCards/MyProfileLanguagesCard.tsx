@@ -33,7 +33,9 @@ const MyProfileLanguagesCard: React.FC = () => {
             )}
             {!isLoadingLanguages && (
                 <div className="flex flex-col gap-2">
-                    <EditAdditionalInformation />
+                    <ModalPortals>
+                        <EditAdditionalInformation />
+                    </ModalPortals>
                     <div className="flex flex-col gap-1">
                         {languagesData.map((language) => (
                             <ul
