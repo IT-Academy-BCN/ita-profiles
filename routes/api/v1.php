@@ -72,7 +72,6 @@ Route::prefix('tags')->group(function () {
     Route::put('/{tag}', TagUpdateController::class)->name('tag.update');
 });
 
-// Message routes
 Route::prefix('messages')->middleware('auth:api')->group(function () {
     Route::post('/', SendMessageController::class)->name('message.send');
 });

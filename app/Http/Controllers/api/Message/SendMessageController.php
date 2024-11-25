@@ -3,30 +3,23 @@
 namespace App\Http\Controllers\api\Message;
 
 use App\Models\Message;
-use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SendMessageRequest;
+use App\Http\Requests\StoreMessageRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class SendMessageController extends Controller
 {
-    public function __invoke(SendMessageRequest $request): JsonResponse
+    public function __invoke(StoreMessageRequest $request): JsonResponse
     {
+        $data = $request->validated();
+        $data['sender_id'] = Auth::id();
 
-        $sender = Auth::user();
-
-        $message = Message::create([
-            'sender' => $sender->id,
-            'receiver' => $request->receiver,
-            'subject' => $request->subject,
-            'body' => $request->body,
-        ]);
+        Message::create($data);
 
         return response()->json([
-            'message' => 'Message sent successfully',
-            'data' => $message,
-        ], 200);
+            'message' => 'Message sent successfully'
+        ], 201);
 
     }
 }
