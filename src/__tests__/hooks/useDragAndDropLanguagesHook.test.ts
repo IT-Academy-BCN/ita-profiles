@@ -16,7 +16,7 @@ const mockLanguages = [
 
 describe("UseDragAndDropLanguagesHook", () => {
 
-  it("should render the UseDragAndDropLanguagesHook hook", () => {
+  it("UseDragAndDropLanguagesHook should by defined", () => {
     expect(useDragAndDropLanguagesHook).toBeDefined()
   });
 
