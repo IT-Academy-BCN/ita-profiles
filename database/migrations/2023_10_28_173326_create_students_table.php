@@ -4,30 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
-    /**
-     * Run the migrations.
-     */
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('restrict')->onUpdate('cascade');
-            $table->string('subtitle');
-            $table->text('about')->nullable();
-            $table->string('cv')->nullable();
-            $table->enum('bootcamp', ['front end Developer', 'php developer', 'java developer', 'nodejs developer',
-                'data scientists']);
-            $table->date('end_date')->nullable();
-            $table->string('linkedin')->nullable();
-            $table->string('github')->nullable();
+            $table->char('id', 36)->primary();
+            $table->string('name')->nullable();
+            $table->string('surname')->nullable();
+            $table->string('photo')->nullable();
+            $table->enum('status', ['Active', 'Inactive', 'In a Bootcamp', 'In a Job'])->default('Active');
             $table->timestamps();
+            $table->char('user_id', 36)->nullable();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('students');
