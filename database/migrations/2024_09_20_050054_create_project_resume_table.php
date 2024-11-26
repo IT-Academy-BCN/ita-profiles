@@ -15,19 +15,18 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('project_id')
-                ->references('id')
-                ->on('projects')
+                ->references('id')->on('projects')
                 ->onDelete('cascade');
 
             $table->foreign('resume_id')
-                ->references('id')
-                ->on('resumes')
+                ->references('id')->on('resumes')
                 ->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('project_resume');
         Schema::dropIfExists('project_resume');
     }
 };

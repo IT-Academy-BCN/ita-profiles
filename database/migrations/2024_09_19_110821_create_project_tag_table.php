@@ -12,17 +12,17 @@ return new class extends Migration
             $table->id();
             $table->uuid('project_id');
             $table->unsignedBigInteger('tag_id');
+            $table->uuid('project_id');
+            $table->unsignedBigInteger('tag_id');
             $table->timestamps();
 
             $table->foreign('project_id')
-                ->references('id')
-                ->on('projects')
+                ->references('id')->on('projects')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->foreign('tag_id')
-                ->references('id')
-                ->on('tags')
+                ->references('id')->on('tags')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

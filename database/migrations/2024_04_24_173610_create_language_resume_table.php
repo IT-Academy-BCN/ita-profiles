@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
 
+return new class extends Migration
+{
+
     public function up(): void
     {
         Schema::create('language_resume', function (Blueprint $table) {
@@ -14,14 +17,13 @@ return new class extends Migration
             $table->uuid('language_id');
             $table->uuid('resume_id');
 
+            // Definir las claves foráneas
             $table->foreign('language_id')
-                ->references('id')
-                ->on('languages')
+                ->references('id')->on('languages')
                 ->onDelete('cascade');
 
             $table->foreign('resume_id')
-                ->references('id')
-                ->on('resumes')
+                ->references('id')->on('resumes')
                 ->onDelete('cascade');
         });
     }
