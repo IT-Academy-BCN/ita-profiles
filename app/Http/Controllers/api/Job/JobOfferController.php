@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api\Job;
+namespace App\Http\Controllers\api\Job;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Job\CreateJobOfferRequest;
@@ -16,6 +16,6 @@ class JobOfferController extends Controller
     {
         $jobOffer = JobOffer::create($request->validated());
 
-        return response()->json(['message' => 'Oferta de feina creada amb èxit', 'jobOffer' => $jobOffer], 201);
+        return response()->json(['message' => '🟢 Oferta de feina creada amb èxit', 'jobOffer' => $jobOffer], 201);
     }
 }
