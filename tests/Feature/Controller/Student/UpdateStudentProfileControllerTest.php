@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
-use App\Models\{Resume, Student, Tag, User};
+use App\Models\{Resume, Student, User};
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -17,17 +17,17 @@ class UpdateStudentProfileControllerTest extends TestCase
         parent::setUp();
     }
 
-    private function createUser():User
+    private function createUser(): User
     {
         return User::factory()->create();
     }
 
-    private function createStudent(User $user):Student
+    private function createStudent(User $user): Student
     {
         return Student::factory()->for($user)->create();
     }
 
-    private function createResume(Student $student):Resume
+    private function createResume(Student $student): Resume
     {
         return Resume::factory()->for($student)->create(['github_url' => 'https://github.com/user1',]);
     }
