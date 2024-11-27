@@ -32,7 +32,7 @@ class CreateJobOfferRequest extends FormRequest
         return [
             'recruiter_id' => 'required|exists:recruiters,id',
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required|string|min:10|max:1000',
             'location' => 'required|string|max:255',
             'salary' => 'required|numeric|min:0',
             'skills' => 'nullable|string',
