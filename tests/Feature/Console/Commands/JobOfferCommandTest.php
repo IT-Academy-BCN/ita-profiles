@@ -74,9 +74,6 @@ class JobOfferCommandTest extends TestCase
             'skills' => $skills
         ]);
     }
-
-
-    /* Unupdated tests:
     public function testCreateJobOfferWithValidParameters()
     {
         $title = $this->faker->jobTitle();
@@ -84,27 +81,29 @@ class JobOfferCommandTest extends TestCase
         $location = $this->faker->city();
         $skills = implode(', ', $this->faker->words(3));
         $salary = $this->faker->numberBetween(20000, 100000);
-
-        $exitCode = Artisan::call('job:offer:create', [
-            'recruiter_id' => $this->recruiter->id,
-            'title' => $title,
-            'description' => $description,
-            'location' => $location,
-            'skills' => $skills,
-            'salary' => $salary
-        ]);
-
-        $this->assertEquals(0, $exitCode);
-
+    
+        $this->artisan('job:offer:create')
+            ->expectsQuestion('Introdueix l\'ID del reclutador', $this->recruiter->id)
+            ->expectsQuestion('Introdueix el títol de l\'oferta', $title)
+            ->expectsQuestion('Introdueix la descripció de l\'oferta', $description)
+            ->expectsQuestion('Introdueix la ubicació', $location)
+            ->expectsQuestion('Introdueix el salari', $salary)
+            ->expectsQuestion('Introdueix les habilitats requerides (opcional, separades per comes)', $skills)
+            ->expectsOutput("Detalls de l'oferta:")
+            ->assertExitCode(0);
+    
         $this->assertDatabaseHas('job_offers', [
-            'title' => $title,
-            'salary' => $salary,
             'recruiter_id' => $this->recruiter->id,
+            'title' => $title,
             'description' => $description,
             'location' => $location,
+            'salary' => $salary,
             'skills' => $skills
         ]);
     }
+   
+    /* Unupdated tests:
+  
     public function testCreateJobOfferWithMissingRequiredFields(): void
     {
         $this->expectException(\Symfony\Component\Console\Exception\RuntimeException::class);
