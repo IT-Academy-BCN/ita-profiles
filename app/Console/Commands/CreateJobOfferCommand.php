@@ -32,14 +32,15 @@ class CreateJobOfferCommand extends Command
     
     protected function configure()
     {
-        $this->setName('job:offer:create')
+        $this->setName('create:job-offer')
             ->addArgument('recruiter_id', InputArgument::OPTIONAL, 'The ID of the recruiter')
             ->addArgument('title', InputArgument::OPTIONAL, 'The title of the job offer')
             ->addArgument('description', InputArgument::OPTIONAL, 'The description of the job offer')
             ->addArgument('location', InputArgument::OPTIONAL, 'The location of the job offer')
             ->addArgument('salary', InputArgument::OPTIONAL, 'The salary for the job offer')
             ->addArgument('skills', InputArgument::OPTIONAL, 'The skills required for the job offer (Optional)');
-    }
+    
+        }
 
     public function handle()
        {

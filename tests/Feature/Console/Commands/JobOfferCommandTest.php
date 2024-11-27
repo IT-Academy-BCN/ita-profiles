@@ -54,7 +54,7 @@ class JobOfferCommandTest extends TestCase
         $skills = implode(', ', $this->faker->words(3));
         $salary = $this->faker->numberBetween(20000, 100000);
 
-        $this->artisan('job:offer:create', [
+        $this->artisan('create:job-offer', [
             'recruiter_id' => $this->recruiter->id,
             'title' => $title,
             'description' => $description,
@@ -82,7 +82,7 @@ class JobOfferCommandTest extends TestCase
         $skills = implode(', ', $this->faker->words(3));
         $salary = $this->faker->numberBetween(20000, 100000);
     
-        $this->artisan('job:offer:create')
+        $this->artisan('create:job-offer')
             ->expectsQuestion('Introdueix l\'ID del reclutador', $this->recruiter->id)
             ->expectsQuestion('Introdueix el títol de l\'oferta', $title)
             ->expectsQuestion('Introdueix la descripció de l\'oferta', $description)
@@ -122,7 +122,7 @@ public function testCreateMultipleJobOffers(): void
 }
 public function testJobOfferCanBeCreatedViaCommand(): void
 {
-    $this->artisan('job:offer:create')
+    $this->artisan('create:job-offer')
         ->expectsQuestion('Introdueix l\'ID del reclutador', $this->recruiter->id)
         ->expectsQuestion('Introdueix el títol de l\'oferta', 'Test Job')
         ->expectsQuestion('Introdueix la descripció de l\'oferta', 'Test Description')
@@ -145,7 +145,7 @@ public function testJobOfferCanBeCreatedViaCommand(): void
  */
 public function testReturnsErrorCodeOnInvalidData($invalidData): void
 {
-    $this->artisan('job:offer:create')
+    $this->artisan('create:job-offer')
         ->expectsQuestion('Introdueix l\'ID del reclutador', $this->recruiter->id)
         ->expectsQuestion('Introdueix el títol de l\'oferta', $invalidData['title'])
         ->expectsQuestion('Introdueix la descripció de l\'oferta', $invalidData['description'])
