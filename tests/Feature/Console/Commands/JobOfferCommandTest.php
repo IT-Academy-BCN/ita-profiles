@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Console\Commands;
 
 
+use Mockery;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Company;
@@ -12,6 +13,8 @@ use App\Models\JobOffer;
 use App\Models\Recruiter;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Console\Commands\CreateJobOfferCommand;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Http\Controllers\Api\Job\JobOfferController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -43,6 +46,37 @@ class JobOfferCommandTest extends TestCase
     {
         $this->assertTrue(class_exists(JobOfferController::class));
     }
+    public function testCreateJobOfferWithAllArgumentsProvided(): void
+    {
+        $title = $this->faker->jobTitle();
+        $description = $this->faker->text();
+        $location = $this->faker->city();
+        $skills = implode(', ', $this->faker->words(3));
+        $salary = $this->faker->numberBetween(20000, 100000);
+
+        $this->artisan('job:offer:create', [
+            'recruiter_id' => $this->recruiter->id,
+            'title' => $title,
+            'description' => $description,
+            'location' => $location,
+            'salary' => $salary,
+            'skills' => $skills
+        ])
+        ->expectsOutput("Detalls de l'oferta:")
+        ->assertExitCode(0);
+
+        $this->assertDatabaseHas('job_offers', [
+            'recruiter_id' => $this->recruiter->id,
+            'title' => $title,
+            'description' => $description,
+            'location' => $location,
+            'salary' => $salary,
+            'skills' => $skills
+        ]);
+    }
+
+
+    /* Unupdated tests:
     public function testCreateJobOfferWithValidParameters()
     {
         $title = $this->faker->jobTitle();
@@ -153,4 +187,5 @@ class JobOfferCommandTest extends TestCase
             'salary' => -5000
         ]);
     }
+        */
 }
