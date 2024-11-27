@@ -14,11 +14,13 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('collaboration_id')
-                ->references('id')->on('collaborations')
+                ->references('id')
+                ->on('collaborations')
                 ->onDelete('cascade');
 
             $table->foreign('resume_id')
-                ->references('id')->on('resumes')
+                ->references('id')
+                ->on('resumes')
                 ->onDelete('cascade');
 
             $table->primary(['resume_id', 'collaboration_id']);

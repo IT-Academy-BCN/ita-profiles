@@ -9,19 +9,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('recruiters', function (Blueprint $table) {
-            $table->char('id', 36)->primary(); // id (UUID como clave primaria)
-            $table->char('company_id', 36); // company_id (clave foránea a la tabla companies)
-            $table->char('user_id', 36); // user_id (clave foránea a la tabla users)
-            $table->string('role')->default('recruiter'); // role con valor predeterminado 'recruiter'
-            $table->timestamps(); // created_at, updated_at
+            $table->char('id', 36)->primary();
+            $table->char('company_id', 36);
+            $table->char('user_id', 36);
+            $table->string('role')->default('recruiter');
+            $table->timestamps();
 
-            // Claves foráneas
             $table->foreign('company_id')
-                ->references('id')->on('companies')
+                ->references('id')
+                ->on('companies')
                 ->onDelete('cascade');
 
             $table->foreign('user_id')
-                ->references('id')->on('users')
+                ->references('id')
+                ->on('users')
                 ->onDelete('cascade');
         });
     }
