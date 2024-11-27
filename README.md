@@ -84,7 +84,16 @@ Below is a list of commands developed for the project, including their descripti
 | Command Name        | Description                                         | Command Help                                      |
 |---------------------|-----------------------------------------------------|-------------------------------------------------|
 | `create:company`   | Creates a new company in the database.            | `create:company --help` |
-| 
+| `create:job-offer`   | Allows recruiters to create job offers via terminal input. | `create:job-offer --help`  |
+
+#### Using the `create:job-offer` Command  
+
+This command allows recruiters to create job offers directly through the terminal. Here’s how to use it:  
+
+1. Execute the following command to begin creating a job offer:  
+
+   ```bash
+   docker exec -it php php artisan create:job-offer
 
 ## Screenshots
 
