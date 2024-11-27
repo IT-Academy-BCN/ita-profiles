@@ -32,7 +32,6 @@ use App\Http\Controllers\api\Auth\{
     RegisterController,
     AuthController
 };
-use App\Http\Middleware\EnsureStudentOwner;
 
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
@@ -46,7 +45,7 @@ Route::prefix('student/{student}/resume')->group(function () {
     Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
     Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
     Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
-    Route::put('projects/{project}', UpdateStudentProjectController::class)->middleware('auth:api')->name('student.updateProject');
+    Route::put('projects/{project}', UpdateStudentProjectController::class)->name('student.updateProject');
     Route::post('languages', AddStudentLanguageController::class)->name('student.addLanguage');
     Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
     Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
@@ -64,5 +63,4 @@ Route::prefix('tags')->group(function () {
     Route::post('/', TagStoreController::class)->name('tag.store');
     Route::get('/{tag}', TagDetailController::class)->name('tag.detail');
     Route::put('/{tag}', TagUpdateController::class)->name('tag.update');
-
 });
