@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('oauth_clients', function (Blueprint $table) {
-            $table->id(); // AUTO_INCREMENT id
+            $table->id();
             $table->string('name', 255);
             $table->string('secret', 100)->nullable();
             $table->string('provider', 255)->nullable();

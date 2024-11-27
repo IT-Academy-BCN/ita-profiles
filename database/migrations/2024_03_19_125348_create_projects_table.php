@@ -15,7 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('github_repository_id')->nullable()->unique();
             $table->string('project_url', 255)->default('');
             $table->string('company_name', 255)->default('Freelance')->nullable();
-            $table->timestamps(); // created_at, updated_at
+            $table->timestamps();
         });
     }
 

@@ -15,12 +15,14 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('project_id')
-                ->references('id')->on('projects')
+                ->references('id')
+                ->on('projects')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->foreign('tag_id')
-                ->references('id')->on('tags')
+                ->references('id')
+                ->on('tags')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

@@ -15,9 +15,12 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->enum('status', ['Active', 'Inactive', 'In a Bootcamp', 'In a Job'])->default('Active');
             $table->timestamps();
-            $table->char('user_id', 36)->nullable();
+            $table->char('user_id', 36)->nullable()->index();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

@@ -16,11 +16,13 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('bootcamp_id')
-                ->references('id')->on('bootcamps')
+                ->references('id')
+                ->on('bootcamps')
                 ->onDelete('cascade');
 
             $table->foreign('resume_id')
-                ->references('id')->on('resumes')
+                ->references('id')
+                ->on('resumes')
                 ->onDelete('cascade');
         });
     }
