@@ -101,90 +101,121 @@ class JobOfferCommandTest extends TestCase
             'skills' => $skills
         ]);
     }
-   
-    /* Unupdated tests:
   
-    public function testCreateJobOfferWithMissingRequiredFields(): void
-    {
-        $this->expectException(\Symfony\Component\Console\Exception\RuntimeException::class);
+public function testCreateMultipleJobOffers(): void
+{
+    $initialCount = JobOffer::where('recruiter_id', $this->recruiter->id)->count();
 
-        Artisan::call('job:offer:create', [
-            'recruiter_id' => $this->recruiter->id,
-            'description' => 'Looking for a Junior Developer.'
+    $jobOffers = JobOffer::factory()
+        ->count(5)
+        ->create([
+            'recruiter_id' => $this->recruiter->id
         ]);
-    }
-    public function testCreateMultipleJobOffers(): void
-    {
-        $initialCount = JobOffer::where('recruiter_id', $this->recruiter->id)->count();
+    $this->assertEquals($initialCount + 5, JobOffer::where('recruiter_id', $this->recruiter->id)->count());
 
-        $jobOffers =  JobOffer::factory()
-            ->count(5)
-            ->create([
-                'recruiter_id' => $this->recruiter->id
-            ]);
-        $this->assertEquals($initialCount + 5, JobOffer::where('recruiter_id', $this->recruiter->id)->count());
-
-        foreach ($jobOffers as $jobOffer) {
-            $this->assertDatabaseHas('job_offers', [
-                'id' => $jobOffer->id,
-                'recruiter_id' => $this->recruiter->id
-            ]);
-        }
-    }
-    public function testCreateJobOfferWithInvalidRecruiterId(): void
-    {
-        $this->expectException(\Symfony\Component\Console\Exception\RuntimeException::class);
-
-        Artisan::call('job:offer:create', [
-            'recruiter_id' => 0,
-            'title' => 'Software Engineer',
-            'description' => 'Looking for a Junior Developer.'
-        ]);
-    }
-    public function testCreateJobOfferWithInvalidSkills(): void
-    {
-        $this->expectException(\Illuminate\Validation\ValidationException::class);
-
-        Artisan::call('job:offer:create', [
-            'recruiter_id' => $this->recruiter->id,
-            'title' => $this->faker->jobTitle(),
-            'description' => $this->faker->text(),
-            'location' => $this->faker->city(),
-            'skills' => ['PHP', 'Laravel', 'MySQL'],
-            'salary' => 50000
-        ]);
-    }
-    public function testCreateJobOfferCommandWithTooLongDescription(): void
-    {
-        $longDescription = str_repeat('a', 1000);
-
-        $exitCode = Artisan::call('job:offer:create', [
-            'recruiter_id' => $this->recruiter->id,
-            'title' => $this->faker->jobTitle(),
-            'description' => $longDescription,
-            'location' => $this->faker->city(),
-            'skills' => 'PHP, Laravel, MySQL',
-            'salary' => 50000
-        ]);
-
-        $this->assertEquals(0, $exitCode);
+    foreach ($jobOffers as $jobOffer) {
         $this->assertDatabaseHas('job_offers', [
-            'description' => $longDescription,
+            'id' => $jobOffer->id,
             'recruiter_id' => $this->recruiter->id
         ]);
     }
-    public function testJobOfferCreateCommandEnsuresSalaryIsPositive(): void
-    {
-        $this->expectException(\Illuminate\Validation\ValidationException::class);
+}
+public function testJobOfferCanBeCreatedViaCommand(): void
+{
+    $this->artisan('job:offer:create')
+        ->expectsQuestion('Introdueix l\'ID del reclutador', $this->recruiter->id)
+        ->expectsQuestion('Introdueix el títol de l\'oferta', 'Test Job')
+        ->expectsQuestion('Introdueix la descripció de l\'oferta', 'Test Description')
+        ->expectsQuestion('Introdueix la ubicació', 'Test Location')
+        ->expectsQuestion('Introdueix el salari', '50000')
+        ->expectsQuestion('Introdueix les habilitats requerides (opcional, separades per comes)', '')
+        ->assertExitCode(0);
 
-        Artisan::call('job:offer:create', [
-            'recruiter_id' => $this->recruiter->id,
-            'title' => $this->faker->jobTitle(),
-            'description' => $this->faker->text(),
-            'location' => $this->faker->city(),
-            'skills' => 'PHP, Laravel, MySQL',
-            'salary' => -5000
-        ]);
-    }
-        */
+    $this->assertDatabaseHas('job_offers', [
+        'recruiter_id' => $this->recruiter->id,
+        'title' => 'Test Job',
+        'description' => 'Test Description',
+        'location' => 'Test Location',
+        'salary' => 50000,
+    ]);
+}
+
+/**
+ * @dataProvider invalidDataProvider
+ */
+public function testReturnsErrorCodeOnInvalidData($invalidData): void
+{
+    $this->artisan('job:offer:create')
+        ->expectsQuestion('Introdueix l\'ID del reclutador', $this->recruiter->id)
+        ->expectsQuestion('Introdueix el títol de l\'oferta', $invalidData['title'])
+        ->expectsQuestion('Introdueix la descripció de l\'oferta', $invalidData['description'])
+        ->expectsQuestion('Introdueix la ubicació', $invalidData['location'])
+        ->expectsQuestion('Introdueix el salari', $invalidData['salary'])
+        ->expectsQuestion('Introdueix les habilitats requerides (opcional, separades per comes)', '')
+        ->assertExitCode(1);
+}
+
+public static function invalidDataProvider(): array
+{
+    return [
+        // Invalid title
+        'invalid title: too long' => [[
+            'title' => str_repeat('A', 256),
+            'description' => 'Valid Description',
+            'location' => 'Valid Location',
+            'salary' => '50000',
+        ]],
+        'invalid title: empty' => [[
+            'title' => '',
+            'description' => 'Valid Description',
+            'location' => 'Valid Location',
+            'salary' => '50000',
+        ]],
+        // Invalid description
+        'invalid description: too short' => [[
+            'title' => 'Valid Job',
+            'description' => 'Too',
+            'location' => 'Valid Location',
+            'salary' => '50000',
+        ]],
+        'invalid description: empty' => [[
+            'title' => 'Valid Job',
+            'description' => '',
+            'location' => 'Valid Location',
+            'salary' => '50000',
+        ]],
+        // Invalid location
+        'invalid location: empty' => [[
+            'title' => 'Valid Job',
+            'description' => 'Valid Description',
+            'location' => '',
+            'salary' => '50000',
+        ]],
+        'invalid location: too long' => [[
+            'title' => 'Valid Job',
+            'description' => 'Valid Description',
+            'location' => str_repeat('L', 256),
+            'salary' => '50000',
+        ]],
+        // Invalid salary
+        'invalid salary: not a number' => [[
+            'title' => 'Valid Job',
+            'description' => 'Valid Description',
+            'location' => 'Valid Location',
+            'salary' => 'NotANumber',
+        ]],
+        'invalid salary: negative' => [[
+            'title' => 'Valid Job',
+            'description' => 'Valid Description',
+            'location' => 'Valid Location',
+            'salary' => '-1000',
+        ]],
+        'invalid salary: empty' => [[
+            'title' => 'Valid Job',
+            'description' => 'Valid Description',
+            'location' => 'Valid Location',
+            'salary' => '',
+        ]],
+    ];
+}
 }
