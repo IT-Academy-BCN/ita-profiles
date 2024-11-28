@@ -1,6 +1,5 @@
-import { Github, ArrowLeft, ArrowRight } from '../../../../assets/icons'
-import { ArrowRightProjects } from '../../../../assets/icons/index'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
+import { Github, ArrowLeft, ArrowRight, ArrowRightProjects } from '../../../../assets/icons/index'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
 import { Carousel } from '../../../molecules/Carousel'
 

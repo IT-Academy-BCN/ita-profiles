@@ -9,8 +9,7 @@ import { detailThunk } from '../../../../../store/thunks/getDetailResourceStuden
 import UploadProfilePhoto from './editStudentProfile/UploadProfilePhoto'
 import EditSkills from './editStudentProfile/EditSkills'
 import { updateTags, setEditProfileModalIsOpen,} from '../../../../../store/slices/student/detailSlice'
-import { Stud1 as ProfilePicture } from '../../../../../assets/icons/index'
-import { Github, Linkedin, Pencil } from '../../../../../assets/icons'
+import { Github, Linkedin, Pencil, Stud1 as ProfilePicture } from '../../../../../assets/icons/index'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =

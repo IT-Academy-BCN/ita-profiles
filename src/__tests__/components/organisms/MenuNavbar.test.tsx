@@ -1,5 +1,5 @@
-import MenuNavbar from '../../components/organisms/MenuNavbar'
-import { render } from '../test-utils'
+import MenuNavbar from '../../../components/organisms/MenuNavbar'
+import { render } from '../../test-utils'
 
 describe('MenuNavbar', () => {
   it('should render the MenuNavbar component', () => {
