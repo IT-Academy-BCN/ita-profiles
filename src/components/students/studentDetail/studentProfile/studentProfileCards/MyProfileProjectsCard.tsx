@@ -18,11 +18,11 @@ const MyProfileProjectsCard: React.FC = () => {
             <div className="flex justify-between">
                 <h3 className="text-lg font-bold">Proyectos</h3>
                 {projectsData && (
-                    <button 
+                    <button
                         className='flex items-center text-xs font-semibold rounded-md border border-gray-3 px-2 py-0 mr-auto ml-4'
                         type='button'
-                        >                        
-                        Nuevo proyecto                       
+                    >
+                        Nuevo proyecto
                     </button>
                 )}
                 <div className="h-3 self-end">
@@ -50,7 +50,7 @@ const MyProfileProjectsCard: React.FC = () => {
                 <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
                     {projectsData.map((project) => (
                         <div
-                            key={project.uuid}
+                            key={project.id}
                             className="flex flex-col gap-1 rounded-xl border border-gray-3 px-5 py-3.5 "
                         >
                             <div className="flex items-center justify-between">
