@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import { Provider } from 'react-redux' 
 import { render } from '../../../../test-utils'
-import Landing from '../../../../../components/landing/Landing'
+import HomeLayout from '../../../../../components/organisms/HomeLayout'
 import { store } from '../../../../../store/store'
 
 describe('StudentDetailsLayout', () => {
@@ -9,7 +9,7 @@ describe('StudentDetailsLayout', () => {
   it('should render the studentDetailsLayout component correctly', () => {
     const { container } = render(
       <Provider store={store}>
-        <Landing />
+        <HomeLayout />
       </Provider>,
     )
     expect(container).toBeInTheDocument()

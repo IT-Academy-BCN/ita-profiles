@@ -1,6 +1,6 @@
 import React from 'react'
-import { Pencil } from '../../../../../assets/svg'
-import medal from '../../../../../assets/img/medal-dynamic-color.png'
+import { Pencil } from '../../../../../assets/icons'
+import medal from '../../../../../assets/icons/medal-dynamic-color.png'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 

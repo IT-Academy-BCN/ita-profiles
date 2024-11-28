@@ -1,8 +1,8 @@
-import { Github, ArrowLeft, ArrowRight } from '../../../../assets/svg'
-import { ArrowRightProjects } from '../../../../assets/img'
+import { Github, ArrowLeft, ArrowRight } from '../../../../assets/icons'
+import { ArrowRightProjects } from '../../../../assets/icons/index'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
-import { Carousel } from '../../../atoms/Carousel'
+import { Carousel } from '../../../molecules/Carousel'
 
 const ProjectsCard: React.FC = () => {
     const { studentProjects } = useAppSelector((state) => state.ShowStudentReducer)

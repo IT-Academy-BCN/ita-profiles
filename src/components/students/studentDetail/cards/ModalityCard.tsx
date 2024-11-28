@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import remoto from '../../../../assets/svg/remoto.svg'
+import remote from '../../../../assets/icons/remote.svg'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
 
@@ -25,7 +25,7 @@ const ModalityCard: React.FC = () => {
                 <div className="flex-col items-center ">
                     {modalityData.map((modality) => (
                         <div key={uuidv4()} className="flex gap-3 py-1">
-                            <img src={remoto} className="pr-2" alt="remoto" />
+                            <img src={remote} className="pr-2" alt="remoto" />
                             <p className="text-sm font-semibold text-black-2">
                                 {modality.toString()}
                             </p>

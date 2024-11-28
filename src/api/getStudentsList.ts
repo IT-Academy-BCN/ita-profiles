@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { IStudentList } from '../interfaces/interfaces';
 
 // eslint-disable-next-line consistent-return
-export const FetchStudentsList = async (selectedRoles: Array<string> = []) => {
+export const getStudentsList = async (selectedRoles: Array<string> = []) => {
 
   try {
     let queryParams = '';

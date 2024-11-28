@@ -1,4 +1,4 @@
-import MenuNavbar from '../../components/menuNavbar/MenuNavbar'
+import MenuNavbar from '../../components/organisms/MenuNavbar'
 import { render } from '../test-utils'
 
 describe('MenuNavbar', () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Close } from '../../../assets/svg'
+import { Close } from '../../../assets/icons'
 import ProjectsCard from './cards/ProjectsCard'
 import CollaborationCard from './cards/CollaborationCard'
 import BootcampCard from './cards/BootcampCard'

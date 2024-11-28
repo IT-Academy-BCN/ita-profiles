@@ -1,6 +1,6 @@
 import ProfileProgress from './ProfileProgress';
-import LikeIcon from '../../../../assets/img/like.png';
-import CheckedIcon from '../../../../assets/img/likeChecked.png'
+import ThumbsUpGray from '../../../../assets/icons/thumbs-up-gray.png';
+import thumbsUpPink from '../../../../assets/icons/thumbs-up-pink.png'
 
 const items = [
   { id: 1, text: 'Nombre, título, gitHub y Linkedin', checked: true },
@@ -29,9 +29,9 @@ const CompletedSteps = () => (
       {items.map((item) => (
         <li key={item.id} className={`my-4 font-semibold flex text-xl ${item.checked ? 'text-primary' : 'text-gray-3'}`}>
           {item.checked ? (
-            <img src={CheckedIcon} alt="like" className="mr-2 w-8 h-8" />
+            <img src={thumbsUpPink} alt="completed" className="mr-2 w-8 h-8" />
           ) : (
-            <img src={LikeIcon} alt="dislike" className="mr-2 w-8 h-8" />
+            <img src={ThumbsUpGray} alt="not completed" className="mr-2 w-8 h-8" />
           )}
 
           {item.text}

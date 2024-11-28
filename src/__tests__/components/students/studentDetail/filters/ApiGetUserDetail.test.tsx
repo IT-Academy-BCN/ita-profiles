@@ -3,7 +3,7 @@ import axios from 'axios'
 import { fireEvent, render } from '@testing-library/react'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import MockAdapter from 'axios-mock-adapter'
-import { FetchStudentsList } from '../../../../../api/FetchStudentsList'
+import { getStudentsList } from '../../../../../api/getStudentsList'
 import {
     StudentFiltersProvider,
     StudentFiltersContext,
@@ -30,7 +30,7 @@ describe('FetchStudentsList function', () => {
 
         mockAxios.onGet(expectedUrl).reply(200, mockData)
 
-        const result = await FetchStudentsList(selectedRoles)
+        const result = await getStudentsList(selectedRoles)
 
         expect(result).toEqual(mockData)
     })
@@ -42,7 +42,7 @@ describe('FetchStudentsList function', () => {
 
         mockAxios.onGet(expectedUrl).reply(500)
 
-        await expect(FetchStudentsList(selectedRoles)).rejects.toThrow()
+        await expect(getStudentsList(selectedRoles)).rejects.toThrow()
     })
 })
 

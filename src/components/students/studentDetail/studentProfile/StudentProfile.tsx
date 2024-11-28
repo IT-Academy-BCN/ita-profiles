@@ -1,6 +1,6 @@
 import StudentProfileContent from './StudentProfileContent'
-import MenuNavbar from '../../../menuNavbar/MenuNavbar'
-import UserNavbar from '../../../userNavBar/UserNavbar'
+import MenuNavbar from '../../../organisms/MenuNavbar'
+import UserNavbar from '../../../organisms/UserNavbar'
 import CompletedSteps from './CompletedSteps'
 
 const StudentProfile: React.FC = () => (

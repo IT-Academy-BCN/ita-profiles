@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LoginUserSchema } from '../../schemes/schemas'
+import { LoginUserSchema } from '../../schemas/loginSchema'
 import { ILoginForm, UserResponseData } from '../../interfaces/interfaces'
 import { useLogin } from '../../context/LoginContext'
 

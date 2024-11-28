@@ -1,11 +1,11 @@
-import MenuNavbar from '../menuNavbar/MenuNavbar'
-import UserNavbar from '../userNavBar/UserNavbar'
+import MenuNavbar from './MenuNavbar'
+import UserNavbar from './UserNavbar'
 import StudentDetailsLayout from '../students/studentDetail/StudentDetailsLayout'
 import StudentsLayout from '../students/StudentsLayout'
 import StudentFiltersLayout from '../students/studentDetail/filters/StudentFiltersLayout'
 import { StudentFiltersProvider } from '../../context/StudentFiltersContext'
 
-const Landing = () => (
+const HomeLayout = () => (
     <div className="flex h-screen">
         <MenuNavbar data-testid="MenuNavbar" /> {/* Added data-testid */}
         <div className="flex w-full md:w-[calc(100%-176px)] flex-col gap-3 p-2.5 md:p-2 md:pb-8 md:pr-14">
@@ -26,4 +26,4 @@ const Landing = () => (
     </div>
 )
 
-export default Landing
+export default HomeLayout

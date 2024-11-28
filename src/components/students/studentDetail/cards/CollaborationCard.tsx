@@ -1,5 +1,5 @@
-import target from '../../../../assets/img/target.png'
-import folder from '../../../../assets/img/folder.png'
+import target from '../../../../assets/icons/target.png'
+import folder from '../../../../assets/icons/folder.png'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
 

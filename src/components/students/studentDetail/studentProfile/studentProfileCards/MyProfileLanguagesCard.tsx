@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux'
-import { Pencil } from '../../../../../assets/svg'
+import { Pencil } from '../../../../../assets/icons'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditAdditionalInformation } from './editStudentProfile/additionalInformation/EditAdditionalInformation'
 import { toggleEditAdditionalInformation } from '../../../../../store/slices/student/languagesSlice'
-import { ModalPortals } from '../../../../ModalPortals'
+import { ModalPortals } from '../../../../atoms/ModalPortals'
 
 const MyProfileLanguagesCard: React.FC = () => {
     const { studentLanguages } = useAppSelector((state) => state.ShowStudentReducer)

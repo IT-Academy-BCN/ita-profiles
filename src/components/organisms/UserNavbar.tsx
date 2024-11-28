@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { Lock, ArrowDown, BurgerMenu, Settings, UserIcon } from '../../assets/svg'
-import LoginPopup from '../login_&_register/LoginPopup'
-import RegisterPopup from '../login_&_register/RegisterPopup'
+import { Lock, ArrowDown, BurgerMenu, Settings, UserIcon } from '../../assets/icons'
+import LoginPopup from './Login'
+import RegisterPopup from './RegisterPopup'
 import { useLogin } from '../../context/LoginContext'
 
 const UserNavbar: React.FC = () => {

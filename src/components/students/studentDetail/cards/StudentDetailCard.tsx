@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Github, Linkedin } from '../../../../assets/svg'
-import { Stud1 as ProfilePicture } from '../../../../assets/img'
+import { Github, Linkedin } from '../../../../assets/icons'
+import { Stud1 as ProfilePicture } from '../../../../assets/icons/index'
 import { ITag } from '../../../../interfaces/interfaces'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'

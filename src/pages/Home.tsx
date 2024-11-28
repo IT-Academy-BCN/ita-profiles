@@ -1,5 +1,5 @@
-import Landing from '../components/landing/Landing'
+import HomeLayout from '../components/organisms/HomeLayout'
 
-const Home = () => <Landing />
+const Home = () => <HomeLayout />
 
 export default Home

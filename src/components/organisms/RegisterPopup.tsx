@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { UserSchema } from '../../schemes/schemas'
+import { UserSchema } from '../../schemas/loginSchema'
 
 type RegisterPopupProps = {
   onClose: () => void

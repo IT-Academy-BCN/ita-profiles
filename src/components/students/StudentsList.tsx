@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import StudentCard from './StudentCard'
 import { useAppSelector } from '../../hooks/ReduxHooks'
 import { IStudentList } from '../../interfaces/interfaces'
-import { FetchStudentsList } from '../../api/FetchStudentsList'
+import { getStudentsList } from '../../api/getStudentsList'
 import { StudentFiltersContext } from '../../context/StudentFiltersContext'
 
 const StudentsList: React.FC = () => {
@@ -17,7 +17,7 @@ const StudentsList: React.FC = () => {
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const studentsList = await FetchStudentsList(
+                const studentsList = await getStudentsList(
                     studentFilterContext?.selectedRoles || [],
                 )
                 setStudents(studentsList)

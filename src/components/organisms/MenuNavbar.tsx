@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { ItAcademyLogo } from '../../assets/svg'
+import ItAcademyLogo from '../../assets/it-academy-logo.svg'
 
 const MenuNavbar = () => {
   const [activeItem, setActiveItem] = useState('Perfiles')

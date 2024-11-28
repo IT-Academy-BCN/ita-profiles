@@ -3,12 +3,11 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { describe, test, expect, beforeEach, beforeAll, afterEach, afterAll, vi } from 'vitest'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import LoginPopup from '../../../components/login_&_register/LoginPopup'
+import LoginPopup from '../../../components/organisms/Login'
 import { LoginContext } from '../../../context/LoginContext'
 
 
 // Source: https://gist.github.com/CarmeloRicarte/ee7b9908c0ef20eae32428de77a0cd4a
-// But nothing is working...
 // this is how to mock partial library for mock a method, in this case, useNavigate
 const mockNavigate = vi.fn();
 vi.mock("react-router-dom", async () => {

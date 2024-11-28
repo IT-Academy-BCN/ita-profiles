@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import remoto from '../../../../../assets/svg/remoto.svg'
+import remoto from '../../../../../assets/icons/remote.svg'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 

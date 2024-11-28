@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { Provider } from "react-redux"
-import { store } from "../../store/store" 
-import StudentDetailsContent from "../../components/students/studentDetail/StudentDetailsContent"
+import { store } from "../../../store/store" 
+import StudentDetailsContent from "../../../components/students/studentDetail/StudentDetailsContent"
 
 
 describe('StudentDetailsContent', () => {

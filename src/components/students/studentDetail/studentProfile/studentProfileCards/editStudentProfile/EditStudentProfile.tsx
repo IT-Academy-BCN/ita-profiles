@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { useRef } from 'react'
-import { Close } from '../../../../../../assets/svg'
-import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
+import { Close } from '../../../../../../assets/icons'
+import { Stud1 as defaultPhoto } from '../../../../../../assets/icons/index'
 import { useEditStudentProfile } from '../../../../../../hooks/useEditstudentProfile'
 
 interface EditStudentProfileProps {

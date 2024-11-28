@@ -6,7 +6,7 @@ import {
 } from '../../../../../../hooks/ReduxHooks'
 import { updateTags } from '../../../../../../store/slices/student/detailSlice'
 import { TSkills, ITag } from '../../../../../../interfaces/interfaces'
-import { Close } from '../../../../../../assets/svg'
+import { Close } from '../../../../../../assets/icons'
 
 const fetchTags = async (
     setTagList: React.Dispatch<React.SetStateAction<ITag[]>>,

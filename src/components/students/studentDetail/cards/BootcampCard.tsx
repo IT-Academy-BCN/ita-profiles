@@ -1,5 +1,5 @@
 import React from 'react'
-import medal from '../../../../assets/img/medal-dynamic-color.png'
+import medal from '../../../../assets/icons/medal-dynamic-color.png'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
 

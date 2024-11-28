@@ -10,7 +10,7 @@ import { TLanguage } from '../../../../../../../interfaces/interfaces'
 import EditModality from './EditModality'
 import DragAndDropLanguages from './DragAndDropLanguages'
 import useEditAdditionalInformationHook from '../../../../../../../hooks/useEditAdditionalInformationHook'
-import { Close } from '../../../../../../../assets/svg'
+import { Close } from '../../../../../../../assets/icons'
 import { updateProfileLanguagesThunk } from '../../../../../../../store/thunks/updateProfileLanguagesThunk'
 import { callUpdateStudent } from '../../../../../../../api/student/callUpdateStudent'
 

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import useUploadProfilePhotoHook from '../../../../../../hooks/useUploadProfilePhotoHook'
-import { Close } from '../../../../../../assets/svg'
+import { Close } from '../../../../../../assets/icons'
 
 const UploadProfilePhoto: FC = () => {
     const {
