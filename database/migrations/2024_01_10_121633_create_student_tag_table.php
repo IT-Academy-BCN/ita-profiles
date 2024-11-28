@@ -8,26 +8,27 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('additional_training_resume', function (Blueprint $table) {
+        Schema::create('student_tag', function (Blueprint $table) {
             $table->id();
-            $table->uuid('resume_id');
-            $table->uuid('additional_training_id');
+            $table->unsignedBigInteger('tag_id');
+            $table->uuid('student_id');
             $table->timestamps();
 
-            $table->foreign('resume_id')
+            $table->foreign('student_id')
                 ->references('id')
-                ->on('resumes')
-                ->onDelete('cascade');
+                ->on('students')
+                ->onUpdate('cascade');
 
-            $table->foreign('additional_training_id')
+            $table->foreign('tag_id')
                 ->references('id')
-                ->on('additional_trainings')
+                ->on('tags')
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('additional_training_resume');
+        Schema::dropIfExists('student_tag');
     }
 };
