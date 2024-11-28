@@ -53,8 +53,16 @@ export type TModality = {
     modality: string[]
 }
 
+export type TUpdateProject = {
+    name: string
+    company_name: string
+    tags: string[]
+    project_url: string
+    github_url: string
+}
+
 export type TProject = {
-    uuid: number
+    id: string
     name: string
     company_name: string
     tags: ITag[]
@@ -62,21 +70,21 @@ export type TProject = {
     github_url: string
 }
 export type TAvailableLanguage = {
-    name: string,
+    name: string
     es_name: string
 }
-export type TLanguageLevel = "Bàsic" | "Intermedi" | "Avançat" | "Natiu";
+export type TLanguageLevel = 'Bàsic' | 'Intermedi' | 'Avançat' | 'Natiu'
 
 export type TUpdateStudentLanguageNotification = {
-    message: string | null,
+    message: string | null
 }
 export type TInitialStateLanguageSlice = {
-    isLoadingLanguages: boolean,
-    isErrorLanguages: boolean,
-    languagesData: TLanguage[],
-    isOpenEditAdditionalInformation: boolean,
-    isLoadingUpdateLanguages: boolean,
-    isErrorUpdateLanguages: boolean,
+    isLoadingLanguages: boolean
+    isErrorLanguages: boolean
+    languagesData: TLanguage[]
+    isOpenEditAdditionalInformation: boolean
+    isLoadingUpdateLanguages: boolean
+    isErrorUpdateLanguages: boolean
     notification: TUpdateStudentLanguageNotification
 }
 export type TLanguage = {
@@ -86,7 +94,7 @@ export type TLanguage = {
 }
 
 export type TAbout = {
-    id: number
+    id: string
     name: string
     surname: string
     resume: {
@@ -131,6 +139,17 @@ export interface TSkills {
     onSave: (skills: string[]) => void
 }
 
+export type TInitialStateProjectsSlice = {
+    isLoadingProjects: boolean
+    isErrorProjects: boolean
+    projectsData: TProject[]
+    editProjectModalIsOpen: boolean
+    selectedProjectID: null | string
+    isLoadingUpdateProjects: boolean
+    isErrorUpdateProjects: boolean
+    isSuccessUpdateProjects: boolean
+}
+
 export type TDragAndDropLanguagesProps = {
-    dropLanguages: TLanguage[],
+    dropLanguages: TLanguage[]
 }

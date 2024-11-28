@@ -3,6 +3,7 @@ import { RefObject, useCallback, useEffect } from 'react'
 export const useCloseWhenClickOutside = (
     modalRef: RefObject<HTMLElement>,
     handleModal: () => void,
+    isModalOpen: boolean,
 ) => {
     const handleClickOutside = useCallback(
         (event: MouseEvent) => {
@@ -17,11 +18,23 @@ export const useCloseWhenClickOutside = (
         [handleModal, modalRef],
     )
 
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent) => {
+            if (event.key === 'Escape' && isModalOpen) {
+                handleModal()
+            }
+        },
+        [handleModal, isModalOpen],
+    )
     useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside)
+        if (isModalOpen) {
+            document.addEventListener('mousedown', handleClickOutside)
+            document.addEventListener('keydown', handleKeyDown)
+
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutside)
+                document.removeEventListener('keydown', handleKeyDown)
+            }
         }
-    }, [handleModal, handleClickOutside])
-    
+    }, [isModalOpen, handleClickOutside, handleKeyDown])
 }

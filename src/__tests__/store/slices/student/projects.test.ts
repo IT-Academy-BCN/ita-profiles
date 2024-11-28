@@ -1,39 +1,38 @@
-import studentProjects from '../../../../store/slices/student/projectsSlice'
+import studentProjects, {
+    initialState,
+} from '../../../../store/slices/student/projectsSlice'
 
 describe('Student Projects Test (Redux)', () => {
     it('should be defined Student Projects Slice', () => {
         expect(studentProjects).toBeDefined()
     })
 
-    it('should be defined Student Projects return initialState', () => {
+    it('should return initialState', () => {
         expect(
-            studentProjects(undefined, {
+            studentProjects(initialState, {
                 type: 'object',
                 payload: [],
             }),
         ).toEqual({
-            isLoadingProjects: false,
-            isErrorProjects: false,
-            projectsData: [],
+            ...initialState,
         })
     })
 
-    it('should be projectsThunk/pending return State', () => {
+    it('projectThunk/pending  should return  inLoadingProject : true', () => {
         expect(
-            studentProjects(undefined, {
+            studentProjects(initialState, {
                 type: 'projectsThunk/pending',
                 payload: [],
             }),
         ).toEqual({
+            ...initialState,
             isLoadingProjects: true,
-            isErrorProjects: false,
-            projectsData: [],
         })
     })
 
-    it('should be projectsThunk/fulfilled return State', () => {
+    it('projectsThunk/fulfilled should return data', () => {
         expect(
-            studentProjects(undefined, {
+            studentProjects(initialState, {
                 type: 'projectsThunk/fulfilled',
                 payload: {
                     projects: [
@@ -54,8 +53,7 @@ describe('Student Projects Test (Redux)', () => {
                 },
             }),
         ).toEqual({
-            isLoadingProjects: false,
-            isErrorProjects: false,
+            ...initialState,
             projectsData: [
                 {
                     uuid: '9becbb14-0267-409b-9c77-9377ce67c9cf',
@@ -71,19 +69,57 @@ describe('Student Projects Test (Redux)', () => {
                     project_repository: 'string',
                 },
             ],
+            selectedProjectID: null,
         })
     })
 
-    it('should be projectsThunk/rejected return State', () => {
+    it('projectsThunk/rejected should return errorProject : true ', () => {
         expect(
-            studentProjects(undefined, {
+            studentProjects(initialState, {
                 type: 'projectsThunk/rejected',
                 payload: [],
             }),
         ).toEqual({
-            isLoadingProjects: false,
+            ...initialState,
             isErrorProjects: true,
-            projectsData: [],
+        })
+    })
+
+    it('updateProjectsThunk/pending  should return  isLoadingUpdateProjects : true', () => {
+        expect(
+            studentProjects(initialState, {
+                type: 'updateProjectsThunk/pending',
+                payload: [],
+            }),
+        ).toEqual({
+            ...initialState,
+            isLoadingUpdateProjects: true,
+        })
+    })
+
+    it('updateProjectsThunk/rejected  should return  isErrorUpdateProjects : true', () => {
+        expect(
+            studentProjects(initialState, {
+                type: 'updateProjectsThunk/rejected',
+                payload: [],
+            }),
+        ).toEqual({
+            ...initialState,
+            isLoadingUpdateProjects: false,
+            isErrorUpdateProjects: true,
+        })
+    })
+
+    it('updateProjectsThunk/fulfilled  should return  isSuccessUpdateProjects : true', () => {
+        expect(
+            studentProjects(initialState, {
+                type: 'updateProjectsThunk/fulfilled',
+                payload: [],
+            }),
+        ).toEqual({
+            ...initialState,
+            isLoadingUpdateProjects: false,
+            isSuccessUpdateProjects: true,
         })
     })
 })

@@ -10,7 +10,7 @@ export const useEditStudentProfile = () => {
     const { aboutData, editProfileModalIsOpen } = useAppSelector(
         (state) => state.ShowStudentReducer.studentDetails,
     )
-    const id = aboutData.id.toString()
+    const { id } = aboutData
 
     const submitForm = async (
         data: TStudentFormData,
@@ -31,6 +31,7 @@ export const useEditStudentProfile = () => {
     const toggleProfileImage = () => {
         dispatch(setEditProfileImageIsOpen())
     }
+    
     const defaultValues = {
         name: aboutData.name,
         surname: aboutData.surname,

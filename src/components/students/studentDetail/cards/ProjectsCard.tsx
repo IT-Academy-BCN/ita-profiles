@@ -5,7 +5,9 @@ import LoadingSpiner from '../../../atoms/LoadingSpiner'
 import { Carousel } from '../../../atoms/Carousel'
 
 const ProjectsCard: React.FC = () => {
-    const { studentProjects } = useAppSelector((state) => state.ShowStudentReducer)
+    const { studentProjects } = useAppSelector(
+        (state) => state.ShowStudentReducer,
+    )
     const { projectsData, isLoadingProjects, isErrorProjects } = studentProjects
 
     const { scrollLeft, scrollRight, carouselRef } = Carousel()
@@ -42,7 +44,7 @@ const ProjectsCard: React.FC = () => {
                 <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
                     {projectsData.map((project) => (
                         <div
-                            key={project.uuid}
+                            key={project.id}
                             className="flex flex-col gap-1 rounded-xl border border-gray-3 px-5 py-3.5 "
                         >
                             <div className="flex items-center justify-between">

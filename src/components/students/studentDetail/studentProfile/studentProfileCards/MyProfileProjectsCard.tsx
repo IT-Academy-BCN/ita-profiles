@@ -1,14 +1,33 @@
-import { Github, Pencil, ArrowLeft, ArrowRight } from '../../../../../assets/svg'
+import {
+    Github,
+    Pencil,
+    ArrowLeft,
+    ArrowRight,
+} from '../../../../../assets/svg'
 import { ArrowRightProjects } from '../../../../../assets/img'
-import { useAppSelector } from '../../../../../hooks/ReduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { Carousel } from '../../../../atoms/Carousel'
+import {
+    setEditProjectModalIsOpen,
+    setSelectedProjectID,
+} from '../../../../../store/slices/student/projectsSlice'
+import { EditStudentProjects } from '../editStudentProfile/EditStudentProjects'
+import { ModalPortals } from '../../../../ModalPortals'
 
 const MyProfileProjectsCard: React.FC = () => {
-    const { studentProjects } = useAppSelector((state) => state.ShowStudentReducer)
+    const { studentProjects } = useAppSelector(
+        (state) => state.ShowStudentReducer,
+    )
+    const dispatch = useAppDispatch()
     const { projectsData, isLoadingProjects, isErrorProjects } = studentProjects
 
     const { scrollLeft, scrollRight, carouselRef } = Carousel()
+
+    const handlePencilClick = (id: string) => {
+        dispatch(setEditProjectModalIsOpen())
+        dispatch(setSelectedProjectID(id))
+    }
 
     return (
         <div
@@ -18,11 +37,11 @@ const MyProfileProjectsCard: React.FC = () => {
             <div className="flex justify-between">
                 <h3 className="text-lg font-bold">Proyectos</h3>
                 {projectsData && (
-                    <button 
-                        className='flex items-center text-xs font-semibold rounded-md border border-gray-3 px-2 py-0 mr-auto ml-4'
-                        type='button'
-                        >                        
-                        Nuevo proyecto                       
+                    <button
+                        className="flex items-center text-xs font-semibold rounded-md border border-gray-3 px-2 py-0 mr-auto ml-4"
+                        type="button"
+                    >
+                        Nuevo proyecto
                     </button>
                 )}
                 <div className="h-3 self-end">
@@ -38,6 +57,11 @@ const MyProfileProjectsCard: React.FC = () => {
                     </button>
                 </div>
             </div>
+
+            <ModalPortals>
+                <EditStudentProjects />
+            </ModalPortals>
+
             {isLoadingProjects && <LoadingSpiner />}
             {isErrorProjects && (
                 <LoadingSpiner
@@ -48,62 +72,71 @@ const MyProfileProjectsCard: React.FC = () => {
             )}
             {projectsData && (
                 <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
-                    {projectsData.map((project) => (
-                        <div
-                            key={project.uuid}
-                            className="flex flex-col gap-1 rounded-xl border border-gray-3 px-5 py-3.5 "
-                        >
-                            <div className="flex items-center justify-between">
-                                <div className="flex w-48 items-center gap-3">
-                                    <p className="text-md font-semibold ">
-                                        {project.name.slice(0, 15)}
-                                    </p>
-                                    <a
-                                        href={project.github_url}
-                                        className="flex items-center"
+                    {projectsData.map((project) => {
+                        return (
+                            <div
+                                key={project.id}
+                                className="flex flex-col gap-1 rounded-xl border border-gray-3 px-5 py-3.5 "
+                            >
+                                <div className="flex items-center justify-between">
+                                    <div className="flex w-48 items-center gap-3">
+                                        <p className="text-md font-semibold ">
+                                            {project.name.slice(0, 15)}
+                                        </p>
+                                        <a
+                                            href={project.github_url}
+                                            className="flex items-center"
+                                        >
+                                            <img
+                                                src={Github}
+                                                alt="github link"
+                                                className="w-6"
+                                            />
+                                        </a>
+                                    </div>
+                                    <button
+                                        aria-label="edit project pencil"
+                                        type="button"
+                                        className="mt-1 flex w-6 self-start hover:scale-105"
+                                        onClick={() =>
+                                            handlePencilClick(project.id)
+                                        }
                                     >
                                         <img
-                                            src={Github}
-                                            alt="github link"
-                                            className="w-6"
+                                            src={Pencil}
+                                            alt="edit project information"
+                                        />
+                                    </button>
+                                </div>
+                                <p className="text-sm text-gray-3">
+                                    {project.company_name}
+                                </p>
+                                <div className="flex items-center justify-between pt-3">
+                                    <div className="text-sm rounded-lg border border-black-3 px-2 py-1 font-semibold">
+                                        {project.tags
+                                            .slice(0, 2)
+                                            .map((tag, index) => (
+                                                <span key={tag.id}>
+                                                    {tag.name}
+                                                    {index !== 1 && ' · '}
+                                                </span>
+                                            ))}
+                                    </div>
+                                    <a
+                                        href={project.project_url}
+                                        type="button"
+                                        className="h-8 rounded-lg border border-black-3"
+                                    >
+                                        <img
+                                            src={ArrowRightProjects}
+                                            alt="right arrow button"
+                                            className="h-full"
                                         />
                                     </a>
                                 </div>
-                                <button
-                                    type="button"
-                                    className="-mt-1 flex w-6 self-start"
-                                >
-                                    <img src={Pencil} alt="edit project information" />
-                                </button>
                             </div>
-                            <p className="text-sm text-gray-3">
-                                {project.company_name}
-                            </p>
-                            <div className="flex items-center justify-between pt-3">
-                                <div className="text-sm rounded-lg border border-black-3 px-2 py-1 font-semibold">
-                                    {project.tags
-                                        .slice(0, 2)
-                                        .map((tag, index) => (
-                                            <span key={tag.id}>
-                                                {tag.name}
-                                                {index !== 1 && ' · '}
-                                            </span>
-                                        ))}
-                                </div>
-                                <a
-                                    href={project.project_url}
-                                    type="button"
-                                    className="h-8 rounded-lg border border-black-3"
-                                >
-                                    <img
-                                        src={ArrowRightProjects}
-                                        alt="right arrow button"
-                                        className="h-full"
-                                    />
-                                </a>
-                            </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
             )}
         </div>
