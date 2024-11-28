@@ -15,7 +15,8 @@ const App = () => {
   const { consoleLogDevelper } = useToastConsoleErrorListenerHook()
   useEffect(() => {
     consoleLogDevelper()
-  }, [])
+  }, [consoleLogDevelper])
+
   return (
     <>
       <SmallScreenProvider>
