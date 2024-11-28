@@ -23,7 +23,6 @@ const MyProfileStudentDetailCard: React.FC = () => {
         aboutData,
         isLoadingAboutData,
         isErrorAboutData,
-        editProfileImageIsOpen,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
 
     const [showEditSkills, setShowEditSkills] = useState(false)
@@ -65,17 +64,16 @@ const MyProfileStudentDetailCard: React.FC = () => {
         <div data-testid="StudentDataCard">
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
-
-            <ModalPortals>
-                <EditStudentProfile
-                    handleModal={handleModalEditProfile}
-                    handleRefresh={refreshStudentData}
-                />
-                {editProfileImageIsOpen && <UploadProfilePhoto />}
-            </ModalPortals>
-
-            {!isLoadingAboutData && (
+            {!isLoadingAboutData && aboutData && (
                 <div className="flex flex-col gap-4">
+                    <ModalPortals>
+                        <EditStudentProfile
+                            handleModal={handleModalEditProfile}
+                            handleRefresh={refreshStudentData}
+                        />
+                        <UploadProfilePhoto />
+
+                    </ModalPortals>
                     <div className="flex gap-3">
                         <img
                             src={ProfilePicture}
@@ -90,6 +88,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                             {aboutData.name}&nbsp;
                                             {aboutData.surname}
                                         </h2>
+
                                         <button
                                             className="ml-auto"
                                             type="button"
@@ -142,9 +141,9 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                     {fullDescriptionVisibility
                                         ? aboutData && aboutData.resume.about
                                         : `${aboutData.resume.about
-                                              .split(' ')
-                                              .slice(0, 15)
-                                              .join(' ')}...`}
+                                            .split(' ')
+                                            .slice(0, 15)
+                                            .join(' ')}...`}
                                     {!fullDescriptionVisibility && (
                                         <button
                                             type="button"
