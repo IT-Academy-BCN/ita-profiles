@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('password_client');
             $table->boolean('revoked');
             $table->timestamps();
-            $table->char('user_id', 36)->nullable()->index();
+            $table->uuid('user_id')->nullable()->index();
         });
     }
 
