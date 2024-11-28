@@ -7,27 +7,19 @@ namespace App\Console\Commands;
 use App\Http\Controllers\api\Company\CreateCompanyController;
 use App\Http\Requests\StoreCompanyRequest;
 use Illuminate\Console\Command;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Input\InputArgument;
 
 class CreateCompany extends Command
 {
-    protected $description =('Create a new company in the database giving the required arguments step by step in terminal.'.PHP_EOL.'  Example:
-    name: It Academy
-    email: itacademy@test.es
-    CIF: A1234567Z
-    location: Barcelona
-    website: https://itacademy.barcelonactiva.cat/');
-    
-    protected function configure()
-    {
-        $this->setName('create:company')
-            ->addArgument('name', InputArgument::OPTIONAL, 'The name of the company')
-            ->addArgument('email', InputArgument::OPTIONAL, 'The email address of the company')
-            ->addArgument('CIF', InputArgument::OPTIONAL, 'The unique CIF of the company')
-            ->addArgument('location', InputArgument::OPTIONAL, 'The physical location of the company')
-            ->addArgument('website', InputArgument::OPTIONAL, 'The company\'s website URL -OPTIONAL-');
-    }   
+    protected $description =(
+        'Create a new company in the database giving the required arguments step by step in terminal.'.PHP_EOL.'  Example:
+        name: It Academy
+        email: itacademy@test.es
+        CIF: A1234567Z
+        location: Barcelona
+        website: https://itacademy.barcelonactiva.cat/'
+    );
 
     /**
      * The CreateCompanyController instance.
@@ -47,12 +39,22 @@ class CreateCompany extends Command
         $this->createCompanyController = $createCompanyController;
     }
 
+    protected function configure()
+    {
+        $this->setName('create:company')
+            ->addArgument('name', InputArgument::OPTIONAL, 'The name of the company')
+            ->addArgument('email', InputArgument::OPTIONAL, 'The email address of the company')
+            ->addArgument('CIF', InputArgument::OPTIONAL, 'The unique CIF of the company')
+            ->addArgument('location', InputArgument::OPTIONAL, 'The physical location of the company')
+            ->addArgument('website', InputArgument::OPTIONAL, 'The company\'s website URL -OPTIONAL-');
+    }
+
+
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        try {
             $data = $this->askCompanyData();
             $request = $this->createRequest($data);
 
@@ -61,10 +63,6 @@ class CreateCompany extends Command
             $this->handleResponse($response);
 
             return 0;
-        } catch (ValidationException $e) {
-            $this->handleValidationException($e);
-            return 1;
-        }
     }
 
     /**
@@ -75,12 +73,39 @@ class CreateCompany extends Command
     protected function askCompanyData(): array
     {
         return [
-            'name' => $this->ask('Nombre de la compañia:'),
-            'email' => $this->ask('Email:'),
-            'CIF' => $this->ask('CIF:'),
-            'location' => $this->ask('Localizacion:'),
-            'website' => $this->ask('Pagina web:')
+            'name' => $this->askValid('Nombre de la compañía:', 'name'),
+            'email' => $this->askValid('Email:', 'email'),
+            'CIF' => $this->askValid('CIF:', 'CIF'),
+            'location' => $this->askValid('Localización:', 'location'),
+            'website' => $this->askValid('Página web:', 'website'),
         ];
+    }
+
+    /**
+     * Prompt the user for input and validate it using StoreCompanyRequest.
+     *
+     * @param string $question
+     * @param string $field
+     * @return string
+     */
+    protected function askValid(string $question, string $field): string|null
+    {
+        do {
+            $value = $this->ask($question);
+
+            $validator = Validator::make(
+                [$field => $value],
+                (new StoreCompanyRequest())->rules()
+            );
+
+            if ($validator->fails())
+            {
+                $this->error($validator->errors()->first($field));
+            } else
+            {
+                return $value;
+            }
+        } while (true);
     }
 
     /**
@@ -93,9 +118,6 @@ class CreateCompany extends Command
     {
         $request = new StoreCompanyRequest();
         $request->merge($data);
-        $request->setContainer(app())
-            ->setRedirector(app('redirect'))
-            ->validateResolved();
         return $request;
     }
 
@@ -112,17 +134,4 @@ class CreateCompany extends Command
         }
     }
 
-    /**
-     * Handle validation exceptions.
-     *
-     * @param ValidationException $e
-     */
-    protected function handleValidationException(ValidationException $e)
-    {
-        foreach ($e->errors() as $field => $messages) {
-            foreach ($messages as $message) {
-                $this->error("Error en el campo {$field}: {$message}");
-            }
-        }
-    }    
 }
