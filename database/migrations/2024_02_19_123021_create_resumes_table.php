@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('github_url', 255)->nullable()->unique();
             $table->enum('specialization', ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'])->default('Not Set');
             $table->enum('development', ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'])->default('Not Set');
+            // TODO: This should be an enum
             $table->longText('modality')->nullable()->collation('utf8mb4_bin')->check(function ($check) {
                 $check->json('modality');
             });
