@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\api\Student;
@@ -13,9 +14,12 @@ class AddStudentLanguageController extends Controller
 {
     public function __invoke(AddStudentLanguageRequest $request, Student $student): JsonResponse
     {
+        $this->authorize('update', $student);
+
         $data = $request->validated();
         $resume = $student->resume()->firstOrFail();
         $language = Language::findOrFail($data['language_id']);
+
 
         $resume->languages()->sync([$language->id], false);
 

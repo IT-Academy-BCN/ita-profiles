@@ -3,6 +3,7 @@
 namespace Tests\Feature\Controller\Student;
 
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Resume;
 use App\Models\Student;
 use App\Models\Collaboration;
@@ -14,6 +15,7 @@ class UpdateStudentCollaborationsControllerTest extends TestCase
     use DatabaseTransactions;
     use WithFaker;
 
+    private User $user;
     private Student $student;
     private Resume $resume;
     private array $collaborations;
@@ -22,11 +24,16 @@ class UpdateStudentCollaborationsControllerTest extends TestCase
     {
         parent::setUp();
 
+        $this->user = User::factory()->create();
+
         $this->student = Student::has('resume')->first();
         if (!$this->student) {
-            $this->student = Student::factory()->create();
+            $this->student = Student::factory()->create([
+                'user_id' => $this->user->id
+            ]);
             $this->resume = Resume::factory()->create(['student_id' => $this->student->id]);
         } else {
+            $this->student->update(['user_id' => $this->user->id]);
             $this->resume = $this->student->resume;
         }
 
@@ -37,6 +44,8 @@ class UpdateStudentCollaborationsControllerTest extends TestCase
         } else {
             $this->collaborations = $existingCollaborations->pluck('id')->toArray();
         }
+
+        $this->actingAs($this->user);
     }
 
     public function testCanUpdateStudentCollaborations(): void

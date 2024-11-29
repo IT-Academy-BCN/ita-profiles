@@ -6,6 +6,7 @@ namespace Tests\Feature\Controller\Student;
 
 use App\Models\{Resume, Student, User};
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class UpdateStudentProfileControllerTest extends TestCase
@@ -35,6 +36,7 @@ class UpdateStudentProfileControllerTest extends TestCase
     public function testCanUpdateStudentProfile(): void
     {
         $user = $this->createUser();
+        Passport::actingAs($user);
         $student = $this->createStudent($user);
         $resume = $this->createResume($student);
         $dataToUpdate = array_merge(
@@ -67,6 +69,7 @@ class UpdateStudentProfileControllerTest extends TestCase
     public function testCanReturn404WhenResumeIsNotFound()
     {
         $user = $this->createUser();
+        Passport::actingAs($user);
         $student = $this->createStudent($user);
 
         $dataToUpdate = [
@@ -87,6 +90,7 @@ class UpdateStudentProfileControllerTest extends TestCase
     public function testCanNotUpdateStudentProfileWithInvalidData(array $invalidData, array $expectedErrors): void
     {
         $user = $this->createUser();
+        Passport::actingAs($user);
         $student = $this->createStudent($user);
 
         $url = route('student.updateProfile', ['student' => $student]);
