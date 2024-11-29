@@ -32,10 +32,7 @@ use App\Http\Controllers\api\Auth\{
     RegisterController,
     AuthController
 };
-use App\Http\Middleware\EnsureStudentOwner;
-use App\Http\Controllers\api\Message\{
-    SendMessageController,
-};
+use App\Http\Controllers\api\Message\SendMessageController;
 
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
