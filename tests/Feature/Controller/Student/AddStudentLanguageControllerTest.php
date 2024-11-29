@@ -9,7 +9,9 @@ use App\Models\Student;
 use App\Models\Resume;
 use App\Models\Language;
 use App\Http\Controllers\api\Student\AddStudentLanguageController;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\Passport\Passport;
 
 class AddStudentLanguageControllerTest extends TestCase
 {
@@ -18,6 +20,7 @@ class AddStudentLanguageControllerTest extends TestCase
     private const INVALID_STUDENT_ID = 'invalidStudentId';
     private const NON_EXISTENT_LANGUAGE_ID = 'ab9bb2ed-8bb5-4a3a-bdb2-09cd00000f0b';
     private const INVALID_LANGUAGE_ID = 'invalidLanguageId';
+    protected User $user;
     protected Student $student;
     protected Resume $resume;
     protected Language $language;
@@ -26,7 +29,9 @@ class AddStudentLanguageControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->student = Student::factory()->create();
+        $this->user = User::factory()->create();
+
+        $this->student = Student::factory()->for($this->user)->create();
 
         $this->resume = Resume::factory()->create([
             'student_id' => $this->student->id,
@@ -35,6 +40,7 @@ class AddStudentLanguageControllerTest extends TestCase
 
         //Language has no factory because it has fixed values in the seeder
         $this->language = Language::first();
+        Passport::actingAs($this->user);
     }
     public function testAddStudentLanguageControllerAddsLanguageSuccessfully(): void
     {

@@ -10,11 +10,23 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
+    protected User $authenticatedUser;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $user = User::factory()->create();
-        Passport::actingAs($user);
+        $this->authenticatedUser = User::factory()->create();
+        Passport::actingAs($this->authenticatedUser);
+    }
+
+    /**
+     * Get the authenticated user.
+     *
+     * @return User
+     */
+    protected function authenticatedUser(): User
+    {
+        return $this->authenticatedUser;
     }
 }

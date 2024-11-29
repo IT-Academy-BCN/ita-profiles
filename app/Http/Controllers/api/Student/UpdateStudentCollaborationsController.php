@@ -16,6 +16,8 @@ class UpdateStudentCollaborationsController extends Controller
     {
         $resume = $student->resume ?? throw new ModelNotFoundException();
 
+        $this->authorize('update', $student);
+
         $collaborations = array_filter($request->input('collaborations', []), fn($value) => !is_null($value));
 
         $resume->collaborations()->sync($collaborations);
