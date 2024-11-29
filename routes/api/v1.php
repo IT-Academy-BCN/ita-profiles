@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('photo', GetStudentImageController::class)->name('student.photo.get');
         Route::delete('languages/{language}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
     });
-    Route::prefix('messages')->middleware('auth:api')->group(function () {
+    Route::prefix('messages')->group(function () {
         Route::post('/', SendMessageController::class)->name('message.send');
     });
 });
