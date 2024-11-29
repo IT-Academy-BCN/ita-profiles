@@ -32,6 +32,7 @@ use App\Http\Controllers\api\Auth\{
     RegisterController,
     AuthController
 };
+use App\Http\Controllers\api\Message\SendMessageController;
 
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
@@ -58,6 +59,9 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('modality', StudentModalityController::class)->name('student.modality');
         Route::get('photo', GetStudentImageController::class)->name('student.photo.get');
         Route::delete('languages/{language}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
+    });
+    Route::prefix('messages')->middleware('auth:api')->group(function () {
+        Route::post('/', SendMessageController::class)->name('message.send');
     });
 });
 
