@@ -6,22 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('project_tag', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('project_id')->constrained('projects')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('tag_id')->constrained('tags')->onDelete('cascade')->onUpdate('cascade');
+            $table->uuid('project_id');
+            $table->unsignedBigInteger('tag_id');
             $table->timestamps();
+
+            $table->foreign('project_id')
+                ->references('id')
+                ->on('projects')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('tag_id')
+                ->references('id')
+                ->on('tags')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('project_tag');

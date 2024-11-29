@@ -12,11 +12,11 @@ const MyProfileBootcampCard: React.FC = () => {
         <div className="flex flex-col gap-4" data-testid="BootcampCard">
             <div className='flex'>
                 <h3 className="text-lg font-bold">Datos del bootcamp</h3>
-                <button 
+                <button
                     type='button'
                     className='ml-auto'
-                    >
-                        <img src={Pencil} alt="edit training information" />
+                >
+                    <img src={Pencil} alt="edit training information" />
                 </button>
             </div>
             {isLoadingBootcamp && <LoadingSpiner />}
@@ -36,10 +36,10 @@ const MyProfileBootcampCard: React.FC = () => {
                     </div>
                 ) : (
                     bootcampData.map((bootcamp) => (
-                        <div className="flex flex-col gap-1 rounded-md bg-gray-5-background p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.25)]">
+                        <div key={bootcamp.id} className="flex flex-col gap-1 rounded-md bg-gray-5-background p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.25)]">
                             <div
                                 className="flex items-center"
-                                key={bootcamp.bootcamp_id}
+
                             >
                                 <img
                                     src={medal}

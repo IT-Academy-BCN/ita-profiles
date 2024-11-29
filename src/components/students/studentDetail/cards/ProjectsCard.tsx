@@ -38,11 +38,11 @@ const ProjectsCard: React.FC = () => {
                     textColor="red"
                 />
             )}
-            {projectsData && (
+            {!isLoadingProjects && (
                 <div ref={carouselRef} className="flex gap-3 overflow-x-hidden">
                     {projectsData.map((project) => (
                         <div
-                            key={project.uuid}
+                            key={project.id}
                             className="flex flex-col gap-1 rounded-xl border border-gray-3 px-5 py-3.5 "
                         >
                             <div className="flex items-center justify-between">
