@@ -4,42 +4,40 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
-use App\Models\Language;
+use Tests\TestCase;
+use App\Models\User;
 use App\Models\Student;
 use App\Models\Resume;
-use App\Service\Student\UpdateStudentLanguagesService;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\Language;
 use Illuminate\Support\Str;
-use Mockery;
-use Tests\TestCase;
+use Laravel\Passport\Passport;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UpdateStudentLanguagesControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
-    private $updateStudentLanguagesService;
+    private $user;
     private $student;
     private $resume;
+    private $language;
 
     protected function setUp(): void
     {
         parent::setUp();
-
         Language::query()->delete();
-        [$this->student, $this->resume, $this->language] = $this->createFakeDataForStudentWithLanguages();
-    }
 
-    private function createFakeDataForStudentWithLanguages(): array
-    {
-        $student = Student::factory()->has(Resume::factory())->create();
-        $resume = $student->resume()->first();
-        $language = Language::firstOrCreate(
+        $this->user = User::factory()->create();
+        $this->student = Student::factory()->has(Resume::factory())->create(['user_id' => $this->user->id]);
+        $this->resume = $this->student->resume()->first();
+
+        $this->language = Language::firstOrCreate(
             ['name' => 'Anglès', 'level' => 'Natiu'],
             ['id' => (string) Str::uuid()]
         );
-        $resume->languages()->syncWithoutDetaching($language->id);
-        return [$student, $resume, $language];
+        $this->resume->languages()->syncWithoutDetaching($this->language->id);
+
+        Passport::actingAs($this->user);
     }
 
     public function testCanUpdateStudentLanguage(): void
@@ -48,7 +46,6 @@ class UpdateStudentLanguagesControllerTest extends TestCase
             'name' => 'Anglès',
             'level' => 'Natiu'
         ]);
-
         $response->assertStatus(200);
         $response->assertJson(['message' => 'Language updated successfully']);
     }
@@ -59,7 +56,6 @@ class UpdateStudentLanguagesControllerTest extends TestCase
             'name' => 'Anglès',
             'level' => 'Bàsic'
         ]);
-
         $response->assertStatus(404);
     }
 
@@ -69,7 +65,6 @@ class UpdateStudentLanguagesControllerTest extends TestCase
             'name' => 'Català',
             'level' => 'Avançat'
         ]);
-
         $response->assertStatus(404);
     }
 }

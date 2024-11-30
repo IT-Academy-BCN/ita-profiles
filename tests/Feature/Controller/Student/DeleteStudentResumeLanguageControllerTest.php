@@ -12,6 +12,7 @@ use App\Models\{
 };
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\Passport\Passport;
 
 class DeleteStudentResumeLanguageControllerTest extends TestCase
 {
@@ -27,6 +28,7 @@ class DeleteStudentResumeLanguageControllerTest extends TestCase
         parent::setUp();
 
         $this->user = User::factory()->create();
+        Passport::actingAs($this->user);
         $this->student = Student::factory()->for($this->user)->create();
         $this->resume = Resume::factory()->for($this->student)->create();
         $languageIds = Language::pluck('id')->toArray();

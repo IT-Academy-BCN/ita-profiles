@@ -14,11 +14,11 @@ class AddStudentImageController extends Controller
 {
     private string $photo_infix = '.profile_photo.';
     private string $photos_path = 'public/photos/';
-    
- 
+
+
     public function __invoke(UpdateImageStudentRequest $request, Student $student): JsonResponse
     {
-        
+        $this->authorize('update', $student);
         $file = $request->file('photo');
         $filename = time() . '.' . $student->id . $this->photo_infix . $file->hashName();
         $oldPhoto = $student->photo;
@@ -30,7 +30,7 @@ class AddStudentImageController extends Controller
         if ($oldPhoto) {
             Storage::delete($this->photos_path . $oldPhoto);
         }
-        
+
         return response()->json(['message' => 'La imatge s\'ha afegit correctament']);
     }
 }

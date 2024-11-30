@@ -17,6 +17,8 @@ class UpdateStudentImageController extends Controller
 
     public function __invoke(UpdateImageStudentRequest $request, Student $student): JsonResponse
     {
+        $this->authorize('update', $student);
+
         $file = $request->file('photo');
 
         $filename = time() . '.' . $student->id . $this->photo_infix . $file->hashName();
