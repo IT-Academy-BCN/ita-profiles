@@ -12,8 +12,8 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class CreateCompany extends Command
 {
-    protected $description =(
-        'Create a new company in the database giving the required arguments step by step in terminal.'.PHP_EOL.'  Example:
+    protected $description = (
+        'Create a new company in the database giving the required arguments step by step in terminal.' . PHP_EOL . '  Example:
         name: It Academy
         email: itacademy@test.es
         CIF: A1234567Z
@@ -55,14 +55,22 @@ class CreateCompany extends Command
      */
     public function handle()
     {
-            $data = $this->askCompanyData();
-            $request = $this->createRequest($data);
+        $data = $this->askCompanyData();
 
-            $response = $this->createCompanyController->__invoke($request);
+        $this->info("Resumen de la empresa:");
+        foreach ($data as $key => $value) {
+            $this->line(" - {$key}: {$value}");
+        }
 
-            $this->handleResponse($response);
+        if (!$this->confirm('¿Desea proceder con estos datos?', true)) {
+            $this->info('Operación cancelada.');
+            return 1;
+        }
+        $request = $this->createRequest($data);
+        $response = $this->createCompanyController->__invoke($request);
 
-            return 0;
+        $this->handleResponse($response);
+        return 0;
     }
 
     /**
@@ -72,12 +80,13 @@ class CreateCompany extends Command
      */
     protected function askCompanyData(): array
     {
+        $rules = (new StoreCompanyRequest())->rules();
         return [
-            'name' => $this->askValid('Nombre de la compañía:', 'name'),
-            'email' => $this->askValid('Email:', 'email'),
-            'CIF' => $this->askValid('CIF:', 'CIF'),
-            'location' => $this->askValid('Localización:', 'location'),
-            'website' => $this->askValid('Página web:', 'website'),
+            'name' => $this->askValid('Nombre de la compañía (ex: It Academy)', 'name', $rules),
+            'email' => $this->askValid('Email (ex: itacademy@example.com)', 'email', $rules),
+            'CIF' => $this->askValid('CIF (ex: A12345678 / 12345678A / A1234567B)', 'CIF', $rules),
+            'location' => $this->askValid('Localización (ex: Barcelona)', 'location', $rules),
+            'website' => $this->askValid('Página web (ex: https://itacademy.barcelonactiva.cat/)', 'website', $rules),
         ];
     }
 
@@ -86,23 +95,22 @@ class CreateCompany extends Command
      *
      * @param string $question
      * @param string $field
+     * @param array $rules
      * @return string
      */
-    protected function askValid(string $question, string $field): string|null
+    protected function askValid(string $question, string $field, array $rules): string|null
     {
         do {
             $value = $this->ask($question);
 
             $validator = Validator::make(
                 [$field => $value],
-                (new StoreCompanyRequest())->rules()
+                [$field => $rules[$field]]
             );
 
-            if ($validator->fails())
-            {
+            if ($validator->fails()) {
                 $this->error($validator->errors()->first($field));
-            } else
-            {
+            } else {
                 return $value;
             }
         } while (true);
@@ -133,5 +141,4 @@ class CreateCompany extends Command
             $this->info($content['message']);
         }
     }
-
 }
