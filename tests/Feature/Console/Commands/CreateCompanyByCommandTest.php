@@ -12,33 +12,33 @@ use Tests\TestCase;
 
 class CreateCompanyByCommandTest extends TestCase
 {
-   use DatabaseTransactions;
+    use DatabaseTransactions;
 
-   public function testCreateCompanyCommandCanInstantiateController(): void
-   {
-       $companyController = new CreateCompanyController();
+    public function testCreateCompanyCommandCanInstantiateController(): void
+    {
+        $companyController = new CreateCompanyController();
 
-       $this->assertInstanceOf(CreateCompanyController::class, $companyController);
-   }
+        $this->assertInstanceOf(CreateCompanyController::class, $companyController);
+    }
 
-   public function testCompanyCanBeCreatedViaCommand(): void
-   {
-       $this->artisan('create:company')
-           ->expectsQuestion('Nombre de la compañia:', 'Test Company')
-           ->expectsQuestion('Email:', 'test@test.es')
-           ->expectsQuestion('CIF:', 'B1234567A')
-           ->expectsQuestion('Localizacion:', 'Test Location')
-           ->expectsQuestion('Pagina web:', 'https://www.test.com')
-           ->assertExitCode(0);
+    public function testCompanyCanBeCreatedViaCommand(): void
+    {
+        $this->artisan('create:company')
+            ->expectsQuestion('Nombre de la compañía (ex: It Academy)', 'Test Company')
+            ->expectsQuestion('Email (ex: itacademy@example.com)', 'test@test.es')
+            ->expectsQuestion('CIF (ex: A12345678 / 12345678A / A1234567B)', 'B1234567A')
+            ->expectsQuestion('Localización (ex: Barcelona)', 'Test Location')
+            ->expectsQuestion('Página web (ex: https://itacademy.barcelonactiva.cat/)', 'https://www.test.com')
+            ->assertExitCode(0);
 
-       $this->assertDatabaseHas('companies', [
-           'name' => 'Test Company',
-           'email' => 'test@test.es',
-           'CIF' => 'B1234567A',
-           'location' => 'Test Location',
-           'website' => 'https://www.test.com',
-       ]);
-   }
+        $this->assertDatabaseHas('companies', [
+            'name' => 'Test Company',
+            'email' => 'test@test.es',
+            'CIF' => 'B1234567A',
+            'location' => 'Test Location',
+            'website' => 'https://www.test.com',
+        ]);
+    }
 
     /**
      * @dataProvider invalidDataProvider
@@ -46,11 +46,11 @@ class CreateCompanyByCommandTest extends TestCase
     public function testReturnsErrorCodeOnInvalidData(array $invalidData): void
     {
         $this->artisan('create:company')
-            ->expectsQuestion('Nombre de la compañia:', $invalidData['name'])
-            ->expectsQuestion('Email:', $invalidData['email'])
-            ->expectsQuestion('CIF:', $invalidData['CIF'])
-            ->expectsQuestion('Localizacion:', $invalidData['location'])
-            ->expectsQuestion('Pagina web:', $invalidData['website'])
+            ->expectsQuestion('Nombre de la compañía (ex: It Academy)', $invalidData['name'])
+            ->expectsQuestion('Email (ex: itacademy@example.com)', $invalidData['email'])
+            ->expectsQuestion('CIF (ex: A12345678 / 12345678A / A1234567B)', $invalidData['CIF'])
+            ->expectsQuestion('Localización (ex: Barcelona)', $invalidData['location'])
+            ->expectsQuestion('Página web (ex: https://itacademy.barcelonactiva.cat/)', $invalidData['website'])
             ->assertExitCode(1);
     }
 
@@ -58,7 +58,7 @@ class CreateCompanyByCommandTest extends TestCase
     {
         return [
             // cases for name
-           'invalid name: too long' => [
+            'invalid name: too long' => [
                 [
                     'name' => str_repeat('A', 256),
                     'email' => 'validEmail@test.com',
@@ -230,22 +230,21 @@ class CreateCompanyByCommandTest extends TestCase
     }
 
     public function testErrorCodeWithDuplicatedEmail(): void
-   {
-       $this->artisan('create:company')
-           ->expectsQuestion('Nombre de la compañia:', 'Test Company')
-           ->expectsQuestion('Email:', 'duplicado@test.es')
-           ->expectsQuestion('CIF:', 'B1234567A')
-           ->expectsQuestion('Localizacion:', 'Test Location')
-           ->expectsQuestion('Pagina web:', 'https://www.test.com')
-           ->assertExitCode(0);
+    {
+        $this->artisan('create:company')
+            ->expectsQuestion('Nombre de la compañía (ex: It Academy)', 'Test Company')
+            ->expectsQuestion('Email (ex: itacademy@example.com)', 'duplicado@test.es')
+            ->expectsQuestion('CIF (ex: A12345678 / 12345678A / A1234567B)', 'B1234567A')
+            ->expectsQuestion('Localización (ex: Barcelona)', 'Test Location')
+            ->expectsQuestion('Página web (ex: https://itacademy.barcelonactiva.cat/)', 'https://www.test.com')
+            ->assertExitCode(0);
 
-           $this->artisan('create:company')
-           ->expectsQuestion('Nombre de la compañia:', 'Test Email')
-           ->expectsQuestion('Email:', 'duplicado@test.es')
-           ->expectsQuestion('CIF:', 'B1234522A')
-           ->expectsQuestion('Localizacion:', 'Test Location')
-           ->expectsQuestion('Pagina web:', 'https://www.test.com')
-           ->assertExitCode(1);
-   }
-
+        $this->artisan('create:company')
+            ->expectsQuestion('Nombre de la compañía (ex: It Academy)', 'Test Email')
+            ->expectsQuestion('Email (ex: itacademy@example.com)', 'duplicado@test.es')
+            ->expectsQuestion('CIF (ex: A12345678 / 12345678A / A1234567B)', 'B1234522A')
+            ->expectsQuestion('Localización (ex: Barcelona)', 'Test Location')
+            ->expectsQuestion('Página web (ex: https://itacademy.barcelonactiva.cat/)', 'https://www.test.com')
+            ->assertExitCode(1);
+    }
 }
