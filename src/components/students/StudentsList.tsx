@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import StudentCard from './StudentCard'
 import { useAppSelector } from '../../hooks/ReduxHooks'
-import { IStudentList } from '../../interfaces/interfaces'
+import { TStudentList } from '../../interfaces/interfaces'
 import { FetchStudentsList } from '../../api/FetchStudentsList'
 import { StudentFiltersContext } from '../../context/StudentFiltersContext'
 
@@ -12,7 +12,7 @@ const StudentsList: React.FC = () => {
 
     const studentFilterContext = useContext(StudentFiltersContext)
 
-    const [students, setStudents] = useState<IStudentList[] | null>()
+    const [students, setStudents] = useState<TStudentList[] | null>()
 
     useEffect(() => {
         const fetchStudents = async () => {
