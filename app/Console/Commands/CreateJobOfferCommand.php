@@ -62,12 +62,12 @@ class CreateJobOfferCommand extends Command
     protected function askJobOfferData(): array
     {
         return [
-            'recruiter_id' => $this->argument('recruiter_id') ?? $this->ask('Introdueix l\'ID del reclutador'),
-            'title' => $this->argument('title') ?? $this->ask('Introdueix el títol de l\'oferta'),
-            'description' => $this->argument('description') ?? $this->ask('Introdueix la descripció de l\'oferta'),
-            'location' => $this->argument('location') ?? $this->ask('Introdueix la ubicació'),
-            'salary' => $this->argument('salary') ?? $this->ask('Introdueix el salari'),
-            'skills' => $this->argument('skills') ?? $this->ask('Introdueix les habilitats requerides (opcional, separades per comes)')
+            'recruiter_id' => $this->argument('recruiter_id') ?? $this->ask('Introdueix l\'ID del reclutador (ex: 9d848076-df53-4430-bdd8-3cc1474d4b1e)'),
+            'title' => $this->argument('title') ?? $this->ask('Introdueix el títol de l\'oferta (ex: Senior Backend Developer)'),
+            'description' => $this->argument('description') ?? $this->ask('Introdueix la descripció de l\'oferta Looking for a Backend Developer'),
+            'location' => $this->argument('location') ?? $this->ask('Introdueix la ubicació (ex: Barcelona)'),
+            'salary' => $this->argument('salary') ?? $this->ask('Introdueix el salari (ex: 55000)'),
+            'skills' => $this->argument('skills') ?? $this->ask('Introdueix les habilitats requerides (opcional, separades per comes ex: PHP, Laravel, MySQL)'),
         ];
     }
     protected function createRequest(array $data): CreateJobOfferRequest
