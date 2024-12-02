@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react'
 import { SmallScreenContext } from '../../../context/SmallScreenContext'
 import { useAppDispatch, useAppSelector } from '../../../hooks/ReduxHooks'
-import type { TSmallScreenContext } from '../../../interfaces/interfaces'
+import type { TSmallScreenContext } from '../../../../types'
 import { closeUserPanel } from '../../../store/slices/user/details'
 import StudentDetailsContent from './StudentDetailsContent'
 

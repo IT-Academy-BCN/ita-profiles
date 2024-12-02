@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { TTag } from '../../../../../interfaces/interfaces'
+import { TTag } from '../../../../../../types'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'

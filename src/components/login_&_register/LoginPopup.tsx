@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginUserSchema } from '../../schemes/schemas'
-import { TLoginForm, TUserResponseData } from '../../interfaces/interfaces'
+import { TLoginForm, TUserResponseData } from '../../../types'
 import { useLogin } from '../../context/LoginContext'
 
 type LoginPopupProps = {

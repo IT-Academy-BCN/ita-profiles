@@ -1,4 +1,4 @@
-import { TLanguage } from '../../../../interfaces/interfaces'
+import { TLanguage } from '../../../../../types'
 import studentLanguages from '../../../../store/slices/student/languagesSlice'
 
 const languagesData: TLanguage[] = []

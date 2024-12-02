@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { TInitialStateLanguageSlice } from '../../../interfaces/interfaces'
+import { TInitialStateLanguageSlice } from '../../../../types'
 import { languagesThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
 import { updateProfileLanguagesThunk } from '../../thunks/updateProfileLanguagesThunk'
 

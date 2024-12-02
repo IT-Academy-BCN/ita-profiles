@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import StudentCard from './StudentCard'
 import { useAppSelector } from '../../hooks/ReduxHooks'
-import { TStudentList } from '../../interfaces/interfaces'
+import { TStudentList } from '../../../types'
 import { FetchStudentsList } from '../../api/FetchStudentsList'
 import { StudentFiltersContext } from '../../context/StudentFiltersContext'
 

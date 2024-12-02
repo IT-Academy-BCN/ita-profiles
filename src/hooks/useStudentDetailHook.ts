@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { TSmallScreenContext } from '../interfaces/interfaces'
+import { TSmallScreenContext } from '../../types'
 import { useAppDispatch } from './ReduxHooks'
 import { SmallScreenContext } from '../context/SmallScreenContext'
 import { useStudentIdContext } from '../context/StudentIdContext'

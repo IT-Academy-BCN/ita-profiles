@@ -2,7 +2,7 @@ import { FC } from 'react'
 import {
     TLanguage,
     TLanguageLevel,
-} from '../../../../../../../interfaces/interfaces'
+} from '../../../../../../../../types'
 import { useDragAndDropLanguagesHook } from '../../../../../../../hooks/useDragAndDropLanguagesHook'
 
 export type TDragAndDropLanguagesProps = {

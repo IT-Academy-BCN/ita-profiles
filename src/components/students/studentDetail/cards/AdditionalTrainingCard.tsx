@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
-import { TAdditionalTraining } from '../../../../interfaces/interfaces'
+import { TAdditionalTraining } from '../../../../../types'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
 
 const AdditionalTrainingCard = () => {
