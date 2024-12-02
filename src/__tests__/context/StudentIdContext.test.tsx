@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { TChildrenProps } from '../../interfaces/interfaces'
+import { TChildrenProps } from '../../../types'
 import {
   SelectedStudentProvider,
   useStudentIdContext,

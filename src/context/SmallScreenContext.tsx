@@ -2,7 +2,7 @@ import { createContext, useState } from 'react'
 import type {
   TSmallScreenContext,
   TChildrenProps,
-} from '../interfaces/interfaces'
+} from '../../types'
 
 export const SmallScreenContext = createContext<TSmallScreenContext>(
   {} as TSmallScreenContext,

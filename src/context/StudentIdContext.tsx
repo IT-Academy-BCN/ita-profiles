@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react'
-import { TChildrenProps } from '../interfaces/interfaces'
+import { TChildrenProps } from '../../types'
 
 type TSelectedStudentContext = {
   // this can be null bc when the page loads, no student is selected.

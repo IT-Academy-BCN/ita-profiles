@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
 import axios, { AxiosError } from 'axios';
-import { TStudentList } from '../interfaces/interfaces';
+import { TStudentList } from '../../types';
 
 // eslint-disable-next-line consistent-return
 export const FetchStudentsList = async (selectedRoles: Array<string> = []) => {

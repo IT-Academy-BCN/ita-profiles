@@ -5,7 +5,7 @@ import {
     useAppSelector,
 } from '../../../../../../hooks/ReduxHooks'
 import { updateTags } from '../../../../../../store/slices/student/detailSlice'
-import { TSkills, TTag } from '../../../../../../interfaces/interfaces'
+import { TSkills, TTag } from '../../../../../../../types'
 import { Close } from '../../../../../../assets/svg'
 
 const fetchTags = async (

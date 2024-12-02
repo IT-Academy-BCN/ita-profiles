@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { TUserResponseData } from '../interfaces/interfaces';
+import { TUserResponseData } from '../../types';
 
 interface LoginContextProps {
   token: string | null;
