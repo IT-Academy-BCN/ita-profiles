@@ -12,7 +12,7 @@ export interface User {
 
 // This could be used globally if we're passing just the children props.
 // Good for providers
-export type TchildrenProps = {
+export type TChildrenProps = {
     children: ReactNode
 }
 
