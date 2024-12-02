@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react'
-import { TchildrenProps } from '../interfaces/interfaces'
+import { TChildrenProps } from '../interfaces/interfaces'
 
 type TSelectedStudentContext = {
   // this can be null bc when the page loads, no student is selected.
@@ -14,7 +14,7 @@ export const SelectedStudentIdContext = createContext<TSelectedStudentContext>({
   setStudentUUID: () => { },
 })
 // The provider ===>
-export const SelectedStudentProvider = ({ children }: TchildrenProps) => {
+export const SelectedStudentProvider = ({ children }: TChildrenProps) => {
   const [studentUUID, setStudentUUID] = useState<string | null>(null)
 
   const contextValue = useMemo(
