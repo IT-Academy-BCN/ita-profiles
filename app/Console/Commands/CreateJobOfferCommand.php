@@ -44,8 +44,13 @@ class CreateJobOfferCommand extends Command
 
     public function handle()
        {
+        $data = $this->askJobOfferData();
+        if (!$this->confirm('Vols procedir amb aquestes dades?', true)) {
+            $this->info('Operació cancel·lada.');
+            return 1;
+        }
         try {
-            $data = $this->askJobOfferData();
+        
             $request = $this->createRequest($data);
 
             $response = $this->jobOfferController->createJobOffer($request);
