@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
-import { ITag } from '../../../../../interfaces/interfaces'
+import { TTag } from '../../../../../interfaces/interfaces'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
@@ -167,7 +167,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                         <div className="flex">
                             <ul className="flex flex-wrap gap-2">
                                 {aboutData &&
-                                    aboutData.tags.map((tag: ITag) => (
+                                    aboutData.tags.map((tag: TTag) => (
                                         <li
                                             key={tag.id}
                                             className="rounded-md bg-gray-5-background px-2 py-1 text-sm"
@@ -192,7 +192,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
                             <EditSkills
                                 initialSkills={
                                     aboutData?.tags?.map(
-                                        (tag: ITag) => tag.name,
+                                        (tag: TTag) => tag.name,
                                     ) || []
                                 }
                                 onClose={handleCloseEditSkills}

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Github, Linkedin } from '../../../../assets/svg'
 import { Stud1 as ProfilePicture } from '../../../../assets/img'
-import { ITag } from '../../../../interfaces/interfaces'
+import { TTag } from '../../../../interfaces/interfaces'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
 
@@ -101,7 +101,7 @@ const StudentDetailCard: React.FC = () => {
                         </div>
                         <ul className="flex flex-wrap gap-2">
                             {aboutData &&
-                                aboutData.tags.map((tag: ITag) => (
+                                aboutData.tags.map((tag: TTag) => (
                                     <li
                                         key={tag.id}
                                         className="rounded-md bg-gray-5-background px-2 py-1 text-sm"
