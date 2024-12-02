@@ -11,7 +11,7 @@ import { useLogin } from '../../context/LoginContext'
 type LoginPopupProps = {
   onClose: () => void
   onOpenRegisterPopup: () => void
-  user: UserResponseData
+  user: TUserResponseData
 }
 
 type TFormSchema = z.infer<typeof LoginUserSchema>
