@@ -6,7 +6,7 @@ import {
     resetUpdateLanguages,
     setLanguagesData
 } from '../../../../../../../store/slices/student/languagesSlice'
-import { TLanguage } from '../../../../../../../interfaces/interfaces'
+import { TLanguage } from '../../../../../../../../types'
 import EditModality from './EditModality'
 import DragAndDropLanguages from './DragAndDropLanguages'
 import useEditAdditionalInformationHook from '../../../../../../../hooks/useEditAdditionalInformationHook'
