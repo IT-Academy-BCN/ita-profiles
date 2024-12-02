@@ -30,7 +30,7 @@ export type TSmallScreenContext = {
 }
 
 // === studentList ===
-export interface IStudentList {
+export type TStudentList = {
     id: string
     fullname: string
     subtitle: string
