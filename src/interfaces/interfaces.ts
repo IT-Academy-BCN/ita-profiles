@@ -17,7 +17,7 @@ export type TChildrenProps = {
 }
 
 // === UserResponseData ===
-export type UserResponseData = {
+export type TUserResponseData = {
     userID: string
     token: string
     studentID: string
