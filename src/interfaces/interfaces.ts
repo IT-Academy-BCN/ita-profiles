@@ -5,11 +5,6 @@ export type TLoginForm = {
     password: string
 }
 
-export interface User {
-    id: string
-    authToken?: string
-}
-
 // This could be used globally if we're passing just the children props.
 // Good for providers
 export type TChildrenProps = {
