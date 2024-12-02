@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export interface ILoginForm {
+export type TLoginForm = {
     dni: string
     password: string
 }
