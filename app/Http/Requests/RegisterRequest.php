@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use App\Rules\DniNieRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -28,7 +28,7 @@ class RegisterRequest extends FormRequest
 
         return [
             'username' => ['required', 'string', 'min:3'],
-            'dni' => ['required', 'unique:users', 'string', 'max:9', new DniNieRule()],
+            'dni' => ['required', 'regex:/^[0-9]{8}[A-Z]$/', 'unique:users'],
             'email' => 'required|string|email|max:255|unique:users',
             'specialization' => 'required|in:Frontend,Backend,Fullstack,Data Science,Not Set',
             'password' => 'required|confirmed|string|regex:/^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$/',
