@@ -30,10 +30,10 @@ export type TStudentList = {
     fullname: string
     subtitle: string
     photo: string
-    tags: ITag[]
+    tags: TTag[]
 }
 
-export interface ITag {
+export type TTag = {
     id: number
     name: string
 }
@@ -52,7 +52,7 @@ export type TProject = {
     id: number
     name: string
     company_name: string
-    tags: ITag[]
+    tags: TTag[]
     project_url: string
     github_url: string
 }
@@ -93,7 +93,7 @@ export type TAbout = {
         about: string
     }
     photo: string
-    tags: ITag[]
+    tags: TTag[]
 }
 export type TStudentFormData = {
     name: string

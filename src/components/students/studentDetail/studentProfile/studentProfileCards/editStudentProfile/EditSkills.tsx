@@ -5,15 +5,15 @@ import {
     useAppSelector,
 } from '../../../../../../hooks/ReduxHooks'
 import { updateTags } from '../../../../../../store/slices/student/detailSlice'
-import { TSkills, ITag } from '../../../../../../interfaces/interfaces'
+import { TSkills, TTag } from '../../../../../../interfaces/interfaces'
 import { Close } from '../../../../../../assets/svg'
 
 const fetchTags = async (
-    setTagList: React.Dispatch<React.SetStateAction<ITag[]>>,
+    setTagList: React.Dispatch<React.SetStateAction<TTag[]>>,
     setCustomError: React.Dispatch<React.SetStateAction<string | null>>,
 ): Promise<void> => {
     try {
-        const response = await axios.get<{ tags: ITag[] }>(
+        const response = await axios.get<{ tags: TTag[] }>(
             'http://localhost:8000/api/v1/tags',
         )
         setTagList(response.data.tags)
@@ -25,7 +25,7 @@ const fetchTags = async (
 const saveSkillsToAPI = async (
     updatedSkills: string[],
     studentId: string,
-    tagList: ITag[],
+    tagList: TTag[],
 ): Promise<void> => {
     const tagNames = tagList.map((tag) => tag.name.toLowerCase())
     const validSkills = updatedSkills.filter((skill) =>
@@ -52,7 +52,7 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
     const dispatch = useAppDispatch()
     const [loading, setLoading] = useState<boolean>(false)
     const [customError, setCustomError] = useState<string | null>(null)
-    const [tagList, setTagList] = useState<ITag[]>([])
+    const [tagList, setTagList] = useState<TTag[]>([])
     const { studentDetails } = useAppSelector(
         (state) => state.ShowStudentReducer,
     )
