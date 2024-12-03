@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TCollaboration } from "../../../../interfaces/interfaces";
+import { TCollaboration } from "../../../../../types";
 
 
 const studentCollaborations = createSlice({

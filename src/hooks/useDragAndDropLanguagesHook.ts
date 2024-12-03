@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useState } from "react";
-import { TLanguage } from "../interfaces/interfaces";
+import { TLanguage } from "../../types";
 import { useUpdateLanguageHook } from "./useUpdateLanguageHook";
 
 export const useDragAndDropLanguagesHook = (updateLanguagesDrop: TLanguage[]) => {

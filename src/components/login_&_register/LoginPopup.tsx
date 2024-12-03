@@ -5,13 +5,13 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginUserSchema } from '../../schemes/schemas'
-import { ILoginForm, UserResponseData } from '../../interfaces/interfaces'
+import { TLoginForm, TUserResponseData } from '../../../types'
 import { useLogin } from '../../context/LoginContext'
 
 type LoginPopupProps = {
   onClose: () => void
   onOpenRegisterPopup: () => void
-  user: UserResponseData
+  user: TUserResponseData
 }
 
 type TFormSchema = z.infer<typeof LoginUserSchema>
@@ -26,7 +26,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   const navigate = useNavigate();
   const [customError, setCustomError] = useState<string | null>(null);
   const { handleSubmit, register, formState: { errors }, } = useForm<TFormSchema>({ resolver: zodResolver(LoginUserSchema) })
-  const handleLogin: SubmitHandler<ILoginForm> = async (data) => {
+  const handleLogin: SubmitHandler<TLoginForm> = async (data) => {
     try {
       const response = await axios.post('//localhost:8000/api/v1/signin', data)
       // eslint-disable-next-line

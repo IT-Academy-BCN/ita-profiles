@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { TModality } from '../../../../../../../interfaces/interfaces'
+import { TModality } from '../../../../../../../../types'
 
 type EditModalityProps = {
     additionalTraining: TModality[]

@@ -1,10 +1,10 @@
 import { fireEvent, render } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import StudentCard from '../../../components/students/StudentCard'
-import { IStudentList } from '../../../interfaces/interfaces'
+import { TStudentList } from '../../../../types'
 import { store } from '../../../store/store'
 
-const mockStudentCard: IStudentList = {
+const mockStudentCard: TStudentList = {
   id: 'abc123',
   fullname: 'John',
   subtitle: 'Doe',

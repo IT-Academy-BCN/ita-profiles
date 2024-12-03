@@ -1,4 +1,4 @@
-import { TAdditionalTraining } from '../../../../interfaces/interfaces'
+import { TAdditionalTraining } from '../../../../../types'
 import additionalTrainingSlice, {
     initialState,
 } from '../../../../store/slices/student/additionalTrainingSlice'
