@@ -27,8 +27,11 @@ const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
       onKeyDown={handleKeyDown}
       className={styleModal.overlay}>
 
-      <div role="button" tabIndex={0} onKeyDown={handleKeyDown} className={styleModal.content} onClick={(e) => e.stopPropagation()}>
-        <button type="button" className={styleModal.close} onClick={onClose}>&times;</button>
+      <div role="button" aria-label="modal-content" tabIndex={0} onKeyDown={(e) => {
+        handleKeyDown(e);
+        e.stopPropagation();
+      }} className={styleModal.content} onClick={(e) => e.stopPropagation()}>
+        <button type="button" aria-label="modal-close" className={styleModal.close} onClick={onClose}>&times;</button>
         {children}
       </div>
 
