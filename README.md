@@ -108,8 +108,9 @@ This command allows recruiters to create job offers directly through the termina
 The system will display a preview of the job offer details and ask for confirmation to proceed. If the data is valid, the job offer will be created. Otherwise, you can retry with corrected information.
 
 Example output:
-```bash
-   Vista prèvia de l'oferta de treball:
+
+```shell
+    Vista prèvia de l'oferta de treball:
     - recruiter_id: 1
     - title: Senior Backend Developer
     - description: Looking for an experienced Backend Developer
@@ -118,9 +119,7 @@ Example output:
     - skills: PHP, Laravel, MySQL
 
     Vols procedir amb aquestes dades? (yes/no) [yes]
-
-
- ``` 
+```
 ## Screenshots
 
 --
