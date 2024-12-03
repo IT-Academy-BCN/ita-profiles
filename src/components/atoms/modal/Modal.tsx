@@ -8,14 +8,31 @@ type TModal = {
 }
 
 const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onClose();
+    }
+  };
+
   if (!isOpen) return null;
+
   return (
-    <section role="dialog" onClick={onClose} className={styleModal.overlay}>
-      <article className={styleModal.content} onClick={(e) => e.stopPropagation()}>
-        <button className={styleModal.close} onClick={onClose}>&times;</button>
+    <div
+      role="button"
+      onClick={onClose}
+      aria-label="modal-overlay"
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      className={styleModal.overlay}>
+
+      <div role="button" tabIndex={0} onKeyDown={handleKeyDown} className={styleModal.content} onClick={(e) => e.stopPropagation()}>
+        <button type="button" className={styleModal.close} onClick={onClose}>&times;</button>
         {children}
-      </article>
-    </section>
+      </div>
+
+    </div>
   )
 }
 
