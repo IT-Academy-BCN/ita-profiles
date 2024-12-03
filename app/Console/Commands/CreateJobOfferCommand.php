@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -16,7 +15,7 @@ class CreateJobOfferCommand extends Command
 {
 
     protected $description = 'Create a new job offer in the database giving the required arguments step by step in terminal.' . PHP_EOL . '  Example:
-    Recruiter ID: 9d848076-df53-4430-bdd8-3cc1474d4b1e
+    Recruiter ID: Provide the unique recruiter identifiere
     Title: Senior Backend Developer
     Description: Looking for an experienced Backend Developer
     Location: Barcelona
@@ -30,15 +29,7 @@ class CreateJobOfferCommand extends Command
         parent::__construct();
         $this->jobOfferController = $jobOfferController;
     }
-
-    /*************  ✨ Codeium Command ⭐  *************/
-    /**
-     * Set the console command name, description and arguments.
-     *
-     * @return void
-     */
-
-    /******  a7ed570b-2896-43b7-bff7-230ec467da35  *******/    protected function configure()
+    protected function configure()
     {
         $this->setName('create:job-offer')
             ->addArgument('recruiter_id', InputArgument::OPTIONAL, 'The ID of the recruiter')
@@ -72,8 +63,6 @@ class CreateJobOfferCommand extends Command
         }
     }
 
-
-
     protected function collectValidatedJobOfferData(): array
     {
         $data = [];
@@ -99,7 +88,7 @@ class CreateJobOfferCommand extends Command
 
                 $rules = (new CreateJobOfferRequest(app(), app('redirect')))->rules();
 
-                
+
                 if ($field === 'recruiter_id') {
                     $validator = Validator::make(
                         [$field => $value],
@@ -149,106 +138,6 @@ class CreateJobOfferCommand extends Command
 
         return $data;
     }
-
-
-    /*
-    protected function collectValidatedJobOfferData(): array
-    {
-        $data = [];
-
-        do {
-            $recruiterId = $this->argument('recruiter_id') ?? $this->ask('Introdueix l\'ID del reclutador');
-
-            $request = new CreateJobOfferRequest(app(), app('redirect'));
-            $request->merge(['recruiter_id' => $recruiterId]);
-
-            try {
-                $request->validateRecruiterIdField();
-                $data['recruiter_id'] = $recruiterId;
-                break;
-            } catch (ValidationException $e) {
-                $this->error("Error en l'ID del reclutador: " . $e->validator->errors()->first('recruiter_id'));
-            }
-        } while (true);
-
-
-        do {
-            $title = $this->argument('title') ?? $this->ask('Introdueix el títol de l\'oferta');
-
-            $request = new CreateJobOfferRequest(app(), app('redirect'));
-            $request->merge(['title' => $title]);
-
-            try {
-                $request->validateTitleField();
-                $data['title'] = $title;
-                break;
-            } catch (ValidationException $e) {
-                $this->error("Error en el títol: " . $e->validator->errors()->first('title'));
-            }
-        } while (true);
-
-        do {
-            $description = $this->argument('description') ?? $this->ask('Introdueix la descripció de l\'oferta');
-
-            $request = new CreateJobOfferRequest(app(), app('redirect'));
-            $request->merge(['description' => $description]);
-
-            try {
-                $request->validateDescriptionField();
-                $data['description'] = $description;
-                break;
-            } catch (ValidationException $e) {
-                $this->error("Error en la descripció: " . $e->validator->errors()->first('description'));
-            }
-        } while (true);
-
-        do {
-            $location = $this->argument('location') ?? $this->ask('Introdueix la ubicació');
-
-            $request = new CreateJobOfferRequest(app(), app('redirect'));
-            $request->merge(['location' => $location]);
-
-            try {
-                $request->validateLocationField();
-                $data['location'] = $location;
-                break;
-            } catch (ValidationException $e) {
-                $this->error("Error en la ubicació: " . $e->validator->errors()->first('location'));
-            }
-        } while (true);
-
-        do {
-            $salary = $this->argument('salary') ?? $this->ask('Introdueix el salari');
-
-            $request = new CreateJobOfferRequest(app(), app('redirect'));
-            $request->merge(['salary' => $salary]);
-
-            try {
-                $request->validateSalaryField();
-                $data['salary'] = $salary;
-                break;
-            } catch (ValidationException $e) {
-                $this->error("Error en el salari: " . $e->validator->errors()->first('salary'));
-            }
-        } while (true);
-
-        $skills = $this->argument('skills') ?? $this->ask('Introdueix les habilitats requerides (opcional, separades per comes)');
-        if (!empty($skills)) {
-            $request = new CreateJobOfferRequest(app(), app('redirect'));
-            $request->merge(['skills' => $skills]);
-
-            try {
-                $request->validateSkillsField();
-                $data['skills'] = $skills;
-            } catch (ValidationException $e) {
-                $this->error("Error en les habilitats: " . $e->validator->errors()->first('skills'));
-                $data['skills'] = null;
-            }
-        }
-
-        return $data;
-    }
-    */
 
     protected function createRequest(array $data): CreateJobOfferRequest
     {
