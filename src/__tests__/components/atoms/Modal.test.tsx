@@ -34,7 +34,7 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    fireEvent.click(screen.getByRole("dialog"));
+    fireEvent.click(screen.getByRole("button", { name: "modal-overlay" }));
     expect(mockOnClose).toHaveBeenCalled();
   });
 });
