@@ -10,8 +10,10 @@ use App\Models\Company;
 use App\Models\JobOffer;
 use App\Models\Recruiter;
 use Illuminate\Foundation\Testing\WithFaker;
-use App\Http\Controllers\Api\Job\JobOfferController;
+use App\Http\Controllers\api\Job\JobOfferController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\Unit\Model\Job\JobOfferModelTest; 
+use Tests\Feature\Controller\Job\JobOfferControllerTest;
 
 class JobOfferCommandTest extends TestCase
 {
@@ -33,14 +35,18 @@ class JobOfferCommandTest extends TestCase
         ]);
     }
 
-
     public function testIfJobOfferModelExists(): void
     {
-        $this->assertTrue(class_exists(JobOffer::class));
+        $jobOfferModel = new JobOffer();
+    
+        $this->assertInstanceOf(JobOffer::class, $jobOfferModel);
     }
+    
     public function testIfJobOfferControllerExists(): void
     {
-        $this->assertTrue(class_exists(JobOfferController::class));
+        $jobOfferController = new JobOfferController();
+    
+        $this->assertInstanceOf(JobOfferController::class, $jobOfferController);
     }
 
     /**
