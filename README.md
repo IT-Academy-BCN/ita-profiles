@@ -95,6 +95,28 @@ This command allows recruiters to create job offers directly through the termina
    ```bash
    docker exec -it php php artisan create:job-offer
 
+2. The system will prompt for the following information:
+
+Recruiter ID: Provide the unique recruiter identifier.
+Job Title: E.g., Senior Backend Developer.
+Job Description: E.g., Looking for an experienced Backend Developer.
+Location: E.g., Barcelona.
+Salary: E.g., 25000 - 35000.
+Skills (Optional): E.g., PHP, Laravel, MySQL, MongoDB.
+After entering the information, the command will display a preview of the job offer details and ask for confirmation to proceed.
+
+If the data is valid, the job offer will be created in the database. If there are any validation errors, the command will allow you to retry.
+ Vista prèvia de l'oferta de treball:
+- recruiter_id: 1
+- title: Senior Backend Developer
+- description: Looking for an experienced Backend Developer
+- location: Barcelona
+- salary: 25000 - 35000
+- skills: PHP, Laravel, MySQL
+
+Vols procedir amb aquestes dades? (y/n)
+  
+
 ## Screenshots
 
 --
