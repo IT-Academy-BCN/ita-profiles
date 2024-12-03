@@ -97,12 +97,12 @@ This command allows recruiters to create job offers directly through the termina
 
 2. Provide the required information:
 
-- Recruiter ID: Provide the unique recruiter identifier.
-- Job Title: E.g., Senior Backend Developer.
-- Job Description: E.g., Looking for an experienced Backend Developer.
-- Location: E.g., Barcelona.
-- Salary: E.g., 25000 - 35000.
-- Skills (Optional): E.g., PHP, Laravel, MySQL, MongoDB.
+ - Recruiter ID: Provide the unique recruiter identifier.
+ - Job Title: E.g., Senior Backend Developer.
+ - Job Description: E.g., Looking for an experienced Backend Developer.
+ - Location: E.g., Barcelona.
+ - Salary (Optional): E.g., 25000 - 35000.
+ - Skills (Optional): E.g., PHP, Laravel, MySQL, MongoDB.
 
 3. Review and confirm: 
 The system will display a preview of the job offer details and ask for confirmation to proceed. If the data is valid, the job offer will be created. Otherwise, you can retry with corrected information.
