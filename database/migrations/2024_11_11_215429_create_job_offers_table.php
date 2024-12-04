@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('job_offers', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('recruiter_id');
+            $table->uuid('company_id');
             $table->string('title', 255);
             $table->text('description');
             $table->string('location', 255);
@@ -22,6 +23,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('recruiters')
                 ->onDelete('cascade');
+            
+            $table->foreign('company_id')
+            ->references('id')
+            ->on('companies')
+            ->onDelete('cascade');
         });
     }
 
