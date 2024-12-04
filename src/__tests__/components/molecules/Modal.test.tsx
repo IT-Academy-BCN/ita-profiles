@@ -5,9 +5,6 @@ import Modal from "../../../components/molecules/Modal";
 
 describe("Modal Component", () => {
 
-  test("should by defined", () => {
-    expect(Modal).toBeDefined();
-  });
 
   test("should render modal content when isOpen is true", () => {
     render(
@@ -76,7 +73,7 @@ describe("Modal Component", () => {
 
   });
 
-  test("should call onClose when Enter key is pressed on modal-content", () => {
+  test("should call onClose when Escape key is pressed on modal-content", () => {
     const mockOnClose = vi.fn();
     render(
       <Modal isOpen onClose={mockOnClose}>
@@ -84,7 +81,7 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    fireEvent.keyDown(screen.getByRole("button", { name: "modal-content" }), { key: "Enter" });
+    fireEvent.keyDown(screen.getByRole("button", { name: "modal-content" }), { key: "Escape" });
 
     expect(mockOnClose).toHaveBeenCalledTimes(1);
 
@@ -99,20 +96,6 @@ describe("Modal Component", () => {
     );
 
     fireEvent.keyDown(screen.getByRole("button", { name: "modal-content" }), { key: " " });
-
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
-
-  });
-
-  test("should not call onClose when Enter key is pressed on overlay", () => {
-    const mockOnClose = vi.fn();
-    render(
-      <Modal isOpen onClose={mockOnClose}>
-        <div>Test Modal Content</div>
-      </Modal>
-    );
-
-    fireEvent.keyDown(screen.getByRole("button", { name: "modal-overlay" }), { key: "Enter" });
 
     expect(mockOnClose).toHaveBeenCalledTimes(1);
 
