@@ -1,7 +1,10 @@
-import { FC } from "react"
-import { Button } from "../atoms/Button";
-import svgClose from "../../assets/svg/close.svg"
-import { TModal } from "../../../types";
+import { FC, ReactNode } from "react"
+
+type TModal = {
+  isOpen: boolean,
+  onClose: () => void,
+  children: ReactNode
+}
 
 const overlayStyle = "fixed top-0 left-0 w-full h-full bg-[rgba(0, 0, 0, 0.8)] flex justify-center items-center";
 const contentStyle = "bg-white p-4 rounded-md relative";
@@ -10,7 +13,7 @@ const buttonStyle = "absolute top-3 right-3 bg-none border-none text-xl cursor-p
 const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Escape') {
+    if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       onClose();
     }
@@ -31,9 +34,7 @@ const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
         handleKeyDown(e);
         e.stopPropagation();
       }} className={contentStyle} onClick={(e) => e.stopPropagation()}>
-        <Button type="button" aria-label="modal-close" className={buttonStyle} onClick={onClose}>
-          <img src={svgClose} alt="Close" width={21} height={19} aria-label="close modal" />
-        </Button>
+        <button type="button" aria-label="modal-close" className={buttonStyle} onClick={onClose}>&times;</button>
         {children}
       </div>
 
