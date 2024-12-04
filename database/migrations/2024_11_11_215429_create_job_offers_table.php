@@ -15,7 +15,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('location', 255);
             $table->string('skills', 255)->nullable();
-            $table->string('salary', 255);
+            $table->string('salary', 255)->nullable();
             $table->timestamps();
 
             $table->foreign('recruiter_id')
