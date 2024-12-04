@@ -1,5 +1,4 @@
 import { FC, ReactNode } from "react"
-import styleModal from "./css/modal.module.css";
 
 type TModal = {
   isOpen: boolean,
@@ -25,13 +24,13 @@ const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
       aria-label="modal-overlay"
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      className={styleModal.overlay}>
+      className="fixed top-0 left-0 w-full h-full bg-[rgba(0, 0, 0, 0.8)] flex justify-center items-center">
 
       <div role="button" aria-label="modal-content" tabIndex={0} onKeyDown={(e) => {
         handleKeyDown(e);
         e.stopPropagation();
-      }} className={styleModal.content} onClick={(e) => e.stopPropagation()}>
-        <button type="button" aria-label="modal-close" className={styleModal.close} onClick={onClose}>&times;</button>
+      }} className="bg-white p-4 rounded-md relative" onClick={(e) => e.stopPropagation()}>
+        <button type="button" aria-label="modal-close" className="absolute top-3 right-3 bg-none border-none text-xl cursor-pointer" onClick={onClose}>&times;</button>
         {children}
       </div>
 
