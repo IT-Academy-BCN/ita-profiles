@@ -13,7 +13,7 @@ const buttonStyle = "absolute top-3 right-3 bg-none border-none text-xl cursor-p
 const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === 'Escape' || event.key === ' ') {
       event.preventDefault();
       onClose();
     }
