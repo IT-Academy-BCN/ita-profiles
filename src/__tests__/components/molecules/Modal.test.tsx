@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { vi } from "vitest";
-import Modal from "../../../components/atoms/Modal";
+import Modal from "../../../components/molecules/Modal";
 
 
 describe("Modal Component", () => {
