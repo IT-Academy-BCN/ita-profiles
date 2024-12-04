@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Job\CreateJobOfferRequest;
 use Symfony\Component\Console\Input\InputArgument;
-use App\Http\Controllers\Api\Job\JobOfferController;
+use App\Http\Controllers\api\Job\JobOfferController;
 
 class CreateJobOfferCommand extends Command
 {
