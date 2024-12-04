@@ -117,23 +117,25 @@ class CreateJobOfferCommand extends Command
 
         $skills = $this->argument('skills') ?? $this->ask('Introdueix les habilitats requerides (opcional, separades per comes o "cancel")');
 
-        if (strtolower($skills) === 'cancel') {
+        if ($skills !== null && strtolower($skills) === 'cancel') {
             $this->info('Operació cancel·lada.');
             exit(0);
         }
-
-        if (!empty($skills)) {
+        
+        if ($skills !== null && trim($skills) !== '') {
             $validator = Validator::make(
                 ['skills' => $skills],
                 ['skills' => (new CreateJobOfferRequest(app(), app('redirect')))->rules()['skills']]
             );
-
+        
             if ($validator->fails()) {
                 $this->error("Error en habilitats: " . $validator->errors()->first('skills'));
                 $data['skills'] = null;
             } else {
                 $data['skills'] = $skills;
             }
+        } else {
+            $data['skills'] = null;
         }
 
         return $data;
