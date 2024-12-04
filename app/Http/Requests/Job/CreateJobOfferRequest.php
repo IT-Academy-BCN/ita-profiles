@@ -31,6 +31,7 @@ class CreateJobOfferRequest extends FormRequest
     {
         return [
             'recruiter_id' => 'required|exists:recruiters,id',
+            'company_id' => 'required|exists:companies,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'location' => 'required|string|max:255',
@@ -43,6 +44,9 @@ class CreateJobOfferRequest extends FormRequest
         return [
             'recruiter_id.required' => 'El camp recruiter_id és obligatori.',
             'recruiter_id.exists' => 'El recruiter_id ha de correspondre a un reclutador existent.',
+
+            'company_id.required' => 'El camp company_id és obligatori.', 
+            'company_id.exists' => 'El company_id ha de correspondre a una empresa existent.', 
 
             'title.required' => 'El camp títol és obligatori.',
             'title.max' => 'El títol no pot tenir més de 255 caràcters.',
@@ -65,6 +69,13 @@ class CreateJobOfferRequest extends FormRequest
     {
         $this->validate([
             'recruiter_id' => $this->rules()['recruiter_id']
+        ]);
+    }
+
+    public function validateCompanyIdField()
+    {
+        $this->validate([
+            'company_id' => $this->rules()['company_id']
         ]);
     }
 
