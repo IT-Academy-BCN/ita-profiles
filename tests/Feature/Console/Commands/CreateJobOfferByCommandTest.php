@@ -12,7 +12,7 @@ use App\Models\Recruiter;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Http\Controllers\api\Job\JobOfferController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\Unit\Model\Job\JobOfferModelTest; 
+use Tests\Unit\Model\Job\JobOfferModelTest;
 use Tests\Feature\Controller\Job\JobOfferControllerTest;
 
 class CreateJobOfferByCommandTest extends TestCase
@@ -38,23 +38,46 @@ class CreateJobOfferByCommandTest extends TestCase
     public function testIfJobOfferModelExists(): void
     {
         $jobOfferModel = new JobOffer();
-    
+
         $this->assertInstanceOf(JobOffer::class, $jobOfferModel);
     }
-    
+
     public function testIfJobOfferControllerExists(): void
     {
         $jobOfferController = new JobOfferController();
-    
+
         $this->assertInstanceOf(JobOfferController::class, $jobOfferController);
     }
 
+    public function testCreateJobOfferViaCommand(): void
+    {
+        $this->artisan('create:job-offer')
+            ->expectsQuestion('Introdueix l\'ID del reclutador', $this->recruiter->id)
+            ->expectsQuestion('Introdueix el títol de l\'oferta de feina (ex: Senior Frontend Developer)' . "\n(o escriu 'cancel' per sortir)", 'Junior Backend Developer')
+            ->expectsQuestion('Introdueix la descripció de l\'oferta de feina (ex: Seeking a creative developer.)' . "\n(o escriu 'cancel' per sortir)", 'Buscamos desarrollador junior')
+            ->expectsQuestion('Introdueix la ubicació de l\'oferta de feina (ex: Barcelona)' . "\n(o escriu 'cancel' per sortir)", 'Barcelona')
+            ->expectsQuestion('Introdueix el sou de l\'oferta de feina (opcional ex: 25000 - 35000)' . "\n(o escriu 'cancel' per sortir)", '30000')
+            ->expectsQuestion('Introdueix les habilitats requerides (opcional, separades per comes o "cancel")', 'PHP, Laravel')
+            ->expectsConfirmation('Vols procedir amb aquestes dades?', 'yes')
+            ->assertExitCode(0);
+        
+        $this->assertDatabaseHas('job_offers', [
+            'recruiter_id' => $this->recruiter->id,
+            'company_id' => $this->recruiter->company_id,
+            'title' => 'Junior Backend Developer',
+            'description' => 'Buscamos desarrollador junior',
+            'location' => 'Barcelona',
+            'salary' => '30000',
+            'skills' => 'PHP, Laravel'
+        ]);
+    }
+    
     /**
      * @dataProvider invalidDataProvider
      */
     public function testInvalidJobOffer($invalidData): void
     {
-        $maxAttempts = 3; 
+        $maxAttempts = 3;
         $exceptionThrown = false;
 
         for ($attempts = 0; $attempts < $maxAttempts; $attempts++) {
@@ -67,11 +90,11 @@ class CreateJobOfferByCommandTest extends TestCase
                     ->expectsQuestion('Introdueix el salari', $invalidData['salary'] ?? '')
                     ->expectsQuestion('Introdueix les habilitats requerides (opcional, separades per comes)', '')
                     ->assertExitCode(1);
-                
-                
+
+
                 $this->fail('Expected an exception to be thrown for invalid data: ' . json_encode($invalidData));
             } catch (\Exception $e) {
-                
+
                 $exceptionThrown = true;
                 break;
             }
@@ -153,6 +176,4 @@ class CreateJobOfferByCommandTest extends TestCase
             ]);
         }
     }
-
-  
 }
