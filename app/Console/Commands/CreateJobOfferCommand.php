@@ -105,7 +105,6 @@ class CreateJobOfferCommand extends Command
         } while (true);
 
         $fields = [
-            //'recruiter_id' => 'Introdueix l\'ID del reclutador',
             'title' => 'Introdueix el títol de l\'oferta de feina (ex: Senior Frontend Developer)',
             'description' => 'Introdueix la descripció de l\'oferta de feina (ex: Seeking a creative developer.)',
             'location' => 'Introdueix la ubicació de l\'oferta de feina (ex: Barcelona)',
@@ -128,18 +127,6 @@ class CreateJobOfferCommand extends Command
                     [$field => $value],
                     [$field => $rules[$field]]
                 );
-                /*
-                if ($field === 'recruiter_id') {
-                    $validator = Validator::make(
-                        [$field => $value],
-                        [$field => 'required|exists:recruiters,id']
-                    );
-                } else {
-                    $validator = Validator::make(
-                        [$field => $value],
-                        [$field => $rules[$field]]
-                    );
-                }*/
 
                 if ($validator->fails()) {
                     $this->error("Error en {$field}: " . $validator->errors()->first($field));
