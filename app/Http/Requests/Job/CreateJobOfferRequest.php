@@ -64,59 +64,5 @@ class CreateJobOfferRequest extends FormRequest
             
         ];
     }
-    
-    public function validateRecruiterIdField()
-    {
-        $this->validate([
-            'recruiter_id' => $this->rules()['recruiter_id']
-        ]);
-    }
 
-    public function validateCompanyIdField()
-    {
-        $this->validate([
-            'company_id' => $this->rules()['company_id']
-        ]);
-    }
-
-    public function validateTitleField()
-    {
-        $this->validate([
-            'title' => $this->rules()['title']
-        ]);
-    }
-
-    public function validateDescriptionField()
-    {
-        $this->validate([
-            'description' => $this->rules()['description']
-        ]);
-    }
-
-    public function validateLocationField()
-    {
-        $this->validate([
-            'location' => $this->rules()['location']
-        ]);
-    }
-
-    public function validateSalaryField()
-    {
-        $this->validate([
-            'salary' => $this->rules()['salary']
-        ]);
-    }
-
-    public function validateSkillsField()
-    {
-        $this->validate([
-            'skills' => $this->rules()['skills']
-        ]);
-    }
-
-    public function validateAllFields()
-    {
-        $this->validate($this->rules());
-    }
-    
 }
