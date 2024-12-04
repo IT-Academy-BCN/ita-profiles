@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\Recruiter;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -67,9 +68,44 @@ class CreateJobOfferCommand extends Command
     {
         $data = [];
         $maxAttempts = 3;
+        $attempts = 0;
+
+        do {
+            $recruiterInput = $this->argument('recruiter_id') ?? $this->ask('Introdueix l\'ID del reclutador');
+
+            try {
+                $recruiter = Recruiter::findOrFail($recruiterInput);
+
+                if (!$recruiter->company_id) {
+                    $this->error('El reclutador no té una empresa assignada.');
+                    $attempts++;
+
+                    if ($attempts >= $maxAttempts) {
+                        $this->error('Has superat el nombre màxim d\'intents. Reinicia el procés.');
+                        exit(1);
+                    }
+                    continue;
+                }
+
+                $data = [
+                    'recruiter_id' => $recruiter->id,
+                    'company_id' => $recruiter->company_id,
+                ];
+
+                break;
+            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                $this->error("Reclutador amb ID {$recruiterInput} no trobat.");
+                $attempts++;
+
+                if ($attempts >= $maxAttempts) {
+                    $this->error('Has superat el nombre màxim d\'intents. Reinicia el procés.');
+                    exit(1);
+                }
+            }
+        } while (true);
 
         $fields = [
-            'recruiter_id' => 'Introdueix l\'ID del reclutador',
+            //'recruiter_id' => 'Introdueix l\'ID del reclutador',
             'title' => 'Introdueix el títol de l\'oferta de feina (ex: Senior Frontend Developer)',
             'description' => 'Introdueix la descripció de l\'oferta de feina (ex: Seeking a creative developer.)',
             'location' => 'Introdueix la ubicació de l\'oferta de feina (ex: Barcelona)',
@@ -88,7 +124,11 @@ class CreateJobOfferCommand extends Command
 
                 $rules = (new CreateJobOfferRequest(app(), app('redirect')))->rules();
 
-
+                $validator = Validator::make(
+                    [$field => $value],
+                    [$field => $rules[$field]]
+                );
+                /*
                 if ($field === 'recruiter_id') {
                     $validator = Validator::make(
                         [$field => $value],
@@ -99,7 +139,7 @@ class CreateJobOfferCommand extends Command
                         [$field => $value],
                         [$field => $rules[$field]]
                     );
-                }
+                }*/
 
                 if ($validator->fails()) {
                     $this->error("Error en {$field}: " . $validator->errors()->first($field));
@@ -121,13 +161,13 @@ class CreateJobOfferCommand extends Command
             $this->info('Operació cancel·lada.');
             exit(0);
         }
-        
+
         if ($skills !== null && trim($skills) !== '') {
             $validator = Validator::make(
                 ['skills' => $skills],
                 ['skills' => (new CreateJobOfferRequest(app(), app('redirect')))->rules()['skills']]
             );
-        
+
             if ($validator->fails()) {
                 $this->error("Error en habilitats: " . $validator->errors()->first('skills'));
                 $data['skills'] = null;
