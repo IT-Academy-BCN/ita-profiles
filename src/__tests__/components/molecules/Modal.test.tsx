@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { FC, useState } from "react";
 import { vi } from "vitest";
 import Modal from "../../../components/molecules/Modal";
 
@@ -98,8 +99,19 @@ import { vi } from "vitest";
 import Modal from "../../../components/molecules/Modal";
 
 
-describe("Modal Component", () => {
+const ModalComponentMock: FC = () => {
+  const [open, setOpen] = useState<boolean>(false)
+  return (
+    <>
+      <button type="button" aria-label="btn-toggle" onClick={() => setOpen(state => !state)}>Toggle Modal</button>
+      <Modal isOpen={open} onClose={() => setOpen(() => false)}>
+        <div>Test Modal Content</div>
+      </Modal>
+    </>
+  )
+}
 
+describe("Modal Component", () => {
 
   test("should render modal content when isOpen is true", () => {
     render(
@@ -195,5 +207,22 @@ describe("Modal Component", () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
 
   });
+
+  it('should toggle the modal state when the button is clicked', () => {
+    const { queryByText, getByText, getByRole } = render(
+      <ModalComponentMock />
+    );
+
+    expect(queryByText(/Test Modal Content/i)).not.toBeInTheDocument();
+    const toggle = getByRole("button", { name: 'btn-toggle' })
+
+    fireEvent.click(toggle)
+
+    expect(getByText(/Test Modal Content/i)).toBeInTheDocument();
+
+    fireEvent.click(toggle)
+
+    expect(queryByText(/Test Modal Content/i)).not.toBeInTheDocument();
+  })
 
 });
