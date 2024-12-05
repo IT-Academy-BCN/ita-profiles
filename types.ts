@@ -1,23 +1,18 @@
 import { ReactNode } from 'react'
 
-export interface ILoginForm {
+export type TLoginForm = {
     dni: string
     password: string
 }
 
-export interface User {
-    id: string
-    authToken?: string
-}
-
 // This could be used globally if we're passing just the children props.
 // Good for providers
-export type TchildrenProps = {
+export type TChildrenProps = {
     children: ReactNode
 }
 
 // === UserResponseData ===
-export type UserResponseData = {
+export type TUserResponseData = {
     userID: string
     token: string
     studentID: string
@@ -30,15 +25,15 @@ export type TSmallScreenContext = {
 }
 
 // === studentList ===
-export interface IStudentList {
+export type TStudentList = {
     id: string
     fullname: string
     subtitle: string
     photo: string
-    tags: ITag[]
+    tags: TTag[]
 }
 
-export interface ITag {
+export type TTag = {
     id: number
     name: string
 }
@@ -57,7 +52,7 @@ export type TProject = {
     id: number
     name: string
     company_name: string
-    tags: ITag[]
+    tags: TTag[]
     project_url: string
     github_url: string
 }
@@ -98,7 +93,7 @@ export type TAbout = {
         about: string
     }
     photo: string
-    tags: ITag[]
+    tags: TTag[]
 }
 export type TStudentFormData = {
     name: string
@@ -125,7 +120,7 @@ export type TCollaboration = {
     collaboration_description: string
     quantity: number
 }
-export interface TSkills {
+export type TSkills = {
     initialSkills: string[]
     onClose: () => void
     onSave: (skills: string[]) => void

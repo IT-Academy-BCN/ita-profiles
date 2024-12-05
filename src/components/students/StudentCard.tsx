@@ -1,9 +1,9 @@
 import { useAppDispatch } from '../../hooks/ReduxHooks'
 import { openUserPanel } from '../../store/slices/user/details'
-import { IStudentList } from '../../interfaces/interfaces'
+import { TStudentList } from '../../../types'
 import { useStudentIdContext } from '../../context/StudentIdContext'
 
-const StudentCard: React.FC<IStudentList> = ({
+const StudentCard: React.FC<TStudentList> = ({
     fullname,
     photo,
     subtitle,

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { TModality } from '../../../interfaces/interfaces'
+import { TModality } from '../../../../types'
 import { modalityThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
 
 const modality: TModality[] = []
