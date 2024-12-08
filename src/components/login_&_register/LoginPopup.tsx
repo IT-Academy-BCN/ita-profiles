@@ -42,7 +42,6 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   return (
     <div 
     role="dialog"
-    aria-labelledby="login-title"
     className=" relative flex flex-col items-center rounded-lg bg-white px-24 py-16 md:px-36">
       <h2 className="text-xl font-bold text-black-3 mb-4">Login</h2>
       <form className="flex flex-col">
@@ -82,7 +81,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
         <div className="ml-16 mb-4 mt-2 text-center text-sm">
           <button
             type="button"
-            aria-label="Cambiar o recuperar contraseña"
+            aria-labelledby="Cambiar o recuperar contraseña"
             className="cursor-pointer"
             style={{ textDecoration: 'underline' }}
           >
