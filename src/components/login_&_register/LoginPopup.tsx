@@ -40,11 +40,14 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   }
 
   return (
-    <div className=" relative flex flex-col items-center rounded-lg bg-white px-24 py-16 md:px-36">
+    <div 
+    role="dialog"
+    className=" relative flex flex-col items-center rounded-lg bg-white px-24 py-16 md:px-36">
       <h2 className="text-xl font-bold text-black-3 mb-4">Login</h2>
       <form className="flex flex-col">
         <button
           type="button"
+          aria-label="Cerrar ventana de inicio de sesión"
           className="absolute right-2 top-2 h-8 w-8 cursor-pointer rounded-full border-none bg-transparent"
           onClick={onClose}
         >
@@ -78,6 +81,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
         <div className="ml-16 mb-4 mt-2 text-center text-sm">
           <button
             type="button"
+            aria-labelledby="Cambiar o recuperar contraseña"
             className="cursor-pointer"
             style={{ textDecoration: 'underline' }}
           >
