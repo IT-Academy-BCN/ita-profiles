@@ -27,31 +27,17 @@ class ResumeFactory extends Factory
         // I THINK THIS CAN ALSO BE REMOVED, is not used.
         $additionalTrainingsIds = AdditionalTraining::factory()->count(2)->create()->pluck('id')->toArray();
 
-        // TEMPORARY: This is used to create add the two users to the first two students.
-        static $studentIndex = 0; // Keep track of the number of students created
-        // Get the user IDs from the cache (SigninTestSeeder)
-        $userIds = Cache::get('test_user_ids', []);
-        // Assign a user ID to the first teo students, then default to null
-        $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
-        // Create GitHub usernames
-        $gitHubUsernames = ['IT-Academy-BCN'];
-        // Assign a GitHub username to the first two students, then default to a random unique one
-        $gitHubUsername = ($studentIndex < count($gitHubUsernames)) ? $gitHubUsernames[$studentIndex] : $this->faker->unique()->userName;
-        $studentIndex++; // Increment the index for each student created, in order to repeat the process
-
         return [
-            'student_id' => Student::factory()->create([
-                'user_id' => $userId, // This will be null after the first two students
-            ])->id,
+            'student_id' => Student::factory()->create(),
             'subtitle' => $this->faker->randomElement(self::SUBTITLES),
             'linkedin_url' => 'https://linkedin.com/' . $this->faker->userName,
-            'github_url' => 'https://github.com/' . $gitHubUsername,
+            'github_url' => 'https://github.com/' . $this->faker->unique()->userName,
             'specialization' => $this->faker->randomElement(
                 ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
             ),
             'development' => $development,
-            'about' => $this->faker->paragraph,
             'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),
+            'about' => $this->faker->paragraph,
         ];
     }
 
