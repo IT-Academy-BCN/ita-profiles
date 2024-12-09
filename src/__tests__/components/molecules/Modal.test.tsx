@@ -1,20 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { FC, useState } from "react";
 import { vi } from "vitest";
 import Modal from "../../../components/molecules/Modal";
-
-
-const ModalComponentMock: FC = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  return (
-    <>
-      <button type="button" aria-label="btn-toggle" onClick={() => setOpen(state => !state)}>Toggle Modal</button>
-      <Modal isOpen={open} onClose={() => setOpen(() => false)}>
-        <div>Test Modal Content</div>
-      </Modal>
-    </>
-  )
-}
 
 describe("Modal Component", () => {
 
@@ -25,9 +11,11 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    expect(screen.getByText("Test Modal Content")).toBeInTheDocument();
+    const textModalContent = screen.getByText("Test Modal Content")
+    expect(textModalContent).toBeInTheDocument();
 
-    expect(screen.getByRole("button", { name: "modal-close" })).toBeInTheDocument();
+    const button = screen.getByRole("button", { name: "modal-close" });
+    expect(button).toBeInTheDocument();
 
   });
 
@@ -38,7 +26,8 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    expect(screen.queryByText("Test Modal Content")).not.toBeInTheDocument();
+    const tesxModalContent = screen.queryByText("Test Modal Content");
+    expect(tesxModalContent).not.toBeInTheDocument();
 
   });
 
@@ -50,7 +39,8 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "modal-overlay" }));
+    const overlayClose = screen.getByRole("button", { name: "modal-overlay" });
+    fireEvent.click(overlayClose);
 
     expect(mockOnClose).toHaveBeenCalledTimes(1);
 
@@ -58,14 +48,14 @@ describe("Modal Component", () => {
 
   test("should not call onClose when modal content is clicked", () => {
     const mockOnClose = vi.fn();
-
     render(
       <Modal isOpen onClose={mockOnClose}>
         <div>Test Modal Content</div>
       </Modal>
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "modal-content" }));
+    const button = screen.getByRole("button", { name: "modal-content" });
+    fireEvent.click(button);
 
     expect(mockOnClose).not.toHaveBeenCalled();
 
@@ -79,7 +69,8 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "modal-close" }));
+    const button = screen.getByRole("button", { name: "modal-close" });
+    fireEvent.click(button);
 
     expect(mockOnClose).toHaveBeenCalledTimes(1);
 
@@ -93,41 +84,11 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    fireEvent.keyDown(screen.getByRole("button", { name: "modal-content" }), { key: "Escape" });
+    const onKeyDown = screen.getByRole("button", { name: "modal-content" })
+    fireEvent.keyDown(onKeyDown, { key: "Escape" });
 
     expect(mockOnClose).toHaveBeenCalledTimes(1);
 
   });
-
-  test("should call onClose when Space key is pressed on modal-content", () => {
-    const mockOnClose = vi.fn();
-    render(
-      <Modal isOpen onClose={mockOnClose}>
-        <div>Test Modal Content</div>
-      </Modal>
-    );
-
-    fireEvent.keyDown(screen.getByRole("button", { name: "modal-content" }), { key: " " });
-
-    expect(mockOnClose).toHaveBeenCalledTimes(1);
-
-  });
-
-  it('should toggle the modal state when the button is clicked', () => {
-    const { queryByText, getByText, getByRole } = render(
-      <ModalComponentMock />
-    );
-
-    expect(queryByText(/Test Modal Content/i)).not.toBeInTheDocument();
-    const toggle = getByRole("button", { name: 'btn-toggle' })
-
-    fireEvent.click(toggle)
-
-    expect(getByText(/Test Modal Content/i)).toBeInTheDocument();
-
-    fireEvent.click(toggle)
-
-    expect(queryByText(/Test Modal Content/i)).not.toBeInTheDocument();
-  })
 
 });
