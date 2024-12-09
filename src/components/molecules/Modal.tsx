@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react"
+import { Button } from "../atoms/Button";
 
 type TModal = {
   isOpen: boolean,
@@ -34,7 +35,7 @@ const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
         handleKeyDown(e);
         e.stopPropagation();
       }} className={contentStyle} onClick={(e) => e.stopPropagation()}>
-        <button type="button" aria-label="modal-close" className={buttonStyle} onClick={onClose}>&times;</button>
+        <Button type="button" aria-label="modal-close" className={buttonStyle} onClick={onClose}>&times;</Button>
         {children}
       </div>
 
