@@ -129,3 +129,9 @@ export type TSkills = {
 export type TDragAndDropLanguagesProps = {
     dropLanguages: TLanguage[],
 }
+
+export type TModal = {
+    isOpen: boolean,
+    onClose: () => void,
+    children: ReactNode
+}
