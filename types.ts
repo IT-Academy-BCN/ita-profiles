@@ -129,3 +129,11 @@ export type TSkills = {
 export type TDragAndDropLanguagesProps = {
     dropLanguages: TLanguage[],
 }
+
+export type TCard = {
+    styles: string
+    children: ReactNode
+    role?: 'button'
+    handleClick?: () => void
+    handleKeyDown?: () => void
+};
