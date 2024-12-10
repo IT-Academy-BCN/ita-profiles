@@ -25,23 +25,14 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request): JsonResponse
     {
-        $input = $request->only(['username', 'dni', 'email', 'specialization', 'password']);
-
-        DB::beginTransaction();
+        $userData = $request->validated();
 
         try {
-            $result = $this->userRegisterService->createUser($input);
+            $result = $this->userRegisterService->registerUser($userData);
 
-            DB::commit();
-
-            return response()->json($result, 200);
-        } catch (\DomainException $e) {
-            DB::rollBack();
-            Log::error('Domain exception:', [
-                'exception' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return response()->json(null, $e->getCode()); // We want the error is only shown in log report
+            return response()->json($result, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }
