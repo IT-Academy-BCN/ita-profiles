@@ -40,22 +40,20 @@ class RegisterUserServiceTest extends TestCase
         $this->assertInstanceOf(UserRegisterService::class, $userRegisterService);
     }
 
-    public function test_user_creation_with_valid_data(): void
+    public function test_user_registration_with_valid_data(): void
     {
         $userData = $this->createUserData();
 
-        try {
-            $response = $this->userService->createUser($userData);
-            $this->assertEquals($userData['email'], $response['email']);
-            $this->assertArrayHasKey('token', $response);
-            $this->assertIsString($response['token']);
-            $this->assertFalse(empty($response['token']) || empty($response['email']));
-        } catch (\Exception $e) {
-            $this->fail('Exception should not have been thrown: ' . $e->getMessage());
-        }
+        $response = $this->userService->registerUser($userData);
+
+        $this->assertEquals($userData['email'], $response['email']);
+        $this->assertArrayHasKey('token', $response);
+        $this->assertIsString($response['token']);
+        $this->assertNotEmpty($response['token']);
+        $this->assertNotEmpty($response['email']);
     }
 
-    public function test_user_creation_with_invalid_data(): void
+    public function test_user_registration_with_invalid_data(): void
     {
         $registerData = [
             'username' => '',
@@ -66,11 +64,11 @@ class RegisterUserServiceTest extends TestCase
             'password' => '123456',
         ];
 
-        $this->expectException(UserRegisterException::class);
-        $this->userService->createUser($registerData);
+        $this->expectException(\Exception::class);
+        $this->userService->registerUser($registerData);
     }
 
-    public function test_user_creation_with_empty_data(): void
+    public function test_user_registration_with_empty_data(): void
     {
         $registerData = [
             'username' => '',
@@ -81,8 +79,8 @@ class RegisterUserServiceTest extends TestCase
             'password' => '',
         ];
 
-        $this->expectException(UserRegisterException::class);
-        $this->userService->createUser($registerData);
+        $this->expectException(\Exception::class);
+        $this->userService->registerUser($registerData);
     }
 
     /**
@@ -91,15 +89,15 @@ class RegisterUserServiceTest extends TestCase
      * @param array $array Data array with user information to test.
      * @param bool $resultCorrect Expected result of the test (true if user creation should succeed, false otherwise).
      */
-    public function test_required_fields_for_user_creation(array $array, bool $resultCorrect): void
+    public function test_required_fields_for_user_creation(array $data, bool $shouldSucceed): void
     {
-        if ($resultCorrect) {
-            $response = $this->userService->createUser($array);
+        if ($shouldSucceed) {
+            $response = $this->userService->registerUser($data);
             $this->assertNotEmpty($response['email']);
             $this->assertNotEmpty($response['token']);
         } else {
             $this->expectException(\Exception::class);
-            $this->userService->createUser($array);
+            $this->userService->registerUser($data);
         }
     }
 

@@ -30,12 +30,12 @@ class RegisterUserControllerTest extends TestCase
         ];
     }
 
-    public function test_user_creation_with_valid_data(): void
+    public function test_user_registration_with_valid_data(): void
     {
         $userData = $this->createUserData();
         $response = $this->json('POST', '/api/v1/register', $userData);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'token',
             'email'
