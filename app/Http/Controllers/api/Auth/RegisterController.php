@@ -19,21 +19,12 @@ class RegisterController extends Controller
     {
         $userData = $request->validated();
 
-        $userData['password'] = bcrypt($userData['password']);
-        $user = User::create($userData);
+        try {
+            $result = $this->userRegisterService->registerUser($userData);
 
-        $student = Student::create(['user_id' => $user->id]);
-
-        Resume::create([
-            'student_id' => $student->id,
-            'specialization' => $userData['specialization'] ?? null,
-        ]);
-
-        $result = [
-            'token' => $user->createToken('ITAcademy')->accessToken,
-            'email' => $user->email,
-        ];
-
-        return response()->json($result, 201);
+            return response()->json($result, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
