@@ -32,9 +32,10 @@ class StudentListSeeder extends Seeder
             ]);
         }
 
-        foreach($resumes as $resume){
-            $collaborations = Collaboration::factory()->count(2)->create();
-            $resume->collaborations()->attach($collaborations->pluck('id'));
-		}
+        $collaborations = Collaboration::factory()->count($resumes->count() * 2)->create();
+
+        $resumes->each(function ($resume) use ($collaborations) {
+            $resume->collaborations()->sync($collaborations->random(2)->pluck('id')->toArray());
+        });
     }
 }
