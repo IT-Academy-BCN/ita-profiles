@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react"
 import { Button } from "../atoms/Button";
+import svgClose from "../../assets/svg/close.svg"
 
 type TModal = {
   isOpen: boolean,
@@ -14,7 +15,7 @@ const buttonStyle = "absolute top-3 right-3 bg-none border-none text-xl cursor-p
 const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Escape' || event.key === ' ') {
+    if (event.key === 'Escape') {
       event.preventDefault();
       onClose();
     }
@@ -35,7 +36,9 @@ const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
         handleKeyDown(e);
         e.stopPropagation();
       }} className={contentStyle} onClick={(e) => e.stopPropagation()}>
-        <Button type="button" aria-label="modal-close" className={buttonStyle} onClick={onClose}>&times;</Button>
+        <Button type="button" aria-label="modal-close" className={buttonStyle} onClick={onClose}>
+          <img src={svgClose} alt="Close" width={21} height={19} aria-label="close modal" />
+        </Button>
         {children}
       </div>
 
