@@ -18,9 +18,9 @@ class DevelopmentListControllerTest extends TestCase
     public function testDevelopmentListControllerReturns_200StatusAndValidDevelopmentListForResumesWithValidDevelopmentOptions(): void
     {
         $developmentOptions = ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'];
-        
+
         foreach ($developmentOptions as $development) {
-            ResumeFactory::new()->specificDevelopment($development)->create();
+            Resume::factory()->create(['development' => $development]);
         }
 
         $response = $this->getJson(route('development.list'));
@@ -28,7 +28,7 @@ class DevelopmentListControllerTest extends TestCase
         $response->assertStatus(200);
 
         $developmentList = $response->json();
-        
+
         $this->assertCount(4, $developmentList);
         $this->assertContains('Spring', $developmentList);
         $this->assertContains('Laravel', $developmentList);
@@ -41,10 +41,8 @@ class DevelopmentListControllerTest extends TestCase
         Resume::query()->delete();
 
         $development = 'Not Set';
-    
-        for ($i = 0; $i < 3; $i++) {
-            ResumeFactory::new()->specificDevelopment($development)->create();
-        }
+
+        Resume::factory()->count(3)->create(['development' => $development]);
 
         $response = $this->getJson(route('development.list'));
 
@@ -72,7 +70,7 @@ class DevelopmentListControllerTest extends TestCase
     public function testDevelopmentListControllerCanBeInstantiated(): void
     {
         $developmentListService = $this->createMock(DevelopmentListService::class);
-        
+
         $controller = new DevelopmentListController($developmentListService);
 
         $this->assertInstanceOf(DevelopmentListController::class, $controller);
