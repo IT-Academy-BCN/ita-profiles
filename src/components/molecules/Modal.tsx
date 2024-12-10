@@ -1,12 +1,9 @@
-import { FC, ReactNode } from "react"
+import { FC } from "react"
 import { Button } from "../atoms/Button";
 import svgClose from "../../assets/svg/close.svg"
+import { TModal } from "../../../types";
 
-type TModal = {
-  isOpen: boolean,
-  onClose: () => void,
-  children: ReactNode
-}
+
 
 const overlayStyle = "fixed top-0 left-0 w-full h-full bg-[rgba(0, 0, 0, 0.8)] flex justify-center items-center";
 const contentStyle = "bg-white p-4 rounded-md relative";
