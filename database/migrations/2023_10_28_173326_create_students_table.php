@@ -15,8 +15,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->enum('status', ['Active', 'Inactive', 'In a Bootcamp', 'In a Job'])->default('Active');
             $table->timestamps();
-            // TODO: This should not be nullable. Fix it as soon as factorie create user for all students.
-            $table->uuid('user_id')->nullable()->index();
+            $table->uuid('user_id')->index();
 
             $table->foreign('user_id')
                 ->references('id')
