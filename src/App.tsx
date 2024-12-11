@@ -8,27 +8,30 @@ import './styles/App.css'
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './utils/ProtectedRoutes'
 import { useLogin } from './context/LoginContext'
-import toastConsoleErrorListener from './lib/utils/toastConsoleErrorListener'
+import { useToastConsoleErrorListenerHook } from './hooks/notifications/useToastConsoleErrorListenerHook'
 
 const App = () => {
   const { isLoggedIn } = useLogin();
-
+  const { consoleLogDevelper } = useToastConsoleErrorListenerHook()
   useEffect(() => {
-    toastConsoleErrorListener()
-  }, [])
+    consoleLogDevelper()
+  }, [consoleLogDevelper])
 
   return (
-    <SmallScreenProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route element={<ProtectedRoute canActivate={isLoggedIn} redirectPath='/' />}>
-            <Route path='/profile' element={<StudentProfilePage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+    <>
+      <SmallScreenProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route element={<ProtectedRoute canActivate={isLoggedIn} redirectPath='/' />}>
+              <Route path='/profile' element={<StudentProfilePage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+        {process.env.NODE_ENV === 'development' && <ToastContainer />}
+      </SmallScreenProvider>
       {process.env.NODE_ENV === 'development' && <ToastContainer />}
-    </SmallScreenProvider>
+    </>
   );
 };
 
