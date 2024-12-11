@@ -18,9 +18,9 @@ class SpecializationListControllerTest extends TestCase
     public function testSpecializationListControllerReturns_200StatusAndValidSpecializationListForResumesWithValidSpecializations(): void
     {
         $specializations = ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'];
-        
+
         foreach ($specializations as $specialization) {
-            ResumeFactory::new()->specificSpecialization($specialization)->create();
+            Resume::factory()->create(['specialization' => $specialization]);
         }
 
         $response = $this->getJson(route('roles.list'));
@@ -33,10 +33,8 @@ class SpecializationListControllerTest extends TestCase
         Resume::query()->delete();
 
         $specialization = 'Not Set';
-    
-        for ($i = 0; $i < 3; $i++) {
-            ResumeFactory::new()->specificSpecialization($specialization)->create();
-        }
+
+        Resume::factory()->count(3)->state(['specialization' => $specialization])->create();
 
         $response = $this->getJson(route('roles.list'));
 
@@ -55,7 +53,7 @@ class SpecializationListControllerTest extends TestCase
     public function testSpecializationListControllerCanBeInstantiated(): void
     {
         $specializationListService = $this->createMock(SpecializationListService::class);
-        
+
         $controller = new SpecializationListController($specializationListService);
 
         $this->assertInstanceOf(SpecializationListController::class, $controller);

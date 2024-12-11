@@ -10,7 +10,6 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call(SigninTestSeeder::class); // Needs to be first in order to add the ID to student.
         $this->call(RoleSeeder::class);
         $this->call(TagSeeder::class);
         $this->call(StudentListSeeder::class);
