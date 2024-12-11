@@ -5,71 +5,51 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Student;
-use App\Models\AdditionalTraining;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Cache;
 
 class ResumeFactory extends Factory
 {
-    public const  SUBTITLES = [
-        "Ingeniero de Software",
-        "Full Stack developer en PHP",
-        "Frontend developer React",
-        "Backend developer Java",
-        "Analista de Datos",
-    ];
-
     public function definition(): array
     {
-        $developmentOptions = ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'];
-        $development = $this->faker->randomElement($developmentOptions);
+        $subtitle = $this->faker->randomElement([
+            'Ingeniero de Software',
+            'Full Stack developer en PHP',
+            'Frontend developer React',
+            'Backend developer Java',
+            'Analista de Datos'
+        ]);
 
-        // I THINK THIS CAN ALSO BE REMOVED, is not used.
-        $additionalTrainingsIds = AdditionalTraining::factory()->count(2)->create()->pluck('id')->toArray();
+        $specialization = $this->faker->randomElement([
+            'Frontend',
+            'Backend',
+            'Fullstack',
+            'Data Science',
+            'Not Set'
+        ]);
 
-        // TEMPORARY: This is used to create add the two users to the first two students.
-        static $studentIndex = 0; // Keep track of the number of students created
-        // Get the user IDs from the cache (SigninTestSeeder)
-        $userIds = Cache::get('test_user_ids', []);
-        // Assign a user ID to the first teo students, then default to null
-        $userId = ($studentIndex < count($userIds)) ? $userIds[$studentIndex] : null;
-        // Create GitHub usernames
-        $gitHubUsernames = ['IT-Academy-BCN'];
-        // Assign a GitHub username to the first two students, then default to a random unique one
-        $gitHubUsername = ($studentIndex < count($gitHubUsernames)) ? $gitHubUsernames[$studentIndex] : $this->faker->unique()->userName;
-        $studentIndex++; // Increment the index for each student created, in order to repeat the process
+        $development = $this->faker->randomElement([
+            'Spring',
+            'Laravel',
+            'Angular',
+            'React',
+            'Not Set'
+        ]);
+
+        $modality = $this->faker->randomElements([
+            'Presencial',
+            'Híbrid',
+            'Remot',
+        ], rand(1, 3));
 
         return [
-            'student_id' => Student::factory()->create([
-                'user_id' => $userId, // This will be null after the first two students
-            ])->id,
-            'subtitle' => $this->faker->randomElement(self::SUBTITLES),
+            'student_id' => Student::factory()->create(),
+            'subtitle' => $subtitle,
             'linkedin_url' => 'https://linkedin.com/' . $this->faker->userName,
-            'github_url' => 'https://github.com/' . $gitHubUsername,
-            'specialization' => $this->faker->randomElement(
-                ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'],
-            ),
+            'github_url' => 'https://github.com/' . $this->faker->unique()->userName,
+            'specialization' => $specialization,
             'development' => $development,
+            'modality' => $modality,
             'about' => $this->faker->paragraph,
-            'modality' => $this->faker->randomElements(['Presencial', 'Híbrid', 'Remot'], rand(1, 3)),
         ];
-    }
-
-    public function specificSpecialization(string $specialization): Factory
-    {
-        return $this->state(function (array $attributes) use ($specialization) {
-            return [
-                'specialization' => $specialization,
-            ];
-        });
-    }
-
-    public function specificDevelopment($data): Factory
-    {
-        return $this->state(function (array $attributes) use ($data) {
-            return [
-                'development' => $data,
-            ];
-        });
     }
 }
