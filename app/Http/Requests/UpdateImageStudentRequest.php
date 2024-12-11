@@ -22,8 +22,7 @@ class UpdateImageStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'photo' => 'required|image|mimes:jpg,jpeg,png,bmp,svg,webp|max:2048'
+            'photo' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ];
-
     }
 }

@@ -38,6 +38,7 @@ php artisan config:clear
 php artisan config:cache
 php artisan cache:clear
 php artisan route:clear
+php artisan storage:link
 chmod 777 -R storage
 
 echo "Starting Cron service..."
