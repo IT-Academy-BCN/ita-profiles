@@ -119,7 +119,7 @@ Contributions are always welcome! Please follow these guidelines:
 ### Folder Structure
 
 - Components: All React components should be created within the /components folder. These components should focus solely on rendering and presenting data. They should not contain any logic or API calls.
-- Pages: Create new pages within the /pages folder. Pages should serve as the top-level components that define the structure of a route and may contain a composition of components. Keep pages clean and avoid adding complex logic directly to them.
+- Pages: Create new pages within the /pages folder. Pages should serve as the top-level components that define the structure of a route and may contain a composition of comp onents. Keep pages clean and avoid adding complex logic directly to them.
 
 ### Separation of Concerns
 
@@ -130,7 +130,25 @@ Contributions are always welcome! Please follow these guidelines:
 
 1. Branches: Create a new branch from the dev branch with a descriptive name for new features or bug fixes.
 2. Commits: Make frequent, well-documented commits with clear and concise messages.
-3. Pull Requests: Submit a pull request when your feature or bug fix is ready for review. Include a description of your changes and reference any related issues.
+3. Pull Requests:
+   - Submit a pull request when your feature or bug fix is ready for review. Include a description of your changes and reference any related issues.
+   - Ensure PR is Up-to-Date: Before creating or updating a pull request, ensure your branch is up-to-date with the `main` branch. The repository includes a GitHub Action that will validate this automatically. If your PR is not up-to-date, follow these steps:
+     1. Fetch the latest changes from `main`:
+        ```bash
+        git fetch origin main
+        ```
+     2. Rebase your branch:
+        ```bash
+        git checkout <your-branch-name>
+        git rebase origin/main
+        ```
+     3. Resolve any merge conflicts during the rebase process.
+     4. Push the updated branch to GitHub:
+        ```bash
+        git push -f origin <your-branch-name>
+        ```
+     - If the PR is not up-to-date, the GitHub Action will provide instructions in the PR checks for resolving the issue.
+4. Code Reviews: Be open to feedback during code reviews to ensure code quality and maintainability.
 
 ### Code Quality
 
