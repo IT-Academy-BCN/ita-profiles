@@ -1,16 +1,12 @@
 import { Card } from '../../../components/atoms/Card'
 import { render, screen } from '../../test-utils'
 
-const defaultCardStyles = 'bg-white px-4 py-2 rounded'
 const handleClick = vi.fn()
 
 describe('Card', () => {
   test('renders card', () => {
     render(
-      <Card 
-      styles={defaultCardStyles}>
-        Card content
-      </Card>
+      <Card>Card content</Card>
     )
     const card = screen.getByText('Card content')
     expect(card).toBeInTheDocument()
@@ -19,9 +15,7 @@ describe('Card', () => {
 
   test('can click the card', () => {    
     render(
-      <Card 
-      styles={defaultCardStyles}
-      handleClick={handleClick}>
+      <Card onClick={handleClick}>
         Click card
       </Card>
     )

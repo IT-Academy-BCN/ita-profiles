@@ -1,21 +1,26 @@
-import { FC } from 'react'
-import { TCard } from '../../../types'
+import { HTMLAttributes, FC } from 'react'
+import cls from 'classnames'
 
 const defaultCardStyles = 'bg-white px-4 py-2 rounded'
+const secondaryCardStyles = ''
+
+type TCard = HTMLAttributes<HTMLDivElement> & {
+  secondary?: boolean
+};
 
 export const Card: FC<TCard> = ({
-  styles = defaultCardStyles,
+  secondary = false,
+  className,
   children,
-  handleClick,
-  handleKeyDown,
 }) => {
   return (
     <div 
-    className={styles}
-    role='button' 
-    onClick={handleClick}
-    onKeyDown={handleKeyDown}
-    tabIndex={0}>
+      className={cls(
+        defaultCardStyles,
+        secondary && secondaryCardStyles,
+        className,
+      )}
+    >
       {children}
     </div>
   )
