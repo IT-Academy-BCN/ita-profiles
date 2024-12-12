@@ -12,6 +12,7 @@ export const Card: FC<TCard> = ({
   secondary = false,
   className,
   children,
+  ...rest
 }) => {
   return (
     <div 
@@ -20,6 +21,7 @@ export const Card: FC<TCard> = ({
         secondary && secondaryCardStyles,
         className,
       )}
+      {...rest}
     >
       {children}
     </div>
