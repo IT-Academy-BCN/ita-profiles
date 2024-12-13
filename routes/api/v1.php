@@ -30,7 +30,8 @@ use App\Http\Controllers\api\Tag\{
 };
 use App\Http\Controllers\api\Auth\{
     RegisterController,
-    AuthController
+    AuthController,
+    RegisterRecruiterController
 };
 use App\Http\Controllers\api\Message\SendMessageController;
 
@@ -39,6 +40,8 @@ Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 Route::get('student/resume/list', StudentListController::class)->name('students.list');
+
+Route::post('/recruiter/register', [RegisterRecruiterController::class, 'register'])->name('recruiter.register');
 
 
 Route::group(['middleware' => ['auth:api']], function () {
