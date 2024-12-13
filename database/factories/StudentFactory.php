@@ -2,21 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\ValueObjects\StudentStatus;
-use App\Models\Student;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
  */
 class StudentFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
-     */
-    protected $model = Student::class;
     /**
      * Define the model's default state.
      *
@@ -25,11 +19,11 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-                'id' => fake()->uuid(),
                 'name' => fake()->firstName(),
                 'surname' => fake()->lastName(),
                 'photo' =>   fake()->url(),
                 'status' => StudentStatus::ACTIVE,
+                'user_id' => User::factory(),
             ];
     }
 }
