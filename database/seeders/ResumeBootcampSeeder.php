@@ -13,33 +13,32 @@ class ResumeBootcampSeeder extends Seeder
     public function run(): void
     {
         $bootcampIds = Bootcamp::pluck('id')->toArray();
-        $bootcampIds[] = null;
-
         $resumes = Resume::all();
 
+        if ($resumes->isNotEmpty()) {
+            $resumes->pop();
+        }
+
         foreach ($resumes as $resume) {
-            $selectedBootcamp = $bootcampIds[array_rand($bootcampIds)];
-
-            if ($selectedBootcamp !== null) {
+            if (rand(1, 5) !== 1) {
+                $selectedBootcamp = $bootcampIds[array_rand($bootcampIds)];
                 $this->attachBootcamp($resume, $selectedBootcamp);
-                $this->attachSecondBootcamp($resume, $bootcampIds, $selectedBootcamp);
+
+                if (rand(1, 4) === 1) {
+                    $eligibleBootcamps = array_diff($bootcampIds, [$selectedBootcamp]);
+                    if (!empty($eligibleBootcamps)) {
+                        $additionalBootcamp = $eligibleBootcamps[array_rand($eligibleBootcamps)]; // Obtener un UUID
+                        $this->attachBootcamp($resume, $additionalBootcamp);
+                    }
+                }
             }
         }
     }
 
-    private function attachBootcamp($resume, $selectedBootcamp): void
+    private function attachBootcamp(Resume $resume, string $bootcampId): void
     {
-        $resume->bootcamps()->attach($selectedBootcamp, ['end_date' => now()->subYear()->addDays(rand(1, 365))->format('Y-m-d')]);
-    }
-
-    private function attachSecondBootcamp($resume, $bootcampIds, $selectedBootcamp): void
-    {
-        if (rand(1, 4) === 1 && $selectedBootcamp !== null) {
-            $eligibleBootcamps = array_diff($bootcampIds, [$selectedBootcamp, null]);
-            if (!empty($eligibleBootcamps)) {
-                $additionalBootcamp = $eligibleBootcamps[array_rand($eligibleBootcamps)];
-                $this->attachBootcamp($resume, $additionalBootcamp);
-            }
-        }
+        $resume->bootcamps()->attach($bootcampId, [
+            'end_date' => now()->subYear()->addDays(rand(1, 365))->format('Y-m-d'),
+        ]);
     }
 }
