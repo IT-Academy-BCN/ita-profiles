@@ -21,16 +21,16 @@ class DevelopmentListServiceTest extends TestCase
         parent::setUp();
 
         Resume::query()->delete();
-        
+
         $this->developmentListService = new DevelopmentListService();
     }
 
     public function testDevelopmentListServiceReturnsAValidDevelopmentArrayForExistingResumesWithDevelopmentFieldWithValidData(): void
     {
         $developmentOptions = ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'];
-        
+
         foreach ($developmentOptions as $development) {
-            ResumeFactory::new()->specificDevelopment($development)->create();
+            Resume::factory()->create(['development' => $development]);
         }
 
         $response = $this->developmentListService->execute();
@@ -45,10 +45,8 @@ class DevelopmentListServiceTest extends TestCase
     public function testDevelopmentListServiceReturnsAnEmptyArrayForExistingResumesWithDevelopmentFieldWithNotSetValue(): void
     {
         $development = 'Not Set';
-    
-        for ($i = 0; $i < 3; $i++) {
-            ResumeFactory::new()->specificDevelopment($development)->create();
-        }
+
+        Resume::factory()->count(3)->create(['development' => $development]);
 
         $response = $this->developmentListService->execute();
 
