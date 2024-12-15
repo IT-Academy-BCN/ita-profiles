@@ -2,5 +2,8 @@
   "project": {
     "title": "Benvinguts al projecte ita-profiles-frontend",
     "description": "Part frontend del projecte ita-profiles"
+  },
+  "exceptions": {
+    "could_not_create_jwt": "No ha estat possible generar el JWT usant Passport per a l'usuari amb ID %id"
   }
 }
