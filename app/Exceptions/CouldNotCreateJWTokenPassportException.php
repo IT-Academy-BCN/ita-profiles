@@ -9,14 +9,11 @@ use Throwable;
 
 class CouldNotCreateJWTokenPassportException extends Exception
 {
+    public const MESSAGE = 'It was not possible to generate the JWT using Passport for the user with ID %s';
+    
     public function __construct(string $user_id, $code = 401, Throwable $previous = null)
     {
-        // Establecer el idioma 
-        App::setLocale('en'); 
-
-        // Obtener el mensaje traducido
-        $message = Lang::get('exceptions.could_not_create_jwt', ['id' => $user_id]);
-
+        $message = sprintf(self::MESSAGE, $user_id);
         parent::__construct($message, $code, $previous);
     }
 }

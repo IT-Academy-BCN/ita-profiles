@@ -9,7 +9,7 @@ use Throwable;
 
 class InvalidCredentialsException extends Exception
 {
-    public const MESSAGE = 'Credencials invàlides proporcionades per l\'usuari.';
+    public const MESSAGE = 'Invalid credentials provided by the user';
 
     public function __construct($code = 401, Throwable $previous = null)
     {

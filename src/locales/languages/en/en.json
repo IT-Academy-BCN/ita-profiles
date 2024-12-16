@@ -4,6 +4,18 @@
     "description": "Frontend part of the ita-profiles project"
   },
   "exceptions": {
-    "could_not_create_jwt": "It was not possible to generate the JWT using Passport for the user with ID %id"
+    "could_not_create_jwt": "It was not possible to generate the JWT using Passport for the user with ID %id",
+    "invalid_credentials": "Invalid credentials provided by the user.",
+    "language_already_exists": "Language %language already exists in student profile %student",
+    "language_not_found": "This language is not in the list of available languages",
+    "project_not_found": "No project found with this ID: %projectId",
+    "resume_not_found": "No resume found for student id: %studentId",
+    "student_language_resume_not_found": "Language with id: %languageId not found for student with id: %studentId",
+    "student_not_found": "No student was found with this ID: %studentId",
+    "tag_not_found": "No tags found with this ID: %tagId",
+    "user_not_authenticated": "Not authorized",
+    "user_not_found": "No user was found with this ID: %userDNI",
+    "user_not_found_in_redis": "It was not possible to find the JWT in Redis for the user with ID %s",
+    "user_not_stored_in_redis": "Failed to store JWT in Redis for user with ID %s"
   }
 }
