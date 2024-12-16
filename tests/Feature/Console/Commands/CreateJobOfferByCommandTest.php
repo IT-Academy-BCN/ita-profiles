@@ -49,28 +49,31 @@ class CreateJobOfferByCommandTest extends TestCase
         $this->assertInstanceOf(JobOfferController::class, $jobOfferController);
     }
 
-    public function testCreateJobOfferViaCommand(): void
-    {
-        $this->artisan('create:job-offer')
-            ->expectsQuestion('Enter the recruiter ID', $this->recruiter->id)  // Asegúrate de que esta pregunta y respuesta se estén esperando bien
-            ->expectsQuestion('Enter the job offer title (e.g., Senior Frontend Developer)' . "\n(or type 'cancel' to exit)", 'Junior Backend Developer')
-            ->expectsQuestion('Enter the job offer description (e.g., Seeking a creative developer.)' . "\n(or type 'cancel' to exit)", 'We are looking for a junior developer')
-            ->expectsQuestion('Enter the job offer location (e.g., Barcelona)' . "\n(or type 'cancel' to exit)", 'Barcelona')
-            ->expectsQuestion('Enter the job offer salary (optional, e.g., 25000 - 35000)' . "\n(or type 'cancel' to exit)", '30000')
-            ->expectsQuestion('Enter the required skills (optional, separated by commas or "cancel")', 'PHP, Laravel')
-            ->expectsConfirmation('Do you want to proceed with these details?', 'yes')
-            ->assertExitCode(0);
 
-            $this->assertDatabaseHas('job_offers', [
-                'recruiter_id' => $this->recruiter->id,
-                'company_id' => $this->recruiter->company_id,
-                'title' => 'Junior Backend Developer',
-                'description' => 'We are looking for a junior developer',
-                'location' => 'Barcelona',
-                'salary' => '30000',
-                'skills' => 'PHP, Laravel'
-            ]);
-    }
+
+    public function testCreateJobOfferViaCommand(): void
+{
+    $this->artisan('create:job-offer')
+        
+        ->expectsQuestion('Enter the recruiter ID.', $this->recruiter->id)
+        ->expectsQuestion('Enter the job offer title (e.g., Senior Frontend Developer)' . "\n(or type 'cancel' to exit)", 'Junior Backend Developer')
+        ->expectsQuestion('Enter the job offer description (e.g., Seeking a creative developer.)' . "\n(or type 'cancel' to exit)", 'We are looking for a junior developer')
+        ->expectsQuestion('Enter the job offer location (e.g., Barcelona)' . "\n(or type 'cancel' to exit)", 'Barcelona')
+        ->expectsQuestion('Enter the job offer salary (optional, e.g., 25000 - 35000)' . "\n(or type 'cancel' to exit)", '30000')
+        ->expectsQuestion('Enter the required skills (optional, separated by commas or "cancel")', 'PHP, Laravel')
+        ->expectsConfirmation('Do you want to proceed with this data?', 'yes')
+        ->assertExitCode(0);
+
+    $this->assertDatabaseHas('job_offers', [
+        'recruiter_id' => $this->recruiter->id,
+        'company_id' => $this->recruiter->company_id,
+        'title' => 'Junior Backend Developer',
+        'description' => 'We are looking for a junior developer',
+        'location' => 'Barcelona',
+        'salary' => '30000',
+        'skills' => 'PHP, Laravel'
+    ]);
+}
 
     /**
      * @dataProvider invalidDataProvider
