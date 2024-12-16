@@ -32,6 +32,7 @@ _This documentation is a work in progress. Contributions are not only welcome, b
   - [Best Practices for FormRequest validation](validation.md#best-practices-for-formrequest-validation)
 
 - ### Error handling
+  - [Error handling best practices](error-handling.md#error-handling-best-practices) 
 
 - ### Testing conventions
   - [General guideline](testing-conventions.md#general-guidelines)
