@@ -10,7 +10,7 @@ class RegisterRecruiterAnnotation
      *      operationId="registerRecruiter",
      *      summary="Register a new recruiter",
      *      tags={"RegisterRecruiter"},
-     *      description="Register a new recruiter linked to a company. No authorization token is required for this endpoint.",
+     *      description="Register a new recruiter linked to a company. The password is hashed in the controller before being saved to the database. No authorization token is required for this endpoint.",
      *      @OA\RequestBody(
      *           required=true,
      *           @OA\JsonContent(

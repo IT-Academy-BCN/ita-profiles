@@ -19,7 +19,9 @@ class RegisterRecruiterController extends Controller
     {
         $data = $request->validated();
 
-        $user = User::create(array_intersect_key($data, array_flip(['username', 'dni', 'email', 'password'])));
+        $user = User::create(array_intersect_key($data, array_flip(['username', 'dni', 'email'])) + [
+            'password' => Hash::make($data['password']),
+        ]);
 
         $recruiter = Recruiter::create(array_intersect_key($data, array_flip(['company_id'])) + [
             'user_id' => $user->id,
