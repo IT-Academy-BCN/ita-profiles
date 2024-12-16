@@ -44,12 +44,12 @@ class CreateJobOfferCommand extends Command
     public function handle()
     {
         $data = $this->collectValidatedJobOfferData();
-        $this->info("Vista prèvia de l'oferta de treball:");
+        $this->info("Job offer preview:");
         foreach ($data as $key => $value) {
             $this->line("- {$key}: {$value}");
         }
-        if (!$this->confirm('Vols procedir amb aquestes dades?', true)) {
-            $this->info('Operació cancel·lada.');
+        if (!$this->confirm('Do you want to proceed with this data?', true)) {
+            $this->info('Operation cancelled.');
             return 1;
         }
         try {
@@ -71,17 +71,17 @@ class CreateJobOfferCommand extends Command
         $attempts = 0;
 
         do {
-            $recruiterInput = $this->argument('recruiter_id') ?? $this->ask('Introdueix l\'ID del reclutador');
+            $recruiterInput = $this->argument('recruiter_id') ?? $this->ask('Enter the recruiter ID.');
 
             try {
                 $recruiter = Recruiter::findOrFail($recruiterInput);
 
                 if (!$recruiter->company_id) {
-                    $this->error('El reclutador no té una empresa assignada.');
+                    $this->error('The recruiter does not have an assigned company.');
                     $attempts++;
 
                     if ($attempts >= $maxAttempts) {
-                        $this->error('Has superat el nombre màxim d\'intents. Reinicia el procés.');
+                        $this->error('You have exceeded the maximum number of attempts. Please restart the process.');
                         exit(1);
                     }
                     continue;
@@ -94,30 +94,30 @@ class CreateJobOfferCommand extends Command
 
                 break;
             } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-                $this->error("Reclutador amb ID {$recruiterInput} no trobat.");
+                $this->error("Recruiter with ID {$recruiterInput} not found.");
                 $attempts++;
 
                 if ($attempts >= $maxAttempts) {
-                    $this->error('Has superat el nombre màxim d\'intents. Reinicia el procés.');
+                    $this->error('You have exceeded the maximum number of attempts. Please restart the process.');
                     exit(1);
                 }
             }
         } while (true);
 
         $fields = [
-            'title' => 'Introdueix el títol de l\'oferta de feina (ex: Senior Frontend Developer)',
-            'description' => 'Introdueix la descripció de l\'oferta de feina (ex: Seeking a creative developer.)',
-            'location' => 'Introdueix la ubicació de l\'oferta de feina (ex: Barcelona)',
-            'salary' => 'Introdueix el sou de l\'oferta de feina (opcional ex: 25000 - 35000)',
+            'title' => 'Enter the job offer title (e.g., Senior Frontend Developer)',
+            'description' => 'Enter the job offer description (e.g., Seeking a creative developer.)',
+            'location' => 'Enter the job offer location (e.g., Barcelona)',
+            'salary' => 'Enter the job offer salary (optional, e.g., 25000 - 35000)',
         ];
 
         foreach ($fields as $field => $prompt) {
             $attempts = 0;
             do {
-                $value = $this->argument($field) ?? $this->ask($prompt . "\n(o escriu 'cancel' per sortir)");
+                $value = $this->argument($field) ?? $this->ask($prompt . "\n(or type 'cancel' to exit)");
 
                 if ($value !== null && strtolower($value) === 'cancel') {
-                    $this->info('Operació cancel·lada.');
+                    $this->info('Operation cancelled.');
                     exit(0);
                 }
 
@@ -129,10 +129,10 @@ class CreateJobOfferCommand extends Command
                 );
 
                 if ($validator->fails()) {
-                    $this->error("Error en {$field}: " . $validator->errors()->first($field));
+                    $this->error("Error in {$field}: " . $validator->errors()->first($field));
                     $attempts++;
                     if ($attempts >= $maxAttempts) {
-                        $this->error('Has superat el nombre màxim d\'intents. Reinicia el procés.');
+                        $this->error('You have exceeded the maximum number of attempts. Please restart the process.');
                         exit(1);
                     }
                 } else {
@@ -142,10 +142,10 @@ class CreateJobOfferCommand extends Command
             } while (true);
         }
 
-        $skills = $this->argument('skills') ?? $this->ask('Introdueix les habilitats requerides (opcional, separades per comes o "cancel")');
+        $skills = $this->argument('skills') ?? $this->ask('Enter the required skills (optional, separated by commas or "cancel")');
 
         if ($skills !== null && strtolower($skills) === 'cancel') {
-            $this->info('Operació cancel·lada.');
+            $this->info('Operation cancelled.');
             exit(0);
         }
 
@@ -156,7 +156,7 @@ class CreateJobOfferCommand extends Command
             );
 
             if ($validator->fails()) {
-                $this->error("Error en habilitats: " . $validator->errors()->first('skills'));
+                $this->error("Error in skills: " . $validator->errors()->first('skills'));
                 $data['skills'] = null;
             } else {
                 $data['skills'] = $skills;
@@ -188,7 +188,7 @@ class CreateJobOfferCommand extends Command
         }
 
         if (isset($content['jobOffer'])) {
-            $this->line("Detalls de l'oferta:");
+            $this->line("Offer details:");
             foreach ($content['jobOffer'] as $key => $value) {
                 $this->line("- {$key}: {$value}");
             }
@@ -198,7 +198,7 @@ class CreateJobOfferCommand extends Command
     {
         foreach ($e->errors() as $field => $messages) {
             foreach ($messages as $message) {
-                $this->error("Error en el camp {$field}: {$message}");
+                $this->error("Error in the field {$field}: {$message}");
             }
         }
     }

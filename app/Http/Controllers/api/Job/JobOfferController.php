@@ -16,6 +16,6 @@ class JobOfferController extends Controller
     {
         $jobOffer = JobOffer::create($request->validated());
 
-        return response()->json(['message' => 'Oferta de feina creada amb èxit', 'jobOffer' => $jobOffer], 201);
+        return response()->json(['message' => 'Job offer successfully created', 'jobOffer' => $jobOffer], 201);
     }
 }

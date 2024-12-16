@@ -52,26 +52,26 @@ class CreateJobOfferByCommandTest extends TestCase
     public function testCreateJobOfferViaCommand(): void
     {
         $this->artisan('create:job-offer')
-            ->expectsQuestion('Introdueix l\'ID del reclutador', $this->recruiter->id)
-            ->expectsQuestion('Introdueix el títol de l\'oferta de feina (ex: Senior Frontend Developer)' . "\n(o escriu 'cancel' per sortir)", 'Junior Backend Developer')
-            ->expectsQuestion('Introdueix la descripció de l\'oferta de feina (ex: Seeking a creative developer.)' . "\n(o escriu 'cancel' per sortir)", 'Buscamos desarrollador junior')
-            ->expectsQuestion('Introdueix la ubicació de l\'oferta de feina (ex: Barcelona)' . "\n(o escriu 'cancel' per sortir)", 'Barcelona')
-            ->expectsQuestion('Introdueix el sou de l\'oferta de feina (opcional ex: 25000 - 35000)' . "\n(o escriu 'cancel' per sortir)", '30000')
-            ->expectsQuestion('Introdueix les habilitats requerides (opcional, separades per comes o "cancel")', 'PHP, Laravel')
-            ->expectsConfirmation('Vols procedir amb aquestes dades?', 'yes')
+            ->expectsQuestion('Enter the recruiter ID', $this->recruiter->id)  // Asegúrate de que esta pregunta y respuesta se estén esperando bien
+            ->expectsQuestion('Enter the job offer title (e.g., Senior Frontend Developer)' . "\n(or type 'cancel' to exit)", 'Junior Backend Developer')
+            ->expectsQuestion('Enter the job offer description (e.g., Seeking a creative developer.)' . "\n(or type 'cancel' to exit)", 'We are looking for a junior developer')
+            ->expectsQuestion('Enter the job offer location (e.g., Barcelona)' . "\n(or type 'cancel' to exit)", 'Barcelona')
+            ->expectsQuestion('Enter the job offer salary (optional, e.g., 25000 - 35000)' . "\n(or type 'cancel' to exit)", '30000')
+            ->expectsQuestion('Enter the required skills (optional, separated by commas or "cancel")', 'PHP, Laravel')
+            ->expectsConfirmation('Do you want to proceed with these details?', 'yes')
             ->assertExitCode(0);
-        
-        $this->assertDatabaseHas('job_offers', [
-            'recruiter_id' => $this->recruiter->id,
-            'company_id' => $this->recruiter->company_id,
-            'title' => 'Junior Backend Developer',
-            'description' => 'Buscamos desarrollador junior',
-            'location' => 'Barcelona',
-            'salary' => '30000',
-            'skills' => 'PHP, Laravel'
-        ]);
+
+            $this->assertDatabaseHas('job_offers', [
+                'recruiter_id' => $this->recruiter->id,
+                'company_id' => $this->recruiter->company_id,
+                'title' => 'Junior Backend Developer',
+                'description' => 'We are looking for a junior developer',
+                'location' => 'Barcelona',
+                'salary' => '30000',
+                'skills' => 'PHP, Laravel'
+            ]);
     }
-    
+
     /**
      * @dataProvider invalidDataProvider
      */
@@ -83,16 +83,16 @@ class CreateJobOfferByCommandTest extends TestCase
         for ($attempts = 0; $attempts < $maxAttempts; $attempts++) {
             try {
                 $this->artisan('create:job-offer')
-                    ->expectsQuestion('Introdueix l\'ID del reclutador', $this->recruiter->id)
-                    ->expectsQuestion('Introdueix el títol de l\'oferta', $invalidData['title'])
-                    ->expectsQuestion('Introdueix la descripció de l\'oferta', $invalidData['description'])
-                    ->expectsQuestion('Introdueix la ubicació', $invalidData['location'])
-                    ->expectsQuestion('Introdueix el salari', $invalidData['salary'] ?? '')
-                    ->expectsQuestion('Introdueix les habilitats requerides (opcional, separades per comes)', '')
+                    ->expectsQuestion('Enter the recruiter ID', $this->recruiter->id)
+                    ->expectsQuestion('Enter the job offer title', $invalidData['title'])
+                    ->expectsQuestion('Enter the job offer description', $invalidData['description'])
+                    ->expectsQuestion('Enter the location', $invalidData['location'])
+                    ->expectsQuestion('Enter the salary', $invalidData['salary'] ?? '')
+                    ->expectsQuestion('Enter the required skills (optional, separated by commas)', '')
                     ->assertExitCode(1);
 
 
-                $this->fail('Expected an exception to be thrown for invalid data: ' . json_encode($invalidData));
+                $this->fail('The expected exception was not thrown for invalid data: ' . json_encode($invalidData));
             } catch (\Exception $e) {
 
                 $exceptionThrown = true;
@@ -100,7 +100,7 @@ class CreateJobOfferByCommandTest extends TestCase
             }
         }
 
-        $this->assertTrue($exceptionThrown, 'No se lanzó la excepción esperada para datos inválidos');
+        $this->assertTrue($exceptionThrown, 'The expected exception was not thrown for invalid data.');
     }
 
     public static function invalidDataProvider(): array

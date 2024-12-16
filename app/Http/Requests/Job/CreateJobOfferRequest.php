@@ -24,7 +24,7 @@ class CreateJobOfferRequest extends FormRequest
 
     public function authorize()
     {
-        return true; 
+        return true;
     }
 
     public function rules()
@@ -42,27 +42,26 @@ class CreateJobOfferRequest extends FormRequest
     public function messages()
     {
         return [
-            'recruiter_id.required' => 'El camp recruiter_id és obligatori.',
-            'recruiter_id.exists' => 'El recruiter_id ha de correspondre a un reclutador existent.',
+            'recruiter_id.required' => 'The recruiter_id field is required.',
+            'recruiter_id.exists' => 'The recruiter_id must correspond to an existing recruiter.',
 
-            'company_id.required' => 'El camp company_id és obligatori.', 
-            'company_id.exists' => 'El company_id ha de correspondre a una empresa existent.', 
+            'company_id.required' => 'The company_id field is required.',
+            'company_id.exists' => 'The company_id must correspond to an existing company.',
 
-            'title.required' => 'El camp títol és obligatori.',
-            'title.max' => 'El títol no pot tenir més de 255 caràcters.',
+            'title.required' => 'The title field is required.',
+            'title.max' => 'The title cannot exceed 255 characters.',
 
-            'description.required' => 'El camp descripció és obligatori.',
-            'description.max' => 'La descripció no pot tenir més de 255 caràcters.',
+            'description.required' => 'The description field is required.',
+            'description.max' => 'The description cannot exceed 255 characters.',
 
-            'location.required' => 'El camp ubicació és obligatori.',
-            'location.max' => 'La ubicació no pot tenir més de 255 caràcters.',
+            'location.required' => 'The location field is required.',
+            'location.max' => 'The location cannot exceed 255 characters.',
 
-            'salary.max' => 'El salari no pot tenir més de 255 caràcters.',
+            'salary.max' => 'The salary cannot exceed 255 characters.',
 
-            'skills.max' => 'Les habilitats no poden superar els 255 caràcters.',
-            
-            
+            'skills.max' => 'Skills cannot exceed 255 characters.',
+
+
         ];
     }
-
 }
