@@ -41,7 +41,7 @@ Route::get('/development/list', DevelopmentListController::class)->name('develop
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 Route::get('student/resume/list', StudentListController::class)->name('students.list');
 
-Route::post('/recruiter/register', [RegisterRecruiterController::class, 'register'])->name('recruiter.register');
+Route::post('/recruiter/register', RegisterRecruiterController::class)->name('recruiter.register');
 
 
 Route::group(['middleware' => ['auth:api']], function () {
