@@ -16,12 +16,10 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = \Faker\Factory::create();
-
         return [
-            'username' => $faker->userName(),
-            'dni' => $faker->unique()->regexify('[1-9]{8}[A-Z]'),
-            'email' => $faker->unique()->safeEmail(),
+            'username' => $this->faker->userName(),
+            'dni' => $this->generateFakeDniOrNie(),
+            'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => bcrypt('password123'),
         ];
@@ -32,5 +30,34 @@ class UserFactory extends Factory
         return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    function generateFakeDniOrNie(): string
+    {
+        if (rand(1, 10) === 1) {
+            return $this->generateFakeNie();
+        }
+        return $this->generateFakeDni();
+    }
+
+    function generateFakeDni(): string
+    {
+        $numbers = str_pad(rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+        $letters = 'TRWAGMYFPDXBNJZSQVHLCKE';
+        $letter = $letters[$numbers % 23];
+        return $numbers . $letter;
+    }
+
+    function generateFakeNie(): string
+    {
+        $prefixes = ['X', 'Y', 'Z'];
+        $prefix = $prefixes[array_rand($prefixes)];
+        $numbers = str_pad(rand(0, 9999999), 7, '0', STR_PAD_LEFT);
+        $letters = 'TRWAGMYFPDXBNJZSQVHLCKE';
+
+        $numericPrefix = str_replace(['X', 'Y', 'Z'], [0, 1, 2], $prefix);
+        $fullNumber = $numericPrefix . $numbers;
+        $letter = $letters[$fullNumber % 23];
+        return $prefix . $numbers . $letter;
     }
 }
