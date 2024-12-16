@@ -22,18 +22,20 @@ _This documentation is a work in progress. Contributions are not only welcome, b
   - Model binding
 
 - ### Database and ORM conventions
-    - [Eloquent conventions](database-and-orm-conventions.md#eloquent-model-conventions)
-    - [Eloquent relationships](database-and-orm-conventions.md#eloquent-relationships)
-    - Model binding
-    - Migrations and schema conventions
-    - Factory conventions
+  - [Eloquent conventions](database-and-orm-conventions.md#eloquent-model-conventions)
+  - [Eloquent relationships](database-and-orm-conventions.md#eloquent-relationships)
+  - Model binding
+  - Migrations and schema conventions
+  - Factory conventions
 
 - ### Validation
+  - [Best Practices for FormRequest validation](validation.md#best-practices-for-formrequest-validation)
 
 - ### Error handling
 
 - ### Testing conventions
   - [General guideline](testing-conventions.md#general-guidelines)
+  - [Avoid Testing Laravel's Native Features](testing-conventions.md#avoid-testing-laravels-native-features)
   - [Creating tests](testing-conventions.md#creating-tests)
   - [Code coverage](testing-conventions.md#code-coverage)
 

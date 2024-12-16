@@ -2,6 +2,7 @@
 [[Back to index]](./coding-guidelines.md)
 
 - [General guideline](#general-guidelines)
+- [Avoid Testing Laravel's Native Features](#avoid-testing-laravels-native-features)
 - [Creating tests](#creating-tests)
 - [Code coverage](#code-coverage)
 
@@ -20,6 +21,16 @@ Methods name should follow the conventions:
 Tests should implement the DatabaseTransactions trait.
 
 Don't assert json messages as they could change in the future.
+
+## Avoid testing Laravel's native features
+
+In this project, we adhere to the principle of not testing functionalities that are native to Laravel, such as the framework's ability to return a 422 Unprocessable Entity response for validation errors. This is because Laravel's core functionalities are already thoroughly tested by the framework's maintainers.
+
+Instead, we focus our testing efforts where they provide the most value:
+
+- Validation Rules: For custom validation logic, use unit tests to ensure your rules work as expected. This allows you to isolate and verify your logic without relying on the framework's feature tests.
+- Feature Tests: Reserve feature tests for scenarios where application-specific behavior needs to be validated. Avoid duplicating tests for Laravel's core functionalities.
+By doing this, we maintain a lean and efficient test suite while trusting the reliability of the Laravel framework.
 
 ## Creating tests
 
