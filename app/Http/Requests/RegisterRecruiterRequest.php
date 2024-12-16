@@ -27,7 +27,7 @@ class RegisterRecruiterRequest extends FormRequest
             'dni' => ['required', 'string', 'max:9', 'unique:users', new DniNieRule()],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|confirmed|string|regex:/^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$/',
-            'company_id' => 'sometimes|exists:companies,id',
+            'company_id' => 'nullable|exists:companies,id',
             'terms' => 'required|accepted',
         ];
     }
