@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRecruiterRequest;
 use Illuminate\Http\JsonResponse;
 use App\Models\{Recruiter, User};
+use Illuminate\Support\Facades\Hash;
 
 class RegisterRecruiterController extends Controller
 {
@@ -18,11 +19,11 @@ class RegisterRecruiterController extends Controller
     {
         $data = $request->validated();
 
-        $user = User::create($request->only(['username', 'dni', 'email', 'password']));
+        $user = User::create(array_intersect_key($data, array_flip(['username', 'dni', 'email', 'password'])));
 
-        $recruiter = Recruiter::create(
-            $request->only(['company_id']) + ['user_id' => $user->id]
-        );
+        $recruiter = Recruiter::create(array_intersect_key($data, array_flip(['company_id'])) + [
+            'user_id' => $user->id,
+        ]);
 
         $token = $user->createToken('RecruiterAccessToken')->accessToken;
 
