@@ -1,9 +1,9 @@
 # Validation
 [[Back to index]](./coding-guidelines.md)
 
-- [Best Practices for FormRequest Validation](#best-practices-for-formrequest-validation)
+- [FormRequest Validation best practices](#formrequest-validation-best-practices)
 
-## Best practices for FormRequest validation
+## FormRequest validation best practices
 
 ### Use translation files for error messages
 

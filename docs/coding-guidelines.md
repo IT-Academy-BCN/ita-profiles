@@ -29,7 +29,7 @@ _This documentation is a work in progress. Contributions are not only welcome, b
   - Factory conventions
 
 - ### Validation
-  - [Best Practices for FormRequest validation](validation.md#best-practices-for-formrequest-validation)
+  - [FormRequest validation best practices](validation.md#formrequest-validation-best-practices)
 
 - ### Error handling
   - [Error handling best practices](error-handling.md#error-handling-best-practices) 
