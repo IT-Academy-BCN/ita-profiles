@@ -55,7 +55,7 @@ class RegisterRecruiterAnnotation
      *                      @OA\Items(type="string", example="The email has already been taken.")
      *                  ),
      *                  @OA\Property(property="company_id", type="array",
-     *                      @OA\Items(type="string", example="The selected company does not exist.")
+     *                      @OA\Items(type="string", example="The selected company id is invalid.")
      *                  ),
      *              ),
      *          )
@@ -70,5 +70,5 @@ class RegisterRecruiterAnnotation
      *      )
      * )
      */
-    public function register() {}
+    public function __invoke() {}
 }
