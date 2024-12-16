@@ -206,5 +206,57 @@ class RegisterRecruiterTest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function testTokenIsGeneratedSuccessfully()
+    {
+        $data = [
+            'username' => 'testRecruiter',
+            'dni' => '31574008E',
+            'email' => 'dMl0X@example.com',
+            'password' => 'Password@123',
+            'password_confirmation' => 'Password@123',
+            'company_id' => $this->company->id,
+            'terms' => 'true',
+        ];
+
+        $response = $this->postJson(route('recruiter.register'),$data);
+
+        $response->assertStatus(201);
+
+        $responseData = $response->json();
+
+        $this->assertNotEmpty($responseData['data']['token']);
+
+        $this->assertIsString($responseData['data']['token']);
+    }
+
+    public function testTokenIsWorkingSuccessfully()
+    {
+        $data = [
+            'username' => 'testRecruiter',
+            'dni' => '31574008E',
+            'email' => 'dMl0X@example.com',
+            'password' => 'Password@123',
+            'password_confirmation' => 'Password@123',
+            'company_id' => $this->company->id,
+            'terms' => 'true',
+        ];
+
+        $response = $this->postJson(route('recruiter.register'),$data);
+
+        $responseData = $response->json();
+
+        $token = $responseData['data']['token'];
+
+        $authResponse = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+        ])->postJson(route('message.send'), [
+            'receiver_id' => $this->user->id,
+            'subject' => 'Test Subject',
+            'body' => 'Hello, this is a test message.',
+        ]);
+    
+        $authResponse->assertStatus(201);
+    }
+
 }
 

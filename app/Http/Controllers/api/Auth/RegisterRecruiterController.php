@@ -24,11 +24,14 @@ class RegisterRecruiterController extends Controller
             $request->only(['company_id']) + ['user_id' => $user->id]
         );
 
+        $token = $user->createToken('RecruiterAccessToken')->accessToken;
+
         return response()->json([
             'message' => 'Recruiter registered successfully.',
             'data' => [
                 'user' => $user,
                 'recruiter' => $recruiter,
+                'token' => $token,
             ],
         ], 201);
     }
