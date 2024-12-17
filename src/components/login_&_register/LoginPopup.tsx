@@ -6,7 +6,11 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginUserSchema } from '../../schemes/schemas'
 import { TLoginForm, TUserResponseData } from '../../../types'
+import { Button } from "../atoms/Button";
+import svgClose from "../../assets/svg/close.svg"
 import { useLogin } from '../../context/LoginContext'
+
+const openRegisterButtonStyles = 'mt-10 cursor-pointer font-bold underline decoration-solid'
 
 type LoginPopupProps = {
   onClose: () => void
@@ -35,24 +39,22 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
       onClose()
       navigate('/profile')
     } catch (e) {
-      setCustomError('El usuario o la contraseña son incorrectos.'); // Set custom error message
+      setCustomError('El usuario o la contraseña son incorrectos.');
     }
   }
 
   return (
     <div 
     role="dialog"
-    className=" relative flex flex-col items-center rounded-lg bg-white px-24 py-16 md:px-36">
+    className=" relative flex flex-col items-center rounded-2xl bg-white px-24 py-16 md:px-36">
       <h2 className="text-xl font-bold text-black-3 mb-4">Login</h2>
-      <form className="flex flex-col">
-        <button
-          type="button"
-          aria-label="Cerrar ventana de inicio de sesión"
-          className="absolute right-2 top-2 h-8 w-8 cursor-pointer rounded-full border-none bg-transparent"
-          onClick={onClose}
-        >
-          ✕
-        </button>
+      <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
+        <Button 
+          defaultButton={false}
+          close 
+          onClick={onClose}>
+          <img src={svgClose} alt="Close" aria-label="Cerrar ventana de inicio de sesión" />
+        </Button>
         <input
           type="text"
           id="dni"
@@ -75,38 +77,23 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
         )}
 
         {customError && (
-          <p className="text-error py-2">{customError}</p> // Display custom error message
-        )}
-
-        <div className="ml-16 mb-4 mt-2 text-center text-sm">
-          <button
-            type="button"
-            aria-labelledby="Cambiar o recuperar contraseña"
-            className="cursor-pointer"
-            style={{ textDecoration: 'underline' }}
-          >
-            Recordar/cambiar contraseña
-          </button>
+          <p className="text-error py-2">{customError}</p>
+        )}        
+        <div          
+          aria-labelledby="Cambiar o recuperar contraseña"
+          className="mb-8 mt-2 text-right text-sm cursor-pointer underline decoration-solid"
+        >
+          Recordar/cambiar contraseña
         </div>
-        <button
-          // type="submit"
-          type="button"
-          className="h-12 w-full my-4 rounded-lg bg-primary font-bold text-white"
-          onClick={handleSubmit(handleLogin)}
-        >
-          Login
-        </button>
+        <Button type='submit'>Login</Button>
       </form>
-      <div className="mt-4 text-center">
-        <button
-          type="button"
-          className="cursor-pointer font-bold"
-          style={{ textDecoration: 'underline' }}
-          onClick={onOpenRegisterPopup}
-        >
-          ¿No tienes cuenta? crear una
-        </button>
-      </div>
+      <Button
+        defaultButton={false}
+        className={openRegisterButtonStyles}
+        onClick={onOpenRegisterPopup}
+      >
+        ¿No tienes cuenta? crear una
+      </Button>
     </div>
   )
 }

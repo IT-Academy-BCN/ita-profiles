@@ -4,6 +4,10 @@ import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { UserSchema } from '../../schemes/schemas'
+import svgClose from "../../assets/svg/close.svg"
+import { Button } from '../atoms/Button'
+
+const openLoginButtonStyles = 'mt-10 cursor-pointer font-bold underline decoration-solid'
 
 type RegisterPopupProps = {
   onClose: () => void
@@ -30,12 +34,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
     try {
       if (isChecked) {
         // This creates a user in db.json.
-        const response = await axios.post(
-          '//localhost:8000/users/register',
-          data,
-        )
-        // eslint-disable-next-line no-console
-        console.log('response de register =>', response.data)
+        await axios.post('//localhost:8000/users/register', data)
         reset()
         onClose()
       } else {
@@ -48,16 +47,15 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
   }
 
   return (
-    <div className="w-120 relative flex flex-col items-center rounded-lg bg-white p-5 md:p-20">
+    <div className="w-120 relative flex flex-col items-center rounded-2xl bg-white p-5 md:p-20">
       <h2 className="text-lg font-bold md:text-2xl">Registro</h2>
-      <form className="flex flex-col space-y-4">
-        <button
-          type="button"
-          className="absolute right-2 top-2 h-8 w-8 cursor-pointer rounded-full border-none bg-transparent"
-          onClick={onClose}
-        >
-          ✕
-        </button>
+      <form className="flex flex-col space-y-6" onSubmit={handleSubmit(sendRegister)}>
+        <Button 
+          defaultButton={false}
+          close 
+          onClick={onClose}>
+          <img src={svgClose} alt="Close" aria-label="Cerrar ventana de registro" />
+        </Button>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <input
@@ -137,7 +135,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
             )}
           </div>
         </div>
-        <div className="flex items-center justify-center space-x-8 p-4 md:p-5 ">
+        <div className="grid grid-cols-2 gap-4 flex items-center">
           <div className="flex flex-col">
             <div className="flex items-center gap-1">
               <input
@@ -160,25 +158,16 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               </p>
             )}
           </div>
-          <button
-            type="button"
-            className="w-102 mr-6 h-12 cursor-pointer rounded-lg border-none bg-primary text-white md:h-12 md:w-60 md:text-lg"
-            onClick={handleSubmit(sendRegister)}
-          >
-            Register
-          </button>
+          <Button type='submit'>Registro</Button>
         </div>
       </form>
-      <div className="mt-4 text-center">
-        <button
-          type="button"
-          onClick={onOpenLoginPopup}
-          className="cursor-pointer font-bold text-black-2"
-          style={{ textDecoration: 'underline' }}
-        >
-          ¿Tienes cuenta? acceder
-        </button>
-      </div>
+      <Button
+        defaultButton={false}
+        className={openLoginButtonStyles}
+        onClick={onOpenLoginPopup}
+      >
+        ¿No tienes cuenta? crear una
+      </Button>
     </div>
   )
 }
