@@ -20,7 +20,7 @@ export const useEditStudentProfile = () => {
         const url = `http://localhost:8000/api/v1/student/${id}/resume/profile`
 
         try {
-            await dispatch(updateDetailThunk({ url, formData: data })).unwrap()
+            dispatch(updateDetailThunk({ url, formData: data }))
             handleRefresh(id)
             handleModal()
         } catch (error) {
