@@ -30,8 +30,13 @@ export const resumes: TResumes = {
 }
 
 axios.defaults.baseURL = API_URL
-axios.defaults.headers.Authorization = `Bearer ${token}`;
 axios.defaults.headers.Accept = 'application/json';
+
+const options = {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+}
 
 export default {
   get: async (url: string) => {
@@ -40,38 +45,38 @@ export default {
       return response.data;
     } catch (e) {
       const error = e as Error
-      throw new Error(error.message);
+      throw new DOMException(error.message, 'ConnectionFailed');
     }
   },
   post: async (url: string, data: FormData) => {
     try {
-      const request = await axios.post(url, data)
+      const request = await axios.post(url, data, options)
       const response = request.data;
       return response;
     } catch (e) {
       const error = e as Error
-      throw new Error(error.message);
+      throw new DOMException(error.message, 'ConnectionFailed');
     }
 
   },
   update: async (url: string, data: FormData) => {
     try {
-      const request = await axios.put(url, data)
+      const request = await axios.put(url, data, options)
       const response = request.data;
       return response;
     } catch (e) {
       const error = e as Error
-      throw new Error(error.message);
+      throw new DOMException(error.message, 'ConnectionFailed');
     }
   },
   delete: async (url: string) => {
     try {
-      const request = await axios.delete(url)
+      const request = await axios.delete(url, options)
       const response = request.data;
       return response;
     } catch (e) {
       const error = e as Error
-      throw new Error(error.message);
+      throw new DOMException(error.message, 'ConnectionFailed');
     }
   }
 }
