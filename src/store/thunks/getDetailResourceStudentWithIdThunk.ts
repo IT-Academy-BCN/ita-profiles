@@ -1,27 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import {
-    getStudentDetailWithId,
-    resumes,
-} from '../../api/student/getStudentDetailWithId'
-import { callUpdateStudent } from '../../api/student/callUpdateStudent'
+import api, { resumes } from '../../api/api'
 
 const bootcampThunk = createAsyncThunk(
     'bootcampThunk',
     async (studentId: string | null) => {
-        const response = await getStudentDetailWithId(
-            studentId,
-            resumes.bootcamp,
-        )
+        const response = await api.get(`/student/${studentId}/resume/${resumes.bootcamp}`)
         return response
     },
 )
 const collaborationThunk = createAsyncThunk(
     'collaborationThunk',
     async (studentId: string | null) => {
-        const response = await getStudentDetailWithId(
-            studentId,
-            resumes.collaborations,
-        )
+        const response = await api.get(`/student/${studentId}/resume/${resumes.collaborations}`)
         return response
     },
 )
@@ -29,10 +19,7 @@ const detailThunk = createAsyncThunk(
     'detailThunk',
     async (studentID: string | null) => {
         try {
-            const response = await getStudentDetailWithId(
-                studentID,
-                resumes.detail,
-            )
+            const response = await api.get(`/student/${studentID}/resume/${resumes.detail}`)
             return response
         } catch (error) {
             const MyError = error as ErrorEvent
@@ -41,49 +28,35 @@ const detailThunk = createAsyncThunk(
     },
 )
 
-const updateDetailThunk = createAsyncThunk<
-    string,
-    { url: string; formData: object }
->('updateDetailThunk', async ({ url, formData }) => {
-    try {
-        const response = await callUpdateStudent({
-            url,
-            formData,
-        })
-        return response
-    } catch (error) {
-        const MyError = error as ErrorEvent
-        throw new Error(MyError.message)
-    }
-})
+const updateDetailThunk = createAsyncThunk<string, { url: string; formData: object }>
+    ('updateDetailThunk', async ({ url, formData }) => {
+        try {
+            const response = await api.update(url, formData as FormData)
+            return response
+        } catch (error) {
+            const MyError = error as ErrorEvent
+            throw new Error(MyError.message)
+        }
+    })
 
 const languagesThunk = createAsyncThunk(
     'languagesThunk',
     async (studentID: string | null) => {
-        const response = await getStudentDetailWithId(
-            studentID,
-            resumes.languages,
-        )
+        const response = await api.get(`/student/${studentID}/resume/${resumes.languages}`)
         return response
     },
 )
 const modalityThunk = createAsyncThunk(
     'modalityThunk',
     async (studenSUID: string | null) => {
-        const response = await getStudentDetailWithId(
-            studenSUID,
-            resumes.modality,
-        )
+        const response = await api.get(`/student/${studenSUID}/resume/${resumes.modality}`)
         return response
     },
 )
 const projectsThunk = createAsyncThunk(
     'projectsThunk',
     async (studenSUID: string | null) => {
-        const response = await getStudentDetailWithId(
-            studenSUID,
-            resumes.projects,
-        )
+        const response = await api.get(`/student/${studenSUID}/resume/${resumes.projects}`)
         return response
     },
 )
@@ -91,10 +64,7 @@ const additionalTrainingThunk = createAsyncThunk(
     'additionalTrainingThunk',
     async (studentID: string | null) => {
         try {
-            const response = await getStudentDetailWithId(
-                studentID,
-                resumes.additionaltraining,
-            )
+            const response = await api.get(`/student/${studentID}/resume/${resumes.additionaltraining}`)
             return response
         } catch (error) {
             const MyError = error as ErrorEvent

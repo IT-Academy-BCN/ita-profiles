@@ -1,17 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { resumes } from '../../api/student/getStudentDetailWithId';
+import api, { resumes } from '../../api/api';
 
 export const updateProfilePhotoThunk = createAsyncThunk(
   "updateProfilePhotoThunk",
-  async (payload: { studentId: string, data: object }) => {
-    const axiosPost = await axios.post(`//localhost:8000/api/v1/student/${payload.studentId}/resume/${resumes.photo}`, payload.data, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        'Accept': 'application/json'
-      }
-    })
-
+  async (payload: { studentId: string, data: FormData }) => {
+    const axiosPost = await api.post(`/student/${payload.studentId}/resume/${resumes.photo}`, payload.data)
     return axiosPost.data
   }
 )
