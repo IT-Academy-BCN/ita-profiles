@@ -1,6 +1,7 @@
-import axios from 'axios'
+
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { StudentFiltersContext } from '../../../../context/StudentFiltersContext'
+import api from '../../../../api/api'
 
 const StudentFiltersProvider: React.FC = () => {
     const [roles, setRoles] = useState<string[]>([])
@@ -23,28 +24,30 @@ const StudentFiltersProvider: React.FC = () => {
         [selectedRoles, addRole, removeRole],
     )
 
-    const urlRoles = '/specialization/list'
-    const urlDevelopment = '/development/list'
-
-    const fetchData = async (
-        url: string,
-
-        setData: React.Dispatch<React.SetStateAction<string[]>>,
-    ) => {
-        try {
-            const response = await axios.get(url)
-            setData(response.data)
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error('Error fetching data:', error)
-            // Handle error gracefully, e.g., show a message to the user
+    useEffect(() => {
+        const fetchRole = async () => {
+            try {
+                const response = await api.get('//localhost:8000/api/v1/specialization/list')
+                setRoles(() => response)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
         }
-    }
+        fetchRole()
+    }, [])
 
     useEffect(() => {
-        fetchData(urlRoles, setRoles)
-        fetchData(urlDevelopment, setDevelopment)
-    }, [urlRoles, urlDevelopment])
+        const fetchData = async () => {
+            try {
+                const response = await api.get('//localhost:8000/api/v1/development/list')
+                setDevelopment(() => response)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
+
+        fetchData()
+    }, [])
 
     const toggleRole = (role: string) => {
         if (selectedRoles.includes(role)) {
