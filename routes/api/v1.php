@@ -40,24 +40,26 @@ Route::get('/development/list', DevelopmentListController::class)->name('develop
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
 Route::get('student/resume/list', StudentListController::class)->name('students.list');
 
+Route::prefix('student/{student}/resume')->group(function () {
+    Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
+    Route::get('detail', StudentDetailController::class)->name('student.details');
+    Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
+    Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
+    Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
+    Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
+    Route::get('modality', StudentModalityController::class)->name('student.modality');
+    Route::get('photo', GetStudentImageController::class)->name('student.photo.get');
+});
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::prefix('student/{student}/resume')->group(function () {
-        Route::get('languages', StudentLanguagesDetailController::class)->name('student.languages');
-        Route::get('detail', StudentDetailController::class)->name('student.details');
         Route::put('profile', UpdateStudentProfileController::class)->name('student.updateProfile');
-        Route::get('bootcamp', StudentBootcampDetailController::class)->name('student.bootcamp');
-        Route::get('projects', StudentProjectsDetailController::class)->name('student.projects');
         Route::put('projects/{project}', UpdateStudentProjectController::class)->name('student.updateProject');
         Route::post('languages', AddStudentLanguageController::class)->name('student.addLanguage');
-        Route::get('additionaltraining', StudentAdditionalTrainingListController::class)->name('student.additionaltraining');
-        Route::get('collaborations', StudentCollaborationDetailController::class)->name('student.collaborations');
         Route::put('collaborations', UpdateStudentCollaborationsController::class)->name('student.updateCollaborations');
         Route::put('languages', UpdateStudentLanguagesController::class)->name('student.languages.update');
         Route::put('photo', UpdateStudentImageController::class)->name('student.updatePhoto');
         Route::post('photo', AddStudentImageController::class)->name('student.addPhoto');
-        Route::get('modality', StudentModalityController::class)->name('student.modality');
-        Route::get('photo', GetStudentImageController::class)->name('student.photo.get');
         Route::delete('languages/{language}', DeleteStudentResumeLanguageController::class)->name('student.language.delete');
     });
     Route::prefix('messages')->group(function () {
