@@ -4,102 +4,96 @@
     "description": "Frontend part of the ita-profiles project"
   },
   "exceptions": {
-    "could_not_create_jwt": "It was not possible to generate the JWT using Passport for the user with ID %id",
-    "invalid_credentials": "Invalid credentials provided by the user.",
-    "language_already_exists": "Language %language already exists in student profile %student",
-    "language_not_found": "This language is not in the list of available languages",
-    "project_not_found": "No project found with this ID: %projectId",
-    "resume_not_found": "No resume found for student id: %studentId",
-    "student_language_resume_not_found": "Language with id: %languageId not found for student with id: %studentId",
-    "student_not_found": "No student was found with this ID: %studentId",
-    "tag_not_found": "No tags found with this ID: %tagId",
-    "user_not_authenticated": "Not authorized",
-    "user_not_found": "No user was found with this ID: %userDNI",
-    "user_not_found_in_redis": "It was not possible to find the JWT in Redis for the user with ID %s",
-    "user_not_stored_in_redis": "Failed to store JWT in Redis for user with ID %s"
+    "CouldNotCreateJWTokenPassport": "It was not possible to generate the JWT using Passport for the user with ID %id",
+    "InvalidCredentials": "Invalid credentials provided by the user.",
+    "LanguageAlreadyExists": "Language %language already exists in student profile %student",
+    "LanguageNotFound": "This language is not in the list of available languages",
+    "ProjectNotFound": "No project found with this ID: %projectId",
+    "ResumeNotFound": "No resume found for student id: %studentId",
+    "StudentLanguageResumeNotFound": "Language with id: %languageId not found for student with id: %studentId",
+    "StudentNotFound": "No student was found with this ID: %studentId",
+    "TagNotFound": "No tags found with this ID: %tagId",
+    "UserNotAuthenticated": "Not authorized",
+    "UserNotFound": "No user was found with this ID: %userDNI",
+    "UserNotFoundInRedis": "It was not possible to find the JWT in Redis for the user with ID %s",
+    "UserNotStoredInRedis": "Failed to store JWT in Redis for user with ID %s"
   },
-  "controller": {
-    "add_student_image": {
-      "image_added_successfully": "The image has been added successfully"
-    },
-    "add_student_language": {
-      "language_added_successfully": "The language has been added successfully"
-    },
-    "update_student_image": {
-      "image_updated_successfully": "The image has been updated successfully"
-    },
-    "update_student_languages": {
-      "language_updated_successfully": "Language updated successfully"
-    },
-    "update_student_profile": {
-      "profile_updated_successfully": "The student's profile has been updated successfully"
-    },
-    "update_student_project": {
-      "project_updated_successfully": "The project has been updated successfully"
-    }
-  },
-  "request": {
-    "RegisterRequest": {
-      "username": {
-        "required": "The username is required",
-        "string": "The username must be a text",
-        "min": "The username must have at least 3 characters"
-      },
-      "dni": {
-        "required": "DNI is required",
-        "unique": "DNI already exists",
-        "string": "DNI must be a text",
-        "max": "DNI must not exceed :max characters",
-        "regex": "DNI must not contain special characters"
-      },
-      "email": {
-        "required": "Email is required",
-        "email": "It must have an email format",
-        "string": "The email must be a text",
-        "max": "The email must not exceed :max characters",
-        "unique": "The email already exists"
-      },
-      "password": {
-        "required": "The password is required",
-        "confirmed": "The password confirmation does not match",
-        "regex": "The password must contain at least one capital letter and one special character, and have a minimum length of 8 characters"
-      },
-      "specialization": {
-        "required": "The specialty is required",
-        "in": "The specialty is not validated"
-      },
-      "terms": {
-        "required": "You must accept the terms and conditions",
-        "in": "You must accept the terms and conditions"
+  "http": {
+    "controllers": {
+      "api": {
+        "student": {
+          "AddStudentImage": "The image has been added successfully",
+          "AddStudentLanguage": "The language has been added successfully",
+          "UpdateStudentImage": "The image has been updated successfully",
+          "UpdateStudentLanguages": "Language updated successfully",
+          "UpdateStudentProfile": "The student's profile has been updated successfully",
+          "UpdateStudentProject": "The project has been updated successfully"
+        }
       }
     },
-    "StoreCompanyRequest": {
-      "name": {
-        "required": "The company name is required.",
-        "string": "The company name must be a text.",
-        "max": "The company name must not exceed :max characters."
+    "request": {
+      "RegisterRequest": {
+        "username": {
+          "required": "The username is required",
+          "string": "The username must be a text",
+          "min": "The username must have at least 3 characters"
+        },
+        "dni": {
+          "required": "DNI is required",
+          "unique": "DNI already exists",
+          "string": "DNI must be a text",
+          "max": "DNI must not exceed :max characters",
+          "regex": "DNI must not contain special characters"
+        },
+        "email": {
+          "required": "Email is required",
+          "email": "It must have an email format",
+          "string": "The email must be a text",
+          "max": "The email must not exceed :max characters",
+          "unique": "The email already exists"
+        },
+        "password": {
+          "required": "The password is required",
+          "confirmed": "The password confirmation does not match",
+          "regex": "The password must contain at least one capital letter and one special character, and have a minimum length of 8 characters"
+        },
+        "specialization": {
+          "required": "The specialty is required",
+          "in": "The specialty is not validated"
+        },
+        "terms": {
+          "required": "You must accept the terms and conditions",
+          "in": "You must accept the terms and conditions"
+        }
       },
-      "email": {
-        "required": "The email address is required.",
-        "email": "Please enter a valid email address.",
-        "string": "The email address must be a text.",
-        "max": "The email address must not exceed :max characters.",
-        "unique": "This email address is already in use."
-      },
-      "CIF": {
-        "required": "The CIF is required.",
-        "unique": "This CIF is already in use.",
-        "regex": "The CIF format is invalid.",
-        "max": "The CIF must not exceed :max characters."
-      },
-      "location": {
-        "required": "The location is required.",
-        "string": "The location must be a text.",
-        "min": "The location must have at least :min characters.",
-        "max": "The location must not exceed :max characters."
-      },
-      "website": {
-        "url": "The website must contain a valid URL."
+      "StoreCompanyRequest": {
+        "name": {
+          "required": "The company name is required.",
+          "string": "The company name must be a text.",
+          "max": "The company name must not exceed :max characters."
+        },
+        "email": {
+          "required": "The email address is required.",
+          "email": "Please enter a valid email address.",
+          "string": "The email address must be a text.",
+          "max": "The email address must not exceed :max characters.",
+          "unique": "This email address is already in use."
+        },
+        "CIF": {
+          "required": "The CIF is required.",
+          "unique": "This CIF is already in use.",
+          "regex": "The CIF format is invalid.",
+          "max": "The CIF must not exceed :max characters."
+        },
+        "location": {
+          "required": "The location is required.",
+          "string": "The location must be a text.",
+          "min": "The location must have at least :min characters.",
+          "max": "The location must not exceed :max characters."
+        },
+        "website": {
+          "url": "The website must contain a valid URL."
+        }
       }
     }
   }
