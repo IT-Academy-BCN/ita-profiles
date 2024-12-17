@@ -24,14 +24,15 @@ export type TSmallScreenContext = {
     setIsMobile: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-// === studentList ===
-export type TStudentList = {
+// === Student ===
+export type TStudent = {
     id: string
     fullname: string
     subtitle: string
     photo: string
     tags: TTag[]
 }
+
 
 export type TTag = {
     id: number
