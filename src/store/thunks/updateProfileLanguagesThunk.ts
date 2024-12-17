@@ -8,7 +8,7 @@ export const updateProfileLanguagesThunk = createAsyncThunk(
     const formData = new FormData()
     formData.append('name', payload[0].name)
     formData.append('level', payload[0].level)
-    const axiosPost = await api.post(`/student/${localStorage.getItem("studentID")}/resume/${resumes.languages}`, formData)
-    return axiosPost.data.message
+    const axiosPost = await api.post(`//localhost:8000/api/v1/student/${localStorage.getItem("studentID")}/resume/${resumes.languages}`, formData)
+    return axiosPost.message
   }
 )
