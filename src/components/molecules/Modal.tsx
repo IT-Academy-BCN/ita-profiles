@@ -5,7 +5,6 @@ import { TModal } from "../../../types";
 
 const overlayStyle = "fixed top-0 left-0 w-full h-full bg-[rgba(0, 0, 0, 0.8)] flex justify-center items-center";
 const contentStyle = "bg-white p-4 rounded-md relative";
-const buttonStyle = "absolute top-3 right-3 bg-none border-none text-xl cursor-pointer"
 
 const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
 
@@ -27,12 +26,19 @@ const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
       onKeyDown={handleKeyDown}
       className={overlayStyle}>
 
-      <div role="button" aria-label="modal-content" tabIndex={0} onKeyDown={(e) => {
-        handleKeyDown(e);
-        e.stopPropagation();
-      }} className={contentStyle} onClick={(e) => e.stopPropagation()}>
-        <Button type="button" aria-label="modal-close" className={buttonStyle} onClick={onClose}>
-          <img src={svgClose} alt="Close" width={21} height={19} aria-label="close modal" />
+      <div 
+        role="button" 
+        aria-label="modal-content" 
+        tabIndex={0} 
+        onKeyDown={(e) => {
+          handleKeyDown(e);
+          e.stopPropagation();
+        }} 
+        className={contentStyle} 
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Button aria-label="modal-close" defaultButton={false} close onClick={onClose}>
+          <img src={svgClose} alt="Close" aria-label="close window" />
         </Button>
         {children}
       </div>
