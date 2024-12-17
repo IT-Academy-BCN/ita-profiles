@@ -5,6 +5,7 @@ import LoginPopup from '../login_&_register/LoginPopup'
 import RegisterPopup from '../login_&_register/RegisterPopup'
 import { useLogin } from '../../context/LoginContext'
 import { Button } from '../atoms/Button'
+import svgClose from "../../assets/svg/close.svg"
 
 const UserNavbar: React.FC = () => {
   const [isRestrictedPopupOpen, setIsRestrictedPopupOpen] = useState(false)
@@ -58,7 +59,7 @@ const UserNavbar: React.FC = () => {
         />
       </div>
       <div className="flex cursor-pointer items-center gap-4">
-        <div className="p-.5 dropdown relative rounded-lg  bg-white px-3 py-2 font-medium">
+        <div className="p-.5 dropdown relative rounded-lg bg-white px-3 py-2 font-medium">
           <div
             tabIndex={0}
             role="button"
@@ -103,13 +104,12 @@ const UserNavbar: React.FC = () => {
       {isRestrictedPopupOpen && (
         <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-30">
           <div className="relative flex px-40 py-16 flex-col items-center rounded-2xl bg-white">
-            <button
-              type="button"
-              className="absolute right-2 top-2 h-8 w-8 cursor-pointer rounded-lg border-none bg-transparent"
-              onClick={handleCloseRestrictedPopup}
-            >
-              ✕
-            </button>
+            <Button 
+              defaultButton={false}
+              close 
+              onClick={handleCloseRestrictedPopup}>
+              <img src={svgClose} alt="Close" aria-label="Cerrar ventana" />
+            </Button>
             <img src={Lock} alt="Lock" className="mb-2 h-24 w-24" />
             <h2 className="mb-4 text-2xl font-bold">Acceso restringido</h2>
             <p className="mb-8 font-medium">Entra o regístrate para acceder al perfil</p>
@@ -120,6 +120,7 @@ const UserNavbar: React.FC = () => {
                 Registrarme
               </Button>
               <Button
+                defaultButton={false}
                 outline
                 onClick={handleOpenLoginPopup}
               >
