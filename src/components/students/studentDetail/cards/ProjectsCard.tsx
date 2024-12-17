@@ -3,6 +3,7 @@ import { ArrowRightProjects } from '../../../../assets/img'
 import { useAppSelector } from '../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../atoms/LoadingSpiner'
 import { Carousel } from '../../../atoms/Carousel'
+import { Button } from '../../../atoms/Button'
 
 const ProjectsCard: React.FC = () => {
     const { studentProjects } = useAppSelector((state) => state.ShowStudentReducer)
@@ -18,16 +19,12 @@ const ProjectsCard: React.FC = () => {
             <div className="flex justify-between">
                 <h3 className="text-lg font-bold">Proyectos</h3>
                 <div className="h-3 self-end">
-                    <button type="button" onClick={scrollLeft}>
-                        <img src={ArrowLeft} alt="arrow left" className="w-5" />
-                    </button>
-                    <button type="button" onClick={scrollRight}>
-                        <img
-                            src={ArrowRight}
-                            alt="arrow right"
-                            className="w-5"
-                        />
-                    </button>
+                    <Button defaultButton={false} onClick={scrollLeft}>
+                        <img src={ArrowLeft} alt="arrow left" className="w-5"/>
+                    </Button>
+                    <Button defaultButton={false} onClick={scrollRight}>
+                        <img src={ArrowRight} alt="arrow right" className="w-5" />
+                    </Button>
                 </div>
             </div>
             {isLoadingProjects && <LoadingSpiner />}
