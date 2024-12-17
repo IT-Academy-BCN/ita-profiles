@@ -85,7 +85,7 @@ describe('LoginPopup', () => {
 
   test('closes the popup when the close button is clicked', () => {
 
-    fireEvent.click(screen.getByText('✕'))
+    fireEvent.click(screen.getByAltText('Close'))
     expect(mockOnClose).toHaveBeenCalled()
 
   })
