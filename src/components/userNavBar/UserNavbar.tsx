@@ -75,20 +75,20 @@ const UserNavbar: React.FC = () => {
         </div>
         {isLoggedIn
           ? <div className='flex gap-4'>
-            <button
-              type='button'
-              className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
-              onClick={logout}
-            >
-              <img src={Settings} alt="Settings button" />
-            </button>
-            <Link
-              className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
-              to='/profile'
-            >
-              <img src={UserIcon} alt="User icon button" />
-            </Link>
-          </div>
+              <Button 
+                navbar
+                defaultButton={false}
+                onClick={logout}
+              >
+                <img src={Settings} alt="Settings button" />
+              </Button>
+              <Link
+                className="rounded-lg bg-white px-3 py-2 font-medium text-gray hover:scale-[1.02] transition duration-150 ease-in-out"
+                to='/profile'
+              >
+                <img src={UserIcon} alt="User icon button" />
+              </Link>
+            </div>
 
           : <Button
               navbar
@@ -97,35 +97,21 @@ const UserNavbar: React.FC = () => {
             >
               Login/registro
             </Button>
-        }
-          
+        }          
       </div>
 
       {isRestrictedPopupOpen && (
         <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-30">
           <div className="relative flex px-40 py-16 flex-col items-center rounded-2xl bg-white">
-            <Button 
-              defaultButton={false}
-              close 
-              onClick={handleCloseRestrictedPopup}>
+            <Button defaultButton={false} close onClick={handleCloseRestrictedPopup}>
               <img src={svgClose} alt="Close" aria-label="Cerrar ventana" />
             </Button>
             <img src={Lock} alt="Lock" className="mb-2 h-24 w-24" />
             <h2 className="mb-4 text-2xl font-bold">Acceso restringido</h2>
             <p className="mb-8 font-medium">Entra o regístrate para acceder al perfil</p>
             <div className="flex flex-col gap-3">
-              <Button
-                onClick={handleOpenRegisterPopup}
-              >
-                Registrarme
-              </Button>
-              <Button
-                defaultButton={false}
-                outline
-                onClick={handleOpenLoginPopup}
-              >
-                Entrar
-              </Button>
+              <Button onClick={handleOpenRegisterPopup}>Registrarme</Button>
+              <Button defaultButton={false} outline onClick={handleOpenLoginPopup}>Entrar</Button>
             </div>
           </div>
         </div>
