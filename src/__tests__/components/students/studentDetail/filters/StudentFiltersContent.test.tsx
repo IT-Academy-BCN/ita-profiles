@@ -21,8 +21,8 @@ describe('StudentFiltersProvider', () => {
     })
 
     const selectedRoles: string[] = []
-    const addRole = () => {}
-    const removeRole = () => {}
+    const addRole = () => { }
+    const removeRole = () => { }
 
     const value = {
         selectedRoles,
@@ -35,12 +35,12 @@ describe('StudentFiltersProvider', () => {
 
     test('renders student filters correctly', async () => {
         // Mock API responses
-        mock.onGet('//localhost:8000/api/v1/specialization/list').reply(
+        mock.onGet('/specialization/list').reply(
             200,
             rolesData,
         )
 
-        mock.onGet('//localhost:8000/api/v1/development/list').reply(
+        mock.onGet('/development/list').reply(
             200,
             developmentData,
         )
