@@ -23,8 +23,8 @@ const StudentFiltersProvider: React.FC = () => {
         [selectedRoles, addRole, removeRole],
     )
 
-    const urlRoles = '//localhost:8000/api/v1/specialization/list'
-    const urlDevelopment = '//localhost:8000/api/v1/development/list'
+    const urlRoles = '/specialization/list'
+    const urlDevelopment = '/development/list'
 
     const fetchData = async (
         url: string,
