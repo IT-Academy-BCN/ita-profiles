@@ -1,5 +1,5 @@
-import { AxiosError } from 'axios';
-import api from './api';
+import axios, { AxiosError } from 'axios';
+
 
 export const FetchStudentsList = async (selectedRoles: Array<string> = []) => {
   try {
@@ -11,7 +11,7 @@ export const FetchStudentsList = async (selectedRoles: Array<string> = []) => {
 
     const url = `//localhost:8000/api/v1/student/resume/list${queryParams ? `?${queryParams}` : ''}`;
 
-    const response = await api.get(url);
+    const response = await axios.get(url);
 
     return response;
 
