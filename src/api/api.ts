@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 const token = globalThis.localStorage.getItem('token') || ''
 const API_URL = '//localhost:8000/api/v1'
@@ -39,7 +39,7 @@ export default {
       const response = await axios.get(`${url}`)
       return response.data;
     } catch (e) {
-      const error = e as AxiosError
+      const error = e as Error
       throw new Error(error.message);
     }
   },
@@ -49,7 +49,7 @@ export default {
       const response = request.data;
       return response;
     } catch (e) {
-      const error = e as AxiosError
+      const error = e as Error
       throw new Error(error.message);
     }
 
@@ -60,17 +60,17 @@ export default {
       const response = request.data;
       return response;
     } catch (e) {
-      const error = e as AxiosError
+      const error = e as Error
       throw new Error(error.message);
     }
   },
   delete: async (url: string) => {
     try {
       const request = await axios.delete(url)
-      const response = await request.data;
+      const response = request.data;
       return response;
     } catch (e) {
-      const error = e as AxiosError
+      const error = e as Error
       throw new Error(error.message);
     }
   }
