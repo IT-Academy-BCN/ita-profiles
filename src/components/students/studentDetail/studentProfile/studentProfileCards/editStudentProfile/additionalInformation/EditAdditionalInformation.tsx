@@ -12,27 +12,16 @@ import DragAndDropLanguages from './DragAndDropLanguages'
 import useEditAdditionalInformationHook from '../../../../../../../hooks/useEditAdditionalInformationHook'
 import { Close } from '../../../../../../../assets/svg'
 import { updateProfileLanguagesThunk } from '../../../../../../../store/thunks/updateProfileLanguagesThunk'
-import { callUpdateStudent } from '../../../../../../../api/student/callUpdateStudent'
+import api, { resumes } from '../../../../../../../api/api'
 
 
 export const fetchChanges = async (langs: TLanguage[]): Promise<string> => {
-    type DataFetch = {
-        name: string
-        level: string
-    }
 
-    const data: DataFetch = {
-        name: langs[0].name,
-        level: langs[0].level,
-    }
-    const peticion = {
-        url: `http://127.0.0.1:8000/api/v1/student/${localStorage.getItem(
-            'studentID',
-        )}/resume/languages`,
-        formData: data
-    }
+    const formData = new FormData()
+    formData.append('name', langs[0].name)
+    formData.append('level', langs[0].name)
 
-    const query = await callUpdateStudent(peticion)
+    const query = await api.post(`/student/${localStorage.getItem('studentID')}/resume/${resumes.languages}`, formData)
     return query
 }
 

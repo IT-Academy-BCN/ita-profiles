@@ -5,14 +5,14 @@ import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 
 const MyProfileCollaborationCard: React.FC = () => {
     const { studentCollaborations } = useAppSelector((state) => state.ShowStudentReducer)
-    const {collaborationsData, isLoadingCollaborations, isErrorCollaborations} = studentCollaborations
+    const { collaborationsData, isLoadingCollaborations, isErrorCollaborations } = studentCollaborations
     const [resourcesCard, challengesCard] = collaborationsData
 
     return (
         <div className="flex flex-col gap-4" data-testid="CollaborationCard">
             <div className='flex'>
                 <h3 className="text-lg font-bold text-black-3">Colaboración</h3>
-            </div>            
+            </div>
             <div className="flex flex-col gap-4 md:flex-row">
                 {isLoadingCollaborations && <LoadingSpiner />}
                 {isErrorCollaborations && (

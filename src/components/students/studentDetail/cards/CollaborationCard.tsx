@@ -5,7 +5,7 @@ import LoadingSpiner from '../../../atoms/LoadingSpiner'
 
 const CollaborationCard: React.FC = () => {
     const { studentCollaborations } = useAppSelector((state) => state.ShowStudentReducer)
-    const {collaborationsData, isLoadingCollaborations, isErrorCollaborations} = studentCollaborations
+    const { collaborationsData, isLoadingCollaborations, isErrorCollaborations } = studentCollaborations
     const [resourcesCard, challengesCard] = collaborationsData
 
     return (
