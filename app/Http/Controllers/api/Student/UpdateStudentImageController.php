@@ -32,6 +32,6 @@ class UpdateStudentImageController extends Controller
         $student->photo = $filename;
         $student->save();
 
-        return response()->json(['message' => 'La imatge s\'ha actualitzat']);
+        return response()->json(['message' => 'The image has been updated successfully']);
     }
 }

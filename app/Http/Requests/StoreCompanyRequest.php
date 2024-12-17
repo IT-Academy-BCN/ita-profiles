@@ -34,15 +34,15 @@ class StoreCompanyRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El nombre de la compañía es obligatorio.',
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'Introduce un correo electrónico válido.',
-            'email.unique' => 'Este correo electrónico ya está en uso.',
-            'CIF.required' => 'El CIF es obligatorio.',
-            'CIF.unique' => 'Este CIF ya está en uso.',
-            'CIF.regex' => 'El formato de CIF no es válido.',
-            'location.required' => 'La localización es obligatoria.',
-            'website.url' => 'La página web debe contener una URL válida.',
+            'name.required' => 'The company name is required.',
+            'email.required' => 'The email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.unique' => 'This email address is already in use.',
+            'CIF.required' => 'The CIF is required.',
+            'CIF.unique' => 'This CIF is already in use.',
+            'CIF.regex' => 'The CIF format is invalid.',
+            'location.required' => 'The location is required.',
+            'website.url' => 'The website must contain a valid URL.',
         ];
     }
 }

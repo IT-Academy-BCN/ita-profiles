@@ -54,7 +54,7 @@ class UpdateStudentProjectControllerTest extends TestCase
         $response = $this->json('PUT', route('student.updateProject', ['student' => $this->student->id, 'project' => $this->project->id]), $data);
 
         $response->assertStatus(200);
-        $response->assertJson(['message' => 'El projecte s\'ha actualitzat']);
+        $response->assertJson(['message' => 'The project has been updated successfully']);
     }
 
     public function testCanReturn404ForInvalidStudentId(): void

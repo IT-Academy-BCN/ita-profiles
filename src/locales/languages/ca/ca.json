@@ -17,5 +17,77 @@
     "user_not_found": "No s'ha trobat cap usuari amb aquest ID: %userDNI",
     "user_not_found_in_redis": "No ha estat possible trobar el JWT a Redis per a l'usuari amb ID %s",
     "user_not_stored_in_redis": "No ha estat possible emmagatzemar el JWT a Redis per a l'usuari amb ID %s"
+  },
+  "controllers": {
+    "add_student_image": {
+      "image_added_successfully": "La imatge s'ha afegit correctament"
+    }
+  },
+  "request": {
+    "RegisterRequest": {
+      "username": {
+        "required": "El nom d'usuari és obligatori",
+        "string": "El nom d'usuari ha de ser un text",
+        "min": "El nom d'usuari ha de tenir almenys 3 caràcters"
+      },
+      "dni": {
+        "required": "El DNI és obligatori",
+        "unique": "El DNI ja existeix",
+        "string": "El DNI ha de ser un text",
+        "max": "El DNI no ha de superar els :max caràcters",
+        "regex": "El DNI no ha de contenir caràcters especials"
+      },
+      "email": {
+        "required": "L'email és obligatori",
+        "email": "L'email ha de tenir un format vàlid",
+        "string": "L'email ha de ser un text",
+        "max": "L'email no ha de superar els :max caràcters",
+        "unique": "L'email ja existeix"
+      },
+      "password": {
+        "required": "La contrasenya és obligatòria",
+        "confirmed": "La confirmació de la contrasenya no coincideix",
+        "regex": "La contrasenya ha de contenir almenys una lletra majúscula, un caràcter especial i tenir una longitud mínima de 8 caràcters"
+      },
+      "specialization": {
+        "required": "L'especialització és obligatòria",
+        "in": "L'especialització no és vàlida"
+      },
+      "terms": {
+        "required": "Has d'acceptar els termes i condicions",
+        "in": "Has d'acceptar els termes i condicions"
+      }
+    },
+    "StoreCompanyRequest": {
+      "name": {
+        "required": "El nom de la companyia és obligatori.",
+        "string": "El nom de la companyia ha de ser un text",
+        "max": "El nom de la companyia no ha de superar els :max caràcters"
+      },
+      "email": {
+        "required": "El correu electrònic és obligatori.",
+        "email": "Introdueix un correu electrònic vàlid.",
+        "string": "El correu electrònic ha de ser un text",
+        "max": "El correu electrònic no ha de superar els :max caràcters",
+        "unique": "Aquest correu electrònic ja està en ús."
+      },
+      "CIF": {
+        "required": "El CIF és obligatori.",
+        "string": "El CIF ha de ser un text",
+        "regex": "El format del CIF no és vàlid.",
+        "max": "El CIF no ha de superar els :max caràcters",
+        "unique": "Aquest CIF ja està en ús."
+      },
+      "location": {
+        "required": "La localització és obligatòria.",
+        "string": "La localització ha de ser un text",
+        "min": "La localització ha de tenir almenys 3 caràcters",
+        "max": "La localització no ha de superar els :max caràcters"
+      },
+      "website": {
+        "url": "La pàgina web ha de contenir una URL vàlida.",
+        "max": "La pàgina web no ha de superar els :max caràcters"
+      }
+    }
   }
 }

@@ -40,36 +40,36 @@ class RegisterRequest extends FormRequest
     {
         return [
             // username
-            'username.required' => 'El username es requerido',
-            'username.string' => 'El username debe ser un texto',
-            'username.min' => 'El username debe tener al menos 3 caracteres',
+            'username.required' => 'The username is required',
+            'username.string' => 'The username must be a text',
+            'username.min' => 'The username must have at least 3 characters',
 
             // dni
-            'dni.required' => 'El dni es requerido',
-            'dni.unique' => 'El dni ya existe',
-            'dni.string' => 'El dni debe ser un texto',
-            'dni.max' => 'El dni no debe ser mayor a :max caracteres',
-            'dni.regex' => 'El dni no debe contener caracteres especiales',
+            'dni.required' => 'dni is required',
+            'dni.unique' => 'dni allready exist',
+            'dni.string' => 'dni must be a text',
+            'dni.max' => 'dni no debe ser mayor a :max caracteres',
+            'dni.regex' => 'dni must not contain special characters',
 
             // email
-            'email.email' => 'Debe tener un formato email',
-            'email.required' => 'El email es requerido',
-            'email.string' => 'El email debe ser un texto',
-            'email.max' => 'El email no debe ser mayor a :max caracteres',
-            'email.unique' => 'El email ya existe',
+            'email.email' => 'It must have an email format',
+            'email.required' => 'Email is required',
+            'email.string' => 'The email must be a text',
+            'email.max' => 'The email must not exceed :max characters',
+            'email.unique' => 'The email allready exist',
 
             // password
-            'password.required' => 'La contraseña es requerida',
-            'password.confirmed' => 'La confirmacion de la contraseña no coincide',
-            'password.regex' => 'La contraseña debe contener al menos una mayúscula y un carácter especial, y tener una longitud minima de 8 caracteres',
+            'password.required' => 'The password is required',
+            'password.confirmed' => 'The password confirmation does not match',
+            'password.regex' => 'The password must contain at least one capital letter and one special character, and have a minimum length of 8 characters',
 
             // specialization
-            'specialization.required' => 'La especialidad es requerida',
-            'specialization.in' => 'La especialidad no es valida',
+            'specialization.required' => 'The specialty is required',
+            'specialization.in' => 'The specialty is not validated',
 
             // terms
-            'terms.required' => 'Debes aceptar los terminos y condiciones',
-            'terms.in' => 'Debes aceptar los terminos y condiciones',
+            'terms.required' => 'You must accept the terms and conditions',
+            'terms.in' => 'You must accept the terms and conditions',
         ];
     }
 

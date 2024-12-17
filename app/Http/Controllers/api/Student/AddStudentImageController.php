@@ -31,6 +31,6 @@ class AddStudentImageController extends Controller
             Storage::delete($this->photos_path . $oldPhoto);
         }
 
-        return response()->json(['message' => 'La imatge s\'ha afegit correctament']);
+        return response()->json(['message' => 'The image has been added successfully']);
     }
 }
