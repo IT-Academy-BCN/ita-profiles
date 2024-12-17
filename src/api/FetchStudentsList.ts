@@ -13,7 +13,7 @@ export const FetchStudentsList = async (selectedRoles: Array<string> = []) => {
 
     const response = await axios.get(url);
 
-    return response;
+    return response.data;
 
   } catch (e) {
     const error = e as AxiosError
