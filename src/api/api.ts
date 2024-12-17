@@ -1,7 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import { TStudentFormData } from '../../types';
 
-const token = globalThis.localStorage.getItem('token') || ''
-const API_URL = '//localhost:8000/api/v1'
+
+
+export const token = globalThis.localStorage.getItem('token');
+export const API_URL = '//localhost:8000/api/v1'
 
 type TResumes = {
   photo: string,
@@ -29,53 +32,50 @@ export const resumes: TResumes = {
   profile: "profile",
 }
 
-axios.defaults.baseURL = API_URL
-axios.defaults.headers.Accept = 'application/json';
 
-const options = {
-  headers: {
-    Authorization: `Bearer ${token}`
-  }
-}
+axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+axios.defaults.headers.common.Accept = 'application/json';
 
 export default {
   get: async (url: string) => {
     try {
-      const response = await axios.get(`${url}`)
+      const response = await axios.get(url)
       return response.data;
     } catch (e) {
-      const error = e as Error
+      const error = e as AxiosError
       throw new DOMException(error.message, 'ConnectionFailed');
     }
   },
-  post: async (url: string, data: FormData) => {
+  post: async (url: string, data: FormData | TStudentFormData) => {
     try {
-      const request = await axios.post(url, data, options)
+      const request = await axios.post(url, data)
       const response = request.data;
+      console.log(response)
       return response;
     } catch (e) {
-      const error = e as Error
+      const error = e as AxiosError
       throw new DOMException(error.message, 'ConnectionFailed');
     }
 
   },
-  update: async (url: string, data: FormData) => {
+  update: async (url: string, data: FormData | TStudentFormData) => {
     try {
-      const request = await axios.put(url, data, options)
+      const request = await axios.put(url, data)
       const response = request.data;
+      console.log(response)
       return response;
     } catch (e) {
-      const error = e as Error
+      const error = e as AxiosError
       throw new DOMException(error.message, 'ConnectionFailed');
     }
   },
   delete: async (url: string) => {
     try {
-      const request = await axios.delete(url, options)
+      const request = await axios.delete(url)
       const response = request.data;
       return response;
     } catch (e) {
-      const error = e as Error
+      const error = e as AxiosError
       throw new DOMException(error.message, 'ConnectionFailed');
     }
   }
