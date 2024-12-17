@@ -1,4 +1,7 @@
 import { FC, LabelHTMLAttributes } from 'react'
+import cls from 'classnames'
+
+const defaultLabelStyles = 'block text-sm font-bold text-gray-2'
 
 export type TLabel = Omit<LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor'> & {
     text: string
@@ -10,14 +13,17 @@ const Label: FC<TLabel> = ({
     htmlFor,
     text = '',
     hiddenLabel = false,
+    className,
     ...rest
 }) => {
     return (
         <label
             htmlFor={htmlFor}
-            className={`block text-sm font-medium text-gray-700 ${
-                hiddenLabel ? 'sr-only' : ''
-            }`}
+            className={cls(
+                defaultLabelStyles,
+                hiddenLabel ? 'sr-only' : '',
+                className,
+                )}
             {...rest}
         >
             {text}
