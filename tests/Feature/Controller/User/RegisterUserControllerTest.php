@@ -30,12 +30,12 @@ class RegisterUserControllerTest extends TestCase
         ];
     }
 
-    public function test_user_creation_with_valid_data(): void
+    public function test_user_registration_with_valid_data(): void
     {
         $userData = $this->createUserData();
         $response = $this->json('POST', '/api/v1/register', $userData);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertJsonStructure([
             'token',
             'email'
@@ -59,7 +59,7 @@ class RegisterUserControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_creation_with_invalid_data(): void
+    public function test_user_registration_with_invalid_data(): void
     {
         $response = $this->json('POST', '/api/v1/register', [
             'username' => 667677,
@@ -70,15 +70,147 @@ class RegisterUserControllerTest extends TestCase
             'password_confirmation' => 'invalid_password_confirmation',
         ]);
 
-        $response->assertStatus(422); // 422 Unprocessable Entity
+        $response->assertStatus(422);
         $response->assertJsonValidationErrors(['username', 'dni', 'email', 'password']);
     }
 
-    public function test_required_fields_for_user_creation(): void
+    /**
+     * @dataProvider required_fields_for_user_creation_provider
+     *
+     * @param array $data Data array with user information to test.
+     * @param bool $shouldSucceed Expected result of the test (true if user creation should succeed, false otherwise).
+     */
+    public function test_required_fields_for_user_creation(array $data, bool $shouldSucceed): void
     {
-        $response = $this->json('POST', '/api/v1/register', []);
+        $response = $this->json('POST', '/api/v1/register', $data);
 
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['username', 'dni', 'email', 'password']);
+        if ($shouldSucceed) {
+            $response->assertStatus(201);
+            $response->assertJsonStructure(['token', 'email']);
+
+            $this->assertDatabaseHas('users', [
+                'username' => $data['username'] ?? null,
+                'dni' => $data['dni'] ?? null,
+                'email' => $data['email'] ?? null,
+            ]);
+
+            $user = User::where('email', $data['email'])->first();
+            $this->assertDatabaseHas('students', ['user_id' => $user->id]);
+            if (isset($data['specialization'])) {
+                $this->assertDatabaseHas('resumes', [
+                    'student_id' => $user->student->id,
+                    'specialization' => $data['specialization'],
+                ]);
+            }
+        } else {
+            $response->assertStatus(422);
+
+            $validationErrors = $response->json('errors');
+
+            foreach (array_keys($data) as $key) {
+                if (empty($data[$key])) {
+                    $this->assertArrayHasKey($key, $validationErrors);
+                }
+            }
+        }
+    }
+
+    /**
+     * Proveedor de datos para campos obligatorios en el registro de usuario.
+     */
+    public static function required_fields_for_user_creation_provider(): array
+    {
+        return [
+            // Campo 'username' faltante
+            [
+                [
+                    'dni' => '27827083G',
+                    'email' => 'test@example.com',
+                    'terms' => 'true',
+                    'password' => 'Password%123',
+                    'specialization' => 'Backend',
+                    'password_confirmation' => 'Password%123',
+                ],
+                false,
+            ],
+
+            // Campo 'email' faltante
+            [
+                [
+                    'username' => 'test_username',
+                    'dni' => '27827083G',
+                    'terms' => 'true',
+                    'password' => 'Password%123',
+                    'specialization' => 'Backend',
+                    'password_confirmation' => 'Password%123',
+                ],
+                false,
+            ],
+
+            // Campo 'password' faltante
+            [
+                [
+                    'username' => 'test_username',
+                    'dni' => '27827083G',
+                    'email' => 'janesmith@example.com',
+                    'terms' => 'true',
+                    'specialization' => 'Backend',
+                    'password_confirmation' => 'Password%123',
+                ],
+                false,
+            ],
+
+            // Campo 'dni' faltante
+            [
+                [
+                    'username' => 'test_username',
+                    'email' => 'alicebrown@example.com',
+                    'terms' => 'true',
+                    'password' => 'Password%123',
+                    'specialization' => 'Backend',
+                    'password_confirmation' => 'Password%123',
+                ],
+                false,
+            ],
+
+            // Campo 'specialization' faltante
+            [
+                [
+                    'username' => 'Alice Brown',
+                    'dni' => '27827083G',
+                    'email' => 'alicebrown@example.com',
+                    'terms' => 'true',
+                    'password' => 'Password%123',
+                    'password_confirmation' => 'Password%123',
+                ],
+                false,
+            ],
+
+            // Campo 'terms' faltante
+            [
+                [
+                    'username' => 'Alice Brown',
+                    'dni' => '27827083G',
+                    'email' => 'alicebrown@example.com',
+                    'password' => 'Password%123',
+                    'specialization' => 'Backend',
+                    'password_confirmation' => 'Password%123',
+                ],
+                false,
+            ],
+
+            // Campo 'password_confirmation' faltante
+            [
+                [
+                    'username' => 'Alice Brown',
+                    'dni' => '27827083G',
+                    'email' => 'alicebrown@example.com',
+                    'terms' => 'true',
+                    'password' => 'Password%123',
+                    'specialization' => 'Backend',
+                ],
+                false,
+            ],
+        ];
     }
 }

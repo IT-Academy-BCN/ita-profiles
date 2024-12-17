@@ -19,7 +19,7 @@ class SendMessageTest extends TestCase
     {
         parent::setUp();
 
-        // Create sender and receiver users
+
         $this->sender = User::factory()->create();
         $this->receiver = User::factory()->create();
 
