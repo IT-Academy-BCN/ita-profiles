@@ -40,7 +40,7 @@ export default {
       return response.data;
     } catch (e) {
       const error = e as AxiosError
-      throw new DOMException(error.message, 'ConnectionFailed');
+      throw new Error(error.message);
     }
   },
   post: async (url: string, data: FormData) => {
@@ -50,7 +50,7 @@ export default {
       return response;
     } catch (e) {
       const error = e as AxiosError
-      throw new DOMException(error.message, 'ConnectionFailed');
+      throw new Error(error.message);
     }
 
   },
@@ -61,7 +61,7 @@ export default {
       return response;
     } catch (e) {
       const error = e as AxiosError
-      throw new DOMException(error.message, 'ConnectionFailed');
+      throw new Error(error.message);
     }
   },
   delete: async (url: string) => {
@@ -71,7 +71,7 @@ export default {
       return response;
     } catch (e) {
       const error = e as AxiosError
-      throw new DOMException(error.message, 'ConnectionFailed');
+      throw new Error(error.message);
     }
   }
 }
