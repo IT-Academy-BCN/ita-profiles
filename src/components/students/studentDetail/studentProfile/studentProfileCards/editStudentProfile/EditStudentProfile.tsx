@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { Close } from '../../../../../../assets/svg'
 import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
 import { useEditStudentProfile } from '../../../../../../hooks/useEditstudentProfile'
+import { Button } from '../../../../../atoms/Button'
 
 interface EditStudentProfileProps {
     handleModal: () => void
@@ -45,14 +46,13 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                 >
                     <div className="flex justify-between">
                         <div />
-                        <button
+                        <Button
+                            defaultButton={false}
                             aria-label="close X student modal"
-                            type="button"
                             onClick={handleModal}
-                            className="cursor-pointer"
                         >
                             <img src={Close} alt="close icon" className="h-5" />
-                        </button>
+                        </Button>
                     </div>
                     <div className="w-full h-full ">
                         <div className="flex flex-col h-[20%] justify-evenly">
@@ -71,14 +71,14 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                         alt="Student profile"
                                     />
                                 </div>
-                                <button
+                                <Button
+                                    defaultButton={false}
                                     aria-label="Open upload image modal"
                                     className="h-[30px] w-[180px] self-center text-sm text-[rgba(30,30,30,1)] font-bold border border-[rgba(128,128,128,1)] rounded-lg  "
-                                    type="button"
                                     onClick={() => toggleProfileImage()}
                                 >
                                     Subir nueva imagen
-                                </button>
+                                </Button>
                             </div>
                         </div>
                         <form
@@ -271,22 +271,23 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                 </div>
                             </div>
                             <div className="flex w-full mt-4 mb-8 mr-8 gap-3 ">
-                                <button
+                                <Button
+                                    defaultButton={false}
                                     aria-label="cancel student button"
                                     onClick={handleModal}
                                     className="flex-1 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)]"
-                                    type="button"
                                 >
                                     Cancelar
-                                </button>
-                                <button
+                                </Button>
+                                <Button
+                                    defaultButton={false}
                                     disabled={isSubmitDisabled}
                                     type="submit"
                                     aria-label="submit form button"
                                     className="flex-1 h-[63px] rounded-xl bg-primary font-bold text-white border mr-4 border-[rgba(128,128,128,1)]"
                                 >
                                     Aceptar
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </div>

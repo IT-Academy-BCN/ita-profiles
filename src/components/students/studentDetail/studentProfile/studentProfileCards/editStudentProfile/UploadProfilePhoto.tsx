@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import useUploadProfilePhotoHook from '../../../../../../hooks/useUploadProfilePhotoHook'
 import { Close } from '../../../../../../assets/svg'
+import { Button } from '../../../../../atoms/Button'
 
 const UploadProfilePhoto: FC = () => {
     const {
@@ -25,9 +26,9 @@ const UploadProfilePhoto: FC = () => {
             <section className="fixed flex items-center justify-center top-0 left-0 w-full h-full z-10 bg-[rgba(0,0,0,.7)]">
                 <article className="w-80 flex flex-col justify-center bg-white border border-gray-[#808080] rounded-[12px] z-10">
                     <header className="w-full flex justify-end pt-4 pr-4">
-                        <button
+                        <Button
+                            defaultButton={false}
                             aria-label="Cerrar modal imagen"
-                            type="button"
                             onClick={() =>
                                 dispatch(setEditProfileImageIsOpen())
                             }
@@ -37,7 +38,7 @@ const UploadProfilePhoto: FC = () => {
                                 alt="Cerrar modal"
                                 className="h-5"
                             />
-                        </button>
+                        </Button>
                     </header>
 
                     <strong
@@ -85,17 +86,17 @@ const UploadProfilePhoto: FC = () => {
                     </label>
 
                     <footer className="flex gap-4 p-4 justify-between">
-                        <button
-                            type="button"
+                        <Button
+                            defaultButton={false}
                             onClick={handleCancel}
                             aria-label="Cancel upload photo"
                             className="w-1/2 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)]"
                         >
                             Cancelar
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            defaultButton={false}
                             disabled={btnDisabled}
-                            type="button"
                             aria-label="Aceptar photo"
                             className={`w-1/2  h-[63px] rounded-xl 
             ${btnDisabled ? 'bg-stone-300 cursor-not-allowed' : 'bg-primary'} 
@@ -103,7 +104,7 @@ const UploadProfilePhoto: FC = () => {
                             onClick={handleAccept}
                         >
                             Aceptar
-                        </button>
+                        </Button>
                     </footer>
                 </article>
             </section>
