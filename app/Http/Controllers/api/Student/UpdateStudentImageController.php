@@ -9,10 +9,10 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateImageStudentRequest;
+use Illuminate\Support\Str;
 
 class UpdateStudentImageController extends Controller
 {
-    private string $photo_infix = '.profile_photo.';
     private string $photos_path = 'public/photos/';
 
     public function __invoke(UpdateImageStudentRequest $request, Student $student): JsonResponse
@@ -20,8 +20,7 @@ class UpdateStudentImageController extends Controller
         $this->authorize('update', $student);
 
         $file = $request->file('photo');
-
-        $filename = time() . '.' . $student->id . $this->photo_infix . $file->hashName();
+        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
 
         if ($student->photo) {
             Storage::delete($this->photos_path . $student->photo);
@@ -32,6 +31,9 @@ class UpdateStudentImageController extends Controller
         $student->photo = $filename;
         $student->save();
 
-        return response()->json(['message' => 'The image has been updated successfully']);
+        return response()->json([
+            'message' => 'Image updated successfully',
+            'photo' => Storage::url($this->photos_path . $filename),
+        ]);
     }
 }

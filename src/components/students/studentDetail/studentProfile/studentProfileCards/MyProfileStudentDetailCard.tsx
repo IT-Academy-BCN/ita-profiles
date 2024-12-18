@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import { createPortal } from 'react-dom'
 import { TTag } from '../../../../../../types'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditStudentProfile } from './editStudentProfile/EditStudentProfile'
-import { ModalPortals } from '../../../../ModalPortals'
 import { detailThunk } from '../../../../../store/thunks/getDetailResourceStudentWithIdThunk'
 import UploadProfilePhoto from './editStudentProfile/UploadProfilePhoto'
 import EditSkills from './editStudentProfile/EditSkills'
@@ -23,7 +21,6 @@ const MyProfileStudentDetailCard: React.FC = () => {
         aboutData,
         isLoadingAboutData,
         isErrorAboutData,
-        editProfileImageIsOpen,
     } = useAppSelector((state) => state.ShowStudentReducer.studentDetails)
 
     const [showEditSkills, setShowEditSkills] = useState(false)
@@ -65,15 +62,6 @@ const MyProfileStudentDetailCard: React.FC = () => {
         <div data-testid="StudentDataCard">
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
-
-            <ModalPortals>
-                <EditStudentProfile
-                    handleModal={handleModalEditProfile}
-                    handleRefresh={refreshStudentData}
-                />
-                {editProfileImageIsOpen && <UploadProfilePhoto />}
-            </ModalPortals>
-
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">
                     <div className="flex gap-3">
@@ -142,9 +130,9 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                     {fullDescriptionVisibility
                                         ? aboutData && aboutData.resume.about
                                         : `${aboutData.resume.about
-                                              .split(' ')
-                                              .slice(0, 15)
-                                              .join(' ')}...`}
+                                            .split(' ')
+                                            .slice(0, 15)
+                                            .join(' ')}...`}
                                     {!fullDescriptionVisibility && (
                                         <button
                                             type="button"
@@ -166,6 +154,11 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                         </button>
                                     </p>
                                 )}
+                                <EditStudentProfile
+                                    handleModal={handleModalEditProfile}
+                                    handleRefresh={refreshStudentData}
+                                />
+                                <UploadProfilePhoto />
                             </div>
                         </div>
                         <span className="h-0.5 w-full bg-gray-4-base" />
@@ -188,13 +181,8 @@ const MyProfileStudentDetailCard: React.FC = () => {
                             >
                                 <img src={Pencil} alt="edit tags" />
                             </button>
-                        </div>
-                    </div>
-                    {!isLoadingAboutData &&
-                        aboutData &&
-                        showEditSkills &&
-                        createPortal(
                             <EditSkills
+                                isOpen={showEditSkills}
                                 initialSkills={
                                     aboutData?.tags?.map(
                                         (tag: TTag) => tag.name,
@@ -202,9 +190,10 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                 }
                                 onClose={handleCloseEditSkills}
                                 onSave={handleSaveSkills}
-                            />,
-                            document.body,
-                        )}
+                            />
+                        </div>
+                    </div>
+
                 </div>
             )}
         </div>
