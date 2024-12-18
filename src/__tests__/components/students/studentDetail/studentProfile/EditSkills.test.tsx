@@ -11,6 +11,7 @@ const renderComponent = (initialSkills = []) => {
     return render(
         <Provider store={store}>
             <EditSkills
+                isOpen
                 initialSkills={initialSkills}
                 onSave={mockOnSave}
                 onClose={mockOnClose}
