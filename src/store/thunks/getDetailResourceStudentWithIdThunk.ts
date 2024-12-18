@@ -49,6 +49,12 @@ const updateDetailThunk = createAsyncThunk<
         const response = await callUpdateStudent({
             url,
             formData,
+            options: {
+                headers: {
+                    'Accept': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+            }
         })
         return response
     } catch (error) {

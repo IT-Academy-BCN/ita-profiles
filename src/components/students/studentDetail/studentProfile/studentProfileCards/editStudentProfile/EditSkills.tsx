@@ -161,13 +161,10 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                                 </button>
                             </div>
                             {skills.map((skill) => {
-                                const tag = tagList.find(
-                                    (t) => t.name === skill,
-                                )
-                                const key = tag ? tag.id : skill
+
                                 return (
                                     <div
-                                        key={key}
+                                        key={skill}
                                         className="flex items-center justify-center rounded-md px-2 py-1 text-sm bg-gray-5-background"
                                     >
                                         <span className="flex items-center text-gray-800">
@@ -200,11 +197,10 @@ const EditSkills: React.FC<TSkills> = ({ initialSkills, onClose, onSave }) => {
                             </button>
                             <button
                                 onClick={handleAccept}
-                                className={`flex-1 h-[63px] rounded-xl bg-primary font-bold text-white border mr-4 border-[rgba(128,128,128,1)] ${
-                                    loading
-                                        ? 'bg-gray-400 cursor-not-allowed'
-                                        : 'bg-[#B91879] hover:bg-[#8b125b]'
-                                }`}
+                                className={`flex-1 h-[63px] rounded-xl bg-primary font-bold text-white border mr-4 border-[rgba(128,128,128,1)] ${loading
+                                    ? 'bg-gray-400 cursor-not-allowed'
+                                    : 'bg-[#B91879] hover:bg-[#8b125b]'
+                                    }`}
                                 disabled={loading}
                                 type="button"
                             >
