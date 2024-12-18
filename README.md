@@ -187,3 +187,5 @@ Complete the React specialization at IT Academy.
 #### Why should I collaborate on this project?
 
 This project provides a real-world environment to apply all the concepts learned in the bootcamp. It also allows for learning more advanced concepts and facing real-life situations that may occur in a company.
+
+#ESTO SE DEBE BORRAR, ES UNA PRUEBA
