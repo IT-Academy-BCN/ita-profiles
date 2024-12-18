@@ -5,6 +5,7 @@ import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditAdditionalInformation } from './editStudentProfile/additionalInformation/EditAdditionalInformation'
 import { toggleEditAdditionalInformation } from '../../../../../store/slices/student/languagesSlice'
 import { ModalPortals } from '../../../../ModalPortals'
+import { Button } from '../../../../atoms/Button'
 
 const MyProfileLanguagesCard: React.FC = () => {
     const { studentLanguages } = useAppSelector((state) => state.ShowStudentReducer)
@@ -14,13 +15,13 @@ const MyProfileLanguagesCard: React.FC = () => {
         <div data-testid="LanguagesCard">
             <div className='flex mb-4'>
                 <h3 className="text-lg font-bold">Idiomas</h3>
-                <button
-                    type='button'
+                <Button
+                    defaultButton={false}
                     className='ml-auto'
                     onClick={() => dispatch(toggleEditAdditionalInformation())}
                 >
                     <img src={Pencil} alt="edit languages information" />
-                </button>
+                </Button>
             </div>
             {isLoadingLanguages && <LoadingSpiner />}
             {isErrorLanguages && (

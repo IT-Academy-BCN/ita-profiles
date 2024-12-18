@@ -14,6 +14,7 @@ import {
 } from '../../../../../store/slices/student/detailSlice'
 import { Stud1 as ProfilePicture } from '../../../../../assets/img'
 import { Github, Linkedin, Pencil } from '../../../../../assets/svg'
+import { Button } from '../../../../atoms/Button'
 
 const MyProfileStudentDetailCard: React.FC = () => {
     const [fullDescriptionVisibility, setFullDescriptionVisibility] =
@@ -90,17 +91,13 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                             {aboutData.name}&nbsp;
                                             {aboutData.surname}
                                         </h2>
-                                        <button
+                                        <Button
+                                            defaultButton={false}
                                             className="ml-auto"
-                                            type="button"
                                             onClick={handleModalEditProfile}
                                         >
-                                            <img
-                                                src={Pencil}
-                                                alt="edit profile information"
-                                                aria-label="edit student pencil"
-                                            />
-                                        </button>
+                                            <img src={Pencil} alt="edit profile information"/>
+                                        </Button>
                                     </div>
 
                                     <p className="text-gray-2">
@@ -146,24 +143,24 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                               .slice(0, 15)
                                               .join(' ')}...`}
                                     {!fullDescriptionVisibility && (
-                                        <button
-                                            type="button"
+                                        <Button
+                                            defaultButton={false}
                                             onClick={toggleDescription}
                                             className="text-sm text-gray-3"
                                         >
                                             ver más
-                                        </button>
+                                        </Button>
                                     )}
                                 </p>
                                 {fullDescriptionVisibility && (
                                     <p className="text-sm">
-                                        <button
-                                            type="button"
+                                        <Button
+                                            defaultButton={false}
                                             onClick={toggleDescription}
                                             className="text-sm text-gray-3"
                                         >
                                             ver menos
-                                        </button>
+                                        </Button>
                                     </p>
                                 )}
                             </div>
@@ -181,13 +178,13 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                         </li>
                                     ))}
                             </ul>
-                            <button
+                            <Button
+                                defaultButton={false}
                                 className="ml-auto"
-                                type="button"
                                 onClick={handleOpenEditSkills}
                             >
                                 <img src={Pencil} alt="edit tags" />
-                            </button>
+                            </Button>
                         </div>
                     </div>
                     {!isLoadingAboutData &&
