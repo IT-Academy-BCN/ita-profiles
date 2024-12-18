@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -7,7 +7,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class DevelopmentListCollection extends ResourceCollection{
+class DevelopmentListCollection extends ResourceCollection
+{
     public function toArray(Request $request): array
     {
         $filteredDevelopments = $this->collection->filter(function ($development) {
@@ -15,11 +16,7 @@ class DevelopmentListCollection extends ResourceCollection{
         });
 
         return [
-            'development' => $filteredDevelopments->map(function ($development) {
-                return [
-                    'development' => $development,  
-                ];
-            })->values()->toArray()
+            'development' => $filteredDevelopments->values()->toArray()
         ];
     }
 }

@@ -5,17 +5,23 @@ declare(strict_types=1);
 namespace App\Http\Controllers\api\Tag;
 
 use App\Http\Controllers\Controller;
+use App\Service\Tag\DevelopmentListService;
 use Illuminate\Http\JsonResponse;
-use App\Http\Resources\DevelopmentListCollection;
-use App\Models\Tag;
-
 
 class DevelopmentListController extends Controller
 {
-    public function __invoke(Tag $tag): JsonResponse
+    private DevelopmentListService $developmentListService;
+
+    public function __construct(DevelopmentListService $developmentListService)
     {
-        $developments = $tag->resume?->development ?? collect();
-        return response()->json(new developmentListCollection($developments));
+        $this->developmentListService = $developmentListService;
+    }
+
+    public function __invoke(): JsonResponse
+    {
+        $data = $this->developmentListService->execute();
+        return response()->json($data, 200);
     }
 }
+
 
