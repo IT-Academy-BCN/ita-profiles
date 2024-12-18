@@ -4,6 +4,7 @@ import { Lock, ArrowDown, BurgerMenu, Settings, UserIcon } from '../../assets/sv
 import LoginPopup from '../login_&_register/LoginPopup'
 import RegisterPopup from '../login_&_register/RegisterPopup'
 import { useLogin } from '../../context/LoginContext'
+import Modal from '../molecules/Modal'
 
 const UserNavbar: React.FC = () => {
   const [isRestrictedPopupOpen, setIsRestrictedPopupOpen] = useState(false)
@@ -96,58 +97,42 @@ const UserNavbar: React.FC = () => {
             Login/registro
           </button>}
       </div>
-
-      {isRestrictedPopupOpen && (
-        <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50">
-          <div className="relative flex px-24 py-12 flex-col items-center rounded-lg bg-white">
+      <Modal isOpen={isRestrictedPopupOpen} onClose={() => handleCloseRestrictedPopup()}>
+        <div className="flex px-24 py-12 flex-col items-center rounded-lg bg-white">
+          <img src={Lock} alt="Lock" className="mb-2 h-24 w-24" />
+          <h2 className="mb-8 text-xl font-bold">Acceso restringido</h2>
+          <p className="mb-8 ">Entra o regístrate para acceder al perfil</p>
+          <div className="w-full">
             <button
               type="button"
-              className="absolute right-2 top-2 h-8 w-8 cursor-pointer rounded-lg border-none bg-transparent"
-              onClick={handleCloseRestrictedPopup}
-            >
-              ✕
+              className="mb-3 h-12 w-full rounded-lg bg-primary font-bold text-white"
+              onClick={handleOpenRegisterPopup}>
+              Quiero registrarme
             </button>
-            <img src={Lock} alt="Lock" className="mb-2 h-24 w-24" />
-            <h2 className="mb-8 text-xl font-bold">Acceso restringido</h2>
-            <p className="mb-8 ">Entra o regístrate para acceder al perfil</p>
-            <div className="w-full">
-              <button
-                type="button"
-                className="mb-3 h-12 w-full rounded-lg bg-primary font-bold text-white"
-                onClick={handleOpenRegisterPopup}>
-                Quiero registrarme
-              </button>
-              <button
-                type="button"
-                className="mb-4 h-12 w-full rounded-lg bg-primary font-bold text-white"
-                onClick={handleOpenLoginPopup}>
-                Ya tengo cuenta
-              </button>
-            </div>
+            <button
+              type="button"
+              className="mb-4 h-12 w-full rounded-lg bg-primary font-bold text-white"
+              onClick={handleOpenLoginPopup}>
+              Ya tengo cuenta
+            </button>
           </div>
         </div>
-      )}
-      {isRegisterPopupOpen && (
-        <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50">
-          <RegisterPopup
-            onClose={handleCloseRegisterPopup}
-            onOpenLoginPopup={handleOpenLoginPopup}
-          />
-        </div>
-      )}
-      {isLoginPopupOpen && (
-        <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50">
-          <LoginPopup
-            onClose={handleCloseLoginPopup}
-            onOpenRegisterPopup={handleOpenRegisterPopup}
-            user={{
-              userID: '',
-              token: '',
-              studentID: ''
-            }}
-          />
-        </div>
-      )}
+      </Modal>
+      <RegisterPopup
+        isOpen={isRegisterPopupOpen}
+        onClose={handleCloseRegisterPopup}
+        onOpenLoginPopup={handleOpenLoginPopup}
+      />
+      <LoginPopup
+        onClose={handleCloseLoginPopup}
+        onOpenRegisterPopup={handleOpenRegisterPopup}
+        user={{
+          userID: '',
+          token: '',
+          studentID: ''
+        }}
+        isOpen={isLoginPopupOpen}
+      />
     </div>
   )
 }

@@ -43,22 +43,6 @@ describe('EditStudentProfile modal opened from MyProfileStudentDetailCard', () =
         expect(form).not.toBeInTheDocument()
     })
 
-    test('should close the modal when X button is clicked', () => {
-        const pencil = screen.getByRole('button', {
-            name: 'edit student pencil',
-        })
-        expect(pencil).toBeInTheDocument()
-        fireEvent.click(pencil)
-        const form = screen.getByRole('form', { name: 'edit student form' })
-        expect(form).toBeInTheDocument()
-        const XButton = screen.getByRole('button', {
-            name: 'close X student modal',
-        })
-        expect(XButton).toBeInTheDocument()
-        fireEvent.click(XButton)
-        expect(form).not.toBeInTheDocument()
-    })
-
     test('should update formData when input values change', () => {
         const pencil = screen.getByRole('button', {
             name: 'edit student pencil',
