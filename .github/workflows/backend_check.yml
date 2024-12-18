@@ -54,7 +54,7 @@ jobs:
           MAIN_LATEST_COMMIT=$(git ls-remote origin main | cut -f1)
           
           # Get the base commit of the pull request
-          PR_BASE_COMMIT=$(gh pr view $PR_NUMBER --json baseCommit -q .baseCommit.oid)
+          PR_BASE_COMMIT=$(git merge-base origin/main origin/$HEAD_BRANCH)
 
           # Additional debug information
           echo "Main Latest Commit: $MAIN_LATEST_COMMIT"
