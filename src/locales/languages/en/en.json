@@ -22,10 +22,10 @@
     "controllers": {
       "api": {
         "student": {
-          "AddStudentImage": "The image has been added successfully",
-          "AddStudentLanguage": "The language has been added successfully",
+          "AddStudentImage": "The image has been updated successfully",
+          "AddStudentLanguage": "The Language has been added successfully",
           "UpdateStudentImage": "The image has been updated successfully",
-          "UpdateStudentLanguages": "Language updated successfully",
+          "UpdateStudentLanguages": "The Language has been added successfully",
           "UpdateStudentProfile": "The student's profile has been updated successfully",
           "UpdateStudentProject": "The project has been updated successfully"
         },
@@ -33,9 +33,9 @@
           "AddStudentImage": "The label has been successfully updated.",
           "AddStudentLanguage": "The language has been added successfully",
           "UpdateStudentImage": "The image has been updated successfully",
-          "UpdateStudentLanguages": "Language updated successfully",
-          "UpdateStudentProfile": "The student's profile has been updated successfully",
-          "UpdateStudentProject": "The project has been updated successfully"
+          "UpdateStudentLanguages": "The language updated successfully",
+          "UpdateStudentProfile": "Student's profile has been updated successfully",
+          "UpdateStudentProject": "The Project has been updated successfully"
         }
       }
     },
