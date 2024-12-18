@@ -9,6 +9,71 @@ on:
       - main
 
 jobs:
+  check-pr-up-to-date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+
+      - name: Ensure PR is up to date with main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Enhanced logging
+          set -x
+
+          # Only run for pull requests
+          if [[ "${{ github.event_name }}" != "pull_request" ]]; then
+            echo "INFO: This is not a pull request, skipping verification"
+            exit 0
+          fi
+
+          # Get pull request information
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          BASE_BRANCH=${{ github.base_ref }}
+          HEAD_BRANCH=${{ github.head_ref }}
+
+          # Validate inputs
+          if [[ -z "$PR_NUMBER" || -z "$BASE_BRANCH" || -z "$HEAD_BRANCH" ]]; then
+            echo "ERROR: Missing required GitHub context variables"
+            exit 1
+          fi
+
+          # Check if the target branch is main
+          if [[ "$BASE_BRANCH" != "main" ]]; then
+            echo "INFO: Pull request is not targeting main, skipping verification"
+            exit 0
+          fi
+
+          # Verbose git operations
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          
+          # Get the latest commit hash of main
+          MAIN_LATEST_COMMIT=$(git ls-remote origin main | cut -f1)
+          
+          # Get the base commit of the pull request
+          PR_BASE_COMMIT=$(gh pr view $PR_NUMBER --json baseCommit -q .baseCommit.oid)
+
+          # Additional debug information
+          echo "Main Latest Commit: $MAIN_LATEST_COMMIT"
+          echo "PR Base Commit: $PR_BASE_COMMIT"
+
+          # Compare hashes to verify if up to date
+          if [[ "$MAIN_LATEST_COMMIT" != "$PR_BASE_COMMIT" ]]; then
+            echo "::error::🚨 Pull Request is NOT up to date with the main branch."
+            echo "::error::Please update your branch by rebasing or merging with main."
+            echo "Detailed update steps:"
+            echo "1. git fetch origin main"
+            echo "2. git checkout $HEAD_BRANCH"
+            echo "3. git rebase origin/main"
+            echo "4. git push -f origin $HEAD_BRANCH"
+            exit 1
+          else
+            echo "✅ Pull Request is up to date with the main branch."
+          fi
+
   pr_check:
     runs-on: ubuntu-latest
 
