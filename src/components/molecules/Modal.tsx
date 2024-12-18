@@ -3,7 +3,7 @@ import { Button } from "../atoms/Button";
 import svgClose from "../../assets/svg/close.svg"
 import { TModal } from "../../../types";
 
-const overlayStyle = "fixed top-0 left-0 w-full h-full bg-[rgba(0, 0, 0, 0.8)] flex justify-center items-center";
+const overlayStyle = "fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,.5)] flex justify-center items-center";
 const contentStyle = "bg-white p-4 rounded-md relative";
 const buttonStyle = "absolute top-3 right-3 bg-none border-none text-xl cursor-pointer"
 
