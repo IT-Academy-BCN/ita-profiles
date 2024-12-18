@@ -64,7 +64,7 @@ class CreateCompany extends Command
 
         if (!$this->confirm('¿Desea proceder con estos datos?', true)) {
             $this->info('Operación cancelada.');
-            return 1;
+            return 0;
         }
         $request = $this->createRequest($data);
         $response = $this->createCompanyController->__invoke($request);
@@ -81,13 +81,15 @@ class CreateCompany extends Command
     protected function askCompanyData(): array
     {
         $rules = (new StoreCompanyRequest())->rules();
-        return [
+        $data = [
             'name' => $this->askValid('Nombre de la compañía (ex: It Academy)', 'name', $rules),
             'email' => $this->askValid('Email (ex: itacademy@example.com)', 'email', $rules),
             'CIF' => $this->askValid('CIF (ex: A12345678 / 12345678A / A1234567B)', 'CIF', $rules),
             'location' => $this->askValid('Localización (ex: Barcelona)', 'location', $rules),
             'website' => $this->askValid('Página web (ex: https://itacademy.barcelonactiva.cat/)', 'website', $rules),
         ];
+
+        return $data;
     }
 
     /**
@@ -101,6 +103,7 @@ class CreateCompany extends Command
     protected function askValid(string $question, string $field, array $rules): string|null
     {
         do {
+
             $value = $this->ask($question);
 
             $validator = Validator::make(
