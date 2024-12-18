@@ -75,11 +75,11 @@ class CreateCompany extends Command
     protected function askCompanyData(): array
     {
         return [
-            'name' => $this->ask('Nombre de la compañia:'),
+            'name' => $this->ask('Company name:'),
             'email' => $this->ask('Email:'),
             'CIF' => $this->ask('CIF:'),
-            'location' => $this->ask('Localizacion:'),
-            'website' => $this->ask('Pagina web:')
+            'location' => $this->ask('Location:'),
+            'website' => $this->ask('Website:')
         ];
     }
 
@@ -121,7 +121,7 @@ class CreateCompany extends Command
     {
         foreach ($e->errors() as $field => $messages) {
             foreach ($messages as $message) {
-                $this->error("Error en el campo {$field}: {$message}");
+                $this->error("Error in the field {$field}: {$message}");
             }
         }
     }    

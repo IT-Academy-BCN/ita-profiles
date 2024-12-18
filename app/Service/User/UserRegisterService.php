@@ -38,7 +38,7 @@ class UserRegisterService
         try {
             return $this->createUserRecord($input);
         } catch (PDOException | Error $e) {
-            throw new Exception('Error al crear el usuario: ' . $e->getMessage(), 500);
+            throw new Exception('Error creating user: ' . $e->getMessage(), 500);
         }
     }
 
@@ -47,12 +47,12 @@ class UserRegisterService
         try {
             foreach ($input as $key => $value) {
                 if (empty($value)) {
-                    throw new UserRegisterException("El campo '$key' no puede estar vacío.", $input);
+                    throw new UserRegisterException("The field '$key' can't be empty.", $input);
                 }
             }
             return User::create($input);
         } catch (PDOException | Error $e) {
-            throw new UserRegisterException('Error al crear el usuario en la base de datos: ' . $e->getMessage(), $input);
+            throw new UserRegisterException('Error creating user in database:' . $e->getMessage(), $input);
         }
     }
 
@@ -64,7 +64,7 @@ class UserRegisterService
             $student->save();
             return $student;
         } catch (PDOException | Error $e) {
-            throw new UserRegisterException('Error al crear el estudiante en la base de datos: ' . $e->getMessage(), $input);
+            throw new UserRegisterException('Error creating the student in the database: ' . $e->getMessage(), $input);
         }
     }
 
@@ -76,7 +76,7 @@ class UserRegisterService
             $resume->specialization = $specialization;
             $resume->save();
         } catch (PDOException | Error $e) {
-            throw new ResumeCreateException('Error al crear el resume: ' . $e->getMessage());
+            throw new ResumeCreateException('Error creating summary:' . $e->getMessage());
         }
     }
 
@@ -85,7 +85,7 @@ class UserRegisterService
         try {
             return $user->createToken('ITAcademy')->accessToken;
         } catch (Exception $e) {
-            throw new TokenGenerateException('Error al generar el token de acceso: ' . $e->getMessage());
+            throw new TokenGenerateException('Error generating access token: ' . $e->getMessage());
         }
     }
 }

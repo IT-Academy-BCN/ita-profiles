@@ -28,6 +28,14 @@
           "UpdateStudentLanguages": "Language updated successfully",
           "UpdateStudentProfile": "The student's profile has been updated successfully",
           "UpdateStudentProject": "The project has been updated successfully"
+        },
+        "tag": {
+          "AddStudentImage": "The label has been successfully updated.",
+          "AddStudentLanguage": "The language has been added successfully",
+          "UpdateStudentImage": "The image has been updated successfully",
+          "UpdateStudentLanguages": "Language updated successfully",
+          "UpdateStudentProfile": "The student's profile has been updated successfully",
+          "UpdateStudentProject": "The project has been updated successfully"
         }
       }
     },
@@ -58,7 +66,7 @@
     "StoreCompanyRequest": {
       "name_required": "The company name is required.",
       "email_required": "The email address is required.",
-      "email_email": "Please enter a valid email address.", 
+      "email_email": "Please enter a valid email address.",
       "email_unique": "This email address is already in use.",
       "CIF_required": "The CIF is required.",
       "CIF_unique": "This CIF is already in use.",
@@ -66,5 +74,19 @@
       "location_required": "The location is required.",
       "website_url": "The website must contain a valid URL."
     }
+  },
+    "rules": {
+      "AcceptedTermsRule": "You must accept the terms and conditions.",
+      "DniNieRule": ":attribute is not valid.",
+      "UniqueTagsIdsRule": {
+        "duplicate_values": "The field :attribute contains duplicate values.",
+        "nonexistent_values": "One or more values in the field :attribute do not exist in the tags table."
+      }
+    },
+    "services": {
+      "student": {
+        "StudentListService": "No resumes available.",
+        "UpdateStudentProjectServices": "You do not have permission to update this project."
+      }
+    }
   }
-}

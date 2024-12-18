@@ -66,5 +66,19 @@
       "location_required": "La localització és obligatòria.",
       "website_url": "La pàgina web ha de contenir una URL vàlida."
     }
+  },
+  "rules": {
+    "AcceptedTermsRule": "Has de acceptar els termes i condicions.",
+    "DniNieRule": "No és un :attribute vàlid",
+    "UniqueTagsIdsRule": {
+      "duplicate_values": "El camp :attribute conté valors duplicats.",
+      "nonexistent_values": "Un o més valors en el camp :attribute no existeixen a la taula de tags."
+    }
+  },
+  "services": {
+    "student":{
+      "StudentListServices": "No hi ha resums",
+      "UpdateStudentProjectServices":"No teniu permís per actualitzar aquest projecte."
+    }  
   }
 }
