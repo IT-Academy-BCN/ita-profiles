@@ -54,7 +54,7 @@ describe('LoginPopup', () => {
     render(
       <LoginContext.Provider value={mockContextValue}>
         <BrowserRouter>
-          <LoginPopup {...props} />
+          <LoginPopup isOpen {...props} />
         </BrowserRouter>
       </LoginContext.Provider>
     )
@@ -81,16 +81,6 @@ describe('LoginPopup', () => {
     expect(projectsElement).toBeInTheDocument();
     expect(projectsLoginElement).toBeInTheDocument();
   })
-
-
-  test('closes the popup when the close button is clicked', () => {
-
-    fireEvent.click(screen.getByAltText('Close'))
-    expect(mockOnClose).toHaveBeenCalled()
-
-  })
-
-
   test('calls login and navigates on successful form submission', async () => {
 
     mockAxios.onPost('//localhost:8000/api/v1/signin').reply(200, {

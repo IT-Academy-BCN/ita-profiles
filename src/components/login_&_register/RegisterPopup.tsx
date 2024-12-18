@@ -4,14 +4,15 @@ import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { UserSchema } from '../../schemes/schemas'
-import svgClose from "../../assets/svg/close.svg"
+import Modal from '../molecules/Modal'
 import { Button } from '../atoms/Button'
 
 const openLoginButtonStyles = 'mt-10 cursor-pointer font-bold underline decoration-solid'
 
 type RegisterPopupProps = {
   onClose: () => void
-  onOpenLoginPopup: () => void
+  onOpenLoginPopup: () => void,
+  isOpen: boolean
 }
 
 type TFormSchema = z.infer<typeof UserSchema>
@@ -19,6 +20,7 @@ type TFormSchema = z.infer<typeof UserSchema>
 const RegisterPopup: React.FC<RegisterPopupProps> = ({
   onClose,
   onOpenLoginPopup,
+  isOpen
 }) => {
   const [isChecked, setIsChecked] = useState(false)
   const [checkError, setCheckError] = useState(false)
@@ -47,15 +49,10 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
   }
 
   return (
+  <Modal isOpen={isOpen} onClose={onClose}>
     <div className="w-120 relative flex flex-col items-center rounded-2xl bg-white p-5 md:p-20">
       <h2 className="text-lg font-bold md:text-2xl">Registro</h2>
       <form className="flex flex-col space-y-6" onSubmit={handleSubmit(sendRegister)}>
-        <Button 
-          defaultButton={false}
-          close 
-          onClick={onClose}>
-          <img src={svgClose} alt="Close" aria-label="Cerrar ventana de registro" />
-        </Button>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <input
@@ -147,7 +144,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
               />
               <label htmlFor="acceptTerms" className=" mr-2 text-sm">
                 Acepto{' '}
-                <span style={{ textDecoration: 'underline' }}>
+                <span className='underline decoration-solid'>
                   términos legales
                 </span>
               </label>
@@ -169,6 +166,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
         ¿No tienes cuenta? crear una
       </Button>
     </div>
+    </Modal>
   )
 }
 

@@ -123,7 +123,8 @@ export type TCollaboration = {
 export type TSkills = {
     initialSkills: string[]
     onClose: () => void
-    onSave: (skills: string[]) => void
+    onSave: (skills: string[]) => void,
+    isOpen: boolean
 }
 
 export type TDragAndDropLanguagesProps = {

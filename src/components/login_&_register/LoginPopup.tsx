@@ -7,15 +7,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginUserSchema } from '../../schemes/schemas'
 import { TLoginForm, TUserResponseData } from '../../../types'
 import { Button } from "../atoms/Button";
-import svgClose from "../../assets/svg/close.svg"
 import { useLogin } from '../../context/LoginContext'
+import Modal from '../molecules/Modal'
 
 const openRegisterButtonStyles = 'mt-10 cursor-pointer font-bold underline decoration-solid'
 
 type LoginPopupProps = {
   onClose: () => void
   onOpenRegisterPopup: () => void
-  user: TUserResponseData
+  user: TUserResponseData,
+  isOpen: boolean
 }
 
 type TFormSchema = z.infer<typeof LoginUserSchema>
@@ -23,7 +24,8 @@ type TFormSchema = z.infer<typeof LoginUserSchema>
 const LoginPopup: React.FC<LoginPopupProps> = ({
   onClose,
   onOpenRegisterPopup,
-  user
+  user,
+  isOpen
 }) => {
 
   const { login } = useLogin();
@@ -44,39 +46,34 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   }
 
   return (
-    <div 
-    role="dialog"
-    className=" relative flex flex-col items-center rounded-2xl bg-white px-24 py-16 md:px-36">
-      <h2 className="text-xl font-bold text-black-3 mb-4">Login</h2>
-      <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
-        <Button 
-          defaultButton={false}
-          close 
-          onClick={onClose}>
-          <img src={svgClose} alt="Close" aria-label="Cerrar ventana de inicio de sesión" />
-        </Button>
-        <input
-          type="text"
-          id="dni"
-          className="border-gray-300 w-full rounded-lg border p-4 my-2 focus:border-blue-300 focus:outline-none focus:ring"
-          placeholder="DNI o NIE"
-          {...register('dni')}
-        />
-        {errors.dni && (
-          <p className="text-error">{`${errors.dni?.message}`}</p>
-        )}
-        <input
-          type="password"
-          id="password"
-          className="border-gray-300 w-full rounded-lg border p-4 my-2 focus:border-blue-300 focus:outline-none focus:ring"
-          placeholder="Contraseña"
-          {...register('password')}
-        />
-        {errors.password && (
-          <p className="text-error">{`${errors.password?.message}`}</p>
-        )}
+    <Modal isOpen={isOpen} onClose={onClose} >
+      <div
+        role="dialog"
+        className="flex flex-col items-center rounded-lg px-24 py-16 md:px-36">
+        <h2 className="text-xl font-bold text-black-3 mb-4">Login</h2>
+        <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
+          <input
+            type="text"
+            id="dni"
+            className="border-gray-300 w-full rounded-lg border p-4 my-2 focus:border-blue-300 focus:outline-none focus:ring"
+            placeholder="DNI o NIE"
+            {...register('dni')}
+          />
+          {errors.dni && (
+            <p className="text-error">{`${errors.dni?.message}`}</p>
+          )}
+          <input
+            type="password"
+            id="password"
+            className="border-gray-300 w-full rounded-lg border p-4 my-2 focus:border-blue-300 focus:outline-none focus:ring"
+            placeholder="Contraseña"
+            {...register('password')}
+          />
+          {errors.password && (
+            <p className="text-error">{`${errors.password?.message}`}</p>
+          )}
 
-        {customError && (
+{customError && (
           <p className="text-error py-2">{customError}</p>
         )}        
         <div          
@@ -94,7 +91,8 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
       >
         ¿No tienes cuenta? crear una
       </Button>
-    </div>
+      </div>
+    </Modal>
   )
 }
 

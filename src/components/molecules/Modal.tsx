@@ -1,9 +1,10 @@
 import { FC } from "react"
+import { createPortal } from "react-dom";
 import { Button } from "../atoms/Button";
 import svgClose from "../../assets/svg/close.svg"
 import { TModal } from "../../../types";
 
-const overlayStyle = "fixed top-0 left-0 w-full h-full bg-[rgba(0, 0, 0, 0.8)] flex justify-center items-center";
+const overlayStyle = "fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,.5)] flex justify-center items-center";
 const contentStyle = "bg-white p-4 rounded-md relative";
 
 const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
@@ -18,13 +19,14 @@ const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div
-      role="button"
-      onClick={onClose}
-      aria-label="modal-overlay"
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-      className={overlayStyle}>
+    createPortal(
+      <div
+        role="button"
+        onClick={onClose}
+        aria-label="modal-overlay"
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        className={overlayStyle}>
 
       <div 
         role="button" 
@@ -43,7 +45,9 @@ const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
         {children}
       </div>
 
-    </div>
+      </div>,
+      document.body
+    )
   )
 }
 
