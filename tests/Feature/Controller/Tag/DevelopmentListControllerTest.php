@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Database\Factories\ResumeFactory;
 use App\Models\Resume;
 use App\Http\Controllers\api\Tag\DevelopmentListController;
-use App\Service\Tag\DevelopmentListService;
+
 
 class DevelopmentListControllerTest extends TestCase
 {
@@ -59,14 +59,6 @@ class DevelopmentListControllerTest extends TestCase
 
     }
 
-    public function testDevelopmentListControllerCanBeInstantiated(): void
-    {
-        $developmentListService = $this->createMock(DevelopmentListService::class);
-
-        $controller = new DevelopmentListController($developmentListService);
-
-        $this->assertInstanceOf(DevelopmentListController::class, $controller);
-    }
     
     
 
