@@ -13,7 +13,10 @@ class SpecializationListController extends Controller
 {
     public function __invoke(): JsonResponse
     {
-        $specializations = $student->resume?->specialization ?? collect();
-        return response()->json(new SpecializationListCollection($specializations));
+    $specializations = Resume::distinct()
+        ->where('specialization', '!=', 'Not Set')
+        ->pluck('specialization');
+
+    return response()->json(new SpecializationListCollection($specializations));
     }
 }
