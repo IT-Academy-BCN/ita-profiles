@@ -33,68 +33,38 @@
     },
     "request": {
       "RegisterRequest": {
-        "username": {
-          "required": "The username is required",
-          "string": "The username must be a text",
-          "min": "The username must have at least 3 characters"
-        },
-        "dni": {
-          "required": "DNI is required",
-          "unique": "DNI already exists",
-          "string": "DNI must be a text",
-          "max": "DNI must not exceed :max characters",
-          "regex": "DNI must not contain special characters"
-        },
-        "email": {
-          "required": "Email is required",
-          "email": "It must have an email format",
-          "string": "The email must be a text",
-          "max": "The email must not exceed :max characters",
-          "unique": "The email already exists"
-        },
-        "password": {
-          "required": "The password is required",
-          "confirmed": "The password confirmation does not match",
-          "regex": "The password must contain at least one capital letter and one special character, and have a minimum length of 8 characters"
-        },
-        "specialization": {
-          "required": "The specialty is required",
-          "in": "The specialty is not validated"
-        },
-        "terms": {
-          "required": "You must accept the terms and conditions",
-          "in": "You must accept the terms and conditions"
-        }
-      },
-      "StoreCompanyRequest": {
-        "name": {
-          "required": "The company name is required.",
-          "string": "The company name must be a text.",
-          "max": "The company name must not exceed :max characters."
-        },
-        "email": {
-          "required": "The email address is required.",
-          "email": "Please enter a valid email address.",
-          "string": "The email address must be a text.",
-          "max": "The email address must not exceed :max characters.",
-          "unique": "This email address is already in use."
-        },
-        "CIF": {
-          "required": "The CIF is required.",
-          "unique": "This CIF is already in use.",
-          "regex": "The CIF format is invalid.",
-          "max": "The CIF must not exceed :max characters."
-        },
-        "location": {
-          "required": "The location is required.",
-          "string": "The location must be a text.",
-          "min": "The location must have at least :min characters.",
-          "max": "The location must not exceed :max characters."
-        },
-        "website": {
-          "url": "The website must contain a valid URL."
-        }
+        "username_required": "The username is required",
+        "username_string": "The username must be a text",
+        "username_min": "The username must have at least 3 characters",
+        "dni_required": "DNI is required",
+        "dni_unique": "DNI already exists",
+        "dni_string": "DNI must be a text",
+        "dni_max": "DNI must not exceed :max characters",
+        "dni_regex": "DNI must not contain special characters",
+        "email_email": "It must have an email format",
+        "email_required": "Email is required",
+        "email_string": "The email must be a text",
+        "email_max": "The email must not exceed :max characters",
+        "email_unique": "The email already exists",
+        "password_required": "The password is required",
+        "password_confirmed": "The password confirmation does not match",
+        "password_regex": "The password must contain at least one capital letter and one special character, and have a minimum length of 8 characters",
+        "specialization_required": "The specialty is required",
+        "specialization_in": "The specialty is not validated",
+        "terms_required": "You must accept the terms and conditions",
+        "terms_in": "You must accept the terms and conditions"
       }
+    },
+    "StoreCompanyRequest": {
+      "name_required": "The company name is required.",
+      "email_required": "The email address is required.",
+      "email_email": "Please enter a valid email address.", 
+      "email_unique": "This email address is already in use.",
+      "CIF_required": "The CIF is required.",
+      "CIF_unique": "This CIF is already in use.",
+      "CIF_regex": "The CIF format is invalid.",
+      "location_required": "The location is required.",
+      "website_url": "The website must contain a valid URL."
     }
   }
 }

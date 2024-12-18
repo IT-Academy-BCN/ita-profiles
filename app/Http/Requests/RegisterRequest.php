@@ -45,11 +45,11 @@ class RegisterRequest extends FormRequest
             'username.min' => 'The username must have at least 3 characters',
 
             // dni
-            'dni.required' => 'dni is required',
-            'dni.unique' => 'dni allready exist',
-            'dni.string' => 'dni must be a text',
-            'dni.max' => 'dni no debe ser mayor a :max caracteres',
-            'dni.regex' => 'dni must not contain special characters',
+            'dni.required' => 'DNI is required',
+            'dni.unique' => 'DNI allready exist',
+            'dni.string' => 'DNI must be a text',
+            'dni.max' => 'DNI no debe ser mayor a :max caracteres',
+            'dni.regex' => 'DNI must not contain special characters',
 
             // email
             'email.email' => 'It must have an email format',
