@@ -1,36 +1,29 @@
 <?php
-
 declare(strict_types=1);
-
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
-
 class StoreCompanyRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
     }
-
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|max:255|unique:companies,email',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:companies,email',
             'CIF' => [
-                'sometimes',
+                'required',
                 'string',
                 'regex:/^(^[A-Z][0-9]{7}[A-Z0-9]$)|(^[0-9]{8}[A-Z]$)|(^[XYZ][0-9]{7}[A-Z])$/',
                 'max:10',
                 'unique:companies,CIF',
             ],
-            'location' => 'sometimes|string|min:3|max:255',
+            'location' => 'required|string|min:3|max:255',
             'website' => 'nullable|url|max:255',
         ];
     }
-
     public function messages()
     {
         return [
@@ -42,6 +35,7 @@ class StoreCompanyRequest extends FormRequest
             'CIF.unique' => 'Este CIF ya está en uso.',
             'CIF.regex' => 'El formato de CIF no es válido.',
             'location.required' => 'La localización es obligatoria.',
+            'location.min' => 'La localización debe tener al menos :min caracteres.',
             'website.url' => 'La página web debe contener una URL válida.',
         ];
     }
