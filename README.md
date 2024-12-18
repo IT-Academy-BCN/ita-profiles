@@ -84,7 +84,42 @@ Below is a list of commands developed for the project, including their descripti
 | Command Name        | Description                                         | Command Help                                      |
 |---------------------|-----------------------------------------------------|-------------------------------------------------|
 | `create:company`   | Creates a new company in the database.            | `create:company --help` |
-| 
+|  `create:job-offer`   | Allows recruiters to create job offers via terminal input. | `create:job-offer --help`  |
+
+#### Using the `create:job-offer` Command  
+
+This command allows recruiters to create job offers directly through the terminal. Here’s how to use it:  
+
+1. Execute the following command to begin creating a job offer:  
+
+   ```bash
+   docker exec -it php php artisan create:job-offer
+
+2. Provide the required information:
+
+ - Recruiter ID: Provide the unique recruiter identifier.
+ - Job Title: E.g., Senior Backend Developer.
+ - Job Description: E.g., Looking for an experienced Backend Developer.
+ - Location: E.g., Barcelona.
+ - Salary (Optional): E.g., 25000 - 35000.
+ - Skills (Optional): E.g., PHP, Laravel, MySQL, MongoDB.
+
+3. Review and confirm: 
+The system will display a preview of the job offer details and ask for confirmation to proceed. If the data is valid, the job offer will be created. Otherwise, you can retry with corrected information.
+
+Example output:
+
+```shell
+    Vista prèvia de l'oferta de treball:
+    - recruiter_id: 1
+    - title: Senior Backend Developer
+    - description: Looking for an experienced Backend Developer
+    - location: Barcelona
+    - salary: 25000 - 35000
+    - skills: PHP, Laravel, MySQL
+
+    Vols procedir amb aquestes dades? (yes/no) [yes]
+```
 
 ## Screenshots
 
