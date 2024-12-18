@@ -67,13 +67,7 @@ const MyProfileStudentDetailCard: React.FC = () => {
             {isLoadingAboutData && <LoadingSpiner />}
             {isErrorAboutData && <LoadingSpiner />}
 
-            <ModalPortals>
-                <EditStudentProfile
-                    handleModal={handleModalEditProfile}
-                    handleRefresh={refreshStudentData}
-                />
-                {editProfileImageIsOpen && <UploadProfilePhoto />}
-            </ModalPortals>
+
 
             {!isLoadingAboutData && (
                 <div className="flex flex-col gap-4">
@@ -139,9 +133,9 @@ const MyProfileStudentDetailCard: React.FC = () => {
                                     {fullDescriptionVisibility
                                         ? aboutData && aboutData.resume.about
                                         : `${aboutData.resume.about
-                                              .split(' ')
-                                              .slice(0, 15)
-                                              .join(' ')}...`}
+                                            .split(' ')
+                                            .slice(0, 15)
+                                            .join(' ')}...`}
                                     {!fullDescriptionVisibility && (
                                         <Button
                                             defaultButton={false}
@@ -202,6 +196,13 @@ const MyProfileStudentDetailCard: React.FC = () => {
                             />,
                             document.body,
                         )}
+                    <ModalPortals>
+                        <EditStudentProfile
+                            handleModal={handleModalEditProfile}
+                            handleRefresh={refreshStudentData}
+                        />
+                        {editProfileImageIsOpen && <UploadProfilePhoto />}
+                    </ModalPortals>
                 </div>
             )}
         </div>
