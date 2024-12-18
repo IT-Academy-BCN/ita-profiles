@@ -1,5 +1,4 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { FC, useState } from "react";
 import { vi } from "vitest";
 import Modal from "../../../components/molecules/Modal";
 
