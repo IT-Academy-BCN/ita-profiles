@@ -34,7 +34,7 @@ const DragAndDropLanguages: FC<TDragAndDropLanguagesProps> = ({
 
                     <div
                         key={language.id}
-                        className="flex flex-col gap-4 mx-8">
+                        className="flex flex-col gap-4 ">
 
                         <div className="flex items-center">
                             <div className='font-semibold'>
