@@ -1,4 +1,5 @@
 import { FC } from "react"
+import { createPortal } from "react-dom";
 import { Button } from "../atoms/Button";
 import svgClose from "../../assets/svg/close.svg"
 import { TModal } from "../../../types";
@@ -19,25 +20,28 @@ const Modal: FC<TModal> = ({ children, isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div
-      role="button"
-      onClick={onClose}
-      aria-label="modal-overlay"
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-      className={overlayStyle}>
+    createPortal(
+      <div
+        role="button"
+        onClick={onClose}
+        aria-label="modal-overlay"
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        className={overlayStyle}>
 
-      <div role="button" aria-label="modal-content" tabIndex={0} onKeyDown={(e) => {
-        handleKeyDown(e);
-        e.stopPropagation();
-      }} className={contentStyle} onClick={(e) => e.stopPropagation()}>
-        <Button type="button" aria-label="modal-close" className={buttonStyle} onClick={onClose}>
-          <img src={svgClose} alt="Close" width={21} height={19} aria-label="close modal" />
-        </Button>
-        {children}
-      </div>
+        <div role="button" aria-label="modal-content" tabIndex={0} onKeyDown={(e) => {
+          handleKeyDown(e);
+          e.stopPropagation();
+        }} className={contentStyle} onClick={(e) => e.stopPropagation()}>
+          <Button type="button" aria-label="modal-close" className={buttonStyle} onClick={onClose}>
+            <img src={svgClose} alt="Close" width={21} height={19} aria-label="close modal" />
+          </Button>
+          {children}
+        </div>
 
-    </div>
+      </div>,
+      document.body
+    )
   )
 }
 
