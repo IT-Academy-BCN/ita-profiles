@@ -16,7 +16,12 @@ class DevelopmentListCollection extends ResourceCollection
         });
 
         return [
-            'development' => $filteredDevelopments->values()->toArray()
+            'developments' => $filteredDevelopments->map(function ($development) {
+                return [
+                    'development' => $development,  
+                ];
+            })->values()->toArray()
         ];
     }
+    
 }

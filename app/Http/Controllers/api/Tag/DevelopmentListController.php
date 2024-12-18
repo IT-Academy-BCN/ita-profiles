@@ -5,23 +5,19 @@ declare(strict_types=1);
 namespace App\Http\Controllers\api\Tag;
 
 use App\Http\Controllers\Controller;
-use App\Service\Tag\DevelopmentListService;
+use App\Http\Resources\DevelopmentListCollection;
+use App\Models\Resume;
 use Illuminate\Http\JsonResponse;
 
 class DevelopmentListController extends Controller
 {
-    private DevelopmentListService $developmentListService;
-
-    public function __construct(DevelopmentListService $developmentListService)
-    {
-        $this->developmentListService = $developmentListService;
-    }
-
     public function __invoke(): JsonResponse
     {
-        $data = $this->developmentListService->execute();
-        return response()->json($data, 200);
+        $developments = Resume::distinct()
+        ->where('development', '!=', 'Not Set')
+        ->pluck('development');
+
+        return response()->json(new DevelopmentListCollection($developments));
     }
 }
-
 
