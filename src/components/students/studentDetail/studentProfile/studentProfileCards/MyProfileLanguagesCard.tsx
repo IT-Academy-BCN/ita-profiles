@@ -4,7 +4,6 @@ import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { EditAdditionalInformation } from './editStudentProfile/additionalInformation/EditAdditionalInformation'
 import { toggleEditAdditionalInformation } from '../../../../../store/slices/student/languagesSlice'
-import { ModalPortals } from '../../../../ModalPortals'
 
 const MyProfileLanguagesCard: React.FC = () => {
     const { studentLanguages } = useAppSelector((state) => state.ShowStudentReducer)
@@ -32,9 +31,7 @@ const MyProfileLanguagesCard: React.FC = () => {
             )}
             {!isLoadingLanguages && (
                 <div className="flex flex-col gap-2">
-                    <ModalPortals>
-                        <EditAdditionalInformation />
-                    </ModalPortals>
+                    <EditAdditionalInformation />
                     <div className="flex flex-col gap-1">
                         {languagesData.map((language) => (
                             <ul
