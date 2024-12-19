@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('recruiters', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('company_id');
+            $table->uuid('company_id')->nullable();
             $table->uuid('user_id');
             $table->string('role')->default('recruiter');
             $table->timestamps();
