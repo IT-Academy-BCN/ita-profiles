@@ -19,6 +19,13 @@ class Recruiter extends Model
 
     protected $guarded = ['id', 'role'];
 
+    protected $fillable = [
+        'id',
+        'company_id',
+        'user_id',
+        'role',
+    ];
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
