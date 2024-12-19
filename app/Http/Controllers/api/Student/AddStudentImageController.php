@@ -34,7 +34,7 @@ class AddStudentImageController extends Controller
         }
 
         return response()->json([
-            'message' => 'Image added successfully',
+            'message' => 'The image has been updated successfully',
             'photo' => Storage::url($this->photos_path . $filename),
         ]);
     }

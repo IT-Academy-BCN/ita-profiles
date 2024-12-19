@@ -32,7 +32,7 @@ class UpdateStudentImageController extends Controller
         $student->save();
 
         return response()->json([
-            'message' => 'Image updated successfully',
+            'message' => 'The image has been updated successfully',
             'photo' => Storage::url($this->photos_path . $filename),
         ]);
     }

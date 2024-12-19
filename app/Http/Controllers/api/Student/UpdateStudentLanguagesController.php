@@ -31,6 +31,6 @@ class UpdateStudentLanguagesController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Language updated successfully']);
+        return response()->json(['message' => 'The Language has been added successfully']);
     }
 }

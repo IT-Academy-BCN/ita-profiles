@@ -24,11 +24,11 @@ class CreateCompanyByCommandTest extends TestCase
    public function testCompanyCanBeCreatedViaCommand(): void
    {
        $this->artisan('create:company')
-           ->expectsQuestion('Nombre de la compañia:', 'Test Company')
+           ->expectsQuestion('Company name:', 'Test Company')
            ->expectsQuestion('Email:', 'test@test.es')
            ->expectsQuestion('CIF:', 'B1234567A')
-           ->expectsQuestion('Localizacion:', 'Test Location')
-           ->expectsQuestion('Pagina web:', 'https://www.test.com')
+           ->expectsQuestion('Location:', 'Test Location')
+           ->expectsQuestion('Website:', 'https://www.test.com')
            ->assertExitCode(0);
 
        $this->assertDatabaseHas('companies', [
@@ -46,11 +46,11 @@ class CreateCompanyByCommandTest extends TestCase
     public function testReturnsErrorCodeOnInvalidData(array $invalidData): void
     {
         $this->artisan('create:company')
-            ->expectsQuestion('Nombre de la compañia:', $invalidData['name'])
+            ->expectsQuestion('Company name:', $invalidData['name'])
             ->expectsQuestion('Email:', $invalidData['email'])
             ->expectsQuestion('CIF:', $invalidData['CIF'])
-            ->expectsQuestion('Localizacion:', $invalidData['location'])
-            ->expectsQuestion('Pagina web:', $invalidData['website'])
+            ->expectsQuestion('Location:', $invalidData['location'])
+            ->expectsQuestion('Website:', $invalidData['website'])
             ->assertExitCode(1);
     }
 
@@ -232,19 +232,19 @@ class CreateCompanyByCommandTest extends TestCase
     public function testErrorCodeWithDuplicatedEmail(): void
    {
        $this->artisan('create:company')
-           ->expectsQuestion('Nombre de la compañia:', 'Test Company')
+           ->expectsQuestion('Company name:', 'Test Company')
            ->expectsQuestion('Email:', 'duplicado@test.es')
            ->expectsQuestion('CIF:', 'B1234567A')
-           ->expectsQuestion('Localizacion:', 'Test Location')
-           ->expectsQuestion('Pagina web:', 'https://www.test.com')
+           ->expectsQuestion('Location:', 'Test Location')
+           ->expectsQuestion('Website:', 'https://www.test.com')
            ->assertExitCode(0);
 
            $this->artisan('create:company')
-           ->expectsQuestion('Nombre de la compañia:', 'Test Email')
+           ->expectsQuestion('Company name:', 'Test Email')
            ->expectsQuestion('Email:', 'duplicado@test.es')
            ->expectsQuestion('CIF:', 'B1234522A')
-           ->expectsQuestion('Localizacion:', 'Test Location')
-           ->expectsQuestion('Pagina web:', 'https://www.test.com')
+           ->expectsQuestion('Location:', 'Test Location')
+           ->expectsQuestion('Website:', 'https://www.test.com')
            ->assertExitCode(1);
    }
 
