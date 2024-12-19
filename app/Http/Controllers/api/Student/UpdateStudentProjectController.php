@@ -25,7 +25,7 @@ class UpdateStudentProjectController extends Controller
         }
 
         return response()->json([
-            'message' => 'El projecte s\'ha actualitzat',
+            'message' => 'The project has been updated successfully',
         ], 200);
     }
 }

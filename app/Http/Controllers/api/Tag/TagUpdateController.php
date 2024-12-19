@@ -18,7 +18,7 @@ class TagUpdateController extends Controller
         $tag->update($data);
 
         return response()->json([
-            'tag' => 'L\'etiqueta s\'ha actualitzat correctament.',
+            'tag' => 'The label has been successfully updated.',
         ]);
     }
 }

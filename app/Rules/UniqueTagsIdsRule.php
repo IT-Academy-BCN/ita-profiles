@@ -11,13 +11,13 @@ class UniqueTagsIdsRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (count($value) !== count(array_unique($value))) {
-            $fail('El camp :attribute conté valors duplicats.');
+            $fail('The field :attribute contains duplicate values.');
             return;
         }
 
         $existingTagsCount = DB::table('tags')->whereIn('id', $value)->count();
         if ($existingTagsCount !== count($value)) {
-            $fail('Un o més valors en el camp :attribute no existeixen a la taula de tags.');
+            $fail('One or more values in the field :attribute do not exist in the tags table.');
         }
     }
 }

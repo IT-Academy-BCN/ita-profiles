@@ -23,6 +23,6 @@ class AddStudentLanguageController extends Controller
 
         $resume->languages()->sync([$language->id], false);
 
-        return response()->json(['message' => 'L\'idioma s\'ha afegit']);
+        return response()->json(['message' => 'The language has been added successfully']);
     }
 }

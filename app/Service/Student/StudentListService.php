@@ -40,7 +40,7 @@ class StudentListService
         $resumes = $query->get();
 
         if ($resumes->isEmpty()) {
-            throw new ModelNotFoundException(__('No hi ha resums'), 404);
+            throw new ModelNotFoundException(__('No resumes available.'), 404);
         }
 
         return $resumes;

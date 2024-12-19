@@ -24,7 +24,7 @@ class UpdateStudentProfileController extends Controller
         $student->tags()->sync($data['tags_ids']);
 
         return response()->json([
-            'profile' => 'El perfil de l\'estudiant s\'actualitza correctament',
+            'profile' => 'The student\'s profile has been updated successfully',
         ]);
     }
 }

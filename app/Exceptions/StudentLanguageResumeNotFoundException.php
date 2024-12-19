@@ -9,7 +9,7 @@ use Throwable;
 
 class StudentLanguageResumeNotFoundException extends Exception
 {
-    public const MESSAGE = 'No s\'ha trobat l\'idioma amb id: %s per a l\'estudiant amb id: %s';
+    public const MESSAGE = 'Language with id: %s not found for student with id: %s';
 
     public function __construct(string $studentId, string $languageId, $code = 404, Throwable $previous = null)
     {

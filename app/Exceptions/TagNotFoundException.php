@@ -9,7 +9,7 @@ use Throwable;
 
 class TagNotFoundException extends Exception
 {
-    public const MESSAGE = 'No s\'ha trobat cap etiqueta amb aquest ID: %s';
+    public const MESSAGE = 'No tags found with this ID: %s';
 
     public function __construct(int $tagId, $code = 404, Throwable $previous = null)
     {

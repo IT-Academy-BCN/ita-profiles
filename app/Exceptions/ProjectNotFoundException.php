@@ -9,7 +9,7 @@ use Throwable;
 
 class ProjectNotFoundException extends Exception
 {
-    public const MESSAGE = 'No s\'ha trobat cap projecte amb aquest ID: %s';
+    public const MESSAGE = 'No project found with this ID: %s';
 
     public function __construct(string $projectId, $code = 404, Throwable $previous = null)
     {

@@ -9,7 +9,7 @@ use Throwable;
 
 class LanguageNotFoundException extends Exception
 {
-    public const MESSAGE = 'Aquest idioma no es troba a la llista d\'idiomes disponibles';
+    public const MESSAGE = 'This language is not in the list of available languages';
 
     public function __construct($languageId, $code = 404, Throwable $previous = null)
     {

@@ -20,7 +20,7 @@ class UpdateStudentProjectService
 
             // Verificar que el proyecto pertenece al estudiante
             if (!$this->isProjectOwnedByStudent($student, $project)) {
-                throw new Exception("No tienes permiso para actualizar este proyecto.", 403);
+                throw new Exception("You do not have permission to update this project.", 403);
             }
 
             $this->updateProject($project, $student, $data);

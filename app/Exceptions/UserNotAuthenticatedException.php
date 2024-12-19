@@ -11,12 +11,11 @@ class UserNotAuthenticatedException extends Exception
 
     public function __construct($message = null)
     {
-        parent::__construct($message ?: 'No autoritzat.'); // Si no pasa mensaje en la exepcion, lanzara este por defecto
-
+        parent::__construct($message ?: 'Not authorized'); /
     }
 
     public function getHttpCode()
     {
-        return Response::HTTP_UNAUTHORIZED; // Código HTTP 401
+        return Response::HTTP_UNAUTHORIZED; 
     }
 }

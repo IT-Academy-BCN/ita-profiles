@@ -47,7 +47,7 @@ class UpdateStudentLanguagesControllerTest extends TestCase
             'level' => 'Natiu'
         ]);
         $response->assertStatus(200);
-        $response->assertJson(['message' => 'Language updated successfully']);
+        $response->assertJson(['message' => 'The Language has been added successfully']);
     }
 
     public function testCanReturn404WhenLanguageNotFound(): void

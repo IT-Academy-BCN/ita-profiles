@@ -9,7 +9,7 @@ use Throwable;
 
 class LanguageAlreadyExistsException extends Exception
 {
-    public const MESSAGE = 'L\'idioma %s ja existeix al perfil de l\'estudiant %s';
+    public const MESSAGE = 'Language %s already exists in student profile %s';
 
     public function __construct($languageId, $studentId, $code = 409, Throwable $previous = null)
     {
