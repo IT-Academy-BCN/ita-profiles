@@ -1,21 +1,27 @@
 <?php
 
 namespace Tests\Feature\Controller;
-
+use App\Models\Resume;
 use Tests\TestCase;
 
 class DevelopmentListTest extends TestCase
 {
     public function testGetDevelopmentList()
     {
-        $response = $this->getJson(route('development.list')); 
+        $developmentOptions = ['Spring', 'Laravel', 'Angular', 'React', 'Not Set'];
+
+        foreach ($developmentOptions as $development) {
+            Resume::factory()->create(['development' => $development]);
+        }
+
+        $response = $this->getJson(route('development.list'));
+
         $response->assertStatus(200);
 
-        $developmentList = $response->json();
+        $response->assertJsonMissing(['Not Set']);
 
-        $this->assertIsArray($developmentList);
-        foreach ($developmentList as $development) {
-            $this->assertIsString($development);
+        foreach (['Spring', 'Laravel', 'Angular', 'React'] as $expectedDevelopment) {
+            $response->assertJsonFragment([$expectedDevelopment]);
         }
     }
 }
