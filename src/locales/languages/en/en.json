@@ -6,15 +6,15 @@
   "exceptions": {
     "CouldNotCreateJWTokenPassport": "It was not possible to generate the JWT using Passport for the user with ID %id",
     "InvalidCredentials": "Invalid credentials provided by the user.",
-    "LanguageAlreadyExists": "Language %language already exists in student profile %student",
+    "LanguageAlreadyExists": "Language %s already exists in student profile %s",
     "LanguageNotFound": "This language is not in the list of available languages",
-    "ProjectNotFound": "No project found with this ID: %projectId",
-    "ResumeNotFound": "No resume found for student id: %studentId",
-    "StudentLanguageResumeNotFound": "Language with id: %languageId not found for student with id: %studentId",
-    "StudentNotFound": "No student was found with this ID: %studentId",
-    "TagNotFound": "No tags found with this ID: %tagId",
+    "ProjectNotFound": "No project found with this ID: %s",
+    "ResumeNotFound": "No resume found for student id: %s",
+    "StudentLanguageResumeNotFound": "Language with id: %s not found for student with id: %s",
+    "StudentNotFound": "No student was found with this ID: %s",
+    "TagNotFound": "No tags found with this ID: %s",
     "UserNotAuthenticated": "Not authorized",
-    "UserNotFound": "No user was found with this ID: %userDNI",
+    "UserNotFound": "No user was found with this ID: %s",
     "UserNotFoundInRedis": "It was not possible to find the JWT in Redis for the user with ID %s",
     "UserNotStoredInRedis": "Failed to store JWT in Redis for user with ID %s"
   },
@@ -28,14 +28,6 @@
           "UpdateStudentLanguages": "The Language has been added successfully",
           "UpdateStudentProfile": "The student's profile has been updated successfully",
           "UpdateStudentProject": "The project has been updated successfully"
-        },
-        "tag": {
-          "AddStudentImage": "The label has been successfully updated.",
-          "AddStudentLanguage": "The language has been added successfully",
-          "UpdateStudentImage": "The image has been updated successfully",
-          "UpdateStudentLanguages": "The language updated successfully",
-          "UpdateStudentProfile": "Student's profile has been updated successfully",
-          "UpdateStudentProject": "The Project has been updated successfully"
         }
       }
     },
