@@ -9,6 +9,7 @@
         "ext-pdo": "*",
         "darkaonline/l5-swagger": "^8.5",
         "guzzlehttp/guzzle": "^7.2",
+        "itsgoingd/clockwork": "^5.3",
         "laravel/framework": "^10.10",
         "laravel/passport": "^12.2",
         "laravel/sanctum": "^3.2",
