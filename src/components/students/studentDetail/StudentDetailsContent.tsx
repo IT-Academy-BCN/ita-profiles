@@ -8,6 +8,7 @@ import StudentDetailCard from './cards/StudentDetailCard'
 import LanguagesCard from './cards/LanguagesCard'
 import AdditionalTrainingCard from './cards/AdditionalTrainingCard'
 import { useStudentDetailHook } from '../../../hooks/useStudentDetailHook'
+import { Button } from '../../atoms/Button'
 
 type TStudentDetailsContent = {
     handleIsPanelOpen: () => void
@@ -24,13 +25,12 @@ const StudentDetailsContent: React.FC<TStudentDetailsContent> = ({
                 <h3 className="hidden text-2xl font-bold md:block">
                     Detalle Perfil
                 </h3>
-                <button
-                    type="button"
-                    className="cursor-pointer"
+                <Button
+                    defaultButton={false}
                     onClick={handleIsPanelOpen}
                 >
                     <img src={Close} alt="close icon" className="h-5" />
-                </button>
+                </Button>
             </div>
 
             <div className='overflow-y-auto'>

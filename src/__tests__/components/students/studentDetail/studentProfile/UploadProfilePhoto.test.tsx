@@ -3,12 +3,11 @@ import { describe, expect } from 'vitest'
 import { render } from '@testing-library/react'
 import { store } from '../../../../../store/store'
 import UploadProfilePhoto from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/editStudentProfile/UploadProfilePhoto'
-import MyProfileStudentDetailCard from '../../../../../components/students/studentDetail/studentProfile/studentProfileCards/MyProfileStudentDetailCard'
 
 const renderComponent = () => {
     return render(
         <Provider store={store}>
-            <MyProfileStudentDetailCard />
+            <UploadProfilePhoto />
         </Provider>,
     )
 }
