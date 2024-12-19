@@ -24,7 +24,6 @@ const MyProfileCollaborationCard: React.FC = () => {
                 )}
                 {!isLoadingCollaborations && (
                     <>
-                        {/* <ResourcesCard /> */}
                         <div className="flex w-2/3 md:w-1/2 items-start justify-between rounded-md bg-ita-wiki p-3 pl-7 pt-3">
                             <div className="flex flex-col">
                                 {resourcesCard === undefined ? (
@@ -52,7 +51,6 @@ const MyProfileCollaborationCard: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* <ChallengesCard /> */}
                         <div className="flex w-2/3 md:w-1/2 items-start justify-between rounded-md bg-ita-challenges p-3 pl-7 pt-3">
                             <div className="flex flex-col ">
                                 {challengesCard === undefined ? (

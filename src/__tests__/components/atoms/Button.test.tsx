@@ -1,5 +1,5 @@
-import { render, screen } from '../test-utils'
-import { Button } from '../../components/atoms/Button'
+import { render, screen } from '../../test-utils'
+import { Button } from '../../../components/atoms/Button'
 
 describe('Button', () => {
   test('renders button', () => {

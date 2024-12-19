@@ -6,8 +6,11 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginUserSchema } from '../../schemes/schemas'
 import { TLoginForm, TUserResponseData } from '../../../types'
+import { Button } from "../atoms/Button";
 import { useLogin } from '../../context/LoginContext'
 import Modal from '../molecules/Modal'
+
+const openRegisterButtonStyles = 'mt-10 cursor-pointer font-bold underline decoration-solid'
 
 type LoginPopupProps = {
   onClose: () => void
@@ -38,7 +41,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
       onClose()
       navigate('/profile')
     } catch (e) {
-      setCustomError('El usuario o la contraseña son incorrectos.'); // Set custom error message
+      setCustomError('El usuario o la contraseña son incorrectos.');
     }
   }
 
@@ -48,7 +51,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
         role="dialog"
         className="flex flex-col items-center rounded-lg px-24 py-16 md:px-36">
         <h2 className="text-xl font-bold text-black-3 mb-4">Login</h2>
-        <form className="flex flex-col">
+        <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
           <input
             type="text"
             id="dni"
@@ -70,39 +73,24 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
             <p className="text-error">{`${errors.password?.message}`}</p>
           )}
 
-          {customError && (
-            <p className="text-error py-2">{customError}</p> // Display custom error message
-          )}
-
-          <div className="ml-16 mb-4 mt-2 text-center text-sm">
-            <button
-              type="button"
-              aria-labelledby="Cambiar o recuperar contraseña"
-              className="cursor-pointer"
-              style={{ textDecoration: 'underline' }}
-            >
-              Recordar/cambiar contraseña
-            </button>
-          </div>
-          <button
-            // type="submit"
-            type="button"
-            className="h-12 w-full my-4 rounded-lg bg-primary font-bold text-white"
-            onClick={handleSubmit(handleLogin)}
-          >
-            Login
-          </button>
-        </form>
-        <div className="mt-4 text-center">
-          <button
-            type="button"
-            className="cursor-pointer font-bold"
-            style={{ textDecoration: 'underline' }}
-            onClick={onOpenRegisterPopup}
-          >
-            ¿No tienes cuenta? crear una
-          </button>
+{customError && (
+          <p className="text-error py-2">{customError}</p>
+        )}        
+        <div          
+          aria-labelledby="Cambiar o recuperar contraseña"
+          className="mb-8 mt-2 text-right text-sm cursor-pointer underline decoration-solid"
+        >
+          Recordar/cambiar contraseña
         </div>
+        <Button type='submit'>Login</Button>
+      </form>
+      <Button
+        defaultButton={false}
+        className={openRegisterButtonStyles}
+        onClick={onOpenRegisterPopup}
+      >
+        ¿No tienes cuenta? crear una
+      </Button>
       </div>
     </Modal>
   )

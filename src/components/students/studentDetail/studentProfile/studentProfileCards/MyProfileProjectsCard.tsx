@@ -3,6 +3,7 @@ import { ArrowRightProjects } from '../../../../../assets/img'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
 import { Carousel } from '../../../../atoms/Carousel'
+import { Button } from '../../../../atoms/Button'
 
 const MyProfileProjectsCard: React.FC = () => {
     const { studentProjects } = useAppSelector((state) => state.ShowStudentReducer)
@@ -18,24 +19,20 @@ const MyProfileProjectsCard: React.FC = () => {
             <div className="flex justify-between">
                 <h3 className="text-lg font-bold">Proyectos</h3>
                 {projectsData && (
-                    <button
-                        className='flex items-center text-xs font-semibold rounded-md border border-gray-3 px-2 py-0 mr-auto ml-4'
-                        type='button'
+                    <Button
+                        defaultButton={false}
+                        className='flex items-center text-xs font-semibold rounded-md border border-gray-3 px-2 py-0 mr-auto ml-4 hover:bg-gray-100'
                     >
                         Nuevo proyecto
-                    </button>
+                    </Button>
                 )}
                 <div className="h-3 self-end">
-                    <button type="button" onClick={scrollLeft}>
+                    <Button defaultButton={false} onClick={scrollLeft}>
                         <img src={ArrowLeft} alt="arrow left" className="w-5" />
-                    </button>
-                    <button type="button" onClick={scrollRight}>
-                        <img
-                            src={ArrowRight}
-                            alt="arrow right"
-                            className="w-5"
-                        />
-                    </button>
+                    </Button>
+                    <Button defaultButton={false} onClick={scrollRight}>
+                        <img src={ArrowRight} alt="arrow right" className="w-5"/>
+                    </Button>
                 </div>
             </div>
             {isLoadingProjects && <LoadingSpiner />}
@@ -69,12 +66,12 @@ const MyProfileProjectsCard: React.FC = () => {
                                         />
                                     </a>
                                 </div>
-                                <button
-                                    type="button"
+                                <Button
+                                    defaultButton={false}
                                     className="-mt-1 flex w-6 self-start"
                                 >
                                     <img src={Pencil} alt="edit project information" />
-                                </button>
+                                </Button>
                             </div>
                             <p className="text-sm text-gray-3">
                                 {project.company_name}
@@ -93,7 +90,7 @@ const MyProfileProjectsCard: React.FC = () => {
                                 <a
                                     href={project.project_url}
                                     type="button"
-                                    className="h-8 rounded-lg border border-black-3"
+                                    className="h-8 rounded-lg border border-black-3 hover:bg-gray-100"
                                 >
                                     <img
                                         src={ArrowRightProjects}
