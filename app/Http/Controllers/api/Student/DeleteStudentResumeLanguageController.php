@@ -16,6 +16,7 @@ class DeleteStudentResumeLanguageController extends Controller
 {
     public function __invoke(Student $student, Language $language): JsonResponse
     {
+        $this->authorize('update', $student);
         $resume = $student->resume()->firstOrFail();
         $resume->languages()->findOrFail($language->id)->pivot->delete();
 

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Controller\Student;
 
-use App\Models\{Resume, Student, Tag, User};
+use App\Models\{Resume, Student, User};
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class UpdateStudentProfileControllerTest extends TestCase
@@ -17,17 +18,17 @@ class UpdateStudentProfileControllerTest extends TestCase
         parent::setUp();
     }
 
-    private function createUser():User
+    private function createUser(): User
     {
         return User::factory()->create();
     }
 
-    private function createStudent(User $user):Student
+    private function createStudent(User $user): Student
     {
         return Student::factory()->for($user)->create();
     }
 
-    private function createResume(Student $student):Resume
+    private function createResume(Student $student): Resume
     {
         return Resume::factory()->for($student)->create(['github_url' => 'https://github.com/user1',]);
     }
@@ -35,6 +36,7 @@ class UpdateStudentProfileControllerTest extends TestCase
     public function testCanUpdateStudentProfile(): void
     {
         $user = $this->createUser();
+        Passport::actingAs($user);
         $student = $this->createStudent($user);
         $resume = $this->createResume($student);
         $dataToUpdate = array_merge(
@@ -67,6 +69,7 @@ class UpdateStudentProfileControllerTest extends TestCase
     public function testCanReturn404WhenResumeIsNotFound()
     {
         $user = $this->createUser();
+        Passport::actingAs($user);
         $student = $this->createStudent($user);
 
         $dataToUpdate = [
@@ -87,6 +90,7 @@ class UpdateStudentProfileControllerTest extends TestCase
     public function testCanNotUpdateStudentProfileWithInvalidData(array $invalidData, array $expectedErrors): void
     {
         $user = $this->createUser();
+        Passport::actingAs($user);
         $student = $this->createStudent($user);
 
         $url = route('student.updateProfile', ['student' => $student]);

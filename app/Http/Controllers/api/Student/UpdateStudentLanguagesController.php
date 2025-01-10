@@ -8,13 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateStudentLanguagesRequest;
 use App\Models\Language;
 use App\Models\Student;
-use App\Service\Student\UpdateStudentLanguagesService;
 use Illuminate\Http\JsonResponse;
 
 class UpdateStudentLanguagesController extends Controller
 {
     public function __invoke(Student $student, UpdateStudentLanguagesRequest $request): JsonResponse
     {
+        $this->authorize('update', $student);
         $data = $request->validated();
         $resume = $student->resume()->firstOrFail();
 
@@ -31,6 +31,6 @@ class UpdateStudentLanguagesController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Language updated successfully']);
+        return response()->json(['message' => 'The Language has been added successfully']);
     }
 }

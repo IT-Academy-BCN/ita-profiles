@@ -1,19 +1,19 @@
 import { FC } from 'react'
-import { TModality } from '../../../../../../../interfaces/interfaces'
+import { TModality } from '../../../../../../../../types'
 
 type EditModalityProps = {
     additionalTraining: TModality[]
 }
 const EditModality: FC<EditModalityProps> = () => {
     return (
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-4 py-4">
 
             <h2 className="font-bold">
                 Modalidad
             </h2>
 
             <div className="flex justify-between">
-                <label htmlFor="Híbrido" className="flex gap-2">                    
+                <label htmlFor="Híbrido" className="flex gap-2">
                     <input
                         type="radio"
                         name="level"
@@ -22,7 +22,7 @@ const EditModality: FC<EditModalityProps> = () => {
                     />
                     <span>Indiferente</span>
                 </label>
-                <label htmlFor="Remoto" className="flex gap-2">                    
+                <label htmlFor="Remoto" className="flex gap-2">
                     <input
                         type="radio"
                         name="level"
@@ -31,7 +31,7 @@ const EditModality: FC<EditModalityProps> = () => {
                     />
                     <span>Remoto</span>
                 </label>
-                <label htmlFor="Presencial" className="flex gap-2">                    
+                <label htmlFor="Presencial" className="flex gap-2">
                     <input
                         type="radio"
                         name="level"

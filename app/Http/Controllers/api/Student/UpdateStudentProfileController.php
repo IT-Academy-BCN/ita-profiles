@@ -12,6 +12,7 @@ class UpdateStudentProfileController extends Controller
 
     public function __invoke(UpdateStudentRequest $request, Student $student): JsonResponse
     {
+        $this->authorize('update', $student);
         $data = $request->validated();
 
         $student->update($data);
@@ -23,8 +24,7 @@ class UpdateStudentProfileController extends Controller
         $student->tags()->sync($data['tags_ids']);
 
         return response()->json([
-            'profile' => 'El perfil de l\'estudiant s\'actualitza correctament',
+            'profile' => 'The student\'s profile has been updated successfully',
         ]);
-
     }
 }

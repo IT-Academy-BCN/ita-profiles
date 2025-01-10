@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Student;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\Passport\Passport;
 
 class AddStudentImageControllerTest extends TestCase
 {
@@ -22,10 +23,11 @@ class AddStudentImageControllerTest extends TestCase
         parent::setUp();
         Storage::fake('public');
         $this->user = User::factory()->create();
+        Passport::actingAs($this->user);
         $this->student = Student::factory()->create(['user_id' => $this->user->id]);
     }
-    
- 
+
+
 
     public function testItAddsStudentImageSuccessfully()
     {

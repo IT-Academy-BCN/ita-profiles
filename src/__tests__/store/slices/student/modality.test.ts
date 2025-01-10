@@ -1,4 +1,4 @@
-import { TModality } from '../../../../interfaces/interfaces'
+import { TModality } from '../../../../../types'
 import studentModality from '../../../../store/slices/student/modalitySlice'
 import { modalityThunk } from '../../../../store/thunks/getDetailResourceStudentWithIdThunk'
 

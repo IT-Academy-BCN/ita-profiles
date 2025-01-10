@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { TBootcamp } from '../../../interfaces/interfaces'
+import { TBootcamp } from '../../../../types'
 import { bootcampThunk } from '../../thunks/getDetailResourceStudentWithIdThunk'
 
 const bootcampData: TBootcamp[] = []

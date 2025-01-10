@@ -9,7 +9,7 @@ use Throwable;
 
 class ResumeNotFoundException extends Exception
 {
-    public const MESSAGE = 'No s\'ha trobat cap currículum per a l\'estudiant amb id: %s';
+    public const MESSAGE = 'No resume found for student id: %s';
 
     public function __construct(string $studentId, $code = 404, Throwable $previous = null)
     {

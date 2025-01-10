@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { TAbout } from '../../../interfaces/interfaces'
+import { TAbout } from '../../../../types'
 import {
     detailThunk,
     updateDetailThunk,

@@ -9,7 +9,7 @@ use Throwable;
 
 class UserNotFoundException extends Exception
 {
-    public const MESSAGE = 'No s\'ha trobat cap usuari amb aquest DNI: %s';
+    public const MESSAGE = 'No user was found with this ID: %s';
 
     public function __construct(string $userDNI, $code = 401, Throwable $previous = null)
     {

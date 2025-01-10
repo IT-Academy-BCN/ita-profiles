@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
 import axios, { AxiosError } from 'axios';
-import { IStudentList } from '../interfaces/interfaces';
+import { TStudentList } from '../../types';
 
 // eslint-disable-next-line consistent-return
 export const FetchStudentsList = async (selectedRoles: Array<string> = []) => {
@@ -16,7 +16,7 @@ export const FetchStudentsList = async (selectedRoles: Array<string> = []) => {
     // Construir la URL completa con la cadena de consulta
     const url = `//localhost:8000/api/v1/student/resume/list${queryParams ? `?${queryParams}` : ''}`;
 
-    const response = await axios.get<IStudentList[]>(url);
+    const response = await axios.get<TStudentList[]>(url);
     return response.data;
     // @ts-expect-error throws AxiosError exception
   } catch (e: AxiosError) {

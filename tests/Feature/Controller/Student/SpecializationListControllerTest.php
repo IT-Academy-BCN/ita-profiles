@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Database\Factories\ResumeFactory;
 use App\Models\Resume;
 use App\Http\Controllers\api\Student\SpecializationListController;
-use App\Service\Student\SpecializationListService;
+use App\Http\Resources\SpecializationListCollection;
 
 class SpecializationListControllerTest extends TestCase
 {
@@ -18,14 +18,17 @@ class SpecializationListControllerTest extends TestCase
     public function testSpecializationListControllerReturns_200StatusAndValidSpecializationListForResumesWithValidSpecializations(): void
     {
         $specializations = ['Frontend', 'Backend', 'Fullstack', 'Data Science', 'Not Set'];
-        
+
         foreach ($specializations as $specialization) {
-            ResumeFactory::new()->specificSpecialization($specialization)->create();
+            Resume::factory()->create(['specialization' => $specialization]);
         }
 
         $response = $this->getJson(route('roles.list'));
 
         $response->assertStatus(200);
+        $response->assertJsonMissing([
+            'specialization' => 'Not Set',
+        ]);
     }
 
     public function testSpecializationListControllerReturns_200StatusAnEmptyArrayForResumesWithNotSetSpecialization(): void
@@ -33,10 +36,8 @@ class SpecializationListControllerTest extends TestCase
         Resume::query()->delete();
 
         $specialization = 'Not Set';
-    
-        for ($i = 0; $i < 3; $i++) {
-            ResumeFactory::new()->specificSpecialization($specialization)->create();
-        }
+
+        Resume::factory()->count(3)->state(['specialization' => $specialization])->create();
 
         $response = $this->getJson(route('roles.list'));
 
@@ -52,14 +53,4 @@ class SpecializationListControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testSpecializationListControllerCanBeInstantiated(): void
-    {
-        $specializationListService = $this->createMock(SpecializationListService::class);
-        
-        $controller = new SpecializationListController($specializationListService);
-
-        $this->assertInstanceOf(SpecializationListController::class, $controller);
-    }
-
 }
-

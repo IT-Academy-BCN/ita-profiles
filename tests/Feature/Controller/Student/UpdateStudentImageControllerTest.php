@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Student;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\Passport\Passport;
 
 class UpdateStudentImageControllerTest extends TestCase
 {
@@ -27,6 +28,7 @@ class UpdateStudentImageControllerTest extends TestCase
     public function testItUpdatesStudentImageSuccessfully()
     {
         $user = User::factory()->create();
+        Passport::actingAs($user);
         $student = Student::factory()->create(['user_id' => $user->id]);
 
         $file = UploadedFile::fake()->image('profile.png', 2, 2);

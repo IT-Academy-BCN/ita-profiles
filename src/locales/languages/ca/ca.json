@@ -2,5 +2,83 @@
   "project": {
     "title": "Benvinguts al projecte ita-profiles-frontend",
     "description": "Part frontend del projecte ita-profiles"
+  },
+  "exceptions": {
+    "CouldNotCreateJWTokenPassport": "No ha estat possible generar el JWT usant Passport per a l'usuari amb ID %id",
+    "InvalidCredentials": "Credencials invàlides proporcionades per l'usuari.",
+    "LanguageAlreadyExists": "L'idioma %language ja existeix al perfil de l'estudiant %student",
+    "LanguageNotFound": "Aquest idioma no es troba a la llista d'idiomes disponibles",
+    "ProjectNotFound": "No s'ha trobat cap projecte amb aquest ID: %projectId",
+    "ResumeNotFound": "No s'ha trobat cap currículum per a l'estudiant amb ID: %studentId",
+    "StudentLanguageResumeNotFound": "L'idioma amb ID: %languageId no s'ha trobat per a l'estudiant amb ID: %studentId",
+    "StudentNotFound": "No s'ha trobat cap estudiant amb aquest ID: %studentId",
+    "TagNotFound": "No s'han trobat etiquetes amb aquest ID: %tagId",
+    "UserNotAuthenticated": "No autoritzat",
+    "UserNotFound": "No s'ha trobat cap usuari amb aquest ID: %userDNI",
+    "UserNotFoundInRedis": "No ha estat possible trobar el JWT a Redis per a l'usuari amb ID %s",
+    "UserNotStoredInRedis": "No ha estat possible emmagatzemar el JWT a Redis per a l'usuari amb ID %s"
+  },
+  "http": {
+    "controllers": {
+      "api": {
+        "student": {
+          "AddStudentImage": "La imatge s'ha afegit correctament",
+          "AddStudentLanguage": "L'idioma s'ha afegit correctament",
+          "UpdateStudentImage": "La imatge s'ha actualitzat correctament",
+          "UpdateStudentLanguages": "L'idioma s'ha actualitzat correctament",
+          "UpdateStudentProfile": "El perfil de l'estudiant s'ha actualitzat correctament",
+          "UpdateStudentProject": "El projecte s'ha actualitzat correctament"
+        }
+      }
+    },
+    "request": {
+      "RegisterRequest": {
+        "username_required": "El nom d'usuari és obligatori",
+        "username_string": "El nom d'usuari ha de ser un text",
+        "username_min": "El nom d'usuari ha de tenir almenys 3 caràcters",
+        "dni_required": "El DNI és obligatori",
+        "dni_unique": "El DNI ja existeix",
+        "dni_string": "El DNI ha de ser un text",
+        "dni_max": "El DNI no ha de superar els :max caràcters",
+        "dni_regex": "El DNI no ha de contenir caràcters especials",
+        "email_email": "Ha de tenir un format de correu electrònic vàlid",
+        "email_required": "El correu electrònic és obligatori",
+        "email_string": "El correu electrònic ha de ser un text",
+        "email_max": "El correu electrònic no ha de superar els :max caràcters",
+        "email_unique": "El correu electrònic ja existeix",
+        "password_required": "La contrasenya és obligatòria",
+        "password_confirmed": "La confirmació de la contrasenya no coincideix",
+        "password_regex": "La contrasenya ha de contenir almenys una lletra majúscula, un caràcter especial i tenir una longitud mínima de 8 caràcters",
+        "specialization_required": "L'especialització és obligatòria",
+        "specialization_in": "L'especialització no és vàlida",
+        "terms_required": "Has d'acceptar els termes i condicions",
+        "terms_in": "Has d'acceptar els termes i condicions"
+      }
+    },
+    "StoreCompanyRequest": {
+      "name_required": "El nom de la companyia és obligatori.",
+      "email_required": "El correu electrònic és obligatori.",
+      "email_email": "Introdueix un correu electrònic vàlid.",
+      "email_unique": "Aquest correu electrònic ja està en ús.",
+      "CIF_required": "El CIF és obligatori.",
+      "CIF_unique": "Aquest CIF ja està en ús.",
+      "CIF_regex": "El format del CIF no és vàlid.",
+      "location_required": "La localització és obligatòria.",
+      "website_url": "La pàgina web ha de contenir una URL vàlida."
+    }
+  },
+  "rules": {
+    "AcceptedTermsRule": "Has de acceptar els termes i condicions.",
+    "DniNieRule": "No és un :attribute vàlid",
+    "UniqueTagsIdsRule": {
+      "duplicate_values": "El camp :attribute conté valors duplicats.",
+      "nonexistent_values": "Un o més valors en el camp :attribute no existeixen a la taula de tags."
+    }
+  },
+  "services": {
+    "student":{
+      "StudentListServices": "No hi ha resums",
+      "UpdateStudentProjectServices":"No teniu permís per actualitzar aquest projecte."
+    }  
   }
 }

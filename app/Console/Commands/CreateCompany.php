@@ -39,7 +39,6 @@ class CreateCompany extends Command
             $this->info('Cancelled.');
             return 0;
         }
-
         $company = Company::create($data);
         $this->info("Company {$company->name} was created successfully.");
         return 0;
