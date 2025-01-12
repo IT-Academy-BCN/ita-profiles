@@ -5,11 +5,12 @@ import { Input, TInput } from '../atoms/Input'
 
 export type TInputGroup = TInput & {
     id: string
-    label: string
+    label?: string
     hiddenLabel?: boolean
     className?: string
     errorMessage?: string
     successMessage?: string
+    warningMessage?: string
     required?: boolean
 }
 
@@ -18,10 +19,11 @@ const InputGroup = forwardRef<HTMLInputElement, TInputGroup>(
         {
             id,
             label,
-            hiddenLabel = false,
+            hiddenLabel,
             className,
             errorMessage,
             successMessage,
+            warningMessage,
             required = false,
             error,
             success,
@@ -30,11 +32,17 @@ const InputGroup = forwardRef<HTMLInputElement, TInputGroup>(
         },
         ref,
     ) => {
-        const hasValidationMessage = !!(errorMessage || successMessage)
-        const validationMessage = errorMessage || successMessage || ''
+        const hasValidationMessage = !!(
+            errorMessage ||
+            successMessage ||
+            warningMessage
+        )
+        const validationMessage =
+            errorMessage || successMessage || warningMessage || ''
         const validationStyles = cls({
-            'text-red-500': errorMessage,
+            'text-red-500 bold': errorMessage,
             'text-green-500': successMessage,
+            'text-yellow-500': warningMessage,
         })
 
         return (
@@ -52,6 +60,11 @@ const InputGroup = forwardRef<HTMLInputElement, TInputGroup>(
                         successMessage !== undefined &&
                         successMessage !== null &&
                         successMessage !== ''
+                    }
+                    warning={
+                        warningMessage !== undefined &&
+                        warningMessage !== null &&
+                        warningMessage !== ''
                     }
                     required={required}
                     {...inputProps}
