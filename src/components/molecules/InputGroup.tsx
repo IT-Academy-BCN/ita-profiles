@@ -47,7 +47,11 @@ const InputGroup = forwardRef<HTMLInputElement, TInputGroup>(
 
         return (
             <div className={cls('flex flex-col gap-2', className)}>
-                <Label text={label} htmlFor={id} hiddenLabel={hiddenLabel} />
+                <Label
+                    text={label || ''}
+                    htmlFor={id}
+                    hiddenLabel={hiddenLabel}
+                />
                 <Input
                     id={id}
                     ref={ref}
