@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\api\Company\CreateCompanyController;
-use App\Http\Requests\StoreCompanyRequest;
 use Illuminate\Console\Command;
-use Illuminate\Validation\ValidationException;
+use App\Models\Company;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreCompanyRequest;
 use Symfony\Component\Console\Input\InputArgument;
 
 class CreateCompany extends Command
 {
-    protected $description =('Create a new company in the database giving the required arguments step by step in terminal.'.PHP_EOL.'  Example:
-    name: It Academy
-    email: itacademy@test.es
-    CIF: A1234567Z
-    location: Barcelona
-    website: https://itacademy.barcelonactiva.cat/');
-    
+    protected $description = (
+        'Create a new company in the database giving the required arguments step by step in terminal.' . PHP_EOL . '  Example:
+        name: It Academy
+        email: itacademy@test.es
+        CIF: A1234567Z
+        location: Barcelona
+        website: https://itacademy.barcelonactiva.cat/'
+    );
+
     protected function configure()
     {
         $this->setName('create:company')
@@ -27,102 +29,65 @@ class CreateCompany extends Command
             ->addArgument('CIF', InputArgument::OPTIONAL, 'The unique CIF of the company')
             ->addArgument('location', InputArgument::OPTIONAL, 'The physical location of the company')
             ->addArgument('website', InputArgument::OPTIONAL, 'The company\'s website URL -OPTIONAL-');
-    }   
-
-    /**
-     * The CreateCompanyController instance.
-     *
-     * @var CreateCompanyController
-     */
-    protected $createCompanyController;
-
-    /**
-     * The constructor injects the CreateCompanyController dependency.
-     *
-     * @param CreateCompanyController $createCompanyController
-     */
-    public function __construct(CreateCompanyController $createCompanyController)
-    {
-        parent::__construct();
-        $this->createCompanyController = $createCompanyController;
     }
-
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    
+    public function handle(): int
     {
-        try {
-            $data = $this->askCompanyData();
-            $request = $this->createRequest($data);
+        $data = $this->collectData();
 
-            $response = $this->createCompanyController->__invoke($request);
-
-            $this->handleResponse($response);
-
+        if (!$this->confirm('Save this data?', true)) {
+            $this->info('Cancelled.');
             return 0;
-        } catch (ValidationException $e) {
-            $this->handleValidationException($e);
-            return 1;
         }
+        $company = Company::create($data);
+        $this->info("Company {$company->name} was created successfully.");
+        return 0;
     }
 
-    /**
-     * Get company data from user input.
-     *
-     * @return array
-     */
-    protected function askCompanyData(): array
-    {
-        return [
-            'name' => $this->ask('Company name:'),
-            'email' => $this->ask('Email:'),
-            'CIF' => $this->ask('CIF:'),
-            'location' => $this->ask('Location:'),
-            'website' => $this->ask('Website:')
-        ];
-    }
-
-    /**
-     * Create a StoreCompanyRequest and merge the data.
-     *
-     * @param array $data
-     * @return StoreCompanyRequest
-     */
-    protected function createRequest(array $data): StoreCompanyRequest
+    protected function collectData(): array
     {
         $request = new StoreCompanyRequest();
-        $request->merge($data);
-        $request->setContainer(app())
-            ->setRedirector(app('redirect'))
-            ->validateResolved();
-        return $request;
-    }
+        $data = [];
 
-    /**
-     * Handle the response from the controller.
-     *
-     * @param \Illuminate\Http\JsonResponse $response
-     */
-    protected function handleResponse($response)
-    {
-        $content = $response->getData(true);
-        if (isset($content['message'])) {
-            $this->info($content['message']);
+        $fields = [
+            'name' => 'Company name (ex: It Academy)',
+            'email' => 'Email (ex: itacademy@example.com)',
+            'CIF' => 'CIF (ex: A12345678 / 12345678A / A1234567B)',
+            'location' => 'Location (ex: Barcelona)',
+            'website' => 'Website (ex: https://itacademy.barcelonactiva.cat/)'
+        ];
+
+        foreach ($fields as $field => $question) {
+            $data[$field] = $this->askValidated($question, $field, $request);
         }
+
+        return $data;
     }
 
-    /**
-     * Handle validation exceptions.
-     *
-     * @param ValidationException $e
-     */
-    protected function handleValidationException(ValidationException $e)
+    protected function askValidated(string $question, string $field, StoreCompanyRequest $request): ?string
     {
-        foreach ($e->errors() as $field => $messages) {
-            foreach ($messages as $message) {
-                $this->error("Error in the field {$field}: {$message}");
+        $rules = $request->rules();
+        $messages = $request->messages();
+
+        do {
+            $value = $this->ask($question);
+
+            if ($field === 'website' && empty($value)) {
+                return null;
             }
-        }
-    }    
+
+            $validator = Validator::make(
+                [$field => $value],
+                [$field => $rules[$field]],
+                $messages
+            );
+
+            if ($validator->fails()) {
+                $this->error($validator->errors()->first($field));
+                continue;
+            }
+
+            return $value;
+        } while (true);
+    }
 }

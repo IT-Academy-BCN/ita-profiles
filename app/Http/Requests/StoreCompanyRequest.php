@@ -1,19 +1,13 @@
 <?php
-
 declare(strict_types=1);
-
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
-
 class StoreCompanyRequest extends FormRequest
 {
-
     public function authorize(): bool
     {
         return true;
     }
-
     public function rules(): array
     {
         return [
@@ -30,19 +24,19 @@ class StoreCompanyRequest extends FormRequest
             'website' => 'nullable|url|max:255',
         ];
     }
-
     public function messages()
     {
         return [
-            'name.required' => 'The company name is required.',
-            'email.required' => 'The email address is required.',
-            'email.email' => 'Please enter a valid email address.',
-            'email.unique' => 'This email address is already in use.',
-            'CIF.required' => 'The CIF is required.',
-            'CIF.unique' => 'This CIF is already in use.',
-            'CIF.regex' => 'The CIF format is invalid.',
-            'location.required' => 'The location is required.',
-            'website.url' => 'The website must contain a valid URL.',
+            'name.required' => 'Company name is required.',
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Enter a valid email address.',
+            'email.unique' => 'The email address is already in use.',
+            'CIF.required' => 'CIF is required.',
+            'CIF.unique' => 'The CIF is already in use.',
+            'CIF.regex' => 'Enter a valid CIF.',
+            'location.required' => 'Location is required.',
+            'location.min' => 'Location must have at least :min characters.',
+            'website.url' => 'Enter a valid website.',
         ];
     }
 }
