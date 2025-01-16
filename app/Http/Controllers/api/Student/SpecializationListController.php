@@ -5,18 +5,26 @@ declare(strict_types=1);
 namespace App\Http\Controllers\api\Student;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SpecializationListCollection;
-use App\Models\Resume;
+use App\Service\Student\SpecializationListService;
 use Illuminate\Http\JsonResponse;
+use Exception;
 
 class SpecializationListController extends Controller
 {
-    public function __invoke(): JsonResponse
-    {
-    $specializations = Resume::distinct()
-        ->where('specialization', '!=', 'Not Set')
-        ->pluck('specialization');
+    private SpecializationListService $specializationListService;
 
-    return response()->json(new SpecializationListCollection($specializations));
+    public function __construct(SpecializationListService $specializationListService) {
+
+        $this->specializationListService = $specializationListService;
+    }
+
+    public function __invoke(): jsonResponse
+    {
+        try {
+            $service = $this->specializationListService->execute();
+            return response()->json($service);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode() ?: 500);
+        }
     }
 }
