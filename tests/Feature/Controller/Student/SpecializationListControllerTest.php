@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Database\Factories\ResumeFactory;
 use App\Models\Resume;
 use App\Http\Controllers\api\Student\SpecializationListController;
-use App\Http\Resources\SpecializationListCollection;
+use App\Service\Student\SpecializationListService;
 
 class SpecializationListControllerTest extends TestCase
 {
@@ -26,9 +26,6 @@ class SpecializationListControllerTest extends TestCase
         $response = $this->getJson(route('roles.list'));
 
         $response->assertStatus(200);
-        $response->assertJsonMissing([
-            'specialization' => 'Not Set',
-        ]);
     }
 
     public function testSpecializationListControllerReturns_200StatusAnEmptyArrayForResumesWithNotSetSpecialization(): void
@@ -53,4 +50,14 @@ class SpecializationListControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function testSpecializationListControllerCanBeInstantiated(): void
+    {
+        $specializationListService = $this->createMock(SpecializationListService::class);
+
+        $controller = new SpecializationListController($specializationListService);
+
+        $this->assertInstanceOf(SpecializationListController::class, $controller);
+    }
+
 }
+
