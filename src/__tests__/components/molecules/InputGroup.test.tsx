@@ -104,4 +104,38 @@ describe('InputGroup Component', () => {
         expect(validationMessage).toBeInTheDocument()
         expect(validationMessage).toHaveClass('text-yellow-500')
     })
+
+    it('handles user input correctly', async () => {
+        const onChangeMock = vi.fn()
+        render(
+            <InputGroup
+                id="input-group-id"
+                label="Test Label"
+                placeholder="write here"
+                onChange={onChangeMock}
+                data-testid="test-input-group"
+            />,
+        )
+
+        const inputElement = screen.getByTestId('test-input-group')
+        expect(inputElement).toBeInTheDocument()
+
+        await userEvent.type(inputElement, 'Hello')
+
+        expect(inputElement).toHaveValue('Hello')
+        expect(onChangeMock).toHaveBeenCalledTimes(5)
+    })
+
+    it('applies custom class names to the container', () => {
+        render(
+            <InputGroup
+                id="test-input-group"
+                label="Test Label"
+                className="custom-class"
+            />,
+        )
+
+        const container = screen.getByText('Test Label').parentElement
+        expect(container).toHaveClass('custom-class')
+    })
 })
