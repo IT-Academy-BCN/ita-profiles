@@ -1,6 +1,6 @@
-import { forwardRef, Ref } from 'react'
+import { forwardRef } from 'react'
 import cls from 'classnames'
-import Label, { TLabel } from '../atoms/Label'
+import Label from '../atoms/Label'
 import { Input, TInput } from '../atoms/Input'
 
 export type TInputGroup = TInput & {
