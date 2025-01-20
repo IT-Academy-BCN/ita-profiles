@@ -39,18 +39,18 @@ docker compose up --build -d
 docker ps
 ```
 
-4. You can now run commands inside the container using the following format:
+4. You can now access the container as a terminal by using the following format:
 
 ```shell
-docker exec -it <app-container-name> <the-command>
+docker exec -it ita-profiles bash
 ```
 
-For example:
+Or run commands inside the container the same way. In example:
 
 ```shell
-docker exec -it php composer install
-docker exec -it php php artisan migrate:fresh
-docker exec -it php php artisan db:seed
+docker exec -it ita-profiles composer install
+docker exec -it ita-profiles php artisan migrate:fresh
+docker exec -it ita-profiles php artisan db:seed
 ```
 
 ### Local Addresses
@@ -61,16 +61,6 @@ After the containers are up, you can access various tools locally:
 - Local Swagger documentation: [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
 - Local PHPMyAdmin (MySQL): [http://localhost:9015](http://localhost:9015)
 - Code Coverage: file:///path/to/your/project/tests/coverage/index.html
-
-#### PHPMyAdmin Credentials
-
-Use the following credentials to access PHPMyAdmin:
-
-```
-Host: mysql
-User: user
-Password: password
-```
 
 #### GitHub Token
 

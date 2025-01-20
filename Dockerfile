@@ -1,46 +1,47 @@
-FROM node:22.2.0 AS node-stage
+FROM ubuntu:22.04
 
-WORKDIR /var/www/html
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN mkdir -p /var/www/html/build
-RUN npm install -g typescript
-
-
-FROM php:8.1-fpm AS php-stage
-
-WORKDIR /var/www/html
-
+# Actualización del sistema e instalación de herramientas básicas
 RUN apt-get update && apt-get install -y \
-    libzip-dev libfreetype6-dev \
-    libjpeg62-turbo-dev libpng-dev libonig-dev \
-    libxml2-dev libpq-dev libicu-dev libxslt1-dev \
-    libmcrypt-dev libssl-dev git zip unzip cron && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
-RUN if ! pecl list | grep -q xdebug; then pecl install xdebug && docker-php-ext-enable xdebug; fi && \
-    echo "xdebug.mode=debug, coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.start_with_request=trigger" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
-    echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-COPY .env.docker /var/www/html/.env
-COPY crontab /etc/cron.d/laravel-cron
-RUN chmod 0644 /etc/cron.d/laravel-cron
-RUN crontab /etc/cron.d/laravel-cron
-RUN touch /var/log/cron.log
+    curl \
+    gnupg \
+    software-properties-common \
+    nginx \
+    php8.1-fpm php8.1-mysql php8.1-cli php8.1-zip php8.1-curl php8.1-mbstring php8.1-bcmath php8.1-xml php8.1-intl php8.1-gd php8.1-soap \
+    mariadb-server \
+    redis-server \
+    supervisor \
+    git \
+    unzip \
+    netcat \
+    && apt-get clean
 
-EXPOSE 9000
+# Instalación de Node.js 22.2
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean
 
-CMD ["php-fpm"]
+# Crear carpetas necesarias para supervisor
+RUN mkdir -p /var/log/supervisor /etc/supervisor/conf.d /run/mysqld /var/lib/redis /run/php \
+    && chmod -R 777 /run/mysqld /var/lib/redis /run/php /var/www/html
 
+# Copiar configuraciones y scripts
+COPY supervisord.conf /etc/supervisor/supervisord.conf
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY entrypoint.sh /root/entrypoint.sh
+COPY entrypoint_node.sh /root/entrypoint_node.sh
+COPY init.sh /root/init.sh
 
-FROM nginx:latest AS nginx-stage
-COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=php-stage /var/www/html /var/www/html
-COPY --from=node-stage /var/www/html/build /var/www/html/build
-RUN chmod -R 777 /var/www/html/build
+# Permisos para los scripts
+RUN chmod +x /root/entrypoint.sh /root/entrypoint_node.sh /root/init.sh
 
-EXPOSE 80
-EXPOSE 8000
+# Configuración del entorno de trabajo
+WORKDIR /var/www/html
+COPY . /var/www/html
 
-CMD ["nginx", "-g", "daemon off;"]
+# Exponer puertos
+EXPOSE 80 8000 3306 6379
 
+# Comando de inicio
+CMD ["/root/init.sh"]

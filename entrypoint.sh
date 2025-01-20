@@ -5,7 +5,6 @@ if [ -f /var/www/html/bootstrap/cache/config.php ]; then
     rm /var/www/html/bootstrap/cache/config.php
 fi
 
-# Ejecuta las instrucciones de Composer y Artisan
 composer install
 
 if [ ! -f .env ]; then
@@ -13,35 +12,42 @@ if [ ! -f .env ]; then
     cp .env.docker .env
 fi
 
-# Verificar si GITHUB_TOKEN existe y tiene un valor en el archivo .env
-if ! grep -q '^GITHUB_TOKEN=[^ ]' .env; then
-    echo ""
-    printf "\033[33m[WARNING] - GITHUB_TOKEN is either missing or empty in the .env file. Some features may not work as expected.\033[0m\n"
-fi
+# Cargar variables desde el archivo .env
+export $(grep -v '^#' .env | xargs)
+
+# Variables de entorno para MariaDB
+DB_NAME=${DB_DATABASE:-laravel}
+DB_USER=${DB_USERNAME:-user}
+DB_PASS=${DB_PASSWORD:-password}
+
+# Crear la base de datos y usuario si no existen
+echo "Configuring MariaDB..."
+until mysql -e "SELECT 1;" > /dev/null 2>&1; do
+  echo "Waiting for MariaDB to be ready..."
+  sleep 5
+done
+
+mysql <<EOSQL
+CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
+CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASS}';
+GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'%';
+FLUSH PRIVILEGES;
+EOSQL
 
 php artisan optimize
 php artisan clear-compiled
 
-#Wait untill MYSQL Connection is ready:
-#Fresh or not fresh...
-until php artisan migrate:fresh --seed
+until php artisan migrate --force
 do
   echo "Waiting for database connection..."
-  # wait for 5 seconds before check again
   sleep 10
 done
 
+php artisan db:seed
 php artisan l5-swagger:generate
 php artisan key:generate
 php artisan passport:install --force --no-interaction
-php artisan config:clear
 php artisan config:cache
-php artisan cache:clear
-php artisan route:clear
+php artisan route:cache
 php artisan storage:link
 chmod 777 -R storage
-
-echo "Starting Cron service..."
-service cron start
-
-php-fpm
