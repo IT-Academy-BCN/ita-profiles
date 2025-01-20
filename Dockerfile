@@ -40,7 +40,7 @@ RUN chmod +x /root/entrypoint.sh /root/entrypoint_node.sh /root/init.sh
 WORKDIR /var/www/html
 COPY . /var/www/html
 
-RUN
+RUN composer install
 
 # Exponer puertos
 EXPOSE 80 8000 3306 6379
