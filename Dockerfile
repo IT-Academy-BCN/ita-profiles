@@ -22,6 +22,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs \
     && apt-get clean
 
+# Instalar Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Crear carpetas necesarias para supervisor
 RUN mkdir -p /var/log/supervisor /etc/supervisor/conf.d /run/mysqld /var/lib/redis /run/php \
     && chmod -R 777 /run/mysqld /var/lib/redis /run/php /var/www/html
