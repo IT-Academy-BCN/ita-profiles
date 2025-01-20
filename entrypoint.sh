@@ -5,8 +5,6 @@ if [ -f /var/www/html/bootstrap/cache/config.php ]; then
     rm /var/www/html/bootstrap/cache/config.php
 fi
 
-composer install
-
 if [ ! -f .env ]; then
     echo "[WARNING] - .env File Not Found! Using .env.docker File as .env"
     cp .env.docker .env
