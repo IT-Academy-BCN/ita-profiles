@@ -1,3 +1,4 @@
 docker/
 .git
 .dockerignore
+dump.rdb
