@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import useUploadProfilePhotoHook from '../../../../../../hooks/useUploadProfilePhotoHook'
 import Modal from '../../../../../molecules/Modal'
+import { Button } from '../../../../../atoms/Button'
 
 const UploadProfilePhoto: FC = () => {
     const {
@@ -65,30 +66,28 @@ const UploadProfilePhoto: FC = () => {
                     />
                 </label>
 
-                <footer className="flex gap-4 p-4 justify-between">
-                    <button
-                        type="button"
-                        onClick={handleCancel}
-                        aria-label="Cancel upload photo"
-                        className="w-1/2 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)]"
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        disabled={btnDisabled}
-                        type="button"
-                        aria-label="Aceptar photo"
-                        className={`w-1/2  h-[63px] rounded-xl 
-            ${btnDisabled ? 'bg-stone-300 cursor-not-allowed' : 'bg-primary'} 
-            font-bold text-white border border-[rgba(128,128,128,1)]`}
-                        onClick={handleAccept}
-                    >
-                        Aceptar
-                    </button>
+                    <footer className="flex gap-4 p-4 justify-between">
+                        <Button
+                            defaultButton={false}
+                            onClick={handleCancel}
+                            aria-label="Cancel upload photo"
+                            className="w-1/2 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)]"
+                        >
+                            Cancelar
+                        </Button>
+                        <Button
+                            defaultButton={false}
+                            disabled={btnDisabled}
+                            aria-label="Aceptar photo"
+                            className={`w-1/2  h-[63px] rounded-xl 
+                            ${btnDisabled ? 'bg-stone-300 cursor-not-allowed' : 'bg-primary'} 
+                            font-bold text-white border border-[rgba(128,128,128,1)]`}
+                            onClick={handleAccept}
+                        >
+                            Aceptar
+                        </Button>
                 </footer>
             </article>
-
-
         </Modal>
     )
 }

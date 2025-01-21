@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { Stud1 as defaultPhoto } from '../../../../../../assets/img'
 import { useEditStudentProfile } from '../../../../../../hooks/useEditstudentProfile'
 import Modal from '../../../../../molecules/Modal'
+import { Button } from '../../../../../atoms/Button'
 
 interface EditStudentProfileProps {
     handleModal: () => void
@@ -65,14 +66,14 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                                     alt="Student profile"
                                 />
                             </div>
-                            <button
+                            <Button
+                                defaultButton={false}
                                 aria-label="Open upload image modal"
                                 className="h-[30px] w-[180px] self-center text-sm text-[rgba(30,30,30,1)] font-bold border border-[rgba(128,128,128,1)] rounded-lg  "
-                                type="button"
                                 onClick={() => toggleProfileImage()}
                             >
                                 Subir nueva imagen
-                            </button>
+                            </Button>
                         </div>
                         <div className="w-[304px] border-t border-[rgba(217,217,217,1)]" />
                         <div className="flex flex-col">
@@ -194,88 +195,88 @@ export const EditStudentProfile: React.FC<EditStudentProfileProps> = ({
                             )}
                         </div>
 
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="linkedin_url"
-                                className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
-                            >
-                                Link perfil de Linkedin
-                            </label>
-                            <input
-                                {...register('linkedin_url', {
-                                    required:
-                                        'Error: Este campo es requerido !',
-                                    pattern: {
-                                        value: /^(https?:\/\/)?(www\.)?linkedin\.com\/.+$/,
-                                        message:
-                                            'Formato de url inválido. Ej. https://linkedin.com/ora00  ',
-                                    },
-                                })}
-                                className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
-                                id="linkedin_url"
-                                type="text"
-                                name="linkedin_url"
-                            />
-                            {errors.linkedin_url ? (
-                                <p className="text-center font-bold text-xs text-red-500 py-1">
-                                    {errors.linkedin_url.message}
-                                </p>
-                            ) : (
-                                ''
-                            )}
-                        </div>
-                        <div className="border-b border-[rgba(217,217,217,1)] w-full mt-[5px] mb-[10px] " />
-                        <div className="flex flex-col">
-                            <label
-                                htmlFor="about"
-                                className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
-                            >
-                                Descripción
-                            </label>
-                            <input
-                                {...register('about', {
-                                    required:
-                                        'Error: Este campo es requerido !',
-                                    minLength: {
-                                        value: 3,
-                                        message: 'Mínimo 3 caracteres',
-                                    },
-                                })}
-                                className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
-                                id="about"
-                                type="text"
-                                name="about"
-                            />
-                            {errors.about ? (
-                                <p className="text-center font-bold text-xs text-red-500 py-1">
-                                    {errors.about.message}
-                                </p>
-                            ) : (
-                                ''
-                            )}
-                        </div>
+                                <div className="flex flex-col">
+                                    <label
+                                        htmlFor="linkedin_url"
+                                        className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
+                                    >
+                                        Link perfil de Linkedin
+                                    </label>
+                                    <input
+                                        {...register('linkedin_url', {
+                                            required:
+                                                'Error: Este campo es requerido !',
+                                            pattern: {
+                                                value: /^(https?:\/\/)?(www\.)?linkedin\.com\/.+$/,
+                                                message:
+                                                    'Formato de url inválido. Ej. https://linkedin.com/ora00  ',
+                                            },
+                                        })}
+                                        className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
+                                        id="linkedin_url"
+                                        type="text"
+                                        name="linkedin_url"
+                                    />
+                                    {errors.linkedin_url ? (
+                                        <p className="text-center font-bold text-xs text-red-500 py-1">
+                                            {errors.linkedin_url.message}
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
+                                </div>
+                                <div className="border-b border-[rgba(217,217,217,1)] w-full mt-[5px] mb-[10px] " />
+                                <div className="flex flex-col">
+                                    <label
+                                        htmlFor="about"
+                                        className="text-[12px] leading-[19px] font-medium text-[rgba(128,128,128,1)] "
+                                    >
+                                        Descripción
+                                    </label>
+                                    <input
+                                        {...register('about', {
+                                            required:
+                                                'Error: Este campo es requerido !',
+                                            minLength: {
+                                                value: 3,
+                                                message: 'Mínimo 3 caracteres',
+                                            },
+                                        })}
+                                        className="text-[16px] leading-[19px] text-[rgba(30,30,30,1)] font-medium p-4 w-full h-[61px] border rounded-lg border-[rgba(128,128,128,1)] mt-[5px] mb-[10px]"
+                                        id="about"
+                                        type="text"
+                                        name="about"
+                                    />
+                                    {errors.about ? (
+                                        <p className="text-center font-bold text-xs text-red-500 py-1">
+                                            {errors.about.message}
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
+                                </div>
+                            </div>
+                            <div className="flex w-full mt-4 mb-8 mr-8 gap-3 ">
+                                <Button
+                                    defaultButton={false}
+                                    aria-label="cancel student button"
+                                    onClick={handleModal}
+                                    className="flex-1 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)]"
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button
+                                    defaultButton={false}
+                                    disabled={isSubmitDisabled}
+                                    type="submit"
+                                    aria-label="submit form button"
+                                    className="flex-1 h-[63px] rounded-xl bg-primary font-bold text-white border mr-4 border-[rgba(128,128,128,1)]"
+                                >
+                                    Aceptar
+                                </Button>
+                            </div>
+                        </form>
                     </div>
-                    <div className="flex w-full mt-4 mb-8 mr-8 gap-3 ">
-                        <button
-                            aria-label="cancel student button"
-                            onClick={handleModal}
-                            className="flex-1 h-[63px] rounded-xl font-bold border border-[rgba(128,128,128,1)]"
-                            type="button"
-                        >
-                            Cancelar
-                        </button>
-                        <button
-                            disabled={isSubmitDisabled}
-                            type="submit"
-                            aria-label="submit form button"
-                            className="flex-1 h-[63px] rounded-xl bg-primary font-bold text-white border mr-4 border-[rgba(128,128,128,1)]"
-                        >
-                            Aceptar
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-        </Modal>
-    )
+            </Modal>
+        )
 }

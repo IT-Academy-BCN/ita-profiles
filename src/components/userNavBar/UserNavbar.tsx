@@ -5,6 +5,7 @@ import LoginPopup from '../login_&_register/LoginPopup'
 import RegisterPopup from '../login_&_register/RegisterPopup'
 import { useLogin } from '../../context/LoginContext'
 import Modal from '../molecules/Modal'
+import { Button } from '../atoms/Button'
 
 const UserNavbar: React.FC = () => {
   const [isRestrictedPopupOpen, setIsRestrictedPopupOpen] = useState(false)
@@ -58,7 +59,7 @@ const UserNavbar: React.FC = () => {
         />
       </div>
       <div className="flex cursor-pointer items-center gap-4">
-        <div className="p-.5 dropdown relative rounded-lg  bg-white px-3 py-2 font-medium">
+        <div className="p-.5 dropdown relative rounded-lg bg-white px-3 py-2 font-medium">
           <div
             tabIndex={0}
             role="button"
@@ -74,28 +75,29 @@ const UserNavbar: React.FC = () => {
         </div>
         {isLoggedIn
           ? <div className='flex gap-4'>
-            <button
-              type='button'
-              className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
-              onClick={logout}
-            >
-              <img src={Settings} alt="Settings button" />
-            </button>
-            <Link
-              className="rounded-lg bg-white px-3 py-2 font-medium text-gray"
-              to='/profile'
-            >
-              <img src={UserIcon} alt="User icon button" />
-            </Link>
-          </div>
+              <Button 
+                navbar
+                defaultButton={false}
+                onClick={logout}
+              >
+                <img src={Settings} alt="Settings button" />
+              </Button>
+              <Link
+                className="rounded-lg bg-white px-3 py-2 font-medium text-gray hover:scale-[1.02] transition duration-150 ease-in-out"
+                to='/profile'
+              >
+                <img src={UserIcon} alt="User icon button" />
+              </Link>
+            </div>
 
-          : <button
-            type="button"
-            className="rounded-lg bg-white px-3 py-2 font-medium text-gray-3"
-            onClick={handleButtonClick}
-          >
-            Login/registro
-          </button>}
+          : <Button
+              navbar
+              defaultButton={false}
+              onClick={handleButtonClick}
+            >
+              Login/registro
+            </Button>
+        }          
       </div>
       <Modal isOpen={isRestrictedPopupOpen} onClose={() => handleCloseRestrictedPopup()}>
         <div className="flex px-24 py-12 flex-col items-center rounded-lg bg-white">
@@ -103,18 +105,8 @@ const UserNavbar: React.FC = () => {
           <h2 className="mb-8 text-xl font-bold">Acceso restringido</h2>
           <p className="mb-8 ">Entra o regístrate para acceder al perfil</p>
           <div className="w-full">
-            <button
-              type="button"
-              className="mb-3 h-12 w-full rounded-lg bg-primary font-bold text-white"
-              onClick={handleOpenRegisterPopup}>
-              Quiero registrarme
-            </button>
-            <button
-              type="button"
-              className="mb-4 h-12 w-full rounded-lg bg-primary font-bold text-white"
-              onClick={handleOpenLoginPopup}>
-              Ya tengo cuenta
-            </button>
+          <Button onClick={handleOpenRegisterPopup}>Registrarme</Button>
+          <Button defaultButton={false} outline onClick={handleOpenLoginPopup}>Entrar</Button>
           </div>
         </div>
       </Modal>

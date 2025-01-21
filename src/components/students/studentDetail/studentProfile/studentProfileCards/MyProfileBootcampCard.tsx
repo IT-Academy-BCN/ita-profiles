@@ -3,6 +3,7 @@ import { Pencil } from '../../../../../assets/svg'
 import medal from '../../../../../assets/img/medal-dynamic-color.png'
 import { useAppSelector } from '../../../../../hooks/ReduxHooks'
 import LoadingSpiner from '../../../../atoms/LoadingSpiner'
+import { Button } from '../../../../atoms/Button'
 
 const MyProfileBootcampCard: React.FC = () => {
     const { studentBootcamps } = useAppSelector((state) => state.ShowStudentReducer)
@@ -12,12 +13,12 @@ const MyProfileBootcampCard: React.FC = () => {
         <div className="flex flex-col gap-4" data-testid="BootcampCard">
             <div className='flex'>
                 <h3 className="text-lg font-bold">Datos del bootcamp</h3>
-                <button
-                    type='button'
+                <Button
+                    defaultButton={false}
                     className='ml-auto'
                 >
                     <img src={Pencil} alt="edit training information" />
-                </button>
+                </Button>
             </div>
             {isLoadingBootcamp && <LoadingSpiner />}
             {isErrorBootcamp && (

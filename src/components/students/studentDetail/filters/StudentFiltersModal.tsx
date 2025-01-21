@@ -1,3 +1,4 @@
+import { Button } from '../../../atoms/Button'
 import StudentFiltersContent from './StudentFiltersContent'
 
 interface TStudentsFiltersModal {
@@ -8,18 +9,17 @@ const StudentsFiltersModal: React.FC<TStudentsFiltersModal> = ({
   handleOpenModal,
 }) => (
   <dialog id="filtersModal" className="modal modal-open modal-bottom flex">
-    <div className="modal-box bg-white shadow-sm w-auto flex-1 flex flex-col gap-4 mx-4 p-8 pt-12 pb-5">
+    <div className="modal-box bg-white w-auto flex-1 flex flex-col gap-4 mx-4 p-8 pt-12 pb-5">
       <StudentFiltersContent />
       <div className="modal-action">
         <form method="dialog" className="flex w-full justify-center ">
-          {/* if there is a button in form, it will close the modal */}
-          <button
-            type="button"
-            className="border-gray-400 hover:bg-gray-100 w-full rounded-lg border px-4 py-1 font-semibold"
+          <Button
+            defaultButton={false}
+            className="rounded-lg px-6 py-3 font-semibold hover:bg-gray-100"
             onClick={handleOpenModal}
           >
             Cerrar
-          </button>
+          </Button>
         </form>
       </div>
     </div>
