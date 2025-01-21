@@ -3,7 +3,7 @@ import axios from 'axios'
 const getResourceWithAxios = async (url: string) => {
     try {
         const response = await axios.get(
-            `//localhost:8000/api/v1${url}`,
+            `http://localhost:8000/api/v1${url}`,
         )
         return response.data;
     } catch (err) {

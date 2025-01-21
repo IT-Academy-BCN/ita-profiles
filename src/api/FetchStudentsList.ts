@@ -14,7 +14,7 @@ export const FetchStudentsList = async (selectedRoles: Array<string> = []) => {
     }
 
     // Construir la URL completa con la cadena de consulta
-    const url = `//localhost:8000/api/v1/student/resume/list${queryParams ? `?${queryParams}` : ''}`;
+    const url = `http://localhost:8000/api/v1/student/resume/list${queryParams ? `?${queryParams}` : ''}`;
 
     const response = await axios.get<TStudentList[]>(url);
     return response.data;

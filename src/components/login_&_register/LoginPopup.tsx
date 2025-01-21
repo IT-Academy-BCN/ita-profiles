@@ -31,7 +31,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({
   const { handleSubmit, register, formState: { errors }, } = useForm<TFormSchema>({ resolver: zodResolver(LoginUserSchema) })
   const handleLogin: SubmitHandler<TLoginForm> = async (data) => {
     try {
-      const response = await axios.post('//localhost:8000/api/v1/signin', data)
+      const response = await axios.post('http://localhost:8000/api/v1/signin', data)
       // eslint-disable-next-line
       user = response.data
       login(user);
