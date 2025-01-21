@@ -1,0 +1,21 @@
+services:
+  - name: ita-profiles
+    type: web
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+    ports:
+      - port: 80
+        targetPort: 80
+        rewrite:
+          sourcePath: /
+          destinationPath: /build
+      - port: 8000
+        targetPort: 8000
+        rewrite:
+          sourcePath: /
+          destinationPath: /public
