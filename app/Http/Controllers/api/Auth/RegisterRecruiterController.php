@@ -39,13 +39,10 @@ class RegisterRecruiterController extends Controller
             'role_id' => $role->id,
         ]);
 
-        $token = $user->createToken('token')->accessToken;
-
         return response()->json([
             'message' => 'Recruiter created successfully',
             'recruiter' => $recruiter,
             'user' => $user,
-            'token' => $token,
         ], 201);
 
     }
