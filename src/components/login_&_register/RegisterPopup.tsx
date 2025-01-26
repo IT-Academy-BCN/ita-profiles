@@ -51,10 +51,13 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
     }
 
     const inputStyle =
-        'border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2'
+        'border-gray-300 w-full h-12 p-2 px-4 py-4 md:p-4 md:px-6 md:py-2 border rounded-lg focus:border-blue-300 focus:outline-none focus:ring mb-2'
+    const textError = 'text-error'
+    const textErrorStyle = `${textError}  break-words max-w-[244px]`
+
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
-            <div className="w-120 flex flex-col items-center rounded-xl p-5 pt-2 md:p-20 md:pt-10">
+            <div className="w-120 flex flex-col items-center rounded-xl p-5 pt-2 md:p-20 md:pt-10 h-auto max-h-[580px] overflow-y-auto">
                 <h2 className="text-lg font-bold md:text-2xl mb-3 md:mb-20">
                     Registro
                 </h2>
@@ -69,7 +72,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 placeholder="DNI o NIE"
                             />
                             {errors.dni && (
-                                <p className="text-error">{`${errors.dni?.message}`}</p>
+                                <p
+                                    className={textErrorStyle}
+                                >{`${errors.dni?.message}`}</p>
                             )}
                         </div>
                         <div>
@@ -81,7 +86,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 placeholder="Email"
                             />
                             {errors.email && (
-                                <p className="text-error">{`${errors.email?.message}`}</p>
+                                <p
+                                    className={textErrorStyle}
+                                >{`${errors.email?.message}`}</p>
                             )}
                         </div>
                         <div>
@@ -93,7 +100,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 placeholder="Username"
                             />
                             {errors.username && (
-                                <p className="text-error">{`${errors.username?.message}`}</p>
+                                <p
+                                    className={textErrorStyle}
+                                >{`${errors.username?.message}`}</p>
                             )}
                         </div>
 
@@ -106,7 +115,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 placeholder="Specialization"
                             />
                             {errors.specialization && (
-                                <p className="text-error">{`${errors.specialization.message}`}</p>
+                                <p
+                                    className={textErrorStyle}
+                                >{`${errors.specialization.message}`}</p>
                             )}
                         </div>
 
@@ -119,7 +130,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 placeholder="Password"
                             />
                             {errors.password && (
-                                <p className="text-error">{`${errors.password?.message}`}</p>
+                                <p
+                                    className={textErrorStyle}
+                                >{`${errors.password?.message}`}</p>
                             )}
                         </div>
                         <div>
@@ -131,7 +144,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 placeholder="Confirm Password"
                             />
                             {errors.confirmPassword && (
-                                <p className="text-error">{`${errors.confirmPassword?.message}`}</p>
+                                <p
+                                    className={textErrorStyle}
+                                >{`${errors.confirmPassword?.message}`}</p>
                             )}
                         </div>
                     </div>
@@ -142,7 +157,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 <input
                                     type="checkbox"
                                     id="acceptTerms"
-                                    className="h-6 w-6"
+                                    className="h-5 w-5"
                                     checked={isChecked}
                                     onChange={(e) =>
                                         setIsChecked(e.target.checked)
