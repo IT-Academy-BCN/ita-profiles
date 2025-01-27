@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     git \
     unzip \
     netcat \
+    cron \
     && apt-get clean
 
 # Instalación de Node.js 22.2
@@ -43,7 +44,11 @@ RUN chmod +x /root/entrypoint.sh /root/entrypoint_node.sh /root/init.sh
 WORKDIR /var/www/html
 COPY . /var/www/html
 
+# Instala composer
 RUN composer install
+
+# Abre el puerto 3306 a externo
+RUN sed -i 's/^bind-address\s*=.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Exponer puertos
 EXPOSE 80 8000 3306 6379
