@@ -1,17 +1,27 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios from 'axios'
 import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { UserSchema } from '../../schemes/schemas'
 import Modal from '../molecules/Modal'
+import { REGEX_DNI, REGEX_EMAIL, REGEX_PASWWORD, REGEX_USERNAME } from '../../utils/regex'
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks'
+import { registerNewUserThunk } from '../../store/thunks/registerNewUserThunk'
 
 type RegisterPopupProps = {
   onClose: () => void
   onOpenLoginPopup: () => void,
   isOpen: boolean
 }
-
+enum Specialization {
+  Frontend = "Frontend",
+  Backend = "Backend",
+  Fullstack = "Fullstack",
+  DataScience = "Data Science",
+  NotSet = "Not Set"
+}
+const specializationValues = Object.values(Specialization)
+console.log(specializationValues)
 type TFormSchema = z.infer<typeof UserSchema>
 
 const RegisterPopup: React.FC<RegisterPopupProps> = ({
@@ -19,6 +29,10 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
   onOpenLoginPopup,
   isOpen
 }) => {
+
+  const { isErrorCreateUser, isSuccessCreateUser, isLoadingCreateUser } = useAppSelector(state => state.ShowUserReducer.createUser)
+  const dispatch = useAppDispatch();
+
   const [isChecked, setIsChecked] = useState(false)
   const [checkError, setCheckError] = useState(false)
 
@@ -30,32 +44,29 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
   } = useForm<TFormSchema>({ resolver: zodResolver(UserSchema) })
 
   const sendRegister: SubmitHandler<TFormSchema> = async (data) => {
-    try {
-      if (isChecked) {
-        // This creates a user in db.json.
-        const response = await axios.post(
-          'http://localhost:8000/users/register',
-          data,
-        )
-        // eslint-disable-next-line no-console
-        console.log('response de register =>', response.data)
-        reset()
-        onClose()
-      } else {
-        setCheckError(true)
+    if (isChecked) {
+      const form = {
+        ...data,
+        terms: data.terms.toString()
       }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      dispatch(registerNewUserThunk(form))
+      reset()
+      onClose()
+    } else {
+      setCheckError(true)
     }
+
   }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="w-120 flex flex-col items-center rounded-lgp-5 md:p-20">
         <h2 className="text-lg font-bold md:text-2xl">Registro</h2>
-        <form className="flex flex-col space-y-4">
+        <form className="flex flex-col space-y-4" autoComplete='on'>
           <div className="grid grid-cols-2 gap-4">
+            {isErrorCreateUser && <h1>{isErrorCreateUser.toString()}</h1>}
+            {isLoadingCreateUser && 'Loading'}
+            {isSuccessCreateUser && 'Ok'}
             <div>
               <input
                 {...register('dni')}
@@ -63,37 +74,14 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                 id="dni"
                 className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
                 placeholder="DNI o NIE"
+                pattern={REGEX_DNI.toString()}
+                title="DNI o NIE"
               />
               {errors.dni && (
                 <p className="text-error">{`${errors.dni?.message}`}</p>
               )}
             </div>
-            <div>
-              <input
-                {...register('username')}
-                type="text"
-                id="username"
-                className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-                placeholder="Username"
-              />
-              {errors.username && (
-                <p className="text-error">{`${errors.username?.message}`}</p>
-              )}
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <input
-                {...register('password')}
-                type="password"
-                id="password"
-                className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-                placeholder="Password"
-              />
-              {errors.password && (
-                <p className="text-error">{`${errors.password?.message}`}</p>
-              )}
-            </div>
+
             <div>
               <input
                 {...register('email')}
@@ -101,6 +89,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                 id="email"
                 className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
                 placeholder="Email"
+                pattern={REGEX_EMAIL.toString()}
+                required
+                title='Email'
               />
               {errors.email && (
                 <p className="text-error">{`${errors.email?.message}`}</p>
@@ -110,41 +101,74 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
           <div className="grid grid-cols-2 gap-4">
             <div>
               <input
-                type="password"
-                {...register('confirmPassword')}
-                id="confirmPassword"
+                {...register('username')}
+                type="text"
+                id="username"
                 className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-                placeholder="Confirm Password"
+                placeholder="Username"
+                pattern={REGEX_USERNAME.toString()}
+                required
+                title='Username'
               />
-              {errors.confirmPassword && (
-                <p className="text-error">{`${errors.confirmPassword?.message}`}</p>
+              {errors.username && (
+                <p className="text-error">{`${errors.username?.message}`}</p>
               )}
             </div>
-
             <div>
-              <input
-                type="text"
-                {...register('specialization')}
-                id="specialization"
-                className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
-                placeholder="Specialization"
-              />
+              <select required title={`Especializaciónes, ${specializationValues.map(specialization => specialization).join(", ")}`} {...register('specialization')} name="specialization" id="specialization" className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2">
+                {specializationValues.map((specialization) => <option key={specialization} value={specialization} title={specialization}>{specialization}</option>)}
+              </select>
               {errors.specialization && (
                 <p className="text-error">{`${errors.specialization.message}`}</p>
               )}
             </div>
           </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <input
+                type="password"
+                {...register('password_confirmation')}
+                id="confirmPassword"
+                className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+                placeholder="Confirm Password"
+                pattern={REGEX_PASWWORD.toString()}
+                required
+                title='Confirm Password'
+              />
+              {errors.password_confirmation && (
+                <p className="text-error">{`${errors.password_confirmation?.message}`}</p>
+              )}
+            </div>
+            <div>
+              <input
+                {...register('password')}
+                type="password"
+                id="password"
+                className="border-gray-300 w-full rounded-lg border p-2 px-4 py-4 focus:border-blue-300 focus:outline-none focus:ring md:p-4 md:px-6 md:py-2"
+                placeholder="Password"
+                pattern={REGEX_PASWWORD.toString()}
+                required
+                title='Password'
+              />
+              {errors.password && (
+                <p className="text-error">{`${errors.password?.message}`}</p>
+              )}
+            </div>
+
+          </div>
           <div className="flex items-center justify-center space-x-8 p-4 md:p-5 ">
             <div className="flex flex-col">
               <div className="flex items-center gap-1">
                 <input
+                  {...register('terms')}
                   type="checkbox"
-                  id="acceptTerms"
+                  id="terms"
                   className="h-6 w-6"
                   checked={isChecked}
                   onChange={(e) => setIsChecked(e.target.checked)}
+                  required
                 />
-                <label htmlFor="acceptTerms" className=" mr-2 text-sm">
+                <label htmlFor="terms" className=" mr-2 text-sm">
                   Acepto{' '}
                   <span style={{ textDecoration: 'underline' }}>
                     términos legales
