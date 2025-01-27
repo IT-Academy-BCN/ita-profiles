@@ -15,8 +15,6 @@ class RegisterRecruiterControllerTest extends TestCase
 
     private $role;
     private $company;
-    private $recruiterWithCompany;
-    private $recruiterWithoutCompany;
 
     protected function setUp(): void
     {
@@ -27,16 +25,7 @@ class RegisterRecruiterControllerTest extends TestCase
         );
 
         $this->company = Company::factory()->create();
-
-        $this->recruiterWithCompany = Recruiter::factory()->create([
-            'company_id' => $this->company->id,
-            'role_id' => $this->role->id,
-        ]);
-
-        $this->recruiterWithoutCompany = Recruiter::factory()->create([
-            'role_id' => $this->role->id,
-            'company_id' => null,
-        ]);   
+  
     }
 
     public function testRoleExists(): void
@@ -48,44 +37,55 @@ class RegisterRecruiterControllerTest extends TestCase
     public function testUserCreationWithCompany(): void
     {
         $response = $this->postJson('/api/v1/recruiter/register', [
-            'username' => 'john_doe',
-            'email' => 'john.doe@example.com',
-            'dni' => '65362114R',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'role_id' => $this->role->id,
+            'username' => 'john_doe2',
+            'email' => 'john.doe2@example.com',
+            'dni' => '31360812J',
+            'password' => 'Password%123',
+            'password_confirmation' => 'Password%123',
             'company_id' => $this->company->id,
             'terms' => true,
         ]);
 
         $response->assertStatus(201);
 
+        $this->assertDatabaseHas('users', [
+            'username' => 'john_doe2',
+            'email' => 'john.doe2@example.com',
+            'dni' => '31360812J',
+        ]);
+
         $this->assertDatabaseHas('recruiters', [
             'user_id' => $response->json('recruiter.user_id'),
             'company_id' => $this->company->id,
-            'role_id' => $this->role->id
+            'role_id' => $this->role->id,
         ]);
     }
+
 
     public function testRecruiterCreationWithoutCompany(): void
     {
         $response = $this->postJson('/api/v1/recruiter/register', [
-            'username' => 'john_doe',
-            'email' => 'john.doe@example.com',
-            'dni' => '65362114R',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'role_id' => $this->role->id,
+            'username' => 'jane_doe',
+            'email' => 'jane.doe@example.com',
+            'dni' => '64401581V',
+            'password' => 'Password%123',
+            'password_confirmation' => 'Password%123',
             'company_id' => null,
             'terms' => true,
         ]);
 
         $response->assertStatus(201);
 
+        $this->assertDatabaseHas('users', [
+            'username' => 'jane_doe',
+            'email' => 'jane.doe@example.com',
+            'dni' => '64401581V',
+        ]);
+
         $this->assertDatabaseHas('recruiters', [
             'user_id' => $response->json('recruiter.user_id'),
             'company_id' => null,
-            'role_id' => $this->role->id
+            'role_id' => $this->role->id,
         ]);
     }
 
@@ -95,11 +95,10 @@ class RegisterRecruiterControllerTest extends TestCase
             'username' => 'john_doe',
             'email' => 'john.doe@example.com',
             'dni' => '65362114R',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('Password%123'),
         ]);
-        
-    
-        $recruiter = Recruiter::create([
+
+        Recruiter::create([
             'user_id' => $user->id,
             'company_id' => $this->company->id,
             'role_id' => $this->role->id,
@@ -109,9 +108,8 @@ class RegisterRecruiterControllerTest extends TestCase
             'username' => 'john_doe',
             'email' => 'john.doe@example.com',
             'dni' => '65362114R',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'role_id' => $this->role->id,
+            'password' => 'Password%123',
+            'password_confirmation' => 'Password%123',
             'company_id' => $this->company->id,
             'terms' => true,
         ]);
@@ -127,7 +125,24 @@ class RegisterRecruiterControllerTest extends TestCase
         $this->assertDatabaseMissing('recruiters', [
             'user_id' => $response->json('recruiter.user_id'),
             'company_id' => $this->company->id,
-            'role_id' => $this->role->id
+            'role_id' => $this->role->id,
         ]);
+    }
+
+    public function testTermsNotAccepted(): void
+    {
+        $response = $this->postJson('/api/v1/recruiter/register', [
+            'username' => 'jane_doe',
+            'email' => 'jane.doe@example.com',
+            'dni' => '65362114Z',
+            'password' => 'Password%123',
+            'password_confirmation' => 'Password%123',
+            'company_id' => null,
+            'terms' => false,
+        ]);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonValidationErrors(['terms']);
     }
 }

@@ -28,7 +28,6 @@ class RegisterRecruiterRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'company_id' => 'nullable|exists:companies,id',
-            'role_id' => 'required|exists:roles,id',
             'terms' => 'required|accepted',
         ];
     }
