@@ -8,7 +8,7 @@ import StudentDetailsContent from './StudentDetailsContent'
 const StudentDetailsLayout: React.FC = () => {
     // aqui cogemos el estado que viene por default "false".
     const isPanelOpen = useAppSelector(
-        (state) => state.ShowUserReducer.isUserPanelOpen,
+        (state) => state.ShowUserReducer.user.isUserPanelOpen,
     )
     const dispatch = useAppDispatch()
 
