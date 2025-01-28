@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Company;
 use App\Models\User;
+use App\Models\Recruiter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RecruiterFactory extends Factory
 {
+    protected $model = Recruiter::class;
+
     /**
      * Define the model's default state.
      *
@@ -18,10 +21,11 @@ class RecruiterFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = \Faker\Factory::create();
         return [
-            'user_id' => User::inRandomOrder()->first()->id,
-            'company_id' => Company::inRandomOrder()->first()->id
+            // Ensure the User and Company exist or create them on the fly
+            'user_id' => User::factory(),
+            'company_id' => Company::factory(),
+            'role_id' => 2,
         ];
     }
 }

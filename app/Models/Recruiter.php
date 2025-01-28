@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Models\Role;
 
 class Recruiter extends Model
 {
@@ -18,6 +19,8 @@ class Recruiter extends Model
     use HasUuids;
 
     protected $guarded = ['id', 'role'];
+
+    protected $fillable = ['user_id', 'company_id', 'role_id'];
 
     public function company(): BelongsTo
     {
@@ -27,6 +30,11 @@ class Recruiter extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
     }
 
     public function jobOffers(): HasMany

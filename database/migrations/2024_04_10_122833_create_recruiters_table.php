@@ -10,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('recruiters', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('company_id');
+            $table->uuid('company_id')->nullable();
             $table->uuid('user_id');
-            $table->string('role')->default('recruiter');
+            $table->unsignedBigInteger('role_id')->default(2);
             $table->timestamps();
 
             $table->foreign('company_id')
@@ -23,6 +23,11 @@ return new class extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles')
                 ->onDelete('cascade');
         });
     }

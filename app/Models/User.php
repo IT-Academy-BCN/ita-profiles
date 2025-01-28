@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasOne(Student::class);
     }
 
+    public function recruiter():HasOne
+    {
+        return $this->hasOne(Recruiter::class);
+    }
+
     public function resume():HasOne
     {
         return $this->hasOne(Resume::class);

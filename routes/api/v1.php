@@ -30,11 +30,18 @@ use App\Http\Controllers\api\Tag\{
 };
 use App\Http\Controllers\api\Auth\{
     RegisterController,
-    AuthController
+    AuthController,
+    RegisterRecruiterController
 };
 use App\Http\Controllers\api\Message\SendMessageController;
+use App\Http\Controllers\api\User\FetchUserController;
+
+Route::get('/users', FetchUserController::class)->name('users.index');
 
 Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
+
+Route::post('/recruiter/register', RegisterRecruiterController::class)->name('recruiter.register');
+
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 Route::get('/development/list', DevelopmentListController::class)->name('development.list');
 Route::get('/specialization/list', SpecializationListController::class)->name('roles.list');
