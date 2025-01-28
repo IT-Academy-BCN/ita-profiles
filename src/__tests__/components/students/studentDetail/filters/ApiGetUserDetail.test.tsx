@@ -21,7 +21,7 @@ describe('FetchStudentsList function', () => {
         const selectedRoles = ['role1', 'role2']
 
         const expectedUrl =
-            '//localhost:8000/api/v1/student/resume/list?specialization=role1,role2'
+            'http://localhost:8000/api/v1/student/resume/list?specialization=role1,role2'
 
         const mockData = [
             { id: 1, name: 'Student 1' },
@@ -38,7 +38,7 @@ describe('FetchStudentsList function', () => {
     it('should handle errors', async () => {
         const selectedRoles: string[] = []
 
-        const expectedUrl = '//localhost:8000/api/v1/student/resume/list'
+        const expectedUrl = 'http://localhost:8000/api/v1/student/resume/list'
 
         mockAxios.onGet(expectedUrl).reply(500)
 
