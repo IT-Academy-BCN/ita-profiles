@@ -57,12 +57,12 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
-            <div className="w-120 flex flex-col items-center rounded-xl p-5 pt-2 md:p-20 md:pt-10 h-auto max-h-[580px] overflow-y-auto">
+            <div className="w-120 flex flex-col items-center rounded-xl p-5 pt-2 md:p-20 md:pt-10 max-h-[calc(100vh-60px)] overflow-y-auto">
                 <h2 className="text-lg font-bold md:text-2xl mb-3 md:mb-20">
                     Registro
                 </h2>
                 <form className="flex flex-col space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <input
                                 {...register('dni')}
@@ -114,6 +114,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                                 className={inputStyle}
                                 placeholder="Specialization"
                             />
+
                             {errors.specialization && (
                                 <p
                                     className={textErrorStyle}
@@ -151,7 +152,7 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-center space-x-8 p-4 md:p-5 ">
+                    <div className="flex flex-col md:flex-row items-center justify-center md:space-x-8 p-0 md:py-4 md:justify-between">
                         <div className="flex flex-col">
                             <div className="flex items-center gap-1">
                                 <input
@@ -187,8 +188,9 @@ const RegisterPopup: React.FC<RegisterPopupProps> = ({
                         </div>
                         <button
                             type="button"
-                            className="w-102 mr-6 h-12 cursor-pointer rounded-lg border-none bg-primary text-white md:h-12 md:w-60 md:text-lg"
+                            className="w-full md:w-60 h-12 cursor-pointer rounded-lg border-none bg-primary text-white mt-6 md:mt-0 md:mr-6"
                             onClick={handleSubmit(sendRegister)}
+                            style={{ marginLeft: '0 !important' }}
                         >
                             Register
                         </button>
